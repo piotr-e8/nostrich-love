@@ -200,6 +200,30 @@ const difficultyLabels = {
   intermediate: 'Intermediate',
   advanced: 'Advanced',
 };
+
+const pathConfig = {
+  beginner: {
+    label: 'Beginners',
+    icon: '👋',
+    description: 'Simple path, no technical jargon',
+    sequence: ['what-is-nostr', 'quickstart', 'finding-community', 'zaps-and-lightning', 'relays-demystified', 'nip05-identity', 'nostr-tools', 'troubleshooting', 'faq'],
+    hideAdvanced: true,
+  },
+  bitcoiner: {
+    label: 'Bitcoiner',
+    icon: '₿',
+    description: 'Skip basics, focus on clients and Lightning',
+    sequence: ['quickstart', 'zaps-and-lightning', 'finding-community', 'multi-client', 'protocol-comparison', 'relays-demystified', 'nip05-identity', 'privacy-security'],
+    hideAdvanced: false,
+  },
+  privacy: {
+    label: 'Privacy Advocate',
+    icon: '🔒',
+    description: 'Security-first approach',
+    sequence: ['what-is-nostr', 'keys-and-security', 'privacy-security', 'nip17-private-messages', 'relays-demystified', 'finding-community', 'multi-client'],
+    hideAdvanced: false,
+  },
+};
 ---
 
 <Layout
@@ -209,38 +233,79 @@ const difficultyLabels = {
   <Header />
 
   <main id="main-content">
+    <!-- Sticky Path Indicator -->
+    <div id="path-indicator" class="sticky top-0 z-40 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800 hidden">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span id="current-path-icon" class="text-lg"></span>
+            <span class="text-sm text-gray-600 dark:text-gray-400">Viewing as:</span>
+            <span id="current-path-label" class="font-semibold text-friendly-purple-600 dark:text-friendly-purple-400"></span>
+          </div>
+          <button id="change-path-btn" class="text-sm text-friendly-purple-600 hover:text-friendly-purple-700 font-medium">
+            Change Path
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Hero Section -->
     <section class="relative overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 dark:from-primary/5 dark:to-secondary/5" />
+      <div class="absolute inset-0 bg-gradient-to-br from-friendly-purple-100/50 via-transparent to-friendly-gold-100/30 dark:from-friendly-purple-900/30 dark:to-friendly-gold-900/20" />
       
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 relative">
         <div class="text-center max-w-3xl mx-auto">
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <span class="bg-gradient-to-r from-friendly-purple-600 to-friendly-purple-400 bg-clip-text text-transparent">
               Learn Nostr Step by Step
             </span>
           </h1>
-          <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+          <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">
             Comprehensive guides to take you from complete beginner to Nostr power user. 
             Learn at your own pace with hands-on tutorials.
           </p>
           
-          <!-- Progress Overview - Temporarily disabled -->
-          {/* <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm max-w-md mx-auto">
+          <!-- Path Selector -->
+          <div class="mb-8">
+            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
+              Choose your learning path
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {Object.entries(pathConfig).map(([key, config]) => (
+                <button
+                  type="button"
+                  class="path-selector-btn p-4 rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-friendly-purple-400 dark:hover:border-friendly-purple-500 transition-all duration-200 bg-white dark:bg-gray-800 text-left"
+                  data-path={key}
+                >
+                  <div class="flex items-center gap-3">
+                    <span class="text-2xl">{config.icon}</span>
+                    <div>
+                      <div class="font-bold text-gray-900 dark:text-white">{config.label}</div>
+                      <div class="text-sm text-gray-500 dark:text-gray-400">{config.description}</div>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+          
+          <!-- Progress Overview -->
+          <div id="progress-overview" class="bg-white dark:bg-gray-800 rounded-2xl border-2 border-friendly-purple-200 dark:border-friendly-purple-700 p-6 shadow-sm max-w-md mx-auto hidden">
             <div class="flex items-center justify-between mb-2">
               <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Your Progress</span>
-              <span class="text-2xl font-bold text-primary">{progressPercentage}%</span>
+              <span id="progress-percentage" class="text-2xl font-bold text-friendly-purple-600">0%</span>
             </div>
-            <div class="h-3 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div class="h-3 w-full bg-gray-200 rounded-full overflow-hidden">
               <div 
-                class="h-full bg-gradient-to-r from-primary to-secondary rounded-full transition-all duration-500"
-                style={`width: ${progressPercentage}%`}
+                id="progress-bar"
+                class="h-full bg-gradient-to-r from-friendly-purple-500 to-friendly-purple-300 rounded-full transition-all duration-500"
+                style="width: 0%"
               />
             </div>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
-              You've completed {completedGuides} of {totalGuides} guides
+            <p id="progress-text" class="text-sm text-gray-500 dark:text-gray-400 mt-2">
+              Start your first guide to see progress
             </p>
-          </div> */}
+          </div>
         </div>
       </div>
     </section>
@@ -276,11 +341,15 @@ const difficultyLabels = {
     </section>
 
     <!-- Guides Grid -->
-    <section class="py-16">
+    <section class="py-16" id="guides-grid">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="space-y-16">
           {guideSections.map((section, sectionIndex) => (
-            <div class="guide-section" data-level={section.level}>
+            <div 
+              class="guide-section" 
+              data-level={section.level}
+              data-section-index={sectionIndex}
+            >
               <div class="flex items-center gap-4 mb-8">
                 <div class={`w-12 h-12 rounded-xl flex items-center justify-center ${
                   section.level === 'beginner' ? 'bg-green-100 dark:bg-green-900/30' :
@@ -292,29 +361,53 @@ const difficultyLabels = {
                      section.level === 'intermediate' ? '🚀' : '⚡'}
                   </span>
                 </div>
-                <div>
+                <div class="flex-1">
                   <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{section.title}</h2>
                   <p class="text-gray-600 dark:text-gray-400">
                     {section.level === 'beginner' ? 'Start your Nostr journey here' :
                      section.level === 'intermediate' ? 'Level up your Nostr skills' :
-                     'Master the protocol'}
+                     'Master the protocol (Advanced)'}
                   </p>
                 </div>
                 {sectionIndex === 0 && (
-                  <span class="ml-auto px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full">
-                    Recommended Path
+                  <span class="px-3 py-1 bg-friendly-purple-100 text-friendly-purple-700 dark:bg-friendly-purple-800/60 dark:text-friendly-purple-200 text-sm font-medium rounded-full">
+                    Start Here
                   </span>
+                )}
+                {section.level === 'advanced' && (
+                  <button 
+                    type="button"
+                    id="toggle-advanced"
+                    class="ml-auto px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors flex items-center gap-2"
+                  >
+                    <span>Show Advanced</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
                 )}
               </div>
               
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {section.level === 'advanced' && (
+                <div class="mb-4 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
+                  <p class="text-sm text-amber-800 dark:text-amber-200">
+                    <span class="font-semibold">Heads up:</span> Advanced guides cover complex topics like relay management, privacy hardening, and multi-client strategies. Complete the beginner and intermediate guides first.
+                  </p>
+                </div>
+              )}
+              
+              <div 
+                class={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${section.level === 'advanced' ? 'advanced-guides-grid' : ''}`}
+                style={section.level === 'advanced' ? 'display: none;' : ''}
+              >
                 {section.guides.map((guide) => (
                   <a
                     href={guide.href}
-                    class="group p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary transition-all duration-200 hover:shadow-lg hover:-translate-y-1"
+                    class="guide-card group p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 hover:border-friendly-purple-400 dark:hover:border-friendly-purple-500 transition-all duration-200 hover:shadow-lg hover:-translate-y-1"
                     data-guide-id={guide.id}
                     data-title={guide.title.toLowerCase()}
                     data-description={guide.description.toLowerCase()}
+                    data-difficulty={guide.difficulty}
                   >
                     <div class="flex items-start justify-between mb-4">
                       <span class={`px-3 py-1 text-xs font-medium rounded-full ${difficultyColors[guide.difficulty]}`}>
@@ -322,9 +415,9 @@ const difficultyLabels = {
                       </span>
                       <div class="flex items-center gap-2">
                         <div class="progress-indicator" data-guide-id={guide.id} title="Loading progress...">
-                          <div class="w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 opacity-0 transition-opacity duration-300"></div>
+                          <div class="w-2.5 h-2.5 rounded-full bg-gray-300 opacity-0 transition-opacity duration-300"></div>
                         </div>
-                        <div class="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-1 text-sm text-gray-500">
                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
@@ -333,7 +426,7 @@ const difficultyLabels = {
                       </div>
                     </div>
                     
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-friendly-purple-600 dark:group-hover:text-friendly-purple-400 transition-colors">
                       {guide.title}
                     </h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
@@ -341,7 +434,7 @@ const difficultyLabels = {
                     </p>
                     
                     {guide.prerequisites && guide.prerequisites.length > 0 && (
-                      <div class="flex items-center gap-2 text-xs text-amber-600 dark:text-amber-400">
+                      <div class="flex items-center gap-2 text-xs text-amber-600">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                         </svg>
@@ -350,10 +443,10 @@ const difficultyLabels = {
                     )}
                     
                     <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between">
-                      <span class="text-sm font-medium text-primary group-hover:underline">
+                      <span class="text-sm font-medium text-friendly-purple-600 dark:text-friendly-purple-400 group-hover:underline">
                         Start Learning
                       </span>
-                      <svg class="w-5 h-5 text-gray-400 group-hover:text-primary group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg class="w-5 h-5 text-gray-400 group-hover:text-friendly-purple-500 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                       </svg>
                     </div>
@@ -392,10 +485,65 @@ const difficultyLabels = {
 </Layout>
 
 <script>
-  // Progress tracking integration
+  // Storage keys
   const STORAGE_KEY = 'nostrich-progress-v1';
   const PRIVACY_SETTINGS_KEY = 'nostrich-privacy-settings';
+  const PATH_STORAGE_KEY = 'nostrich-user-path';
+  
+  // Path configuration (must match server-side config)
+  const pathConfig = {
+    beginner: {
+      label: 'Beginners',
+      icon: '👋',
+      sequence: ['what-is-nostr', 'quickstart', 'finding-community', 'zaps-and-lightning', 'relays-demystified', 'nip05-identity', 'nostr-tools', 'troubleshooting', 'faq'],
+      hideAdvanced: true,
+    },
+    // Backwards compatibility alias
+    general: {
+      label: 'Beginners',
+      icon: '👋',
+      sequence: ['what-is-nostr', 'quickstart', 'finding-community', 'zaps-and-lightning', 'relays-demystified', 'nip05-identity', 'nostr-tools', 'troubleshooting', 'faq'],
+      hideAdvanced: true,
+    },
+    bitcoiner: {
+      label: 'Bitcoiner',
+      icon: '₿',
+      sequence: ['quickstart', 'zaps-and-lightning', 'finding-community', 'multi-client', 'protocol-comparison', 'relays-demystified', 'nip05-identity', 'privacy-security'],
+      hideAdvanced: false,
+    },
+    privacy: {
+      label: 'Privacy Advocate',
+      icon: '🔒',
+      sequence: ['what-is-nostr', 'keys-and-security', 'privacy-security', 'nip17-private-messages', 'relays-demystified', 'finding-community', 'multi-client'],
+      hideAdvanced: false,
+    },
+  };
 
+  // Get stored path
+  function getUserPath() {
+    try {
+      // Support both 'beginner' (new) and 'general' (legacy) paths
+      const stored = localStorage.getItem(PATH_STORAGE_KEY);
+      if (stored === 'general') {
+        // Migrate legacy path to new name
+        localStorage.setItem(PATH_STORAGE_KEY, 'beginner');
+        return 'beginner';
+      }
+      return stored || 'beginner';
+    } catch (e) {
+      return 'beginner';
+    }
+  }
+  
+  // Set user path
+  function setUserPath(path) {
+    try {
+      localStorage.setItem(PATH_STORAGE_KEY, path);
+    } catch (e) {
+      console.error('Error saving path:', e);
+    }
+  }
+  
   // Get privacy settings
   function getPrivacySettings() {
     const defaultSettings = {
@@ -426,6 +574,46 @@ const difficultyLabels = {
     }
     return {};
   }
+  
+  // Calculate progress
+  function calculateProgress() {
+    const guides = getProgressData();
+    const totalGuides = document.querySelectorAll('.guide-card').length;
+    const completedGuides = Object.values(guides).filter(g => g.status === 'completed').length;
+    const percentage = totalGuides > 0 ? Math.round((completedGuides / totalGuides) * 100) : 0;
+    
+    return {
+      total: totalGuides,
+      completed: completedGuides,
+      percentage: percentage,
+    };
+  }
+  
+  // Update progress overview
+  function updateProgressOverview() {
+    const progress = calculateProgress();
+    const overview = document.getElementById('progress-overview');
+    const percentageEl = document.getElementById('progress-percentage');
+    const barEl = document.getElementById('progress-bar');
+    const textEl = document.getElementById('progress-text');
+    
+    if (!overview || !percentageEl || !barEl || !textEl) return;
+    
+    if (progress.completed > 0) {
+      overview.classList.remove('hidden');
+      percentageEl.textContent = `${progress.percentage}%`;
+      barEl.style.width = `${progress.percentage}%`;
+      
+      if (progress.percentage === 100) {
+        textEl.textContent = '🎉 Congratulations! You\'ve completed all guides!';
+      } else {
+        const remaining = progress.total - progress.completed;
+        textEl.textContent = `${progress.completed} of ${progress.total} guides completed (${remaining} to go)`;
+      }
+    } else {
+      overview.classList.add('hidden');
+    }
+  }
 
   // Update progress indicators
   function updateProgressIndicators() {
@@ -436,9 +624,9 @@ const difficultyLabels = {
     indicators.forEach((indicator) => {
       const guideId = indicator.getAttribute('data-guide-id');
       const dot = indicator.querySelector('div');
+      if (!dot) return;
 
       if (!settings.trackingEnabled || !settings.showProgressIndicators) {
-        // Hide all dots if tracking disabled
         dot.classList.add('opacity-0');
         indicator.removeAttribute('title');
         return;
@@ -447,8 +635,7 @@ const difficultyLabels = {
       const progress = guides[guideId];
       const status = progress?.status || 'not-started';
 
-      // Remove all status classes first
-      dot.classList.remove('bg-green-500', 'bg-blue-400', 'bg-gray-300', 'dark:bg-gray-600', 'opacity-0');
+      dot.classList.remove('bg-green-500', 'bg-blue-400', 'bg-gray-300', 'opacity-0');
 
       switch (status) {
         case 'completed':
@@ -461,45 +648,170 @@ const difficultyLabels = {
           indicator.setAttribute('title', 'In progress');
           break;
         default:
-          // Not started - hide the dot
-          dot.classList.add('bg-gray-300', 'dark:bg-gray-600', 'opacity-0');
+          dot.classList.add('bg-gray-300', 'opacity-0');
           indicator.removeAttribute('title');
-          return;
       }
     });
   }
-
-  // Initialize progress indicators
-  if (typeof window !== 'undefined') {
-    updateProgressIndicators();
+  
+  // Filter guides by path
+  function filterGuidesByPath(path) {
+    const config = pathConfig[path] || pathConfig.general;
+    const sequence = config.sequence;
+    const cards = document.querySelectorAll('.guide-card');
     
-    // Listen for storage changes (in case user updates progress in another tab)
+    cards.forEach((card) => {
+      const guideId = card.getAttribute('data-guide-id');
+      const difficulty = card.getAttribute('data-difficulty');
+      
+      // Hide advanced guides for general public
+      if (config.hideAdvanced && difficulty === 'advanced') {
+        card.style.display = 'none';
+        return;
+      }
+      
+      // Show/hide based on path sequence
+      if (sequence.includes(guideId)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    
+    // Reorder guides in each section based on sequence
+    sequence.forEach((guideId, index) => {
+      const card = document.querySelector(`[data-guide-id="${guideId}"]`);
+      if (card) {
+        card.style.order = index;
+      }
+    });
+  }
+  
+  // Update path indicator UI
+  function updatePathIndicator(path) {
+    const config = pathConfig[path] || pathConfig.general;
+    const indicator = document.getElementById('path-indicator');
+    const iconEl = document.getElementById('current-path-icon');
+    const labelEl = document.getElementById('current-path-label');
+    
+    if (indicator && iconEl && labelEl) {
+      indicator.classList.remove('hidden');
+      iconEl.textContent = config.icon;
+      labelEl.textContent = config.label;
+    }
+    
+    // Update active state of path selector buttons
+    document.querySelectorAll('.path-selector-btn').forEach((btn) => {
+      if (btn.dataset.path === path) {
+        btn.classList.add('border-friendly-purple-500', 'bg-friendly-purple-50');
+        btn.classList.remove('border-gray-200', 'bg-white');
+      } else {
+        btn.classList.remove('border-friendly-purple-500', 'bg-friendly-purple-50');
+        btn.classList.add('border-gray-200', 'bg-white');
+      }
+    });
+  }
+  
+  // Toggle advanced guides
+  function toggleAdvancedGuides() {
+    const grid = document.querySelector('.advanced-guides-grid');
+    const btn = document.getElementById('toggle-advanced');
+    
+    if (!grid || !btn) return;
+    
+    const isHidden = grid.style.display === 'none';
+    grid.style.display = isHidden ? 'grid' : 'none';
+    
+    const span = btn.querySelector('span');
+    const svg = btn.querySelector('svg');
+    
+    if (span) {
+      span.textContent = isHidden ? 'Hide Advanced' : 'Show Advanced';
+    }
+    if (svg) {
+      svg.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+    }
+  }
+
+  // Initialize
+  if (typeof window !== 'undefined') {
+    // Check for path in URL or storage
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlPath = urlParams.get('path');
+    const currentPath = urlPath && pathConfig[urlPath] ? urlPath : getUserPath();
+    
+    // Initialize UI
+    updatePathIndicator(currentPath);
+    filterGuidesByPath(currentPath);
+    updateProgressIndicators();
+    updateProgressOverview();
+    
+    // Path selector buttons
+    document.querySelectorAll('.path-selector-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const path = btn.dataset.path;
+        if (path && pathConfig[path]) {
+          setUserPath(path);
+          updatePathIndicator(path);
+          filterGuidesByPath(path);
+          
+          // Update URL without reloading
+          const url = new URL(window.location);
+          url.searchParams.set('path', path);
+          window.history.pushState({}, '', url);
+        }
+      });
+    });
+    
+    // Change path button
+    const changePathBtn = document.getElementById('change-path-btn');
+    if (changePathBtn) {
+      changePathBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+    
+    // Advanced toggle
+    const toggleAdvancedBtn = document.getElementById('toggle-advanced');
+    if (toggleAdvancedBtn) {
+      toggleAdvancedBtn.addEventListener('click', toggleAdvancedGuides);
+    }
+    
+    // Listen for storage changes
     window.addEventListener('storage', (e) => {
       if (e.key === STORAGE_KEY || e.key === PRIVACY_SETTINGS_KEY) {
         updateProgressIndicators();
+        updateProgressOverview();
       }
     });
   }
 
-  // Simple search functionality
+  // Search functionality
   const searchInput = document.getElementById('guide-search');
-  const guideCards = document.querySelectorAll('[data-guide-id]');
   
   searchInput?.addEventListener('input', (e) => {
-    const query = (e.target).value.toLowerCase();
+    const query = e.target?.value?.toLowerCase() || '';
+    const currentPath = getUserPath();
+    const config = pathConfig[currentPath] || pathConfig.general;
     
-    guideCards.forEach((card) => {
+    document.querySelectorAll('.guide-card').forEach((card) => {
+      const guideId = card.getAttribute('data-guide-id');
       const title = card.getAttribute('data-title') || '';
       const description = card.getAttribute('data-description') || '';
-      const shouldShow = title.includes(query) || description.includes(query);
+      const difficulty = card.getAttribute('data-difficulty');
       
-      card.style.display = shouldShow ? 'block' : 'none';
-    });
-    
-    // Hide empty sections
-    document.querySelectorAll('.guide-section').forEach((section) => {
-      const visibleCards = section.querySelectorAll('[data-guide-id]:not([style*="none"])');
-      section.style.display = visibleCards.length > 0 ? 'block' : 'none';
+      const matchesSearch = title.includes(query) || description.includes(query);
+      const isInPath = config.sequence.includes(guideId);
+      const isAdvancedHidden = config.hideAdvanced && difficulty === 'advanced';
+      
+      if (matchesSearch && isInPath && !isAdvancedHidden) {
+        card.style.display = 'block';
+      } else if (query) {
+        card.style.display = 'none';
+      } else {
+        // Reset to path-based visibility
+        card.style.display = isInPath && !isAdvancedHidden ? 'block' : 'none';
+      }
     });
   });
 </script>

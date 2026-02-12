@@ -4,76 +4,277 @@ import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import { CyberpunkHeroAnimation } from '../components/CyberpunkAnimation';
 
-const title = 'Nostrich.love - Your Gateway to Decentralized Social Media';
-const description = 'The safest way to start with Nostr. Master decentralized social media with structured guides, interactive tools, and hands-on practice.';
+const title = 'Nostrich.love - Social Media That Respects You';
+const description = 'Try decentralized social media without the complexity. Join thousands leaving Twitter for a platform that puts you in control—not algorithms or corporations.';
 
 const valueProps = [
   { 
     icon: '🎮', 
-    title: 'Gamified Learning', 
-    description: 'Track your progress with visual indicators as you advance from beginner to expert' 
+    title: 'Learn at Your Pace', 
+    description: 'Track your progress with clear milestones from first steps to power user' 
   },
   { 
-    icon: '📈', 
-    title: 'Linear Path', 
-    description: 'Follow a structured curriculum - no guesswork on what to learn next' 
+    icon: '🔐', 
+    title: 'You Own Everything', 
+    description: 'Your account, your followers, your content. No platform can delete you.' 
   },
   { 
-    icon: '🛠️', 
-    title: 'Hands-On Practice', 
-    description: 'Interactive tools and simulators to practice before going live' 
+    icon: '⚡', 
+    title: 'Earn From Day One', 
+    description: 'Built-in micropayments let supporters tip you directly—no ads needed' 
   },
 ];
 
+const comparisonPoints = [
+  {
+    twitter: {
+      icon: '🤖',
+      title: 'Algorithm decides',
+      subtitle: 'what you see',
+      description: 'Sponsored content and engagement bait prioritized over your friends'
+    },
+    nostr: {
+      icon: '✅',
+      title: 'You decide',
+      subtitle: 'what you see',
+      description: 'Chronological feed showing posts from people you follow—no manipulation'
+    }
+  },
+  {
+    twitter: {
+      icon: '🆔',
+      title: 'ID verification',
+      subtitle: 'required',
+      description: 'Upload government ID + selfie. Your identity sold to data brokers.'
+    },
+    nostr: {
+      icon: '🔒',
+      title: 'Stay anonymous',
+      subtitle: 'or use any name',
+      description: 'No phone number, no email, no ID required. Truly private.'
+    }
+  },
+  {
+    twitter: {
+      icon: '❌',
+      title: 'Account deleted',
+      subtitle: 'without warning',
+      description: 'Years of content gone instantly. No appeal. No recourse.'
+    },
+    nostr: {
+      icon: '💾',
+      title: 'Your content',
+      subtitle: 'stored forever',
+      description: 'Distributed across 50+ servers. You own your digital footprint.'
+    }
+  },
+  {
+    twitter: {
+      icon: '💰',
+      title: 'Your data sold',
+      subtitle: 'for profit',
+      description: 'Twitter makes money from your attention. You get nothing.'
+    },
+    nostr: {
+      icon: '⚡',
+      title: 'You get paid',
+      subtitle: 'directly',
+      description: 'Supporters send instant tips. Keep 100%—no platform cut.'
+    }
+  }
+];
+
+const paths = [
+  {
+    id: 'beginner',
+    icon: '👋',
+    title: "I'm New to Nostr",
+    subtitle: 'Start your journey with simple, beginner-friendly guides',
+    description: 'Start here if you want the simplest path. We\'ll show you the basics without overwhelming technical details.',
+    features: ['Simple explanations', 'Step-by-step guides', 'No crypto knowledge needed'],
+    cta: 'Start Simple',
+    theme: 'friendly'
+  },
+  {
+    id: 'bitcoiner',
+    icon: '₿',
+    title: 'Bitcoiner',
+    subtitle: 'I get keys, show me the good stuff',
+    description: 'Already understand self-custody? Skip the basics and dive into the best clients and Lightning integration.',
+    features: ['Skip fundamentals', 'Lightning-first setup', 'Technical deep dives'],
+    cta: 'Bitcoiner Fast Track',
+    theme: 'cyberpunk'
+  },
+  {
+    id: 'privacy',
+    icon: '🔒',
+    title: 'Privacy First',
+    subtitle: 'Maximum security & anonymity',
+    description: 'For those who demand the highest privacy. Learn threat modeling, OpSec, and hardening techniques.',
+    features: ['Threat modeling', 'Advanced OpSec', 'Privacy hardening'],
+    cta: 'Secure Setup',
+    theme: 'cyberpunk'
+  }
+];
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} data-theme="friendly">
   <Header />
   
-  <main id="main-content">
-    <!-- Hero Section with Nostrich Animation -->
-    <section class="relative min-h-[600px] flex items-center">
-      <CyberpunkHeroAnimation client:load className="absolute inset-0" />
+  <main id="main-content" class="theme-bg-primary transition-colors duration-500">
+    <!-- Hero Section - Friendly Theme -->
+    <section class="relative min-h-[700px] flex items-center bg-gradient-to-br from-friendly-purple-100 via-friendly-warm-50 to-white dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+      <!-- Subtle animated background for friendly theme -->
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-friendly-purple-200/30 to-transparent rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-to-tr from-friendly-gold-200/20 to-transparent rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+      </div>
       
       <div class="relative z-10 w-full">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="max-w-4xl mx-auto text-center">
+          <div class="max-w-5xl mx-auto">
             <!-- Badge -->
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
-              <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-              <span class="text-sm text-gray-300">Open Source • Community Driven • Privacy First</span>
+            <div class="flex justify-center mb-6">
+              <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-friendly-purple-200 dark:border-friendly-purple-700 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">No accounts • No passwords • No corporations</span>
+              </div>
             </div>
             
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-              <span class="bg-gradient-to-r from-purple-300 via-white to-cyan-300 bg-clip-text text-transparent drop-shadow-[0_2px_10px_rgba(168,85,247,0.5)]">
-                Learn Nostr the Smart Way
-              </span>
-            </h1>
+            <!-- Main Headline -->
+            <div class="text-center mb-8">
+              <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-white">
+                <span class="block">Social Media That</span>
+                <span class="bg-gradient-to-r from-friendly-purple-600 to-friendly-purple-400 bg-clip-text text-transparent">
+                  Respects You
+                </span>
+              </h1>
+              
+              <p class="text-xl sm:text-2xl text-gray-600 dark:text-gray-400 mb-4 max-w-3xl mx-auto leading-relaxed">
+                No algorithms. No data selling. No ID verification required. 
+                Just you, your content, and your community.
+              </p>
+              
+              <p class="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+                Join thousands leaving Twitter for a <span class="font-semibold text-friendly-purple-600 dark:text-friendly-purple-400">protocol</span> that puts you in control.
+              </p>
+            </div>
             
-            <p class="text-xl text-gray-300 mb-4 max-w-2xl mx-auto">
-              Master decentralized social media with structured guides, hands-on tools, and clear explanations. From your first steps to advanced privacy practices.
+            <!-- 3-Path Selector -->
+            <div class="mt-12">
+              <p class="text-center text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-6">
+                Who are you? Choose your path:
+              </p>
+              
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
+                {paths.map((path) => (
+                  <button
+                    type="button"
+                    class="path-selector group relative p-6 bg-white dark:bg-gray-800 rounded-2xl border-2 border-gray-200 dark:border-gray-700 hover:border-friendly-purple-400 dark:hover:border-friendly-purple-500 transition-all duration-300 shadow-sm hover:shadow-lg text-left"
+                    data-path={path.id}
+                    data-theme={path.theme}
+                  >
+                    <div class="flex items-start gap-4">
+                      <span class="text-3xl">{path.icon}</span>
+                      <div class="flex-1">
+                        <h3 class="font-bold text-lg text-gray-900 dark:text-white group-hover:text-friendly-purple-600 transition-colors">
+                          {path.title}
+                        </h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{path.subtitle}</p>
+                      </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+                      <ul class="space-y-1 text-sm text-gray-600 dark:text-gray-400">
+                        {path.features.map((feature) => (
+                          <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-friendly-purple-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <div class="mt-4 flex items-center justify-between">
+                      <span class="text-sm font-semibold text-friendly-purple-600 group-hover:text-friendly-purple-700">
+                        {path.cta}
+                      </span>
+                      <svg class="w-5 h-5 text-gray-400 group-hover:text-friendly-purple-500 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Nostr > Twitter Section -->
+    <section class="py-20 bg-white dark:bg-gray-900">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              Why People Are Switching
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              See how Nostr solves the problems that made Twitter frustrating—and why it's getting harder to stay on centralized platforms.
             </p>
-            
-            <p class="text-lg text-gray-400 mb-8">
-              No accounts. No passwords. No central authority. Just you and your keys.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/guides"
-                class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 rounded-xl transition-all duration-200 shadow-lg hover:shadow-purple-500/25 hover:-translate-y-0.5"
-              >
-                Start Learning
-                <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </a>
-              <a
-                href="/tools"
-                class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-gray-200 bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 rounded-xl transition-all duration-200 backdrop-blur-sm"
-              >
-                Explore Tools
-              </a>
+          </div>
+
+          <div class="space-y-8">
+            {comparisonPoints.map((point, index) => (
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Twitter Side -->
+                <div class="p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 opacity-75">
+                  <div class="flex items-start gap-4">
+                    <span class="text-3xl">{point.twitter.icon}</span>
+                    <div>
+                      <div class="flex items-baseline gap-2">
+                        <h3 class="font-bold text-lg text-gray-700 dark:text-gray-300 line-through">{point.twitter.title}</h3>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">{point.twitter.subtitle}</span>
+                      </div>
+                      <p class="text-gray-600 dark:text-gray-400 mt-1">{point.twitter.description}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Nostr Side -->
+                <div class="p-6 rounded-2xl bg-gradient-to-br from-friendly-purple-50 to-white dark:bg-gray-800 dark:bg-none border-2 border-friendly-purple-200 dark:border-friendly-purple-500/70 shadow-sm">
+                  <div class="flex items-start gap-4">
+                    <span class="text-3xl">{point.nostr.icon}</span>
+                    <div>
+                      <div class="flex items-baseline gap-2">
+                        <h3 class="font-bold text-lg text-friendly-purple-700 dark:text-friendly-purple-200">{point.nostr.title}</h3>
+                        <span class="text-sm text-friendly-purple-600 dark:text-friendly-purple-100 font-medium">{point.nostr.subtitle}</span>
+                      </div>
+                      <p class="text-gray-700 dark:text-gray-100 mt-1">{point.nostr.description}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- Special Callout for ID Verification -->
+          <div class="mt-12 p-6 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/30 dark:to-orange-900/30 border border-amber-200 dark:border-amber-800">
+            <div class="flex items-start gap-4">
+              <span class="text-3xl">⚠️</span>
+              <div>
+                <h3 class="font-bold text-lg text-amber-900 dark:text-amber-400 mb-2">
+                  Social Media Is Requiring More of Your Identity
+                </h3>
+                <p class="text-amber-800 dark:text-amber-300">
+                  Twitter/X is rolling out mandatory government ID + selfie verification in more regions. 
+                  Your biometric data, linked to your real identity, stored who-knows-where. 
+                  <span class="font-semibold">Nostr never requires ID.</span> Not now. Not ever.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -81,157 +282,95 @@ const valueProps = [
     </section>
 
     <!-- Value Proposition Section -->
-    <section class="py-16 border-y border-gray-800 bg-gray-950/50">
+    <section class="py-16 bg-friendly-warm-50 dark:bg-gray-900 border-y border-friendly-purple-100 dark:border-gray-700">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {valueProps.map((prop) => (
             <div class="text-center p-6">
               <div class="text-4xl mb-4">{prop.icon}</div>
-              <h3 class="text-lg font-semibold text-white mb-2">{prop.title}</h3>
-              <p class="text-sm text-gray-400">{prop.description}</p>
+              <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">{prop.title}</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-300">{prop.description}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-    <!-- Guides Overview Section -->
-    <section class="py-20 bg-gradient-to-b from-gray-950 to-gray-900">
+    <!-- Social Proof Section -->
+    <section class="py-20 bg-white dark:bg-gray-900">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-4xl mx-auto">
-          <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-white mb-4">
-              15 Guides, Zero Overwhelm
-            </h2>
-            <p class="text-lg text-gray-400 max-w-2xl mx-auto">
-              Start with the basics and progress at your own pace. Each guide builds on the previous one, with clear prerequisites so you always know what's next.
-            </p>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            <div class="p-6 rounded-2xl bg-gray-800/50 border border-gray-700">
-              <h3 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                <span class="text-2xl">🚀</span> Getting Started
-              </h3>
-              <ul class="space-y-2 text-gray-400 text-sm">
-                <li>• What is Nostr? (5 min read)</li>
-                <li>• Quickstart Guide</li>
-                <li>• Keys & Security Fundamentals</li>
-              </ul>
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+            Join Thousands Making the Switch
+          </h2>
+          
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+            <div>
+              <div class="text-4xl font-bold text-friendly-purple-600">50K+</div>
+              <div class="text-gray-600 dark:text-gray-400">Active Users</div>
             </div>
-            <div class="p-6 rounded-2xl bg-gray-800/50 border border-gray-700">
-              <h3 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                <span class="text-2xl">⚙️</span> Core Concepts
-              </h3>
-              <ul class="space-y-2 text-gray-400 text-sm">
-                <li>• Understanding Relays</li>
-                <li>• NIP-05 Identity Verification</li>
-                <li>• Privacy & Security Best Practices</li>
-              </ul>
+            <div>
+              <div class="text-4xl font-bold text-friendly-purple-600">15</div>
+              <div class="text-gray-600 dark:text-gray-400">Step-by-Step Guides</div>
             </div>
-            <div class="p-6 rounded-2xl bg-gray-800/50 border border-gray-700">
-              <h3 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                <span class="text-2xl">💡</span> Practical Skills
-              </h3>
-              <ul class="space-y-2 text-gray-400 text-sm">
-                <li>• Zaps & Lightning Payments</li>
-                <li>• Private Messages (NIP-17)</li>
-                <li>• Finding Your Community</li>
-              </ul>
+            <div>
+              <div class="text-4xl font-bold text-friendly-purple-600">7</div>
+              <div class="text-gray-600 dark:text-gray-400">Client Options</div>
             </div>
-            <div class="p-6 rounded-2xl bg-gray-800/50 border border-gray-700">
-              <h3 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                <span class="text-2xl">🔧</span> Tools & Reference
-              </h3>
-              <ul class="space-y-2 text-gray-400 text-sm">
-                <li>• Essential Nostr Tools</li>
-                <li>• Troubleshooting Common Issues</li>
-                <li>• <a href="/glossary" class="text-cyan-400 hover:underline">Glossary</a> & <a href="/guides/faq" class="text-cyan-400 hover:underline">FAQ</a></li>
-              </ul>
+            <div>
+              <div class="text-4xl font-bold text-friendly-purple-600">100%</div>
+              <div class="text-gray-600 dark:text-gray-400">Open Source</div>
             </div>
           </div>
 
-          <div class="text-center">
-            <a
-              href="/guides"
-              class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 rounded-xl transition-all duration-200"
-            >
-              Browse All Guides
-              <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Why Nostrich.love Section -->
-    <section class="py-20 bg-gradient-to-b from-black to-gray-900">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-4xl mx-auto">
-          <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-white mb-4">
-              Why Start Here?
-            </h2>
-            <p class="text-lg text-gray-400">
-              Understanding Nostr isn't optional—it's essential for anyone who values freedom online.
-            </p>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 to-transparent border border-purple-500/20">
-              <h3 class="text-lg font-semibold text-white mb-2">🌐 The Future is Decentralized</h3>
-              <p class="text-gray-400">Centralized platforms control what you see, who you can reach, and whether you exist online. Learning decentralized social media means understanding how to communicate without permission.</p>
-            </div>
-            <div class="p-6 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-transparent border border-cyan-500/20">
-              <h3 class="text-lg font-semibold text-white mb-2">🔑 Own Your Digital Identity</h3>
-              <p class="text-gray-400">Your online presence shouldn't be rented from corporations. Self-custody of your identity means no one can delete you, shadowban you, or sell your data without consent.</p>
-            </div>
-            <div class="p-6 rounded-2xl bg-gradient-to-br from-green-500/10 to-transparent border border-green-500/20">
-              <h3 class="text-lg font-semibold text-white mb-2">⚡ Early Adopters Shape the Future</h3>
-              <p class="text-gray-400">Those who learn Nostr now will define the standards, build the tools, and lead communities as this technology matures. The learning curve is steeper now—but so is the opportunity.</p>
-            </div>
-            <div class="p-6 rounded-2xl bg-gradient-to-br from-orange-500/10 to-transparent border border-orange-500/20">
-              <h3 class="text-lg font-semibold text-white mb-2">⚠️ The Cost of Ignorance</h3>
-              <p class="text-gray-400">Every day you rely on corporate platforms, your data is harvested, your speech is monitored, and your reach is throttled. Not learning alternatives means accepting a future with less freedom.</p>
-            </div>
-          </div>
+          <p class="text-gray-500 dark:text-gray-400 text-sm">
+            Numbers updated daily. No accounts required to try—see for yourself.
+          </p>
         </div>
       </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="py-20 relative overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-purple-900 via-gray-900 to-cyan-900"></div>
-      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-500/20 via-transparent to-transparent"></div>
-      
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">
-          Ready to Own Your Social Media?
+    <section class="py-20 bg-gradient-to-br from-friendly-purple-100 via-white to-friendly-gold-50 dark:from-friendly-purple-900/30 dark:via-gray-900 dark:to-friendly-gold-900/20">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          Ready to Try Something Better?
         </h2>
-        <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-          Join thousands of people who are taking control of their online identity. No corporations, no algorithms, no surveillance.
+        <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+          It takes 2 minutes to get started. No phone number required. No strings attached.
         </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        
+        <!-- Path selector again for convenience -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
           <a
             href="/guides"
-            class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-purple-900 bg-white rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+            class="path-link inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-friendly-purple-600 hover:bg-friendly-purple-700 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+            data-path="beginner"
           >
-            Start Learning
+            Start Simple
             <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </a>
           <a
-            href="/tools"
-            class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white border-2 border-white/30 hover:border-white rounded-xl transition-all duration-200"
+            href="/guides"
+            class="path-link inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-friendly-purple-700 dark:text-friendly-purple-400 bg-white dark:bg-gray-800 border-2 border-friendly-purple-200 dark:border-friendly-purple-700 hover:border-friendly-purple-400 dark:hover:border-friendly-purple-500 rounded-xl transition-all duration-200"
+            data-path="bitcoiner"
           >
-            Try the Tools
+            Bitcoiner Fast Track
+          </a>
+          <a
+            href="/guides"
+            class="path-link inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 rounded-xl transition-all duration-200"
+            data-path="privacy"
+          >
+            Privacy Setup
           </a>
         </div>
-        <p class="mt-6 text-sm text-gray-400">
-          Open source on <a href="https://github.com/aljazceru/awesome-nostr" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline">GitHub</a> • Built by the Nostr community
+        
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          Already know Nostr? <a href="/tools" class="text-friendly-purple-600 dark:text-friendly-purple-400 hover:underline font-medium">Jump to Tools</a> • 
+          Open source on <a href="https://github.com/aljazceru/awesome-nostr" target="_blank" rel="noopener noreferrer" class="text-friendly-purple-600 dark:text-friendly-purple-400 hover:underline font-medium">GitHub</a>
         </p>
       </div>
     </section>
@@ -239,3 +378,79 @@ const valueProps = [
 
   <Footer />
 </Layout>
+
+<script>
+  // Path selection and persistence
+  const PATH_STORAGE_KEY = 'nostrich-user-path';
+  
+  // Get stored path
+  function getUserPath() {
+    try {
+      // Support both 'beginner' (new) and 'general' (legacy) paths
+      const stored = localStorage.getItem(PATH_STORAGE_KEY);
+      if (stored === 'general') {
+        // Migrate legacy path to new name
+        localStorage.setItem(PATH_STORAGE_KEY, 'beginner');
+        return 'beginner';
+      }
+      return stored || 'beginner';
+    } catch (e) {
+      return 'beginner';
+    }
+  }
+  
+  // Set user path
+  function setUserPath(path) {
+    try {
+      localStorage.setItem(PATH_STORAGE_KEY, path);
+    } catch (e) {
+      console.error('Error saving path:', e);
+    }
+  }
+  
+  // Update active path UI
+  function updateActivePath(path) {
+    document.querySelectorAll('.path-selector').forEach((btn) => {
+      if (btn.dataset.path === path) {
+        btn.classList.add('border-friendly-purple-500', 'bg-friendly-purple-50');
+        btn.classList.remove('border-gray-200', 'bg-white');
+      } else {
+        btn.classList.remove('border-friendly-purple-500', 'bg-friendly-purple-50');
+        btn.classList.add('border-gray-200', 'bg-white');
+      }
+    });
+  }
+  
+  // Initialize
+  const currentPath = getUserPath();
+  updateActivePath(currentPath);
+  
+  // Handle path selection clicks
+  document.querySelectorAll('.path-selector').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const path = btn.dataset.path;
+      setUserPath(path);
+      updateActivePath(path);
+      
+      // Optional: Update theme based on path
+      if (path === 'beginner' || path === 'general') {
+        document.body.setAttribute('data-theme', 'friendly');
+      } else {
+        document.body.setAttribute('data-theme', 'cyberpunk');
+      }
+      
+      // Navigate to guides with path parameter
+      window.location.href = `/guides?path=${path}`;
+    });
+  });
+  
+  // Handle CTA links
+  document.querySelectorAll('.path-link').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const path = link.dataset.path || getUserPath();
+      setUserPath(path);
+      e.preventDefault();
+      window.location.href = `/guides?path=${path}`;
+    });
+  });
+</script>

@@ -38,6 +38,37 @@ export default {
         success: "#22C55E",
         danger: "#EF4444",
         warning: "#F59E0B",
+        // Friendly theme colors based on nostrich logo
+        friendly: {
+          purple: {
+            DEFAULT: "#9B7BFF",
+            50: "#FAF8FF",
+            100: "#F3F0FF",
+            200: "#E8E2FF",
+            300: "#D4C9FF",
+            400: "#B8A3FF",
+            500: "#9B7BFF",
+            600: "#8A6AE6",
+            700: "#7A5CCC",
+          },
+          gold: {
+            DEFAULT: "#FFD700",
+            50: "#FFFBEB",
+            100: "#FEF3C7",
+            200: "#FDE68A",
+            300: "#FCD34D",
+            400: "#FBBF24",
+            500: "#FFD700",
+            600: "#D97706",
+          },
+          cream: "#FFFDF8",
+          warm: {
+            50: "#FFFBF5",
+            100: "#FFF7EB",
+            200: "#FFEFD6",
+            300: "#FFE4C2",
+          },
+        },
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],

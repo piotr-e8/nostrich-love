@@ -15,15 +15,19 @@ import { SecurityQuiz } from "@components/interactive/SecurityQuiz";
 {/* ProgressIndicator temporarily disabled - will be implemented with actual tracking later */}
 {/* <ProgressIndicator current={2} total={4} estimatedTime="8 minutes" /> */}
 
-<AlertBanner
-  type="warning"
-  title="This is the most important page. Read carefully."
->
-  Your keys are your identity. Lose them = lose your account forever. No
-  exceptions. No recovery. Take this seriously.
-</AlertBanner>
-
 # Your Keys, Your Identity
+
+Welcome to self-custody of your digital identity! This guide will show you how to safely create and protect your Nostr keys—giving you complete control over your online presence.
+
+## Why This Matters
+
+Unlike Twitter or Instagram, Nostr puts **you** in charge of your identity. There are no companies to ban you, no algorithms to suppress your content, and no customer service to lose your data. This freedom comes with responsibility—you own your keys, you control your account.
+
+The good news? Securing your keys is straightforward. Follow this guide and you'll be safer than 99% of users.
+
+---
+
+## Understanding Keys (2 minutes)
 
 ## Understanding Keys (2 minutes)
 
@@ -187,22 +191,11 @@ This rule comes from professional data management. Follow it religiously.
 
 ### What Happens If You Lose Your Keys?
 
-**Permanent loss. No exceptions.**
+**This is why the 3-2-1 backup rule matters.**
 
-Nostr has no:
+Unlike centralized platforms, Nostr has no "forgot password" button or customer support to recover your account. But don't worry—following the simple backup steps below will keep you safe.
 
-- "Forgot password" button
-- Customer support to call
-- Admin who can reset your account
-- Way to recover lost keys
-
-**Real examples:**
-
-- User lost $50,000 in Bitcoin tips because they didn't back up their nsec
-- Influencer lost 10,000 followers when their phone died
-- Developer lost years of posts and reputation
-
-**Don't be that person.** Back up your keys now.
+**Think of it like this:** You wouldn't carry your life savings as cash in your pocket. You'd keep most of it in a bank (multiple backups) and only carry what you need. Your nsec is similar—store it securely, not just on your phone.
 
 ---
 
@@ -308,6 +301,28 @@ These are real. Learn from them:
 </div>
 
 </div>
+
+---
+
+## Advanced: Real-World Cautionary Tales
+
+<details>
+<summary>⚠️ Click to read: What happens without proper backups (optional)</summary>
+
+While the 3-2-1 backup rule keeps you safe, here are real examples of what happened when people didn't follow it:
+
+**Case Study 1: The Bitcoin Tips**  
+A content creator received $50,000 worth of Bitcoin tips (zaps) over 6 months. Their phone was stolen—they had no backup. The tips were gone forever because the nsec was only on that device.
+
+**Case Study 2: The Influencer**  
+A Nostr personality with 10,000 followers dropped their phone in a pool. No backup = starting from zero. Years of community building, lost.
+
+**Case Study 3: The Developer**  
+A Nostr app developer with years of code contributions and technical discussions lost everything when their laptop crashed. No cloud backup, no second device, no recovery.
+
+**The common thread:** All of these were preventable with a simple backup to a password manager or encrypted USB drive.
+
+</details>
 
 ---
 
