@@ -1,0 +1,288 @@
+/**
+ * Coracle Theme
+ * Simple, accessible, beginner-friendly Nostr client
+ * High contrast, clean design with indigo accent
+ */
+
+/* CSS Variables */
+:root {
+  --coracle-primary: #6366f1;
+  --coracle-primary-dark: #4f46e5;
+  --coracle-primary-light: #818cf8;
+  --coracle-secondary: #8b5cf6;
+  --coracle-success: #22c55e;
+  --coracle-warning: #f59e0b;
+  --coracle-error: #ef4444;
+  --coracle-orange: #f97316;
+  
+  /* Grays - High Contrast */
+  --coracle-gray-50: #f9fafb;
+  --coracle-gray-100: #f3f4f6;
+  --coracle-gray-200: #e5e7eb;
+  --coracle-gray-300: #d1d5db;
+  --coracle-gray-400: #9ca3af;
+  --coracle-gray-500: #6b7280;
+  --coracle-gray-600: #4b5563;
+  --coracle-gray-700: #374151;
+  --coracle-gray-800: #1f2937;
+  --coracle-gray-900: #111827;
+}
+
+/* Base Styles */
+.coracle-simulator {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--coracle-gray-900);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Screen Container */
+.coracle-screen {
+  min-height: calc(100vh - 64px);
+  padding-bottom: 2rem;
+}
+
+/* Welcome Banner */
+.coracle-welcome-banner {
+  background: linear-gradient(135deg, var(--coracle-primary) 0%, var(--coracle-secondary) 100%);
+  color: white;
+}
+
+/* Buttons */
+.coracle-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background-color: var(--coracle-primary);
+  color: white;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px 0 rgba(99, 102, 241, 0.1);
+}
+
+.coracle-btn-primary:hover {
+  background-color: var(--coracle-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.2);
+}
+
+.coracle-btn-primary:active {
+  transform: translateY(0);
+}
+
+.coracle-btn-primary:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+}
+
+.coracle-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.coracle-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background-color: white;
+  color: var(--coracle-gray-700);
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--coracle-gray-300);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.coracle-btn-secondary:hover {
+  background-color: var(--coracle-gray-50);
+  border-color: var(--coracle-gray-400);
+}
+
+.coracle-btn-secondary:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  border-color: var(--coracle-primary);
+}
+
+/* Inputs */
+.coracle-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--coracle-gray-900);
+  background-color: white;
+  border: 2px solid var(--coracle-gray-200);
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.coracle-input:hover {
+  border-color: var(--coracle-gray-300);
+}
+
+.coracle-input:focus {
+  outline: none;
+  border-color: var(--coracle-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.coracle-input::placeholder {
+  color: var(--coracle-gray-400);
+}
+
+.coracle-input:disabled {
+  background-color: var(--coracle-gray-100);
+  cursor: not-allowed;
+}
+
+/* Key Display */
+.coracle-key-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--coracle-gray-50);
+  border: 2px solid var(--coracle-gray-200);
+  border-radius: 0.5rem;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.75rem;
+}
+
+.coracle-copy-btn {
+  flex-shrink: 0;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--coracle-primary);
+  background-color: white;
+  border: 1px solid var(--coracle-gray-300);
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.coracle-copy-btn:hover {
+  background-color: var(--coracle-primary);
+  color: white;
+  border-color: var(--coracle-primary);
+}
+
+/* Cards */
+.coracle-card {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--coracle-gray-100);
+  transition: box-shadow 0.2s ease;
+}
+
+.coracle-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Line clamp */
+.line-clamp-6 {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Focus visible for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--coracle-primary);
+  outline-offset: 2px;
+}
+
+/* Animations */
+@keyframes coracle-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: coracle-fade-in 0.3s ease-out;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .coracle-btn-primary {
+    border: 2px solid var(--coracle-primary-dark);
+  }
+  
+  .coracle-input {
+    border-width: 3px;
+  }
+  
+  .coracle-key-display {
+    border-width: 3px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .coracle-screen {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .coracle-btn-primary,
+  .coracle-btn-secondary {
+    padding: 0.75rem 1rem;
+  }
+  
+  .coracle-input {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* Scrollbar styling */
+.coracle-simulator ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.coracle-simulator ::-webkit-scrollbar-track {
+  background: var(--coracle-gray-100);
+  border-radius: 4px;
+}
+
+.coracle-simulator ::-webkit-scrollbar-thumb {
+  background: var(--coracle-gray-400);
+  border-radius: 4px;
+}
+
+.coracle-simulator ::-webkit-scrollbar-thumb:hover {
+  background: var(--coracle-gray-500);
+}

@@ -1,0 +1,489 @@
+---
+title: "Multi-Client Workflow"
+description: "Maximize your Nostr experience with multiple clients. Desktop + mobile workflows, syncing strategies, and best practices for power users."
+estimatedTime: "8 minutes"
+priority: 11
+category: "advanced"
+prerequisites: ["keys-and-security", "quickstart"]
+---
+
+import { CTAButton } from "@components/CTAButton";
+import { Callout } from "@components/ui/Callout";
+import { MultiClientQuiz } from "@components/interactive/MultiClientQuiz";
+
+{/* ProgressIndicator temporarily disabled - will be implemented with actual tracking later */}
+{/* <ProgressIndicator current={6} total={6} estimatedTime="8 minutes" /> */}
+
+## Why Multiple Clients? (2 minutes)
+
+### The Power of Choice
+
+Nostr's superpower is that your identity works everywhere. Smart users take advantage of this by using multiple clients for different purposes.
+
+### Common Use Cases
+
+**Mobile + Desktop:**
+
+- **Phone (Damus/Amethyst):** Quick checks, on-the-go posting, notifications
+- **Desktop (Iris/Snort):** Long-form writing, heavy browsing, work hours
+
+**Public + Private:**
+
+- **Public client:** Professional identity, public posts
+- **Private client:** Personal identity, different circles
+
+**Different Features:**
+
+- **Client A:** Great for media
+- **Client B:** Better for DMs
+- **Client C:** Best for discovery
+
+**Backup & Redundancy:**
+
+- If one client breaks, you have alternatives
+- Test new features safely
+- Compare interfaces
+
+### Benefits
+
+✅ **Optimization**
+
+- Use best tool for each task
+- Different UIs for different contexts
+- Feature-specific advantages
+
+✅ **Flexibility**
+
+- Not locked into one interface
+- Easy to switch if issues arise
+- Experiment freely
+
+✅ **Productivity**
+
+- Desktop for writing
+- Mobile for consuming
+- Separate contexts = better focus
+
+<Callout type="info">
+  **You don't need multiple clients.** But if you're serious about Nostr, it
+  unlocks new workflows.
+</Callout>
+
+---
+
+## Syncing Strategy (3 minutes)
+
+### What Syncs Automatically
+
+**Universal (works across all clients):**
+
+- ✓ Your identity (npub)
+- ✓ Posts you publish
+- ✓ Follows list
+- ✓ Profile information
+- ✓ Reactions (likes, reposts)
+- ✓ DMs (if properly encrypted)
+
+### What Doesn't Sync
+
+**Client-specific:**
+
+- ✗ App settings (themes, fonts)
+- ✗ Notification preferences
+- ✗ Mute/block lists (sometimes)
+- ✗ Draft posts
+- ✗ Local bookmarks
+- ✗ Custom feeds/algorithms
+- ✗ App-specific data
+
+### The Syncing Process
+
+**How it works:**
+
+1. You post from Client A
+2. Client A sends to relays
+3. Client B connects to same relays
+4. Client B sees your post
+5. Everything stays in sync
+
+**Time delay:**
+
+- Usually instant to a few seconds
+- Depends on relay speed
+- Client refresh rate varies
+
+### Workarounds for Non-Syncing Data
+
+**Settings:**
+
+- Manually configure each client
+- Document your preferences
+- Use similar settings for consistency
+
+**Mutes/Blocks:**
+
+- Some clients export/import lists
+- NIP-51 standardizing this
+- May need manual sync for now
+
+**Drafts:**
+
+- Use external notes app
+- Copy-paste between clients
+- Or just post immediately
+
+**Bookmarks:**
+
+- Use NIP-51 lists (if supported)
+- External bookmarking tools
+- Nostr-based bookmarking services
+
+<Callout type="tip">
+  **Pro tip:** Focus on what syncs (content, follows) and don't worry too much
+  about what doesn't (settings).
+</Callout>
+
+---
+
+## Desktop + Mobile (3 minutes)
+
+### Recommended Pairings
+
+**iOS User:**
+
+- **Mobile:** Damus (clean, fast)
+- **Desktop:** Iris (web) or Snort (web)
+- **Why:** Damus is iOS-optimized, web clients work everywhere
+
+**Android User:**
+
+- **Mobile:** Amethyst (feature-rich)
+- **Desktop:** Iris (web) or Coracle (web)
+- **Why:** Amethyst is Android's best, pair with fast web clients
+
+**Cross-Platform:**
+
+- **Mobile:** Primal (iOS + Android)
+- **Desktop:** Same Primal account (web)
+- **Why:** Unified experience across devices
+
+### Workflow Examples
+
+**Content Creator:**
+
+- **Draft on desktop** (Iris) - Write, edit, format
+- **Post from desktop** - Hit publish
+- **Check engagement on mobile** (Damus) - Replies, zaps
+- **Quick replies on mobile** - While out and about
+
+**Community Manager:**
+
+- **Monitor on mobile** (Amethyst) - Notifications, alerts
+- **Deep engagement on desktop** (Snort) - Long replies, threads
+- **DMs on mobile** - Quick conversations
+- **Event planning on desktop** - Detailed posts
+
+**Casual User:**
+
+- **Browse on mobile** (any) - During downtime
+- **Post from either** - Whatever's convenient
+- **No strict workflow** - Just use what feels right
+
+### Keeping Track
+
+**Notifications:**
+
+- Enable on mobile for urgent stuff
+- Disable on desktop if distracting
+- Or enable both, mute strategically
+
+**Read State:**
+
+- Nostr doesn't track "read" status
+- Your client does locally
+- May see same posts as "new" on different clients
+- This is normal, not a bug
+
+---
+
+## Client-Specific Features (2 minutes)
+
+### Unique Features by Client
+
+**Damus (iOS):**
+
+- Best iOS experience
+- Smooth animations
+- Great notifications
+- Apple ecosystem integration
+
+**Amethyst (Android):**
+
+- Most customizable
+- Advanced relay controls
+- Great for power users
+- Feature-rich
+
+**Iris (Web):**
+
+- Works everywhere
+- Fast and minimal
+- Good for desktop
+- Simple interface
+
+**Primal (All platforms):**
+
+- Beautiful design
+- Easy discovery
+- Unified experience
+- Beginner-friendly
+
+**Snort (Web):**
+
+- Keyboard shortcuts
+- Fast performance
+- Developer-friendly
+- Minimal UI
+
+**Coracle (Web):**
+
+- Matrix integration
+- Unique features
+- Good performance
+- Active development
+
+### Choosing Based on Task
+
+**Best for posting:**
+
+- Desktop web clients (bigger screen, easier typing)
+- Mobile for quick thoughts
+
+**Best for reading:**
+
+- Mobile (convenience)
+- Desktop (better for long content)
+
+**Best for media:**
+
+- Clients with good image support
+- Check which handles photos/videos well
+
+**Best for DMs:**
+
+- Mobile (always available)
+- Desktop (better for long conversations)
+
+<Callout type="tip">
+  **Experiment:** Try different clients for different tasks. You'll quickly find
+  what works best for you.
+</Callout>
+
+---
+
+## Backup & Migration (2 minutes)
+
+### Moving Between Clients
+
+**Easy (automatic):**
+
+1. Install new client
+2. Import your nsec
+3. Wait for sync (follows, profile)
+4. Start using
+
+**What transfers:**
+
+- Identity
+- Follows list
+- Profile info
+- Published posts
+
+**What doesn't:**
+
+- Settings
+- Drafts
+- Local data
+
+### Export/Import When Available
+
+**Some clients support:**
+
+- Follow lists export (NIP-02)
+- Mute lists export (NIP-51)
+- Settings export (proprietary)
+
+**How to:**
+
+1. Go to Settings → Export
+2. Save file
+3. Import in new client
+4. Verify data transferred
+
+### Testing New Clients
+
+**Safe approach:**
+
+1. Create test keys first
+2. Try client with test account
+3. If you like it, import real keys
+4. Keep old client as backup
+
+**Don't:**
+
+- Import nsec into sketchy clients
+- Test with your main identity
+- Rush the migration
+
+---
+
+## Advanced Workflows [ADVANCED]
+
+### Professional Setup
+
+**Content Creator:**
+
+- **Planning:** Notion/external tool
+- **Writing:** Desktop client (full screen)
+- **Scheduling:** If client supports
+- **Analytics:** Third-party tools
+- **Engagement:** Mobile throughout day
+
+**Developer:**
+
+- **Testing:** Multiple clients simultaneously
+- **Debugging:** Developer tools
+- **Documentation:** Long-form platforms
+- **Community:** Mix of clients
+
+**Community Manager:**
+
+- **Monitoring:** Mobile always-on
+- **Response:** Desktop for detailed replies
+- **Events:** Specialized clients
+- **Analytics:** Third-party tools
+
+### Automation [ADVANCED]
+
+**Tools:**
+
+- Nostr bots
+- Cross-posting services
+- Scheduling tools
+- Analytics platforms
+
+**Warning:**
+
+- Don't over-automate
+- Authenticity matters
+- Use sparingly
+
+---
+
+## Troubleshooting Multi-Client Issues
+
+### Out of Sync
+
+**Posts not showing:**
+
+- Different relay connections
+- Wait a few minutes
+- Pull to refresh
+- Check relay status
+
+**Follows different:**
+
+- One client not fully synced
+- Different relay sets
+- Wait and refresh
+
+### Notification Overload
+
+**Too many alerts:**
+
+- Disable on less-used clients
+- Keep only mobile notifications
+- Use Do Not Disturb strategically
+
+### Confusion
+
+**Lost track:**
+
+- Pick primary and secondary
+- Use consistent usernames
+- Document your setup
+
+---
+
+## Completion
+
+<div className="cta-section my-12 text-center py-8 bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-lg border-2 border-green-500 dark:border-green-700">
+  <h2 className="text-3xl font-bold mb-4">🎉 Congratulations!</h2>
+
+<p className="text-xl text-muted-foreground mb-6">
+  You've completed all 6 advanced guides. You're now a Nostr power user!
+</p>
+
+  <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto mb-6">
+    <div className="p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+      <h4 className="font-bold text-green-600 dark:text-green-400">✓ What You Know</h4>
+      <ul className="text-sm text-left mt-2 space-y-1 text-gray-700 dark:text-gray-300">
+        <li>NIP-05 identifiers</li>
+        <li>Lightning zaps</li>
+        <li>Relay management</li>
+        <li>Privacy & security</li>
+        <li>Community building</li>
+        <li>Multi-client workflows</li>
+      </ul>
+    </div>
+
+    <div className="p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+      <h4 className="font-bold text-blue-600 dark:text-blue-400">→ What's Next</h4>
+      <ul className="text-sm text-left mt-2 space-y-1 text-gray-700 dark:text-gray-300">
+        <li>Explore resource library</li>
+        <li>Find your community</li>
+        <li>Build your presence</li>
+        <li>Help other beginners</li>
+        <li>Stay updated</li>
+        <li>Enjoy Nostr!</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <CTAButton variant="primary" size="lg" href="/resources">
+    Explore Resources →
+  </CTAButton>
+</div>
+
+---
+
+## Quick Reference
+
+**Syncing:**
+
+- ✓ Posts, follows, profile (automatic)
+- ✗ Settings, drafts (manual)
+
+**Recommended Pairings:**
+
+- iOS: Damus + Iris web
+- Android: Amethyst + Coracle web
+- Cross-platform: Primal everywhere
+
+**Best Practices:**
+
+- Use different clients for different tasks
+- Don't overthink syncing
+- Pick primary + secondary
+- Backup your keys (always!)
+
+**Remember:** Multiple clients = flexibility. Use it to your advantage!
+
+---
+
+## Test Your Multi-Client Knowledge
+
+Ready to optimize your workflow across multiple clients?
+
+<MultiClientQuiz client:load />

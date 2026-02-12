@@ -1,0 +1,124 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import { KeyGenerator, ClientRecommender, NIP05Checker, RelayExplorer, RelayPlayground, FollowPackFinder } from '../components/interactive';
+
+const title = 'Interactive Tools';
+const description = 'Free browser-based tools for Nostr: key generator, client recommender, NIP-05 checker, follow pack finder, and relay explorer. Generate keys securely in your browser.';
+
+const tools = [
+  {
+    id: 'key-generator',
+    title: 'Key Generator',
+    description: 'Generate secure Nostr keys (nsec/npub) directly in your browser. No data sent to servers.',
+    icon: '🔐',
+    component: KeyGenerator,
+  },
+  {
+    id: 'follow-pack-finder',
+    title: 'Find People to Follow',
+    description: 'Browse 100+ curated Nostr accounts by category. Build a follow pack and import it into any client via QR code.',
+    icon: '👥',
+    component: FollowPackFinder,
+  },
+  {
+    id: 'client-recommender',
+    title: 'Client Recommender',
+    description: 'Answer a few questions and find the perfect Nostr client for your needs.',
+    icon: '💻',
+    component: ClientRecommender,
+  },
+  {
+    id: 'nip05-checker',
+    title: 'NIP-05 Checker',
+    description: 'Verify your NIP-05 identifier is set up correctly and troubleshoot issues.',
+    icon: '✅',
+    component: NIP05Checker,
+  },
+  {
+    id: 'relay-explorer',
+    title: 'Relay Explorer',
+    description: 'Explore public Nostr relays, check their status, and find the best ones for you.',
+    icon: '📡',
+    component: RelayExplorer,
+  },
+  {
+    id: 'relay-playground',
+    title: 'Relay Playground',
+    description: 'Interactive relay testing: connect live, check health metrics, and explore NIP support. Learn how relays work hands-on.',
+    icon: '🧪',
+    component: RelayPlayground,
+  },
+];
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 dark:from-primary/5 dark:to-secondary/5" />
+      
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative">
+        <div class="text-center max-w-3xl mx-auto">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Nostr Tools
+            </span>
+          </h1>
+          <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+            Free browser-based tools to help you get started with Nostr. 
+            All tools run locally in your browser - no data is sent to any server.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tools Grid -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {tools.map((tool, index) => (
+            <div id={tool.id} class={`p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 ${index === 0 || tool.id === 'relay-playground' || tool.id === 'follow-pack-finder' ? 'lg:col-span-2' : ''}`}>
+              <div class="flex items-center gap-4 mb-6">
+                <div class="text-4xl">{tool.icon}</div>
+                <div>
+                  <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{tool.title}</h2>
+                  <p class="text-gray-600 dark:text-gray-400">{tool.description}</p>
+                </div>
+              </div>
+              {tool.id === 'key-generator' && <div class="max-w-3xl mx-auto"><KeyGenerator client:load /></div>}
+              {tool.id === 'follow-pack-finder' && <FollowPackFinder client:load />}
+              {tool.id === 'client-recommender' && <div class="max-w-3xl mx-auto"><ClientRecommender client:load /></div>}
+              {tool.id === 'nip05-checker' && <div class="max-w-3xl mx-auto"><NIP05Checker client:load /></div>}
+              {tool.id === 'relay-explorer' && <div class="max-w-3xl mx-auto"><RelayExplorer client:load /></div>}
+              {tool.id === 'relay-playground' && <RelayPlayground client:load />}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Security Notice -->
+    <section class="py-12">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mx-auto text-center">
+          <div class="p-6 bg-success-500/10 rounded-2xl border border-success-500/20">
+            <h3 class="text-lg font-semibold text-success-600 dark:text-success-400 mb-2">
+              🔒 Your Privacy Matters
+            </h3>
+            <p class="text-gray-600 dark:text-gray-400">
+              All keys are generated locally in your browser using the Web Crypto API. 
+              Nothing is sent to our servers. You can verify this by checking the source code 
+              or using developer tools.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

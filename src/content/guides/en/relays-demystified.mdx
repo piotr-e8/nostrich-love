@@ -1,0 +1,244 @@
+---
+title: "How Posts Travel: Relays Explained"
+description: "Understand how Nostr relays work with simple analogies and interactive tools"
+estimatedTime: "5-10 minutes"
+priority: 2
+category: "intermediate"
+prerequisites: ["keys-and-security", "quickstart"]
+---
+
+import { RelayWorldMap } from "@components/ui/RelayWorldMap";
+import { PostFlowSimulator } from "@components/ui/PostFlowSimulator";
+import { RelayExplorer } from "@components/interactive/RelayExplorer";
+import { TroubleshootingWizard } from "@components/interactive/TroubleshootingWizard";
+import { RelaysDemystifiedQuiz } from "@components/interactive/RelaysDemystifiedQuiz";
+
+Relays are the post offices of Nostr. They're where your messages live and how they travel to reach other users.
+
+## The Post Office Analogy 🏤
+
+Imagine Nostr as a network of post offices around the world.
+
+- **You** have a mailbox (your keys)
+- **Relays** are post offices
+- **Posts** are letters you send
+
+Here's the key difference from traditional social media: **You choose where to send your mail.**
+
+```
+Traditional Social Media:    Nostr:
+┌──────────────────┐        ┌──────────────────┐
+│ One Big Server   │        │ Many Post Offices│
+│ (Twitter/X)      │        │ (Relays)         │
+│                  │        │                  │
+│ Everyone in      │        │ You pick which   │
+│ one place        │        │ ones to use      │
+└──────────────────┘        └──────────────────┘
+```
+
+### The Power of Choice
+
+In Nostr, you're not locked into one service provider. You can:
+
+- Send posts to any relay
+- Connect to multiple relays
+- Switch relays anytime
+- Run your own relay
+
+<RelayWorldMap />
+
+## Why Posts Don't Sync 🔄
+
+Here's the most common confusion new users face:
+
+> "I posted something but my friend can't see it!"
+
+### The Visual Explanation
+
+```
+Your Connection                    Friend's Connection
+     │                                  │
+     ▼                                  ▼
+┌──────────┐                     ┌──────────┐
+│ Relay A  │         ❌          │ Relay B  │
+│ (wss://...)│      No link      │(wss://...)│
+└──────────┘                     └──────────┘
+     │                                  │
+   Your posts                         Friend's posts
+```
+
+**If you post to Relay A and your friend only uses Relay B, they won't see your post.**
+
+### The Solution: Connect to Multiple Relays
+
+```
+Your Connection
+     │
+┌────┴────┐
+│ Relay A │
+│ Relay B │  ← Connect to both!
+│ Relay C │
+└────┬────┘
+     │
+   Your posts → Reach more people
+```
+
+Most Nostr clients connect you to several default relays. But understanding this helps when you:
+
+- Can't see someone's content
+- Want to join a specific community
+- Need to troubleshoot missing posts
+
+<PostFlowSimulator client:load />
+
+## Choosing Relays 🔌
+
+### Default Recommendations
+
+If you're just starting, stick with these popular, reliable relays:
+
+| Relay                      | Description      | Reliability |
+| -------------------------- | ---------------- | ----------- |
+| `wss://relay.damus.io`     | Damus main relay | ⭐⭐⭐⭐⭐  |
+| `wss://nostr.wine`         | General relay    | ⭐⭐⭐⭐    |
+| `wss://relay.snort.social` | Snort social     | ⭐⭐⭐⭐    |
+
+### Interest-Based Discovery
+
+Communities often run their own relays for focused discussions:
+
+- **Bitcoin**: `wss://nostr.bitcoiner.social`
+- **Development**: `wss://relay.nostrdevs.com`
+- **Art**: `wss://relay.nostrich.art`
+
+<RelayExplorer client:load />
+
+### Free vs Paid Relays
+
+**Free Relays**
+
+- Open to everyone
+- May have rate limits
+- Can fill up with spam
+- Great for beginners
+
+**Paid Relays**
+
+- Usually require small fee (often 1000-5000 sats/month)
+- Better performance
+- Less spam
+- Support relay operators
+
+> 💡 **Tip**: Start with free relays. You can always add paid ones later.
+
+---
+
+## Advanced: Outbox Model (NIP-65) [ADVANCED]
+
+<Note type="advanced">
+  This section is optional. You can use Nostr perfectly well without
+  understanding NIP-65.
+</Note>
+
+### What is NIP-65?
+
+NIP-65 introduces a smarter way to handle relays called the "outbox model."
+
+**Instead of**: You manually connecting to 10+ relays
+**You do**: Publish your preferred relay list once, let clients figure it out
+
+### How It Works
+
+```
+1. You publish a relay list:
+   {
+     "read": ["wss://relay-a.com"],
+     "write": ["wss://relay-b.com"]
+   }
+
+2. Other clients read this and know:
+   - Where to find your posts (read relays)
+   - Where to send you messages (write relays)
+```
+
+### Setting Up Personal Relays
+
+For advanced users, running your own relay gives you:
+
+- **Complete control** over your data
+- **Perfect reliability** (no dependency on others)
+- **Privacy** (only your data on the relay)
+
+Popular personal relay software:
+
+- [strfry](https://github.com/hoytech/strfry) - Fast C++ implementation
+- [nostr-rs-relay](https://gitlab.com/soapbox-pub/nostr-rs-relay) - Rust implementation
+
+> 📚 See our [Relay Guide](/guides/relay-guide) for detailed setup instructions.
+
+---
+
+## Quick Reference
+
+### Common Relay Commands
+
+In most clients, you can:
+
+- **Add relay**: Settings → Relays → Add
+- **Remove relay**: Long press/click relay → Remove
+- **Check status**: Relay list shows connection status
+
+### Best Practices
+
+1. **Connect to 4-8 relays** for good coverage
+2. **Include one "write" relay** where you always post
+3. **Check relay uptime** before relying on it
+4. **Keep your relay list updated** as the network grows
+
+---
+
+## Related Topics
+
+Already read about choosing clients? Jump ahead to other guides:
+
+---
+
+## Troubleshooting
+
+### "I can't see any posts"
+
+- Check if you're connected to any relays (Settings → Relays)
+- Try adding popular relays from the list above
+- Wait a moment for content to load
+
+### "My posts disappear"
+
+- Some relays delete old content to save space
+- Connect to more relays for redundancy
+- Consider a paid relay for permanent storage
+
+### "Relay won't connect"
+
+- Check your internet connection
+- Try the relay URL in a browser (should show error/ws page)
+- The relay might be down - try another one
+
+<TroubleshootingWizard client:load />
+
+---
+
+## Test Your Understanding
+
+Think you've got relays figured out? Test your knowledge:
+
+<RelaysDemystifiedQuiz client:load />
+
+---
+
+## Still Have Questions?
+
+Join the Nostr community:
+
+- [Nostr Reddit](https://reddit.com/r/nostr)
+- [Nostr Telegram](https://t.me/nostr_protocol)
+- [Stacker News](https://stacker.news) (Bitcoin/Nostr forum)

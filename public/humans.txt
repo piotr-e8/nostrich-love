@@ -1,0 +1,38 @@
+/* TEAM */
+  Project Lead: Nostr Community
+  Contact: hello [at] nostrich.love
+  Site: https://nostrich.love
+  Location: Global
+  
+  Development: Open Source Contributors
+  GitHub: https://github.com/nostr-protocol/nostr
+  
+  Design: Nostr Community
+
+/* THANKS */
+  Nostr Protocol Creators: fiatjaf and contributors
+  Site: https://nostr.com
+  
+  All contributors who have helped improve this guide
+  
+  The entire Nostr community for support and feedback
+
+/* SITE */
+  Last update: 2025-02-10
+  Standards: HTML5, CSS3, TypeScript
+  Components: Astro, React, Tailwind CSS
+  Software: VS Code, Git, Node.js
+  
+  /* NOSTR */
+  Protocol: Nostr (Notes and Other Stuff Transmitted by Relays)
+  Specification: https://github.com/nostr-protocol/nips
+  
+/* ABOUT */
+  This guide is an open-source project dedicated to making Nostr 
+  accessible to everyone. Built with love by the community, for the community.
+  
+  Privacy First: No tracking, no cookies, no data collection.
+  
+/* LICENSE */
+  Code: MIT License
+  Content: Creative Commons CC BY 4.0

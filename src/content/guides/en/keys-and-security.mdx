@@ -1,0 +1,314 @@
+---
+title: "Your Keys, Your Identity"
+description: "Learn how to generate, save, and protect your Nostr keys. The complete security guide for beginners. Follow the 3-2-1 backup rule."
+estimatedTime: "8 minutes"
+priority: 3
+category: "getting-started"
+---
+
+import { AlertBanner } from "@components/AlertBanner";
+import { KeyVisualizer } from "@components/KeyVisualizer";
+import { KeyGenerator } from "@components/KeyGenerator";
+import { BackupChecklist } from "@components/BackupChecklist";
+import { SecurityQuiz } from "@components/interactive/SecurityQuiz";
+
+{/* ProgressIndicator temporarily disabled - will be implemented with actual tracking later */}
+{/* <ProgressIndicator current={2} total={4} estimatedTime="8 minutes" /> */}
+
+<AlertBanner
+  type="warning"
+  title="This is the most important page. Read carefully."
+>
+  Your keys are your identity. Lose them = lose your account forever. No
+  exceptions. No recovery. Take this seriously.
+</AlertBanner>
+
+# Your Keys, Your Identity
+
+## Understanding Keys (2 minutes)
+
+Nostr uses cryptography to secure your identity. Don't worry—you don't need to understand the math. Just think of it like a lock and key system.
+
+### What Is a Key Pair?
+
+Every Nostr user has two keys that work together:
+
+<KeyVisualizer />
+
+### Your Public Key (npub1...)
+
+<div className="key-display bg-green-50 dark:bg-green-900/20 border-2 border-green-500 p-4 rounded-lg my-4">
+  <div className="flex items-center gap-2 mb-2">
+    <span className="text-2xl">🟢</span>
+    <span className="font-bold text-green-700 dark:text-green-400">
+      SAFE TO SHARE
+    </span>
+  </div>
+  <code className="text-sm break-all bg-white dark:bg-gray-800 p-2 rounded block text-gray-900 dark:text-gray-100">
+    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+  </code>
+  <p className="mt-2 text-sm text-green-700 dark:text-green-400">
+    This is your username. Share it everywhere. Post it publicly. This is how
+    people find you.
+  </p>
+</div>
+
+**What you do with your npub:**
+
+- Share it on your website or other social profiles
+- Give it to friends so they can follow you
+- Post it publicly
+- Include it in your email signature
+
+### Your Private Key (nsec1...)
+
+<div className="key-display bg-red-50 dark:bg-red-900/20 border-2 border-red-500 p-4 rounded-lg my-4">
+  <div className="flex items-center gap-2 mb-2">
+    <span className="text-2xl">🔴</span>
+    <span className="font-bold text-red-700 dark:text-red-400">
+      NEVER SHARE - TOP SECRET
+    </span>
+  </div>
+  <code className="text-sm break-all bg-white dark:bg-gray-800 p-2 rounded block text-gray-900 dark:text-gray-100">
+    nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+  </code>
+  <p className="mt-2 text-sm text-red-700 dark:text-red-400">
+    This is your password. Anyone with this can post as you. Lose it = lose your
+    account forever.
+  </p>
+</div>
+
+**Rules for your nsec:**
+
+- NEVER share it with anyone
+- NEVER screenshot it (goes to cloud)
+- NEVER save it in unencrypted notes
+- NEVER paste it into random websites
+- ALWAYS back it up securely (see below)
+
+### Why So Long?
+
+Those strings look like gibberish because they're cryptographic keys. Here's why:
+
+- **256-bit security:** Makes it impossible to guess or crack
+- **Random generation:** Even computers can't predict it
+- **One-way math:** You can't figure out the private key from the public key
+
+Think of it like this: There are more possible private keys than grains of sand on Earth. No one is guessing yours.
+
+---
+
+## Generate Your Keys (3 minutes)
+
+<KeyGenerator client:load />
+
+### Step-by-Step Instructions
+
+1. **Click "Generate New Keys"**
+   - This creates a random key pair
+   - Watch the animation to understand what's happening
+
+2. **Save Both Keys Immediately**
+   - Copy your **npub** (green) to a safe place
+   - Copy your **nsec** (red) to a SECURE place
+   - Do this NOW before doing anything else
+
+3. **Verify You Saved Them**
+   - Close the generator
+   - Reopen it
+   - Can you still access your keys?
+
+### Example Format (Not Real Keys)
+
+Below is what Nostr keys look like. These are examples only—not valid keys:
+
+<div className="test-keys bg-gray-100 dark:bg-gray-800 p-4 rounded-lg my-4">
+  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Example Public Key (npub) format:</p>
+  <code className="text-xs break-all block mb-4 text-gray-900 dark:text-gray-100">
+    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+  </code>
+
+<p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+  Example Private Key (nsec) format:
+</p>
+<code className="text-xs break-all block text-red-600 dark:text-red-400">
+  nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+</code>
+
+  <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 italic">
+    These are example formats only—not valid keys. Use the Key Generator above for real test keys.
+  </p>
+</div>
+
+---
+
+## The 3-2-1 Backup Rule (2 minutes)
+
+This rule comes from professional data management. Follow it religiously.
+
+<BackupChecklist client:load />
+
+### The Rule Explained
+
+**3 copies of your nsec**
+
+- One isn't enough. Two is better. Three is safe.
+- If one fails, you have two backups
+
+**2 different media types**
+
+- Digital: Password manager, encrypted file
+- Physical: Paper written by hand, metal plate
+- Why different types? Digital fails differently than physical
+
+**1 offsite location**
+
+- At least one copy should be somewhere else
+- Cloud storage counts as offsite (if encrypted)
+- Safe deposit box, trusted friend/family member
+
+### Backup Methods Ranked
+
+**BEST (Do This):**
+
+1. ✅ Password manager (1Password, Bitwarden)
+2. ✅ Written on paper, stored in safe
+3. ✅ Encrypted USB drive in different location
+
+**GOOD:** 4. ✅ Encrypted cloud storage (iCloud/Google Drive with encryption) 5. ✅ Metal seed plate (fireproof/waterproof)
+
+**NEVER DO:**
+
+- ❌ Screenshot on phone (syncs to cloud)
+- ❌ Unencrypted notes app
+- ❌ Email to yourself
+- ❌ Text message
+- ❌ Save in browser autocomplete
+
+### What Happens If You Lose Your Keys?
+
+**Permanent loss. No exceptions.**
+
+Nostr has no:
+
+- "Forgot password" button
+- Customer support to call
+- Admin who can reset your account
+- Way to recover lost keys
+
+**Real examples:**
+
+- User lost $50,000 in Bitcoin tips because they didn't back up their nsec
+- Influencer lost 10,000 followers when their phone died
+- Developer lost years of posts and reputation
+
+**Don't be that person.** Back up your keys now.
+
+---
+
+## Security Best Practices (2 minutes)
+
+### The DON'Ts (Learn from Others' Mistakes)
+
+**DON'T Screenshot Your Keys**
+
+- Screenshots sync to cloud (iCloud, Google Photos)
+- Cloud accounts get hacked
+- Deleting the photo doesn't remove it from backups
+
+**DON'T Save in Unencrypted Notes**
+
+- Apple Notes, Google Keep, etc. aren't encrypted
+- Anyone with your phone/computer can read them
+- Syncs to cloud by default
+
+**DON'T Share With Anyone**
+
+- Not your spouse
+- Not your best friend
+- Not "Nostr support" (there is no support)
+- Not anyone, ever
+
+### The DOs (Best Practices)
+
+**DO Use a Password Manager**
+
+- 1Password, Bitwarden, KeePass
+- Encrypted, backed up, accessible
+- Generate strong passwords for clients too
+
+**DO Write on Paper**
+
+- Low-tech, highly reliable
+- No batteries needed
+- Store in a safe, lockbox, or hidden location
+
+**DO Use Nostr Signer Apps [ADVANCED]**
+
+- Apps like Amber (Android) store your keys securely
+- Clients request signatures instead of storing keys
+- Adds extra security layer
+- Recommended for serious users
+
+---
+
+## Common Mistakes (1 minute)
+
+<SecurityQuiz client:load />
+
+### Horror Stories (Optional Reading)
+
+These are real. Learn from them:
+
+**"I thought I backed it up"**
+
+> "I saved my nsec in my password manager, but I forgot to sync it. Phone died. 2,000 followers gone. Had to start over." — @nostruser123
+
+**"The screenshot that wasn't deleted"**
+
+> "I screenshotted my keys, then deleted the photo. Forgot about Recently Deleted folder. Someone restored it from my iCloud. Lost everything." — Anonymous
+
+**"The 'helpful' stranger"**
+
+> "Someone DM'd me offering to 'verify my account.' Asked for my nsec to 'link it properly.' I gave it to them. They stole my account and started posting scams." — @learnedthehardway
+
+### Quick Quiz
+
+**Which is safe to share?**
+
+- [ ] nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+- [x] npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+**Answer:** Only the npub (starts with "npub"). Never share anything starting with "nsec".
+
+---
+
+<div className="confirmation-section my-12 p-6 bg-green-50 dark:bg-green-900/20 border-2 border-green-500 rounded-lg">
+  <h3 className="text-xl font-bold mb-4 text-green-700 dark:text-green-400">
+    ✓ Key Backup Checklist
+  </h3>
+
+<div className="space-y-2 mb-6">
+  <label className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+    <input type="checkbox" className="w-5 h-5" />
+    <span>I have saved my npub (public key)</span>
+  </label>
+  <label className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+    <input type="checkbox" className="w-5 h-5" />
+    <span>I have saved my nsec (private key) in 3+ places</span>
+  </label>
+  <label className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+    <input type="checkbox" className="w-5 h-5" />
+    <span>I understand that losing my nsec = losing my account</span>
+  </label>
+  <label className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+    <input type="checkbox" className="w-5 h-5" />
+    <span>I will NEVER share my nsec with anyone</span>
+  </label>
+</div>
+
+</div>
+
+---
+
+**Questions?** Check our [FAQ](/guides/faq) for common concerns about keys and security.

@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://nostrich.love/sitemap-index.xml
+
+# Crawl rate
+Crawl-delay: 1
+
+# Disallow specific paths if needed (none currently)
+# Disallow: /private/
+# Disallow: /admin/

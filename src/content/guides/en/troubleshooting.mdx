@@ -1,0 +1,446 @@
+---
+title: "Common Problems & Solutions"
+description: "Quick solutions to the most common Nostr issues and questions"
+estimatedTime: "Reference guide"
+priority: 2
+category: "reference"
+prerequisites: ["keys-and-security", "quickstart"]
+---
+
+## A quick reference guide for the most frequent issues Nostr users encounter.
+
+import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz";
+
+## Problem: "My Feed is Empty" 📭
+
+### Symptoms
+
+- No posts showing up
+- "No events found" message
+- Blank timeline
+
+### Causes & Solutions
+
+**1. Not following anyone**
+
+- **Cause**: New account with no follows
+- **Solution**: Search for users or interests, follow 10-20 accounts
+- **Quick fix**: Follow popular accounts from the [Finding Community](/guides/finding-community) guide
+
+**2. Relay connection issues**
+
+- **Cause**: Not connected to any relays
+- **Solution**: Check Settings → Relays, ensure you're connected to 3-5 relays
+- **Quick fix**: Add popular relays: `wss://relay.damus.io`, `wss://nostr.wine`
+
+**3. Client cache is empty**
+
+- **Cause**: New install or cleared data
+- **Solution**: Wait 30-60 seconds for content to load
+- **Quick fix**: Pull down to refresh (mobile) or press refresh button
+
+### Prevention
+
+- Connect to multiple relays during setup
+- Follow active users immediately
+- Keep client updated
+
+---
+
+## Problem: "I Can't See My Old Posts" 🕐
+
+### Symptoms
+
+- Posts from yesterday/week ago are missing
+- "No notes" on your profile
+- Incomplete post history
+
+### Causes & Solutions
+
+**1. Relay storage limits**
+
+- **Cause**: Free relays delete old content to save space
+- **Solution**: Connect to more relays (increases redundancy)
+- **Long-term**: Use paid relays or personal relay for important content
+
+**2. Different relay configuration**
+
+- **Cause**: Posted from Client A (Relays X,Y), now using Client B (Relays Z)
+- **Solution**: Ensure both clients use the same relays
+- **Quick fix**: Import your relay list (NIP-65)
+
+**3. Content not broadcasted**
+
+- **Cause**: Client failed to post to all relays
+- **Solution**: Check which relays received your post
+- **Note**: Once posted, can't re-broadcast to new relays retroactively
+
+### What Syncs vs What Doesn't
+
+| Data           | Syncs Across Clients | Notes                      |
+| -------------- | -------------------- | -------------------------- |
+| Your posts     | ✅ Yes               | If posted to shared relays |
+| Your follows   | ✅ Yes               | Public data                |
+| Your followers | ✅ Yes               | Public data                |
+| Your profile   | ✅ Yes               | Public data                |
+| Drafts         | ❌ No                | Stored locally per client  |
+| App settings   | ❌ No                | Client-specific            |
+| Muted accounts | ⚠️ Sometimes         | Varies by client           |
+
+---
+
+## Problem: "My Posts Aren't Showing Up" 📤
+
+### Symptoms
+
+- Posted but no one sees it
+- No likes/replies/zaps
+- Post appears locally but not on other clients
+
+### Causes & Solutions
+
+**1. Relay not accepting posts**
+
+- **Cause**: Rate limited, banned, or relay down
+- **Solution**: Check relay status, try different relays
+- **Test**: Can you see your post in a web client like Primal?
+
+**2. Only connected to read-only relays**
+
+- **Cause**: Some relays only allow reading, not writing
+- **Solution**: Check relay settings, ensure you have "write" relays
+- **Quick fix**: Add `wss://relay.damus.io` (allows writing)
+
+**3. Posting too fast**
+
+- **Cause**: Hitting rate limits
+- **Solution**: Slow down, wait a few minutes
+- **Note**: Most relays limit to 1-5 posts per second
+
+---
+
+## Problem: "Someone is Impersonating Me" 🎭
+
+### Symptoms
+
+- Fake account with your name/picture
+- Someone claiming to be you
+- Confused followers asking which account is real
+
+### Causes & Solutions
+
+**1. Get NIP-05 verified**
+
+- **Solution**: Set up NIP-05 identity (see [guide](/guides/nip05-identity))
+- **Why**: Verified badge distinguishes real from fake
+
+**2. Share your npub widely**
+
+- **Solution**: Post your real npub on other platforms
+- **Why**: People can verify your identity cryptographically
+
+**3. Report the impostor**
+
+- **Solution**: Use client report feature or community moderation
+- **Note**: Can't delete their account (decentralized), but can block/mute
+
+### Prevention
+
+- Verify yourself with NIP-05 as soon as possible
+- Post your npub on Twitter/website
+- Build reputation quickly so your real account is obvious
+
+---
+
+## Problem: "Spam in My Feed" 🗑️
+
+### Symptoms
+
+- Unwanted promotional content
+- Bot accounts posting constantly
+- Off-topic or inappropriate content
+
+### Causes & Solutions
+
+**1. Following spam accounts**
+
+- **Solution**: Unfollow spam sources
+- **Better**: Don't mass-follow; curate carefully
+
+**2. Relay with poor moderation**
+
+- **Solution**: Disconnect from low-quality relays
+- **Better**: Use paid or invite-only relays
+
+**3. No mute list**
+
+- **Solution**: Create a mute list in your client
+- **How**: Profile → Muted accounts → Add spammers
+
+### Best Practices
+
+- Mute early, mute often
+- Use interest-specific relays
+- Enable word filters if client supports it
+- Don't follow accounts without checking their content first
+
+---
+
+## Problem: "Client Crashes" 💥
+
+### Symptoms
+
+- App closes unexpectedly
+- Freezes or becomes unresponsive
+- Errors when loading content
+
+### Causes & Solutions
+
+**1. Outdated app**
+
+- **Solution**: Update to latest version from app store
+- **iOS**: App Store → Updates
+- **Android**: Play Store → Manage apps
+
+**2. Too many relays**
+
+- **Cause**: Connected to 20+ relays overwhelms the client
+- **Solution**: Reduce to 4-8 active relays
+- **Optimize**: Use NIP-65 outbox model
+
+**3. Corrupted cache**
+
+- **Solution**: Clear app data (you won't lose posts/follows)
+- **Nuclear option**: Reinstall app, re-import keys
+
+### Try a Different Client
+
+If one client consistently has issues, try another:
+
+| Platform           | Alternative          |
+| ------------------ | -------------------- |
+| iOS (Damus)        | Nos, Nostur          |
+| Android (Amethyst) | Primal web, Nostros  |
+| Web (Primal)       | Iris, Snort, Coracle |
+
+---
+
+## Problem: "Lost My Keys" 🔑
+
+### Symptoms
+
+- Can't log in to client
+- No backup of nsec/npub
+- Keys only on one device that broke
+
+### The Hard Truth
+
+> ⚠️ **If you don't have a backup of your keys, your account is unrecoverable.**
+
+This is by design—Nostr has no "forgot password" because there's no central server holding your keys.
+
+### What You CAN Do
+
+**1. Search for backups**
+
+- Check password managers
+- Look for screenshots
+- Check email for welcome messages
+- Check other devices with client installed
+
+**2. Check if client has keys stored**
+
+- Some clients cache keys
+- Try logging in without pasting key
+- Check browser extensions (Alby, Nos2x)
+
+**3. Create new account**
+
+- Generate new keys
+- Announce on other platforms that old account is lost
+- Start rebuilding your follows
+
+### Prevention (Do This NOW)
+
+1. **Write down your nsec** on paper
+2. **Store in password manager** (1Password, Bitwarden)
+3. **Use a signer app** (Amber, Nos2x) to avoid typing nsec
+4. **Make multiple backups** in different locations
+
+---
+
+## Problem: "Can't Connect to Relay" 🔌
+
+### Symptoms
+
+- "Connection failed" error
+- Relay shows as offline
+- Posts not syncing
+
+### Causes & Solutions
+
+**1. Relay is down**
+
+- **Test**: Open relay URL in browser (should show error or ws page)
+- **Solution**: Check relay's status page or social media
+- **Fix**: Remove temporarily, re-add when back
+
+**2. Network issues**
+
+- **Test**: Can you access other websites?
+- **Solution**: Check internet connection, try different network
+- **Note**: Some networks block WebSocket connections
+
+**3. Wrong relay URL**
+
+- **Check**: Must start with `wss://` (secure) or `ws://` (insecure)
+- **Common mistake**: `https://relay.com` instead of `wss://relay.com`
+- **Fix**: Edit relay URL in settings
+
+**4. Relay is full**
+
+- **Cause**: Some free relays hit capacity limits
+- **Solution**: Try again later or use different relay
+- **Long-term**: Consider paid relay
+
+---
+
+## Problem: "Zaps Not Working" ⚡
+
+### Symptoms
+
+- Zap button unresponsive
+- "Payment failed" errors
+- Can't send or receive zaps
+
+### Causes & Solutions
+
+**1. No wallet connected**
+
+- **Solution**: Connect Lightning wallet in client settings
+- **See**: [Zaps Guide](/guides/zaps-and-lightning)
+
+**2. Insufficient balance**
+
+- **Check**: Wallet balance
+- **Solution**: Add funds to your wallet
+- **Minimum**: Usually need 100+ sats for fees
+
+**3. Wallet offline**
+
+- **Cause**: Non-custodial wallets need to be online
+- **Solution**: Open your wallet app, ensure it's running
+- **Alternative**: Use custodial wallet like Alby
+
+**4. Wrong Lightning address**
+
+- **Check**: Is your Lightning address correct in profile?
+- **Test**: Try sending yourself 10 sats
+- **Fix**: Update address in profile settings
+
+---
+
+## Problem: "Images Not Loading" 🖼️
+
+### Symptoms
+
+- Broken image icons
+- Spinning loaders
+- No media in posts
+
+### Causes & Solutions
+
+**1. Relay media limits**
+
+- **Cause**: Some relays don't store images, only text
+- **Solution**: Images hosted on separate servers (Blossom, etc.)
+- **Fix**: Check if images load on web client
+
+**2. Image host down**
+
+- **Cause**: The server hosting the image is offline
+- **Test**: Try opening image URL directly
+- **Note**: Nothing you can do if host is down
+
+**3. Client settings**
+
+- **Check**: Settings → Media → "Load images"
+- **Some clients**: Have data-saving modes that block images
+- **Fix**: Enable media loading in settings
+
+**4. Slow connection**
+
+- **Cause**: Large images on slow internet
+- **Solution**: Wait for load, or switch to faster network
+
+---
+
+## Quick Decision Tree 🌳
+
+<TroubleshootingWizard />
+
+**Having issues? Follow this:**
+
+1. **Can't see anything?** → Check relays, add more
+2. **Can't post?** → Check write relays, rate limits
+3. **Account issues?** → Verify keys are correct
+4. **App crashes?** → Update, clear cache, or try different client
+5. **Still stuck?** → See below
+
+---
+
+## Still Stuck? 🆘
+
+### Community Help
+
+**Telegram:**
+
+- [Nostr Protocol](https://t.me/nostr_protocol) - General help
+- [Damus](https://t.me/damusios) - iOS-specific
+- [Amethyst](https://t.me/AmethystNostr) - Android-specific
+
+**Other Platforms:**
+
+- [r/nostr](https://reddit.com/r/nostr) - Reddit community
+- [Stacker News](https://stacker.news) - Bitcoin/Nostr forum
+- Nostr itself - Post with #help tag
+
+### Resources
+
+- [Nostr Wiki](https://wiki.nostr.com)
+- [Client-specific docs](https://github.com/damus-io/damus#documentation)
+- [NIP specifications](https://github.com/nostr-protocol/nips)
+
+### Reporting Bugs
+
+If you found a bug in a client:
+
+1. Check if it's already reported (GitHub issues)
+2. Create detailed bug report:
+   - What you expected
+   - What actually happened
+   - Steps to reproduce
+   - Client version and platform
+
+---
+
+## Bookmark This Page 📑
+
+Keep this guide handy for quick reference. Most issues have simple solutions once you know where to look!
+
+---
+
+## Test Your Troubleshooting Skills
+
+Think you know how to solve common Nostr issues?
+
+<TroubleshootingQuiz client:load />
+
+---
+
+## Related Guides
+
+- [Relays Explained](/guides/relays-demystified) - Fix connection issues
+- [Quickstart Guide](/guides/quickstart) - Switch clients
+- [Zaps Guide](/guides/zaps-and-lightning) - Fix payment issues
+- [Keys & Security](/guides/keys-and-security) - Prevent lockouts

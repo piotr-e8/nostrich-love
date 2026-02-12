@@ -1,0 +1,510 @@
+/**
+ * Damus Theme - iOS Minimal Style
+ * Purple accent (#8B5CF6), clean white backgrounds, San Francisco fonts
+ */
+
+.damus-simulator {
+  --damus-purple: #8B5CF6;
+  --damus-purple-dark: #7C3AED;
+  --damus-purple-light: #A78BFA;
+  --damus-bg: #FFFFFF;
+  --damus-bg-secondary: #F2F2F7;
+  --damus-bg-tertiary: #E5E5EA;
+  --damus-text: #000000;
+  --damus-text-secondary: #8E8E93;
+  --damus-text-tertiary: #C7C7CC;
+  --damus-border: #E5E5EA;
+  --damus-border-light: #F2F2F7;
+  --damus-danger: #FF3B30;
+  --damus-success: #34C759;
+  --damus-warning: #FF9500;
+  --damus-blue: #007AFF;
+  --damus-ios-radius: 10px;
+  --damus-ios-radius-lg: 12px;
+  --damus-ios-radius-sm: 8px;
+  --damus-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --damus-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.12);
+  
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* iOS-style buttons */
+.damus-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  border-radius: var(--damus-ios-radius-lg);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.damus-btn-primary {
+  background: var(--damus-purple);
+  color: white;
+}
+
+.damus-btn-primary:active {
+  background: var(--damus-purple-dark);
+  transform: scale(0.98);
+}
+
+.damus-btn-secondary {
+  background: var(--damus-bg-secondary);
+  color: var(--damus-text);
+}
+
+.damus-btn-secondary:active {
+  background: var(--damus-bg-tertiary);
+}
+
+.damus-btn-outline {
+  background: transparent;
+  border: 1px solid var(--damus-purple);
+  color: var(--damus-purple);
+}
+
+.damus-btn-outline:active {
+  background: rgba(139, 92, 246, 0.1);
+}
+
+.damus-btn-ghost {
+  background: transparent;
+  color: var(--damus-purple);
+  padding: 8px 12px;
+}
+
+.damus-btn-ghost:active {
+  background: rgba(139, 92, 246, 0.1);
+}
+
+/* iOS-style inputs */
+.damus-input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: var(--damus-ios-radius);
+  border: 1px solid var(--damus-border);
+  background: var(--damus-bg);
+  font-size: 17px;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.damus-input:focus {
+  outline: none;
+  border-color: var(--damus-purple);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+}
+
+.damus-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 14px 16px;
+  border-radius: var(--damus-ios-radius);
+  border: 1px solid var(--damus-border);
+  background: var(--damus-bg);
+  font-size: 17px;
+  font-family: inherit;
+  resize: vertical;
+  transition: all 0.2s ease;
+}
+
+.damus-textarea:focus {
+  outline: none;
+  border-color: var(--damus-purple);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+}
+
+/* iOS-style cards */
+.damus-card {
+  background: var(--damus-bg);
+  border-radius: var(--damus-ios-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--damus-shadow);
+}
+
+.damus-card-flat {
+  background: var(--damus-bg);
+  border-radius: 0;
+  box-shadow: none;
+  border-bottom: 1px solid var(--damus-border);
+}
+
+/* Avatar styles */
+.damus-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--damus-bg-secondary);
+}
+
+.damus-avatar-lg {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 4px solid white;
+  object-fit: cover;
+}
+
+/* Banner styles */
+.damus-banner {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  background: linear-gradient(135deg, var(--damus-purple-light), var(--damus-purple));
+}
+
+/* iOS-style navigation */
+.damus-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--damus-bg);
+  border-bottom: 1px solid var(--damus-border);
+}
+
+.damus-nav-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--damus-text);
+}
+
+/* iOS-style list */
+.damus-list {
+  background: var(--damus-bg);
+  border-radius: var(--damus-ios-radius-lg);
+  overflow: hidden;
+  margin: 16px;
+}
+
+.damus-list-item {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid var(--damus-border);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.damus-list-item:last-child {
+  border-bottom: none;
+}
+
+.damus-list-item:active {
+  background: var(--damus-bg-secondary);
+}
+
+.damus-list-item-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--damus-bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  color: var(--damus-purple);
+}
+
+.damus-list-item-content {
+  flex: 1;
+}
+
+.damus-list-item-title {
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--damus-text);
+}
+
+.damus-list-item-subtitle {
+  font-size: 15px;
+  color: var(--damus-text-secondary);
+  margin-top: 2px;
+}
+
+.damus-list-item-chevron {
+  color: var(--damus-text-tertiary);
+  font-size: 20px;
+}
+
+/* Tab bar */
+.damus-tab-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 8px 0 24px;
+  background: var(--damus-bg);
+  border-top: 1px solid var(--damus-border);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.damus-tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 16px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.damus-tab-item.active {
+  color: var(--damus-purple);
+}
+
+.damus-tab-item:not(.active) {
+  color: var(--damus-text-secondary);
+}
+
+.damus-tab-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.damus-tab-label {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* FAB */
+.damus-fab {
+  position: fixed;
+  bottom: 90px;
+  right: 16px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--damus-purple);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--damus-shadow-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  z-index: 50;
+}
+
+.damus-fab:active {
+  transform: scale(0.95);
+  background: var(--damus-purple-dark);
+}
+
+/* Action buttons for notes */
+.damus-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  border-radius: 20px;
+  background: transparent;
+  border: none;
+  color: var(--damus-text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.damus-action-btn:hover {
+  color: var(--damus-purple);
+  background: rgba(139, 92, 246, 0.1);
+}
+
+.damus-action-btn.active {
+  color: var(--damus-purple);
+}
+
+.damus-action-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Stats display */
+.damus-stats {
+  display: flex;
+  gap: 16px;
+}
+
+.damus-stat {
+  text-align: center;
+}
+
+.damus-stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--damus-text);
+}
+
+.damus-stat-label {
+  font-size: 13px;
+  color: var(--damus-text-secondary);
+}
+
+/* Modal overlay */
+.damus-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.damus-modal-overlay.active {
+  opacity: 1;
+}
+
+.damus-modal {
+  background: var(--damus-bg);
+  border-radius: var(--damus-ios-radius-lg) var(--damus-ios-radius-lg) 0 0;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.damus-modal-overlay.active .damus-modal {
+  transform: translateY(0);
+}
+
+/* Toggle switch */
+.damus-toggle {
+  position: relative;
+  width: 51px;
+  height: 31px;
+  background: var(--damus-bg-tertiary);
+  border-radius: 15.5px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.damus-toggle.active {
+  background: var(--damus-purple);
+}
+
+.damus-toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 27px;
+  height: 27px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.damus-toggle.active .damus-toggle-thumb {
+  transform: translateX(20px);
+}
+
+/* Key display */
+.damus-key-display {
+  background: var(--damus-bg-secondary);
+  border-radius: var(--damus-ios-radius);
+  padding: 12px;
+  font-family: 'SF Mono', Monaco, monospace;
+  font-size: 13px;
+  word-break: break-all;
+  position: relative;
+}
+
+.damus-key-display .copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  background: var(--damus-bg);
+  border: 1px solid var(--damus-border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Safe area spacing */
+.damus-safe-top {
+  padding-top: env(safe-area-inset-top, 44px);
+}
+
+.damus-safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 34px);
+}
+
+/* Animation for pull to refresh */
+@keyframes damus-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.damus-spin {
+  animation: damus-spin 1s linear infinite;
+}
+
+/* Simulator Container */
+.damus-simulator {
+  position: relative;
+  overflow: hidden;
+  max-width: 100vw;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .damus-simulator {
+    max-width: 430px;
+    margin: 0 auto;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
+    border-radius: 40px;
+    overflow: hidden;
+    min-height: 100vh;
+    position: relative;
+  }
+  
+  .damus-tab-bar {
+    position: absolute;
+    max-width: 430px;
+    margin: 0 auto;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 0 0 40px 40px;
+  }
+  
+  .damus-fab {
+    position: absolute;
+    right: 16px;
+  }
+}
+
+/* Dark mode support (ready for future) */
+@media (prefers-color-scheme: dark) {
+  .damus-simulator.dark {
+    --damus-bg: #000000;
+    --damus-bg-secondary: #1C1C1E;
+    --damus-bg-tertiary: #2C2C2E;
+    --damus-text: #FFFFFF;
+    --damus-text-secondary: #8E8E93;
+    --damus-text-tertiary: #636366;
+    --damus-border: #38383A;
+    --damus-border-light: #2C2C2E;
+  }
+}

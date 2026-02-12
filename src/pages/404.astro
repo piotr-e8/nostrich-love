@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+
+const title = 'Page Not Found';
+const description = 'The page you are looking for could not be found. Explore our guides and resources to learn about Nostr.';
+---
+
+<Layout title={title} description={description} noindex={true}>
+  <Header />
+  
+  <main id="main-content" class="min-h-[60vh] flex items-center">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="max-w-2xl mx-auto text-center">
+        <!-- 404 Icon -->
+        <div class="mb-8">
+          <span class="text-8xl">🔍</span>
+        </div>
+        
+        <h1 class="text-6xl font-bold text-gray-900 dark:text-white mb-4">
+          404
+        </h1>
+        
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+          Page Not Found
+        </h2>
+        
+        <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
+          The page you're looking for doesn't exist or has been moved. 
+          But don't worry - there's plenty more to explore!
+        </p>
+        
+        <!-- Suggested Links -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+          <a
+            href="/"
+            class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary transition-colors text-left"
+          >
+            <div class="text-2xl mb-2">🏠</div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Home</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Start from the beginning</p>
+          </a>
+          
+          <a
+            href="/guides"
+            class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary transition-colors text-left"
+          >
+            <div class="text-2xl mb-2">📚</div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Guides</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Learn Nostr step by step</p>
+          </a>
+          
+          <a
+            href="/tools"
+            class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary transition-colors text-left"
+          >
+            <div class="text-2xl mb-2">🛠️</div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Tools</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Interactive Nostr tools</p>
+          </a>
+          
+          <a
+            href="/glossary"
+            class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary transition-colors text-left"
+          >
+            <div class="text-2xl mb-2">📖</div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Glossary</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Nostr terminology</p>
+          </a>
+        </div>
+        
+        <!-- Back Button -->
+        <button
+          onclick="history.back()"
+          class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-xl transition-colors"
+        >
+          <svg class="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Go Back
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Snort Logo Placeholder - Pig/snout icon -->
+  <defs>
+    <linearGradient id="snortGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFB6C1"/>
+      <stop offset="100%" style="stop-color:#FF69B4"/>
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="45" fill="url(#snortGrad)"/>
+  <ellipse cx="50" cy="55" rx="20" ry="18" fill="#FFC0CB"/>
+  <circle cx="42" cy="52" r="4" fill="#333"/>
+  <circle cx="58" cy="52" r="4" fill="#333"/>
+  <ellipse cx="50" cy="62" rx="8" ry="6" fill="#FF1493"/>
+  <ellipse cx="46" cy="62" rx="3" ry="4" fill="#333"/>
+  <ellipse cx="54" cy="62" rx="3" ry="4" fill="#333"/>
+</svg>

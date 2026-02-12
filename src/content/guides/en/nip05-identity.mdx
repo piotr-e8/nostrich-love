@@ -1,0 +1,488 @@
+---
+title: "Get Your Human-Readable Identity"
+description: "Set up NIP-05 for a professional, easy-to-share Nostr identifier like you@domain.com"
+estimatedTime: "10-15 minutes"
+priority: 2
+category: "intermediate"
+prerequisites: ["keys-and-security", "quickstart"]
+---
+
+import { NIP05Checker } from "@components/interactive/NIP05Checker";
+import { CTA } from "@components/ui/CTA";
+import { Note } from "@components/ui/Note";
+import { Callout } from "@components/ui/Callout";
+import { NIP05IdentityQuiz } from "@components/interactive/NIP05IdentityQuiz";
+
+## What is NIP-05? 🆔
+
+NIP-05 (Nostr Implementation Possibility #5) lets you have a human-readable identifier like `you@domain.com` instead of a long string of random characters.
+
+### The Problem It Solves
+
+```
+Before NIP-05:
+┌──────────────────────────────────────────────┐
+│ Follow: npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  │
+│ "Hey, follow me! I'm npub1abc123...xyz789"   │
+└──────────────────────────────────────────────┘
+                ↓
+After NIP-05:
+┌──────────────────────────────────────────────┐
+│ Follow: alice@example.com                    │
+│ "Hey, follow me! I'm alice@example.com"      │
+└──────────────────────────────────────────────┘
+```
+
+### What You Get
+
+- ✅ **Easy to share**: "Find me at bob@nostrplebs.com"
+- ✅ **Looks professional**: Clean, memorable identifier
+- ✅ **Trust signal**: NIP-05 badge in many clients
+- ✅ **Easier to find**: Search by your identifier
+
+### But Remember...
+
+> ⚠️ **NIP-05 is optional.** You can use Nostr perfectly well with just your npub.
+
+The NIP-05 identifier is a **convenience**, not a requirement. Your `npub` is your real identity on Nostr.
+
+---
+
+## Why Get a NIP-05? ✨
+
+### Easier to Share
+
+```
+At a party:
+"What's your Nostr?"
+
+Without NIP-05:
+"Uh... n-p-u-b-one-x-x-x... let me find it in my phone"
+
+With NIP-05:
+"Just alice@example.com"
+```
+
+### Professional Appearance
+
+- **Businesses**: `support@yourcompany.com`
+- **Creators**: `artist@yourdomain.com`
+- **Developers**: `dev@opensourceproject.com`
+
+### Trust & Authenticity
+
+Many clients show a ✓ badge for NIP-05 users:
+
+```
+┌─────────────────────┐
+│ 👤 Alice ✓          │
+│ alice@example.com   │
+│ "Bitcoin educator"  │
+└─────────────────────┘
+```
+
+This helps people know they're following the real you, not an impostor.
+
+### Do You Need One?
+
+**No.** You can use Nostr perfectly fine without it.
+
+**But...** it's highly recommended if you're:
+
+- Building a personal brand
+- Creating content
+- Running a business
+- Serious about Nostr long-term
+- Tired of reading 63-character strings
+
+### Not Centralization!
+
+Some worry NIP-05 means "centralized identity." It doesn't:
+
+- You can have **multiple** NIP-05 identifiers
+- You can **change** them anytime
+- Your **npub** is still your real identity
+- NIP-05 is just a **pointer** to your npub
+
+---
+
+## Free Options 🎁
+
+Several services offer free NIP-05 identifiers. Great for trying it out!
+
+### NostrPlebs
+
+One of the most popular free providers.
+
+**How to get one:**
+
+1. Visit [nostrplebs.com](https://nostrplebs.com)
+2. Choose a username (e.g., `alice`)
+3. Provide your npub
+4. Verify via nostr DM or email
+5. Done! Your identifier: `alice@nostrplebs.com`
+
+**Pros:**
+
+- Completely free
+- Established community
+- Easy setup
+
+**Cons:**
+
+- Popular names taken quickly
+- You're `username@nostrplebs.com` (not your own domain)
+
+### NostrCheck
+
+Another great free option.
+
+**How to get one:**
+
+1. Visit [nostrcheck.me](https://nostrcheck.me)
+2. Create account
+3. Set your NIP-05
+4. Verify your npub
+
+**Pros:**
+
+- Also free
+- Additional tools included
+
+### Other Free Providers
+
+- **bitcoiner.social**: Bitcoin-focused community
+- **getalby.com**: If you use Alby wallet
+- **stacker.news**: For SN users
+- **NostrCheck.me** - Additional tools included
+
+<Note type="info">
+  Free providers may have waiting lists or verification requirements. Be
+  patient!
+</Note>
+
+<Callout type="warning">
+  Free providers can change terms or shut down. If you become serious about
+  Nostr, consider upgrading to a paid option or self-hosting.
+</Callout>
+
+---
+
+## Paid Options
+
+### NostrPlebs Paid Tier
+
+**Cost:** ~$12-15/year
+
+**Benefits:**
+
+- Custom domains supported
+- Priority support
+- No ads
+- More reliable
+- Better reputation
+
+**Setup:**
+
+1. Visit [nostrplebs.com](https://nostrplebs.com)
+2. Select a paid plan
+3. Choose your username
+4. Pay with Bitcoin or Lightning
+5. Follow setup instructions
+
+### Other Paid Providers
+
+- **NostrName.com** - Various pricing tiers
+- **NostrID.com** - Domain + NIP-05 packages
+- **Custom domain registrars** - Many now offer NIP-05 setup
+
+**What you get:**
+
+- Professional appearance
+- Better uptime guarantees
+- Support if issues arise
+- Often bundled with other services
+
+| Method | Cost | Difficulty | Control | Best For |
+|--------|------|------------|---------|----------|
+| Free Provider | $0 | Easy | Low | Beginners |
+| Paid Provider | ~$15/yr | Easy | Medium | Serious Users |
+| Self-hosted | Domain cost | Advanced | High | Tech-savvy |
+
+---
+
+## Using Your Own Domain 🌐
+
+For complete control and professionalism, use your own domain.
+
+### Step 1: Buy a Domain
+
+Any domain registrar works:
+
+- [Namecheap](https://namecheap.com)
+- [Porkbun](https://porkbun.com)
+- [Cloudflare Registrar](https://www.cloudflare.com/products/registrar/)
+
+Cost: Usually $10-15/year
+
+### Step 2: DNS Setup
+
+Add a DNS record to point to your Nostr key:
+
+**Type:** TXT  
+**Name:** `_@` (or just `@` for root)  
+**Value:**
+
+```
+"nostr": "<your-npub>"
+```
+
+Or use a redirect:
+
+**Type:** CNAME  
+**Name:** `nostr`  
+**Value:** `your-nostr-provider.com`
+
+### Step 3: Create NIP-05 JSON
+
+Host a file at `https://yourdomain.com/.well-known/nostr.json`:
+
+```json
+{
+  "names": {
+    "alice": "<your-npub-here>",
+    "bob": "<another-npub>"
+  }
+}
+```
+
+Your identifier becomes: `alice@yourdomain.com`
+
+### Example Setup Walkthrough
+
+**Scenario:** You own `alice.dev`
+
+1. **Create the JSON file:**
+
+```json
+{
+  "names": {
+    "alice": "npub1abc123..."
+  }
+}
+```
+
+2. **Upload to your server:**
+
+```
+https://alice.dev/.well-known/nostr.json
+```
+
+3. **Verify it works:**
+   Open in browser: `https://alice.dev/.well-known/nostr.json`
+
+4. **Add to your Nostr profile:**
+   In your client: Settings → Profile → NIP-05 → `alice@alice.dev`
+
+---
+
+## Testing Your NIP-05 ✅
+
+### Check Your Identifier
+
+Use our tool below or visit your identifier URL:
+
+<NIP05Checker showForm={true} client:load />
+
+### In Your Client
+
+Most clients show NIP-05 status:
+
+**Damus/Amethyst:**
+
+- Settings → Profile → NIP-05 field
+- Shows ✓ when set up correctly
+
+**Primal:**
+
+- Profile shows NIP-05 badge
+- Click badge to see details
+
+### Troubleshooting Common Issues
+
+**"NIP-05 not working"**
+
+- Double-check your npub is correct in nostr.json
+- Ensure the JSON is valid (use a JSON validator)
+- Check that the file is accessible at the exact URL
+
+**"File not found"**
+
+- Make sure `.well-known` folder is created
+- Check your server serves hidden directories
+- Verify the path: `/.well-known/nostr.json`
+
+**"Domain not resolving"**
+
+- DNS changes can take up to 24 hours
+- Clear your DNS cache
+- Check with `dig` or `nslookup` command
+
+**"Client doesn't recognize it"**
+
+- Some clients cache NIP-05 lookup results
+- Try logging out and back in
+- Wait a few minutes for propagation
+
+**"Verification Failed" Error**
+
+**Possible causes:**
+
+1. **JSON syntax error** - Check for missing quotes or commas
+2. **Wrong file location** - Must be at `/.well-known/nostr.json`
+3. **Caching** - Wait 10-15 minutes and retry
+4. **HTTPS required** - Must be served over HTTPS
+
+**Fix:**
+
+- Validate JSON at jsonlint.com
+- Check file is at exact path
+- Clear client cache
+- Ensure SSL certificate is valid
+
+**"Not Found" Error**
+
+**Possible causes:**
+
+1. File not uploaded to correct location
+2. Server blocks dot-directories
+3. Wrong domain
+
+**Fix:**
+
+- Verify file exists at exact URL
+- Check `.htaccess` or server config allows dot-directories
+- Confirm you're using correct domain
+
+**Provider-Specific Issues**
+
+**NostrPlebs:**
+
+- Check spam folder for verification email
+- Ensure npub is correct (not nsec!)
+- Contact support if stuck
+
+**Self-hosted:**
+
+- Verify DNS propagation: `dig yourdomain.com`
+- Check server logs for errors
+- Ensure file permissions allow reading
+
+<Callout type="warning">
+  Never share your nsec (private key) when setting up NIP-05. Only your npub
+  (public key) is needed.
+</Callout>
+
+---
+
+## Advanced Tips 💡
+
+### Multiple Identities
+
+You can have multiple NIP-05 addresses:
+
+```
+personal@yourdomain.com
+work@yourdomain.com
+blog@yourdomain.com
+```
+
+All point to the same npub, or different ones.
+
+### Subdomains
+
+Use subdomains for organization:
+
+```
+alice@team.yourdomain.com
+alice@community.yourdomain.com
+```
+
+### Hosting Multiple Users
+
+You can host multiple NIP-05 identifiers on one domain:
+
+```json
+{
+  "names": {
+    "alice": "npub1alice...",
+    "bob": "npub1bob...",
+    "carol": "npub1carol..."
+  }
+}
+```
+
+### Verifying Your Setup
+
+**Method 1: Your Client**
+
+1. Add the NIP-05 to your profile
+2. Save changes
+3. Look for a checkmark ✓ or "verified" badge
+4. May take a few minutes to propagate
+
+**Method 2: Nostr Explorer**
+
+1. Visit a Nostr explorer like nostr.guru
+2. Search for your NIP-05
+3. Check if it resolves to your npub
+
+**Method 3: Direct Test (Command Line)**
+
+```bash
+curl https://yourdomain.com/.well-known/nostr.json
+```
+
+**What Success Looks Like:**
+
+- ✅ Client shows verification badge
+- ✅ Others can find you by your NIP-05
+- ✅ Your profile displays your human-readable name
+
+### Privacy Considerations
+
+- NIP-05 links your npub to a domain
+- This could deanonymize you if the domain has your real info
+- Use free providers for pseudonymous accounts
+- Use your own domain when you want to be identified
+
+---
+
+## Next Steps
+
+Jump ahead to learn about troubleshooting or explore related topics:
+
+<CTA
+  href="/guides/troubleshooting"
+  title="Problem Solving Guide"
+  description="Fix common Nostr issues and get back on track"
+  buttonText="Problem Solving Guide →"
+  variant="outline"
+/>
+
+---
+
+## Test Your NIP-05 Knowledge
+
+Think you understand NIP-05? Take the quiz:
+
+<NIP05IdentityQuiz client:load />
+
+---
+
+## Resources
+
+- [NIP-05 Specification](https://github.com/nostr-protocol/nips/blob/master/05.md)
+- [NostrPlebs](https://nostrplebs.com) - Free NIP-05
+- [NostrCheck](https://nostrcheck.me) - Free NIP-05 + tools
+- [NIP05 Generator](https://github.com/nostr-tools/nip05) - DIY tools

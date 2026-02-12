@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Amethyst Logo Placeholder - Purple crystal/gem shape -->
+  <defs>
+    <linearGradient id="amethystGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9B59B6"/>
+      <stop offset="50%" style="stop-color:#8E44AD"/>
+      <stop offset="100%" style="stop-color:#6C3483"/>
+    </linearGradient>
+  </defs>
+  <polygon points="50,5 85,25 85,65 50,95 15,65 15,25" fill="url(#amethystGrad)" stroke="#5B2C6F" stroke-width="2"/>
+  <polygon points="50,5 85,25 50,45 15,25" fill="#AF7AC5"/>
+  <polygon points="15,25 50,45 50,95 15,65" fill="#884EA0"/>
+  <polygon points="85,25 50,45 50,95 85,65" fill="#7D3C98"/>
+</svg>

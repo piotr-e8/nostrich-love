@@ -1,0 +1,523 @@
+---
+title: "Zaps: Tips on Nostr"
+description: "Learn how to send and receive Bitcoin tips (zaps) on Nostr using the Lightning Network"
+estimatedTime: "10-15 minutes"
+priority: 2
+category: "intermediate"
+prerequisites: ["keys-and-security", "quickstart"]
+---
+
+import { ZapSimulator } from "@components/ui/ZapSimulator";
+import { Callout } from "@components/ui/Callout";
+import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQuiz";
+
+## What are Zaps? ⚡
+
+Zaps are Bitcoin tips sent over the Lightning Network. They're the native value layer of Nostr—allowing users to reward content they love with real money.
+
+Think of them as "likes with value"—a way to support people whose content you enjoy.
+
+### How Zaps Work
+
+1. **You create good content** → A post, thread, or reply
+2. **Someone enjoys it** → They click the ⚡ zap button
+3. **They send satoshis** → Tiny amounts of Bitcoin (1000 sats = ~$0.30)
+4. **You receive instantly** → Money appears in your wallet
+5. **Everyone sees it** → Zaps are public and create social proof
+
+### Why Zaps Are Revolutionary
+
+**Traditional Social Media:**
+
+- Likes are free and worthless
+- Platform keeps all ad revenue
+- Creators get nothing
+- Engagement is hollow
+
+**Nostr with Zaps:**
+
+- Every like can have real value
+- No platform takes a cut
+- Direct creator support
+- Meaningful engagement
+
+### Real Examples
+
+- Developer receives 100,000 sats ($30) for fixing a bug
+- Artist gets zapped for sharing their work
+- Writer earns Bitcoin for insightful threads
+- Meme creator gets tips for viral content
+
+### The Value-for-Value Model
+
+```
+Traditional Social Media:              Nostr:
+┌──────────────────┐                 ┌──────────────────┐
+│ Free to post     │                 │ Free to post     │
+│ Free to read     │                 │ Free to read     │
+│ Attention = $$$  │                 │ Attention = ⚡   │
+│ (for platform)   │                 │ (for creator)    │
+└──────────────────┘                 └──────────────────┘
+```
+
+### How Zaps Appear
+
+In supported clients, zaps show up as:
+
+- ⚡ Lightning bolt icons
+- Amount zapped (e.g., "21 sats")
+- Running totals on posts
+- Special notifications when you receive them
+
+```
+┌────────────────────────────────────┐
+│ Alice                              │
+│ "Just published my new article!"   │
+│                                    │
+│ [❤️ 12] [💬 3] [⚡ 5,420 sats]     │
+│                                    │
+│ ⚡ Bob zapped 1,000 sats           │
+│ ⚡ Carol zapped 500 sats           │
+└────────────────────────────────────┘
+```
+
+### Not Required!
+
+> 💡 **Important**: Zaps are completely optional. You can use Nostr for free forever without ever sending or receiving a single satoshi.
+
+---
+
+## Wallet Setup 💼
+
+Before you can send or receive zaps, you need a Lightning wallet.
+
+### Recommended Wallets
+
+#### For Beginners
+
+**Alby** (Browser Extension)
+
+- Easy setup
+- Great Nostr integration
+- Works in web clients
+- [getalby.com](https://getalby.com)
+
+**Phoenix** (Mobile)
+
+- User-friendly
+- Self-custodial
+- iOS and Android
+- [phoenix.acinq.co](https://phoenix.acinq.co)
+
+#### For Advanced Users
+
+**Zeus** (Mobile)
+
+- Connect to your own node
+- Full control
+- Power user features
+- [zeusln.app](https://zeusln.app)
+
+**Mutiny** (Web/Mobile)
+
+- Self-custodial in browser
+- No app store needed
+- [app.mutinywallet.com](https://app.mutinywallet.com)
+
+### Custodial vs Non-Custodial
+
+**Custodial (Alby, Wallet of Satoshi)**
+
+- ✅ Easy setup
+- ✅ Lower fees
+- ❌ They hold your funds
+- ❌ KYC may be required
+
+**Non-Custodial (Phoenix, Zeus, Mutiny)**
+
+- ✅ You control your keys
+- ✅ Better privacy
+- ❌ Slightly more complex
+- ❌ Higher on-chain fees
+
+> 💡 **Recommendation**: Start with Alby for web use + Phoenix for mobile. Upgrade to non-custodial as you get comfortable.
+
+### Option 3: Wallet of Satoshi (Easiest)
+
+**Best for:** Complete beginners who want simplicity
+
+**Pros:**
+
+- No setup required
+- Just download and go
+- Lightning address included
+- Works immediately
+
+**Cons:**
+
+- Not your keys, not your coins
+- Requires trust in provider
+- Limits on withdrawals
+
+**Platform:** iOS, Android
+
+---
+
+### Connecting Your Wallet
+
+#### Step-by-Step: Alby + Web Client
+
+1. **Install Alby Extension**
+   - Chrome/Firefox: [getalby.com](https://getalby.com)
+   - Create account or use existing
+
+2. **Get Your Connection String**
+   - Alby Dashboard → API Keys
+   - Or: Profile → Nostr Wallet Connect
+
+3. **Connect to Client**
+   - In your Nostr client (Primal, Iris, etc.)
+   - Settings → Wallet → Connect
+   - Paste connection string
+
+4. **Test with a Small Zap**
+   - Find a post you like
+   - Click ⚡ button
+   - Send 10 sats
+
+#### Step-by-Step: Phoenix + Mobile Client
+
+1. **Download Phoenix**
+   - App Store / Play Store
+   - Create wallet (backup seed phrase!)
+
+2. **Fund Your Wallet**
+   - Buy Bitcoin or receive from elsewhere
+   - Need at least 10,000 sats to start
+
+3. **Get LNURL or Lightning Address**
+   - Phoenix → Receive → Lightning Address
+   - Copy `yourname@phoenix.wallet` or LNURL
+
+4. **Add to Nostr Profile**
+   - Client → Profile → Edit
+   - Paste Lightning Address
+
+#### Step-by-Step: Wallet of Satoshi + Mobile Client
+
+1. **Download Wallet of Satoshi**
+   - Go to app store (iOS/Android)
+   - Search "Wallet of Satoshi"
+   - Download and install
+   - Open the app (no account needed!)
+
+2. **Get Your Lightning Address**
+   - Tap "Receive"
+   - Look for your Lightning address
+   - It looks like: `username@walletofsatoshi.com`
+   - Write this down—you'll need it
+
+3. **Add to Your Nostr Profile**
+   - Open your Nostr client (Damus, Amethyst, Iris, etc.)
+   - Go to Edit Profile
+   - Find "Lightning Address" or "LN Address" field
+   - Paste your address
+   - Save changes
+
+4. **Verify It Works**
+   - Look for ⚡ icon on your profile
+   - Ask a friend to send you a test zap (100 sats)
+   - Check your wallet—should receive instantly
+   - You should see zap notification in your client
+
+<Callout type="warning">
+  **Important:** Write down your wallet recovery phrase if using Phoenix! If you lose access to your wallet, you lose your Bitcoin. No exceptions.
+</Callout>
+
+---
+
+## Sending Zaps 💸
+
+### How to Zap a Post
+
+1. **Find a post you like**
+2. **Tap the ⚡ button**
+3. **Choose amount** or enter custom
+4. **Add message** (optional)
+5. **Confirm** and send!
+
+### Zap Amounts Etiquette
+
+**Quick reference:**
+
+| Amount           | When to Use                    |
+| ---------------- | ------------------------------ |
+| 10-50 sats       | Small appreciation             |
+| 100-500 sats     | Good post/thread               |
+| 1,000-5,000 sats | Great content, podcast episode |
+| 10,000+ sats     | Exceptional value, art, tool   |
+
+> 💡 **Rule of thumb**: Zap what the content is worth to you. No amount is too small!
+
+### Custom Messages
+
+Most clients let you add a message with your zap:
+
+```
+"Thanks for the help!"
+"Great thread, learned a lot"
+"☕ Coffee's on me"
+```
+
+This personalizes the interaction and helps creators know what content resonates.
+
+<ZapSimulator client:load />
+
+---
+
+## Receiving Zaps 💰
+
+### Setting Up LNURL
+
+To receive zaps, you need to configure where they go:
+
+1. **Get your Lightning Address or LNURL**
+   - From your wallet (Alby, Phoenix, etc.)
+   - Format: `yourname@provider.com`
+
+2. **Add to Your Profile**
+
+   ```
+   Client → Profile → Edit → Lightning Address
+   Paste: yourname@getalby.com
+   ```
+
+3. **Verify it works**
+   - Ask a friend to send you 10 sats
+   - Or use a testnet faucet
+
+### Zap Notifications
+
+**In most clients:**
+
+- Push notification when zapped
+- Notification tab shows zap history
+- Can see who zapped you
+
+**Privacy note:**
+Zaps are semi-public. While amounts can be private in some setups, the fact that you zapped (or were zapped) is visible.
+
+---
+
+## Zap Splits [ADVANCED]
+
+<Note type="advanced">
+  Optional feature for sharing zap revenue automatically.
+</Note>
+
+### What are Zap Splits?
+
+When someone zaps your post, automatically split the payment with collaborators:
+
+```
+Example: Podcast Episode
+├── 70% → Host (you)
+├── 20% → Producer
+└── 10% → Editor
+```
+
+### Setting Up Splits
+
+1. **In your client**: Look for "Zap Splits" or "Recipients"
+2. **Add collaborators**: Enter their Lightning addresses
+3. **Set percentages**: Must total 100%
+4. **Save**: Future zaps auto-split
+
+### Common Use Cases
+
+- **Podcasts**: Split between host and guests
+- **Collaborative posts**: Share with co-authors
+- **Art**: Split with inspiration sources
+- **Open source**: Fund dependencies
+
+---
+
+## Zap Analytics 📊
+
+Tracking your zap activity:
+
+### For Creators
+
+- **Total zaps received**: Lifetime and time period
+- **Top zapped content**: Which posts earn most
+- **Zap velocity**: Rate of incoming zaps
+
+**Tools:**
+
+- Most clients show basic stats
+- [zaplife.lol](https://zaplife.lol) - Detailed analytics
+- [nostrudel.ninja](https://nostrudel.ninja) - Advanced stats
+
+### For Supporters
+
+- **Total zapped**: How much you've given
+- **Zap leaderboard**: Who you've supported most
+- **Impact tracking**: See your contribution
+
+---
+
+## Creator Best Practices
+
+### Maximizing Zap Support
+
+**1. Create Value**
+
+- Educational content
+- Unique insights
+- Entertainment
+- Helpful tools/resources
+
+**2. Be Consistent**
+
+- Post regularly
+- Build trust over time
+- Quality over quantity
+
+**3. Acknowledge Supporters**
+
+- Thank people who zap
+- Reply to comments
+- Build relationships
+
+**4. Signal Value**
+
+- "Zaps welcome" occasionally
+- Show appreciation
+- Don't beg or demand
+
+**5. Diversify Income**
+
+- Don't rely solely on zaps
+- Offer paid content/subscriptions
+- Build products/services
+- Accept direct donations
+
+### Tax Considerations
+
+<Callout type="warning">
+  **Not financial advice.** Consult a tax professional in your jurisdiction.
+</Callout>
+
+**General principles:**
+
+- Zaps may be taxable income
+- Keep records of receipts
+- Convert to fiat = taxable event in most places
+- Bitcoin held = capital gains when sold
+
+**Tools:**
+
+- Koinly, CoinTracker for tracking
+- Export wallet history regularly
+- Document everything
+
+---
+
+## Troubleshooting Zaps 🔧
+
+### "Zap button doesn't work"
+
+- Check wallet is connected (Settings → Wallet)
+- Ensure you have sufficient balance
+- Try reloading the client
+
+### "Wallet won't connect"
+
+- Verify your connection string is correct
+- Check that your wallet is unlocked
+- Some wallets need to be "online" (Phoenix)
+
+### "Zaps not showing up"
+
+- Zaps take a few seconds to process
+- Some clients batch notifications
+- Check your wallet directly for confirmation
+
+### "Can't receive zaps"
+
+- Verify your Lightning address is in your profile
+- Test with a small amount first
+- Ensure your wallet is running (non-custodial)
+
+---
+
+## Related Topics
+
+Jump ahead to explore more advanced topics:
+
+---
+
+## Best Practices
+
+### Do:
+
+- ✅ Zap content that provides value
+- ✅ Add a friendly message
+- ✅ Start small while learning
+- ✅ Support newcomers with welcome zaps
+- ✅ Keep some sats in your wallet
+
+### Don't:
+
+- ❌ Feel pressured to zap
+- ❌ Zap more than you can afford
+- ❌ Expect zaps in return
+- ❌ Spam low-quality content expecting zaps
+- ❌ Forget to backup your wallet seed
+
+---
+
+## Resources
+
+- [Lightning Network Info](https://lightning.network)
+- [Alby Documentation](https://guides.getalby.com)
+- [Zaplife - Zap Analytics](https://zaplife.lol)
+- [ZapSplits Tool](https://github.com/nostr-protocol/zaps)
+
+---
+
+## Community
+
+Join the zapping community:
+
+- Use #zap tag to discuss
+- Follow #plebchain for tips
+- Share your Lightning Address in your bio
+
+---
+
+## Quick Reference
+
+| Wallet | Difficulty | Control | Best For |
+|--------|-----------|---------|----------|
+| Wallet of Satoshi | Easiest | Custodial | Beginners |
+| Alby | Easy | Browser | Desktop users |
+| Phoenix | Medium | Self-custody | Serious users |
+| Zeus | Hard | Full control | Power users |
+
+**Zap Amounts:**
+
+- 21 sats = Minimum viable zap
+- 100 sats = Standard "thank you"
+- 1000 sats = "This was valuable"
+- 10000+ sats = Exceptional content
+
+**Remember:** Every sat counts. Don't worry about amounts—support good content generously!
+
+---
+
+## Test Your Zap Knowledge
+
+Ready to test what you've learned about zaps?
+
+<ZapsAndLightningQuiz client:load />

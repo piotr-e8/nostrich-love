@@ -1,0 +1,89 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import { PrivacyControls } from '../components/progress/PrivacyControls';
+---
+
+<Layout
+  title="Settings - Nostr Beginner Guide"
+  description="Manage your privacy settings and progress tracking preferences."
+>
+  <Header />
+
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 dark:from-primary/5 dark:to-secondary/5" />
+      
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative">
+        <div class="text-center max-w-3xl mx-auto">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Settings
+            </span>
+          </h1>
+          <p class="text-xl text-gray-600 dark:text-gray-300">
+            Control your privacy and manage your learning progress.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Privacy Settings Section -->
+    <section class="py-12 lg:py-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mx-auto">
+          <PrivacyControls client:load />
+        </div>
+      </div>
+    </section>
+
+    <!-- Additional Info -->
+    <section class="py-12 lg:py-16 bg-gray-50 dark:bg-gray-900/50">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mx-auto">
+          <h2 class="text-2xl font-bold mb-6">About Our Privacy Approach</h2>
+          
+          <div class="space-y-6 text-gray-600 dark:text-gray-300">
+            <div>
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Local-First Design</h3>
+              <p>
+                All your progress data is stored locally in your browser. Nothing is sent to our servers or any third parties. Your learning journey stays private.
+              </p>
+            </div>
+            
+            <div>
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Opt-In Philosophy</h3>
+              <p>
+                Progress tracking is disabled by default. We believe you should choose what features to enable. No dark patterns, no forced tracking.
+              </p>
+            </div>
+            
+            <div>
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Data Portability</h3>
+              <p>
+                You own your data. Export it anytime as JSON, import it on another device, or delete it completely. We don't lock you in.
+              </p>
+            </div>
+            
+            <div>
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Aligned with Nostr Values</h3>
+              <p>
+                Just like Nostr itself, we believe in user sovereignty, privacy, and decentralization. These principles guide every feature we build.
+              </p>
+            </div>
+          </div>
+          
+          <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+              Have questions about privacy? Check our <a href="/privacy" class="text-primary hover:underline">Privacy Policy</a> or reach out on Nostr.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

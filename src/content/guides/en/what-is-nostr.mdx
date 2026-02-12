@@ -1,0 +1,181 @@
+---
+title: "Nostr Explained Simply"
+description: "Understand Nostr in 5 minutes. Learn how decentralized social media works, why it matters, and how it's different from traditional platforms."
+estimatedTime: "5 minutes"
+priority: 2
+category: "getting-started"
+---
+
+import { HoverCard } from "@components/HoverCard";
+import { ProtocolComparison } from "@components/ProtocolComparison";
+import { NostrSimulator } from "@components/NostrSimulator";
+import { WhatIsNostrQuiz } from "@components/interactive/WhatIsNostrQuiz";
+
+{/* ProgressIndicator temporarily disabled - will be implemented with actual tracking later */}
+{/* <ProgressIndicator current={1} total={4} estimatedTime="5 minutes" /> */}
+
+{ /* <div className="simulator-section my-12"> */ }
+  { /* <NostrSimulator client:load /> */ }
+{ /* </div> */ }
+
+### The Problem (1 minute read)
+
+**You don't own your social media presence.**
+
+When you build a following on Twitter, Instagram, or Facebook, you're building on rented land. Here's what that means:
+
+### Platform Risk Is Real
+
+- **Bans happen.** A mistake, a controversial opinion, or a false report can lock you out of years of content and connections
+- **Algorithms change.** Your posts might reach 10,000 people one day and 200 the next—with no warning or explanation
+- **Your followers aren't yours.** If the platform bans you, you lose access to the audience you spent years building
+- **Data lock-in.** Your posts, photos, and messages are trapped in one company's database
+
+### The Core Issue
+
+Big tech companies control:
+
+- Who can speak
+- Who can hear you
+- What content gets promoted
+- Whether you can export your data
+
+**This isn't just inconvenient—it puts your digital identity at risk.**
+
+---
+
+### The Solution: Protocol vs Platform (2 minutes read)
+
+Nostr solves this by changing one fundamental thing: **It's a protocol, not a platform.**
+
+### Think Email
+
+You probably use email every day without thinking about this magic:
+
+- Someone on Gmail can email someone on Outlook
+- You can switch from Yahoo to ProtonMail and keep your address book
+- No single company controls all email
+
+**Email is a protocol.** Anyone can build an email app. Everyone can communicate. No one owns the network.
+
+**Nostr works the same way.**
+
+### The Difference Explained
+
+<ProtocolComparison />
+
+**Centralized (Twitter, Facebook):** One company owns everything. They can ban you, change the rules, or shut down entirely.
+
+**Federated (Mastodon):** Many servers that can talk to each other, but each server owner has power over their users.
+
+**Nostr:** No servers own your identity. You hold the keys. You choose where to post. You can switch apps anytime.
+
+### What This Means for You
+
+- **One identity, everywhere.** Your keys work on every Nostr app
+- **Your data follows you.** Switch clients? Your posts and followers come too
+- **No one can ban you.** They can ignore you, but they can't stop you from posting
+- **Many choices.** Use the app with the interface you love
+
+---
+
+### Key Concepts (2 minutes read)
+
+Don't worry about memorizing everything. You'll learn by doing. But here's the mental model:
+
+### Public Key (npub) = Your Username
+
+<HoverCard
+  term="Public Key"
+  definition="A long string starting with 'npub1' that identifies you publicly. Safe to share everywhere."
+>
+  Your public identity on Nostr looks like: `npub1q...9x`
+</HoverCard>
+
+- Looks like: `npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq`
+- Share this freely—it's how people find and follow you
+- Think of it like your email address or phone number
+- **Green light: Safe to share anywhere**
+
+### Private Key (nsec) = Your Password
+
+<HoverCard
+  term="Private Key"
+  definition="A secret string starting with 'nsec1' that proves you're you. NEVER share this. Lose it = lose your account."
+>
+  Your secret key looks like: `nsec1q...9x`
+</HoverCard>
+
+- Looks like: `nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq`
+- This proves you own your public key
+- **RED ALERT: Never share this with anyone**
+- Lose it = permanent loss. No "forgot password" option
+
+### Relays = Post Offices
+
+<HoverCard
+  term="Relays"
+  definition="Servers that store and forward Nostr messages. You choose which ones to connect to, and can switch anytime."
+>
+  Relays are like post offices for your posts
+</HoverCard>
+
+- Servers that store and share Nostr messages
+- You choose which ones to use (and can use many)
+- Some are free, some require payment
+- [ADVANCED] You can even run your own
+
+### Clients = Apps
+
+<HoverCard
+  term="Clients"
+  definition="The apps you use to interact with Nostr—like Damus, Amethyst, or Iris. You can switch clients anytime without losing your identity."
+>
+  Clients are like Gmail vs Apple Mail—different interfaces, same protocol
+</HoverCard>
+
+- The app you use to post, browse, and message
+- Examples: Damus (iOS), Amethyst (Android), Iris (web)
+- Switch anytime—you're never locked in
+
+---
+
+### Why This Matters (1 minute read)
+
+### The Good
+
+✅ **No one can ban you.** They can ignore your posts, but they can't stop you from publishing
+
+✅ **Your data is portable.** Every post, every follower, every like—it's all yours to move
+
+✅ **No ads or algorithms.** Most clients show chronological feeds. Your attention isn't the product
+
+✅ **Resilient.** If one relay goes down, your identity survives. If one client shuts down, you switch to another
+
+### The Responsibility
+
+⚠️ **You are responsible for your keys.** Lose your nsec = lose your identity forever. No help desk to call
+
+⚠️ **No "undo" button.** Deleted posts can persist on relays. Think before you post
+
+⚠️ **Learning curve.** It's new, it's different, and some parts are still rough around the edges
+
+### Is It Worth It?
+
+That depends on what you value:
+
+- **If you want simplicity:** Traditional platforms are easier (for now)
+- **If you want freedom:** Nostr gives you control no platform can match
+- **If you're curious:** The best way to learn is to try
+
+---
+
+## Test Your Knowledge
+
+Ready to check what you've learned? Take this quick quiz:
+
+<WhatIsNostrQuiz client:load />
+
+---
+
+_Want to dive deeper? Check out our [FAQ](/guides/faq) for more topics._

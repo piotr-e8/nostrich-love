@@ -1,0 +1,508 @@
+---
+title: "Privacy & Security Deep Dive"
+description: "Advanced security practices for Nostr. Protect your identity, prevent metadata leaks, and maintain privacy while using decentralized social media."
+estimatedTime: "15 minutes"
+priority: 9
+category: "advanced"
+prerequisites: ["keys-and-security", "quickstart"]
+---
+
+import { Callout } from "@components/ui/Callout";
+import { SecurityQuiz } from "@components/interactive/SecurityQuiz";
+import { CTAButton } from "@components/CTAButton";
+
+{/* ProgressIndicator temporarily disabled - will be implemented with actual tracking later */}
+{/* <ProgressIndicator current={4} total={6} estimatedTime="15 minutes" /> */}
+
+## Threat Model (3 minutes)
+
+### What Are You Protecting Against?
+
+Before diving into security practices, let's understand what threats exist on Nostr:
+
+**Threat Level 1: Casual Privacy**
+
+- **Concern:** Don't want employers/family seeing everything
+- **Threats:** Public posts, profile association
+- **Solution:** Separate identities
+
+**Threat Level 2: Active Avoidance**
+
+- **Concern:** Avoiding specific people/platforms
+- **Threats:** Doxxing, harassment, stalking
+- **Solution:** Anonymous account, OPSEC
+
+**Threat Level 3: High Security**
+
+- **Concern:** Whistleblowers, activists, high-profile individuals
+- **Threats:** State actors, sophisticated attacks
+- **Solution:** Advanced OPSEC, air-gapped keys
+
+### What Nostr Protects
+
+✅ **Censorship Resistance**
+
+- No platform can ban you
+- Your identity can't be seized
+- Posts distributed across network
+
+✅ **Data Ownership**
+
+- You control your keys
+- Portable across clients
+- No company owns your graph
+
+### What Nostr Doesn't Protect
+
+❌ **Public By Default**
+
+- All posts are public (unless encrypted DMs)
+- Metadata leaks possible
+- Content analysis possible
+
+❌ **No Anonymity Guarantees**
+
+- Your npub is pseudonymous, not anonymous
+- Patterns can reveal identity
+- IP addresses visible to relays
+
+<Callout type="info">
+  **Realistic expectations:** Nostr provides censorship resistance, not perfect
+  anonymity. Understand the difference.
+</Callout>
+
+---
+
+## Identity Separation (3 minutes)
+
+### Why Multiple Identities?
+
+Most people should have **at least two** Nostr identities:
+
+**1. Public Identity**
+
+- Linked to real name
+- Professional use
+- Public figure presence
+- Long-term reputation
+
+**2. Private/Pseudonymous Identity**
+
+- Not linked to real name
+- Personal interests
+- Controversial opinions
+- Testing/experimentation
+
+### When to Separate
+
+**Definitely separate:**
+
+- Personal vs professional life
+- Different interests (work, hobbies, politics)
+- Testing new clients/apps
+- Financial (tipping) vs social
+
+**Can combine:**
+
+- Close friends who know everything
+- Low-stakes casual use
+- Already public persona
+
+### Managing Multiple Keys
+
+**Option 1: Different Clients**
+
+- Use Damus for public identity
+- Use Amethyst for private identity
+- Simple, but limited to device
+
+**Option 2: Nostr Signer Apps**
+
+- Use Amber (Android) or similar
+- Multiple keys in one app
+- More flexible
+
+**Option 3: Separate Devices**
+
+- Phone for public
+- Tablet for private
+- Maximum isolation
+
+<Callout type="tip">
+  **Start simple:** Create one pseudonymous account first. Add a public one
+  later if needed.
+</Callout>
+
+---
+
+## Signer Apps (3 minutes)
+
+### What Are Signers?
+
+**Signer apps** store your private keys securely and sign messages for other apps.
+
+**How it works:**
+
+1. Signer app holds your nsec
+2. Client app requests "sign this message"
+3. Signer app approves and signs
+4. Client app never sees your nsec
+
+### Benefits
+
+✅ **Key Isolation**
+
+- Nsec never leaves signer
+- Clients can't steal keys
+- Compromised client = safe keys
+
+✅ **Approval Required**
+
+- See what you're signing
+- Prevent accidental posts
+- Control over actions
+
+✅ **Multiple Clients**
+
+- Use same keys across apps
+- Consistent identity
+- Easy switching
+
+### Popular Signer Apps
+
+**Amber (Android)**
+
+- Best signer on mobile
+- Open source
+- Active development
+- Supports multiple keys
+
+**Primal (iOS)**
+
+- Built-in secure storage
+- No need for separate signer app
+- Keys stay on device
+- Simple and intuitive
+
+**Other Options:**
+
+- **Nostr Connect** (cross-platform protocol)
+- **Browser extensions** (Alby can sign)
+- **Hardware wallets** [ADVANCED]
+
+### Setting Up Amber
+
+1. **Download** from Play Store
+2. **Create or import** keys
+3. **Set as default signer** in Android settings
+4. **Open Nostr client** - it will request signing
+5. **Approve requests** in Amber
+
+### When to Use Signers
+
+**Highly recommended:**
+
+- Serious Nostr users
+- High-value accounts
+- Multiple clients
+- Security-conscious users
+
+**Not necessary:**
+
+- Casual testing
+- Low-value accounts
+- Single client use
+- Beginners (add later)
+
+<Callout type="warning">
+  **Critical:** Your signer app becomes a single point of failure. Back it up
+  securely!
+</Callout>
+
+---
+
+## Key Rotation (2 minutes)
+
+### What is Key Rotation?
+
+**Key rotation** means creating new keys and migrating your following to them.
+
+### When to Rotate
+
+**Do rotate:**
+
+- Suspect compromise
+- Private key accidentally exposed
+- Moving from custodial to self-custodial
+- Periodic security practice
+
+**Don't rotate casually:**
+
+- Lose all history
+- Confuse followers
+- Break NIP-05 connections
+
+### How to Rotate
+
+**Step 1: Prepare**
+
+1. Generate new keys securely
+2. Back them up properly
+3. Test new account
+
+**Step 2: Announce**
+
+1. Post from old account: "Moving to [new npub]"
+2. Pin the post
+3. Update bio with new npub
+4. Wait a few days
+
+**Step 3: Migrate**
+
+1. Follow your old follows on new account
+2. Update NIP-05 if you have one
+3. Tell close contacts directly
+
+**Step 4: Sunset**
+
+1. Post from old account periodically: "Moved to [new]"
+2. Keep old account as redirect
+3. Eventually abandon old account
+
+<Callout type="tip">
+  **Pro tip:** If you have a NIP-05, you can update it to point to your new
+  npub. People using your NIP-05 will automatically follow your new account.
+</Callout>
+
+---
+
+## Metadata Leaks (5 minutes)
+
+### What Metadata Leaks?
+
+Even "anonymous" posts can reveal identity through:
+
+**1. Writing Style**
+
+- Vocabulary choices
+- Grammar patterns
+- Emoji usage
+- Capitalization habits
+
+**2. Content Clues**
+
+- Locations mentioned
+- Specific events
+- Inside jokes
+- Unique knowledge
+
+**3. Timing Patterns**
+
+- When you post (timezone)
+- Response times
+- Active hours
+
+**4. Technical Leaks**
+
+- IP addresses (visible to relays)
+- Client software version
+- Device fingerprints
+
+**5. Social Graph**
+
+- Who you follow
+- Who follows you
+- Interaction patterns
+
+### Prevention Strategies
+
+**1. Separate Writing Styles**
+
+- Use different vocabulary
+- Vary sentence structure
+- Different emoji habits
+
+**2. Be Vague**
+
+- Don't mention specific dates
+- Avoid unique identifiers
+- Generalize locations
+
+**3. Use Tor/VPN**
+
+- Hide IP from relays
+- Use different IPs per identity
+- Consider Tor for maximum privacy
+
+**4. Limit Client Info**
+
+- Some clients leak version info
+- Check what your client sends
+- Use privacy-focused clients
+
+**5. Control Social Graph**
+
+- Don't follow same people
+- Different circles
+- Limit cross-identity interactions
+
+### Cross-Identity Contamination
+
+**What NOT to do:**
+
+- ❌ Mention your other account
+- ❌ Post same content simultaneously
+- ❌ Follow exact same people
+- ❌ Use same phrases/slang
+- ❌ Respond to same threads
+- ❌ Post from both in same conversation
+
+**Safe practices:**
+
+- ✅ Completely separate content
+- ✅ Different topics/interests
+- ✅ Different active times
+- ✅ No cross-references
+- ✅ Assume they're watching
+
+<Callout type="warning">
+  **Paranoia check:** If you need true anonymity, assume a motivated adversary
+  is analyzing everything. Act accordingly.
+</Callout>
+
+---
+
+## OPSEC Checklist (2 minutes)
+
+### Basic Security (Everyone)
+
+- [ ] Back up keys in 3+ places
+- [ ] Use password manager
+- [ ] Never screenshot keys
+- [ ] Never share nsec
+- [ ] Keep client software updated
+- [ ] Use unique keys per identity
+
+### Enhanced Security (Active Users)
+
+- [ ] Use signer app
+- [ ] Separate devices/accounts
+- [ ] VPN/Tor for sensitive posts
+- [ ] Regular key rotation (yearly)
+- [ ] Monitor for impersonators
+- [ ] Document recovery procedures
+
+### Maximum Security (High Risk)
+
+- [ ] Air-gapped key generation
+- [ ] Hardware security modules
+- [ ] Self-hosted relay
+- [ ] Tor-only connections
+- [ ] Multiple identity layers
+- [ ] Regular OPSEC audits
+- [ ] Legal consultation
+
+### Audit Yourself
+
+**Questions to ask:**
+
+1. If someone wanted to dox me, what would they find?
+2. Are my multiple identities actually separate?
+3. What happens if my phone is stolen?
+4. Who would I tell if I got compromised?
+5. What's my recovery plan?
+
+---
+
+## Recovery Planning (2 minutes)
+
+### If You Suspect Compromise
+
+**Immediate actions:**
+
+1. **Stop posting** from compromised account
+2. **Document** what happened
+3. **Generate new keys** on secure device
+4. **Announce** the compromise (if public)
+5. **Rotate** to new keys
+6. **Investigate** how it happened
+
+### Building a Recovery Plan
+
+**Before you need it:**
+
+1. **Trusted contacts** - Who can verify your new identity?
+2. **Proof of identity** - How will you prove you're you?
+3. **Out-of-band communication** - How to reach followers if Nostr is compromised?
+4. **NIP-05 control** - Can you update your identifier?
+5. **Backup strategy** - How are keys backed up?
+
+### Communication Template
+
+If compromised, post something like:
+
+```
+⚠️ SECURITY ALERT ⚠️
+
+My account [old npub] has been compromised.
+
+My new account is: [new npub]
+
+This message is signed by both keys to prove transition.
+
+[Signed message from new key]
+
+Please unfollow the old account and follow this one.
+```
+
+<Callout type="info">
+  **Hope for the best, plan for the worst.** Having a recovery plan reduces
+  panic if something goes wrong.
+</Callout>
+
+---
+
+## Test Your Knowledge
+
+<SecurityQuiz />
+
+---
+
+## Next Steps
+
+<div className="cta-section my-12 text-center py-8 bg-primary/5 rounded-lg">
+  <h3 className="text-2xl font-bold mb-4">Ready to Find Your Community?</h3>
+  <p className="text-muted-foreground mb-6">
+    Learn strategies for discovering people, communities, and conversations that
+    matter to you.
+  </p>
+  <CTAButton variant="primary" size="lg" href="/guides/finding-community">
+    Continue: Finding Your Community →
+  </CTAButton>
+</div>
+
+---
+
+## Quick Reference
+
+**Minimum Security:**
+
+- 3 backups of keys
+- Password manager
+- Never share nsec
+
+**Enhanced Security:**
+
+- Use signer app
+- Separate identities
+- VPN for privacy
+- Regular audits
+
+**Maximum Security:**
+
+- Air-gapped keys
+- Hardware wallets
+- Tor-only
+- Professional OPSEC
+
+**Remember:** Security is a journey, not a destination. Start with basics, improve over time.

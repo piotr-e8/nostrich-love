@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Primal Logo Placeholder - Lightning/energy bolt -->
+  <defs>
+    <linearGradient id="primalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700"/>
+      <stop offset="50%" style="stop-color:#FFA500"/>
+      <stop offset="100%" style="stop-color:#FF8C00"/>
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="45" fill="#1a1a2e"/>
+  <path d="M55 15 L35 45 L50 45 L40 85 L70 50 L55 50 L65 15 Z" fill="url(#primalGrad)" stroke="#FF6347" stroke-width="1"/>
+</svg>

@@ -1,0 +1,808 @@
+/**
+ * YakiHonne Theme - Bitcoin Orange Accent
+ * Cross-platform design with orange Bitcoin accents (#F7931A)
+ */
+
+/* Bitcoin Orange Color System */
+:root {
+  /* Primary - Bitcoin Orange */
+  --yh-primary: #F7931A;
+  --yh-primary-light: #FFB84D;
+  --yh-primary-dark: #C7760D;
+  --yh-on-primary: #FFFFFF;
+  
+  /* Secondary - Dark Gray */
+  --yh-secondary: #4A4A4A;
+  --yh-secondary-light: #6A6A6A;
+  --yh-secondary-dark: #2A2A2A;
+  --yh-on-secondary: #FFFFFF;
+  
+  /* Accent Colors */
+  --yh-accent-purple: #8B5CF6;
+  --yh-accent-green: #10B981;
+  --yh-accent-blue: #3B82F6;
+  --yh-accent-red: #EF4444;
+  
+  /* Background Colors */
+  --yh-background: #FFFFFF;
+  --yh-background-secondary: #F8F9FA;
+  --yh-background-tertiary: #F1F3F4;
+  --yh-on-background: #1A1A1A;
+  
+  /* Surface Colors */
+  --yh-surface: #FFFFFF;
+  --yh-surface-variant: #F1F3F4;
+  --yh-on-surface: #1A1A1A;
+  --yh-on-surface-variant: #5F6368;
+  
+  /* Border Colors */
+  --yh-border: #E0E0E0;
+  --yh-border-light: #F0F0F0;
+  
+  /* Text Colors */
+  --yh-text-primary: #1A1A1A;
+  --yh-text-secondary: #5F6368;
+  --yh-text-tertiary: #9AA0A6;
+  --yh-text-link: #F7931A;
+  
+  /* Status Colors */
+  --yh-success: #10B981;
+  --yh-warning: #F59E0B;
+  --yh-error: #EF4444;
+  --yh-info: #3B82F6;
+  
+  /* Bitcoin Specific */
+  --yh-satoshi: #F7931A;
+  --yh-lightning: #FDD835;
+  
+  /* Shadows */
+  --yh-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --yh-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --yh-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --yh-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Spacing */
+  --yh-space-xs: 4px;
+  --yh-space-sm: 8px;
+  --yh-space-md: 16px;
+  --yh-space-lg: 24px;
+  --yh-space-xl: 32px;
+  --yh-space-2xl: 48px;
+  
+  /* Border Radius */
+  --yh-radius-sm: 6px;
+  --yh-radius-md: 12px;
+  --yh-radius-lg: 16px;
+  --yh-radius-xl: 24px;
+  --yh-radius-full: 9999px;
+  
+  /* Typography */
+  --yh-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --yh-font-mono: 'SF Mono', Monaco, monospace;
+  
+  /* Transitions */
+  --yh-transition-fast: 150ms ease;
+  --yh-transition-normal: 250ms ease;
+  --yh-transition-slow: 350ms ease;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --yh-background: #0D0D0D;
+  --yh-background-secondary: #1A1A1A;
+  --yh-background-tertiary: #2A2A2A;
+  --yh-on-background: #FFFFFF;
+  
+  --yh-surface: #1A1A1A;
+  --yh-surface-variant: #2A2A2A;
+  --yh-on-surface: #FFFFFF;
+  --yh-on-surface-variant: #A0A0A0;
+  
+  --yh-border: #333333;
+  --yh-border-light: #222222;
+  
+  --yh-text-primary: #FFFFFF;
+  --yh-text-secondary: #A0A0A0;
+  --yh-text-tertiary: #666666;
+  
+  --yh-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --yh-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --yh-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+}
+
+/* YakiHonne Simulator Container */
+.yakihonne-simulator {
+  font-family: var(--yh-font-family);
+  background-color: var(--yh-background);
+  color: var(--yh-on-background);
+  max-width: 420px;
+  margin: 0 auto;
+  height: 100vh;
+  max-height: 900px;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--yh-radius-xl);
+  box-shadow: var(--yh-shadow-xl);
+  display: flex;
+  flex-direction: column;
+}
+
+.yakihonne-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: var(--yh-background-secondary);
+}
+
+/* Status Bar */
+.yakihonne-status-bar {
+  background-color: var(--yh-surface);
+  color: var(--yh-on-surface);
+  padding: var(--yh-space-sm) var(--yh-space-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 50;
+}
+
+/* Header */
+.yakihonne-header {
+  background-color: var(--yh-surface);
+  padding: var(--yh-space-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--yh-border);
+}
+
+.yakihonne-header-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--yh-text-primary);
+}
+
+.yakihonne-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--yh-space-sm);
+  color: var(--yh-primary);
+}
+
+/* Bottom Navigation */
+.yakihonne-bottom-nav {
+  background-color: var(--yh-surface);
+  border-top: 1px solid var(--yh-border);
+  display: flex;
+  justify-content: space-around;
+  padding: var(--yh-space-sm) 0 calc(var(--yh-space-sm) + env(safe-area-inset-bottom));
+  position: relative;
+}
+
+.yakihonne-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: var(--yh-space-xs) var(--yh-space-sm);
+  color: var(--yh-text-secondary);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: var(--yh-radius-md);
+  transition: all var(--yh-transition-fast);
+  position: relative;
+}
+
+.yakihonne-nav-item:hover {
+  color: var(--yh-primary);
+}
+
+.yakihonne-nav-item.active {
+  color: var(--yh-primary);
+}
+
+.yakihonne-nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  width: 4px;
+  height: 4px;
+  background-color: var(--yh-primary);
+  border-radius: var(--yh-radius-full);
+}
+
+/* Content Tabs */
+.yakihonne-tabs {
+  display: flex;
+  background-color: var(--yh-surface);
+  border-bottom: 1px solid var(--yh-border);
+  padding: 0 var(--yh-space-md);
+  gap: var(--yh-space-lg);
+}
+
+.yakihonne-tab {
+  padding: var(--yh-space-md) 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--yh-text-secondary);
+  cursor: pointer;
+  position: relative;
+  transition: color var(--yh-transition-fast);
+  white-space: nowrap;
+}
+
+.yakihonne-tab:hover {
+  color: var(--yh-text-primary);
+}
+
+.yakihonne-tab.active {
+  color: var(--yh-primary);
+}
+
+.yakihonne-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--yh-primary);
+  border-radius: 2px 2px 0 0;
+}
+
+/* Cards */
+.yakihonne-card {
+  background-color: var(--yh-surface);
+  border-radius: var(--yh-radius-lg);
+  box-shadow: var(--yh-shadow-sm);
+  overflow: hidden;
+  margin-bottom: var(--yh-space-md);
+  transition: transform var(--yh-transition-fast), box-shadow var(--yh-transition-fast);
+}
+
+.yakihonne-card:hover {
+  box-shadow: var(--yh-shadow-md);
+}
+
+.yakihonne-card-header {
+  padding: var(--yh-space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--yh-space-md);
+}
+
+.yakihonne-card-content {
+  padding: 0 var(--yh-space-md) var(--yh-space-md);
+}
+
+.yakihonne-card-footer {
+  padding: var(--yh-space-md);
+  border-top: 1px solid var(--yh-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Article Card Specific */
+.yakihonne-article-card {
+  background-color: var(--yh-surface);
+  border-radius: var(--yh-radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--yh-space-md);
+  box-shadow: var(--yh-shadow-sm);
+}
+
+.yakihonne-article-cover {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+.yakihonne-article-content {
+  padding: var(--yh-space-md);
+}
+
+.yakihonne-article-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--yh-text-primary);
+  line-height: 1.4;
+  margin-bottom: var(--yh-space-sm);
+}
+
+.yakihonne-article-summary {
+  font-size: 14px;
+  color: var(--yh-text-secondary);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.yakihonne-article-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--yh-space-md);
+  font-size: 13px;
+  color: var(--yh-text-tertiary);
+  margin-top: var(--yh-space-md);
+}
+
+/* Media Grid */
+.yakihonne-media-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background-color: var(--yh-background);
+}
+
+.yakihonne-media-item {
+  aspect-ratio: 1;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.yakihonne-media-item img,
+.yakihonne-media-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--yh-transition-normal);
+}
+
+.yakihonne-media-item:hover img,
+.yakihonne-media-item:hover video {
+  transform: scale(1.05);
+}
+
+.yakihonne-media-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 100%);
+  opacity: 0;
+  transition: opacity var(--yh-transition-fast);
+  display: flex;
+  align-items: flex-end;
+  padding: var(--yh-space-sm);
+}
+
+.yakihonne-media-item:hover .yakihonne-media-overlay {
+  opacity: 1;
+}
+
+/* Wallet Display */
+.yakihonne-wallet {
+  background: linear-gradient(135deg, var(--yh-primary) 0%, var(--yh-primary-dark) 100%);
+  border-radius: var(--yh-radius-xl);
+  padding: var(--yh-space-xl);
+  color: white;
+  margin: var(--yh-space-md);
+  box-shadow: var(--yh-shadow-lg);
+}
+
+.yakihonne-wallet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--yh-space-lg);
+}
+
+.yakihonne-wallet-label {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.yakihonne-wallet-balance {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: var(--yh-space-sm);
+}
+
+.yakihonne-wallet-balance-sats {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.yakihonne-wallet-actions {
+  display: flex;
+  gap: var(--yh-space-md);
+  margin-top: var(--yh-space-lg);
+}
+
+.yakihonne-wallet-btn {
+  flex: 1;
+  padding: var(--yh-space-md);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: var(--yh-radius-md);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--yh-transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--yh-space-sm);
+}
+
+.yakihonne-wallet-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Transaction Item */
+.yakihonne-transaction {
+  display: flex;
+  align-items: center;
+  gap: var(--yh-space-md);
+  padding: var(--yh-space-md);
+  background-color: var(--yh-surface);
+  border-radius: var(--yh-radius-md);
+  margin-bottom: var(--yh-space-sm);
+}
+
+.yakihonne-transaction-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--yh-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.yakihonne-transaction-icon.receive {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--yh-success);
+}
+
+.yakihonne-transaction-icon.send {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--yh-error);
+}
+
+.yakihonne-transaction-icon.zap {
+  background-color: rgba(253, 216, 53, 0.2);
+  color: var(--yh-lightning);
+}
+
+.yakihonne-transaction-details {
+  flex: 1;
+}
+
+.yakihonne-transaction-title {
+  font-weight: 600;
+  color: var(--yh-text-primary);
+  font-size: 15px;
+}
+
+.yakihonne-transaction-subtitle {
+  font-size: 13px;
+  color: var(--yh-text-tertiary);
+}
+
+.yakihonne-transaction-amount {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.yakihonne-transaction-amount.positive {
+  color: var(--yh-success);
+}
+
+.yakihonne-transaction-amount.negative {
+  color: var(--yh-text-primary);
+}
+
+/* Buttons */
+.yakihonne-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--yh-space-sm);
+  padding: var(--yh-space-md) var(--yh-space-lg);
+  border-radius: var(--yh-radius-md);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all var(--yh-transition-fast);
+  border: none;
+  outline: none;
+}
+
+.yakihonne-btn-primary {
+  background-color: var(--yh-primary);
+  color: var(--yh-on-primary);
+}
+
+.yakihonne-btn-primary:hover {
+  background-color: var(--yh-primary-dark);
+}
+
+.yakihonne-btn-secondary {
+  background-color: var(--yh-surface-variant);
+  color: var(--yh-on-surface);
+}
+
+.yakihonne-btn-secondary:hover {
+  background-color: var(--yh-border);
+}
+
+.yakihonne-btn-outline {
+  background-color: transparent;
+  color: var(--yh-primary);
+  border: 1.5px solid var(--yh-primary);
+}
+
+.yakihonne-btn-outline:hover {
+  background-color: var(--yh-primary);
+  color: var(--yh-on-primary);
+}
+
+/* Action Bar */
+.yakihonne-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--yh-space-lg);
+}
+
+.yakihonne-action {
+  display: flex;
+  align-items: center;
+  gap: var(--yh-space-xs);
+  color: var(--yh-text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: color var(--yh-transition-fast);
+}
+
+.yakihonne-action:hover {
+  color: var(--yh-primary);
+}
+
+.yakihonne-action.active {
+  color: var(--yh-primary);
+}
+
+/* Avatar */
+.yakihonne-avatar {
+  border-radius: var(--yh-radius-full);
+  object-fit: cover;
+  background-color: var(--yh-surface-variant);
+}
+
+.yakihonne-avatar-sm {
+  width: 32px;
+  height: 32px;
+}
+
+.yakihonne-avatar-md {
+  width: 44px;
+  height: 44px;
+}
+
+.yakihonne-avatar-lg {
+  width: 64px;
+  height: 64px;
+}
+
+.yakihonne-avatar-xl {
+  width: 80px;
+  height: 80px;
+}
+
+/* Form Elements */
+.yakihonne-input {
+  width: 100%;
+  padding: var(--yh-space-md);
+  background-color: var(--yh-surface-variant);
+  border: 1px solid transparent;
+  border-radius: var(--yh-radius-md);
+  font-size: 15px;
+  color: var(--yh-text-primary);
+  transition: all var(--yh-transition-fast);
+}
+
+.yakihonne-input:focus {
+  outline: none;
+  border-color: var(--yh-primary);
+  background-color: var(--yh-surface);
+}
+
+.yakihonne-input::placeholder {
+  color: var(--yh-text-tertiary);
+}
+
+.yakihonne-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: var(--yh-space-md);
+  background-color: var(--yh-surface-variant);
+  border: 1px solid transparent;
+  border-radius: var(--yh-radius-md);
+  font-size: 15px;
+  color: var(--yh-text-primary);
+  resize: vertical;
+  transition: all var(--yh-transition-fast);
+}
+
+.yakihonne-textarea:focus {
+  outline: none;
+  border-color: var(--yh-primary);
+  background-color: var(--yh-surface);
+}
+
+/* Settings Item */
+.yakihonne-setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--yh-space-md);
+  background-color: var(--yh-surface);
+  border-bottom: 1px solid var(--yh-border-light);
+}
+
+.yakihonne-setting-label {
+  display: flex;
+  align-items: center;
+  gap: var(--yh-space-md);
+}
+
+.yakihonne-setting-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--yh-radius-md);
+  background-color: var(--yh-surface-variant);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--yh-primary);
+}
+
+.yakihonne-setting-text {
+  font-weight: 500;
+  color: var(--yh-text-primary);
+}
+
+/* Compose Toolbar */
+.yakihonne-compose-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--yh-space-md);
+  padding: var(--yh-space-md);
+  border-top: 1px solid var(--yh-border);
+}
+
+.yakihonne-toolbar-btn {
+  padding: var(--yh-space-sm);
+  color: var(--yh-text-secondary);
+  cursor: pointer;
+  border-radius: var(--yh-radius-md);
+  transition: all var(--yh-transition-fast);
+}
+
+.yakihonne-toolbar-btn:hover {
+  color: var(--yh-primary);
+  background-color: var(--yh-surface-variant);
+}
+
+/* Floating Action Button */
+.yakihonne-fab {
+  position: absolute;
+  bottom: 80px;
+  right: var(--yh-space-md);
+  width: 56px;
+  height: 56px;
+  border-radius: var(--yh-radius-full);
+  background-color: var(--yh-primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--yh-shadow-lg);
+  transition: all var(--yh-transition-fast);
+  z-index: 40;
+}
+
+.yakihonne-fab:hover {
+  background-color: var(--yh-primary-dark);
+  transform: scale(1.05);
+}
+
+/* Badge */
+.yakihonne-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  background-color: var(--yh-primary);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: var(--yh-radius-sm);
+}
+
+.yakihonne-badge-outline {
+  background-color: transparent;
+  color: var(--yh-primary);
+  border: 1px solid var(--yh-primary);
+}
+
+/* Toast Notification */
+.yakihonne-toast {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--yh-secondary-dark);
+  color: white;
+  padding: var(--yh-space-md) var(--yh-space-lg);
+  border-radius: var(--yh-radius-lg);
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: var(--yh-shadow-lg);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: var(--yh-space-sm);
+}
+
+/* Loading Spinner */
+.yakihonne-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--yh-border);
+  border-top-color: var(--yh-primary);
+  border-radius: var(--yh-radius-full);
+  animation: yh-spin 1s linear infinite;
+}
+
+@keyframes yh-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Scrollbar Styling */
+.yakihonne-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.yakihonne-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.yakihonne-content::-webkit-scrollbar-thumb {
+  background: var(--yh-border);
+  border-radius: var(--yh-radius-full);
+}
+
+.yakihonne-content::-webkit-scrollbar-thumb:hover {
+  background: var(--yh-text-tertiary);
+}
+
+/* Home Indicator */
+.yakihonne-home-indicator {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 134px;
+  height: 5px;
+  background-color: var(--yh-text-tertiary);
+  border-radius: var(--yh-radius-full);
+  z-index: 50;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .yakihonne-simulator {
+    border-radius: 0;
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+  }
+}

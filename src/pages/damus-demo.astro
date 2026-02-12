@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { DamusSimulator } from '../simulators/damus';
+
+const title = "Damus Simulator - Interactive Nostr Client Demo";
+const description = "Experience Damus iOS Nostr client in this interactive simulator. Visual demo with mock data showing how decentralized social media works.";
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-gray-100 py-8">
+    <div class="max-w-4xl mx-auto px-4">
+      <header class="mb-8 text-center">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">Damus Simulator</h1>
+        <p class="text-gray-600">Interactive iOS Nostr client simulation</p>
+      </header>
+      
+      <div class="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-md mx-auto">
+        <DamusSimulator client:load />
+      </div>
+      
+      <div class="mt-8 text-center text-sm text-gray-500">
+        <p>This is a visual simulation with mock data for educational purposes.</p>
+        <p class="mt-2">
+          <a href="https://damus.io" target="_blank" rel="noopener noreferrer" class="text-purple-600 hover:underline">
+            Download the real Damus app →
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>

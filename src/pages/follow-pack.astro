@@ -1,0 +1,255 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import { FollowPackFinder } from '../components/follow-pack';
+
+const title = 'Find People to Follow';
+const description = 'Discover 100+ curated Nostr accounts by category. Build your follow pack and export via QR code to any client. No empty feed!';
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 dark:from-primary/10 dark:to-secondary/10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 relative">
+        <div class="max-w-4xl mx-auto text-center">
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            Solve the Empty Feed Problem
+          </div>
+          
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
+            Find Your First
+            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"> 100+ Accounts </span>
+            to Follow
+          </h1>
+          
+          <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+            Browse curated Nostr accounts by category—Influencers, Developers, Bitcoiners, Creators, and more. 
+            Select the ones you like, generate a follow pack, and import it via QR code into any client.
+          </p>
+          
+          <div class="flex flex-wrap justify-center gap-4 text-sm">
+            <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 flex items-center justify-center text-xs">✓</span>
+              100% Free
+            </div>
+            <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 flex items-center justify-center text-xs">✓</span>
+              No Registration
+            </div>
+            <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 flex items-center justify-center text-xs">✓</span>
+              Export to Any Client
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Tool Section -->
+    <section class="py-8 lg:py-12 bg-gray-50 dark:bg-gray-900/30">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+          <FollowPackFinder client:load />
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-16 bg-white dark:bg-gray-800">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-12">
+            How It Works
+          </h2>
+          
+          <div class="grid md:grid-cols-3 gap-8">
+            <div class="text-center">
+              <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-primary/10 flex items-center justify-center">
+                <span class="text-2xl">1️⃣</span>
+              </div>
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Browse & Select</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Explore 100+ curated accounts by category. Click "Follow" on the ones you find interesting.
+              </p>
+            </div>
+            
+            <div class="text-center">
+              <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-secondary/10 flex items-center justify-center">
+                <span class="text-2xl">2️⃣</span>
+              </div>
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Build Your Pack</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Select 20-50 accounts for a diverse feed. The sidebar shows your category breakdown.
+              </p>
+            </div>
+            
+            <div class="text-center">
+              <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-green-100 dark:bg-green-900/20 flex items-center justify-center">
+                <span class="text-2xl">3️⃣</span>
+              </div>
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Export & Import</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Generate a QR code or copy the list. Import into Amethyst, Damus, or any client.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories Preview -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-8">
+            Account Categories
+          </h2>
+          
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <div class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 text-center">
+              <div class="text-2xl mb-2">⭐</div>
+              <p class="font-medium text-gray-900 dark:text-white text-sm">Influencers</p>
+              <p class="text-xs text-gray-500">High-profile</p>
+            </div>
+            
+            <div class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 text-center">
+              <div class="text-2xl mb-2">💻</div>
+              <p class="font-medium text-gray-900 dark:text-white text-sm">Developers</p>
+              <p class="text-xs text-gray-500">Builders</p>
+            </div>
+            
+            <div class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 text-center">
+              <div class="text-2xl mb-2">₿</div>
+              <p class="font-medium text-gray-900 dark:text-white text-sm">Bitcoiners</p>
+              <p class="text-xs text-gray-500">Maxis</p>
+            </div>
+            
+            <div class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 text-center">
+              <div class="text-2xl mb-2">🎨</div>
+              <p class="font-medium text-gray-900 dark:text-white text-sm">Creators</p>
+              <p class="text-xs text-gray-500">Artists</p>
+            </div>
+            
+            <div class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 text-center">
+              <div class="text-2xl mb-2">📚</div>
+              <p class="font-medium text-gray-900 dark:text-white text-sm">Education</p>
+              <p class="text-xs text-gray-500">Teachers</p>
+            </div>
+            
+            <div class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 text-center">
+              <div class="text-2xl mb-2">📰</div>
+              <p class="font-medium text-gray-900 dark:text-white text-sm">News</p>
+              <p class="text-xs text-gray-500">Media</p>
+            </div>
+            
+            <div class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 text-center">
+              <div class="text-2xl mb-2">🔒</div>
+              <p class="font-medium text-gray-900 dark:text-white text-sm">Privacy</p>
+              <p class="text-xs text-gray-500">Security</p>
+            </div>
+            
+            <div class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 text-center">
+              <div class="text-2xl mb-2">👥</div>
+              <p class="font-medium text-gray-900 dark:text-white text-sm">Plebs</p>
+              <p class="text-xs text-gray-500">Community</p>
+            </div>
+            
+            <div class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 text-center">
+              <div class="text-2xl mb-2">😂</div>
+              <p class="font-medium text-gray-900 dark:text-white text-sm">Humor</p>
+              <p class="text-xs text-gray-500">Memes</p>
+            </div>
+            
+            <div class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 text-center">
+              <div class="text-2xl mb-2">🌍</div>
+              <p class="font-medium text-gray-900 dark:text-white text-sm">Regional</p>
+              <p class="text-xs text-gray-500">Languages</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-white dark:bg-gray-800">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-8">
+            Frequently Asked Questions
+          </h2>
+          
+          <div class="space-y-4">
+            <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Is this free to use?</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">
+                Yes! 100% free. No registration, no tracking, no strings attached. We built this to help newcomers avoid the empty feed problem.
+              </p>
+            </div>
+            
+            <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">How do I import into my client?</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">
+                Generate a QR code and scan it with your Nostr client, or copy the npub list and paste it into your client's "Import Follows" feature. Works with Amethyst, Damus, Coracle, Primal, and more.
+              </p>
+            </div>
+            
+            <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">How many accounts should I follow?</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">
+                We recommend starting with 20-50 accounts. This gives you a diverse, active feed without being overwhelming. You can always add more later as you discover people organically!
+              </p>
+            </div>
+            
+            <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Who curated these accounts?</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">
+                We researched active, high-quality Nostr accounts across different categories. All accounts are verified for activity and appropriate content. Want to suggest an account? Open a PR on GitHub!
+              </p>
+            </div>
+            
+            <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Will my selections be saved?</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">
+                Yes! Your selections are saved locally in your browser. You can come back later and your pack will still be there. Nothing is sent to any server—everything stays on your device.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-primary/10 to-secondary/10 dark:from-primary/5 dark:to-secondary/5">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mx-auto text-center">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            Ready to Build Your Network?
+          </h2>
+          
+          <p class="text-gray-600 dark:text-gray-300 mb-8">
+            Start discovering accounts now. Your first 100 follows are just a few clicks away!
+          </p>
+          
+          <a
+            href="#main-content"
+            class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-xl font-semibold hover:bg-primary/90 transition-colors"
+          >
+            Get Started
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

@@ -1,0 +1,109 @@
+---
+title: "Welcome to Nostr: Your First Step into Decentralized Social"
+description: "Get started with Nostr in minutes. No accounts, no companies, just you and your keys. The beginner-friendly guide to decentralized social media."
+estimatedTime: "3 minutes"
+priority: 1
+category: "getting-started"
+---
+
+import { NostrSimulator } from "@components/NostrSimulator";
+import { CTAButton } from "@components/CTAButton";
+import { ValueCard } from "@components/ValueCard";
+
+<div className="hero-section">
+  <h1 className="text-4xl md:text-6xl font-bold mb-6">
+    Welcome to Nostr
+    <span className="block text-primary">
+      Your First Step into Decentralized Social
+    </span>
+  </h1>
+
+  <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+    No accounts to create. No companies controlling your data. Just you and your
+    keys.
+  </p>
+</div>
+
+<div className="simulator-section my-12">
+  <NostrSimulator client:load />
+</div>
+
+<div className="entry-points grid md:grid-cols-3 gap-4 my-12">
+  <CTAButton
+    variant="primary"
+    href="/guides/quickstart"
+    className="text-lg py-6"
+  >
+    🚀 I'm Brand New
+    <span className="block text-sm font-normal mt-1">
+      Start the guided path
+    </span>
+  </CTAButton>
+
+<CTAButton
+  variant="secondary"
+  href="/guides/troubleshooting"
+  className="text-lg py-6"
+>
+  🔧 I Have Keys But My Feed Is Empty
+  <span className="block text-sm font-normal mt-1">Quick fix in 2 minutes</span>
+</CTAButton>
+
+  <CTAButton variant="outline" href="#simulator" className="text-lg py-6">
+    🤔 Just Curious
+    <span className="block text-sm font-normal mt-1">
+      Try the interactive simulator
+    </span>
+  </CTAButton>
+</div>
+
+## Why Nostr?
+
+<div className="value-props grid md:grid-cols-3 gap-6 my-12">
+  <ValueCard
+    icon="🔑"
+    title="Own Your Identity"
+    description="Your keys = your identity. No one can take it away, lock you out, or delete your account."
+  />
+
+<ValueCard
+  icon="🛡️"
+  title="Censorship Resistant"
+  description="Post what you want. Switch clients anytime. Your followers come with you everywhere."
+/>
+
+  <ValueCard
+    icon="🌍"
+    title="Works Everywhere"
+    description="One identity, infinite apps. Use the client you love while staying connected to everyone."
+  />
+</div>
+
+<div className="social-proof text-center my-16 py-8 bg-primary/5 rounded-lg">
+  <p className="text-2xl font-semibold text-primary">
+    Join <span className="count-up">100,000+</span> people already on Nostr
+  </p>
+  <p className="text-muted-foreground mt-2">
+    Growing every day across hundreds of apps
+  </p>
+</div>
+
+## How It Works in 30 Seconds
+
+1. **Create Keys** → A public key (npub) and private key (nsec)
+2. **Pick a Client** → The app you'll use to post and browse
+3. **Connect to Relays** → Servers that store and share your posts
+4. **Start Posting** → Your content flows through the network
+
+[Want the full story? Read "What is Nostr?" →](/guides/what-is-nostr)
+
+---
+
+<div className="footer-links text-center py-8">
+  <p className="text-muted-foreground text-sm">
+    <a href="/guides/what-is-nostr">What is Nostr?</a> •
+    <a href="/guides/keys-and-security">Keys & Security</a> •
+    <a href="/guides/quickstart">Quickstart</a> •<a href="/guides/faq">FAQ</a> •
+    <a href="/guides/relay-guide">Relay Guide</a>
+  </p>
+</div>

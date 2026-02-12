@@ -1,0 +1,160 @@
+---
+title: "Quickstart: Your First 5 Minutes on Nostr"
+description: "Experience Nostr risk-free. Generate keys, explore clients with simulations, compare features, and launch confidently."
+estimatedTime: "8-12 minutes"
+priority: 4
+category: "getting-started"
+prerequisites: ["what-is-nostr", "keys-and-security"]
+---
+
+import { QuickstartSimulator } from "@components/QuickstartSimulator";
+import { ClientRecommender } from "@components/ClientRecommender";
+import { ClientComparisonTable } from "@components/ClientComparisonTable";
+
+<div className="text-center mb-8">
+  <h1 className="text-4xl md:text-5xl font-bold mb-4">
+    Practice Before The Game
+  </h1>
+  <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+    Try Nostr risk-free. Generate keys, test different clients, and experience your first day before going live.
+  </p>
+</div>
+
+---
+
+## Step 1: Generate Your Keys (1 min)
+
+Your keys are your identity on Nostr. Generate them right here — they're **real** and you can use them on actual clients.
+
+<QuickstartSimulator mode="keygen" client:load />
+
+**What you just created:**
+- `npub...` = your public username (safe to share)
+- `nsec...` = your private password (NEVER share with anyone)
+
+**Important:** Back up your `nsec` in 3+ places. Lose it = lose your account forever.
+
+---
+
+## Step 2: Choose Your Client
+
+Nostr isn't one app — it's a protocol with **dozens of clients**. Think of it like email: Gmail, Outlook, and Apple Mail all access the same email system. Your keys work everywhere.
+
+### A. Experience It First
+
+Don't pick blindly. Click a client below to experience how it feels:
+
+<QuickstartSimulator mode="client-picker" client:load />
+
+**What to look for:**
+- **Interface** — Do you like the layout and colors?
+- **Speed** — How fast do posts load?
+- **Features** — Can you easily find what you need?
+- **Vibe** — Does it feel right for your style?
+
+**Try at least 2 different clients** to compare.
+
+### B. Compare Features Side-by-Side
+
+Liked one from above? See how it compares to all alternatives:
+
+<ClientComparisonTable client:load />
+
+### C. Pick by Platform
+
+**Quick picks by your device:**
+
+| Platform | Best for Beginners | Best for Power Users |
+|----------|-------------------|---------------------|
+| **iPhone/iPad** | Damus | Current, Nostur |
+| **Android** | Amethyst, Primal | Amethyst |
+| **Web/Desktop** | Primal, Iris | Coracle |
+
+---
+
+## Step 3: Simulate Your First Day (2 min)
+
+Now let's practice a typical first day on Nostr:
+
+<QuickstartSimulator mode="first-day" client:load />
+
+**You'll practice:**
+
+1. **Connect to relays** — Join the network by connecting to servers that share posts
+2. **Make your first post** — Say hello to the Nostr world
+3. **Follow accounts** — Build your feed with interesting people
+4. **React to posts** — Join conversations with likes and replies
+5. **Receive a zap** — Experience Bitcoin tips (Lightning Network)
+
+**This is exactly what you'll do on real Nostr** — but with zero risk.
+
+---
+
+## Step 4: Confirm Your Choice
+
+Still unsure? Let our quiz find your match:
+
+<ClientRecommender client:load className="my-8" />
+
+---
+
+## You're Ready to Launch
+
+### What Syncs Automatically
+
+Your keys work on every client. When you switch:
+
+✅ **Your posts** — Stored on relays, available everywhere  
+✅ **Your followers** — Follow list is public  
+✅ **Your following** — Same as above  
+✅ **Your profile** — Name, bio, picture, NIP-05  
+✅ **Your relays** — Via NIP-65 relay list
+
+### What Doesn't Sync
+
+❌ **App settings** — Each client has its own preferences  
+❌ **Drafts** — Stored locally in each app  
+❌ **Muted accounts** — May vary by client  
+❌ **Custom lists** — Client-specific features
+
+### How to Switch Clients Later
+
+1. **Export your key** from current client (nsec)
+2. **Download new client** or open web app
+3. **Import your key** using nsec
+4. **Wait for sync** — Follows and profile load automatically
+5. **Adjust settings** to your preference
+
+> ⚠️ **Security**: Only paste your nsec into clients you trust. When in doubt, use a signer app like Amber or Nos2x.
+
+---
+
+## Common Questions
+
+**"Can I use the keys I generated here on real Nostr?"**
+Yes! They're real keys. Save them safely.
+
+**"What if I mess up?"**
+In simulation? No consequences. On real Nostr? Keys are permanent, but you can always create new ones.
+
+**"Do I need Bitcoin to start?"**
+No. Nostr is free. Zaps (tips) are optional.
+
+**"What if I don't like my first client?"**
+Switch! Your identity (keys) works on every client. Your followers come with you.
+
+**"Should I use multiple clients?"**
+Many users do! One for mobile, one for desktop, one for specific features.
+
+---
+
+## Next Steps
+
+After you've launched:
+
+1. **[Set Up Your Profile](/guides/nip05-identity)** — Get a human-readable name (you@domain.com)
+2. **[Learn About Zaps](/guides/zaps-and-lightning)** — Start receiving Bitcoin tips
+3. **[Find Your Community](/guides/finding-community)** — Connect with like-minded people
+4. **[Understand Relays](/guides/relays-demystified)** — Optimize your connection strategy
+
+**Welcome to Nostr. You got this.** 🚀

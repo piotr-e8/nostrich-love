@@ -1,0 +1,226 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+
+const title = 'Glossary';
+const description = 'Complete glossary of Nostr terms and concepts. Understand key terminology like npub, nsec, relays, NIPs, zaps, and more.';
+
+const glossaryTerms = [
+  {
+    term: 'Nostr',
+    definition: 'Notes and Other Stuff Transmitted by Relays. A decentralized protocol for social media and other applications.',
+  },
+  {
+    term: 'npub',
+    definition: 'Your public key (public identifier) in Nostr. Safe to share with anyone. Looks like npub1...',
+  },
+  {
+    term: 'nsec',
+    definition: 'Your private key (secret key) in Nostr. Never share this with anyone! Looks like nsec1...',
+  },
+  {
+    term: 'Relay',
+    definition: 'A server that stores and forwards Nostr events. Users connect to relays to publish and receive content.',
+  },
+  {
+    term: 'Client',
+    definition: 'An application that connects to Nostr relays, allowing users to read and publish notes. Examples: Damus, Iris, Amethyst.',
+  },
+  {
+    term: 'NIP',
+    definition: 'Nostr Implementation Possibility. A document describing how to implement specific Nostr features. NIP-01 is the basic protocol.',
+  },
+  {
+    term: 'Zap',
+    definition: 'A Bitcoin Lightning Network payment sent over Nostr. Used to tip or support other users.',
+  },
+  {
+    term: 'NIP-05',
+    definition: 'A standard for human-readable identifiers (like username@domain.com) mapped to Nostr public keys.',
+  },
+  {
+    term: 'Event',
+    definition: 'The basic unit of data in Nostr. Can be a note (post), metadata, contact list, reaction, or other types.',
+  },
+  {
+    term: 'Kind',
+    definition: 'A number indicating the type of an event. Kind 1 is a text note (regular post), Kind 0 is metadata, etc.',
+  },
+  {
+    term: 'Pubkey',
+    definition: 'Short for public key. Your identifier on the Nostr network, derived from your private key.',
+  },
+  {
+    term: '_nsec',
+    definition: 'Bech32-encoded private key format. Starts with "nsec1" and should be kept secret.',
+  },
+  {
+    term: '_npub',
+    definition: 'Bech32-encoded public key format. Starts with "npub1" and is safe to share publicly.',
+  },
+  {
+    term: 'Feed',
+    definition: 'A chronological stream of posts from accounts you follow, displayed in your Nostr client.',
+  },
+  {
+    term: 'Follow List',
+    definition: 'A list of public keys you follow, stored as a special event (Kind 3) on relays.',
+  },
+  {
+    term: 'Relay List',
+    definition: 'A list of relays you use, stored as a special event (Kind 10002 with NIP-65).',
+  },
+  {
+    term: 'DM',
+    definition: 'Direct Message. Encrypted private messages between Nostr users (NIP-04 or NIP-17).',
+  },
+  {
+    term: 'Mention',
+    definition: 'Referencing another user in a note using their npub or NIP-05 identifier.',
+  },
+  {
+    term: 'Hashtag',
+    definition: 'Topics or keywords prefixed with # to categorize content and make it discoverable.',
+  },
+  {
+    term: 'Thread',
+    definition: 'A series of connected notes (replies) forming a conversation.',
+  },
+  {
+    term: 'Boost / Repost',
+    definition: 'Sharing someone else\'s note to your followers (Kind 6 event).',
+  },
+  {
+    term: 'Reaction',
+    definition: 'A simple emoji response to a note (Kind 7 event). Usually a like (❤️).',
+  },
+  {
+    term: 'LNURL',
+    definition: 'Lightning Network URL. A standard for Lightning Network payment interactions.',
+  },
+  {
+    term: 'Lightning Address',
+    definition: 'A human-readable identifier for receiving Lightning payments (like name@domain.com).',
+  },
+  {
+    term: 'Nostr Address',
+    definition: 'A NIP-05 identifier that looks like an email address (username@domain.com) mapped to your npub.',
+  },
+  {
+    term: 'Censorship Resistance',
+    definition: 'The ability to publish content without being blocked by a central authority. A core Nostr feature.',
+  },
+];
+
+// Sort alphabetically
+glossaryTerms.sort((a, b) => a.term.localeCompare(b.term));
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 dark:from-primary/5 dark:to-secondary/5" />
+      
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative">
+        <div class="text-center max-w-3xl mx-auto">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Nostr Glossary
+            </span>
+          </h1>
+          <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+            Learn the terminology and concepts you need to navigate the Nostr ecosystem.
+          </p>
+          
+          <!-- Search -->
+          <div class="max-w-xl mx-auto">
+            <input
+              type="text"
+              id="glossary-search"
+              placeholder="Search terms..."
+              class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Glossary Grid -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+          <div class="grid grid-cols-1 gap-4" id="glossary-grid">
+            {glossaryTerms.map((item) => (
+              <div class="glossary-item p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700" data-term={item.term.toLowerCase()} data-definition={item.definition.toLowerCase()}>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{item.term}</h3>
+                <p class="text-gray-600 dark:text-gray-400">{item.definition}</p>
+              </div>
+            ))}
+          </div>
+          
+          <div id="no-results" class="hidden text-center py-12">
+            <p class="text-gray-500 dark:text-gray-400">No terms found matching your search.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Reference -->
+    <section class="py-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Quick Reference</h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 bg-primary/10 dark:bg-primary/20 rounded-xl">
+              <h3 class="font-semibold text-primary mb-1">npub</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Public key - Safe to share</p>
+            </div>
+            <div class="p-4 bg-error-500/10 dark:bg-error-500/20 rounded-xl">
+              <h3 class="font-semibold text-error-500 mb-1">nsec</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Private key - Keep secret!</p>
+            </div>
+            <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-xl">
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-1">NIP-01</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Basic protocol</p>
+            </div>
+            <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-xl">
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-1">Kind 1</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Text note (post)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  const searchInput = document.getElementById('glossary-search') as HTMLInputElement;
+  const glossaryItems = document.querySelectorAll('.glossary-item');
+  const noResults = document.getElementById('no-results');
+
+  searchInput?.addEventListener('input', (e) => {
+    const query = (e.target as HTMLInputElement).value.toLowerCase();
+    let visibleCount = 0;
+
+    glossaryItems.forEach((item) => {
+      const term = item.getAttribute('data-term') || '';
+      const definition = item.getAttribute('data-definition') || '';
+      const shouldShow = term.includes(query) || definition.includes(query);
+
+      (item as HTMLElement).style.display = shouldShow ? 'block' : 'none';
+      if (shouldShow) visibleCount++;
+    });
+
+    if (noResults) {
+      noResults.classList.toggle('hidden', visibleCount > 0);
+    }
+  });
+</script>

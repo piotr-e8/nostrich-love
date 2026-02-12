@@ -1,0 +1,272 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { FAQAccordion } from '../../components/ui/FAQAccordion';
+import { RelatedQuestions } from '../../components/ui/RelatedQuestions';
+import { CTA } from '../../components/ui/CTA';
+import { ValueCard } from '../../components/ValueCard';
+import { Note } from '../../components/ui/Note';
+import { NIP } from '../../components/ui/NIP';
+import { ZapSimulator } from '../../components/ui/ZapSimulator';
+import { ScreenshotGallery } from '../../components/ui/ScreenshotGallery';
+import { RelayWorldMap } from '../../components/ui/RelayWorldMap';
+import { Callout } from '../../components/ui/Callout';
+import { CTAButton } from '../../components/CTAButton';
+import { HoverCard } from '../../components/HoverCard';
+import { ProtocolComparison } from '../../components/ProtocolComparison';
+import { ClientComparisonTable } from '../../components/interactive/ClientComparisonTable';
+import { SecurityQuiz } from '../../components/interactive/SecurityQuiz';
+import { RelayExplorer } from '../../components/interactive/RelayExplorer';
+import { TroubleshootingWizard } from '../../components/interactive/TroubleshootingWizard';
+import { AlertBanner } from '../../components/AlertBanner';
+import { BackupChecklist } from '../../components/BackupChecklist';
+import { ChecklistItem } from '../../components/ChecklistItem';
+import { ClientRecommender } from '../../components/ClientRecommender';
+import { ConfettiAnimation } from '../../components/ConfettiAnimation';
+import { EmptyFeedFixer } from '../../components/EmptyFeedFixer';
+import { KeyGenerator } from '../../components/KeyGenerator';
+import { KeyVisualizer } from '../../components/KeyVisualizer';
+import { NostrSimulator } from '../../components/NostrSimulator';
+import { ProgressBar } from '../../components/ProgressBar';
+import { ProgressIndicator } from '../../components/ui/ProgressIndicator';
+import { RelayVisualizer } from '../../components/ui/RelayVisualizer';
+import { NIP05Checker } from '../../components/interactive/NIP05Checker';
+import { PostFlowSimulator } from '../../components/ui/PostFlowSimulator';
+import { InteractiveChecklist, ChecklistProgress } from '../../components/InteractiveChecklist';
+import { H2, H3 } from '../../components/ReadingTimeHeading';
+import { MinimalProgressBar, GuidePositionIndicator } from '../../components/progress/MinimalProgress';
+import { GuideNavigation } from '../../components/navigation/GuideNavigation';
+import { ContinueLearning } from '../../components/navigation/ContinueLearning';
+import { GuideCompletionIndicator } from '../../components/navigation/GuideCompletionIndicator';
+import { EnhancedGuideCompletionIndicator } from '../../components/navigation/EnhancedGuideCompletionIndicator';
+import { PrerequisiteWarning } from '../../components/navigation/PrerequisiteWarning';
+import { PrerequisiteModal } from '../../components/navigation/PrerequisiteModal';
+
+// Guide order for progress tracking - must match the order in guides/index.astro
+const GUIDE_ORDER = [
+  'protocol-comparison',
+  'what-is-nostr',
+  'keys-and-security',
+  'quickstart',
+  'relays-demystified',
+  'nip05-identity',
+  'zaps-and-lightning',
+  'finding-community',
+  'nostr-tools',
+  'troubleshooting',
+  'relay-guide',
+  'privacy-security',
+  'nip17-private-messages',
+  'multi-client',
+  'faq'
+];
+
+type GuideEntry = CollectionEntry<'guides'>;
+type StaticPath = {
+  params: { slug: string };
+  props: { guide: GuideEntry };
+};
+
+export async function getStaticPaths(): Promise<StaticPath[]> {
+  const allGuides = await getCollection('guides');
+  // Filter for English guides (in en/ subfolder)
+  const guides = allGuides.filter(guide => guide.slug.startsWith('en/'));
+
+  return guides.map((guide) => ({
+    params: { slug: guide.slug.replace('en/', '') },
+    props: {
+      guide,
+    },
+  }));
+}
+
+type PageProps = { guide: GuideEntry };
+const { guide } = Astro.props as PageProps;
+const title = `${guide.data.title} - Nostr Beginner Guide`;
+const description = guide.data.description ?? 'Learn how to use Nostr with our beginner-friendly guides.';
+const { Content } = await guide.render();
+const categoryLabel = guide.data.category ? guide.data.category.replace(/-/g, ' ') : undefined;
+
+// Calculate guide position for progress indicator
+const guideSlug = guide.slug.replace('en/', '');
+const currentGuideNum = GUIDE_ORDER.indexOf(guideSlug) + 1;
+const totalGuides = GUIDE_ORDER.length;
+const estimatedTimeMinutes = parseInt(guide.data.estimatedTime?.match(/\d+/)?.[0] || '10');
+
+// Check if guide has a quiz by looking for Quiz component imports in the raw body
+const hasQuiz = guide.body?.includes('Quiz') || false;
+
+// Calculate prev/next guides for navigation
+const prevGuideSlug = currentGuideNum > 1 ? GUIDE_ORDER[currentGuideNum - 2] : null;
+const nextGuideSlug = currentGuideNum < totalGuides ? GUIDE_ORDER[currentGuideNum] : null;
+
+// Get guide titles for prev/next navigation
+const allGuides = await getCollection('guides');
+const guidesMap = new Map(allGuides.filter(g => g.slug.startsWith('en/')).map(g => [g.slug.replace('en/', ''), g]));
+
+const prevGuide = prevGuideSlug ? {
+  slug: prevGuideSlug,
+  title: guidesMap.get(prevGuideSlug)?.data.title || prevGuideSlug,
+  description: guidesMap.get(prevGuideSlug)?.data.description
+} : undefined;
+
+const nextGuide = nextGuideSlug ? {
+  slug: nextGuideSlug,
+  title: guidesMap.get(nextGuideSlug)?.data.title || nextGuideSlug,
+  description: guidesMap.get(nextGuideSlug)?.data.description
+} : undefined;
+
+// Build guide list for completion indicator
+const guideList = GUIDE_ORDER.map(slug => ({
+  slug,
+  title: guidesMap.get(slug)?.data.title || slug
+}));
+
+// Load prerequisites from guide frontmatter
+const prerequisites = guide.data.prerequisites || [];
+const prerequisiteData = prerequisites.map(prereqSlug => {
+  const prereqGuide = guidesMap.get(prereqSlug);
+  return {
+    slug: prereqSlug,
+    title: prereqGuide?.data.title || prereqSlug
+  };
+});
+
+// Components to make available in MDX
+// Note: Interactive React components need client:load directive added in MDX
+const components = {
+  FAQAccordion,
+  RelatedQuestions,
+  CTA,
+  ValueCard,
+  Note,
+  NIP,
+  ZapSimulator,
+  ScreenshotGallery,
+  RelayWorldMap,
+  Callout,
+  CTAButton,
+  HoverCard,
+  ProtocolComparison,
+  ClientComparisonTable,
+  SecurityQuiz,
+  AlertBanner,
+  BackupChecklist,
+  ChecklistItem,
+  ClientRecommender,
+  ConfettiAnimation,
+  EmptyFeedFixer,
+  KeyGenerator,
+  KeyVisualizer,
+  NostrSimulator,
+  ProgressBar,
+  ProgressIndicator,
+  RelayVisualizer,
+  NIP05Checker,
+  PostFlowSimulator,
+  RelayExplorer,
+  TroubleshootingWizard,
+  InteractiveChecklist,
+  ChecklistProgress,
+  H2,
+  H3,
+};
+---
+
+<Layout title={title} description={description}>
+  <Header />
+
+  <MinimalProgressBar client:load guideId={guideSlug} estimatedTimeMinutes={estimatedTimeMinutes} />
+
+  {/* Show modal for critical guides with incomplete prerequisites */}
+  {prerequisites.length > 0 && guide.data.isCritical && (
+    <PrerequisiteModal
+      client:load
+      currentGuideId={guideSlug}
+      currentGuideTitle={guide.data.title}
+      prerequisites={prerequisiteData}
+      isCritical={true}
+    />
+  )}
+
+  <main id="main-content" class="py-16">
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 dark:from-primary/5 dark:to-secondary/5" />
+
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative">
+        <div class="max-w-3xl mx-auto bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-lg">
+          <article class="prose prose-lg dark:prose-invert max-w-none px-6 sm:px-10 lg:px-12 py-10">
+            <div class="flex items-center justify-between mb-2">
+              <p class="text-sm uppercase tracking-wide text-primary font-semibold">Guide</p>
+              <GuidePositionIndicator client:load currentGuide={currentGuideNum} totalGuides={totalGuides} />
+            </div>
+            
+            <EnhancedGuideCompletionIndicator 
+              client:load 
+              guides={guideList} 
+              currentGuideSlug={guideSlug}
+              currentGuidePrerequisites={prerequisites}
+              className="mb-6" 
+            />
+            <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-3">{guide.data.title}</h1>
+
+            {guide.data.description && (
+              <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">{guide.data.description}</p>
+            )}
+
+            <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-12">
+              {guide.data.estimatedTime && (
+                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  {guide.data.estimatedTime}
+                </span>
+              )}
+
+              {guide.data.category && (
+                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary">
+                  {categoryLabel}
+                </span>
+              )}
+
+              {guide.data.updated && (
+                <span class="inline-flex items-center gap-2">
+                  Last updated {guide.data.updated}
+                </span>
+              )}
+            </div>
+
+            {prerequisiteData.length > 0 && (
+              <PrerequisiteWarning 
+                client:load 
+                currentGuideId={guideSlug}
+                currentGuideTitle={guide.data.title}
+                prerequisites={prerequisiteData}
+                className="mb-8"
+                dismissible={true}
+              />
+            )}
+
+            <Content components={components} />
+            
+            <GuideNavigation 
+              client:load
+              prevGuide={prevGuide}
+              nextGuide={nextGuide}
+              currentGuideNum={currentGuideNum}
+              totalGuides={totalGuides}
+            />
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <ContinueLearning client:load nextGuide={nextGuide} threshold={0.8} hasQuiz={hasQuiz} />
+
+  <Footer />
+</Layout>

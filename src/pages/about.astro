@@ -1,0 +1,150 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+
+const title = 'About';
+const description = 'Learn about the Nostr Beginner Guide - an open-source project dedicated to helping newcomers understand and use the Nostr decentralized social protocol.';
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 dark:from-primary/5 dark:to-secondary/5" />
+      
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative">
+        <div class="text-center max-w-3xl mx-auto">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              About This Guide
+            </span>
+          </h1>
+          <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+            An open-source, community-driven resource for learning Nostr.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="py-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Our Mission</h2>
+          <div class="prose dark:prose-invert max-w-none">
+            <p class="text-lg text-gray-600 dark:text-gray-400 mb-4">
+              The Nostr Beginner Guide was created to make the Nostr protocol accessible to everyone. 
+              We believe that decentralized social media should be easy to understand and use, regardless 
+              of your technical background.
+            </p>
+            <p class="text-lg text-gray-600 dark:text-gray-400 mb-4">
+              Nostr (Notes and Other Stuff Transmitted by Relays) is a simple, open protocol that enables 
+              global, decentralized, and censorship-resistant social media. Unlike traditional platforms, 
+              Nostr puts you in control of your identity and data through cryptographic keys.
+            </p>
+            <p class="text-lg text-gray-600 dark:text-gray-400">
+              This guide is completely free, open-source, and maintained by the community. 
+              No ads, no tracking, no gatekeeping - just pure education.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Principles Section -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">Our Principles</h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
+              <div class="text-3xl mb-4">🔓</div>
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Open Source</h3>
+              <p class="text-gray-600 dark:text-gray-400">
+                All code is publicly available on GitHub. Anyone can contribute, review, or fork the project.
+              </p>
+            </div>
+            
+            <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
+              <div class="text-3xl mb-4">🔒</div>
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Privacy First</h3>
+              <p class="text-gray-600 dark:text-gray-400">
+                No tracking, no cookies, no data collection. We use privacy-friendly analytics.
+              </p>
+            </div>
+            
+            <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
+              <div class="text-3xl mb-4">🌍</div>
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Accessible</h3>
+              <p class="text-gray-600 dark:text-gray-400">
+                Written for everyone, not just developers. Clear explanations without jargon.
+              </p>
+            </div>
+            
+            <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
+              <div class="text-3xl mb-4">⚡</div>
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Community Driven</h3>
+              <p class="text-gray-600 dark:text-gray-400">
+                Built by the Nostr community, for the Nostr community. Contributions welcome!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="py-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Built With</h2>
+          
+          <div class="prose dark:prose-invert max-w-none">
+            <p class="text-gray-600 dark:text-gray-400 mb-4">This website is built using modern, open-source technologies:</p>
+            <ul class="space-y-2 text-gray-600 dark:text-gray-400">
+              <li><strong>Astro</strong> - Fast, modern static site builder</li>
+              <li><strong>React</strong> - Interactive components</li>
+              <li><strong>Tailwind CSS</strong> - Utility-first styling</li>
+              <li><strong>TypeScript</strong> - Type-safe development</li>
+              <li><strong>shadcn/ui</strong> - Beautiful UI components</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contribute Section -->
+    <section class="py-20 bg-gradient-to-br from-primary to-secondary">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold text-white mb-4">
+          Join the Community
+        </h2>
+        <p class="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
+          Help us make Nostr accessible to everyone. Contribute to the guide, report issues, or suggest improvements.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="https://github.com/nostr-protocol/nostr"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-primary bg-white rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+          >
+            Contribute on GitHub
+          </a>
+          <a
+            href="/guides"
+            class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white border-2 border-white/30 hover:border-white rounded-xl transition-all duration-200"
+          >
+            Start Learning
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

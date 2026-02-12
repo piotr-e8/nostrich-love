@@ -1,0 +1,117 @@
+---
+import { DarkModeToggleSimple } from '../ui/DarkModeToggle';
+import { LanguageSwitcher } from '../LanguageSwitcher';
+import { LogoText } from '../ui/LogoText';
+
+const navItems = [
+  { label: 'Guides', href: '/guides' },
+  { label: 'Tools', href: '/tools' },
+  { label: 'Glossary', href: '/glossary' },
+  { label: 'Resources', href: '/resources' },
+  { label: 'About', href: '/about' },
+];
+---
+
+<header class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md transition-colors duration-200" role="banner">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex h-16 items-center justify-between">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3 group" aria-label="Nostrich.love - Home">
+        <div class="w-10 h-10 transition-transform duration-200 group-hover:scale-105 flex-shrink-0">
+          <img class="scale-[1.5]" src="/logo.png" width={40} height={40} alt="" />
+        </div>
+        <LogoText client:load size="sm" className="hidden sm:block" />
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-1" role="navigation" aria-label="Main navigation">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- Right side actions -->
+      <div class="flex items-center gap-1">
+        <LanguageSwitcher client:load />
+        <DarkModeToggleSimple client:load />
+        
+        <!-- Mobile menu button -->
+        <button
+          type="button"
+          class="md:hidden p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          id="mobile-menu-button"
+        >
+          <svg class="w-6 h-6 menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg class="w-6 h-6 close-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <nav 
+      class="md:hidden hidden border-t border-gray-200 dark:border-gray-800 py-4" 
+      id="mobile-menu"
+      role="navigation" 
+      aria-label="Mobile navigation"
+    >
+      <div class="flex flex-col gap-2">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class="px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = mobileMenuButton?.querySelector('.menu-icon');
+  const closeIcon = mobileMenuButton?.querySelector('.close-icon');
+  
+  mobileMenuButton?.addEventListener('click', () => {
+    const isHidden = mobileMenu?.classList.contains('hidden');
+    mobileMenu?.classList.toggle('hidden');
+    menuIcon?.classList.toggle('hidden');
+    closeIcon?.classList.toggle('hidden');
+    mobileMenuButton?.setAttribute('aria-expanded', (!isHidden).toString());
+  });
+  
+  // Close menu when clicking on a link
+  mobileMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      mobileMenu?.classList.add('hidden');
+      menuIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+      mobileMenuButton?.setAttribute('aria-expanded', 'false');
+    });
+  });
+  
+  // Close menu when pressing Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !mobileMenu?.classList.contains('hidden')) {
+      mobileMenu?.classList.add('hidden');
+      menuIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+      mobileMenuButton?.setAttribute('aria-expanded', 'false');
+      mobileMenuButton?.focus();
+    }
+  });
+</script>
