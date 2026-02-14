@@ -1,0 +1,589 @@
+{
+  "permaculture": [
+    {
+      "pubkey": "b17c59874dc05d7f6ec975bce04770c8b7fa9d37f3ad0096fdb76c9385d68928",
+      "npub": "npub1k979np6dcpwh7mkfwk7wq3msezml48fh7wksp9hakakf8pwk3y5qhdz7te",
+      "name": "Andrew",
+      "username": "Andrew",
+      "bio": "Software Engineer by day, aspiring beet farmer by night. ☦️💻⚽🏥📷📈💪☕️🇺🇸🇪🇬\r\n\r\nThings I like: \r\n- #P2P/#decentralized/#opensource stuff\r\n- #History (esp Rome/Greece/Egypt)\r\n- #Transit oriented city design\r\n- #Gadgets/#ElectricVehicles/#Solar Power\r\n- #Space exploration\r\n- #Videogames (especially #GTA)\r\n\r\nThings I've Built:\r\n- Agora: Follow your favorite topics across Mastodon, Bluesky, Nostr, and Threads\r\nhttps://agorasocial.app\r\n- Chronicl: Decentralized web archiver that distributes archives across Nostr relays\r\nhttps://chronicl.vercel.app/\r\n\r\n“Egyptians are twisted and bitter people with a sense of humor”\r\n- Roman poet Theocritus",
+      "picture": "https://media.ditto.pub/eda57c32464e163943d93a635d0f74795a4fb12772f137475e5789db05f26dc3.jpeg",
+      "nip05": "andrew@ditto.pub",
+      "website": "",
+      "lud16": "spiritedpause@getalby.com",
+      "score": 2,
+      "matches": [
+        "farm",
+        "farmer"
+      ]
+    },
+    {
+      "pubkey": "d3ab33199eb48c6f785072b4a66a8e57814e35d31375cca8c3ceeecc171f30ba",
+      "npub": "npub16w4nxxv7kjxx77zsw262v65w27q5udwnzd6ue2xremhvc9clxzaq974vef",
+      "name": "PocketCow",
+      "username": "PocketCow",
+      "bio": "#Bitcoin only, financially illiterate psychopath.\n\nNIP-65 advocate, grower of plants, roaster of coffee, noser of whisky, tinkerer of technology.",
+      "picture": "https://nostr.build/i/p/nostr.build_ee1ac128012c67e4839a7c6bc7766ffc2cdc9be877838f3c6f4219965f947486.png",
+      "nip05": "pocketcow@nostrplebs.com",
+      "website": "",
+      "lud16": "ethnicnight93@walletofsatoshi.com",
+      "score": 2,
+      "matches": [
+        "grow",
+        "plants"
+      ]
+    },
+    {
+      "pubkey": "0b11a45bf4ff7f000886b2227e43404d212bf585f71514d54ae5ae685f4c8fbb",
+      "npub": "npub1pvg6gkl5lalsqzyxkg38us6qf5sjhav97u23f422ukhxsh6v37aszhz5ws",
+      "name": "kitakripto",
+      "username": "kitakripto",
+      "bio": "💊 humble pleb💊 btc begins in 2020; after covid fud 💊 sats farmer since 2022",
+      "picture": "https://nostr.build/i/nostr.build_0727a64a4bc5d45be7897e779ed6d5b879ee7746a056c9e0ddff113e3579a282.jpg",
+      "nip05": "kitakripto@BitcoinNostr.com",
+      "website": "",
+      "lud16": "kitakripto@blink.sv",
+      "score": 2,
+      "matches": [
+        "farm",
+        "farmer"
+      ]
+    },
+    {
+      "pubkey": "47d519cd3bfe5cc6705e32063ef39931946979eebb53425db5f2e4f19c3a3af5",
+      "npub": "npub1gl23nnfmlewvvuz7xgrrauuexx2xj70whdf5yhd47tj0r8p68t6sww70gt",
+      "name": "Bitcoin Bull ",
+      "username": "Bitcoin Bull ",
+      "bio": "Running Nostr Zap challenges & philanthropy 🏆 🧡\nSending Sats ⚡️ to Nostr newbies & Hug-Zap 🫂⚡️\n10M+ Sats paid, fueling Nostr & Lightning growth 💜⚡️\nDM to donate & help others 🫡",
+      "picture": "https://nostr.build/i/2086.gif",
+      "nip05": "bull@nostrplebs.com",
+      "website": "",
+      "lud16": "happyswan8@primal.net",
+      "score": 1,
+      "matches": [
+        "grow"
+      ]
+    },
+    {
+      "pubkey": "b5c417b9b51ff323f857b6c60cff085c8e50e87a3365a1ed5d52f9b3c0580a9b",
+      "npub": "npub1khzp0wd4rlej87zhkmrqelcgtj89p6r6xdj6rm2a2tum8szcp2dsje3c5c",
+      "name": "lacruzboss",
+      "username": "lacruzboss",
+      "bio": "🇸🇻 jungle coffee provider 🇸🇻\n🌴 LA CRUZ 🌴 \n\nI have a speciality coffee farm in El Salvador.",
+      "picture": "https://m.primal.net/OTVl.jpg",
+      "nip05": "lacruz@nostrplebs.com",
+      "website": "",
+      "lud16": "cyanpanther3@primal.net",
+      "score": 1,
+      "matches": [
+        "farm"
+      ]
+    },
+    {
+      "pubkey": "2b57730ec1cc46d2d565f04bdac193003633d9829ecf92009e79066b9cf5c3ec",
+      "npub": "npub19dthxrkpe3rd94t97p9a4svnqqmr8kvznm8eyqy70yrxh884c0kqlnqv0g",
+      "name": "Rafa ⚡🌿🌴𓆏",
+      "username": "Rafa",
+      "bio": "#coquí𓆏 #permaculture #Bitcoin\n#technonaturalist",
+      "picture": "https://image.nostr.build/60d3410d69bc88217b3d427b5a057109ba8eaa7e4c42a22623a3b5e84b7bfa79.jpg",
+      "nip05": "rafa@nostrplebs.com",
+      "website": "https://tinyurl.com/microbes👀👀",
+      "lud16": "rafa@nostrplebs.com",
+      "score": 1,
+      "matches": [
+        "permaculture"
+      ]
+    },
+    {
+      "pubkey": "f7380c11f6a40c7681d2661ef601b9305991141b6bf45ad70585da5cd5c75df4",
+      "npub": "npub17uuqcy0k5sx8dqwjvc00vqdexpvez9qmd06944c9shd9e4w8th6q8dv6qx",
+      "name": "BitcoinBelle",
+      "username": "Bitcoinbelle",
+      "bio": "🧡⚡️southern misses. Here to learn, share, and grow#bitcoin #plebchain⚡️🧡 🥩🌻🧘🏽‍♀️📚🎵💫\n\nMore Than A Bit Black Available Now\nhttps://a.co/d/7vIvCZo",
+      "picture": "https://nostr.build/i/p/nostr.build_be04a124e12b3593a36cfabaf4e4629e9aa01bba9121f72fe20b1838d468209c.jpeg",
+      "nip05": "thebitcoinbelle@nostrplebs.com",
+      "website": "",
+      "lud16": "gratisname56@walletofsatoshi.com",
+      "score": 1,
+      "matches": [
+        "grow"
+      ]
+    },
+    {
+      "pubkey": "b3b1d5809306c642b7c7e9f01cf9a73a9dc8b363463776361d25dc0927db0aa8",
+      "npub": "npub1kwcatqynqmry9d78a8cpe7d882wu3vmrgcmhvdsayhwqjf7mp25qpqf3xx",
+      "name": "Love is Bitcoin 💜⚡",
+      "username": "Love is Bitcoin 💜⚡",
+      "bio": "Help me grow my Bitty Balance,⚡ zap me some bitties at loveisbitcoin@primal.net \n\nConnect to my relay to get all my posts\nws://ykfmoqnmdhjaw4qkihvqigrayiusclfqxfh2lt3frtlykody5wwvcfid.onion\n\nRun your own Nostr relay with one button using Start 9 Labs server. Order your own with the coupon code LOVEISBITCOIN for a discount",
+      "picture": "https://image.nostr.build/795efa1d09c5f9d48d222a6aeef04051d46d2b8288952f57c7b9b0c8e1d8fc3a.jpg",
+      "nip05": "loveisbitcoin@primal.net",
+      "website": "https://loveisbitcoin.com/links",
+      "lud16": "loveisbitcoin@walletofsatoshi.com",
+      "score": 1,
+      "matches": [
+        "grow"
+      ]
+    },
+    {
+      "pubkey": "0da54ff10e1931782c8db2cb7519a282cb990f39dff378dc5a2cc67a63794007",
+      "npub": "npub1pkj5lugwrychstydkt9h2xdzst9ejreemleh3hz69nr85cmegqrs232y4t",
+      "name": "monk_cactus",
+      "username": "monk_cactus",
+      "bio": "We must cultivate our garden |\nStatistics and Data Science \n\nhttps://en.m.wikipedia.org/wiki/Sortition",
+      "picture": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Frederic_Remington_-_The_Lookout_-_Google_Art_Project.jpg",
+      "nip05": "monkcactus@primal.net",
+      "website": "",
+      "lud16": "monk_cactus@getalby.com",
+      "score": 1,
+      "matches": [
+        "garden"
+      ]
+    },
+    {
+      "pubkey": "0575bf03c261c19508094def29ca943a5ab148c4f76c3798a45bbb1162a2b879",
+      "npub": "npub1q46m7q7zv8qe2zqffhhjnj558fdtzjxy7akr0x9ytwa3zc4zhpus0m8rmu",
+      "name": "Tuvok",
+      "username": "Tuvok",
+      "bio": "bitcoin and lightning node runner \nwhile running startOS home server\nZap addicted! natural law first\nhttps://21drucker.farm\nhttps://waehrungsrechner.app\nhttps://lightning.horse",
+      "picture": "https://i.nostr.build/ork7xBFgfcOHLe9z.jpg",
+      "nip05": "Tuvok@primal.net",
+      "website": "https://21drucker.farm/",
+      "lud16": "tuvok@rizful.com",
+      "score": 1,
+      "matches": [
+        "farm"
+      ]
+    },
+    {
+      "pubkey": "d3f06d830e33927f422f9d00c5180b6a071f8e024573c5aad5c5a3f17ff53dc3",
+      "npub": "npub160cxmqcwxwf87s30n5qv2xqtdgr3lrszg4eut2k4ck3lzll48hpsqupad5",
+      "name": "CyberplantaHODL",
+      "username": "CyberplantaHODL",
+      "bio": "Your favourite internet goose 🪿 \n\nI love my chicks, my garden and… my #pizza worth 5000 #Bitcoin\n\nStudent of culture, society and human behaviour #memeticist",
+      "picture": "https://image.nostr.build/5ee8650c2003933b3d59ae2934f219c49265a57451bce0b3d6fee95f97c2d792.gif",
+      "nip05": "cyberplantahodl@iris.to",
+      "website": "",
+      "lud16": "cyberplanta@walletofsatoshi.com",
+      "score": 1,
+      "matches": [
+        "garden"
+      ]
+    },
+    {
+      "pubkey": "f2c96c97f6419a538f84cf3fa72e2194605e1848096e6e5170cce5b76799d400",
+      "npub": "npub17tyke9lkgxd98ruyeul6wt3pj3s9uxzgp9hxu5tsenjmweue6sqq4y3mgl",
+      "name": "SeedSigner",
+      "username": "SeedSigner",
+      "bio": "Build your own airgapped, stateless bitcoin signing device for less than most hardware wallets. 🤘 Not set up for zaps, if you'd like to donate to our contributors please go to https://donate.seedsigner.com ",
+      "picture": "https://nostr.build/i/221.gif",
+      "nip05": "seedsigner@nostr.seedsigner.com",
+      "website": "https://github.com/SeedSigner/seedsigner",
+      "lud16": "",
+      "score": 1,
+      "matches": [
+        "seeds"
+      ]
+    },
+    {
+      "pubkey": "d0a5a7fe80d2700a3591d6c2c5cd225ebe914fb7bae20b22bfa331d3966f31dd",
+      "npub": "npub16zj60l5q6fcq5dv36mpvtnfzt6lfznahht3qkg4l5vca89n0x8wsqzz8my",
+      "name": "manbyt",
+      "username": "manbyt",
+      "bio": "punk | psychonaut | permaculture | parent | 80 IQ",
+      "picture": "https://i.postimg.cc/rpfQGMDD/E9-F1-FF27-C807-4-C21-A120-BECF80-D6-B398.jpg",
+      "nip05": "manbyt@primal.net",
+      "website": "",
+      "lud16": "manbyt@primal.net",
+      "score": 1,
+      "matches": [
+        "permaculture"
+      ]
+    }
+  ],
+  "parents": [
+    {
+      "pubkey": "fdd5e8f6ae0db817be0b71da20498c1806968d8a6459559c249f322fa73464a7",
+      "npub": "npub1lh273a4wpkup00stw8dzqjvvrqrfdrv2v3v4t8pynuezlfe5vjnsnaa9nk",
+      "name": "Luke Dashjr",
+      "username": "Luke Dashjr",
+      "bio": "Roman #Catholic, husband, father of 11 children, #Bitcoin Core developer, and CTO @npub1qtvl2em0llpnnllffhat8zltugwwz97x79gfmxfz4qk52n6zpk3qq87dze ; INTP;\nI condemn fake \"Catholics\", cryptobros & pedos; see full bio",
+      "picture": "https://luke.dashjr.org/myself/avatar.jpg",
+      "nip05": "luke_nostr@dashjr.org",
+      "website": "",
+      "lud16": "lukedashjr@coinos.io",
+      "score": 3,
+      "matches": [
+        "father",
+        "children",
+        "child"
+      ]
+    },
+    {
+      "pubkey": "f275ab37d64f6be0379a85ce5736060e164b136a08c7f1e78dea633abad84bfe",
+      "npub": "npub17f66kd7kfa47qdu6sh89wdsxpctykym2prrlreudaf3n4wkcf0lq9u92kc",
+      "name": "Steve",
+      "username": "Steve",
+      "bio": "👋 Hi, I’m Steve. I’m from the future 🚀🪐\n⚡️\n🥊 Author of “All Callouts is Mandatory” \n📸 Retired Entertainment Photographer\n🥃 Hibiki & Horology Enjoyoor⏱\n🍼 Father of Dragons 🐉🐉\n🚀 ₿ class of 2013\n☠️ Survivor [687013]\n🦄 Pronouns: Daddy/爸爸\n🤠 Adjectives: Handsome/Intelligent",
+      "picture": "https://image.nostr.build/1e4e664759bac4aa10fc6fb2d957f85c68f762b9a1d096cb5847e9449869b40c.gif",
+      "nip05": "bauzen@harlembitcoin.com",
+      "website": "http://www.bauzen.com/",
+      "lud16": "coralcrab1@primal.net",
+      "score": 2,
+      "matches": [
+        "dad",
+        "father"
+      ]
+    },
+    {
+      "pubkey": "d162a53c3b0bfb5c3ebd787d7b08feab206b112362eca25aa291251cd70fe225",
+      "npub": "npub1693220pmp0a4c04a0p7hkz874vsxkyfrvtk2yk4zjyj3e4c0ugjs3r4j0c",
+      "name": "Jason Hodlers 🪢",
+      "username": "Jason Hodlers 🪢",
+      "bio": "Follower of The Way, Jesus Christ. His words are not only found in the Bible.\n\nCreator of @npub1fdc5nr47gx8pcz9cppyat9fx0gc9hv48nke7pf78drx7rpqw28ksqgx779.\n\nChristian, homeschooling father of 6, & Bitcoin maximalist.",
+      "picture": "https://i.nostr.build/kw8qVBSzrolVl53M.jpg",
+      "nip05": "",
+      "website": "www.BitcoinChatt.com",
+      "lud16": "geekigai@strike.me",
+      "score": 2,
+      "matches": [
+        "father",
+        "homeschool"
+      ]
+    },
+    {
+      "pubkey": "d162a53c3b0bfb5c3ebd787d7b08feab206b112362eca25aa291251cd70fe225",
+      "npub": "npub1693220pmp0a4c04a0p7hkz874vsxkyfrvtk2yk4zjyj3e4c0ugjs3r4j0c",
+      "name": "Jason Hodlers",
+      "username": "Jason Hodlers",
+      "bio": "Christian, homeschooling father of 6, & Bitcoin maximalist.",
+      "picture": "https://i.nostr.build/kw8qVBSzrolVl53M.jpg",
+      "nip05": "",
+      "website": "www.BitcoinChatt.com",
+      "lud16": "geekigai@strike.me",
+      "score": 2,
+      "matches": [
+        "father",
+        "homeschool"
+      ]
+    },
+    {
+      "pubkey": "284954984e19bf621b1a85687806890d2e27ddd0e6c58c14e41e9e0a7362acce",
+      "npub": "npub19py4fxzwrxlkyxc6s458sp5fp5hz0hwsumzcc98yr60q5umz4n8qfxz9sn",
+      "name": "NEEDcreations",
+      "username": "NEEDcreations",
+      "bio": "#Jesus 👑\n120% all in #BTC\nNode runner\nHome miner\nEducator\nOccasional streamer [ bit.ly/NEEDstream ], \nBitcoin Beats, PLEB Cards, Super Satoshi children's book [ @satoshisjournal ];\nFreedom Festival, Bitcoin Brunch NH meetup [ @btc_mass ];\nFounder and lead curator of the largest Bitcoin Education Discord [ https://discord.com/invite/tMWbW5v4Mb ];\nI also love dogs, EDM, facts about outer space and the Red Sox",
+      "picture": "https://pfp.nostr.build/73708fbf209e643545bd442acb5c7876c64c0b9ce8240d14886a92d11d63fb9e.gif",
+      "nip05": "needcreations@nostrplebs.com",
+      "website": "https://www.603btc.com",
+      "lud16": "needcreations@strike.me",
+      "score": 2,
+      "matches": [
+        "children",
+        "child"
+      ]
+    },
+    {
+      "pubkey": "2c2b5892fed843819c27e63fbed6f9e294e13cee4feb260bdf9013581eaa354d",
+      "npub": "npub19s443yh7mppcr8p8uclma4heu22wz08wfl4jvz7ljqf4s842x4xsrfufvh",
+      "name": "Golfwinch ",
+      "username": "Golfwinch ",
+      "bio": "Treated as a part of me and at other times simply mine, and then again, as if I had nothing to do with it at all. In its widest possible sense, however, a man's self is the sum-total of all that he can call his. Not only his body, and psychic powers, but his clothes, and his house, his wife and children, his reputation and work, his land,his horses, his yacht, and his #BITCOIN  (Bank Account). All these things give him the same emotions. If they wax him prosper, he feels triumphant, if they dwindle and die away, he feels cast down, not necessarily in the same degree for each thing, but in much the same way, for all.  \n\n     ~ William James and Satoshi Nakamoto",
+      "picture": "https://nostr.build/i/3375225b8c76f5335e8c21b08f7f0aeb9784c14079b7630dd49b31f04cf97038.webp",
+      "nip05": "",
+      "website": "",
+      "lud16": "31131bea57d23eb4@coinos.io",
+      "score": 2,
+      "matches": [
+        "children",
+        "child"
+      ]
+    },
+    {
+      "pubkey": "284954984e19bf621b1a85687806890d2e27ddd0e6c58c14e41e9e0a7362acce",
+      "npub": "npub19py4fxzwrxlkyxc6s458sp5fp5hz0hwsumzcc98yr60q5umz4n8qfxz9sn",
+      "name": "🧡NEEDcreations is stacking sats & listening to EDM",
+      "username": "🧡NEEDcreations is stacking sats & listening to EDM",
+      "bio": "#Jesus 👑\n120% all in #BTC\nNode runner\nHome miner\nEducator\nOccasional streamer [ bit.ly/NEEDstream ], \nBitcoin Beats, PLEB Cards, Super Satoshi children's book [ @satoshisjournal ];\nFreedom Festival, Bitcoin Brunch NH meetup [ @btc_mass ];\nFounder and lead curator of the largest Bitcoin Education Discord [ https://discord.com/invite/tMWbW5v4Mb ];\nI also love dogs, EDM, facts about outer space and the Red Sox",
+      "picture": "https://pfp.nostr.build/73708fbf209e643545bd442acb5c7876c64c0b9ce8240d14886a92d11d63fb9e.gif",
+      "nip05": "needcreations@nostrplebs.com",
+      "website": "https://www.603btc.com",
+      "lud16": "needcreations@strike.me",
+      "score": 2,
+      "matches": [
+        "children",
+        "child"
+      ]
+    },
+    {
+      "pubkey": "d5415a313d38461ff93a8c170f941b2cd4a66a5cfdbb093406960f6cb317849f",
+      "npub": "npub164q45vfa8prpl7f63stsl9qm9n22v6julkasjdqxjc8kevchsj0sp42rl3",
+      "name": "trey",
+      "username": "trey",
+      "bio": "gm pv welcome to my nostr crib | here since block 768753\n\nAll in on freedom tech and Bitcoin, supporting humanity’s global struggle for freedom in the 21st century. Creating the world I wish to see for my children. Plant-based + sober advocate. \n\nOther stuff: insufferable Boston sports fan, indie music (mostly), New Englander, hiking enthusiast, lover of the 🌞 & 🌊 \n\nDirector of Finance and Administration myfirstbitcoin.org",
+      "picture": "https://i.nostr.build/0Wz6SPetjpFfhFSx.jpg",
+      "nip05": "treywalsh@primal.net",
+      "website": "",
+      "lud16": "treywalsh@primal.net",
+      "score": 2,
+      "matches": [
+        "children",
+        "child"
+      ]
+    },
+    {
+      "pubkey": "958a514eed5da3b6551fd514d117c8af3b7395942a962d508f325dbc366e5e93",
+      "npub": "npub1jk99znhdtk3mv4gl652dz97g4uah89v592tz65y0xfwmcdnwt6fsr34vhu",
+      "name": "bitcoinmd",
+      "username": "bitcoinmd",
+      "bio": "Christian, husband, father, physician, freedom fighter. Bitcoin only. \n\nGetting paid to put people to sleep and wake them back up 🥱\n\n🤙⚡️\n#plebchain\n#docchain\n#plebdad",
+      "picture": "https://nostr.build/i/p/nostr.build_0c63866e6b668a8589e50cd9010acdf6cce9379fb15bbe26669fe9dc3d56bbf4.png",
+      "nip05": "bitcoinmd@nostrplebs.com",
+      "website": "",
+      "lud16": "apricothound1@primal.net",
+      "score": 2,
+      "matches": [
+        "dad",
+        "father"
+      ]
+    },
+    {
+      "pubkey": "883fea4c071fda4406d2b66be21cb1edaf45a3e058050d6201ecf1d3596bbc39",
+      "npub": "npub13ql75nq8rldygpkjke47y893akh5tglqtqzs6cspancaxktthsusvfqcg7",
+      "name": "adamcurry",
+      "username": "adamcurry",
+      "bio": "Podfather PodcastIndex.org value4value.info nostr.dog",
+      "picture": "https://noagendaassets.com/enc/1671720136.248_ac-tiny-2.png",
+      "nip05": "adamcurry@primal.net",
+      "website": "",
+      "lud16": "adamcurry@primal.net",
+      "score": 1,
+      "matches": [
+        "father"
+      ]
+    },
+    {
+      "pubkey": "5b0183ab6c3e322bf4d41c6b3aef98562a144847b7499543727c5539a114563e",
+      "npub": "npub1tvqc82mv8cezhax5r34n4muc2c4pgjz8kaye2smj032nngg52clq0rkrq4",
+      "name": "QW",
+      "username": "QW",
+      "bio": "Generation ₿ Father\nCo-Host Plebchain Radio\nBuilding Nostr PHX\nV4V Advocate\nⒶlliance \nEstablished Block 71865",
+      "picture": "https://blossom.primal.net/8fd3afe3c7d33e60c34152a33f02d3bdc1a8455ffd44689d5afc8dced23127d0.jpg",
+      "nip05": "QW@npub.bar",
+      "website": "",
+      "lud16": "qw@primal.net",
+      "score": 1,
+      "matches": [
+        "father"
+      ]
+    },
+    {
+      "pubkey": "307981b2277fcc957d2c32835b36dab8b03d708658f9e9aa4e65bc08f68e5e3f",
+      "npub": "npub1xpucrv380lxf2lfvx2p4kdk6hzcr6uyxtru7n2jwvk7q3a5wtcls3w5u46",
+      "name": "noodle",
+      "username": "noodle",
+      "bio": "🇬🇧 Husband. Father. #Bitcoin Maxi. Spurs Addict. Make and perform music.",
+      "picture": "https://i.imgur.com/G3MXg9J.gif",
+      "nip05": "noodle@nostrplebs.com",
+      "website": "noodlenakamoto.com",
+      "lud16": "noodle@coincorner.io",
+      "score": 1,
+      "matches": [
+        "father"
+      ]
+    },
+    {
+      "pubkey": "7a78fbfec68c2b3ab6084f1f808321ba3b5ea47502c41115902013e648e76288",
+      "npub": "npub10fu0hlkx3s4n4dsgfu0cpqephga4afr4qtzpz9vsyqf7vj88v2yqdp8vp4",
+      "name": "zach",
+      "username": "zach",
+      "bio": "Family #kaizen \n\nRunning a web of trust (WoT) relay at wss://satsage.xyz\n\nhttps://whynostr.com/\n\nhttps://nostr.rehab/\n\nhttps://satsage.xyz/",
+      "picture": "https://i.nostr.build/Jmmwx9uX2QBWOSEK.jpg",
+      "nip05": "zach@primal.net",
+      "website": "https://github.com/zatzby",
+      "lud16": "swiftfreeze81@walletofsatoshi.com",
+      "score": 1,
+      "matches": [
+        "family"
+      ]
+    },
+    {
+      "pubkey": "c82bf12d7eb3df7e3cc7766e54363133ac17024a5df2e179c603106cdf203e15",
+      "npub": "npub1eq4lztt7k00hu0x8weh9gd33xwkpwqj2thewz7wxqvgxeheq8c2s2ck5s7",
+      "name": "LIVEFOREVER ",
+      "username": "LIVEFOREVER ",
+      "bio": " FAMILY :: BITCOIN  :: OASIS :: SPORTS\n\nBitcoin class of 2017 🟠\nNostr  class of 2022 🟣\n\nPresident of Nostr Fan Clubs for:\n#Oasis\n#CaitlinClark\n#PCA\n#ConnorBedard\n",
+      "picture": "https://i.imgur.com/e73axEs.gif",
+      "nip05": "liveforever@nostrplebs.com",
+      "website": "",
+      "lud16": "crowdedbengal000@walletofsatoshi.com",
+      "score": 1,
+      "matches": [
+        "family"
+      ]
+    },
+    {
+      "pubkey": "e41e883f1ef62485a074c1a1fa1d0a092a5d678ad49bedc2f955ab5e305ba94e",
+      "npub": "npub1us0gs0c77cjgtgr5cxsl58g2py496eu26jd7mshe2k44uvzm498qrefrqv",
+      "name": "brady ",
+      "username": "brady ",
+      "bio": "cofounder swan bitcoin . pleb . family man . citizen bitcoin ",
+      "picture": "https://i.imgur.com/gD01Ujl.jpg",
+      "nip05": "",
+      "website": "swan.com",
+      "lud16": "brady@primal.net",
+      "score": 1,
+      "matches": [
+        "family"
+      ]
+    },
+    {
+      "pubkey": "46fcbe3065eaf1ae7811465924e48923363ff3f526bd6f73d7c184b16bd8ce4d",
+      "npub": "npub1gm7tuvr9atc6u7q3gevjfeyfyvmrlul4y67k7u7hcxztz67ceexs078rf6",
+      "name": "LeoWandersleb",
+      "username": "LeoWandersleb",
+      "bio": "https://walletscrutiny.com\n\nhttps://nostr.info\n\nWorking on Bitcoin, Nostr and being a good dad.",
+      "picture": "https://i.nostr.build/dSNMDeopTidcN6SX.png",
+      "nip05": "leo@nostr.info",
+      "website": "https://walletscrutiny.com",
+      "lud16": "vilewish26@walletofsatoshi.com",
+      "score": 1,
+      "matches": [
+        "dad"
+      ]
+    },
+    {
+      "pubkey": "548aed73cf0bd94c0637872b6acd2c83977dde03d745db65c8af72516c7993d2",
+      "npub": "npub12j9w6u70p0v5cp3hsu4k4nfvswthmhsr6azakewg4ae9zmrej0fq6cck68",
+      "name": "aoeu",
+      "username": "aoeu",
+      "bio": "⚡️ Christian. Husband. Father. Radiologist. Bitcoiner. \n\nPrefer White Noise and Keet for DMs\n\n#bitcoin #stackchain #meshtastic\nSupport the bitcoin circular economy:\nhttps://btcaccepted.org - directory of businesses that accept bitcoin\n\nhttps://fiat-is-hopeless.org - bitcoin-related quotes",
+      "picture": "https://pfp.nostr.build/nostr.build_595a6511240773c2b94a7b28f0cbbfa63942b318c4de0f130a8a7ac80f61f631.jpeg",
+      "nip05": "aoeu@nostrpurple.com",
+      "website": "https://btcfixesthis.org/",
+      "lud16": "scott@primal.net",
+      "score": 1,
+      "matches": [
+        "father"
+      ]
+    },
+    {
+      "pubkey": "6fda5bce2882176bfbabfab503a1b5281329582d71c4be84bbb567e65c1a791f",
+      "npub": "npub1dld9hn3gsgtkh7atl26s8gd49qfjjkpdw8ztap9mk4n7vhq60y0satfd8s",
+      "name": "bryan",
+      "username": "bryan",
+      "bio": "Father, Husband, Bitcoiner, Urologist.",
+      "picture": "https://i.nostr.build/xKq4bCazcOLrwWQ9.jpg",
+      "nip05": "bryan@nostrplebs.com",
+      "website": "",
+      "lud16": "bryanmd@strike.me",
+      "score": 1,
+      "matches": [
+        "father"
+      ]
+    },
+    {
+      "pubkey": "bae77874946ec111f94be59aef282de092dc4baf213f8ecb8c9e15cb7ed7304e",
+      "npub": "npub1htnhsay5dmq3r72tukdw72pduzfdcja0yylcajuvnc2uklkhxp8qnz3qac",
+      "name": "lukechilds",
+      "username": "lukechilds",
+      "bio": "Cofounder & CTO Umbrel.\n\nPreviously BitcoinJS, Browserify.",
+      "picture": "https://0.gravatar.com/avatar/4af0d9a1f16bf05d1aedee5e3923d3e3?size=512&v2",
+      "nip05": "_@lu.ke",
+      "website": "https://lu.ke",
+      "lud16": "alby@lu.ke",
+      "score": 1,
+      "matches": [
+        "child"
+      ]
+    },
+    {
+      "pubkey": "971615b70ad9ec896f8d5ba0f2d01652f1dfe5f9ced81ac9469ca7facefad68b",
+      "npub": "npub1jutptdc2m8kgjmudtws095qk2tcale0eemvp4j2xnjnl4nh6669slrf04x",
+      "name": "BenGWeeks",
+      "username": "BenGWeeks",
+      "bio": "Open source dev: @Damus | @LightningPiggy | @LNbits | POWR | @LnBits. Homeschool youngest and help her run @RobotechyShop (3D printing shop)",
+      "picture": "https://nostr.build/i/p/nostr.build_9841ac0b1902a46e9ecae4cd72f9caa2c20216b43838d1fb7c8dcb113ac98258.gif",
+      "nip05": "ben@bengweeks.github.io",
+      "website": "https://www.robotechy.com",
+      "lud16": "ben.weeks@bank.weeksfamily.me",
+      "score": 1,
+      "matches": [
+        "homeschool"
+      ]
+    },
+    {
+      "pubkey": "6ad575c6558b6b5d5b215efb76e7539dd026ef8df03e7f2f1401311b9b63cd12",
+      "npub": "npub1dt2ht3j43d446keptmahde6nnhgzdmud7ql87tc5qyc3hxmre5fqnxc3g9",
+      "name": "Pyre",
+      "username": "Pyre",
+      "bio": "My ultimate goal is to conquer the social media world and become a viral sensation...or at least get more followers than my mom. #hustle #grind #onfleek",
+      "picture": "https://void.cat/d/2uYgFrVS9dC4tmcu9qE66G",
+      "nip05": "Joan@nostress.cc",
+      "website": "",
+      "lud16": "wooinghip85@walletofsatoshi.com",
+      "score": 1,
+      "matches": [
+        "mom"
+      ]
+    },
+    {
+      "pubkey": "f1b911af1c7a56073e3b83ba7eaa681467040e0fbbdd265445aa80e65c274c22",
+      "npub": "npub17xu3rtcu0ftqw03mswa8a2ngz3nsgrs0h0wjv4z942qwvhp8fs3qzcadls",
+      "name": "Lebanese Hodl",
+      "username": "",
+      "bio": "Bitcoin Culture & Brand Building\nNew Father, Photographer & Filmmaker\nFounder & Creative Director @ Sunday Afternoon\nWe made the @ZEUS logo\nBoard @Bitcoin for the Arts\nfix the money, fix the world 🧡\n#NostrOnly\n#nodestrich runner 🏃‍♂️⚡️💜",
+      "picture": "https://image.nostr.build/e2e53f8799d2f60986d6eb50ef36fa3fb36c0c700db2d525df3aea7b89559bff.jpg",
+      "nip05": "ahmed@nostrplebs.com",
+      "website": "https://sundayafternoon.us/creative-studio/the-power-of-bitcoin-payments-made-easy",
+      "lud16": "saatar@rizful.com",
+      "score": 1,
+      "matches": [
+        "father"
+      ]
+    },
+    {
+      "pubkey": "aa40644bfeb557e3be4051e4a2d8fa3087f5a357ca56836faeb7d4fb4ad4afa5",
+      "npub": "npub14fqxgjl7k4t780jq28j29k86xzrltg6heftgxmawkl20kjk547js6tztp5",
+      "name": "ty",
+      "username": "ty",
+      "bio": "Faith, Family, Sports, and Bitcoin just about cover it.",
+      "picture": "https://i.imgur.com/6KypCxN.jpg",
+      "nip05": "ty@nostrplebs.com",
+      "website": "",
+      "lud16": "btcbeans@getalby.com",
+      "score": 1,
+      "matches": [
+        "family"
+      ]
+    },
+    {
+      "pubkey": "7b102dc5f434bd1be02f5000b9695cef15ceb6665955a81d86009ff60f42d059",
+      "npub": "npub10vgzm305xj73hcp02qqtj62uau2uadnxt926s8vxqz0lvr6z6pvsufg9ar",
+      "name": "Bodhi☯️",
+      "username": "Bodhicitta777",
+      "bio": "life is not something you do but something you are. Each moment it creates you. Life uses us as its instrument of creation.",
+      "picture": "https://pbs.twimg.com/profile_images/1859626739833401344/y_3tyktJ.jpg",
+      "nip05": "bodhicitta777@iris.to",
+      "website": "",
+      "lud16": "flimsyostrich42@walletofsatoshi.com",
+      "score": 1,
+      "matches": [
+        "mom"
+      ]
+    },
+    {
+      "pubkey": "285d4ca25cbe209832aa15a4b94353b877a2fe6c3b94dee1a4c8bc36770304db",
+      "npub": "npub19pw5egjuhcsfsv42zkjtjs6nhpm69lnv8w2dacdyez7rvacrqnds6xjtwk",
+      "name": "ursuscamp",
+      "username": "ursuscamp",
+      "bio": "Father. Husband. Bitcoiner. Developer. In that order.\n\nNostore: https://apps.apple.com/us/app/nostore/id1666553677\nNomen: https://nomenexplorer.com",
+      "picture": "https://image.nostr.build/2fb44944107f93167ed6411f3506b536095eb4ebd9082da8c596b598c181ed9a.jpg",
+      "nip05": "_@ursus.camp",
+      "website": "https://ursus.camp",
+      "lud16": "ursuscamp@strike.me",
+      "score": 1,
+      "matches": [
+        "father"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { NostrKittenSimulator } from '../../simulators/nostr-kitten/NostrKittenSimulator';
+
+// NostrKitten - The most chaotic Nostr client ever
+// Pure 90s GeoCities energy
+---
+
+<Layout title="NostrKitten - 90s GeoCities Nostr Client">
+  <div class="w-full h-screen bg-black flex items-center justify-center p-4 overflow-hidden">
+    <div class="w-full max-w-4xl h-full max-h-[900px]">
+      <NostrKittenSimulator client:load className="h-full" />
+    </div>
+  </div>
+</Layout>

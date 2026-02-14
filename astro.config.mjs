@@ -13,6 +13,7 @@ const srcDir = resolve(__dirname, "src");
 export default defineConfig({
   site: "https://nostrich.love",
   output: "static",
+  adapter: undefined,
   i18n: {
     defaultLocale: "en",
     locales: ["en", "pl"],
@@ -45,7 +46,7 @@ export default defineConfig({
       },
     },
     build: {
-      sourcemap: true,
+      sourcemap: false,
     },
   },
 });

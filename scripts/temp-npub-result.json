@@ -1,0 +1,27 @@
+{
+  "category": "parents",
+  "account": {
+    "npub": "npub178umpxtdflcm7a08nexvs4mu384kx0ngg9w8ltm5eut6q7lcp0vq05qrg4",
+    "name": "pitiunited",
+    "username": "pitiunited",
+    "picture": "https://uselessshit.co/images/avatar.gif",
+    "bio": "All-round buidler.",
+    "categories": [
+      "parents"
+    ],
+    "tags": [
+      "parents"
+    ],
+    "nip05": "_@thisbitcointhing.com",
+    "lud16": "furiouschina21@walletofsatoshi.com",
+    "website": "https://UseLessShit.co",
+    "activity": "medium",
+    "contentTypes": [
+      "text"
+    ],
+    "addedAt": "2026-02-13",
+    "updatedAt": "2026-02-13"
+  },
+  "isDuplicate": false,
+  "processedAt": "2026-02-13T09:15:40.329Z"
+}

@@ -1,6 +1,7 @@
 ---
 import SocialShare from '../ui/SocialShare.astro';
 import { siteConfig } from '../../config/site';
+import { LogoText } from '../ui/LogoText';
 
 const footerLinks = {
   learn: [
@@ -27,19 +28,35 @@ const footerLinks = {
   ],
 };
 
+const communityLinks = [
+  { label: 'Artists', href: '/nostr-for-artists' },
+  { label: 'Musicians', href: '/nostr-for-musicians' },
+  { label: 'Photographers', href: '/nostr-for-photographers' },
+  { label: 'Parents', href: '/nostr-for-parents' },
+  { label: 'Foodies', href: '/nostr-for-foodies' },
+  { label: 'Book Lovers', href: '/nostr-for-books' },
+];
+
+const toolLinks = [
+  { label: 'Twitter Bridge', href: '/twitter-bridge' },
+  { label: 'Client Recommender', href: '/tools#client-recommender' },
+  { label: 'Key Generator', href: '/tools#key-generator' },
+  { label: 'Follow Pack Finder', href: '/follow-pack' },
+];
+
 const currentYear = new Date().getFullYear();
 ---
 
 <footer class="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 transition-colors duration-200" role="contentinfo">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
       <!-- Brand -->
       <div class="lg:col-span-2">
         <a href="/" class="flex items-center gap-2 mb-4" aria-label="Nostrich.love - Home">
-          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-            <span class="text-white font-bold" aria-hidden="true">N</span>
+          <div class="w-10 h-10 flex-shrink-0">
+            <img class="scale-[1.5]" src="/logo.png" width={40} height={40} alt="" />
           </div>
-          <span class="font-bold text-lg text-primary">Nostrich</span>
+          <LogoText client:load size="sm" />
         </a>
         <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
           A beginner-friendly guide to the Nostr protocol. Learn, explore, and join the decentralized social revolution.
@@ -71,11 +88,28 @@ const currentYear = new Date().getFullYear();
         </ul>
       </div>
 
-      <!-- Resources -->
+      <!-- Communities -->
+      <div>
+        <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Communities</h3>
+        <ul class="space-y-2" role="list">
+          {communityLinks.map((link) => (
+            <li>
+              <a 
+                href={link.href}
+                class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Tools -->
       <div>
         <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Tools</h3>
         <ul class="space-y-2" role="list">
-          {footerLinks.resources.map((link) => (
+          {toolLinks.map((link) => (
             <li>
               <a 
                 href={link.href}

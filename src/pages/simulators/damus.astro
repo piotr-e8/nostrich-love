@@ -1,7 +1,7 @@
 ---
 /**
  * Damus Simulator Page
- * iOS Nostr client simulation - Compact Layout with Consolidated Navigation
+ * iOS Nostr client simulation - Sidebar Navigation Layout
  */
 
 import Layout from '../../layouts/Layout.astro';
@@ -9,6 +9,8 @@ import Header from '../../components/layout/Header.astro';
 import { damusConfig } from '../../simulators/shared/configs';
 import DamusSimulatorWithTour from '../../simulators/damus/DamusSimulatorWithTour';
 import { SimulatorClient } from '../../simulators/shared/types';
+import SimulatorSidebar from '../../components/navigation/SimulatorSidebar';
+import MobilePhoneFrame from '../../simulators/shared/components/MobilePhoneFrame';
 
 const title = `Try ${damusConfig.name} - Nostr Client Simulator`;
 const description = damusConfig.description;
@@ -17,139 +19,26 @@ const description = damusConfig.description;
 <Layout title={title} description={description}>
   <Header />
   
-  <div class="simulator-page min-h-screen bg-gray-100 dark:bg-gray-950 py-4">
-    <div class="max-w-4xl mx-auto px-4">
-      {/* Consolidated Navigation Bar */}
-      <div class="mb-4 flex items-center justify-between bg-white dark:bg-gray-900 rounded-xl p-2 shadow-sm">
-        <a 
-          href="/simulators/snort"
-          class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 transition-colors"
-          aria-label="Previous simulator"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-          </svg>
-        </a>
-        
-        {/* Center Dropdown Trigger */}
-        <div class="relative flex-1 mx-4">
-          <button 
-            id="simulatorDropdownTrigger"
-            class="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            <div class="w-8 h-8 rounded-lg shadow overflow-hidden flex-shrink-0">
-              <img 
-                src={damusConfig.icon} 
-                alt={`${damusConfig.name} logo`}
-                class="w-full h-full object-cover rounded-lg"
-              />
-            </div>
-            <div class="text-left">
-              <div class="text-sm font-semibold text-gray-900 dark:text-white">{damusConfig.name}</div>
-              <div class="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
-                iOS
-              </div>
-            </div>
-            <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-          
-          {/* Dropdown Menu */}
-          <div 
-            id="simulatorDropdownMenu"
-            class="hidden absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 z-50 max-h-[60vh] overflow-y-auto"
-          >
-            <div class="p-2">
-              <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider px-3 py-2">iOS</div>
-              <a href="/simulators/damus" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300">
-                <img src="/icons/damus.png" alt="Damus" class="w-8 h-8 rounded-lg object-cover" />
-                <span class="font-medium">Damus</span>
-              </a>
-              <a href="/simulators/yakihonne" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
-                <img src="/icons/yakihonne.svg" alt="YakiHonne" class="w-8 h-8 rounded-lg object-cover" />
-                <span class="font-medium">YakiHonne</span>
-              </a>
-              
-              <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider px-3 py-2 mt-2">Android</div>
-              <a href="/simulators/amethyst" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
-                <img src="/icons/amethyst.png" alt="Amethyst" class="w-8 h-8 rounded-lg object-cover" />
-                <span class="font-medium">Amethyst</span>
-              </a>
-              
-              <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider px-3 py-2 mt-2">Web</div>
-              <a href="/simulators/primal" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
-                <img src="/icons/primal.png" alt="Primal" class="w-8 h-8 rounded-lg object-cover" />
-                <span class="font-medium">Primal</span>
-              </a>
-              <a href="/simulators/snort" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
-                <img src="/icons/snort.png" alt="Snort" class="w-8 h-8 rounded-lg object-cover" />
-                <span class="font-medium">Snort</span>
-              </a>
-              <a href="/simulators/coracle" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
-                <img src="/icons/coracle.png" alt="Coracle" class="w-8 h-8 rounded-lg object-cover" />
-                <span class="font-medium">Coracle</span>
-              </a>
-              
-              <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider px-3 py-2 mt-2">Desktop</div>
-              <a href="/simulators/gossip" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
-                <img src="/icons/gossip.png" alt="Gossip" class="w-8 h-8 rounded-lg object-cover" />
-                <span class="font-medium">Gossip</span>
-              </a>
-            </div>
-          </div>
-        </div>
-        
-        <a 
-          href="/simulators/amethyst"
-          class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 transition-colors"
-          aria-label="Next simulator"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-          </svg>
-        </a>
-      </div>
-
-      {/* Simulator Container */}
-      <div class="simulator-container bg-white dark:bg-gray-900 rounded-2xl shadow-2xl overflow-hidden">
-        <div class="h-[800px] overflow-hidden">
-          <DamusSimulatorWithTour client:load />
+  <div class="simulator-page min-h-screen bg-gray-100 dark:bg-gray-950">
+    <div class="flex h-[calc(100vh-4rem)]">
+      {/* Sidebar Navigation */}
+      <SimulatorSidebar 
+        client:load 
+        currentClient={SimulatorClient.DAMUS}
+        className="h-full"
+      />
+      
+      {/* Main Content Area - Simulator stays centered and fixed */}
+      <div class="flex-1 relative h-full overflow-hidden">
+        {/* Simulator Container - Centered with mobile phone frame */}
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+          <MobilePhoneFrame client:load platform="ios">
+            <DamusSimulatorWithTour client:load />
+          </MobilePhoneFrame>
         </div>
       </div>
     </div>
   </div>
 </Layout>
 
-<script>
-  // Dropdown functionality
-  const trigger = document.getElementById('simulatorDropdownTrigger');
-  const menu = document.getElementById('simulatorDropdownMenu');
-  
-  if (trigger && menu) {
-    trigger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      menu.classList.toggle('hidden');
-      trigger.setAttribute('aria-expanded', menu.classList.contains('hidden') ? 'false' : 'true');
-    });
-    
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!trigger.contains(e.target as Node) && !menu.contains(e.target as Node)) {
-        menu.classList.add('hidden');
-        trigger.setAttribute('aria-expanded', 'false');
-      }
-    });
-    
-    // Close dropdown on escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        menu.classList.add('hidden');
-        trigger.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
-</script>
+<!-- Tour button functionality handled by SimulatorSidebar React component -->

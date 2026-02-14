@@ -1,0 +1,401 @@
+{
+  "analysis_metadata": {
+    "date": "2026-02-13",
+    "version": "phase-2",
+    "analyzed_by": "component-detective-agent",
+    "total_files": 7,
+    "total_lines_analyzed": 1900
+  },
+  "existing_features": {
+    "screens": [
+      {
+        "name": "HomeScreen",
+        "implemented": true,
+        "file": "screens/HomeScreen.tsx",
+        "features": [
+          "App bar with hamburger menu",
+          "Settings button",
+          "Following/Global tabs",
+          "Animated tab indicator",
+          "Filter chips (All, Bitcoin, Nostr, Tech, Memes)",
+          "Post feed with MaterialCards",
+          "Simulated refresh (spinner only)",
+          "End of feed indicator",
+          "Format timestamp helper"
+        ],
+        "quality_score": 7
+      },
+      {
+        "name": "ProfileScreen",
+        "implemented": true,
+        "file": "screens/ProfileScreen.tsx",
+        "features": [
+          "Collapsible app bar with post count",
+          "Banner image/gradient",
+          "Avatar with verification badge",
+          "Name and handle display",
+          "Bio section",
+          "Location metadata",
+          "Website link",
+          "Join date",
+          "Followers/Following stats",
+          "Edit Profile/Following button",
+          "Share button",
+          "Posts/Replies/Likes tabs",
+          "User posts feed"
+        ],
+        "quality_score": 8
+      },
+      {
+        "name": "ComposeScreen",
+        "implemented": true,
+        "file": "screens/ComposeScreen.tsx",
+        "features": [
+          "Modal bottom sheet (mobile)",
+          "Centered dialog (desktop)",
+          "Avatar display",
+          "Privacy selector (Public/Followers)",
+          "Textarea with character limit (280)",
+          "Character count display",
+          "Progress circle indicator",
+          "Image attachment (mock)",
+          "Image previews with remove",
+          "Toolbar buttons (image, link, mention, hashtag, emoji)",
+          "Post button with disabled state"
+        ],
+        "quality_score": 8
+      }
+    ],
+    "components": [
+      {
+        "name": "MaterialCard",
+        "implemented": true,
+        "file": "components/MaterialCard.tsx",
+        "features": [
+          "Avatar with verification badge",
+          "Author name and NIP-05 handle",
+          "Timestamp",
+          "Content with hashtag highlighting",
+          "Mention highlighting (nostr:)",
+          "Link highlighting",
+          "Image grid (1-4 images)",
+          "Reply button",
+          "Repost button with toggle",
+          "Zap button with toggle",
+          "Like button with toggle",
+          "Share button",
+          "More options button",
+          "Animated entry"
+        ],
+        "quality_score": 8
+      },
+      {
+        "name": "BottomNav",
+        "implemented": true,
+        "file": "components/BottomNav.tsx",
+        "features": [
+          "5 navigation items",
+          "Active state indicator",
+          "Badge support",
+          "Spring animations",
+          "Labels below icons"
+        ],
+        "quality_score": 7
+      },
+      {
+        "name": "FloatingActionButton",
+        "implemented": true,
+        "file": "components/FloatingActionButton.tsx",
+        "features": [
+          "Default FAB (56dp)",
+          "Small variant (40dp)",
+          "Large variant (96dp)",
+          "Primary/Secondary/Surface variants",
+          "Extended FAB variant",
+          "Hover and tap animations"
+        ],
+        "quality_score": 9
+      }
+    ],
+    "theme": {
+      "name": "Material Design 3",
+      "file": "amethyst.theme.css",
+      "implemented": true,
+      "features": [
+        "Complete color system (primary, secondary, tertiary, error)",
+        "Surface colors with elevation tints",
+        "Outline colors",
+        "Inverse colors",
+        "5 elevation shadows",
+        "Border radius tokens",
+        "8dp spacing grid",
+        "Typography scale",
+        "Animation durations and easings",
+        "Light and dark themes",
+        "Amethyst brand colors",
+        "Card styles (elevated, filled, outlined)",
+        "Button styles (filled, outlined, text, elevated, tonal)",
+        "Chip styles (assist, filter, input, suggestion)",
+        "Bottom navigation styles",
+        "Text field styles",
+        "Ripple animation",
+        "List item styles",
+        "Badge styles",
+        "Avatar styles",
+        "Progress indicator",
+        "Switch styles",
+        "Snackbar styles",
+        "App bar styles",
+        "Tab styles"
+      ],
+      "quality_score": 9
+    }
+  },
+  "missing_features": {
+    "critical": [
+      {
+        "name": "Pull-to-Refresh Gesture",
+        "description": "Actual touch gesture to refresh feed, not just visual spinner",
+        "priority": "P0",
+        "effort": "Medium"
+      },
+      {
+        "name": "Relay Connection Status",
+        "description": "Visual indicator showing connection to Nostr relays",
+        "priority": "P0",
+        "effort": "Small"
+      },
+      {
+        "name": "Reply Threading",
+        "description": "Visual tree structure showing conversation threads",
+        "priority": "P0",
+        "effort": "Large"
+      },
+      {
+        "name": "NIP-05 Badge Display",
+        "description": "Proper NIP-05 identifier format (name@domain)",
+        "priority": "P0",
+        "effort": "Small"
+      }
+    ],
+    "high": [
+      {
+        "name": "Stories/Highlights Row",
+        "description": "Instagram-style stories at top of feed",
+        "priority": "P1",
+        "effort": "Large"
+      },
+      {
+        "name": "Search Screen",
+        "description": "Full search interface with filters and results",
+        "priority": "P1",
+        "effort": "Large"
+      },
+      {
+        "name": "Notifications Screen",
+        "description": "Activity feed showing likes, follows, mentions",
+        "priority": "P1",
+        "effort": "Medium"
+      },
+      {
+        "name": "Navigation Drawer",
+        "description": "Side menu with settings, profile, bookmarks",
+        "priority": "P1",
+        "effort": "Medium"
+      },
+      {
+        "name": "Messages/DM Screen",
+        "description": "Direct messaging interface (NIP-17)",
+        "priority": "P1",
+        "effort": "Large"
+      },
+      {
+        "name": "Image Lightbox",
+        "description": "Full-screen image viewer with zoom",
+        "priority": "P1",
+        "effort": "Medium"
+      },
+      {
+        "name": "Community Tags",
+        "description": "NIP-28 community identifiers on posts",
+        "priority": "P1",
+        "effort": "Medium"
+      }
+    ],
+    "medium": [
+      {
+        "name": "Zap Amount Picker",
+        "description": "Interface for selecting sats amount to zap",
+        "priority": "P2",
+        "effort": "Medium"
+      },
+      {
+        "name": "Live Streaming Indicators",
+        "description": "LIVE badges on profiles currently streaming",
+        "priority": "P2",
+        "effort": "Small"
+      },
+      {
+        "name": "Poll Support",
+        "description": "Create and vote on polls (NIP-69)",
+        "priority": "P2",
+        "effort": "Large"
+      },
+      {
+        "name": "Long-form Notes",
+        "description": "NIP-23 article reading and creation",
+        "priority": "P2",
+        "effort": "Large"
+      },
+      {
+        "name": "Repost with Comment",
+        "description": "Quote repost functionality",
+        "priority": "P2",
+        "effort": "Medium"
+      }
+    ],
+    "low": [
+      {
+        "name": "Material Ripple Effects",
+        "description": "Touch ripple on all interactive elements",
+        "priority": "P3",
+        "effort": "Medium"
+      },
+      {
+        "name": "Roboto Font Loading",
+        "description": "Proper Material Design typography",
+        "priority": "P3",
+        "effort": "Small"
+      },
+      {
+        "name": "Haptic Feedback",
+        "description": "Vibration patterns for interactions",
+        "priority": "P3",
+        "effort": "Small"
+      },
+      {
+        "name": "System Status Bar",
+        "description": "Android-style status bar simulation",
+        "priority": "P3",
+        "effort": "Small"
+      },
+      {
+        "name": "Tooltips",
+        "description": "Long-press tooltips for icon buttons",
+        "priority": "P3",
+        "effort": "Small"
+      }
+    ]
+  },
+  "implementation_quality": {
+    "overall_score": 6.5,
+    "breakdown": {
+      "visual_design": {
+        "score": 7,
+        "max": 10,
+        "notes": "Good MD3 foundation with proper color system, needs polish on spacing and elevation"
+      },
+      "interaction_design": {
+        "score": 6,
+        "max": 10,
+        "notes": "Basic interactions present, missing advanced patterns like pull-to-refresh, ripple effects"
+      },
+      "nostr_compliance": {
+        "score": 5,
+        "max": 10,
+        "notes": "Missing many Nostr-specific features like relay management, NIP-05 proper display, zap workflows"
+      },
+      "code_quality": {
+        "score": 8,
+        "max": 10,
+        "notes": "Clean, well-structured TypeScript with good component separation"
+      },
+      "accessibility": {
+        "score": 4,
+        "max": 10,
+        "notes": "Missing ARIA labels, focus indicators, screen reader support"
+      },
+      "performance": {
+        "score": 7,
+        "max": 10,
+        "notes": "Good use of Framer Motion, could benefit from virtual scrolling for large feeds"
+      }
+    }
+  },
+  "material_design_compliance": {
+    "compliant_components": [
+      "Color system (primary, secondary, tertiary, error)",
+      "Surface elevation with tint overlays",
+      "Card component structure",
+      "Button variants (filled, outlined, text)",
+      "Chip components",
+      "Bottom navigation",
+      "Tab indicators",
+      "Badge placement",
+      "Avatar sizing"
+    ],
+    "non_compliant_patterns": [
+      {
+        "pattern": "Card Elevation",
+        "issue": "Always uses shadow-1, should support filled/elevated/outlined variants",
+        "severity": "Medium"
+      },
+      {
+        "pattern": "Typography",
+        "issue": "Uses system fonts instead of Roboto",
+        "severity": "Medium"
+      },
+      {
+        "pattern": "Ripple Effects",
+        "issue": "CSS ripple defined but not applied to components",
+        "severity": "Medium"
+      },
+      {
+        "pattern": "Text Fields",
+        "issue": "Compose uses plain textarea instead of MD3 text field",
+        "severity": "Medium"
+      },
+      {
+        "pattern": "Tab Animation",
+        "issue": "Spring animation doesn't match MD3 150ms ease spec",
+        "severity": "Low"
+      }
+    ]
+  },
+  "nostr_specific_gaps": [
+    "Relay connection/management UI",
+    "NIP-05 verification flow",
+    "Zap receipt display",
+    "NIP-28 community browsing",
+    "NIP-23 long-form reader",
+    "Key management interface",
+    "Event kind filtering",
+    "Hashtag following"
+  ],
+  "recommendations": {
+    "immediate": [
+      "Implement pull-to-refresh gesture on feed",
+      "Add relay connection status indicator",
+      "Fix NIP-05 display format",
+      "Make hamburger menu functional with navigation drawer"
+    ],
+    "short_term": [
+      "Create search screen",
+      "Implement notifications screen",
+      "Add stories/highlights row",
+      "Add image lightbox viewer"
+    ],
+    "medium_term": [
+      "Implement community tags",
+      "Add zap amount picker",
+      "Create messages/DM screen",
+      "Add poll support"
+    ],
+    "long_term": [
+      "Full MD3 compliance audit",
+      "Accessibility improvements",
+      "Tablet/navigation rail support",
+      "Performance optimizations"
+    ]
+  }
+}

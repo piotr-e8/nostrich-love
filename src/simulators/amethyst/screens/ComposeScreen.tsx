@@ -116,7 +116,7 @@ export function ComposeScreen({ isOpen, onClose, onPost }: ComposeScreenProps) {
               <div className="flex gap-3">
                 {/* Avatar */}
                 <img
-                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=currentuser"
+                  src="https://api.dicebear.com/7.x/bottts/svg?seed=currentuser"
                   alt="You"
                   className="w-10 h-10 rounded-full flex-shrink-0"
                 />

@@ -1,0 +1,4454 @@
+{
+  "processedAt": "2026-02-13T17:59:11.508Z",
+  "nadrs": [
+    {
+      "id": "naddr1",
+      "identifier": "b9c49267-5145-489a-ad6f-887b42e188e3",
+      "kind": 39089,
+      "pubkey": "1b3c0e97912969a90817cf4940ba8fdde8714b971161c6079e7e6114034153b1",
+      "totalPubkeys": 11,
+      "metadataFound": 12,
+      "newAccounts": 4,
+      "duplicates": 8,
+      "accounts": [
+        {
+          "pubkey": "32d1df355d2ceeea5cd1c41d574b9105c68eeefd7c0bd29e49c152fe71c4c7d5",
+          "npub": "npub1xtga7d2a9nhw5hx3csw4wju3qhrgamha0s9a98jfc9f0uuwycl2ssg89t4",
+          "name": "grawoig",
+          "username": "grawoig",
+          "picture": "https://blossom.primal.net/4e1c12c513cc832ead9739c284a5eb3cdbdef0a07b3a5df03ce7f4b1faa02c1d.jpg",
+          "bio": "artist composer maxi",
+          "nip05": "",
+          "lud16": "justelephant4@primal.net",
+          "website": "https://grawoig.com",
+          "fetchedAt": "2026-02-13T17:59:13.043Z",
+          "categories": [
+            "artists",
+            "musicians"
+          ],
+          "tags": [
+            "artists",
+            "musicians"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "1aa1dbbeeb04dde30e1e7a00f7eea7605549e78726d53522e3990aa68009f433",
+          "npub": "npub1r2sah0htqnw7xrs70gq00m48vp25neu8ym2n2ghrny92dqqf7sest8hth0",
+          "name": "zed-erwan☕️✏️🎨",
+          "username": "zed-erwan☕️✏️🎨",
+          "picture": "https://arweave.net/9JJUAzW5fMHrVzS0q1sJA3M70GnsXwkGSyRxi4BU-cg/lccgei_image.png",
+          "bio": "Sketch, croquis, carnet de voyage, chaque jour un dessin et un café. Juste le plaisir de partager mon travail.",
+          "nip05": "",
+          "lud16": "zederwan@minibits.cash",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:13.043Z",
+          "categories": [
+            "artists"
+          ],
+          "tags": [
+            "artists"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "f4db5270bd991b17bea1e6d035f45dee392919c29474bbac10342d223c74e0d0",
+          "npub": "npub17nd4yu9anyd3004pumgrtazaacujjxwzj36thtqsxskjy0r5urgqf6950x",
+          "name": "🟠 isolabellart",
+          "username": "🟠 isolabellart",
+          "picture": "https://creatr.nostr.wine/creator/content/c9149a12-1852-4607-91c0-eedbfce6949b.png",
+          "bio": "I paint in oil.\nInspired by time, silence, and light.\nEach work is unique and for sale in Bitcoin.\n→ https://isolabellart.it.com\nPaintings notes: #isolabellart\nArt gallery: https://gallery.isolabellart.it.com",
+          "nip05": "isolabellart@isolabellart.it.com",
+          "lud16": "isolabellart@blitzwalletapp.com",
+          "website": "https://isolabellart.it.com",
+          "fetchedAt": "2026-02-13T17:59:13.043Z",
+          "categories": [
+            "artists"
+          ],
+          "tags": [
+            "artists"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "ba18b6545357cff8e531accfe1d609a41ef3023fba071db1cbf5a67448c19046",
+          "npub": "npub1hgvtv4zn2l8l3ef34n87r4sf5s00xq3lhgr3mvwt7kn8gjxpjprqc89jnv",
+          "name": "Yarnlady 🧶",
+          "username": "Yarnlady 🧶",
+          "picture": "https://i.nostr.build/W9GR.jpg",
+          "bio": "Yarnfluencoor\nINFP\nMaker of yarn things\nCigar smoker\nCoffee drinker\nBread baker\nBread crocheter\nCorn hat maker\nPolystitcherous\n\n\nShut up and knit (or crochet). I love making strings into things using sticks, hooks, time, patience, and a little bit of love (also frustration sometimes).",
+          "nip05": "yarnlady@nostr.21mil.me",
+          "lud16": "yarnlady@coinos.io",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:13.043Z",
+          "categories": [
+            "cool_people"
+          ],
+          "tags": [
+            "cool_people"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "10f1f4a58cd7a7f6f5ed81ecef529f16ce42173d6197da5413aa0eeca0c21322",
+          "npub": "npub1zrclffvv67nlda0ds8kw755lzm8yy9eavxta54qn4g8wegxzzv3q8amvxc",
+          "name": "BitcoinArtMag",
+          "username": "BitcoinArtMag",
+          "picture": "https://i.nostr.build/WwisrxnSgY2tlvc0.png",
+          "bio": "The world’s first Bitcoin Art Magazine ⚡️\nOrder Now︱ bitcoinartmagazine.com\nListen︱ bitcoinartbroadcast.com\nChat︱t.me/bitcoinartmagazine\n\n",
+          "nip05": "BitcoinArtMag@primal.net",
+          "lud16": "BitcoinArtMag@primal.net",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:13.043Z",
+          "categories": [
+            "artists"
+          ],
+          "tags": [
+            "artists"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "59a98c047944f65ea40f3765555ee589bf50363f4f7dcf5594c3584bbb13ff66",
+          "npub": "npub1tx5ccpregnm9afq0xaj42hh93xl4qd3lfa7u74v5cdvyhwcnlanqplhd8g",
+          "name": "PurplePainter",
+          "username": "PurplePainter",
+          "picture": "https://blossom.primal.net/d232e0da40932648b5fbbfee82af4c79d04a1686676e8665da9e4df9fbbc435b.jpg",
+          "bio": "Painting Plebs\n21k for Paintings\n7.5”x10”\nWorldwide Shipping.",
+          "nip05": "Bitcoinpainter@iris.to",
+          "lud16": "Art@coinos.io",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:13.043Z",
+          "categories": [
+            "artists"
+          ],
+          "tags": [
+            "artists"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "43baaf0c28e6cfb195b17ee083e19eb3a4afdfac54d9b6baf170270ed193e34c",
+          "npub": "npub1gwa27rpgum8mr9d30msg8cv7kwj2lhav2nvmdwh3wqnsa5vnudxqlta2sz",
+          "name": "BitPopArt",
+          "username": "BitPopArt",
+          "picture": "https://i.nostr.build/0WQFBsHLrLeI4J5S.jpg",
+          "bio": "Bitcoin PopArt ✍️ by World Traveler Johannes Oppewal 88+ countries @traveltelly 🗺️",
+          "nip05": "bitpopart@primal.net",
+          "lud16": "bitpopart@coinos.io",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:13.043Z",
+          "categories": [
+            "artists"
+          ],
+          "tags": [
+            "artists"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "b78e0111502f435b7e179f0abc6f7898e3b8319dc8ba5ae43040563f4b19d04b",
+          "npub": "npub1k78qzy2s9ap4klshnu9tcmmcnr3msvvaeza94epsgptr7jce6p9sa2ggp4",
+          "name": "BureauGewas",
+          "username": "BureauGewas",
+          "picture": "https://m.primal.net/PuuV.png",
+          "bio": "Dutch oil painting artist\nReviving classical realism\n\nWorks are for sale\nDM for availability and pricing",
+          "nip05": "bureaugewas@primal.net",
+          "lud16": "rapiddolphin8@primal.net",
+          "website": "https://jvgenugten.nl",
+          "fetchedAt": "2026-02-13T17:59:13.043Z",
+          "categories": [
+            "artists"
+          ],
+          "tags": [
+            "artists"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "497e2ad9609d900f7b2fab27b27ba478b7a4a578809f52288fd47c5e431a7e3f",
+          "npub": "npub1f9lz4ktqnkgq77e04vnmy7ay0zm6fftcsz04y2y06379usc60clss7pxza",
+          "name": "Lydia",
+          "username": "Lydia",
+          "picture": "https://nostr.build/i/p/nostr.build_5a59876610e18dfbecbc012bd077a017609e71e84e9df97e5569a2a6b2d6eee6.jpg",
+          "bio": "Illustrator🗡️Artist🗡️ Tattoo artist",
+          "nip05": "lydia@www.flurs.art",
+          "lud16": "lidiakurshuk@getalby.com",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:13.043Z",
+          "categories": [
+            "artists"
+          ],
+          "tags": [
+            "artists"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "9356d008ab226ab6b08ab3c73900546b2836c48c7527f0e5332c09201a3e6dc8",
+          "npub": "npub1jdtdqz9tyf4tdvy2k0rnjqz5dv5rd3yvw5nlpefn9syjqx37dhyqxwh0c8",
+          "name": "Rustypuppy",
+          "username": "Rustypuppy",
+          "picture": "https://i.nostr.build/QhEQdzIRENLu7a1q.jpg",
+          "bio": "Author. Artist. Introvert. \nNostrArtstr.com Art Challenges Host. ",
+          "nip05": "rustypuppy@nostrplebs.com",
+          "lud16": "warmparrot4@primal.net",
+          "website": "https://rustypuppy.npub.pro",
+          "fetchedAt": "2026-02-13T17:59:13.043Z",
+          "categories": [
+            "artists",
+            "books"
+          ],
+          "tags": [
+            "artists",
+            "books"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "1aa1dbbeeb04dde30e1e7a00f7eea7605549e78726d53522e3990aa68009f433",
+          "npub": "npub1r2sah0htqnw7xrs70gq00m48vp25neu8ym2n2ghrny92dqqf7sest8hth0",
+          "name": "zed-erwan☕️✏️🎨",
+          "username": "zed-erwan☕️✏️🎨",
+          "picture": "https://arweave.net/9JJUAzW5fMHrVzS0q1sJA3M70GnsXwkGSyRxi4BU-cg/lccgei_image.png",
+          "bio": "Sketch, croquis, carnet de voyage, chaque jour un dessin et un café. Juste le plaisir de partager mon travail.",
+          "nip05": "",
+          "lud16": "zederwan@minibits.cash",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:13.043Z",
+          "categories": [
+            "artists"
+          ],
+          "tags": [
+            "artists"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "256a8525f8b45fa7b7ff180cb4b093d861dc9c00f14c517dea3512049bad1897",
+          "npub": "npub1y44g2f0ck3060dllrqxtfvynmpsae8qq79x9zl02x5fqfxadrzts67gama",
+          "name": "MaVi Lab 🌸",
+          "username": "MaVi Lab 🌸",
+          "picture": "https://blossom.primal.net/3ef1d5270f237f0c3abdaab03b63d53abc1d3650ceb31e19971841e9b21bebcf.jpg",
+          "bio": "I’m Maria, the artist behind MaVi LAB in Venice, Italy.\nI paint quiet, contemporary botanicals 🌸: cropped branches, small blossoms, and kintsugi-like gold seams.\nbalanced with generous negative space. The aim is simple: pieces that feel calm, modern, and luminous in everyday interiors.　\n\nI am happy to join NOSTR for the first time :) \n\nI have a shop where I only accept lightning payments →\n\nhttps://mavilab.art",
+          "nip05": "maria@mavilab.art",
+          "lud16": "mavilab@blink.sv",
+          "website": "https://mavilab.art",
+          "fetchedAt": "2026-02-13T17:59:13.570Z",
+          "categories": [
+            "artists"
+          ],
+          "tags": [
+            "artists"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        }
+      ]
+    },
+    {
+      "id": "naddr2",
+      "identifier": "cioc58duuftq",
+      "kind": 39089,
+      "pubkey": "17538dc2a62769d09443f18c37cbe358fab5bbf981173542aa7c5ff171ed77c4",
+      "totalPubkeys": 48,
+      "metadataFound": 51,
+      "newAccounts": 46,
+      "duplicates": 5,
+      "accounts": [
+        {
+          "pubkey": "a9434ee165ed01b286becfc2771ef1705d3537d051b387288898cc00d5c885be",
+          "npub": "npub149p5act9a5qm9p47elp8w8h3wpwn2d7s2xecw2ygnrxqp4wgsklq9g722q",
+          "name": "Niel Liesmons",
+          "username": "Niel Liesmons",
+          "picture": "https://image.nostr.build/bf7e965bf6ddba341ef07a866aa9562e7323e9e5639cd699ecb187078c9192e9.jpg",
+          "bio": "Designer that codes.\nAlso #WordStudy #Dadstr #Farmstr",
+          "nip05": "",
+          "lud16": "nielliesmons@coinos.io",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:14.777Z",
+          "categories": [
+            "artists",
+            "permaculture",
+            "parents"
+          ],
+          "tags": [
+            "artists",
+            "permaculture",
+            "parents"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "8d9d2b77930ee54ec3e46faf774ddd041dbb4e4aa35ad47c025884a286dd65fa",
+          "npub": "npub13kwjkaunpmj5aslyd7hhwnwaqswmknj25dddglqztzz29pkavhaq25wg2a",
+          "name": "Maria2000",
+          "username": "Maria2000",
+          "picture": "https://cdn.nostrcheck.me/8d9d2b77930ee54ec3e46faf774ddd041dbb4e4aa35ad47c025884a286dd65fa/f06b82b484020ac360f47a0f277c0464ce661ef3a9700bb4c0a20c2fbc531230.webp",
+          "bio": "Country living, chickens, living a peaceful life",
+          "nip05": "maria2000@happytavern.co",
+          "lud16": "maria@walletofsatoshi.com",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:14.777Z",
+          "categories": [
+            "cool_people"
+          ],
+          "tags": [
+            "cool_people"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "6a02b7d5d5c1ceec3d0ad28dd71c4cfeebb6397b95fef5cd5032c9223a13d02a",
+          "npub": "npub1dgpt04w4c88wc0g262xaw8zvlm4mvwtmjhl0tn2sxtyjywsn6q4qt8ka3a",
+          "name": "WedgeSocial",
+          "username": "WedgeSocial",
+          "picture": "https://image.nostr.build/47ac3f9e8d5bed324825905530c00763ca5a4a4912551aceb678fb50ef2b947f.jpg",
+          "bio": "Loose Canon Loaded Flowers",
+          "nip05": "wedgesocial@nostrplebs.com",
+          "lud16": "wedgesocial@walletofsatoshi.com",
+          "website": "wedgeorganics.com",
+          "fetchedAt": "2026-02-13T17:59:14.777Z",
+          "categories": [
+            "cool_people"
+          ],
+          "tags": [
+            "cool_people"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "d70d50091504b992d1838822af245d5f6b3a16b82d917acb7924cef61ed4acee",
+          "npub": "npub16ux4qzg4qjue95vr3q327fzata4n594c9kgh4jmeyn80v8k54nhqg6lra7",
+          "name": "AU9913",
+          "username": "AU9913",
+          "picture": "https://image.nostr.build/51a101919f5c2a43b1a5e1230a871e17d94cfe68c9014423dfe29615ec0ea657.jpg",
+          "bio": "Papa\nRegen Rancher #permaculture \nDev\n🐤",
+          "nip05": "auggie@nakaMOtown.com",
+          "lud16": "au9913@minibits.cash",
+          "website": "https://nakaMOtown.com",
+          "fetchedAt": "2026-02-13T17:59:14.777Z",
+          "categories": [
+            "permaculture"
+          ],
+          "tags": [
+            "permaculture"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "4d023ce9dfd75a7f3075b8e8e084008be17a1f750c63b5de721e6ef883adc765",
+          "npub": "npub1f5pre6wl6ad87vr4hr5wppqq30sh58m4p33mthnjreh03qadcajs7gwt3z",
+          "name": "rev.hodl",
+          "username": "rev.hodl",
+          "picture": "https://i.nostr.build/attyPOwmlyU7Y0t6.jpg",
+          "bio": "Homesteading, Permaculture, Bitcoin, Freedom. All one or all none!",
+          "nip05": "revhodl@cornychat.com",
+          "lud16": "revhodl@minibits.cash",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:14.777Z",
+          "categories": [
+            "permaculture",
+            "sovereign"
+          ],
+          "tags": [
+            "permaculture",
+            "sovereign"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "f27a4813f31d8faf80377ef15d4a397e3640b5ca1dffba9ce9dca91d3362c091",
+          "npub": "npub17faysylnrk86lqph0mc46j3e0cmypdw2rhlm488fmj536vmzczgs5qlnh4",
+          "name": "jsm",
+          "username": "jsm",
+          "picture": "https://pfp.nostr.build/e9e7963637e04d90ad2c33f21c6f112a188c5b001dd697e108991261487aa258.jpg",
+          "bio": "Farmer.",
+          "nip05": "jsmcd@getalby.com",
+          "lud16": "jsmcd@getalby.com",
+          "website": "https://studiohill.farm",
+          "fetchedAt": "2026-02-13T17:59:14.777Z",
+          "categories": [
+            "permaculture"
+          ],
+          "tags": [
+            "permaculture"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "5e7e69f863d20ca30103df88887194e091679491fefe5eb8212753013cc3d552",
+          "npub": "npub1telxn7rr6gx2xqgrm7ygsuv5uzgk09y3lml9awppyafsz0xr64fqlap4l3",
+          "name": "ender",
+          "username": "ender",
+          "picture": "https://blossom.primal.net/f809f831b3d946d043c526ec8020516e8b15cade6641d3f8ef7cb82e58e6505d.jpg",
+          "bio": "low IQ | blue collar worker | married | Yeshua follower | bitcoin standard | building my own Georgian styled bitcoin heated house | organizer of @airpool",
+          "nip05": "",
+          "lud16": "boldshrimp14@primal.net",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:14.777Z",
+          "categories": [
+            "cool_people"
+          ],
+          "tags": [
+            "cool_people"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "715c279295b65454c464b78503d6154ad7697ba82460c56d8a42eb5da11e6c4b",
+          "npub": "npub1w9wz0y54ke29f3ryk7zs84s4fttkj7agy3sv2mv2gt44mgg7d39sewekxt",
+          "name": "RecoveringAcademic",
+          "username": "RecoveringAcademic",
+          "picture": "https://image.nostr.build/e1d7b38e5965c07bec5c7b57d5b9ead48aecbd9043c5f9a39926d47c102043dd.jpg",
+          "bio": " ",
+          "nip05": " ",
+          "lud16": "  ",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:14.777Z",
+          "categories": [
+            "jumpstart"
+          ],
+          "tags": [
+            "jumpstart"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "ab11aa702482080cfead6e35fb6fbad454a3e792dd4d75f183f52f5fea2a2fa9",
+          "npub": "npub14vg65upysgyqel4ddc6lkma663228eujm4xhtuvr75h4l632975sdupd9a",
+          "name": "ornedii",
+          "username": "ornedii",
+          "picture": "https://image.nostr.build/93a0c6d92d635e2f7a4eb005224718fdfb47380a2cb573da32f222064109de7d.jpg",
+          "bio": "dryland permaculture, tinyhouse, music, software engineer full stack",
+          "nip05": "",
+          "lud16": "lovelycoffee4614@getalby.com",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:14.777Z",
+          "categories": [
+            "musicians",
+            "permaculture"
+          ],
+          "tags": [
+            "musicians",
+            "permaculture"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "c0e0c4272134d92da8651650c10ca612b710a670d5e043488f27e073a1f63a16",
+          "npub": "npub1crsvgfepxnvjm2r9zegvzr9xz2m3pfns6hsyxjy0yls88g0k8gtqhc9r37",
+          "name": "Jen",
+          "username": "Jen",
+          "picture": "https://nostr.build/i/nostr.build_334544f44f38979dc54b1fd0d4a64b93dcc5fbb46e12de3493f106e670f007c0.jpeg",
+          "bio": "Nostr only \nHomesteader \nPassionate about regen agriculture\nBeagles make the best buddies\nBitcoin is not a hobby\nMusic feeds the soul\nLife is better when lived outdoors\n🐮👩🏼‍🌾🐶🧡🏴‍☠️🎻🧘🏼‍♀️🌳🥩",
+          "nip05": "farmerjen@nostrplebs.com",
+          "lud16": "farmerjen@walletofsatoshi.com",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:14.777Z",
+          "categories": [
+            "musicians",
+            "permaculture"
+          ],
+          "tags": [
+            "musicians",
+            "permaculture"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "d020fe6e22b3aca9f578172a135e25d7b692e67b52e97fdce55431127d7626af",
+          "npub": "npub16qs0um3zkwk2natczu4pxh3967mf9enm2t5hlh892sc3yltky6hs832q4u",
+          "name": "MowMow",
+          "username": "MowMow",
+          "picture": "https://image.nostr.build/68416477fcc84d4158c4c2bb40f90747d9d5f19f55ff3e6915a5d46e5c1cb732.jpg",
+          "bio": "I'm a goat. CEO of weed control and maintenance.\nI do goat things and occasionally zap things that goats like.",
+          "nip05": "",
+          "lud16": "theseguru02@walletofsatoshi.com",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:15.301Z",
+          "categories": [
+            "cool_people"
+          ],
+          "tags": [
+            "cool_people"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "360764241990900e9bf9acafbe102743cc19321c4548bd748671c7e0bd528a25",
+          "npub": "npub1xcrkgfqejzgqaxle4jhmuyp8g0xpjvsug4yt6ayxw8r7p02j3gjscl60yf",
+          "name": "bitcoinbonden",
+          "username": "bitcoinbonden",
+          "picture": "https://m.primal.net/HWdV.jpg",
+          "bio": "Norwegian farmer selling beef, pork and firewood for #bitcoin",
+          "nip05": "",
+          "lud16": "curiousjam84@walletofsatoshi.com",
+          "website": "Bitcoinbonden.no",
+          "fetchedAt": "2026-02-13T17:59:15.301Z",
+          "categories": [
+            "permaculture"
+          ],
+          "tags": [
+            "permaculture"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "ce3c305d4f6bde1060bc3193e1f18f3619dbbd993082da5838fd74491ea1de6b",
+          "npub": "npub1ec7rqh20d00pqc9uxxf7ruv0xcvah0vexzpd5kpcl46yj84pme4suggn5k",
+          "name": "AC",
+          "username": "AC",
+          "picture": "https://image.nostr.build/beb2b145e6f9c8434e867de19d281b1017905d619a3f7cf46fe614bae7bf2b8f.jpg",
+          "bio": "",
+          "nip05": "agrariancontrarian@nostrplebs.com",
+          "lud16": "agrariancontrarian@getalby.com",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:15.301Z",
+          "categories": [
+            "jumpstart"
+          ],
+          "tags": [
+            "jumpstart"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "428d9b92e962bdb6ad9b178ffaa734c369eff3c43590eb9f3d3eea059e28d38a",
+          "npub": "npub1g2xehyhfv27mdtvmz78l4fe5cd57lu7yxkgwh8ea8m4qt83g6w9qqrg0vy",
+          "name": "phenixfalconer",
+          "username": "phenixfalconer",
+          "picture": "https://image.nostr.build/8317f5d547f87419911672f4bf7a11b359170ece3d342f1f0dae37fa5e2015b1.jpg",
+          "bio": "#homesteading #farmstr #gardening #garden #seedstr #chickens #rabbits #birdstr #huntstr #hunting #buckskin #wildlife #nature",
+          "nip05": "",
+          "lud16": "cloudycook707@minibits.cash",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:15.301Z",
+          "categories": [
+            "permaculture"
+          ],
+          "tags": [
+            "permaculture"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "e7211c227437dcb5582712b5b1bbfb2a23b27654649ddc7c1fb5a7dde87afeee",
+          "npub": "npub1uus3cgn5xlwt2kp8z26mrwlm9g3myaj5vjwaclqlkknam6r6lmhqjhwkxn",
+          "name": "Lost Sheep Ranch",
+          "username": "Lost Sheep Ranch",
+          "picture": "https://lost-sheep-ranch.com/img/sheepsingle.png",
+          "bio": "Selling 100% grassfed lamb and pasture raised eggs for bitcoin (and fiat) in south central Pennsylvania",
+          "nip05": "",
+          "lud16": "grover@getalby.com",
+          "website": "www.lost-sheep-ranch.com",
+          "fetchedAt": "2026-02-13T17:59:15.301Z",
+          "categories": [
+            "cool_people"
+          ],
+          "tags": [
+            "cool_people"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "0f4011159c24a6a53eeea72e1c2e97e0425be8af15e7de397003dd65d9e8d278",
+          "npub": "npub1paqpz9vuyjn220hw5uhpct5hupp9h690zhnauwtsq0wktk0g6fuq4dezs0",
+          "name": "Stacking Functions",
+          "username": "Stacking Functions",
+          "picture": "https://nostr.build/i/nostr.build_52a113f3e46f59e727e74545004e1e3e67dcccb5622f6a55ffef91df75505d2a.jpeg",
+          "bio": "Urban Homesteader, Edible Landscaper\nHere for the Great Awakening ",
+          "nip05": "",
+          "lud16": "chicrenewal691762@getalby.com",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:15.301Z",
+          "categories": [
+            "photography",
+            "permaculture"
+          ],
+          "tags": [
+            "photography",
+            "permaculture"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "7644119b18ec56b5b2779e0d035e7712a9d669dbfbe5b2c5f458cb564afb6c95",
+          "npub": "npub1wezprxcca3tttvnhncxsxhnhz25av6wml0jm9305tr94vjhmdj2s2e62hu",
+          "name": "TBone",
+          "username": "TBone",
+          "picture": "https://image.nostr.build/930fafef923c1bde7e490c5b20cf8decbab853562eec9a955dbd2072023718f9.gif",
+          "bio": "Homesteader.\nSteak Approver.\nUngovernable.\nUnemployable.\n#bitcoin only\n#nostr only",
+          "nip05": "Tbone@nostrplebs.com",
+          "lud16": "tbone@walletofsatoshi.com",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:15.301Z",
+          "categories": [
+            "permaculture"
+          ],
+          "tags": [
+            "permaculture"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "428d9b92e962bdb6ad9b178ffaa734c369eff3c43590eb9f3d3eea059e28d38a",
+          "npub": "npub1g2xehyhfv27mdtvmz78l4fe5cd57lu7yxkgwh8ea8m4qt83g6w9qqrg0vy",
+          "name": "phenixfalconer",
+          "username": "phenixfalconer",
+          "picture": "https://image.nostr.build/cae084b5832b135dfb0c9ecf81f77adc97e75e48a78b6b7ce4464e8f34c55f11.jpg",
+          "bio": "#homesteading #farmstr #gardening #garden #seedstr #chickens #rabbits #birdstr #huntstr #hunting #buckskin #wildlife #nature",
+          "nip05": "",
+          "lud16": "cloudycook707@minibits.cash",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:15.301Z",
+          "categories": [
+            "permaculture"
+          ],
+          "tags": [
+            "permaculture"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "58d2be9f20537ad7074b0283287611507ef7bd313c5edb64def9e1fc5df26d11",
+          "npub": "npub1trfta8eq2dadwp6tq2pjsas32pl000f3830dkex7l8slch0jd5gs34d0e6",
+          "name": "dwright5816",
+          "username": "dwright5816",
+          "picture": "https://m.primal.net/NPfs.jpg",
+          "bio": "In Tennessee, interested in permaculture, decentralized technology, bitcoin, and algorithmic trading. Catholic father and husband. world traveler, and software engineering manager.",
+          "nip05": "",
+          "lud16": "jollyhorse7@primal.net",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:15.301Z",
+          "categories": [
+            "musicians",
+            "permaculture",
+            "parents"
+          ],
+          "tags": [
+            "musicians",
+            "permaculture",
+            "parents"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "681b9e384921582ecac2b4641a9337f17b66698a01065694c91dc4c345c6de1e",
+          "npub": "npub1dqdeuwzfy9vzajkzk3jp4yeh79akv6v2qyr9d9xfrhzvx3wxmc0qrzw9nn",
+          "name": "FloofFarm",
+          "username": "FloofFarm",
+          "picture": "https://m.primal.net/KrMM.png",
+          "bio": "Floof Farm is a dairy goat farm located in Washington. We breed American Dairy Goat Association (ADGA) Registered Nigerian Dwarf and Toggenburg Dairy Goats.",
+          "nip05": "flooffarm@coinos.io",
+          "lud16": "flooffarm@coinos.io",
+          "website": "https://floof.farm",
+          "fetchedAt": "2026-02-13T17:59:15.301Z",
+          "categories": [
+            "permaculture"
+          ],
+          "tags": [
+            "permaculture"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "7b8fcd9153d2c47146155df24b7f167924c1fc16fb4e843d98f8b5f3add6bd85",
+          "npub": "npub10w8umy2n6tz8z3s4theyklck0yjvrlqkld8gg0vclz6l8twkhkzsd4zf5s",
+          "name": "watts_bar",
+          "username": "watts_bar",
+          "picture": "https://i.pinimg.com/736x/07/59/c9/0759c9b979c04fc9b6952c5cfa85ec5f.jpg",
+          "bio": "Freedom minded homesteader, chicken farmer and pig castrator\n",
+          "nip05": "",
+          "lud16": "",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:15.301Z",
+          "categories": [
+            "permaculture",
+            "sovereign"
+          ],
+          "tags": [
+            "permaculture",
+            "sovereign"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "815f4f1ecbffe7abe360018b663295d188bd49f8fe4726ee63ef5bca5b6f64e8",
+          "npub": "npub1s90578ktlln6hcmqqx9kvv546xyt6j0clerjdmnraadu5km0vn5q9w8hyk",
+          "name": "JoJ",
+          "username": "JoJ",
+          "picture": "https://image.nostr.build/d3e2d1df4eefd751768aeeea6e215aaba0822b2dd2260511f61283d11959bbdb.jpg",
+          "bio": "Heathen\nHusband, Father, Farmer,\nWood chopper, wood burner",
+          "nip05": "",
+          "lud16": "quickswan9@primal.net",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:15.820Z",
+          "categories": [
+            "musicians",
+            "permaculture",
+            "parents"
+          ],
+          "tags": [
+            "musicians",
+            "permaculture",
+            "parents"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "655f0194f141831368f4da372622062457ef73cbf1e6db1734d2c7c05e0029ca",
+          "npub": "npub1v40sr983gxp3x685mgmjvgsxy3t77u7t78ndk9e56truqhsq989q3e2y09",
+          "name": "A.A.Ron",
+          "username": "A.A.Ron",
+          "picture": "https://image.nostr.build/ea905d3b87da01986ac7defebbaa25501618c746e1def54f221c13c41145f496.jpg",
+          "bio": "Alaskan. Electrical enginerd. Hunter, fisherman, gardener. Ham radio operator.",
+          "nip05": "",
+          "lud16": "grainyagenda152@minibits.cash",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:15.820Z",
+          "categories": [
+            "permaculture"
+          ],
+          "tags": [
+            "permaculture"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "949110ffbaab1eed7c02b4665a0dc5054537e5e89c5bbe06f51600e8b0001c72",
+          "npub": "npub1jjg3pla64v0w6lqzk3n95rw9q4zn0e0gn3dmuph4zcqw3vqqr3equqm9ym",
+          "name": "Sand Hill Thicket",
+          "username": "Sand Hill Thicket",
+          "picture": "https://cdn.masto.host/medmastodoncom/accounts/avatars/109/309/211/721/872/668/original/ae094247c1f91898.jpg",
+          "bio": "It's pretty much all about Gulf Coast sheep, cats, and food over here... Life of a smallholder on the prairie in northeastern Kansas. Grow Zone 6a.\n\nhttps://www.sandhill-thicket.com",
+          "nip05": "SandHillThicket@med--mastodon-com.mostr.pub",
+          "lud16": "",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:15.821Z",
+          "categories": [
+            "permaculture",
+            "foodies"
+          ],
+          "tags": [
+            "permaculture",
+            "foodies"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "469223f4ce484bba4e125a8c8a92032e16e5d07b723ea5da2f253b2627da92c7",
+          "npub": "npub1g6fz8axwfp9m5nsjt2xg4ysr9ctwt5rmwgl2tk30y5ajvf76jtrsskpcks",
+          "name": "The Fertile Crescent",
+          "username": "The Fertile Crescent",
+          "picture": "https://image.nostr.build/f6f0eb5c78c9bfef872555306c40f91804a823faff2777a7e16fd2680db5cda3.jpg",
+          "bio": "a Bitcoin farm 🌱\n𝘧𝘰𝘭𝘭𝘰𝘸 𝘢𝘭𝘰𝘯𝘨 𝘸𝘪𝘵𝘩 𝘶𝘴 𝘰𝘯 𝘰𝘶𝘳 𝘫𝘰𝘶𝘳𝘯𝘦𝘺 𝘵𝘰 𝘧𝘳𝘦𝘦𝘥𝘰𝘮",
+          "nip05": "",
+          "lud16": "thefertilecrescent@getalby.com",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:15.821Z",
+          "categories": [
+            "permaculture"
+          ],
+          "tags": [
+            "permaculture"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "b5c417b9b51ff323f857b6c60cff085c8e50e87a3365a1ed5d52f9b3c0580a9b",
+          "npub": "npub1khzp0wd4rlej87zhkmrqelcgtj89p6r6xdj6rm2a2tum8szcp2dsje3c5c",
+          "name": "lacruzboss",
+          "username": "lacruzboss",
+          "picture": "https://m.primal.net/OTVl.jpg",
+          "bio": "🇸🇻 jungle coffee provider 🇸🇻\n🌴 LA CRUZ 🌴 \n\nI have a speciality coffee farm in El Salvador.",
+          "nip05": "lacruz@nostrplebs.com",
+          "lud16": "cyanpanther3@primal.net",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:15.821Z",
+          "categories": [
+            "permaculture"
+          ],
+          "tags": [
+            "permaculture"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "fb89e58f838b7d716a88300ea1f2539fff78766aa1121ec10968b6b10a498f28",
+          "npub": "npub1lwy7trur3d7hz65gxq82rujnnllhsan25yfpasgfdzmtzzjf3u5q0v4zv0",
+          "name": "Henry",
+          "username": "HenryGQJ",
+          "picture": "https://i.imgur.com/NlGUxA3.jpg",
+          "bio": "#Permaculture  and idiocy",
+          "nip05": "",
+          "lud16": "henry@minibits.cash",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:15.821Z",
+          "categories": [
+            "permaculture"
+          ],
+          "tags": [
+            "permaculture"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "99562ddb32ac3e3378919a943e861cb999e80583efc7c70a42bba3e9ebbfc579",
+          "npub": "npub1n9tzmkej4slrx7y3n22rapsuhxv7spvralruwzjzhw37n6alc4usnu8t27",
+          "name": "FlyoverJoe",
+          "username": "FlyoverJoe",
+          "picture": "https://image.nostr.build/a7c7144a4bc0f9aeb40d57b66c0c7c8f8f481f59d945b853214c9c705ce279b3.jpg",
+          "bio": "Out here in the middle of nowhere. ",
+          "nip05": "",
+          "lud16": "733ac1b0bfac491f@coinos.io",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:15.821Z",
+          "categories": [
+            "cool_people"
+          ],
+          "tags": [
+            "cool_people"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "7bc70ce80a898cc4b3e17d0992fa17264df188e1c806b60ed54424e8b41f5686",
+          "npub": "npub100rse6q23xxvfvlp05ye97shyexlrz8peqrtvrk4gsjw3dql26rqxu63y7",
+          "name": "Skick",
+          "username": "Skick",
+          "picture": "https://m.primal.net/QcUi.png",
+          "bio": "Gourmet mushroom and cultivation supply company.",
+          "nip05": "",
+          "lud16": "jollyturtle10@primal.net",
+          "website": "www.foxfiremushrooms.com",
+          "fetchedAt": "2026-02-13T17:59:15.821Z",
+          "categories": [
+            "cool_people"
+          ],
+          "tags": [
+            "cool_people"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "797750041d1366a80d45e130c831f0562b5f7266662b07acef50dd541bfa2535",
+          "npub": "npub109m4qpqazdn2sr29uycvsv0s2c447unxvc4s0t802rw4gxl6y56sd9hvru",
+          "name": "Jordan Richner",
+          "username": "jmrichner",
+          "picture": "https://i.nostr.build/jxq8ACRpRX4PKBYq.jpg",
+          "bio": "Rancher, Soil Scientist, Bushcrafter, Woodworker, Homesteader, Bitcoiner, Entrepreneur",
+          "nip05": "",
+          "lud16": "jordanrichner@strike.me",
+          "website": "https://fountain.fm/jordanrichner",
+          "fetchedAt": "2026-02-13T17:59:15.821Z",
+          "categories": [
+            "permaculture"
+          ],
+          "tags": [
+            "permaculture"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "4256093f64ac3f552703e1887b9e5b2267f88abd34baf485987e6c2c83f77b53",
+          "npub": "npub1gftqj0my4sl42fcruxy8h8jmyfnl3z4axja0fpvc0ekzeqlh0dfsffg34w",
+          "name": "JayW132",
+          "username": "JayW132",
+          "picture": "https://m.primal.net/PFfW.jpg",
+          "bio": "Building The Bitcoin Collective",
+          "nip05": "",
+          "lud16": "honestcloudy02@walletofsatoshi.com",
+          "website": "https://linktr.ee/bitcoincollective",
+          "fetchedAt": "2026-02-13T17:59:15.821Z",
+          "categories": [
+            "cool_people"
+          ],
+          "tags": [
+            "cool_people"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "101a112c8adc2e69e0003114ff1c1d36b7fcde06d84d47968e599d558721b0df",
+          "npub": "npub1zqdpzty2mshxncqqxy2078qax6mlehsxmpx5095wtxw4tpepkr0s2ce6fj",
+          "name": "Permanerd 🌱 💻",
+          "username": "Permanerd 🌱 💻",
+          "picture": "https://image.nostr.build/01e213f3cd9d2a77f2363c1a2c0e99c17c334841f25769f20722f1516318a4cd.jpg",
+          "bio": "Father, husband,  homesteader, permaculturer, hunter, laugher, fun haver, Sats 4 Snacks operator",
+          "nip05": "",
+          "lud16": "permanerd@getalby.com",
+          "website": "sats4snacks.com",
+          "fetchedAt": "2026-02-13T17:59:16.330Z",
+          "categories": [
+            "musicians",
+            "permaculture",
+            "parents"
+          ],
+          "tags": [
+            "musicians",
+            "permaculture",
+            "parents"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "165b9d37a28903103af9ad24036bdc54270882c01add515791fc9666167cfac1",
+          "npub": "npub1zede6daz3yp3qwhe45jqx67u2sns3qkqrtw4z4u3ljtxv9nultqs0e3hvt",
+          "name": "Kayne",
+          "username": "Kayne",
+          "picture": "https://blossom.primal.net/602bc67069efb4e94ecfec0542944113087cdd6f7c803d28bfea11b9301c3153.jpg",
+          "bio": "i am Kayne this is where I express my opinions. ",
+          "nip05": "kayne@nostrcheck.me",
+          "lud16": "zippymoose10@primal.net",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:16.330Z",
+          "categories": [
+            "cool_people"
+          ],
+          "tags": [
+            "cool_people"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "7a6b8c7de171955c214ded7e35cc782cd6dddfd141abb1929c632f69348e6f49",
+          "npub": "npub10f4ccl0pwx24cg2da4lrtnrc9ntdmh73gx4mry5uvvhkjdywdaysa5hrhr",
+          "name": "NaturalNerd",
+          "username": "NaturalNerd",
+          "picture": "https://image.nostr.build/b4bc13ed8ef5a805c45062506694d117cce5f36ef7aad6ee4af749d3a696223b.jpg",
+          "bio": "Hillbilly engineer and plant nerd going feral",
+          "nip05": "",
+          "lud16": "7a6b8c7de171955c214ded7e@coinos.io",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:16.331Z",
+          "categories": [
+            "cool_people"
+          ],
+          "tags": [
+            "cool_people"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "f6900e6b42a83a6d66589714de49ac86919c6464857d9e164b953bcf9c7e939d",
+          "npub": "npub176gqu66z4qax6ejcju2dujdvs6gecerys47eu9jtj5aul8r7jwwsnqq836",
+          "name": "The Bird",
+          "username": "The Bird",
+          "picture": "https://image.nostr.build/f10ca032b5ff99b2a28fcf87900e9486c9bf14440368a7ea1f372a51cff63319.jpg",
+          "bio": "God, Family, Bitcoin, nature, pew, fish, birdman and _______________\n\nXMR\n44EhwqxoEBwaatnyLQop645v5bAQPz1v6LQXmfbvgCpVVeHpcVhLDtpYKmZ18gdW9d5BnCTpUZqwE1HdixSf94PzGLCHekM",
+          "nip05": "DC@bitcoinveterans.org",
+          "lud16": "greenkarusa@blitzwalletapp.com",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:16.331Z",
+          "categories": [
+            "parents",
+            "christians"
+          ],
+          "tags": [
+            "parents",
+            "christians"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "aa836271424a1d3601f82628c64a105126560ebf1e03847d5b8f247b6fa507bf",
+          "npub": "npub142pkyu2zfgwnvq0cyc5vvjss2yn9vr4lrcpcgl2m3uj8kma9q7lsdfduqf",
+          "name": "Be The Change: Abundance, Service, Play",
+          "username": "Be The Change: Abundance, Service, Play",
+          "picture": "https://blossom.primal.net/9d1de024c6c9e915e85d9210610fdfc59078ca62104a6fa439f51590fcc9dc3f.gif",
+          "bio": "Homesteaders in the South.\n",
+          "nip05": "",
+          "lud16": "farm@coinos.io",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:16.331Z",
+          "categories": [
+            "permaculture"
+          ],
+          "tags": [
+            "permaculture"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "dc530ac3899739b08827e9901c25ccc08b357d8347532a76594f4df71bbb9189",
+          "npub": "npub1m3fs4sufjuumpzp8axgpcfwvcz9n2lvrgafj5ajefaxlwxamjxysfjhch4",
+          "name": "Acme Acres",
+          "username": "Acme Acres",
+          "picture": "https://blossom.primal.net/c75d54f90fec53935d99709af6a6be16129ba7b8cf47b34bf8cea173984d8eb3.jpg",
+          "bio": "Acme Acres is a family farm-to-table provider of premium, grass-fed/grass finished pasture-raised beef, pork, lamb, and chicken. Raised with no vaccines, hormones or antibiotics. ",
+          "nip05": "",
+          "lud16": "ambermoth8@primal.net",
+          "website": "www.acmeacres.us",
+          "fetchedAt": "2026-02-13T17:59:16.331Z",
+          "categories": [
+            "permaculture",
+            "parents"
+          ],
+          "tags": [
+            "permaculture",
+            "parents"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "a25ff9fcdc949f4e9f03f6777808b880b12effa07c39a1936c72942e2eefb953",
+          "npub": "npub15f0lnlxujj05a8cr7emhsz9cszcjalaq0su6rymvw22zuth0h9fs7cqrdx",
+          "name": "Little Spoon",
+          "username": "Little Spoon",
+          "picture": "https://cdn.nostr.build/i/5d7b99681f2949a148f6e2ccb764fe11b7ff1cd464dc158acbfee7ad264c4a8a.jpg",
+          "bio": "Fat zapper.   Skinny zaps. ",
+          "nip05": "",
+          "lud16": "BigSpoon@coinos.io",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:16.331Z",
+          "categories": [
+            "cool_people"
+          ],
+          "tags": [
+            "cool_people"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "a1fc5dfd7ffcf563c89155b466751b580d115e136e2f8c90e8913385bbedb1cf",
+          "npub": "npub15879mltlln6k8jy32k6xvagmtqx3zhsndchcey8gjyectwldk88sq5kv0n",
+          "name": "jackspirko",
+          "username": "jackspirko",
+          "picture": "https://m.primal.net/HbGx.png",
+          "bio": "Host of The Survival Podcast & The Bitcoin Breakout, Founder of the #grownostr initiative.  I am also a prepper, a permaculturist, a teacher, a gardener, a hunter, a fisherman, a grandfather, a husband and dad.  My life is pretty damn great. ",
+          "nip05": "jackspirko@primal.net",
+          "lud16": "jackspirko@primal.net",
+          "website": "TheSurvivalPodcast.com",
+          "fetchedAt": "2026-02-13T17:59:16.331Z",
+          "categories": [
+            "musicians",
+            "permaculture",
+            "parents",
+            "sovereign"
+          ],
+          "tags": [
+            "musicians",
+            "permaculture",
+            "parents",
+            "sovereign"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "a39199ccb5ec92b1cd047bf3dc7e8923ede769d1a5ccc47d579912f0f5cbdab4",
+          "npub": "npub15wgenn94ajftrngy00eacl5fy0k7w6w35hxvgl2hnyf0pawtm26qy07hfl",
+          "name": "jesssowards",
+          "username": "jesssowards",
+          "picture": "https://m.primal.net/Hswj.jpg",
+          "bio": "Homesteader. Gardener. Lover of good food and pretty words. South Carolina is home. ",
+          "nip05": "",
+          "lud16": "tealsloth1@primal.net",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:16.331Z",
+          "categories": [
+            "permaculture",
+            "foodies"
+          ],
+          "tags": [
+            "permaculture",
+            "foodies"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "518b2e2976d23bbf778edd3a8613f393d67c5df579b99bb459222ae3cb6e6b78",
+          "npub": "npub12x9ju2tk6gam7auwm5agvylnj0t8ch040xuehdzeyg4w8jmwdduqetsr92",
+          "name": "Ragamuffin",
+          "username": "Ragamuffin",
+          "picture": "https://image.nostr.build/09f0cc59e44344485b8a8e27ef59778aee91098aae9e179c38c66bf20f467efe.jpg",
+          "bio": "",
+          "nip05": "",
+          "lud16": "fancyladybug3@primal.net",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:16.331Z",
+          "categories": [
+            "jumpstart"
+          ],
+          "tags": [
+            "jumpstart"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "26d6a946675e603f8de4bf6f9cef442037b70c7eee170ff06ed7673fc34c98f1",
+          "npub": "npub1ymt2j3n8tesrlr0yhaheem6yyqmmwrr7actslurw6annls6vnrcslapxnz",
+          "name": "Noshole",
+          "username": "Noshole",
+          "picture": "https://image.nostr.build/e051a34362fdc4af17d2d2cda3df80e6de081c6f3a94713061e6c14645655177.jpg",
+          "bio": "Nobody asked me, but…",
+          "nip05": "noshole@turdsoup.com",
+          "lud16": "poopypants@coinos.io",
+          "website": "turdsoup.com",
+          "fetchedAt": "2026-02-13T17:59:16.852Z",
+          "categories": [
+            "cool_people"
+          ],
+          "tags": [
+            "cool_people"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "f941ad2a24f166c1b594039c908db45c408b671f8ff76c5bd7b9d6cd50d5d339",
+          "npub": "npub1l9q6623y79nvrdv5qwwfprd5t3qgkecl3lmkck7hh8tv65x46vuskzcmqa",
+          "name": "BTCbeeRancher",
+          "username": "",
+          "picture": "https://m.primal.net/LlNa.jpg",
+          "bio": "Keeping bees in horizontal hives and avoiding traders/scammers who want to “teach” me to make money. BTC ONLY!\n\nAlso, no responses or attention given to snarky, obviously alt/anon/attention seeking profiles... just block and move on. If you don't comment with a real profile, sorry but I don't have time for you.",
+          "nip05": "BTCbeeRancher@primal.net",
+          "lud16": "BTCbeeRancher@primal.net",
+          "website": "https://mwbees.com/btc-bee-ranch/",
+          "fetchedAt": "2026-02-13T17:59:16.852Z",
+          "categories": [
+            "cool_people"
+          ],
+          "tags": [
+            "cool_people"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "de75eb1d7a6627807a8dff0fb337cfcf189e7e9af8ab6229f688f664710c3014",
+          "npub": "npub1me67k8t6vcncq75dlu8mxd70euvful56lz4ky20k3rmxgugvxq2qy23gnm",
+          "name": "Yojimble",
+          "username": "Yojimble",
+          "picture": "https://image.nostr.build/2294c8ee6ee88b64140134268ef3dc7b5548817d33e51eaf75938e3c59385027.gif",
+          "bio": "Skip diving, tractor driving ragamuffin suburban forager, stacking sats with jam on https://plebeian.market\nNorthampton, England. Worldwide shipping",
+          "nip05": "yojimble@getalby.com",
+          "lud16": "silverbird2@primal.net",
+          "website": "https://jimblesjumble.netlify.app",
+          "fetchedAt": "2026-02-13T17:59:16.852Z",
+          "categories": [
+            "cool_people"
+          ],
+          "tags": [
+            "cool_people"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "e04866056759b01388d86e7b531a6f71d536a97f601f0906219ec737d5857fcb",
+          "npub": "npub1upyxvpt8txcp8zxcdea4xxn0w82nd2tlvq0sjp3pnmrn04v90l9sz3s9at",
+          "name": "GnosisMycelium",
+          "username": "GnosisMycelium",
+          "picture": "https://blossom.primal.net/48178a6590878c2cb20f30b93d1c089d8e994a20187142361edf212744922a31.jpg",
+          "bio": "Gnosis (No-sis) translates from Greek to “knowledge” often associated with a deeper understanding of oneself and the divine.\nMycelium Grower\nBTC is KING.\nKnow They Self\n\nMessage me on SimpleX\n\nhttps://smp12.simplex.im/a#EUWZTSlSJjNCcEi4xuJ9GHKrvhEgwjVMak-9LEnZY6w\n\n🇺🇸",
+          "nip05": "",
+          "lud16": "lemonchicken14@primal.net",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:16.852Z",
+          "categories": [
+            "permaculture"
+          ],
+          "tags": [
+            "permaculture"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "374ee93a33f3b6f10143260183d357de1184ab5d31c65dab67749ce736623347",
+          "npub": "npub1xa8wjw3n7wm0zq2rycqc856hmcgcf26ax8r9m2m8wjwwwdnzxdrsr64spj",
+          "name": "Jimble's Jumble",
+          "username": "Jimble's Jumble",
+          "picture": "https://jimblesjumble.odoo.com/web/image/product.product/9/image_1920/Homemade%20Chunky%20Piccalilli?unique=e8982db",
+          "bio": "Handmade preserves created in Northamptonshire from homegrown, wild foraged and food rescued ingredients",
+          "nip05": "jimblesjumble@nostrcheck.me",
+          "lud16": "yojimble@coinos.io",
+          "website": "https://jimblesjumble.netlify.app",
+          "fetchedAt": "2026-02-13T17:59:16.852Z",
+          "categories": [
+            "permaculture",
+            "foodies"
+          ],
+          "tags": [
+            "permaculture",
+            "foodies"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "6116d06dd94aedb145d2e7689a2fe2249de56fc4e89a4cace88a0d4b1d80b135",
+          "npub": "npub1vytdqmweftkmz3wjua5f5tlzyjw72m7yazdyet8g3gx5k8vqky6sy3a544",
+          "name": "Homestead Citadel",
+          "username": "Homestead Citadel",
+          "picture": "https://image.nostr.build/aa1ec280eae96d65c68f66454eb968a4a9cf881d42ec4a97c6a04623e3530058.jpg",
+          "bio": "Bitcoin homesteader and citadel builder",
+          "nip05": "",
+          "lud16": "serendipitouspancake735240@getalby.com",
+          "website": "https://www.youtube.com/@HomesteadCitadel",
+          "fetchedAt": "2026-02-13T17:59:16.852Z",
+          "categories": [
+            "permaculture"
+          ],
+          "tags": [
+            "permaculture"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "0cf08d280aa5fcfaf340c269abcf66357526fdc90b94b3e9ff6d347a41f090b7",
+          "npub": "npub1pncg62q25h704u6qcf56hnmxx46jdlwfpw2t860ld5685s0sjzms9rqlgr",
+          "name": "DefiantDandelion",
+          "username": "DefiantDandelion",
+          "picture": "https://nostr.build/i/nostr.build_d012f5371b3a709cbfb5e6c38883731004dd219466ec7d39daca2b605c051cc2.jpg",
+          "bio": "🏔️🏕️📷🪴🥖🐓🔭📡🔬💻🇺🇸🧐✝️\n\nI’m cursed by curiosity. My education is in #Economics and #Philosophy. I spend time as an #AmateurRadio Operator, #LazyGardener, father, husband, and general hobbyist interests in #Camping, #Photography, Food, #Permaculture, small scale Livestock, AppropriateTechnology, ResilientSystems and design, agile, Ecology, Lean, Zone USDA 6a #Ohio\nI do not represent my employer\n\nXMR:\n89veuC7T1g5JFbpxc2CY7KML5bAy428AhYoxWHoOJuzkET2nykfgRmPqbuDVgqi1RGfYNvcGYYSxYbtEZSNS3jC9jXU\n\n",
+          "nip05": "",
+          "lud16": "npub1hxx4z9ul8qvt3jmy4rfccyl2fcl9x4qtflxrk9y2fe560f4eqe8qhetm7w@npub.cash",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:16.852Z",
+          "categories": [
+            "photography",
+            "musicians",
+            "permaculture",
+            "parents",
+            "foodies"
+          ],
+          "tags": [
+            "photography",
+            "musicians",
+            "permaculture",
+            "parents",
+            "foodies"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "8aafa7d540d9f24704477eba0f39ec24b7d65439bcf588b04d69cc428aff4c2a",
+          "npub": "npub132h6042qm8eywpz806aq7w0vyjmav4pehn6c3vzdd8xy9zhlfs4qwwe2yu",
+          "name": "hbhgardens ",
+          "username": "hbhgardens ",
+          "picture": "https://image.nostr.build/ff0f90f29ed6bf562f0870927c4d1fd946269775ca1dd8234a8a33dab4cfe981.jpg",
+          "bio": "Love & Light ",
+          "nip05": "hbhgardens@nostrplebs.com",
+          "lud16": "supermoth6@primal.net",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:16.852Z",
+          "categories": [
+            "jumpstart"
+          ],
+          "tags": [
+            "jumpstart"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "f941ad2a24f166c1b594039c908db45c408b671f8ff76c5bd7b9d6cd50d5d339",
+          "npub": "npub1l9q6623y79nvrdv5qwwfprd5t3qgkecl3lmkck7hh8tv65x46vuskzcmqa",
+          "name": "BTCbeeRancher",
+          "username": "",
+          "picture": "https://m.primal.net/LlNa.jpg",
+          "bio": "Keeping bees in horizontal hives and avoiding traders/scammers who want to “teach” me to make money. BTC ONLY!",
+          "nip05": "BTCbeeRancher@primal.net",
+          "lud16": "BTCbeeRancher@primal.net",
+          "website": "https://mwbees.com/btc-bee-ranch/",
+          "fetchedAt": "2026-02-13T17:59:16.852Z",
+          "categories": [
+            "cool_people"
+          ],
+          "tags": [
+            "cool_people"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        },
+        {
+          "pubkey": "0cf08d280aa5fcfaf340c269abcf66357526fdc90b94b3e9ff6d347a41f090b7",
+          "npub": "npub1pncg62q25h704u6qcf56hnmxx46jdlwfpw2t860ld5685s0sjzms9rqlgr",
+          "name": "DefiantDandelion",
+          "username": "DefiantDandelion",
+          "picture": "https://nostr.build/i/nostr.build_d012f5371b3a709cbfb5e6c38883731004dd219466ec7d39daca2b605c051cc2.jpg",
+          "bio": "🏔️🏕️📷🪴🥖🐓🔭📡🔬💻🇺🇸🧐✝️\n\nI’m cursed by curiosity. My education is in #Economics and #Philosophy. I spend time as an #AmateurRadio Operator, #LazyGardener, father, husband, and general hobbyist interests in #Camping, #Photography, Food, #Permaculture, small scale Livestock, AppropriateTechnology, ResilientSystems and design, agile, Ecology, Lean, Zone USDA 6a #Ohio\nI do not represent my employer",
+          "nip05": "",
+          "lud16": "npub1hxx4z9ul8qvt3jmy4rfccyl2fcl9x4qtflxrk9y2fe560f4eqe8qhetm7w@npub.cash",
+          "website": "",
+          "fetchedAt": "2026-02-13T17:59:16.852Z",
+          "categories": [
+            "photography",
+            "musicians",
+            "permaculture",
+            "parents",
+            "foodies"
+          ],
+          "tags": [
+            "photography",
+            "musicians",
+            "permaculture",
+            "parents",
+            "foodies"
+          ],
+          "activity": "medium",
+          "contentTypes": [
+            "text"
+          ],
+          "addedAt": "2026-02-13",
+          "updatedAt": "2026-02-13"
+        }
+      ]
+    }
+  ],
+  "allAccounts": [
+    {
+      "pubkey": "32d1df355d2ceeea5cd1c41d574b9105c68eeefd7c0bd29e49c152fe71c4c7d5",
+      "npub": "npub1xtga7d2a9nhw5hx3csw4wju3qhrgamha0s9a98jfc9f0uuwycl2ssg89t4",
+      "name": "grawoig",
+      "username": "grawoig",
+      "picture": "https://blossom.primal.net/4e1c12c513cc832ead9739c284a5eb3cdbdef0a07b3a5df03ce7f4b1faa02c1d.jpg",
+      "bio": "artist composer maxi",
+      "nip05": "",
+      "lud16": "justelephant4@primal.net",
+      "website": "https://grawoig.com",
+      "fetchedAt": "2026-02-13T17:59:13.043Z",
+      "categories": [
+        "artists",
+        "musicians"
+      ],
+      "tags": [
+        "artists",
+        "musicians"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "1aa1dbbeeb04dde30e1e7a00f7eea7605549e78726d53522e3990aa68009f433",
+      "npub": "npub1r2sah0htqnw7xrs70gq00m48vp25neu8ym2n2ghrny92dqqf7sest8hth0",
+      "name": "zed-erwan☕️✏️🎨",
+      "username": "zed-erwan☕️✏️🎨",
+      "picture": "https://arweave.net/9JJUAzW5fMHrVzS0q1sJA3M70GnsXwkGSyRxi4BU-cg/lccgei_image.png",
+      "bio": "Sketch, croquis, carnet de voyage, chaque jour un dessin et un café. Juste le plaisir de partager mon travail.",
+      "nip05": "",
+      "lud16": "zederwan@minibits.cash",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:13.043Z",
+      "categories": [
+        "artists"
+      ],
+      "tags": [
+        "artists"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "f4db5270bd991b17bea1e6d035f45dee392919c29474bbac10342d223c74e0d0",
+      "npub": "npub17nd4yu9anyd3004pumgrtazaacujjxwzj36thtqsxskjy0r5urgqf6950x",
+      "name": "🟠 isolabellart",
+      "username": "🟠 isolabellart",
+      "picture": "https://creatr.nostr.wine/creator/content/c9149a12-1852-4607-91c0-eedbfce6949b.png",
+      "bio": "I paint in oil.\nInspired by time, silence, and light.\nEach work is unique and for sale in Bitcoin.\n→ https://isolabellart.it.com\nPaintings notes: #isolabellart\nArt gallery: https://gallery.isolabellart.it.com",
+      "nip05": "isolabellart@isolabellart.it.com",
+      "lud16": "isolabellart@blitzwalletapp.com",
+      "website": "https://isolabellart.it.com",
+      "fetchedAt": "2026-02-13T17:59:13.043Z",
+      "categories": [
+        "artists"
+      ],
+      "tags": [
+        "artists"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "ba18b6545357cff8e531accfe1d609a41ef3023fba071db1cbf5a67448c19046",
+      "npub": "npub1hgvtv4zn2l8l3ef34n87r4sf5s00xq3lhgr3mvwt7kn8gjxpjprqc89jnv",
+      "name": "Yarnlady 🧶",
+      "username": "Yarnlady 🧶",
+      "picture": "https://i.nostr.build/W9GR.jpg",
+      "bio": "Yarnfluencoor\nINFP\nMaker of yarn things\nCigar smoker\nCoffee drinker\nBread baker\nBread crocheter\nCorn hat maker\nPolystitcherous\n\n\nShut up and knit (or crochet). I love making strings into things using sticks, hooks, time, patience, and a little bit of love (also frustration sometimes).",
+      "nip05": "yarnlady@nostr.21mil.me",
+      "lud16": "yarnlady@coinos.io",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:13.043Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "10f1f4a58cd7a7f6f5ed81ecef529f16ce42173d6197da5413aa0eeca0c21322",
+      "npub": "npub1zrclffvv67nlda0ds8kw755lzm8yy9eavxta54qn4g8wegxzzv3q8amvxc",
+      "name": "BitcoinArtMag",
+      "username": "BitcoinArtMag",
+      "picture": "https://i.nostr.build/WwisrxnSgY2tlvc0.png",
+      "bio": "The world’s first Bitcoin Art Magazine ⚡️\nOrder Now︱ bitcoinartmagazine.com\nListen︱ bitcoinartbroadcast.com\nChat︱t.me/bitcoinartmagazine\n\n",
+      "nip05": "BitcoinArtMag@primal.net",
+      "lud16": "BitcoinArtMag@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:13.043Z",
+      "categories": [
+        "artists"
+      ],
+      "tags": [
+        "artists"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "59a98c047944f65ea40f3765555ee589bf50363f4f7dcf5594c3584bbb13ff66",
+      "npub": "npub1tx5ccpregnm9afq0xaj42hh93xl4qd3lfa7u74v5cdvyhwcnlanqplhd8g",
+      "name": "PurplePainter",
+      "username": "PurplePainter",
+      "picture": "https://blossom.primal.net/d232e0da40932648b5fbbfee82af4c79d04a1686676e8665da9e4df9fbbc435b.jpg",
+      "bio": "Painting Plebs\n21k for Paintings\n7.5”x10”\nWorldwide Shipping.",
+      "nip05": "Bitcoinpainter@iris.to",
+      "lud16": "Art@coinos.io",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:13.043Z",
+      "categories": [
+        "artists"
+      ],
+      "tags": [
+        "artists"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "43baaf0c28e6cfb195b17ee083e19eb3a4afdfac54d9b6baf170270ed193e34c",
+      "npub": "npub1gwa27rpgum8mr9d30msg8cv7kwj2lhav2nvmdwh3wqnsa5vnudxqlta2sz",
+      "name": "BitPopArt",
+      "username": "BitPopArt",
+      "picture": "https://i.nostr.build/0WQFBsHLrLeI4J5S.jpg",
+      "bio": "Bitcoin PopArt ✍️ by World Traveler Johannes Oppewal 88+ countries @traveltelly 🗺️",
+      "nip05": "bitpopart@primal.net",
+      "lud16": "bitpopart@coinos.io",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:13.043Z",
+      "categories": [
+        "artists"
+      ],
+      "tags": [
+        "artists"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "b78e0111502f435b7e179f0abc6f7898e3b8319dc8ba5ae43040563f4b19d04b",
+      "npub": "npub1k78qzy2s9ap4klshnu9tcmmcnr3msvvaeza94epsgptr7jce6p9sa2ggp4",
+      "name": "BureauGewas",
+      "username": "BureauGewas",
+      "picture": "https://m.primal.net/PuuV.png",
+      "bio": "Dutch oil painting artist\nReviving classical realism\n\nWorks are for sale\nDM for availability and pricing",
+      "nip05": "bureaugewas@primal.net",
+      "lud16": "rapiddolphin8@primal.net",
+      "website": "https://jvgenugten.nl",
+      "fetchedAt": "2026-02-13T17:59:13.043Z",
+      "categories": [
+        "artists"
+      ],
+      "tags": [
+        "artists"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "497e2ad9609d900f7b2fab27b27ba478b7a4a578809f52288fd47c5e431a7e3f",
+      "npub": "npub1f9lz4ktqnkgq77e04vnmy7ay0zm6fftcsz04y2y06379usc60clss7pxza",
+      "name": "Lydia",
+      "username": "Lydia",
+      "picture": "https://nostr.build/i/p/nostr.build_5a59876610e18dfbecbc012bd077a017609e71e84e9df97e5569a2a6b2d6eee6.jpg",
+      "bio": "Illustrator🗡️Artist🗡️ Tattoo artist",
+      "nip05": "lydia@www.flurs.art",
+      "lud16": "lidiakurshuk@getalby.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:13.043Z",
+      "categories": [
+        "artists"
+      ],
+      "tags": [
+        "artists"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "9356d008ab226ab6b08ab3c73900546b2836c48c7527f0e5332c09201a3e6dc8",
+      "npub": "npub1jdtdqz9tyf4tdvy2k0rnjqz5dv5rd3yvw5nlpefn9syjqx37dhyqxwh0c8",
+      "name": "Rustypuppy",
+      "username": "Rustypuppy",
+      "picture": "https://i.nostr.build/QhEQdzIRENLu7a1q.jpg",
+      "bio": "Author. Artist. Introvert. \nNostrArtstr.com Art Challenges Host. ",
+      "nip05": "rustypuppy@nostrplebs.com",
+      "lud16": "warmparrot4@primal.net",
+      "website": "https://rustypuppy.npub.pro",
+      "fetchedAt": "2026-02-13T17:59:13.043Z",
+      "categories": [
+        "artists",
+        "books"
+      ],
+      "tags": [
+        "artists",
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "1aa1dbbeeb04dde30e1e7a00f7eea7605549e78726d53522e3990aa68009f433",
+      "npub": "npub1r2sah0htqnw7xrs70gq00m48vp25neu8ym2n2ghrny92dqqf7sest8hth0",
+      "name": "zed-erwan☕️✏️🎨",
+      "username": "zed-erwan☕️✏️🎨",
+      "picture": "https://arweave.net/9JJUAzW5fMHrVzS0q1sJA3M70GnsXwkGSyRxi4BU-cg/lccgei_image.png",
+      "bio": "Sketch, croquis, carnet de voyage, chaque jour un dessin et un café. Juste le plaisir de partager mon travail.",
+      "nip05": "",
+      "lud16": "zederwan@minibits.cash",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:13.043Z",
+      "categories": [
+        "artists"
+      ],
+      "tags": [
+        "artists"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "256a8525f8b45fa7b7ff180cb4b093d861dc9c00f14c517dea3512049bad1897",
+      "npub": "npub1y44g2f0ck3060dllrqxtfvynmpsae8qq79x9zl02x5fqfxadrzts67gama",
+      "name": "MaVi Lab 🌸",
+      "username": "MaVi Lab 🌸",
+      "picture": "https://blossom.primal.net/3ef1d5270f237f0c3abdaab03b63d53abc1d3650ceb31e19971841e9b21bebcf.jpg",
+      "bio": "I’m Maria, the artist behind MaVi LAB in Venice, Italy.\nI paint quiet, contemporary botanicals 🌸: cropped branches, small blossoms, and kintsugi-like gold seams.\nbalanced with generous negative space. The aim is simple: pieces that feel calm, modern, and luminous in everyday interiors.　\n\nI am happy to join NOSTR for the first time :) \n\nI have a shop where I only accept lightning payments →\n\nhttps://mavilab.art",
+      "nip05": "maria@mavilab.art",
+      "lud16": "mavilab@blink.sv",
+      "website": "https://mavilab.art",
+      "fetchedAt": "2026-02-13T17:59:13.570Z",
+      "categories": [
+        "artists"
+      ],
+      "tags": [
+        "artists"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "a9434ee165ed01b286becfc2771ef1705d3537d051b387288898cc00d5c885be",
+      "npub": "npub149p5act9a5qm9p47elp8w8h3wpwn2d7s2xecw2ygnrxqp4wgsklq9g722q",
+      "name": "Niel Liesmons",
+      "username": "Niel Liesmons",
+      "picture": "https://image.nostr.build/bf7e965bf6ddba341ef07a866aa9562e7323e9e5639cd699ecb187078c9192e9.jpg",
+      "bio": "Designer that codes.\nAlso #WordStudy #Dadstr #Farmstr",
+      "nip05": "",
+      "lud16": "nielliesmons@coinos.io",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "artists",
+        "permaculture",
+        "parents"
+      ],
+      "tags": [
+        "artists",
+        "permaculture",
+        "parents"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "8d9d2b77930ee54ec3e46faf774ddd041dbb4e4aa35ad47c025884a286dd65fa",
+      "npub": "npub13kwjkaunpmj5aslyd7hhwnwaqswmknj25dddglqztzz29pkavhaq25wg2a",
+      "name": "Maria2000",
+      "username": "Maria2000",
+      "picture": "https://cdn.nostrcheck.me/8d9d2b77930ee54ec3e46faf774ddd041dbb4e4aa35ad47c025884a286dd65fa/f06b82b484020ac360f47a0f277c0464ce661ef3a9700bb4c0a20c2fbc531230.webp",
+      "bio": "Country living, chickens, living a peaceful life",
+      "nip05": "maria2000@happytavern.co",
+      "lud16": "maria@walletofsatoshi.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "6a02b7d5d5c1ceec3d0ad28dd71c4cfeebb6397b95fef5cd5032c9223a13d02a",
+      "npub": "npub1dgpt04w4c88wc0g262xaw8zvlm4mvwtmjhl0tn2sxtyjywsn6q4qt8ka3a",
+      "name": "WedgeSocial",
+      "username": "WedgeSocial",
+      "picture": "https://image.nostr.build/47ac3f9e8d5bed324825905530c00763ca5a4a4912551aceb678fb50ef2b947f.jpg",
+      "bio": "Loose Canon Loaded Flowers",
+      "nip05": "wedgesocial@nostrplebs.com",
+      "lud16": "wedgesocial@walletofsatoshi.com",
+      "website": "wedgeorganics.com",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "d70d50091504b992d1838822af245d5f6b3a16b82d917acb7924cef61ed4acee",
+      "npub": "npub16ux4qzg4qjue95vr3q327fzata4n594c9kgh4jmeyn80v8k54nhqg6lra7",
+      "name": "AU9913",
+      "username": "AU9913",
+      "picture": "https://image.nostr.build/51a101919f5c2a43b1a5e1230a871e17d94cfe68c9014423dfe29615ec0ea657.jpg",
+      "bio": "Papa\nRegen Rancher #permaculture \nDev\n🐤",
+      "nip05": "auggie@nakaMOtown.com",
+      "lud16": "au9913@minibits.cash",
+      "website": "https://nakaMOtown.com",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "4d023ce9dfd75a7f3075b8e8e084008be17a1f750c63b5de721e6ef883adc765",
+      "npub": "npub1f5pre6wl6ad87vr4hr5wppqq30sh58m4p33mthnjreh03qadcajs7gwt3z",
+      "name": "rev.hodl",
+      "username": "rev.hodl",
+      "picture": "https://i.nostr.build/attyPOwmlyU7Y0t6.jpg",
+      "bio": "Homesteading, Permaculture, Bitcoin, Freedom. All one or all none!",
+      "nip05": "revhodl@cornychat.com",
+      "lud16": "revhodl@minibits.cash",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "permaculture",
+        "sovereign"
+      ],
+      "tags": [
+        "permaculture",
+        "sovereign"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "f27a4813f31d8faf80377ef15d4a397e3640b5ca1dffba9ce9dca91d3362c091",
+      "npub": "npub17faysylnrk86lqph0mc46j3e0cmypdw2rhlm488fmj536vmzczgs5qlnh4",
+      "name": "jsm",
+      "username": "jsm",
+      "picture": "https://pfp.nostr.build/e9e7963637e04d90ad2c33f21c6f112a188c5b001dd697e108991261487aa258.jpg",
+      "bio": "Farmer.",
+      "nip05": "jsmcd@getalby.com",
+      "lud16": "jsmcd@getalby.com",
+      "website": "https://studiohill.farm",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "5e7e69f863d20ca30103df88887194e091679491fefe5eb8212753013cc3d552",
+      "npub": "npub1telxn7rr6gx2xqgrm7ygsuv5uzgk09y3lml9awppyafsz0xr64fqlap4l3",
+      "name": "ender",
+      "username": "ender",
+      "picture": "https://blossom.primal.net/f809f831b3d946d043c526ec8020516e8b15cade6641d3f8ef7cb82e58e6505d.jpg",
+      "bio": "low IQ | blue collar worker | married | Yeshua follower | bitcoin standard | building my own Georgian styled bitcoin heated house | organizer of @airpool",
+      "nip05": "",
+      "lud16": "boldshrimp14@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "715c279295b65454c464b78503d6154ad7697ba82460c56d8a42eb5da11e6c4b",
+      "npub": "npub1w9wz0y54ke29f3ryk7zs84s4fttkj7agy3sv2mv2gt44mgg7d39sewekxt",
+      "name": "RecoveringAcademic",
+      "username": "RecoveringAcademic",
+      "picture": "https://image.nostr.build/e1d7b38e5965c07bec5c7b57d5b9ead48aecbd9043c5f9a39926d47c102043dd.jpg",
+      "bio": " ",
+      "nip05": " ",
+      "lud16": "  ",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "jumpstart"
+      ],
+      "tags": [
+        "jumpstart"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "ab11aa702482080cfead6e35fb6fbad454a3e792dd4d75f183f52f5fea2a2fa9",
+      "npub": "npub14vg65upysgyqel4ddc6lkma663228eujm4xhtuvr75h4l632975sdupd9a",
+      "name": "ornedii",
+      "username": "ornedii",
+      "picture": "https://image.nostr.build/93a0c6d92d635e2f7a4eb005224718fdfb47380a2cb573da32f222064109de7d.jpg",
+      "bio": "dryland permaculture, tinyhouse, music, software engineer full stack",
+      "nip05": "",
+      "lud16": "lovelycoffee4614@getalby.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "musicians",
+        "permaculture"
+      ],
+      "tags": [
+        "musicians",
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "c0e0c4272134d92da8651650c10ca612b710a670d5e043488f27e073a1f63a16",
+      "npub": "npub1crsvgfepxnvjm2r9zegvzr9xz2m3pfns6hsyxjy0yls88g0k8gtqhc9r37",
+      "name": "Jen",
+      "username": "Jen",
+      "picture": "https://nostr.build/i/nostr.build_334544f44f38979dc54b1fd0d4a64b93dcc5fbb46e12de3493f106e670f007c0.jpeg",
+      "bio": "Nostr only \nHomesteader \nPassionate about regen agriculture\nBeagles make the best buddies\nBitcoin is not a hobby\nMusic feeds the soul\nLife is better when lived outdoors\n🐮👩🏼‍🌾🐶🧡🏴‍☠️🎻🧘🏼‍♀️🌳🥩",
+      "nip05": "farmerjen@nostrplebs.com",
+      "lud16": "farmerjen@walletofsatoshi.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "musicians",
+        "permaculture"
+      ],
+      "tags": [
+        "musicians",
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "d020fe6e22b3aca9f578172a135e25d7b692e67b52e97fdce55431127d7626af",
+      "npub": "npub16qs0um3zkwk2natczu4pxh3967mf9enm2t5hlh892sc3yltky6hs832q4u",
+      "name": "MowMow",
+      "username": "MowMow",
+      "picture": "https://image.nostr.build/68416477fcc84d4158c4c2bb40f90747d9d5f19f55ff3e6915a5d46e5c1cb732.jpg",
+      "bio": "I'm a goat. CEO of weed control and maintenance.\nI do goat things and occasionally zap things that goats like.",
+      "nip05": "",
+      "lud16": "theseguru02@walletofsatoshi.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "360764241990900e9bf9acafbe102743cc19321c4548bd748671c7e0bd528a25",
+      "npub": "npub1xcrkgfqejzgqaxle4jhmuyp8g0xpjvsug4yt6ayxw8r7p02j3gjscl60yf",
+      "name": "bitcoinbonden",
+      "username": "bitcoinbonden",
+      "picture": "https://m.primal.net/HWdV.jpg",
+      "bio": "Norwegian farmer selling beef, pork and firewood for #bitcoin",
+      "nip05": "",
+      "lud16": "curiousjam84@walletofsatoshi.com",
+      "website": "Bitcoinbonden.no",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "ce3c305d4f6bde1060bc3193e1f18f3619dbbd993082da5838fd74491ea1de6b",
+      "npub": "npub1ec7rqh20d00pqc9uxxf7ruv0xcvah0vexzpd5kpcl46yj84pme4suggn5k",
+      "name": "AC",
+      "username": "AC",
+      "picture": "https://image.nostr.build/beb2b145e6f9c8434e867de19d281b1017905d619a3f7cf46fe614bae7bf2b8f.jpg",
+      "bio": "",
+      "nip05": "agrariancontrarian@nostrplebs.com",
+      "lud16": "agrariancontrarian@getalby.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "jumpstart"
+      ],
+      "tags": [
+        "jumpstart"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "428d9b92e962bdb6ad9b178ffaa734c369eff3c43590eb9f3d3eea059e28d38a",
+      "npub": "npub1g2xehyhfv27mdtvmz78l4fe5cd57lu7yxkgwh8ea8m4qt83g6w9qqrg0vy",
+      "name": "phenixfalconer",
+      "username": "phenixfalconer",
+      "picture": "https://image.nostr.build/8317f5d547f87419911672f4bf7a11b359170ece3d342f1f0dae37fa5e2015b1.jpg",
+      "bio": "#homesteading #farmstr #gardening #garden #seedstr #chickens #rabbits #birdstr #huntstr #hunting #buckskin #wildlife #nature",
+      "nip05": "",
+      "lud16": "cloudycook707@minibits.cash",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "e7211c227437dcb5582712b5b1bbfb2a23b27654649ddc7c1fb5a7dde87afeee",
+      "npub": "npub1uus3cgn5xlwt2kp8z26mrwlm9g3myaj5vjwaclqlkknam6r6lmhqjhwkxn",
+      "name": "Lost Sheep Ranch",
+      "username": "Lost Sheep Ranch",
+      "picture": "https://lost-sheep-ranch.com/img/sheepsingle.png",
+      "bio": "Selling 100% grassfed lamb and pasture raised eggs for bitcoin (and fiat) in south central Pennsylvania",
+      "nip05": "",
+      "lud16": "grover@getalby.com",
+      "website": "www.lost-sheep-ranch.com",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "0f4011159c24a6a53eeea72e1c2e97e0425be8af15e7de397003dd65d9e8d278",
+      "npub": "npub1paqpz9vuyjn220hw5uhpct5hupp9h690zhnauwtsq0wktk0g6fuq4dezs0",
+      "name": "Stacking Functions",
+      "username": "Stacking Functions",
+      "picture": "https://nostr.build/i/nostr.build_52a113f3e46f59e727e74545004e1e3e67dcccb5622f6a55ffef91df75505d2a.jpeg",
+      "bio": "Urban Homesteader, Edible Landscaper\nHere for the Great Awakening ",
+      "nip05": "",
+      "lud16": "chicrenewal691762@getalby.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "photography",
+        "permaculture"
+      ],
+      "tags": [
+        "photography",
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "7644119b18ec56b5b2779e0d035e7712a9d669dbfbe5b2c5f458cb564afb6c95",
+      "npub": "npub1wezprxcca3tttvnhncxsxhnhz25av6wml0jm9305tr94vjhmdj2s2e62hu",
+      "name": "TBone",
+      "username": "TBone",
+      "picture": "https://image.nostr.build/930fafef923c1bde7e490c5b20cf8decbab853562eec9a955dbd2072023718f9.gif",
+      "bio": "Homesteader.\nSteak Approver.\nUngovernable.\nUnemployable.\n#bitcoin only\n#nostr only",
+      "nip05": "Tbone@nostrplebs.com",
+      "lud16": "tbone@walletofsatoshi.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "428d9b92e962bdb6ad9b178ffaa734c369eff3c43590eb9f3d3eea059e28d38a",
+      "npub": "npub1g2xehyhfv27mdtvmz78l4fe5cd57lu7yxkgwh8ea8m4qt83g6w9qqrg0vy",
+      "name": "phenixfalconer",
+      "username": "phenixfalconer",
+      "picture": "https://image.nostr.build/cae084b5832b135dfb0c9ecf81f77adc97e75e48a78b6b7ce4464e8f34c55f11.jpg",
+      "bio": "#homesteading #farmstr #gardening #garden #seedstr #chickens #rabbits #birdstr #huntstr #hunting #buckskin #wildlife #nature",
+      "nip05": "",
+      "lud16": "cloudycook707@minibits.cash",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "58d2be9f20537ad7074b0283287611507ef7bd313c5edb64def9e1fc5df26d11",
+      "npub": "npub1trfta8eq2dadwp6tq2pjsas32pl000f3830dkex7l8slch0jd5gs34d0e6",
+      "name": "dwright5816",
+      "username": "dwright5816",
+      "picture": "https://m.primal.net/NPfs.jpg",
+      "bio": "In Tennessee, interested in permaculture, decentralized technology, bitcoin, and algorithmic trading. Catholic father and husband. world traveler, and software engineering manager.",
+      "nip05": "",
+      "lud16": "jollyhorse7@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "musicians",
+        "permaculture",
+        "parents"
+      ],
+      "tags": [
+        "musicians",
+        "permaculture",
+        "parents"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "681b9e384921582ecac2b4641a9337f17b66698a01065694c91dc4c345c6de1e",
+      "npub": "npub1dqdeuwzfy9vzajkzk3jp4yeh79akv6v2qyr9d9xfrhzvx3wxmc0qrzw9nn",
+      "name": "FloofFarm",
+      "username": "FloofFarm",
+      "picture": "https://m.primal.net/KrMM.png",
+      "bio": "Floof Farm is a dairy goat farm located in Washington. We breed American Dairy Goat Association (ADGA) Registered Nigerian Dwarf and Toggenburg Dairy Goats.",
+      "nip05": "flooffarm@coinos.io",
+      "lud16": "flooffarm@coinos.io",
+      "website": "https://floof.farm",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "7b8fcd9153d2c47146155df24b7f167924c1fc16fb4e843d98f8b5f3add6bd85",
+      "npub": "npub10w8umy2n6tz8z3s4theyklck0yjvrlqkld8gg0vclz6l8twkhkzsd4zf5s",
+      "name": "watts_bar",
+      "username": "watts_bar",
+      "picture": "https://i.pinimg.com/736x/07/59/c9/0759c9b979c04fc9b6952c5cfa85ec5f.jpg",
+      "bio": "Freedom minded homesteader, chicken farmer and pig castrator\n",
+      "nip05": "",
+      "lud16": "",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "permaculture",
+        "sovereign"
+      ],
+      "tags": [
+        "permaculture",
+        "sovereign"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "815f4f1ecbffe7abe360018b663295d188bd49f8fe4726ee63ef5bca5b6f64e8",
+      "npub": "npub1s90578ktlln6hcmqqx9kvv546xyt6j0clerjdmnraadu5km0vn5q9w8hyk",
+      "name": "JoJ",
+      "username": "JoJ",
+      "picture": "https://image.nostr.build/d3e2d1df4eefd751768aeeea6e215aaba0822b2dd2260511f61283d11959bbdb.jpg",
+      "bio": "Heathen\nHusband, Father, Farmer,\nWood chopper, wood burner",
+      "nip05": "",
+      "lud16": "quickswan9@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.820Z",
+      "categories": [
+        "musicians",
+        "permaculture",
+        "parents"
+      ],
+      "tags": [
+        "musicians",
+        "permaculture",
+        "parents"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "655f0194f141831368f4da372622062457ef73cbf1e6db1734d2c7c05e0029ca",
+      "npub": "npub1v40sr983gxp3x685mgmjvgsxy3t77u7t78ndk9e56truqhsq989q3e2y09",
+      "name": "A.A.Ron",
+      "username": "A.A.Ron",
+      "picture": "https://image.nostr.build/ea905d3b87da01986ac7defebbaa25501618c746e1def54f221c13c41145f496.jpg",
+      "bio": "Alaskan. Electrical enginerd. Hunter, fisherman, gardener. Ham radio operator.",
+      "nip05": "",
+      "lud16": "grainyagenda152@minibits.cash",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.820Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "949110ffbaab1eed7c02b4665a0dc5054537e5e89c5bbe06f51600e8b0001c72",
+      "npub": "npub1jjg3pla64v0w6lqzk3n95rw9q4zn0e0gn3dmuph4zcqw3vqqr3equqm9ym",
+      "name": "Sand Hill Thicket",
+      "username": "Sand Hill Thicket",
+      "picture": "https://cdn.masto.host/medmastodoncom/accounts/avatars/109/309/211/721/872/668/original/ae094247c1f91898.jpg",
+      "bio": "It's pretty much all about Gulf Coast sheep, cats, and food over here... Life of a smallholder on the prairie in northeastern Kansas. Grow Zone 6a.\n\nhttps://www.sandhill-thicket.com",
+      "nip05": "SandHillThicket@med--mastodon-com.mostr.pub",
+      "lud16": "",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.821Z",
+      "categories": [
+        "permaculture",
+        "foodies"
+      ],
+      "tags": [
+        "permaculture",
+        "foodies"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "469223f4ce484bba4e125a8c8a92032e16e5d07b723ea5da2f253b2627da92c7",
+      "npub": "npub1g6fz8axwfp9m5nsjt2xg4ysr9ctwt5rmwgl2tk30y5ajvf76jtrsskpcks",
+      "name": "The Fertile Crescent",
+      "username": "The Fertile Crescent",
+      "picture": "https://image.nostr.build/f6f0eb5c78c9bfef872555306c40f91804a823faff2777a7e16fd2680db5cda3.jpg",
+      "bio": "a Bitcoin farm 🌱\n𝘧𝘰𝘭𝘭𝘰𝘸 𝘢𝘭𝘰𝘯𝘨 𝘸𝘪𝘵𝘩 𝘶𝘴 𝘰𝘯 𝘰𝘶𝘳 𝘫𝘰𝘶𝘳𝘯𝘦𝘺 𝘵𝘰 𝘧𝘳𝘦𝘦𝘥𝘰𝘮",
+      "nip05": "",
+      "lud16": "thefertilecrescent@getalby.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.821Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "b5c417b9b51ff323f857b6c60cff085c8e50e87a3365a1ed5d52f9b3c0580a9b",
+      "npub": "npub1khzp0wd4rlej87zhkmrqelcgtj89p6r6xdj6rm2a2tum8szcp2dsje3c5c",
+      "name": "lacruzboss",
+      "username": "lacruzboss",
+      "picture": "https://m.primal.net/OTVl.jpg",
+      "bio": "🇸🇻 jungle coffee provider 🇸🇻\n🌴 LA CRUZ 🌴 \n\nI have a speciality coffee farm in El Salvador.",
+      "nip05": "lacruz@nostrplebs.com",
+      "lud16": "cyanpanther3@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.821Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "fb89e58f838b7d716a88300ea1f2539fff78766aa1121ec10968b6b10a498f28",
+      "npub": "npub1lwy7trur3d7hz65gxq82rujnnllhsan25yfpasgfdzmtzzjf3u5q0v4zv0",
+      "name": "Henry",
+      "username": "HenryGQJ",
+      "picture": "https://i.imgur.com/NlGUxA3.jpg",
+      "bio": "#Permaculture  and idiocy",
+      "nip05": "",
+      "lud16": "henry@minibits.cash",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.821Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "99562ddb32ac3e3378919a943e861cb999e80583efc7c70a42bba3e9ebbfc579",
+      "npub": "npub1n9tzmkej4slrx7y3n22rapsuhxv7spvralruwzjzhw37n6alc4usnu8t27",
+      "name": "FlyoverJoe",
+      "username": "FlyoverJoe",
+      "picture": "https://image.nostr.build/a7c7144a4bc0f9aeb40d57b66c0c7c8f8f481f59d945b853214c9c705ce279b3.jpg",
+      "bio": "Out here in the middle of nowhere. ",
+      "nip05": "",
+      "lud16": "733ac1b0bfac491f@coinos.io",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.821Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "7bc70ce80a898cc4b3e17d0992fa17264df188e1c806b60ed54424e8b41f5686",
+      "npub": "npub100rse6q23xxvfvlp05ye97shyexlrz8peqrtvrk4gsjw3dql26rqxu63y7",
+      "name": "Skick",
+      "username": "Skick",
+      "picture": "https://m.primal.net/QcUi.png",
+      "bio": "Gourmet mushroom and cultivation supply company.",
+      "nip05": "",
+      "lud16": "jollyturtle10@primal.net",
+      "website": "www.foxfiremushrooms.com",
+      "fetchedAt": "2026-02-13T17:59:15.821Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "797750041d1366a80d45e130c831f0562b5f7266662b07acef50dd541bfa2535",
+      "npub": "npub109m4qpqazdn2sr29uycvsv0s2c447unxvc4s0t802rw4gxl6y56sd9hvru",
+      "name": "Jordan Richner",
+      "username": "jmrichner",
+      "picture": "https://i.nostr.build/jxq8ACRpRX4PKBYq.jpg",
+      "bio": "Rancher, Soil Scientist, Bushcrafter, Woodworker, Homesteader, Bitcoiner, Entrepreneur",
+      "nip05": "",
+      "lud16": "jordanrichner@strike.me",
+      "website": "https://fountain.fm/jordanrichner",
+      "fetchedAt": "2026-02-13T17:59:15.821Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "4256093f64ac3f552703e1887b9e5b2267f88abd34baf485987e6c2c83f77b53",
+      "npub": "npub1gftqj0my4sl42fcruxy8h8jmyfnl3z4axja0fpvc0ekzeqlh0dfsffg34w",
+      "name": "JayW132",
+      "username": "JayW132",
+      "picture": "https://m.primal.net/PFfW.jpg",
+      "bio": "Building The Bitcoin Collective",
+      "nip05": "",
+      "lud16": "honestcloudy02@walletofsatoshi.com",
+      "website": "https://linktr.ee/bitcoincollective",
+      "fetchedAt": "2026-02-13T17:59:15.821Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "101a112c8adc2e69e0003114ff1c1d36b7fcde06d84d47968e599d558721b0df",
+      "npub": "npub1zqdpzty2mshxncqqxy2078qax6mlehsxmpx5095wtxw4tpepkr0s2ce6fj",
+      "name": "Permanerd 🌱 💻",
+      "username": "Permanerd 🌱 💻",
+      "picture": "https://image.nostr.build/01e213f3cd9d2a77f2363c1a2c0e99c17c334841f25769f20722f1516318a4cd.jpg",
+      "bio": "Father, husband,  homesteader, permaculturer, hunter, laugher, fun haver, Sats 4 Snacks operator",
+      "nip05": "",
+      "lud16": "permanerd@getalby.com",
+      "website": "sats4snacks.com",
+      "fetchedAt": "2026-02-13T17:59:16.330Z",
+      "categories": [
+        "musicians",
+        "permaculture",
+        "parents"
+      ],
+      "tags": [
+        "musicians",
+        "permaculture",
+        "parents"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "165b9d37a28903103af9ad24036bdc54270882c01add515791fc9666167cfac1",
+      "npub": "npub1zede6daz3yp3qwhe45jqx67u2sns3qkqrtw4z4u3ljtxv9nultqs0e3hvt",
+      "name": "Kayne",
+      "username": "Kayne",
+      "picture": "https://blossom.primal.net/602bc67069efb4e94ecfec0542944113087cdd6f7c803d28bfea11b9301c3153.jpg",
+      "bio": "i am Kayne this is where I express my opinions. ",
+      "nip05": "kayne@nostrcheck.me",
+      "lud16": "zippymoose10@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.330Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "7a6b8c7de171955c214ded7e35cc782cd6dddfd141abb1929c632f69348e6f49",
+      "npub": "npub10f4ccl0pwx24cg2da4lrtnrc9ntdmh73gx4mry5uvvhkjdywdaysa5hrhr",
+      "name": "NaturalNerd",
+      "username": "NaturalNerd",
+      "picture": "https://image.nostr.build/b4bc13ed8ef5a805c45062506694d117cce5f36ef7aad6ee4af749d3a696223b.jpg",
+      "bio": "Hillbilly engineer and plant nerd going feral",
+      "nip05": "",
+      "lud16": "7a6b8c7de171955c214ded7e@coinos.io",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.331Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "f6900e6b42a83a6d66589714de49ac86919c6464857d9e164b953bcf9c7e939d",
+      "npub": "npub176gqu66z4qax6ejcju2dujdvs6gecerys47eu9jtj5aul8r7jwwsnqq836",
+      "name": "The Bird",
+      "username": "The Bird",
+      "picture": "https://image.nostr.build/f10ca032b5ff99b2a28fcf87900e9486c9bf14440368a7ea1f372a51cff63319.jpg",
+      "bio": "God, Family, Bitcoin, nature, pew, fish, birdman and _______________\n\nXMR\n44EhwqxoEBwaatnyLQop645v5bAQPz1v6LQXmfbvgCpVVeHpcVhLDtpYKmZ18gdW9d5BnCTpUZqwE1HdixSf94PzGLCHekM",
+      "nip05": "DC@bitcoinveterans.org",
+      "lud16": "greenkarusa@blitzwalletapp.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.331Z",
+      "categories": [
+        "parents",
+        "christians"
+      ],
+      "tags": [
+        "parents",
+        "christians"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "aa836271424a1d3601f82628c64a105126560ebf1e03847d5b8f247b6fa507bf",
+      "npub": "npub142pkyu2zfgwnvq0cyc5vvjss2yn9vr4lrcpcgl2m3uj8kma9q7lsdfduqf",
+      "name": "Be The Change: Abundance, Service, Play",
+      "username": "Be The Change: Abundance, Service, Play",
+      "picture": "https://blossom.primal.net/9d1de024c6c9e915e85d9210610fdfc59078ca62104a6fa439f51590fcc9dc3f.gif",
+      "bio": "Homesteaders in the South.\n",
+      "nip05": "",
+      "lud16": "farm@coinos.io",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.331Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "dc530ac3899739b08827e9901c25ccc08b357d8347532a76594f4df71bbb9189",
+      "npub": "npub1m3fs4sufjuumpzp8axgpcfwvcz9n2lvrgafj5ajefaxlwxamjxysfjhch4",
+      "name": "Acme Acres",
+      "username": "Acme Acres",
+      "picture": "https://blossom.primal.net/c75d54f90fec53935d99709af6a6be16129ba7b8cf47b34bf8cea173984d8eb3.jpg",
+      "bio": "Acme Acres is a family farm-to-table provider of premium, grass-fed/grass finished pasture-raised beef, pork, lamb, and chicken. Raised with no vaccines, hormones or antibiotics. ",
+      "nip05": "",
+      "lud16": "ambermoth8@primal.net",
+      "website": "www.acmeacres.us",
+      "fetchedAt": "2026-02-13T17:59:16.331Z",
+      "categories": [
+        "permaculture",
+        "parents"
+      ],
+      "tags": [
+        "permaculture",
+        "parents"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "a25ff9fcdc949f4e9f03f6777808b880b12effa07c39a1936c72942e2eefb953",
+      "npub": "npub15f0lnlxujj05a8cr7emhsz9cszcjalaq0su6rymvw22zuth0h9fs7cqrdx",
+      "name": "Little Spoon",
+      "username": "Little Spoon",
+      "picture": "https://cdn.nostr.build/i/5d7b99681f2949a148f6e2ccb764fe11b7ff1cd464dc158acbfee7ad264c4a8a.jpg",
+      "bio": "Fat zapper.   Skinny zaps. ",
+      "nip05": "",
+      "lud16": "BigSpoon@coinos.io",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.331Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "a1fc5dfd7ffcf563c89155b466751b580d115e136e2f8c90e8913385bbedb1cf",
+      "npub": "npub15879mltlln6k8jy32k6xvagmtqx3zhsndchcey8gjyectwldk88sq5kv0n",
+      "name": "jackspirko",
+      "username": "jackspirko",
+      "picture": "https://m.primal.net/HbGx.png",
+      "bio": "Host of The Survival Podcast & The Bitcoin Breakout, Founder of the #grownostr initiative.  I am also a prepper, a permaculturist, a teacher, a gardener, a hunter, a fisherman, a grandfather, a husband and dad.  My life is pretty damn great. ",
+      "nip05": "jackspirko@primal.net",
+      "lud16": "jackspirko@primal.net",
+      "website": "TheSurvivalPodcast.com",
+      "fetchedAt": "2026-02-13T17:59:16.331Z",
+      "categories": [
+        "musicians",
+        "permaculture",
+        "parents",
+        "sovereign"
+      ],
+      "tags": [
+        "musicians",
+        "permaculture",
+        "parents",
+        "sovereign"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "a39199ccb5ec92b1cd047bf3dc7e8923ede769d1a5ccc47d579912f0f5cbdab4",
+      "npub": "npub15wgenn94ajftrngy00eacl5fy0k7w6w35hxvgl2hnyf0pawtm26qy07hfl",
+      "name": "jesssowards",
+      "username": "jesssowards",
+      "picture": "https://m.primal.net/Hswj.jpg",
+      "bio": "Homesteader. Gardener. Lover of good food and pretty words. South Carolina is home. ",
+      "nip05": "",
+      "lud16": "tealsloth1@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.331Z",
+      "categories": [
+        "permaculture",
+        "foodies"
+      ],
+      "tags": [
+        "permaculture",
+        "foodies"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "518b2e2976d23bbf778edd3a8613f393d67c5df579b99bb459222ae3cb6e6b78",
+      "npub": "npub12x9ju2tk6gam7auwm5agvylnj0t8ch040xuehdzeyg4w8jmwdduqetsr92",
+      "name": "Ragamuffin",
+      "username": "Ragamuffin",
+      "picture": "https://image.nostr.build/09f0cc59e44344485b8a8e27ef59778aee91098aae9e179c38c66bf20f467efe.jpg",
+      "bio": "",
+      "nip05": "",
+      "lud16": "fancyladybug3@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.331Z",
+      "categories": [
+        "jumpstart"
+      ],
+      "tags": [
+        "jumpstart"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "26d6a946675e603f8de4bf6f9cef442037b70c7eee170ff06ed7673fc34c98f1",
+      "npub": "npub1ymt2j3n8tesrlr0yhaheem6yyqmmwrr7actslurw6annls6vnrcslapxnz",
+      "name": "Noshole",
+      "username": "Noshole",
+      "picture": "https://image.nostr.build/e051a34362fdc4af17d2d2cda3df80e6de081c6f3a94713061e6c14645655177.jpg",
+      "bio": "Nobody asked me, but…",
+      "nip05": "noshole@turdsoup.com",
+      "lud16": "poopypants@coinos.io",
+      "website": "turdsoup.com",
+      "fetchedAt": "2026-02-13T17:59:16.852Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "f941ad2a24f166c1b594039c908db45c408b671f8ff76c5bd7b9d6cd50d5d339",
+      "npub": "npub1l9q6623y79nvrdv5qwwfprd5t3qgkecl3lmkck7hh8tv65x46vuskzcmqa",
+      "name": "BTCbeeRancher",
+      "username": "",
+      "picture": "https://m.primal.net/LlNa.jpg",
+      "bio": "Keeping bees in horizontal hives and avoiding traders/scammers who want to “teach” me to make money. BTC ONLY!\n\nAlso, no responses or attention given to snarky, obviously alt/anon/attention seeking profiles... just block and move on. If you don't comment with a real profile, sorry but I don't have time for you.",
+      "nip05": "BTCbeeRancher@primal.net",
+      "lud16": "BTCbeeRancher@primal.net",
+      "website": "https://mwbees.com/btc-bee-ranch/",
+      "fetchedAt": "2026-02-13T17:59:16.852Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "de75eb1d7a6627807a8dff0fb337cfcf189e7e9af8ab6229f688f664710c3014",
+      "npub": "npub1me67k8t6vcncq75dlu8mxd70euvful56lz4ky20k3rmxgugvxq2qy23gnm",
+      "name": "Yojimble",
+      "username": "Yojimble",
+      "picture": "https://image.nostr.build/2294c8ee6ee88b64140134268ef3dc7b5548817d33e51eaf75938e3c59385027.gif",
+      "bio": "Skip diving, tractor driving ragamuffin suburban forager, stacking sats with jam on https://plebeian.market\nNorthampton, England. Worldwide shipping",
+      "nip05": "yojimble@getalby.com",
+      "lud16": "silverbird2@primal.net",
+      "website": "https://jimblesjumble.netlify.app",
+      "fetchedAt": "2026-02-13T17:59:16.852Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "e04866056759b01388d86e7b531a6f71d536a97f601f0906219ec737d5857fcb",
+      "npub": "npub1upyxvpt8txcp8zxcdea4xxn0w82nd2tlvq0sjp3pnmrn04v90l9sz3s9at",
+      "name": "GnosisMycelium",
+      "username": "GnosisMycelium",
+      "picture": "https://blossom.primal.net/48178a6590878c2cb20f30b93d1c089d8e994a20187142361edf212744922a31.jpg",
+      "bio": "Gnosis (No-sis) translates from Greek to “knowledge” often associated with a deeper understanding of oneself and the divine.\nMycelium Grower\nBTC is KING.\nKnow They Self\n\nMessage me on SimpleX\n\nhttps://smp12.simplex.im/a#EUWZTSlSJjNCcEi4xuJ9GHKrvhEgwjVMak-9LEnZY6w\n\n🇺🇸",
+      "nip05": "",
+      "lud16": "lemonchicken14@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.852Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "374ee93a33f3b6f10143260183d357de1184ab5d31c65dab67749ce736623347",
+      "npub": "npub1xa8wjw3n7wm0zq2rycqc856hmcgcf26ax8r9m2m8wjwwwdnzxdrsr64spj",
+      "name": "Jimble's Jumble",
+      "username": "Jimble's Jumble",
+      "picture": "https://jimblesjumble.odoo.com/web/image/product.product/9/image_1920/Homemade%20Chunky%20Piccalilli?unique=e8982db",
+      "bio": "Handmade preserves created in Northamptonshire from homegrown, wild foraged and food rescued ingredients",
+      "nip05": "jimblesjumble@nostrcheck.me",
+      "lud16": "yojimble@coinos.io",
+      "website": "https://jimblesjumble.netlify.app",
+      "fetchedAt": "2026-02-13T17:59:16.852Z",
+      "categories": [
+        "permaculture",
+        "foodies"
+      ],
+      "tags": [
+        "permaculture",
+        "foodies"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "6116d06dd94aedb145d2e7689a2fe2249de56fc4e89a4cace88a0d4b1d80b135",
+      "npub": "npub1vytdqmweftkmz3wjua5f5tlzyjw72m7yazdyet8g3gx5k8vqky6sy3a544",
+      "name": "Homestead Citadel",
+      "username": "Homestead Citadel",
+      "picture": "https://image.nostr.build/aa1ec280eae96d65c68f66454eb968a4a9cf881d42ec4a97c6a04623e3530058.jpg",
+      "bio": "Bitcoin homesteader and citadel builder",
+      "nip05": "",
+      "lud16": "serendipitouspancake735240@getalby.com",
+      "website": "https://www.youtube.com/@HomesteadCitadel",
+      "fetchedAt": "2026-02-13T17:59:16.852Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "0cf08d280aa5fcfaf340c269abcf66357526fdc90b94b3e9ff6d347a41f090b7",
+      "npub": "npub1pncg62q25h704u6qcf56hnmxx46jdlwfpw2t860ld5685s0sjzms9rqlgr",
+      "name": "DefiantDandelion",
+      "username": "DefiantDandelion",
+      "picture": "https://nostr.build/i/nostr.build_d012f5371b3a709cbfb5e6c38883731004dd219466ec7d39daca2b605c051cc2.jpg",
+      "bio": "🏔️🏕️📷🪴🥖🐓🔭📡🔬💻🇺🇸🧐✝️\n\nI’m cursed by curiosity. My education is in #Economics and #Philosophy. I spend time as an #AmateurRadio Operator, #LazyGardener, father, husband, and general hobbyist interests in #Camping, #Photography, Food, #Permaculture, small scale Livestock, AppropriateTechnology, ResilientSystems and design, agile, Ecology, Lean, Zone USDA 6a #Ohio\nI do not represent my employer\n\nXMR:\n89veuC7T1g5JFbpxc2CY7KML5bAy428AhYoxWHoOJuzkET2nykfgRmPqbuDVgqi1RGfYNvcGYYSxYbtEZSNS3jC9jXU\n\n",
+      "nip05": "",
+      "lud16": "npub1hxx4z9ul8qvt3jmy4rfccyl2fcl9x4qtflxrk9y2fe560f4eqe8qhetm7w@npub.cash",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.852Z",
+      "categories": [
+        "photography",
+        "musicians",
+        "permaculture",
+        "parents",
+        "foodies"
+      ],
+      "tags": [
+        "photography",
+        "musicians",
+        "permaculture",
+        "parents",
+        "foodies"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "8aafa7d540d9f24704477eba0f39ec24b7d65439bcf588b04d69cc428aff4c2a",
+      "npub": "npub132h6042qm8eywpz806aq7w0vyjmav4pehn6c3vzdd8xy9zhlfs4qwwe2yu",
+      "name": "hbhgardens ",
+      "username": "hbhgardens ",
+      "picture": "https://image.nostr.build/ff0f90f29ed6bf562f0870927c4d1fd946269775ca1dd8234a8a33dab4cfe981.jpg",
+      "bio": "Love & Light ",
+      "nip05": "hbhgardens@nostrplebs.com",
+      "lud16": "supermoth6@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.852Z",
+      "categories": [
+        "jumpstart"
+      ],
+      "tags": [
+        "jumpstart"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "f941ad2a24f166c1b594039c908db45c408b671f8ff76c5bd7b9d6cd50d5d339",
+      "npub": "npub1l9q6623y79nvrdv5qwwfprd5t3qgkecl3lmkck7hh8tv65x46vuskzcmqa",
+      "name": "BTCbeeRancher",
+      "username": "",
+      "picture": "https://m.primal.net/LlNa.jpg",
+      "bio": "Keeping bees in horizontal hives and avoiding traders/scammers who want to “teach” me to make money. BTC ONLY!",
+      "nip05": "BTCbeeRancher@primal.net",
+      "lud16": "BTCbeeRancher@primal.net",
+      "website": "https://mwbees.com/btc-bee-ranch/",
+      "fetchedAt": "2026-02-13T17:59:16.852Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "0cf08d280aa5fcfaf340c269abcf66357526fdc90b94b3e9ff6d347a41f090b7",
+      "npub": "npub1pncg62q25h704u6qcf56hnmxx46jdlwfpw2t860ld5685s0sjzms9rqlgr",
+      "name": "DefiantDandelion",
+      "username": "DefiantDandelion",
+      "picture": "https://nostr.build/i/nostr.build_d012f5371b3a709cbfb5e6c38883731004dd219466ec7d39daca2b605c051cc2.jpg",
+      "bio": "🏔️🏕️📷🪴🥖🐓🔭📡🔬💻🇺🇸🧐✝️\n\nI’m cursed by curiosity. My education is in #Economics and #Philosophy. I spend time as an #AmateurRadio Operator, #LazyGardener, father, husband, and general hobbyist interests in #Camping, #Photography, Food, #Permaculture, small scale Livestock, AppropriateTechnology, ResilientSystems and design, agile, Ecology, Lean, Zone USDA 6a #Ohio\nI do not represent my employer",
+      "nip05": "",
+      "lud16": "npub1hxx4z9ul8qvt3jmy4rfccyl2fcl9x4qtflxrk9y2fe560f4eqe8qhetm7w@npub.cash",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.852Z",
+      "categories": [
+        "photography",
+        "musicians",
+        "permaculture",
+        "parents",
+        "foodies"
+      ],
+      "tags": [
+        "photography",
+        "musicians",
+        "permaculture",
+        "parents",
+        "foodies"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    }
+  ],
+  "duplicates": [
+    "npub17nd4yu9anyd3004pumgrtazaacujjxwzj36thtqsxskjy0r5urgqf6950x",
+    "npub1hgvtv4zn2l8l3ef34n87r4sf5s00xq3lhgr3mvwt7kn8gjxpjprqc89jnv",
+    "npub1tx5ccpregnm9afq0xaj42hh93xl4qd3lfa7u74v5cdvyhwcnlanqplhd8g",
+    "npub1gwa27rpgum8mr9d30msg8cv7kwj2lhav2nvmdwh3wqnsa5vnudxqlta2sz",
+    "npub1k78qzy2s9ap4klshnu9tcmmcnr3msvvaeza94epsgptr7jce6p9sa2ggp4",
+    "npub1f9lz4ktqnkgq77e04vnmy7ay0zm6fftcsz04y2y06379usc60clss7pxza",
+    "npub1jdtdqz9tyf4tdvy2k0rnjqz5dv5rd3yvw5nlpefn9syjqx37dhyqxwh0c8",
+    "npub1y44g2f0ck3060dllrqxtfvynmpsae8qq79x9zl02x5fqfxadrzts67gama",
+    "npub1lwy7trur3d7hz65gxq82rujnnllhsan25yfpasgfdzmtzzjf3u5q0v4zv0",
+    "npub100rse6q23xxvfvlp05ye97shyexlrz8peqrtvrk4gsjw3dql26rqxu63y7",
+    "npub1ymt2j3n8tesrlr0yhaheem6yyqmmwrr7actslurw6annls6vnrcslapxnz",
+    "npub1me67k8t6vcncq75dlu8mxd70euvful56lz4ky20k3rmxgugvxq2qy23gnm",
+    "npub1xa8wjw3n7wm0zq2rycqc856hmcgcf26ax8r9m2m8wjwwwdnzxdrsr64spj"
+  ],
+  "newAccounts": [
+    {
+      "pubkey": "32d1df355d2ceeea5cd1c41d574b9105c68eeefd7c0bd29e49c152fe71c4c7d5",
+      "npub": "npub1xtga7d2a9nhw5hx3csw4wju3qhrgamha0s9a98jfc9f0uuwycl2ssg89t4",
+      "name": "grawoig",
+      "username": "grawoig",
+      "picture": "https://blossom.primal.net/4e1c12c513cc832ead9739c284a5eb3cdbdef0a07b3a5df03ce7f4b1faa02c1d.jpg",
+      "bio": "artist composer maxi",
+      "nip05": "",
+      "lud16": "justelephant4@primal.net",
+      "website": "https://grawoig.com",
+      "fetchedAt": "2026-02-13T17:59:13.043Z",
+      "categories": [
+        "artists",
+        "musicians"
+      ],
+      "tags": [
+        "artists",
+        "musicians"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "1aa1dbbeeb04dde30e1e7a00f7eea7605549e78726d53522e3990aa68009f433",
+      "npub": "npub1r2sah0htqnw7xrs70gq00m48vp25neu8ym2n2ghrny92dqqf7sest8hth0",
+      "name": "zed-erwan☕️✏️🎨",
+      "username": "zed-erwan☕️✏️🎨",
+      "picture": "https://arweave.net/9JJUAzW5fMHrVzS0q1sJA3M70GnsXwkGSyRxi4BU-cg/lccgei_image.png",
+      "bio": "Sketch, croquis, carnet de voyage, chaque jour un dessin et un café. Juste le plaisir de partager mon travail.",
+      "nip05": "",
+      "lud16": "zederwan@minibits.cash",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:13.043Z",
+      "categories": [
+        "artists"
+      ],
+      "tags": [
+        "artists"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "10f1f4a58cd7a7f6f5ed81ecef529f16ce42173d6197da5413aa0eeca0c21322",
+      "npub": "npub1zrclffvv67nlda0ds8kw755lzm8yy9eavxta54qn4g8wegxzzv3q8amvxc",
+      "name": "BitcoinArtMag",
+      "username": "BitcoinArtMag",
+      "picture": "https://i.nostr.build/WwisrxnSgY2tlvc0.png",
+      "bio": "The world’s first Bitcoin Art Magazine ⚡️\nOrder Now︱ bitcoinartmagazine.com\nListen︱ bitcoinartbroadcast.com\nChat︱t.me/bitcoinartmagazine\n\n",
+      "nip05": "BitcoinArtMag@primal.net",
+      "lud16": "BitcoinArtMag@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:13.043Z",
+      "categories": [
+        "artists"
+      ],
+      "tags": [
+        "artists"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "1aa1dbbeeb04dde30e1e7a00f7eea7605549e78726d53522e3990aa68009f433",
+      "npub": "npub1r2sah0htqnw7xrs70gq00m48vp25neu8ym2n2ghrny92dqqf7sest8hth0",
+      "name": "zed-erwan☕️✏️🎨",
+      "username": "zed-erwan☕️✏️🎨",
+      "picture": "https://arweave.net/9JJUAzW5fMHrVzS0q1sJA3M70GnsXwkGSyRxi4BU-cg/lccgei_image.png",
+      "bio": "Sketch, croquis, carnet de voyage, chaque jour un dessin et un café. Juste le plaisir de partager mon travail.",
+      "nip05": "",
+      "lud16": "zederwan@minibits.cash",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:13.043Z",
+      "categories": [
+        "artists"
+      ],
+      "tags": [
+        "artists"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "a9434ee165ed01b286becfc2771ef1705d3537d051b387288898cc00d5c885be",
+      "npub": "npub149p5act9a5qm9p47elp8w8h3wpwn2d7s2xecw2ygnrxqp4wgsklq9g722q",
+      "name": "Niel Liesmons",
+      "username": "Niel Liesmons",
+      "picture": "https://image.nostr.build/bf7e965bf6ddba341ef07a866aa9562e7323e9e5639cd699ecb187078c9192e9.jpg",
+      "bio": "Designer that codes.\nAlso #WordStudy #Dadstr #Farmstr",
+      "nip05": "",
+      "lud16": "nielliesmons@coinos.io",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "artists",
+        "permaculture",
+        "parents"
+      ],
+      "tags": [
+        "artists",
+        "permaculture",
+        "parents"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "8d9d2b77930ee54ec3e46faf774ddd041dbb4e4aa35ad47c025884a286dd65fa",
+      "npub": "npub13kwjkaunpmj5aslyd7hhwnwaqswmknj25dddglqztzz29pkavhaq25wg2a",
+      "name": "Maria2000",
+      "username": "Maria2000",
+      "picture": "https://cdn.nostrcheck.me/8d9d2b77930ee54ec3e46faf774ddd041dbb4e4aa35ad47c025884a286dd65fa/f06b82b484020ac360f47a0f277c0464ce661ef3a9700bb4c0a20c2fbc531230.webp",
+      "bio": "Country living, chickens, living a peaceful life",
+      "nip05": "maria2000@happytavern.co",
+      "lud16": "maria@walletofsatoshi.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "6a02b7d5d5c1ceec3d0ad28dd71c4cfeebb6397b95fef5cd5032c9223a13d02a",
+      "npub": "npub1dgpt04w4c88wc0g262xaw8zvlm4mvwtmjhl0tn2sxtyjywsn6q4qt8ka3a",
+      "name": "WedgeSocial",
+      "username": "WedgeSocial",
+      "picture": "https://image.nostr.build/47ac3f9e8d5bed324825905530c00763ca5a4a4912551aceb678fb50ef2b947f.jpg",
+      "bio": "Loose Canon Loaded Flowers",
+      "nip05": "wedgesocial@nostrplebs.com",
+      "lud16": "wedgesocial@walletofsatoshi.com",
+      "website": "wedgeorganics.com",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "d70d50091504b992d1838822af245d5f6b3a16b82d917acb7924cef61ed4acee",
+      "npub": "npub16ux4qzg4qjue95vr3q327fzata4n594c9kgh4jmeyn80v8k54nhqg6lra7",
+      "name": "AU9913",
+      "username": "AU9913",
+      "picture": "https://image.nostr.build/51a101919f5c2a43b1a5e1230a871e17d94cfe68c9014423dfe29615ec0ea657.jpg",
+      "bio": "Papa\nRegen Rancher #permaculture \nDev\n🐤",
+      "nip05": "auggie@nakaMOtown.com",
+      "lud16": "au9913@minibits.cash",
+      "website": "https://nakaMOtown.com",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "4d023ce9dfd75a7f3075b8e8e084008be17a1f750c63b5de721e6ef883adc765",
+      "npub": "npub1f5pre6wl6ad87vr4hr5wppqq30sh58m4p33mthnjreh03qadcajs7gwt3z",
+      "name": "rev.hodl",
+      "username": "rev.hodl",
+      "picture": "https://i.nostr.build/attyPOwmlyU7Y0t6.jpg",
+      "bio": "Homesteading, Permaculture, Bitcoin, Freedom. All one or all none!",
+      "nip05": "revhodl@cornychat.com",
+      "lud16": "revhodl@minibits.cash",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "permaculture",
+        "sovereign"
+      ],
+      "tags": [
+        "permaculture",
+        "sovereign"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "f27a4813f31d8faf80377ef15d4a397e3640b5ca1dffba9ce9dca91d3362c091",
+      "npub": "npub17faysylnrk86lqph0mc46j3e0cmypdw2rhlm488fmj536vmzczgs5qlnh4",
+      "name": "jsm",
+      "username": "jsm",
+      "picture": "https://pfp.nostr.build/e9e7963637e04d90ad2c33f21c6f112a188c5b001dd697e108991261487aa258.jpg",
+      "bio": "Farmer.",
+      "nip05": "jsmcd@getalby.com",
+      "lud16": "jsmcd@getalby.com",
+      "website": "https://studiohill.farm",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "5e7e69f863d20ca30103df88887194e091679491fefe5eb8212753013cc3d552",
+      "npub": "npub1telxn7rr6gx2xqgrm7ygsuv5uzgk09y3lml9awppyafsz0xr64fqlap4l3",
+      "name": "ender",
+      "username": "ender",
+      "picture": "https://blossom.primal.net/f809f831b3d946d043c526ec8020516e8b15cade6641d3f8ef7cb82e58e6505d.jpg",
+      "bio": "low IQ | blue collar worker | married | Yeshua follower | bitcoin standard | building my own Georgian styled bitcoin heated house | organizer of @airpool",
+      "nip05": "",
+      "lud16": "boldshrimp14@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "715c279295b65454c464b78503d6154ad7697ba82460c56d8a42eb5da11e6c4b",
+      "npub": "npub1w9wz0y54ke29f3ryk7zs84s4fttkj7agy3sv2mv2gt44mgg7d39sewekxt",
+      "name": "RecoveringAcademic",
+      "username": "RecoveringAcademic",
+      "picture": "https://image.nostr.build/e1d7b38e5965c07bec5c7b57d5b9ead48aecbd9043c5f9a39926d47c102043dd.jpg",
+      "bio": " ",
+      "nip05": " ",
+      "lud16": "  ",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "jumpstart"
+      ],
+      "tags": [
+        "jumpstart"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "ab11aa702482080cfead6e35fb6fbad454a3e792dd4d75f183f52f5fea2a2fa9",
+      "npub": "npub14vg65upysgyqel4ddc6lkma663228eujm4xhtuvr75h4l632975sdupd9a",
+      "name": "ornedii",
+      "username": "ornedii",
+      "picture": "https://image.nostr.build/93a0c6d92d635e2f7a4eb005224718fdfb47380a2cb573da32f222064109de7d.jpg",
+      "bio": "dryland permaculture, tinyhouse, music, software engineer full stack",
+      "nip05": "",
+      "lud16": "lovelycoffee4614@getalby.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "musicians",
+        "permaculture"
+      ],
+      "tags": [
+        "musicians",
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "c0e0c4272134d92da8651650c10ca612b710a670d5e043488f27e073a1f63a16",
+      "npub": "npub1crsvgfepxnvjm2r9zegvzr9xz2m3pfns6hsyxjy0yls88g0k8gtqhc9r37",
+      "name": "Jen",
+      "username": "Jen",
+      "picture": "https://nostr.build/i/nostr.build_334544f44f38979dc54b1fd0d4a64b93dcc5fbb46e12de3493f106e670f007c0.jpeg",
+      "bio": "Nostr only \nHomesteader \nPassionate about regen agriculture\nBeagles make the best buddies\nBitcoin is not a hobby\nMusic feeds the soul\nLife is better when lived outdoors\n🐮👩🏼‍🌾🐶🧡🏴‍☠️🎻🧘🏼‍♀️🌳🥩",
+      "nip05": "farmerjen@nostrplebs.com",
+      "lud16": "farmerjen@walletofsatoshi.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:14.777Z",
+      "categories": [
+        "musicians",
+        "permaculture"
+      ],
+      "tags": [
+        "musicians",
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "d020fe6e22b3aca9f578172a135e25d7b692e67b52e97fdce55431127d7626af",
+      "npub": "npub16qs0um3zkwk2natczu4pxh3967mf9enm2t5hlh892sc3yltky6hs832q4u",
+      "name": "MowMow",
+      "username": "MowMow",
+      "picture": "https://image.nostr.build/68416477fcc84d4158c4c2bb40f90747d9d5f19f55ff3e6915a5d46e5c1cb732.jpg",
+      "bio": "I'm a goat. CEO of weed control and maintenance.\nI do goat things and occasionally zap things that goats like.",
+      "nip05": "",
+      "lud16": "theseguru02@walletofsatoshi.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "360764241990900e9bf9acafbe102743cc19321c4548bd748671c7e0bd528a25",
+      "npub": "npub1xcrkgfqejzgqaxle4jhmuyp8g0xpjvsug4yt6ayxw8r7p02j3gjscl60yf",
+      "name": "bitcoinbonden",
+      "username": "bitcoinbonden",
+      "picture": "https://m.primal.net/HWdV.jpg",
+      "bio": "Norwegian farmer selling beef, pork and firewood for #bitcoin",
+      "nip05": "",
+      "lud16": "curiousjam84@walletofsatoshi.com",
+      "website": "Bitcoinbonden.no",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "ce3c305d4f6bde1060bc3193e1f18f3619dbbd993082da5838fd74491ea1de6b",
+      "npub": "npub1ec7rqh20d00pqc9uxxf7ruv0xcvah0vexzpd5kpcl46yj84pme4suggn5k",
+      "name": "AC",
+      "username": "AC",
+      "picture": "https://image.nostr.build/beb2b145e6f9c8434e867de19d281b1017905d619a3f7cf46fe614bae7bf2b8f.jpg",
+      "bio": "",
+      "nip05": "agrariancontrarian@nostrplebs.com",
+      "lud16": "agrariancontrarian@getalby.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "jumpstart"
+      ],
+      "tags": [
+        "jumpstart"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "428d9b92e962bdb6ad9b178ffaa734c369eff3c43590eb9f3d3eea059e28d38a",
+      "npub": "npub1g2xehyhfv27mdtvmz78l4fe5cd57lu7yxkgwh8ea8m4qt83g6w9qqrg0vy",
+      "name": "phenixfalconer",
+      "username": "phenixfalconer",
+      "picture": "https://image.nostr.build/8317f5d547f87419911672f4bf7a11b359170ece3d342f1f0dae37fa5e2015b1.jpg",
+      "bio": "#homesteading #farmstr #gardening #garden #seedstr #chickens #rabbits #birdstr #huntstr #hunting #buckskin #wildlife #nature",
+      "nip05": "",
+      "lud16": "cloudycook707@minibits.cash",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "e7211c227437dcb5582712b5b1bbfb2a23b27654649ddc7c1fb5a7dde87afeee",
+      "npub": "npub1uus3cgn5xlwt2kp8z26mrwlm9g3myaj5vjwaclqlkknam6r6lmhqjhwkxn",
+      "name": "Lost Sheep Ranch",
+      "username": "Lost Sheep Ranch",
+      "picture": "https://lost-sheep-ranch.com/img/sheepsingle.png",
+      "bio": "Selling 100% grassfed lamb and pasture raised eggs for bitcoin (and fiat) in south central Pennsylvania",
+      "nip05": "",
+      "lud16": "grover@getalby.com",
+      "website": "www.lost-sheep-ranch.com",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "0f4011159c24a6a53eeea72e1c2e97e0425be8af15e7de397003dd65d9e8d278",
+      "npub": "npub1paqpz9vuyjn220hw5uhpct5hupp9h690zhnauwtsq0wktk0g6fuq4dezs0",
+      "name": "Stacking Functions",
+      "username": "Stacking Functions",
+      "picture": "https://nostr.build/i/nostr.build_52a113f3e46f59e727e74545004e1e3e67dcccb5622f6a55ffef91df75505d2a.jpeg",
+      "bio": "Urban Homesteader, Edible Landscaper\nHere for the Great Awakening ",
+      "nip05": "",
+      "lud16": "chicrenewal691762@getalby.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "photography",
+        "permaculture"
+      ],
+      "tags": [
+        "photography",
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "7644119b18ec56b5b2779e0d035e7712a9d669dbfbe5b2c5f458cb564afb6c95",
+      "npub": "npub1wezprxcca3tttvnhncxsxhnhz25av6wml0jm9305tr94vjhmdj2s2e62hu",
+      "name": "TBone",
+      "username": "TBone",
+      "picture": "https://image.nostr.build/930fafef923c1bde7e490c5b20cf8decbab853562eec9a955dbd2072023718f9.gif",
+      "bio": "Homesteader.\nSteak Approver.\nUngovernable.\nUnemployable.\n#bitcoin only\n#nostr only",
+      "nip05": "Tbone@nostrplebs.com",
+      "lud16": "tbone@walletofsatoshi.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "428d9b92e962bdb6ad9b178ffaa734c369eff3c43590eb9f3d3eea059e28d38a",
+      "npub": "npub1g2xehyhfv27mdtvmz78l4fe5cd57lu7yxkgwh8ea8m4qt83g6w9qqrg0vy",
+      "name": "phenixfalconer",
+      "username": "phenixfalconer",
+      "picture": "https://image.nostr.build/cae084b5832b135dfb0c9ecf81f77adc97e75e48a78b6b7ce4464e8f34c55f11.jpg",
+      "bio": "#homesteading #farmstr #gardening #garden #seedstr #chickens #rabbits #birdstr #huntstr #hunting #buckskin #wildlife #nature",
+      "nip05": "",
+      "lud16": "cloudycook707@minibits.cash",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "58d2be9f20537ad7074b0283287611507ef7bd313c5edb64def9e1fc5df26d11",
+      "npub": "npub1trfta8eq2dadwp6tq2pjsas32pl000f3830dkex7l8slch0jd5gs34d0e6",
+      "name": "dwright5816",
+      "username": "dwright5816",
+      "picture": "https://m.primal.net/NPfs.jpg",
+      "bio": "In Tennessee, interested in permaculture, decentralized technology, bitcoin, and algorithmic trading. Catholic father and husband. world traveler, and software engineering manager.",
+      "nip05": "",
+      "lud16": "jollyhorse7@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "musicians",
+        "permaculture",
+        "parents"
+      ],
+      "tags": [
+        "musicians",
+        "permaculture",
+        "parents"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "681b9e384921582ecac2b4641a9337f17b66698a01065694c91dc4c345c6de1e",
+      "npub": "npub1dqdeuwzfy9vzajkzk3jp4yeh79akv6v2qyr9d9xfrhzvx3wxmc0qrzw9nn",
+      "name": "FloofFarm",
+      "username": "FloofFarm",
+      "picture": "https://m.primal.net/KrMM.png",
+      "bio": "Floof Farm is a dairy goat farm located in Washington. We breed American Dairy Goat Association (ADGA) Registered Nigerian Dwarf and Toggenburg Dairy Goats.",
+      "nip05": "flooffarm@coinos.io",
+      "lud16": "flooffarm@coinos.io",
+      "website": "https://floof.farm",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "7b8fcd9153d2c47146155df24b7f167924c1fc16fb4e843d98f8b5f3add6bd85",
+      "npub": "npub10w8umy2n6tz8z3s4theyklck0yjvrlqkld8gg0vclz6l8twkhkzsd4zf5s",
+      "name": "watts_bar",
+      "username": "watts_bar",
+      "picture": "https://i.pinimg.com/736x/07/59/c9/0759c9b979c04fc9b6952c5cfa85ec5f.jpg",
+      "bio": "Freedom minded homesteader, chicken farmer and pig castrator\n",
+      "nip05": "",
+      "lud16": "",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.301Z",
+      "categories": [
+        "permaculture",
+        "sovereign"
+      ],
+      "tags": [
+        "permaculture",
+        "sovereign"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "815f4f1ecbffe7abe360018b663295d188bd49f8fe4726ee63ef5bca5b6f64e8",
+      "npub": "npub1s90578ktlln6hcmqqx9kvv546xyt6j0clerjdmnraadu5km0vn5q9w8hyk",
+      "name": "JoJ",
+      "username": "JoJ",
+      "picture": "https://image.nostr.build/d3e2d1df4eefd751768aeeea6e215aaba0822b2dd2260511f61283d11959bbdb.jpg",
+      "bio": "Heathen\nHusband, Father, Farmer,\nWood chopper, wood burner",
+      "nip05": "",
+      "lud16": "quickswan9@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.820Z",
+      "categories": [
+        "musicians",
+        "permaculture",
+        "parents"
+      ],
+      "tags": [
+        "musicians",
+        "permaculture",
+        "parents"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "655f0194f141831368f4da372622062457ef73cbf1e6db1734d2c7c05e0029ca",
+      "npub": "npub1v40sr983gxp3x685mgmjvgsxy3t77u7t78ndk9e56truqhsq989q3e2y09",
+      "name": "A.A.Ron",
+      "username": "A.A.Ron",
+      "picture": "https://image.nostr.build/ea905d3b87da01986ac7defebbaa25501618c746e1def54f221c13c41145f496.jpg",
+      "bio": "Alaskan. Electrical enginerd. Hunter, fisherman, gardener. Ham radio operator.",
+      "nip05": "",
+      "lud16": "grainyagenda152@minibits.cash",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.820Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "949110ffbaab1eed7c02b4665a0dc5054537e5e89c5bbe06f51600e8b0001c72",
+      "npub": "npub1jjg3pla64v0w6lqzk3n95rw9q4zn0e0gn3dmuph4zcqw3vqqr3equqm9ym",
+      "name": "Sand Hill Thicket",
+      "username": "Sand Hill Thicket",
+      "picture": "https://cdn.masto.host/medmastodoncom/accounts/avatars/109/309/211/721/872/668/original/ae094247c1f91898.jpg",
+      "bio": "It's pretty much all about Gulf Coast sheep, cats, and food over here... Life of a smallholder on the prairie in northeastern Kansas. Grow Zone 6a.\n\nhttps://www.sandhill-thicket.com",
+      "nip05": "SandHillThicket@med--mastodon-com.mostr.pub",
+      "lud16": "",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.821Z",
+      "categories": [
+        "permaculture",
+        "foodies"
+      ],
+      "tags": [
+        "permaculture",
+        "foodies"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "469223f4ce484bba4e125a8c8a92032e16e5d07b723ea5da2f253b2627da92c7",
+      "npub": "npub1g6fz8axwfp9m5nsjt2xg4ysr9ctwt5rmwgl2tk30y5ajvf76jtrsskpcks",
+      "name": "The Fertile Crescent",
+      "username": "The Fertile Crescent",
+      "picture": "https://image.nostr.build/f6f0eb5c78c9bfef872555306c40f91804a823faff2777a7e16fd2680db5cda3.jpg",
+      "bio": "a Bitcoin farm 🌱\n𝘧𝘰𝘭𝘭𝘰𝘸 𝘢𝘭𝘰𝘯𝘨 𝘸𝘪𝘵𝘩 𝘶𝘴 𝘰𝘯 𝘰𝘶𝘳 𝘫𝘰𝘶𝘳𝘯𝘦𝘺 𝘵𝘰 𝘧𝘳𝘦𝘦𝘥𝘰𝘮",
+      "nip05": "",
+      "lud16": "thefertilecrescent@getalby.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.821Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "b5c417b9b51ff323f857b6c60cff085c8e50e87a3365a1ed5d52f9b3c0580a9b",
+      "npub": "npub1khzp0wd4rlej87zhkmrqelcgtj89p6r6xdj6rm2a2tum8szcp2dsje3c5c",
+      "name": "lacruzboss",
+      "username": "lacruzboss",
+      "picture": "https://m.primal.net/OTVl.jpg",
+      "bio": "🇸🇻 jungle coffee provider 🇸🇻\n🌴 LA CRUZ 🌴 \n\nI have a speciality coffee farm in El Salvador.",
+      "nip05": "lacruz@nostrplebs.com",
+      "lud16": "cyanpanther3@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.821Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "99562ddb32ac3e3378919a943e861cb999e80583efc7c70a42bba3e9ebbfc579",
+      "npub": "npub1n9tzmkej4slrx7y3n22rapsuhxv7spvralruwzjzhw37n6alc4usnu8t27",
+      "name": "FlyoverJoe",
+      "username": "FlyoverJoe",
+      "picture": "https://image.nostr.build/a7c7144a4bc0f9aeb40d57b66c0c7c8f8f481f59d945b853214c9c705ce279b3.jpg",
+      "bio": "Out here in the middle of nowhere. ",
+      "nip05": "",
+      "lud16": "733ac1b0bfac491f@coinos.io",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:15.821Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "797750041d1366a80d45e130c831f0562b5f7266662b07acef50dd541bfa2535",
+      "npub": "npub109m4qpqazdn2sr29uycvsv0s2c447unxvc4s0t802rw4gxl6y56sd9hvru",
+      "name": "Jordan Richner",
+      "username": "jmrichner",
+      "picture": "https://i.nostr.build/jxq8ACRpRX4PKBYq.jpg",
+      "bio": "Rancher, Soil Scientist, Bushcrafter, Woodworker, Homesteader, Bitcoiner, Entrepreneur",
+      "nip05": "",
+      "lud16": "jordanrichner@strike.me",
+      "website": "https://fountain.fm/jordanrichner",
+      "fetchedAt": "2026-02-13T17:59:15.821Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "4256093f64ac3f552703e1887b9e5b2267f88abd34baf485987e6c2c83f77b53",
+      "npub": "npub1gftqj0my4sl42fcruxy8h8jmyfnl3z4axja0fpvc0ekzeqlh0dfsffg34w",
+      "name": "JayW132",
+      "username": "JayW132",
+      "picture": "https://m.primal.net/PFfW.jpg",
+      "bio": "Building The Bitcoin Collective",
+      "nip05": "",
+      "lud16": "honestcloudy02@walletofsatoshi.com",
+      "website": "https://linktr.ee/bitcoincollective",
+      "fetchedAt": "2026-02-13T17:59:15.821Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "101a112c8adc2e69e0003114ff1c1d36b7fcde06d84d47968e599d558721b0df",
+      "npub": "npub1zqdpzty2mshxncqqxy2078qax6mlehsxmpx5095wtxw4tpepkr0s2ce6fj",
+      "name": "Permanerd 🌱 💻",
+      "username": "Permanerd 🌱 💻",
+      "picture": "https://image.nostr.build/01e213f3cd9d2a77f2363c1a2c0e99c17c334841f25769f20722f1516318a4cd.jpg",
+      "bio": "Father, husband,  homesteader, permaculturer, hunter, laugher, fun haver, Sats 4 Snacks operator",
+      "nip05": "",
+      "lud16": "permanerd@getalby.com",
+      "website": "sats4snacks.com",
+      "fetchedAt": "2026-02-13T17:59:16.330Z",
+      "categories": [
+        "musicians",
+        "permaculture",
+        "parents"
+      ],
+      "tags": [
+        "musicians",
+        "permaculture",
+        "parents"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "165b9d37a28903103af9ad24036bdc54270882c01add515791fc9666167cfac1",
+      "npub": "npub1zede6daz3yp3qwhe45jqx67u2sns3qkqrtw4z4u3ljtxv9nultqs0e3hvt",
+      "name": "Kayne",
+      "username": "Kayne",
+      "picture": "https://blossom.primal.net/602bc67069efb4e94ecfec0542944113087cdd6f7c803d28bfea11b9301c3153.jpg",
+      "bio": "i am Kayne this is where I express my opinions. ",
+      "nip05": "kayne@nostrcheck.me",
+      "lud16": "zippymoose10@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.330Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "7a6b8c7de171955c214ded7e35cc782cd6dddfd141abb1929c632f69348e6f49",
+      "npub": "npub10f4ccl0pwx24cg2da4lrtnrc9ntdmh73gx4mry5uvvhkjdywdaysa5hrhr",
+      "name": "NaturalNerd",
+      "username": "NaturalNerd",
+      "picture": "https://image.nostr.build/b4bc13ed8ef5a805c45062506694d117cce5f36ef7aad6ee4af749d3a696223b.jpg",
+      "bio": "Hillbilly engineer and plant nerd going feral",
+      "nip05": "",
+      "lud16": "7a6b8c7de171955c214ded7e@coinos.io",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.331Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "f6900e6b42a83a6d66589714de49ac86919c6464857d9e164b953bcf9c7e939d",
+      "npub": "npub176gqu66z4qax6ejcju2dujdvs6gecerys47eu9jtj5aul8r7jwwsnqq836",
+      "name": "The Bird",
+      "username": "The Bird",
+      "picture": "https://image.nostr.build/f10ca032b5ff99b2a28fcf87900e9486c9bf14440368a7ea1f372a51cff63319.jpg",
+      "bio": "God, Family, Bitcoin, nature, pew, fish, birdman and _______________\n\nXMR\n44EhwqxoEBwaatnyLQop645v5bAQPz1v6LQXmfbvgCpVVeHpcVhLDtpYKmZ18gdW9d5BnCTpUZqwE1HdixSf94PzGLCHekM",
+      "nip05": "DC@bitcoinveterans.org",
+      "lud16": "greenkarusa@blitzwalletapp.com",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.331Z",
+      "categories": [
+        "parents",
+        "christians"
+      ],
+      "tags": [
+        "parents",
+        "christians"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "aa836271424a1d3601f82628c64a105126560ebf1e03847d5b8f247b6fa507bf",
+      "npub": "npub142pkyu2zfgwnvq0cyc5vvjss2yn9vr4lrcpcgl2m3uj8kma9q7lsdfduqf",
+      "name": "Be The Change: Abundance, Service, Play",
+      "username": "Be The Change: Abundance, Service, Play",
+      "picture": "https://blossom.primal.net/9d1de024c6c9e915e85d9210610fdfc59078ca62104a6fa439f51590fcc9dc3f.gif",
+      "bio": "Homesteaders in the South.\n",
+      "nip05": "",
+      "lud16": "farm@coinos.io",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.331Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "dc530ac3899739b08827e9901c25ccc08b357d8347532a76594f4df71bbb9189",
+      "npub": "npub1m3fs4sufjuumpzp8axgpcfwvcz9n2lvrgafj5ajefaxlwxamjxysfjhch4",
+      "name": "Acme Acres",
+      "username": "Acme Acres",
+      "picture": "https://blossom.primal.net/c75d54f90fec53935d99709af6a6be16129ba7b8cf47b34bf8cea173984d8eb3.jpg",
+      "bio": "Acme Acres is a family farm-to-table provider of premium, grass-fed/grass finished pasture-raised beef, pork, lamb, and chicken. Raised with no vaccines, hormones or antibiotics. ",
+      "nip05": "",
+      "lud16": "ambermoth8@primal.net",
+      "website": "www.acmeacres.us",
+      "fetchedAt": "2026-02-13T17:59:16.331Z",
+      "categories": [
+        "permaculture",
+        "parents"
+      ],
+      "tags": [
+        "permaculture",
+        "parents"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "a25ff9fcdc949f4e9f03f6777808b880b12effa07c39a1936c72942e2eefb953",
+      "npub": "npub15f0lnlxujj05a8cr7emhsz9cszcjalaq0su6rymvw22zuth0h9fs7cqrdx",
+      "name": "Little Spoon",
+      "username": "Little Spoon",
+      "picture": "https://cdn.nostr.build/i/5d7b99681f2949a148f6e2ccb764fe11b7ff1cd464dc158acbfee7ad264c4a8a.jpg",
+      "bio": "Fat zapper.   Skinny zaps. ",
+      "nip05": "",
+      "lud16": "BigSpoon@coinos.io",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.331Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "a1fc5dfd7ffcf563c89155b466751b580d115e136e2f8c90e8913385bbedb1cf",
+      "npub": "npub15879mltlln6k8jy32k6xvagmtqx3zhsndchcey8gjyectwldk88sq5kv0n",
+      "name": "jackspirko",
+      "username": "jackspirko",
+      "picture": "https://m.primal.net/HbGx.png",
+      "bio": "Host of The Survival Podcast & The Bitcoin Breakout, Founder of the #grownostr initiative.  I am also a prepper, a permaculturist, a teacher, a gardener, a hunter, a fisherman, a grandfather, a husband and dad.  My life is pretty damn great. ",
+      "nip05": "jackspirko@primal.net",
+      "lud16": "jackspirko@primal.net",
+      "website": "TheSurvivalPodcast.com",
+      "fetchedAt": "2026-02-13T17:59:16.331Z",
+      "categories": [
+        "musicians",
+        "permaculture",
+        "parents",
+        "sovereign"
+      ],
+      "tags": [
+        "musicians",
+        "permaculture",
+        "parents",
+        "sovereign"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "a39199ccb5ec92b1cd047bf3dc7e8923ede769d1a5ccc47d579912f0f5cbdab4",
+      "npub": "npub15wgenn94ajftrngy00eacl5fy0k7w6w35hxvgl2hnyf0pawtm26qy07hfl",
+      "name": "jesssowards",
+      "username": "jesssowards",
+      "picture": "https://m.primal.net/Hswj.jpg",
+      "bio": "Homesteader. Gardener. Lover of good food and pretty words. South Carolina is home. ",
+      "nip05": "",
+      "lud16": "tealsloth1@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.331Z",
+      "categories": [
+        "permaculture",
+        "foodies"
+      ],
+      "tags": [
+        "permaculture",
+        "foodies"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "518b2e2976d23bbf778edd3a8613f393d67c5df579b99bb459222ae3cb6e6b78",
+      "npub": "npub12x9ju2tk6gam7auwm5agvylnj0t8ch040xuehdzeyg4w8jmwdduqetsr92",
+      "name": "Ragamuffin",
+      "username": "Ragamuffin",
+      "picture": "https://image.nostr.build/09f0cc59e44344485b8a8e27ef59778aee91098aae9e179c38c66bf20f467efe.jpg",
+      "bio": "",
+      "nip05": "",
+      "lud16": "fancyladybug3@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.331Z",
+      "categories": [
+        "jumpstart"
+      ],
+      "tags": [
+        "jumpstart"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "f941ad2a24f166c1b594039c908db45c408b671f8ff76c5bd7b9d6cd50d5d339",
+      "npub": "npub1l9q6623y79nvrdv5qwwfprd5t3qgkecl3lmkck7hh8tv65x46vuskzcmqa",
+      "name": "BTCbeeRancher",
+      "username": "",
+      "picture": "https://m.primal.net/LlNa.jpg",
+      "bio": "Keeping bees in horizontal hives and avoiding traders/scammers who want to “teach” me to make money. BTC ONLY!\n\nAlso, no responses or attention given to snarky, obviously alt/anon/attention seeking profiles... just block and move on. If you don't comment with a real profile, sorry but I don't have time for you.",
+      "nip05": "BTCbeeRancher@primal.net",
+      "lud16": "BTCbeeRancher@primal.net",
+      "website": "https://mwbees.com/btc-bee-ranch/",
+      "fetchedAt": "2026-02-13T17:59:16.852Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "e04866056759b01388d86e7b531a6f71d536a97f601f0906219ec737d5857fcb",
+      "npub": "npub1upyxvpt8txcp8zxcdea4xxn0w82nd2tlvq0sjp3pnmrn04v90l9sz3s9at",
+      "name": "GnosisMycelium",
+      "username": "GnosisMycelium",
+      "picture": "https://blossom.primal.net/48178a6590878c2cb20f30b93d1c089d8e994a20187142361edf212744922a31.jpg",
+      "bio": "Gnosis (No-sis) translates from Greek to “knowledge” often associated with a deeper understanding of oneself and the divine.\nMycelium Grower\nBTC is KING.\nKnow They Self\n\nMessage me on SimpleX\n\nhttps://smp12.simplex.im/a#EUWZTSlSJjNCcEi4xuJ9GHKrvhEgwjVMak-9LEnZY6w\n\n🇺🇸",
+      "nip05": "",
+      "lud16": "lemonchicken14@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.852Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "6116d06dd94aedb145d2e7689a2fe2249de56fc4e89a4cace88a0d4b1d80b135",
+      "npub": "npub1vytdqmweftkmz3wjua5f5tlzyjw72m7yazdyet8g3gx5k8vqky6sy3a544",
+      "name": "Homestead Citadel",
+      "username": "Homestead Citadel",
+      "picture": "https://image.nostr.build/aa1ec280eae96d65c68f66454eb968a4a9cf881d42ec4a97c6a04623e3530058.jpg",
+      "bio": "Bitcoin homesteader and citadel builder",
+      "nip05": "",
+      "lud16": "serendipitouspancake735240@getalby.com",
+      "website": "https://www.youtube.com/@HomesteadCitadel",
+      "fetchedAt": "2026-02-13T17:59:16.852Z",
+      "categories": [
+        "permaculture"
+      ],
+      "tags": [
+        "permaculture"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "0cf08d280aa5fcfaf340c269abcf66357526fdc90b94b3e9ff6d347a41f090b7",
+      "npub": "npub1pncg62q25h704u6qcf56hnmxx46jdlwfpw2t860ld5685s0sjzms9rqlgr",
+      "name": "DefiantDandelion",
+      "username": "DefiantDandelion",
+      "picture": "https://nostr.build/i/nostr.build_d012f5371b3a709cbfb5e6c38883731004dd219466ec7d39daca2b605c051cc2.jpg",
+      "bio": "🏔️🏕️📷🪴🥖🐓🔭📡🔬💻🇺🇸🧐✝️\n\nI’m cursed by curiosity. My education is in #Economics and #Philosophy. I spend time as an #AmateurRadio Operator, #LazyGardener, father, husband, and general hobbyist interests in #Camping, #Photography, Food, #Permaculture, small scale Livestock, AppropriateTechnology, ResilientSystems and design, agile, Ecology, Lean, Zone USDA 6a #Ohio\nI do not represent my employer\n\nXMR:\n89veuC7T1g5JFbpxc2CY7KML5bAy428AhYoxWHoOJuzkET2nykfgRmPqbuDVgqi1RGfYNvcGYYSxYbtEZSNS3jC9jXU\n\n",
+      "nip05": "",
+      "lud16": "npub1hxx4z9ul8qvt3jmy4rfccyl2fcl9x4qtflxrk9y2fe560f4eqe8qhetm7w@npub.cash",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.852Z",
+      "categories": [
+        "photography",
+        "musicians",
+        "permaculture",
+        "parents",
+        "foodies"
+      ],
+      "tags": [
+        "photography",
+        "musicians",
+        "permaculture",
+        "parents",
+        "foodies"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "8aafa7d540d9f24704477eba0f39ec24b7d65439bcf588b04d69cc428aff4c2a",
+      "npub": "npub132h6042qm8eywpz806aq7w0vyjmav4pehn6c3vzdd8xy9zhlfs4qwwe2yu",
+      "name": "hbhgardens ",
+      "username": "hbhgardens ",
+      "picture": "https://image.nostr.build/ff0f90f29ed6bf562f0870927c4d1fd946269775ca1dd8234a8a33dab4cfe981.jpg",
+      "bio": "Love & Light ",
+      "nip05": "hbhgardens@nostrplebs.com",
+      "lud16": "supermoth6@primal.net",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.852Z",
+      "categories": [
+        "jumpstart"
+      ],
+      "tags": [
+        "jumpstart"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "f941ad2a24f166c1b594039c908db45c408b671f8ff76c5bd7b9d6cd50d5d339",
+      "npub": "npub1l9q6623y79nvrdv5qwwfprd5t3qgkecl3lmkck7hh8tv65x46vuskzcmqa",
+      "name": "BTCbeeRancher",
+      "username": "",
+      "picture": "https://m.primal.net/LlNa.jpg",
+      "bio": "Keeping bees in horizontal hives and avoiding traders/scammers who want to “teach” me to make money. BTC ONLY!",
+      "nip05": "BTCbeeRancher@primal.net",
+      "lud16": "BTCbeeRancher@primal.net",
+      "website": "https://mwbees.com/btc-bee-ranch/",
+      "fetchedAt": "2026-02-13T17:59:16.852Z",
+      "categories": [
+        "cool_people"
+      ],
+      "tags": [
+        "cool_people"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "pubkey": "0cf08d280aa5fcfaf340c269abcf66357526fdc90b94b3e9ff6d347a41f090b7",
+      "npub": "npub1pncg62q25h704u6qcf56hnmxx46jdlwfpw2t860ld5685s0sjzms9rqlgr",
+      "name": "DefiantDandelion",
+      "username": "DefiantDandelion",
+      "picture": "https://nostr.build/i/nostr.build_d012f5371b3a709cbfb5e6c38883731004dd219466ec7d39daca2b605c051cc2.jpg",
+      "bio": "🏔️🏕️📷🪴🥖🐓🔭📡🔬💻🇺🇸🧐✝️\n\nI’m cursed by curiosity. My education is in #Economics and #Philosophy. I spend time as an #AmateurRadio Operator, #LazyGardener, father, husband, and general hobbyist interests in #Camping, #Photography, Food, #Permaculture, small scale Livestock, AppropriateTechnology, ResilientSystems and design, agile, Ecology, Lean, Zone USDA 6a #Ohio\nI do not represent my employer",
+      "nip05": "",
+      "lud16": "npub1hxx4z9ul8qvt3jmy4rfccyl2fcl9x4qtflxrk9y2fe560f4eqe8qhetm7w@npub.cash",
+      "website": "",
+      "fetchedAt": "2026-02-13T17:59:16.852Z",
+      "categories": [
+        "photography",
+        "musicians",
+        "permaculture",
+        "parents",
+        "foodies"
+      ],
+      "tags": [
+        "photography",
+        "musicians",
+        "permaculture",
+        "parents",
+        "foodies"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    }
+  ]
+}

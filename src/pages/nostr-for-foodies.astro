@@ -1,0 +1,203 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import { FeaturedCreatorsFromPack } from '../components/community/FeaturedCreatorsFromPack';
+
+const title = 'Nostr for Foodies';
+const description = 'Share recipes, cooking tips, and food photography. Your culinary creations will not be buried by algorithms.';
+
+const valueProps = [
+  { 
+    icon: '🍳', 
+    title: 'Recipe Sharing', 
+    description: 'Share your family recipes and culinary experiments without them being hidden behind paywalls or algorithmic suppression.' 
+  },
+  { 
+    icon: '📸', 
+    title: 'Food Photography', 
+    description: 'Upload high-quality food photos without compression. Your sourdough deserves to be seen in full resolution.' 
+  },
+  { 
+    icon: '👨‍🍳', 
+    title: 'Cooking Tips', 
+    description: 'Get and share real cooking advice from food enthusiasts. No sponsored content—just genuine kitchen wisdom.' 
+  },
+  { 
+    icon: '🍽️', 
+    title: 'Restaurant Reviews', 
+    description: 'Honest reviews without the filter of paid partnerships. Find real recommendations from real diners.' 
+  },
+];
+
+const categoryId = 'foodies';
+const followPackUrl = '/follow-pack?category=foodies';
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-orange-50 via-white to-red-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-orange-200/30 to-transparent rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-to-tr from-red-200/20 to-transparent rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+      </div>
+      
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative">
+        <div class="max-w-4xl mx-auto text-center">
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 text-sm font-medium mb-6">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            Nostr Community
+          </div>
+          
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-white">
+            {title}
+          </h1>
+          
+          <p class="text-xl sm:text-2xl text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed">
+            {description}
+          </p>
+          
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href={followPackUrl}
+              class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-orange-600 hover:bg-orange-700 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+            >
+              Join Foodies on Nostr
+              <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+            <a
+              href="/guides"
+              class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 rounded-xl transition-all duration-200"
+            >
+              View All Guides
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Value Propositions -->
+    <section class="py-20 bg-white dark:bg-gray-900">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              Why Foodies Choose Nostr
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Share your culinary passion without compromise
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {valueProps.map((prop) => (
+              <div class="p-8 rounded-2xl bg-gradient-to-br from-orange-50 to-white dark:bg-gray-800 dark:bg-none border border-orange-100 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-600 transition-all duration-300 group">
+                <div class="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                  {prop.icon}
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">
+                  {prop.title}
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                  {prop.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Creators Section -->
+    <section class="py-20 bg-gray-50 dark:bg-gray-900/50 border-y border-orange-100 dark:border-gray-700">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+              Featured Foodies
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Discover amazing chefs and food enthusiasts on Nostr
+            </p>
+          </div>
+
+          <FeaturedCreatorsFromPack 
+            client:load 
+            categoryId={categoryId} 
+            maxDisplay={6}
+            followPackUrl={followPackUrl}
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Join CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-orange-100 via-white to-red-50 dark:from-orange-900/30 dark:via-gray-900 dark:to-red-900/20">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+            Join Foodies on Nostr
+          </h2>
+          <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+            Start sharing your recipes in minutes. No phone number. No ID verification. Your culinary creations will be seen.
+          </p>
+          
+          <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <a
+              href="/guides"
+              class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-orange-600 hover:bg-orange-700 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+            >
+              Get Started
+              <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+            <a
+              href={followPackUrl}
+              class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-orange-700 dark:text-orange-400 bg-white dark:bg-gray-800 border-2 border-orange-200 dark:border-orange-700 hover:border-orange-400 dark:hover:border-orange-500 rounded-xl transition-all duration-200"
+            >
+              <svg class="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+              Import Follow Pack
+            </a>
+          </div>
+
+          <!-- How to Join Steps -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
+            <div class="text-center">
+              <div class="w-12 h-12 mx-auto mb-4 rounded-full bg-orange-100 dark:bg-orange-900/50 flex items-center justify-center text-xl font-bold text-orange-600">
+                1
+              </div>
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Choose a Client</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Download a Nostr app for your device</p>
+            </div>
+            <div class="text-center">
+              <div class="w-12 h-12 mx-auto mb-4 rounded-full bg-orange-100 dark:bg-orange-900/50 flex items-center justify-center text-xl font-bold text-orange-600">
+                2
+              </div>
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Create Keys</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Get your unique identity in 30 seconds</p>
+            </div>
+            <div class="text-center">
+              <div class="w-12 h-12 mx-auto mb-4 rounded-full bg-orange-100 dark:bg-orange-900/50 flex items-center justify-center text-xl font-bold text-orange-600">
+                3
+              </div>
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Share</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Post your recipes to the world</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

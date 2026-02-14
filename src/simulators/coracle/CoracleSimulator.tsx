@@ -282,7 +282,7 @@ export const CoracleSimulator: React.FC = () => {
 
   return (
     <div 
-      className={`coracle-simulator min-h-screen relative overflow-hidden ${parentTheme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}
+      className={`coracle-simulator h-full relative overflow-hidden ${parentTheme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}
       data-theme={parentTheme}
     >
       <div className="coracle-container flex flex-col h-full">

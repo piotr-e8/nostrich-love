@@ -33,9 +33,9 @@ export function TourButton({
 
   const handleClick = () => {
     if (state.isActive) {
-      restartTour();
+      restartTour(tourConfig);
     } else if (isCompleted || isSkipped) {
-      restartTour();
+      restartTour(tourConfig);
     } else {
       startTour(tourConfig);
     }

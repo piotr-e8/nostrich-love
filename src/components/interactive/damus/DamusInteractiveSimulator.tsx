@@ -38,7 +38,7 @@ const MOCK_POSTS: Post[] = [
     author: {
       name: "Will Casarin",
       handle: "@jb55",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=will",
+      avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=will",
       isVerified: true,
     },
     content: "Just shipped a new Damus update! Purple members can now customize their app icons. Check it out ⚡️",
@@ -50,7 +50,7 @@ const MOCK_POSTS: Post[] = [
     author: {
       name: "fiatjaf",
       handle: "@fiatjaf",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=fiatjaf",
+      avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=fiatjaf",
       isVerified: true,
     },
     content: "Nostr is not just a protocol, it's a movement towards user sovereignty. Every day more developers join and build amazing things.",
@@ -62,7 +62,7 @@ const MOCK_POSTS: Post[] = [
     author: {
       name: "Pablo",
       handle: "@pablo",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=pablo",
+      avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=pablo",
       isVerified: true,
       isPurple: true,
     },
@@ -75,7 +75,7 @@ const MOCK_POSTS: Post[] = [
     author: {
       name: "ODELL",
       handle: "@odell",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=odell",
+      avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=odell",
       isPurple: true,
     },
     content: "Bitcoin fixes this. Nostr fixes the rest. Stack sats, use nostr, stay free. 🍊💊",
@@ -87,7 +87,7 @@ const MOCK_POSTS: Post[] = [
     author: {
       name: "Lisa Neigut",
       handle: "@niftynei",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=lisa",
+      avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=lisa",
     },
     content: "Building on Lightning is like having superpowers. The things you can do with instant, global payments are mind-blowing.",
     timestamp: "2h",
@@ -96,11 +96,11 @@ const MOCK_POSTS: Post[] = [
 ];
 
 const STORIES = [
-  { id: "1", name: "Your Story", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=you", isActive: true },
-  { id: "2", name: "Will", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=will", isActive: true },
-  { id: "3", name: "Pablo", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=pablo", isActive: false },
-  { id: "4", name: "fiatjaf", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=fiatjaf", isActive: true },
-  { id: "5", name: "ODELL", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=odell", isActive: false },
+  { id: "1", name: "Your Story", image: "https://api.dicebear.com/7.x/bottts/svg?seed=you", isActive: true },
+  { id: "2", name: "Will", image: "https://api.dicebear.com/7.x/bottts/svg?seed=will", isActive: true },
+  { id: "3", name: "Pablo", image: "https://api.dicebear.com/7.x/bottts/svg?seed=pablo", isActive: false },
+  { id: "4", name: "fiatjaf", image: "https://api.dicebear.com/7.x/bottts/svg?seed=fiatjaf", isActive: true },
+  { id: "5", name: "ODELL", image: "https://api.dicebear.com/7.x/bottts/svg?seed=odell", isActive: false },
 ];
 
 const TABS: Tab[] = [
@@ -386,7 +386,7 @@ export function DamusInteractiveSimulator() {
       author: {
         name: "You",
         handle: "@you",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=you",
+        avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=you",
       },
       content,
       timestamp: "now",
@@ -555,7 +555,7 @@ export function DamusInteractiveSimulator() {
                         author: {
                           name: "You",
                           handle: "@you",
-                          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=you",
+                          avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=you",
                         },
                       }}
                       onLike={handleLike}

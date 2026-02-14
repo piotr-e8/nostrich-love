@@ -1,0 +1,356 @@
+/**
+ * Olas Theme - Photo-first Nostr Client
+ * Instagram-style UI with coral/orange accent colors
+ */
+
+/* CSS Custom Properties */
+:root {
+  /* Primary Colors - Coral/Orange */
+  --olas-primary: #FF6B6B;
+  --olas-primary-dark: #E85555;
+  --olas-primary-light: #FF8E8E;
+  
+  /* Secondary - Teal accent */
+  --olas-secondary: #4ECDC4;
+  --olas-secondary-light: #6EDDD6;
+  
+  /* Background Colors */
+  --olas-background: #FFFFFF;
+  --olas-surface: #FAFAFA;
+  --olas-card-bg: #FFFFFF;
+  
+  /* Text Colors */
+  --olas-text-primary: #1A1A1A;
+  --olas-text-secondary: #666666;
+  --olas-text-muted: #999999;
+  --olas-text-inverse: #FFFFFF;
+  
+  /* Border & Divider */
+  --olas-border: #E5E5E5;
+  --olas-divider: #F0F0F0;
+  
+  /* Status Colors */
+  --olas-success: #22C55E;
+  --olas-warning: #F59E0B;
+  --olas-error: #EF4444;
+  --olas-info: #3B82F6;
+  
+  /* Spacing */
+  --olas-space-xs: 4px;
+  --olas-space-sm: 8px;
+  --olas-space-md: 16px;
+  --olas-space-lg: 24px;
+  --olas-space-xl: 32px;
+  
+  /* Border Radius */
+  --olas-radius-sm: 4px;
+  --olas-radius-md: 8px;
+  --olas-radius-lg: 12px;
+  --olas-radius-round: 50%;
+  --olas-radius-pill: 9999px;
+  
+  /* Shadows */
+  --olas-shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --olas-shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+  --olas-shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+  --olas-shadow-primary: 0 4px 12px rgba(255, 107, 107, 0.4);
+  
+  /* Animation */
+  --olas-transition-fast: 150ms ease;
+  --olas-transition-normal: 250ms ease;
+  --olas-transition-slow: 350ms ease;
+}
+
+/* Dark Mode Variables */
+.dark {
+  --olas-background: #0F0F0F;
+  --olas-surface: #1A1A1A;
+  --olas-card-bg: #262626;
+  --olas-text-primary: #FFFFFF;
+  --olas-text-secondary: #A0A0A0;
+  --olas-text-muted: #6B6B6B;
+  --olas-border: #333333;
+  --olas-divider: #2A2A2A;
+}
+
+/* Olas Simulator Base Styles */
+.olas-simulator {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Photo Grid Styles */
+.olas-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.olas-photo-item {
+  aspect-ratio: 1;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--olas-divider);
+}
+
+.olas-photo-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--olas-transition-normal);
+}
+
+.olas-photo-item:hover img {
+  transform: scale(1.05);
+}
+
+.olas-photo-item.video::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Story Ring */
+.olas-story-ring {
+  background: linear-gradient(45deg, #FF6B6B, #FF8E53, #FF6B6B);
+  padding: 3px;
+  border-radius: 50%;
+}
+
+.olas-story-ring.viewed {
+  background: var(--olas-border);
+}
+
+.olas-story-avatar {
+  border: 3px solid var(--olas-background);
+  border-radius: 50%;
+}
+
+/* Bottom Navigation */
+.olas-bottom-nav {
+  background: var(--olas-background);
+  border-top: 1px solid var(--olas-border);
+}
+
+.olas-nav-item {
+  color: var(--olas-text-muted);
+  transition: color var(--olas-transition-fast), transform var(--olas-transition-fast);
+}
+
+.olas-nav-item.active {
+  color: var(--olas-primary);
+}
+
+.olas-nav-item:active {
+  transform: scale(0.95);
+}
+
+/* Upload FAB */
+.olas-upload-fab {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, var(--olas-primary), var(--olas-primary-light));
+  border-radius: 50%;
+  box-shadow: var(--olas-shadow-primary);
+  transition: transform var(--olas-transition-fast), box-shadow var(--olas-transition-fast);
+}
+
+.olas-upload-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(255, 107, 107, 0.5);
+}
+
+.olas-upload-fab:active {
+  transform: scale(0.95);
+}
+
+/* Media Card */
+.olas-media-card {
+  background: var(--olas-background);
+  border-bottom: 1px solid var(--olas-divider);
+}
+
+.olas-media-header {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.olas-media-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.olas-media-content {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  background: var(--olas-divider);
+}
+
+.olas-media-actions {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.olas-action-btn {
+  color: var(--olas-text-primary);
+  transition: color var(--olas-transition-fast), transform var(--olas-transition-fast);
+}
+
+.olas-action-btn:hover {
+  color: var(--olas-text-secondary);
+}
+
+.olas-action-btn.liked {
+  color: var(--olas-primary);
+}
+
+.olas-action-btn:active {
+  transform: scale(0.9);
+}
+
+/* Profile Header */
+.olas-profile-header {
+  padding: 24px 16px;
+  text-align: center;
+}
+
+.olas-profile-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  border: 4px solid var(--olas-background);
+  box-shadow: var(--olas-shadow-md);
+}
+
+.olas-profile-stats {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 16px;
+}
+
+.olas-stat {
+  text-align: center;
+}
+
+.olas-stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--olas-text-primary);
+}
+
+.olas-stat-label {
+  font-size: 12px;
+  color: var(--olas-text-secondary);
+  text-transform: lowercase;
+}
+
+/* Notification Item */
+.olas-notification {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--olas-divider);
+}
+
+.olas-notification-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.olas-notification-content {
+  flex: 1;
+}
+
+.olas-notification-preview {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--olas-radius-md);
+  object-fit: cover;
+}
+
+/* Button Styles */
+.olas-btn {
+  padding: 8px 16px;
+  border-radius: var(--olas-radius-md);
+  font-weight: 600;
+  font-size: 14px;
+  transition: all var(--olas-transition-fast);
+}
+
+.olas-btn-primary {
+  background: linear-gradient(135deg, var(--olas-primary), var(--olas-primary-light));
+  color: white;
+}
+
+.olas-btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.olas-btn-secondary {
+  background: var(--olas-surface);
+  color: var(--olas-text-primary);
+  border: 1px solid var(--olas-border);
+}
+
+.olas-btn-secondary:hover {
+  background: var(--olas-divider);
+}
+
+/* Scrollbar Styling */
+.olas-simulator ::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Animation Classes */
+@keyframes olas-heart-bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.olas-heart-animation {
+  animation: olas-heart-bounce 0.3s ease-in-out;
+}
+
+@keyframes olas-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.olas-fade-in {
+  animation: olas-fade-in 0.3s ease-out;
+}
+
+/* Loading Skeleton */
+.olas-skeleton {
+  background: linear-gradient(90deg, var(--olas-divider) 25%, var(--olas-surface) 50%, var(--olas-divider) 75%);
+  background-size: 200% 100%;
+  animation: olas-shimmer 1.5s infinite;
+}
+
+@keyframes olas-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

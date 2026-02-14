@@ -24,5 +24,8 @@ export * from './primal';
 export * from './coracle';
 export * from './gossip';
 
+// Olas - Photo-first client
+export * from './olas';
+
 // Shared utilities and types
 export * from './shared';

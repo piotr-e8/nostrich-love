@@ -379,6 +379,13 @@ function createNoteFromTemplate(
   const isHighQuality = author.isVerified || author.followersCount > 5000;
   const engagement = generateEngagement(author.followersCount, isHighQuality);
   
+  // Random community assignment (30% chance)
+  const communities = ['Bitcoin', 'Nostr', 'Tech', 'Philosophy', 'Programming', 'Art', 'Music', 'Memes', 'News'];
+  const community = Math.random() < 0.3 ? communities[Math.floor(Math.random() * communities.length)] : undefined;
+  
+  // Random live streaming indicator (10% chance for verified users)
+  const isLive = author.isVerified && Math.random() < 0.1;
+  
   const note: MockNote = {
     id,
     pubkey: author.pubkey,
@@ -399,6 +406,8 @@ function createNoteFromTemplate(
     hashtags,
     links,
     category,
+    community,
+    isLive,
   };
   
   return note;

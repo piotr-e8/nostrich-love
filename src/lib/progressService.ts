@@ -20,11 +20,11 @@ function getDeviceId(): string {
 }
 
 // Default privacy settings - all opt-in, disabled by default
-const defaultPrivacySettings = {
+const defaultPrivacySettings: PrivacySettings = {
   trackingEnabled: false,
   dataRetention: 'forever', // 'session' | '30d' | '90d' | 'forever'
   showProgressIndicators: false, // Default OFF (opt-in)
-  toursEnabled: false, // Default OFF - client tours are opt-in
+  toursEnabled: true, // Default ON - client tours help users learn
 };
 
 export interface PrivacySettings {

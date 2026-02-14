@@ -1,6 +1,6 @@
 /**
  * YakiHonne Web Simulator Tour
- * Interactive, event-driven guided tour for YakiHonne client
+ * Tour drives the simulator - user clicks Next, tour navigates simulator
  */
 
 import type { TourConfig, TourStep } from '../../components/tour';
@@ -20,10 +20,7 @@ const yakihonneTourSteps: TourStep[] = [
     title: 'Secure Login',
     content: 'Login with your Nostr keys or generate new ones. YakiHonne emphasizes privacy and security. Browser extensions are supported for the safest experience. Your keys are your identity!',
     position: 'bottom',
-    trigger: 'action',
-    actionType: 'login',
     allowClickThrough: true,
-    action: 'Login to continue the tour',
     spotlightPadding: 16,
   },
   {
@@ -32,10 +29,7 @@ const yakihonneTourSteps: TourStep[] = [
     title: 'Customizable Feed',
     content: 'Your timeline with multiple view options. Switch between different layouts and filters. YakiHonne offers unique ways to browse Nostr content beyond the standard feed.',
     position: 'top',
-    trigger: 'action',
-    actionType: 'navigate_home',
     allowClickThrough: true,
-    action: 'Click the Home icon to view your feed',
     spotlightPadding: 8,
   },
   {
@@ -44,10 +38,7 @@ const yakihonneTourSteps: TourStep[] = [
     title: 'Express Yourself',
     content: 'Create notes with full formatting support. YakiHonne supports rich media embedding, custom reactions, and even drawing/art features for creative expression.',
     position: 'bottom',
-    trigger: 'action',
-    actionType: 'compose',
     allowClickThrough: true,
-    action: 'Click to start composing a post',
     spotlightPadding: 12,
   },
   {
@@ -56,10 +47,7 @@ const yakihonneTourSteps: TourStep[] = [
     title: 'Publish Your Note',
     content: 'Write something interesting and hit post! Your note will be cryptographically signed and broadcast to all connected relays. Once published, it is permanent on the Nostr network.',
     position: 'bottom',
-    trigger: 'action',
-    actionType: 'post',
     allowClickThrough: true,
-    action: 'Type a message and click "Post" to publish',
     spotlightPadding: 12,
   },
   {
@@ -68,10 +56,7 @@ const yakihonneTourSteps: TourStep[] = [
     title: 'Personal Space',
     content: 'Your profile hub with customizable themes, detailed statistics, and content organization. Show off your NIP-05 badge and Lightning address for tips. This is your identity on Nostr!',
     position: 'bottom',
-    trigger: 'action',
-    actionType: 'view_profile',
     allowClickThrough: true,
-    action: 'Click your profile picture to view your profile',
     spotlightPadding: 16,
   },
   {
@@ -80,10 +65,7 @@ const yakihonneTourSteps: TourStep[] = [
     title: 'Following Users',
     content: 'Find interesting people by browsing your network. When you follow someone, their posts appear in your feed. Your follows are stored in your account and synced across all Nostr clients.',
     position: 'left',
-    trigger: 'action',
-    actionType: 'follow',
     allowClickThrough: true,
-    action: 'Click "Follow" on any user profile',
     spotlightPadding: 8,
   },
   {
@@ -92,10 +74,7 @@ const yakihonneTourSteps: TourStep[] = [
     title: 'Unique Interactions',
     content: 'YakiHonne offers custom emoji reactions, zaps (Bitcoin tips), likes, and replies. Zaps use Lightning Network to send real Bitcoin to content creators instantly!',
     position: 'top',
-    trigger: 'action',
-    actionType: 'like',
     allowClickThrough: true,
-    action: 'Click the heart icon to like a post',
     spotlightPadding: 8,
   },
   {
@@ -104,10 +83,7 @@ const yakihonneTourSteps: TourStep[] = [
     title: 'Unique Features',
     content: 'Discover YakiHonne\'s special features: custom emoji reactions, art/drawing tools, community spaces, and unique UI customizations. Remember to backup your private key securely!',
     position: 'left',
-    trigger: 'action',
-    actionType: 'navigate_settings',
     allowClickThrough: true,
-    action: 'Click the Settings icon to explore options',
     spotlightPadding: 8,
   },
   {

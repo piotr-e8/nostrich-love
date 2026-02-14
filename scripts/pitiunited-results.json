@@ -1,0 +1,588 @@
+{
+  "photography": [
+    {
+      "pubkey": "8712b369e906a3925f60000c0a9c12de53c229f6b60ee68692d4b73840625af9",
+      "npub": "npub1suftx60fq63eyhmqqqxq48qjmefuy20kkc8wdp5j6jmnssrzttusc4lmh2",
+      "name": "adam",
+      "username": "adam",
+      "bio": "Landscape Photographer & Filmmaker. Value for value content. Buy prints with bitcoin. #photography #landscapephotography",
+      "picture": "https://firstmanphotography.com/wp-content/uploads/2022/11/Logo-Small.png",
+      "nip05": "adam@firstmanphotography.com",
+      "website": "https://btcpayserver.firstmanphotography.com/",
+      "lud16": "firstman@getalby.com",
+      "score": 5,
+      "matches": [
+        "photo",
+        "photography",
+        "photographer",
+        "landscape"
+      ]
+    },
+    {
+      "pubkey": "6a0e6b709fb5239a3df637695764f153e56edccd48fa1c64916b8481d0ca3ab3",
+      "npub": "npub1dg8xkuylk53e500kxa54we8320jkahxdfrapcey3dwzgr5x282es6fa46a",
+      "name": "From the Dave",
+      "username": "From the Dave",
+      "bio": "#Bitcoin class of 2021, #nostr class of 2022.  A nobody, saved by grace, work traveler, still photographer, sometimes writing. Most posts are notes to self.",
+      "picture": "https://m.primal.net/Nyox.jpg",
+      "nip05": "fromthedave@primal.net",
+      "website": "",
+      "lud16": "fromthedave@primal.net",
+      "score": 2,
+      "matches": [
+        "photo",
+        "photographer"
+      ]
+    },
+    {
+      "pubkey": "f1b911af1c7a56073e3b83ba7eaa681467040e0fbbdd265445aa80e65c274c22",
+      "npub": "npub17xu3rtcu0ftqw03mswa8a2ngz3nsgrs0h0wjv4z942qwvhp8fs3qzcadls",
+      "name": "Lebanese Hodl",
+      "username": "",
+      "bio": "Bitcoin Culture & Brand Building\nNew Father, Photographer & Filmmaker\nFounder & Creative Director @ Sunday Afternoon\nWe made the @ZEUS logo\nBoard @Bitcoin for the Arts\nfix the money, fix the world 🧡\n#NostrOnly\n#nodestrich runner 🏃‍♂️⚡️💜",
+      "picture": "https://image.nostr.build/e2e53f8799d2f60986d6eb50ef36fa3fb36c0c700db2d525df3aea7b89559bff.jpg",
+      "nip05": "ahmed@nostrplebs.com",
+      "website": "https://sundayafternoon.us/creative-studio/the-power-of-bitcoin-payments-made-easy",
+      "lud16": "saatar@rizful.com",
+      "score": 2,
+      "matches": [
+        "photo",
+        "photographer"
+      ]
+    },
+    {
+      "pubkey": "f275ab37d64f6be0379a85ce5736060e164b136a08c7f1e78dea633abad84bfe",
+      "npub": "npub17f66kd7kfa47qdu6sh89wdsxpctykym2prrlreudaf3n4wkcf0lq9u92kc",
+      "name": "Steve",
+      "username": "Steve",
+      "bio": "👋 Hi, I’m Steve. I’m from the future 🚀🪐\n⚡️\n🥊 Author of “All Callouts is Mandatory” \n📸 Retired Entertainment Photographer\n🥃 Hibiki & Horology Enjoyoor⏱\n🍼 Father of Dragons 🐉🐉\n🚀 ₿ class of 2013\n☠️ Survivor [687013]\n🦄 Pronouns: Daddy/爸爸\n🤠 Adjectives: Handsome/Intelligent",
+      "picture": "https://image.nostr.build/1e4e664759bac4aa10fc6fb2d957f85c68f762b9a1d096cb5847e9449869b40c.gif",
+      "nip05": "bauzen@harlembitcoin.com",
+      "website": "http://www.bauzen.com/",
+      "lud16": "coralcrab1@primal.net",
+      "score": 2,
+      "matches": [
+        "photo",
+        "photographer"
+      ]
+    },
+    {
+      "pubkey": "b5ba65fbb0221a32b6c14400f505cfdd3651d43938a248a9265a516ec0c54240",
+      "npub": "npub1kkaxt7asygdr9dkpgsq02pw0m5m9r4pe8z3y32fxtfgkasx9gfqqzxnp8n",
+      "name": "Joel",
+      "username": "Joel",
+      "bio": "Designer + Photographer + Bitcoin",
+      "picture": "https://nostr.build/i/p/nostr.build_14ddd98234538d173d9371832728974b72cf8d151e80bb90e3d6aaeb53bec46a.gif",
+      "nip05": "js@satoshis.lol",
+      "website": "",
+      "lud16": "limechicken1@primal.net",
+      "score": 2,
+      "matches": [
+        "photo",
+        "photographer"
+      ]
+    },
+    {
+      "pubkey": "b17c59874dc05d7f6ec975bce04770c8b7fa9d37f3ad0096fdb76c9385d68928",
+      "npub": "npub1k979np6dcpwh7mkfwk7wq3msezml48fh7wksp9hakakf8pwk3y5qhdz7te",
+      "name": "Andrew",
+      "username": "Andrew",
+      "bio": "Software Engineer by day, aspiring beet farmer by night. ☦️💻⚽🏥📷📈💪☕️🇺🇸🇪🇬\r\n\r\nThings I like: \r\n- #P2P/#decentralized/#opensource stuff\r\n- #History (esp Rome/Greece/Egypt)\r\n- #Transit oriented city design\r\n- #Gadgets/#ElectricVehicles/#Solar Power\r\n- #Space exploration\r\n- #Videogames (especially #GTA)\r\n\r\nThings I've Built:\r\n- Agora: Follow your favorite topics across Mastodon, Bluesky, Nostr, and Threads\r\nhttps://agorasocial.app\r\n- Chronicl: Decentralized web archiver that distributes archives across Nostr relays\r\nhttps://chronicl.vercel.app/\r\n\r\n“Egyptians are twisted and bitter people with a sense of humor”\r\n- Roman poet Theocritus",
+      "picture": "https://media.ditto.pub/eda57c32464e163943d93a635d0f74795a4fb12772f137475e5789db05f26dc3.jpeg",
+      "nip05": "andrew@ditto.pub",
+      "website": "",
+      "lud16": "spiritedpause@getalby.com",
+      "score": 1,
+      "matches": [
+        "pics"
+      ]
+    },
+    {
+      "pubkey": "031f3c690619df040f2de7cdbf2342de845406b38167c6835b4980fcb4fe4426",
+      "npub": "npub1qv0nc6gxr80sgredulxm7g6zm6z9gp4ns9nudq6mfxq0ed87gsnq7wswaz",
+      "name": "BitcoinImagined",
+      "username": "BitcoinImagined",
+      "bio": "Follow for Visually Stunning Bitcoin and Nostr Art\n\nhttps://twitter.com/BitcoinImagined",
+      "picture": "https://void.cat/d/HAtrda5w9WdFsusfGn7WRj.webp",
+      "nip05": "BitcoinImagined@nostrplebs.com",
+      "website": "https://twitter.com/BitcoinImagined",
+      "lud16": "bitcoinimagined@getalby.com",
+      "score": 1,
+      "matches": [
+        "visual"
+      ]
+    },
+    {
+      "pubkey": "7fa92094e2293f097c7cfef2933ed37a167062c254c540aa7ec26e8019cec726",
+      "npub": "npub1075jp98z9ylsjlrulmefx0kn0gt8qckz2nz5p2n7cfhgqxwwcunqqe5mxs",
+      "name": "matthewbennett",
+      "username": "matthewbennett",
+      "bio": "Journalist. Spain. Independent. Stories. Photos.",
+      "picture": "https://void.cat/d/QNNTPQWJKwEmCqXm1yQKES.webp",
+      "nip05": "matthewbennett@getalby.com",
+      "website": "https://thespainreport.substack.com/",
+      "lud16": "matthewbennett@getalby.com",
+      "score": 1,
+      "matches": [
+        "photo"
+      ]
+    },
+    {
+      "pubkey": "11d0b66747887ba9a6d34b23eb31287374b45b1a1b161eac54cb183c53e00ef7",
+      "npub": "npub1z8gtve683pa6nfknfv37kvfgwd6tgkc6rvtpatz5evvrc5lqpmmszk36vw",
+      "name": "sperry",
+      "username": "sperry",
+      "bio": "Cabins. Snow. Photos. History.\n\nSimpleX: https://w3.do/kPkcoYm7",
+      "picture": "https://pfp.nostr.build/55d354bcd51e95b5b9a63fe2af48178c43d652d3fa5aaf2547d627964d821960.gif",
+      "nip05": "sperry@bitcoin.rocks",
+      "website": "",
+      "lud16": "bronzehorse17@primal.net",
+      "score": 1,
+      "matches": [
+        "photo"
+      ]
+    },
+    {
+      "pubkey": "d13f92163262fa2aae70f6e3578dc0b5fcbec4a11492288da58885d998122fae",
+      "npub": "npub16yley93jvtaz4tns7m340rwqkh7ta39pzjfz3rd93zzanxqj97hqew6l0d",
+      "name": "Bitfan",
+      "username": "Bitfan",
+      "bio": "🟠Bitcoin Fan\n⚪I share and create cool pictures for Bitcoin and Nostr.\n⚡️Powered by zaps",
+      "picture": "https://image.nostr.build/9eaa4944b0ccca2ebbe00a6b8906fd61c3c5609011d474343574bf929a8fe04c.jpg",
+      "nip05": "bitfan@nostrplebs.com",
+      "website": "",
+      "lud16": "bitfan@coinos.io",
+      "score": 1,
+      "matches": [
+        "pictures"
+      ]
+    },
+    {
+      "pubkey": "61bf790b2094afb03495c9e136acf615be0fccc2cb95b5acfb5f6ccefe18b062",
+      "npub": "npub1vxlhjzeqjjhmqdy4e8sndt8kzklqlnxzew2mtt8mtakvalsckp3qa0gnvx",
+      "name": "Logen",
+      "username": "Logen",
+      "bio": "Jesus | Family | ₿itcoin | Photo + Video Production\nThe mind sees what it chooses to see 丰₿\n\nNostr since: 768217\nNoderunner since: 719374\n\nI’m making a new MySpace: https://MyNostrSpace.com ",
+      "picture": "https://i.nostr.build/SfVKUXKKyetL9CP8.jpg",
+      "nip05": "logen@btcforplebs.com",
+      "website": "",
+      "lud16": "logen@lightning.btcforplebs.com",
+      "score": 1,
+      "matches": [
+        "photo"
+      ]
+    },
+    {
+      "pubkey": "1cb14ab335876fc9efc37d838ba287cf17e5adcccb20bf6d49f9da9695d52462",
+      "npub": "npub1rjc54ve4sahunm7r0kpchg58eut7ttwvevst7m2fl8dfd9w4y33q0w0qw2",
+      "name": "hes",
+      "username": "hes",
+      "bio": "Notes. And other stuff…\n\nDrone // Art // Bitcoin // Photo \nTravel // Econ // History // Politics\n\nClass of 500,000 somethin’\n\nMy art ➡️ @npub13yx2envk6dl82c64awzvswla6p0duvcejmmgtxhlcpn6fa8470psxe25qj\nMy dog ➡️ @npub1fpp057mk5dg3mqmlms4sqc3n87fyf3n2zmv9clkjag8hc8628juq50f63v\n\nPortfolio ⬇️\nhttps://hesart.npub.pro/\n\nPrints + Originals ⬇️\nhttps://plebeian.market/community/hes@nostrplebs.com/hesmart-ym3fcufdfz\n\nLong form notes ⬇️",
+      "picture": "https://image.nostr.build/5654e60af3b677fff211a12dd4a64816bc4ecd9bb07372e3339766f7604d674b.jpg",
+      "nip05": "hes@nostrplebs.com",
+      "website": "https://hes.npub.pro/",
+      "lud16": "ches@getalby.com",
+      "score": 1,
+      "matches": [
+        "photo"
+      ]
+    },
+    {
+      "pubkey": "1d80e5588de010d137a67c42b03717595f5f510e73e42cfc48f31bae91844d59",
+      "npub": "npub1rkqw2kyduqgdzdax03ptqdcht90475gww0jzelzg7vd6ayvyf4vsl2jtk0",
+      "name": "Endcape",
+      "username": "Endcape",
+      "bio": "My name is [endcape].\nI am a Japanese Banana Artist! \n\nI  use bananas as canvas to create illustrations using just a needle. These tattoos are done without colored ink, simply by the process of oxidation of the banana skin pierced by the needle. \n\nAll the photos uploaded here are my works🍌\nThank you!\nmail: endcape01@gmail.com",
+      "picture": "https://image.nostr.build/44ef37f0e3d5725b4e1e1ba0cb64109cb23b803d056f5090fb88873a431ffc55.jpg",
+      "nip05": "endcape@nostrich.zone",
+      "website": "https://www.instagram.com/endcape/",
+      "lud16": "abruptdresser64@walletofsatoshi.com",
+      "score": 1,
+      "matches": [
+        "photo"
+      ]
+    }
+  ],
+  "foodies": [
+    {
+      "pubkey": "ee6ea13ab9fe5c4a68eaf9b1a34fe014a66b40117c50ee2a614f4cda959b6e74",
+      "npub": "npub1aeh2zw4elewy5682lxc6xnlqzjnxksq303gwu2npfaxd49vmde6qcq4nwx",
+      "name": "daniel",
+      "username": "daniel",
+      "bio": "“Resist much, obey little.” —Walt Whitman ✊\n\nWon the nostr:npub1jugar2agq6369p0l86razavs9shj2p6pscxecevs8j94ap37hkqsjlfc28 </time2build> 2025 challenge. 🏆\n\nMarketing at nostr:npub1fmunwy3lljfyzlgyuyman79lxwm4efz6pzlgqjwc400pr9l708qquvje8w 🐚🌾 https://resolvr.io\nGhost in the machine 👻⚙️ https://ghostr.org\nShort order vibecook 👨🏻‍🍳🍳 https://zap.cooking\nSats Factory worker ⚡️🏭 https://satsfactory.com\nNodestrich runner 🏃‍♂️⚡️💜♾️ https://nodestrich.com\nZombie hunter 🏹🧟‍♂️ https://plebsvszombies.cc\nMute sn👀per 🤫🔇 https://mutable.top\nMeetup disorganizer 🗽🧡 https://harlembitcoin.com\nBand namer 🤘🎸 nostr:npub12cqtmej8mutnwu0yzfmshznaxltetmn7nkzranps7v4dsxuc6mnqdf5pmv\nCrash test dummy wallet tester in residence. 💥⚠️\nCreated 2008.jpeg, the first NFT on Nostr (Sort of.)\nIf you are a Dan, ask about membership in #OnlyDans 🫂\nFollow the best dog ever 🐶💜 nostr:npub1cudap5kkjdvnv78v08m3748afshj0u3zh9h34svrf4nhn07gn4lscflujc\nI helped invent the Blocktron. 🧠💡 https://blocktron.io\nSomeone once called me a Nostr “fake-fluencer” because I said his app didn’t work. (It didn’t.)\nMuted by the guy who thinks sats aren’t the standard. #SatsAreTheStandard ✨\nUsed to work at a bar, but then I grew up. 🍻\n\nGM ☀️ PV 🖖 since: 767700",
+      "picture": "https://i.nostr.build/pvLMuVG1nTN09JAU.gif",
+      "nip05": "daniel@zap.cooking",
+      "website": "https://nostree.me/daniel",
+      "lud16": "thedaniel@getalby.com",
+      "score": 3,
+      "matches": [
+        "cook",
+        "cooking",
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "c2622c916d9b90e10a81b2ba67b19bdfc5d6be26c25756d1f990d3785ce1361b",
+      "npub": "npub1cf3zeytdnwgwzz5pk2ax0vvmmlzad03xcft4d50ejrfhsh8pxcdsefx7gk",
+      "name": "ck",
+      "username": "ck",
+      "bio": "Home cooking + Bitcoin. \n\nNo one is bullish enough on Bitcoin.",
+      "picture": "https://cdn.nostr.build/i/4c3e9fa50dc8c54dd9a1c6a6b60e287e3d738abf7e9528b1ea87bb797e94088c.jpg",
+      "nip05": "ck@primal.net",
+      "website": "",
+      "lud16": "excitedbasilisk36@zeusnuts.com",
+      "score": 3,
+      "matches": [
+        "cook",
+        "cooking",
+        "home cook"
+      ]
+    },
+    {
+      "pubkey": "a723805cda67251191c8786f4da58f797e6977582301354ba8e91bcb0342dc9c",
+      "npub": "npub15u3cqhx6vuj3rywg0ph5mfv009lxja6cyvqn2jagaydukq6zmjwqex05rq",
+      "name": "seth",
+      "username": "seth",
+      "bio": "Simplify Nostr\n\n👨🏻‍🍳 https://zap.cooking \n\n🫂 https://sobrkey.org\n\n🌅 https://gratefulday.space \n\n\n🤔 https://asknostr.io",
+      "picture": "https://i.nostr.build/pRrD6BPp2M05Z31M.jpg",
+      "nip05": "sethd@zap.cooking",
+      "website": "https://zap.cooking",
+      "lud16": "seth@sats.zap.cooking",
+      "score": 2,
+      "matches": [
+        "cook",
+        "cooking"
+      ]
+    },
+    {
+      "pubkey": "7abafef00c26639e9388625c4ad7932febef2eb4e62c78282f3984145fc7af19",
+      "npub": "npub102a0auqvye3eayugvfwy44un9l477t45uck8s2p08xzpgh784uvslsh7w9",
+      "name": "Dick Whitman",
+      "username": "Dick Whitman",
+      "bio": "Founding pleb of the Bitcoin Economic Forum.  Ushering in “The Great Re-Sat”",
+      "picture": "https://pbs.twimg.com/profile_images/1594930968325984256/TjMXaXBE_400x400.jpg",
+      "nip05": "dickwhitman@getalby.com",
+      "website": "https://linktr.ee/bitcoin_links",
+      "lud16": "kindvacuum230@walletofsatoshi.com",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "3efdaebb1d8923ebd99c9e7ace3b4194ab45512e2be79c1b7d68d9243e0d2681",
+      "npub": "npub18m76awca3y37hkvuneavuw6pjj4525fw90necxmadrvjg0sdy6qsngq955",
+      "name": "damus",
+      "username": "damus",
+      "bio": "The first and fastest nostr client, now available on iOS, android and desktop! Be part of the roadmap with first access to new features: https://damus.io/purple\n\nGet the TestFlight: https://damus.io/purple/login",
+      "picture": "https://damus.io/img/logo.png",
+      "nip05": "_@damus.io",
+      "website": "https://damus.io",
+      "lud16": "damus@sendsats.lol",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "83e818dfbeccea56b0f551576b3fd39a7a50e1d8159343500368fa085ccd964b",
+      "npub": "npub1s05p3ha7en49dv8429tkk07nnfa9pcwczkf5x5qrdraqshxdje9sq6eyhe",
+      "name": "Jeff Booth",
+      "username": "Jeff Booth",
+      "bio": "\nEntrepreneur, Tech Leader, Author of The Price of Tomorrow - Why Deflation Is the Key to an Abundant Future, GP @EgoDeathCapital",
+      "picture": "https://pbs.twimg.com/profile_images/1362957991410954241/spiaMAg2_400x400.jpg",
+      "nip05": "jeffbooth@nostrverified.com",
+      "website": "https://jeffbooth.ca",
+      "lud16": "jeffbooth@getalby.com",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "85080d3bad70ccdcd7f74c29a44f55bb85cbcd3dd0cbb957da1d215bdb931204",
+      "npub": "npub1s5yq6wadwrxde4lhfs56gn64hwzuhnfa6r9mj476r5s4hkunzgzqrs6q7z",
+      "name": "preston",
+      "username": "preston",
+      "bio": "Bitcoin & Books.\nGP at Ego Death Capital\n@PrestonPysh on Twitter.\n",
+      "picture": "https://i.imgur.com/Xf8iV9G.gif",
+      "nip05": "preston@primal.net",
+      "website": "https://theinvestorspodcast.com/",
+      "lud16": "preston@primal.net",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "b5db1aacc067a056350c4fcaaa0f445c8f2acbb3efc2079c51aaba1f35cd8465",
+      "npub": "npub1khd34txqv7s9vdgvfl925r6ytj8j4janalpq08z342ap7dwds3jskny9x4",
+      "name": "Nostrich",
+      "username": "Nostrich",
+      "bio": "I am Nostrich, the nostr ostrich.\nCreated by Walker",
+      "picture": "https://cdn.midjourney.com/8567f206-ec92-4dc3-9d90-403722a313f8/grid_0.png",
+      "nip05": "nostrich@nostrplebs.com",
+      "website": "https://twitter.com/nostr_ostrich",
+      "lud16": "nostrich@getalby.com",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "3a432bc0cb87ea4e43a373825402a08eb2bb2788fd435b85e2488fb96eab77ec",
+      "npub": "npub18fpjhsxtsl4yusarwwp9gq4q36etkfugl4p4hp0zfz8mjm4twlkqmh79qx",
+      "name": "MountainYoda",
+      "username": "MountainYoda",
+      "bio": "#Bitcoin ONLY ∞/21M Professional threat mitigator, wannabe sailor. Strong opinions, weakly held.  #plebminer @Ocean.xyz #plebchain ⚡MtYoda@getalby.com",
+      "picture": "https://nostr.build/i/p/Deer_Lasers.gif",
+      "nip05": "MountainYoda@nostrplebs.com",
+      "website": "",
+      "lud16": "mtyoda@getalby.com",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "f7e84b92a5457546894daedaff9abd66f3d289f92435d6ac068a33cb170b01a4",
+      "npub": "npub17l5yhy49g465dz2d4md0lx4avmea9z0eys6adtqx3geuk9ctqxjq9vf35j",
+      "name": "Murmur",
+      "username": "Murmur",
+      "bio": "Strong opinions loosely held\nStack sats or regrets | non-partisan\nmurmur@getalby.com\n“Is that air you think you’re breathing?”",
+      "picture": "https://i.postimg.cc/zX5r77HJ/C5-BCC01-C-C9-C2-4-A83-97-D9-E5-C574-E2-B037.jpg",
+      "nip05": "Murmur@primal.net",
+      "website": "",
+      "lud16": "Murmur@primal.net",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "3eba6a919a63c6ebcb069676313ff3fd4143668202b87ef3b0b615e8f97ad747",
+      "npub": "npub186ax4yv6v0rwhjcxjemrz0lnl4q5xe5zq2u8auaskc2737t66arss7mugn",
+      "name": "bigdogg",
+      "username": "bigdogg",
+      "bio": "Bullish on #foodstr",
+      "picture": "https://i.imgur.com/Ma3l2RT.jpg",
+      "nip05": "bigdogg@uselessshit.co",
+      "website": "",
+      "lud16": "LNURL1DP68GURN8GHJ7AMPD3KX2AR0VEEKZAR0WD5XJTNRDAKJ7TNHV4KXCTTTDEHHWM30D3H82UNVWQHHGETNW3UHZATPD35HG7FJXUAY5YJ4",
+      "score": 1,
+      "matches": [
+        "food"
+      ]
+    },
+    {
+      "pubkey": "3356de61b39647931ce8b2140b2bab837e0810c0ef515bbe92de0248040b8bdd",
+      "npub": "npub1xdtducdnjerex88gkg2qk2atsdlqsyxqaag4h05jmcpyspqt30wscmntxy",
+      "name": "brugeman",
+      "username": "brugeman",
+      "bio": "Building https://npub.pro https://nsec.app and https://nostr.band \n\nCreate beautiful nostr-based websites with Npub.pro",
+      "picture": "https://pbs.twimg.com/profile_images/1226556961434591233/nTJpWObI_400x400.jpg",
+      "nip05": "artur@nostr.band",
+      "website": "https://npub.pro",
+      "lud16": "artur@nostr.band",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "f1b911af1c7a56073e3b83ba7eaa681467040e0fbbdd265445aa80e65c274c22",
+      "npub": "npub17xu3rtcu0ftqw03mswa8a2ngz3nsgrs0h0wjv4z942qwvhp8fs3qzcadls",
+      "name": "Lebanese Hodl",
+      "username": "",
+      "bio": "Bitcoin Culture & Brand Building\nNew Father, Photographer & Filmmaker\nFounder & Creative Director @ Sunday Afternoon\nWe made the @ZEUS logo\nBoard @Bitcoin for the Arts\nfix the money, fix the world 🧡\n#NostrOnly\n#nodestrich runner 🏃‍♂️⚡️💜",
+      "picture": "https://image.nostr.build/e2e53f8799d2f60986d6eb50ef36fa3fb36c0c700db2d525df3aea7b89559bff.jpg",
+      "nip05": "ahmed@nostrplebs.com",
+      "website": "https://sundayafternoon.us/creative-studio/the-power-of-bitcoin-payments-made-easy",
+      "lud16": "saatar@rizful.com",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "7b102dc5f434bd1be02f5000b9695cef15ceb6665955a81d86009ff60f42d059",
+      "npub": "npub10vgzm305xj73hcp02qqtj62uau2uadnxt926s8vxqz0lvr6z6pvsufg9ar",
+      "name": "Bodhi☯️",
+      "username": "Bodhicitta777",
+      "bio": "life is not something you do but something you are. Each moment it creates you. Life uses us as its instrument of creation.",
+      "picture": "https://pbs.twimg.com/profile_images/1859626739833401344/y_3tyktJ.jpg",
+      "nip05": "bodhicitta777@iris.to",
+      "website": "",
+      "lud16": "flimsyostrich42@walletofsatoshi.com",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "2edbcea694d164629854a52583458fd6d965b161e3c48b57d3aff01940558884",
+      "npub": "npub19mduaf5569jx9xz555jcx3v06mvktvtpu0zgk47n4lcpjsz43zzqhj6vzk",
+      "name": "NostReport",
+      "username": "NostReport",
+      "bio": "By plebs, for plebs.\n\nA synopsis of the best content of the day. Don’t miss a beat. \n\n#NostReport ",
+      "picture": "https://nostr.build/i/p/nostr.build_2d40c82b0ea13e34069f1c934f39d9cbc33c999ab80824b5763a9ff451c5f82f.gif",
+      "nip05": "nostreport@nostr.report",
+      "website": "https://Nostr.Report",
+      "lud16": "nostreport@getalby.com",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "eab0e756d32b80bcd464f3d844b8040303075a13eabc3599a762c9ac7ab91f4f",
+      "npub": "npub1a2cww4kn9wqte4ry70vyfwqyqvpswksna27rtxd8vty6c74era8sdcw83a",
+      "name": "LynAlden",
+      "username": "LynAlden",
+      "bio": "Founder of Lyn Alden Investment Strategy. Partner at Ego Death Capital. Finance/Engineering blended background.",
+      "picture": "https://m.primal.net/LtjB.jpg",
+      "nip05": "lyn@primal.net",
+      "website": "https://www.lynalden.com/",
+      "lud16": "lyn@primal.net",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "e8ed3798c6ffebffa08501ac39e271662bfd160f688f94c45d692d8767dd345a",
+      "npub": "npub1arkn0xxxll4llgy9qxkrncn3vc4l69s0dz8ef3zadykcwe7ax3dqrrh43w",
+      "name": "arkinox",
+      "username": "arkinox",
+      "bio": "CTO Fanfares.io\nCreator of #cyberspace meta-protocol, https://onosendai.tech\nOpenSats grantee\nCyberspace community https://straylight.cafe\nGamedev community https://t.me/Nostrgamedev",
+      "picture": "https://i.nostr.build/1QEFRT2Zzwul92mu.jpg",
+      "nip05": "arkinox@team.fanfares.io",
+      "website": "https://straylight.cafe",
+      "lud16": "arkin0x@strike.me",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "cb59f0345b1ef0cf3d3c31ff28376f5b28db38daa8226ce6d03bab16d47dbc83",
+      "npub": "npub1edvlqdzmrmcv70fux8ljsdm0tv5dkwx64q3xeeks8w43d4rahjps47yt7u",
+      "name": "Faceless Bounty Hunter",
+      "username": "Faceless Bounty Hunter",
+      "bio": "🌲 Time is a Flat Circle - Eternal Recurrence Parody Account, Kali Yuga enjoyer, Bug Eater, Pod liver, Yogi & Hermetic Monk.🪬 🐸 Christ is King ♰ #BTC #ETH #NFT",
+      "picture": "https://image.nostr.build/37b17f27d7bd0b17d766d19847424d40c8ab3a32cd680bc1c7ef843335db9400.jpg",
+      "nip05": "kainiak@plebs.place",
+      "website": "",
+      "lud16": "LNURL1DP68GURN8GHJ7AMPD3KX2AR0VEEKZAR0WD5XJTNRDAKJ7TNHV4KXCTTTDEHHWM30D3H82UNVWQHKS6TNWD5KUEMRDAHXWCFSXU68Q68K",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "356875ffd729b06eeb4c1d7a70a1f750045d067774d21c0faffe4af2bf96a2e8",
+      "npub": "npub1x458tl7h9xcxa66vr4a8pg0h2qz96pnhwnfpcra0le9090uk5t5qw7armt",
+      "name": "Laser",
+      "username": "Laser",
+      "bio": "Reformed Christian. Head of Household. Bitcoiner. Retired (Software). Posting to → #ToChristAlone ⬩ #Peatstr ⬩ #Terrain ⬩ #MasculineFrame ⬩ #FatherlyFrame ⬩ #WorthTheSats ⬩ #SovereignStack ⬩ #RulesForReset ⬩ #TheQuoteShelf⬩ #AmericaFirst ⬩ #VaccineTemple",
+      "picture": "https://blossom.primal.net/1254d8bf9c6a4f250f78a6ff58eca02974371a59c59cd929742e4fb125fd05b9.jpg",
+      "nip05": "laser@primal.net",
+      "website": "",
+      "lud16": "laser@primal.net",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "7f5c2b4e48a0e9feca63a46b13cdb82489f4020398d60a2070a968caa818d75d",
+      "npub": "npub10awzknjg5r5lajnr53438ndcyjylgqsrnrtq5grs495v42qc6awsj45ys7",
+      "name": "Tony",
+      "username": "Tony",
+      "bio": "Bitcoin advocate & educator\nnostr:npub1tcalvjvswjh5rwhr3gywmfjzghthexjpddzvlxre9wxfqz4euqys0309hn creator & maintainer\nBuilding knowledge networks through censorship-resistant protocols\nhttps://nostree.me/tony",
+      "picture": "https://haven-tony.21ideas.org/70d3a66dbf3262071ef887c6dbb0ac93b44dac545ef35419d1ad22d2ee30302b.jpeg",
+      "nip05": "tony@21ideas.org",
+      "website": "",
+      "lud16": "21ideas@getalby.com",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "1739d937dc8c0c7370aa27585938c119e25c41f6c441a5d34c6d38503e3136ef",
+      "npub": "npub1zuuajd7u3sx8xu92yav9jwxpr839cs0kc3q6t56vd5u9q033xmhsk6c2uc",
+      "name": "JeffG",
+      "username": "JeffG",
+      "bio": "Secure messaging on Nostr. Creator of Marmot protocol, MDK, and White Noise. Other stuff connoisseur. Also built Listr, Ostrich.work, Ontolo, Nostr.how.",
+      "picture": "https://m.primal.net/HIVN.jpg",
+      "nip05": "_@jeffg.fyi",
+      "website": "https://jeffg.fyi",
+      "lud16": "jeffg@primal.net",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "3d842afecd5e293f28b6627933704a3fb8ce153aa91d790ab11f6a752d44a42d",
+      "npub": "npub18kzz4lkdtc5n729kvfunxuz287uvu9f64ywhjz43ra482t2y5sks0mx5sz",
+      "name": "Mazin",
+      "username": "Mazin",
+      "bio": "Used to play poker now I build things and fly planes.\n\n🍷 relay: wss://nostr.wine\n🎥 relay: wss://creatr.nostr.wine\nFilter and API: https://docs.nostr.wine\nTranslations: https://translate.nostr.wine",
+      "picture": "https://nostr.build/i/nostr.build_11ef2efe907c72fbae5e9829b53d81a1edeaea985f1b4e18db7ee751bc4cc544.jpeg",
+      "nip05": "_@mazinkhoury.com",
+      "website": "nostr.wine",
+      "lud16": "mazin@pay.nostr.wine",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "21a8dee76821d202fa38b3a99c36b25d71df59411198fcb27267925d35abb1a7",
+      "npub": "npub1yx5daemgy8fq973ckw5ecd4jt4ca7k2pzxv0evnjv7f96ddtkxnspduumh",
+      "name": "SullyMichaelvan",
+      "username": "SullyMichaelvan",
+      "bio": "Writing the Great American Bitcoin Novel 📚🧡✍️",
+      "picture": "https://m.primal.net/KMKC.jpg",
+      "nip05": "",
+      "website": "michaelrsullivan.com",
+      "lud16": "",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "c9b19ffcd43e6a5f23b3d27106ce19e4ad2df89ba1031dd4617f1b591e108965",
+      "npub": "npub1excellx58e497gan6fcsdnseujkjm7ym5yp3m4rp0ud4j8ss39js2pn72a",
+      "name": "Excellion",
+      "username": "Excellion",
+      "bio": "Working on nation-state #Bitcoin adoption. CEO @ JAN3, architect of the #BitcoinBonds, CEO @ Pixelmatic, and creator of Infinite Fleet. 🚀",
+      "picture": "https://image.nostr.build/acfdb061e61ade047f652568c59c13ed53466de6c92cf651056909dab208e3b1.jpg",
+      "nip05": "excellion@jan3.com",
+      "website": "samsonmow.com",
+      "lud16": "samson@getalby.com",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    },
+    {
+      "pubkey": "967d808b6536d7fd310364ec13add1210d676090f42290476ea3fdc0e091cc3e",
+      "npub": "npub1je7cpzm9xmtl6vgrvnkp8tw3yyxkwcys7s3fq3mw507upcy3eslq2u9jjk",
+      "name": "chewie",
+      "username": "chewie",
+      "bio": "Content creator / artist / architect / UI/UX Designer\nNostr is the future - here to help with User Experience and to onboard",
+      "picture": "https://void.cat/d/EyJrcEzjp1v7QzoF7BV9Fh.webp",
+      "nip05": "chewie@nostrplebs.com",
+      "website": "https://mark.sitecreator.io",
+      "lud16": "chewie@getalby.com",
+      "score": 1,
+      "matches": [
+        "eat"
+      ]
+    }
+  ]
+}

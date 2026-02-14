@@ -1,0 +1,129 @@
+# Workflow: Fix Code Logic Issue
+# For fixing logic, data flow, and architecture bugs (not UI/visual issues)
+
+workflow:
+  id: fix-code-logic
+  name: Fix Code Logic Issue
+  description: >
+    Fixes logic, data flow, and architecture issues in the codebase.
+    Use for: incorrect data handling, API integration problems, 
+    state management bugs, conditional logic errors, type mismatches.
+    NOT for: UI/visual bugs (use fix-ui-bug workflow instead).
+  version: 1.0.0
+
+  inputs:
+    - name: issue_description
+      type: string
+      required: true
+      description: Clear description of the logic bug or unexpected behavior
+    
+    - name: affected_area
+      type: string
+      required: true
+      description: Where the issue occurs (page, component, or feature name)
+    
+    - name: expected_behavior
+      type: string
+      required: false
+      description: What should happen instead
+    
+    - name: actual_behavior
+      type: string
+      required: false
+      description: What actually happens
+
+  steps:
+    - id: analyze_issue
+      name: Analyze Issue
+      agent: component-detective-agent
+      description: Identify files and code patterns related to the issue
+      inputs:
+        issue_description: "{{workflow.inputs.issue_description}}"
+        affected_area: "{{workflow.inputs.affected_area}}"
+        code_patterns:
+          - data flow patterns
+          - state management
+          - API calls
+          - conditional logic
+      outputs:
+        - affected_files
+        - related_components
+        - data_flow_diagram
+      decision_gate: false
+
+    - id: investigate_root_cause
+      name: Investigate Root Cause
+      agent: root-cause-agent
+      depends_on: [analyze_issue]
+      description: Determine why the logic bug is occurring
+      inputs:
+        issue_description: "{{workflow.inputs.issue_description}}"
+        affected_files: "{{steps.analyze_issue.outputs.affected_files}}"
+        expected_behavior: "{{workflow.inputs.expected_behavior}}"
+        actual_behavior: "{{workflow.inputs.actual_behavior}}"
+        data_flow: "{{steps.analyze_issue.outputs.data_flow_diagram}}"
+      outputs:
+        - root_cause_report
+        - fix_approach
+      decision_gate: true  # Human approval of the approach
+
+    - id: implement_fix
+      name: Implement Fix
+      agent: code-agent
+      depends_on: [investigate_root_cause]
+      description: Apply the logic fix following codebase patterns
+      inputs:
+        fix_approach: "{{steps.investigate_root_cause.outputs.fix_approach}}"
+        affected_files: "{{steps.analyze_issue.outputs.affected_files}}"
+        root_cause: "{{steps.investigate_root_cause.outputs.root_cause_report}}"
+      outputs:
+        - modified_files
+        - changes_summary
+      decision_gate: false
+
+    - id: validate_fix
+      name: Validate Fix
+      agent: qa-agent
+      depends_on: [implement_fix]
+      description: Test that the fix works and doesn't break anything
+      inputs:
+        modified_files: "{{steps.implement_fix.outputs.modified_files}}"
+        changes_summary: "{{steps.implement_fix.outputs.changes_summary}}"
+        test_cases:
+          - "{{workflow.inputs.expected_behavior}}"
+          - edge cases
+          - related functionality
+      outputs:
+        - validation_report
+        - test_results
+      decision_gate: true  # Human verification of fix
+
+    - id: finalize
+      name: Finalize
+      agent: integration-agent
+      depends_on: [validate_fix]
+      description: Apply final touches and update documentation if needed
+      inputs:
+        validation_report: "{{steps.validate_fix.outputs.validation_report}}"
+        changes_summary: "{{steps.implement_fix.outputs.changes_summary}}"
+      outputs:
+        - final_status
+        - documentation_updates
+      decision_gate: false
+
+  outputs:
+    - name: root_cause
+      source: investigate_root_cause.root_cause_report
+      description: Root cause of the logic bug
+    
+    - name: files_modified
+      source: implement_fix.modified_files
+      description: Files that were changed
+    
+    - name: validation_results
+      source: validate_fix.validation_report
+      description: QA validation results
+    
+    - name: final_status
+      source: finalize.final_status
+      description: Completion status

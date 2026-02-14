@@ -14,9 +14,8 @@ import {
   yakihonneConfig,
   coracleConfig,
   gossipConfig,
-  type SimulatorConfig 
 } from '../../simulators/shared/configs';
-import { SimulatorClient } from '../../simulators/shared/types';
+import { SimulatorClient, type SimulatorConfig } from '../../simulators/shared/types';
 
 interface SimulatorNavProps {
   currentClient: SimulatorClient;

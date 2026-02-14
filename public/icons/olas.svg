@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Olas Logo - Coral/Orange Gradient Circle -->
+  <defs>
+    <linearGradient id="olasGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B6B"/>
+      <stop offset="100%" style="stop-color:#FF8E53"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Main Circle -->
+  <circle cx="50" cy="50" r="45" fill="url(#olasGradient)"/>
+  
+  <!-- Camera/Lens Icon -->
+  <circle cx="50" cy="50" r="18" fill="white" opacity="0.9"/>
+  <circle cx="50" cy="50" r="12" fill="url(#olasGradient)"/>
+  <circle cx="50" cy="50" r="6" fill="white" opacity="0.8"/>
+  
+  <!-- Decorative Ring -->
+  <circle cx="50" cy="50" r="35" fill="none" stroke="white" stroke-width="2" opacity="0.3"/>
+</svg>

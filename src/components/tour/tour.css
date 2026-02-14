@@ -11,6 +11,13 @@
   right: 0;
   bottom: 0;
   z-index: 9999;
+  pointer-events: none; /* Allow clicks to pass through by default */
+}
+
+/* Re-enable pointer events for interactive tour elements */
+.tour-tooltip,
+.tour-controls,
+.tour-progress {
   pointer-events: auto;
 }
 
@@ -36,7 +43,7 @@
   position: absolute;
   border: 2px solid #8b5cf6;
   border-radius: 8px;
-  box-shadow: 
+  box-shadow:
     0 0 0 4px rgba(139, 92, 246, 0.2),
     0 0 30px rgba(139, 92, 246, 0.4),
     inset 0 0 20px rgba(139, 92, 246, 0.1);
@@ -71,11 +78,11 @@
     0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04),
     0 0 0 1px rgba(0, 0, 0, 0.05);
-  z-index: 10000;
+  z-index: 10002; /* Higher than controls (10001) to appear above them */
   opacity: 0;
   transform: translateY(10px);
   transition: all 0.3s ease-out;
-  overflow: hidden;
+  overflow: visible; /* Allow arrows to extend outside */
 }
 
 .tour-tooltip--visible {
@@ -88,35 +95,28 @@
   width: 16px;
   height: 16px;
   background: white;
-  transform: rotate(45deg);
+  transform: translate(-50%, -50%) rotate(45deg); /* Center the arrow on its position point */
   box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.05);
 }
 
+/* Arrow positioning - extends outside tooltip to point to target */
 .tour-tooltip__arrow--top {
-  bottom: -8px;
-  left: 50%;
-  margin-left: -8px;
+  bottom: -8px; /* Extend outside bottom edge */
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .tour-tooltip__arrow--bottom {
-  top: -8px;
-  left: 50%;
-  margin-left: -8px;
+  top: -8px; /* Extend outside top edge */
   box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .tour-tooltip__arrow--left {
-  right: -8px;
-  top: 50%;
-  margin-top: -8px;
+  right: -8px; /* Extend outside right edge */
   box-shadow: 2px -2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .tour-tooltip__arrow--right {
-  left: -8px;
-  top: 50%;
-  margin-top: -8px;
+  left: -8px; /* Extend outside left edge */
   box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.05);
 }
 
@@ -561,5 +561,126 @@
 
   .tour-spotlight {
     animation: none;
+  }
+}
+
+/* Tour Button Styles */
+.tour-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  min-width: fit-content;
+}
+
+.tour-btn-sm {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+}
+
+.tour-btn-md {
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+.tour-btn-lg {
+  padding: 14px 20px;
+  font-size: 16px;
+  border-radius: 10px;
+}
+
+.tour-btn-primary {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+}
+
+.tour-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+.tour-btn-secondary {
+  background: rgba(139, 92, 246, 0.1);
+  color: #7c3aed;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.tour-btn-secondary:hover {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.tour-btn-ghost {
+  background: transparent;
+  color: #6b7280;
+}
+
+.tour-btn-ghost:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #374151;
+}
+
+.tour-btn-icon {
+  padding: 8px;
+  background: rgba(139, 92, 246, 0.1);
+  color: #7c3aed;
+  border-radius: 50%;
+}
+
+.tour-btn-icon:hover {
+  background: rgba(139, 92, 246, 0.2);
+}
+
+.tour-btn-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 10px;
+}
+
+.tour-btn-badge--new {
+  background: #10b981;
+  color: white;
+}
+
+/* Dark mode for tour buttons */
+@media (prefers-color-scheme: dark) {
+  .tour-btn-secondary {
+    background: rgba(139, 92, 246, 0.2);
+    color: #a78bfa;
+    border-color: rgba(139, 92, 246, 0.3);
+  }
+
+  .tour-btn-secondary:hover {
+    background: rgba(139, 92, 246, 0.3);
+    border-color: rgba(139, 92, 246, 0.4);
+  }
+
+  .tour-btn-ghost {
+    color: #9ca3af;
+  }
+
+  .tour-btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e5e7eb;
+  }
+
+  .tour-btn-icon {
+    background: rgba(139, 92, 246, 0.2);
+    color: #a78bfa;
+  }
+
+  .tour-btn-icon:hover {
+    background: rgba(139, 92, 246, 0.3);
   }
 }

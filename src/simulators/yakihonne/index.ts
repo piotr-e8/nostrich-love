@@ -34,3 +34,4 @@ export { ContentTabs } from './components/ContentTabs';
 
 // Theme
 import './yakihonne.theme.css';
+import '../../components/tour/tour.css';

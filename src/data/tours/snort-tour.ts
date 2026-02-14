@@ -1,6 +1,6 @@
 /**
  * Snort Web Simulator Tour
- * Interactive, event-driven guided tour for Snort client
+ * Tour drives the simulator - user clicks Next, tour navigates simulator
  */
 
 import type { TourConfig, TourStep } from '../../components/tour';
@@ -20,10 +20,7 @@ const snortTourSteps: TourStep[] = [
     title: 'Login Options',
     content: 'Snort supports multiple login methods: browser extension (like nos2x or Alby), private key paste, or key generation. Extensions are recommended for better security. Your keys are your identity on Nostr!',
     position: 'bottom',
-    trigger: 'action',
-    actionType: 'login',
     allowClickThrough: true,
-    action: 'Choose your login method to continue',
     spotlightPadding: 16,
   },
   {
@@ -32,10 +29,7 @@ const snortTourSteps: TourStep[] = [
     title: 'Your Timeline',
     content: 'The main feed shows content from followed accounts with real-time updates. Snort uses efficient loading and caching for a smooth scrolling experience. This is where you will spend most of your time!',
     position: 'top',
-    trigger: 'action',
-    actionType: 'navigate_home',
     allowClickThrough: true,
-    action: 'Click the Home icon to view your feed',
     spotlightPadding: 8,
   },
   {
@@ -44,10 +38,7 @@ const snortTourSteps: TourStep[] = [
     title: 'Create Content',
     content: 'Compose notes with full Markdown support, image uploads, and mentions. Snort also supports long-form content for blog-style posts beyond the standard note limit. Express yourself!',
     position: 'bottom',
-    trigger: 'action',
-    actionType: 'compose',
     allowClickThrough: true,
-    action: 'Click to start composing a post',
     spotlightPadding: 12,
   },
   {
@@ -56,10 +47,7 @@ const snortTourSteps: TourStep[] = [
     title: 'Publish Your Note',
     content: 'Write something interesting and click post! Your note will be cryptographically signed and broadcast to all connected relays. Once published, it is permanent on the Nostr network.',
     position: 'bottom',
-    trigger: 'action',
-    actionType: 'post',
     allowClickThrough: true,
-    action: 'Type a message and click "Post" to publish',
     spotlightPadding: 12,
   },
   {
@@ -68,10 +56,7 @@ const snortTourSteps: TourStep[] = [
     title: 'Rich Profiles',
     content: 'Profiles show comprehensive information: bio, links, NIP-05, Lightning address, badges, and all user activity. Switch between posts, replies, likes, and zaps. This is your identity on Nostr!',
     position: 'bottom',
-    trigger: 'action',
-    actionType: 'view_profile',
     allowClickThrough: true,
-    action: 'Click your profile picture to view your profile',
     spotlightPadding: 16,
   },
   {
@@ -80,10 +65,7 @@ const snortTourSteps: TourStep[] = [
     title: 'Following Users',
     content: 'Find interesting people by browsing your network. When you follow someone, their posts appear in your feed. Your follows are stored in your account and synced across all Nostr clients.',
     position: 'left',
-    trigger: 'action',
-    actionType: 'follow',
     allowClickThrough: true,
-    action: 'Click "Follow" on any user profile',
     spotlightPadding: 8,
   },
   {
@@ -92,10 +74,7 @@ const snortTourSteps: TourStep[] = [
     title: 'Interact with Posts',
     content: 'Engage with posts using: Reply (respond publicly), Repost (share with your followers), Like (show appreciation), or Zap (send Bitcoin sats as a tip). Zaps are a unique Nostr feature!',
     position: 'top',
-    trigger: 'action',
-    actionType: 'like',
     allowClickThrough: true,
-    action: 'Click the heart icon to like a post',
     spotlightPadding: 8,
   },
   {
@@ -104,10 +83,7 @@ const snortTourSteps: TourStep[] = [
     title: 'Customization',
     content: 'Extensive settings include: themes, language, media preferences, notification filters, privacy options, and developer features. Make Snort work exactly how you want. Remember to backup your keys!',
     position: 'left',
-    trigger: 'action',
-    actionType: 'navigate_settings',
     allowClickThrough: true,
-    action: 'Click the Settings icon to explore options',
     spotlightPadding: 8,
   },
   {

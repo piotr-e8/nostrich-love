@@ -1,9 +1,11 @@
 /**
  * Tour Overlay Component
  * Provides the dark backdrop with spotlight effect
+ * Uses portal to render outside simulator containers
  */
 
 import React, { useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { useTour } from './TourProvider';
 import { TourTooltip } from './TourTooltip';
 import { TourProgress } from './TourProgress';
@@ -110,7 +112,7 @@ export function TourOverlay() {
       )`
     : undefined;
 
-  return (
+  const overlay = (
     <div
       className="tour-overlay"
       onClick={handleOverlayClick}
@@ -156,4 +158,11 @@ export function TourOverlay() {
       </div>
     </div>
   );
+
+  // Use portal to render outside simulator containers
+  if (typeof document !== 'undefined') {
+    return createPortal(overlay, document.body);
+  }
+
+  return null;
 }

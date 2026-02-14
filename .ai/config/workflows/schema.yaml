@@ -1,0 +1,106 @@
+# Workflow Schema Definition
+# This defines the structure all workflow files must follow
+
+workflow:
+  type: object
+  required: [id, name, description, version, steps]
+  properties:
+    id:
+      type: string
+      pattern: "^[a-z0-9-]+$"
+      description: Unique identifier for the workflow
+    
+    name:
+      type: string
+      description: Human-readable name
+    
+    description:
+      type: string
+      description: Detailed description of what the workflow does
+    
+    version:
+      type: string
+      pattern: "^\\d+\\.\\d+\\.\\d+$"
+      description: Semantic version
+    
+    inputs:
+      type: array
+      items:
+        type: object
+        required: [name, type]
+        properties:
+          name:
+            type: string
+            pattern: "^[a-z_][a-z0-9_]*$"
+          type:
+            type: string
+            enum: [string, number, boolean, array, object]
+          required:
+            type: boolean
+            default: false
+          description:
+            type: string
+          default:
+            description: Default value if not provided
+    
+    steps:
+      type: array
+      minItems: 1
+      items:
+        type: object
+        required: [id, name, agent]
+        properties:
+          id:
+            type: string
+            pattern: "^[a-z_][a-z0-9_]*$"
+            description: Unique step identifier
+          
+          name:
+            type: string
+            description: Human-readable step name
+          
+          agent:
+            type: string
+            enum: [research-agent, code-agent, qa-agent, integration-agent, design-agent, doc-agent, test-agent]
+            description: Which agent executes this step
+          
+          description:
+            type: string
+            description: What this step accomplishes
+          
+          depends_on:
+            type: array
+            items:
+              type: string
+            description: Step IDs that must complete before this step
+          
+          inputs:
+            type: object
+            description: Input parameters for the agent
+            additionalProperties: true
+          
+          outputs:
+            type: array
+            items:
+              type: string
+            description: Names of outputs this step produces
+          
+          decision_gate:
+            type: boolean
+            default: false
+            description: If true, pause for human approval before proceeding
+    
+    outputs:
+      type: array
+      items:
+        type: object
+        required: [name, source]
+        properties:
+          name:
+            type: string
+          source:
+            type: string
+            pattern: "^\\w+\\.\\w+$"
+            description: "step_id.output_name format"
+          description:
+            type: string

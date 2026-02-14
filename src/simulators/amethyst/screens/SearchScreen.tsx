@@ -42,7 +42,7 @@ export function SearchScreen() {
             author: {
               name: author?.displayName || 'Unknown',
               handle: author?.nip05 || author?.username || 'unknown',
-              avatar: author?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${note.pubkey}`,
+              avatar: author?.avatar || `https://api.dicebear.com/7.x/bottts/svg?seed=${note.pubkey}`,
               nip05: author?.nip05,
               isVerified: author?.isVerified,
             },
@@ -189,7 +189,7 @@ export function SearchScreen() {
                       className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-[var(--md-surface-variant)] transition-colors"
                     >
                       <img
-                        src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user}`}
+                        src={`https://api.dicebear.com/7.x/bottts/svg?seed=${user}`}
                         alt={user}
                         className="w-10 h-10 rounded-full"
                       />

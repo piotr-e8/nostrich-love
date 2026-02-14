@@ -30,6 +30,10 @@ export interface TourStep {
    * Optional validation function that must return true before advancing
    */
   validateStep?: () => boolean;
+  /**
+   * Callback when tour enters this step - use to navigate simulator to correct state
+   */
+  onEnter?: () => void;
 }
 
 export interface TourConfig {
@@ -63,7 +67,7 @@ export interface TourContextValue {
   goToStep: (stepIndex: number) => void;
   goToNextStep: () => void;
   goToPreviousStep: () => void;
-  restartTour: () => void;
+  restartTour: (tourConfig?: TourConfig) => void;
   currentStepData: TourStep | null;
   /**
    * Register an action that may trigger tour advancement

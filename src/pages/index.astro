@@ -2,6 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import { ActivityFeed } from '../components/activity/ActivityFeed';
+import { ProgressTracker } from '../components/gamification/ProgressTracker';
 import { CyberpunkHeroAnimation } from '../components/CyberpunkAnimation';
 
 const title = 'Nostrich.love - Social Media That Respects You';
@@ -296,37 +298,66 @@ const paths = [
       </div>
     </section>
 
-    <!-- Social Proof Section -->
+    <!-- Social Proof & Activity Section -->
     <section class="py-20 bg-white dark:bg-gray-900">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-4xl mx-auto text-center">
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">
-            Join Thousands Making the Switch
-          </h2>
-          
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-            <div>
-              <div class="text-4xl font-bold text-friendly-purple-600">50K+</div>
-              <div class="text-gray-600 dark:text-gray-400">Active Users</div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {/* Stats Column */}
+          <div class="lg:col-span-2">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center lg:text-left">
+              Join Thousands Making the Switch
+            </h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+              <div class="text-center">
+                <div class="text-4xl font-bold text-friendly-purple-600">50K+</div>
+                <div class="text-gray-600 dark:text-gray-400">Active Users</div>
+              </div>
+              <div class="text-center">
+                <div class="text-4xl font-bold text-friendly-purple-600">15</div>
+                <div class="text-gray-600 dark:text-gray-400">Step-by-Step Guides</div>
+              </div>
+              <div class="text-center">
+                <div class="text-4xl font-bold text-friendly-purple-600">7</div>
+                <div class="text-gray-600 dark:text-gray-400">Client Options</div>
+              </div>
+              <div class="text-center">
+                <div class="text-4xl font-bold text-friendly-purple-600">100%</div>
+                <div class="text-gray-600 dark:text-gray-400">Open Source</div>
+              </div>
             </div>
-            <div>
-              <div class="text-4xl font-bold text-friendly-purple-600">15</div>
-              <div class="text-gray-600 dark:text-gray-400">Step-by-Step Guides</div>
-            </div>
-            <div>
-              <div class="text-4xl font-bold text-friendly-purple-600">7</div>
-              <div class="text-gray-600 dark:text-gray-400">Client Options</div>
-            </div>
-            <div>
-              <div class="text-4xl font-bold text-friendly-purple-600">100%</div>
-              <div class="text-gray-600 dark:text-gray-400">Open Source</div>
-            </div>
+
+            <p class="text-gray-500 dark:text-gray-400 text-sm text-center lg:text-left">
+              Numbers updated daily. No accounts required to try—see for yourself.
+            </p>
           </div>
 
-          <p class="text-gray-500 dark:text-gray-400 text-sm">
-            Numbers updated daily. No accounts required to try—see for yourself.
-          </p>
+          {/* Activity Feed Sidebar - Desktop */}
+          <div class="hidden lg:block">
+            <div class="sticky top-24">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                <svg class="w-5 h-5 text-friendly-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                Recent Activity
+              </h3>
+              <ActivityFeed client:load compact={true} maxItems={4} />
+            </div>
+          </div>
         </div>
+      </div>
+    </section>
+
+    {/* Activity Feed - Mobile Footer */}
+    <section class="py-12 bg-gray-50 dark:bg-gray-800 lg:hidden">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+          <svg class="w-5 h-5 text-friendly-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          Recent Activity
+        </h3>
+        <ActivityFeed client:load compact={true} maxItems={3} />
       </div>
     </section>
 

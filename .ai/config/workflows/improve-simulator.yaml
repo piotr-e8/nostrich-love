@@ -1,0 +1,162 @@
+# Workflow: Improve Nostr Client Simulator
+# Updates and improves an existing simulator to match the real app more closely
+
+workflow:
+  id: improve-simulator
+  name: Improve Nostr Client Simulator
+  description: >
+    Improves an existing simulator by researching the real app,
+    identifying discrepancies, and implementing fixes to match
+    the actual client more accurately.
+  version: 1.0.0
+
+  inputs:
+    - name: client_name
+      type: string
+      required: true
+      description: Name of the Nostr client (e.g., "Amethyst", "Damus")
+    
+    - name: client_slug
+      type: string
+      required: true
+      description: URL-friendly slug (e.g., "amethyst", "damus")
+    
+    - name: platform
+      type: string
+      required: true
+      description: Platform type (ios, android, web, desktop)
+    
+    - name: focus_areas
+      type: array
+      required: false
+      description: Specific areas to focus on (ui, features, colors, navigation, etc.)
+      default: ["all"]
+
+  steps:
+    - id: research_real_app
+      name: Research Real App
+      agent: research-agent
+      description: Gather current information about the real client app
+      inputs:
+        target_name: "{{workflow.inputs.client_name}}"
+        target_type: "nostr_client"
+        platform: "{{workflow.inputs.platform}}"
+        existing_patterns: "src/simulators/{{workflow.inputs.client_slug}}/"
+        extract_assets: true
+        compare_with_existing: true
+      outputs:
+        - research_report
+        - new_screenshots
+        - branding_updates
+        - feature_changes
+      decision_gate: false
+
+    - id: analyze_discrepancies
+      name: Analyze Discrepancies
+      agent: component-detective-agent
+      depends_on: [research_real_app]
+      description: Compare current simulator with real app findings
+      inputs:
+        simulator_path: "src/simulators/{{workflow.inputs.client_slug}}/"
+        research_report: "{{steps.research_real_app.outputs.research_report}}"
+        new_screenshots: "{{steps.research_real_app.outputs.new_screenshots}}"
+        focus_areas: "{{workflow.inputs.focus_areas}}"
+      outputs:
+        - discrepancy_report
+        - missing_features
+        - ui_issues
+        - improvement_priorities
+      decision_gate: false
+
+    - id: create_improvement_spec
+      name: Create Improvement Specification
+      agent: ui-parser-agent
+      depends_on: [analyze_discrepancies]
+      description: Create detailed specification for improvements
+      inputs:
+        discrepancy_report: "{{steps.analyze_discrepancies.outputs.discrepancy_report}}"
+        research_report: "{{steps.research_real_app.outputs.research_report}}"
+        simulator_path: "src/simulators/{{workflow.inputs.client_slug}}/"
+      outputs:
+        - improvement_spec
+        - component_changes
+        - color_updates
+        - feature_additions
+      decision_gate: true  # Human approval required
+
+    - id: implement_improvements
+      name: Implement Improvements
+      agent: code-agent
+      depends_on: [create_improvement_spec]
+      description: Apply improvements to simulator components
+      inputs:
+        improvement_spec: "{{steps.create_improvement_spec.outputs.improvement_spec}}"
+        simulator_path: "src/simulators/{{workflow.inputs.client_slug}}/"
+        component_changes: "{{steps.create_improvement_spec.outputs.component_changes}}"
+      outputs:
+        - updated_components
+        - theme_updates
+        - screen_updates
+      decision_gate: false
+
+    - id: apply_ui_fixes
+      name: Apply UI Fixes
+      agent: ui-fix-implementer-agent
+      depends_on: [implement_improvements]
+      description: Fix UI-specific issues (colors, spacing, fonts)
+      inputs:
+        ui_issues: "{{steps.analyze_discrepancies.outputs.ui_issues}}"
+        simulator_path: "src/simulators/{{workflow.inputs.client_slug}}/"
+        color_updates: "{{steps.create_improvement_spec.outputs.color_updates}}"
+      outputs:
+        - ui_fixes_applied
+        - css_updates
+      decision_gate: false
+
+    - id: quality_validation
+      name: Quality Validation
+      agent: qa-agent
+      depends_on: [apply_ui_fixes]
+      description: Validate improvements match real app
+      inputs:
+        simulator_path: "src/simulators/{{workflow.inputs.client_slug}}/"
+        improvement_spec: "{{steps.create_improvement_spec.outputs.improvement_spec}}"
+        new_screenshots: "{{steps.research_real_app.outputs.new_screenshots}}"
+        checklist:
+          - visual_accuracy
+          - color_match
+          - feature_parity
+          - navigation_flow
+          - responsive_design
+      outputs:
+        - qa_report
+        - validation_results
+        - remaining_issues
+      decision_gate: true  # Human review of results
+
+    - id: finalize_improvements
+      name: Finalize Improvements
+      agent: integration-agent
+      depends_on: [quality_validation]
+      description: Apply final fixes and update documentation
+      inputs:
+        qa_report: "{{steps.quality_validation.outputs.qa_report}}"
+        remaining_issues: "{{steps.quality_validation.outputs.remaining_issues}}"
+        simulator_path: "src/simulators/{{workflow.inputs.client_slug}}/"
+      outputs:
+        - final_status
+        - documentation_updated
+      decision_gate: false
+
+  outputs:
+    - name: improvement_summary
+      source: analyze_discrepancies.discrepancy_report
+      description: Summary of changes made
+    
+    - name: qa_results
+      source: quality_validation.validation_results
+      description: Quality validation results
+    
+    - name: final_status
+      source: finalize_improvements.final_status
+      description: Final improvement completion status

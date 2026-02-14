@@ -24,3 +24,4 @@ export { ProfileHeader } from './components/ProfileHeader';
 
 // Theme
 import './damus.theme.css';
+import '../../components/tour/tour.css';

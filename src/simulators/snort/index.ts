@@ -27,3 +27,4 @@ export { useKeyboardShortcuts, useModalShortcuts } from './hooks/useKeyboardShor
 
 // Theme
 import './snort.theme.css';
+import '../../components/tour/tour.css';

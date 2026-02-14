@@ -40,7 +40,7 @@ export const Avatar: React.FC<AvatarProps> = ({
   // Use as image URL
   return (
     <img
-      src={src || `https://api.dicebear.com/7.x/avataaars/svg?seed=${alt}`}
+      src={src || `https://api.dicebear.com/7.x/bottts/svg?seed=${alt}`}
       alt={alt}
       className={`${sizeClasses[size]} rounded-full object-cover bg-gray-100 ${className}`}
     />

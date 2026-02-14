@@ -1,0 +1,844 @@
+{
+  "category": "books",
+  "sourceNpub": "npub178umpxtdflcm7a08nexvs4mu384kx0ngg9w8ltm5eut6q7lcp0vq05qrg4",
+  "searchedAt": "2026-02-13T11:38:19.628Z",
+  "newAccounts": [
+    {
+      "npub": "npub1dpna3xwwddnhhzg9ycpvlcz2ze0jdwm2rf3eqd2lf9leaewtq7tqhw0ef2",
+      "name": "SimplestBitcoinBook",
+      "picture": "https://m.primal.net/PvsB.png",
+      "bio": "🔸 Senior Editor: Bitcoin Art Magazine Primal.net/BitcoinArtMagazine 🔸 Author: The Simplest Bitcoin Book Ever Written 🔸 Free book download → http://simplestbitcoinbook.com\n\nAuthor :: 📙Download ‘The Simplest Bitcoin Book Ever Written’ - 2nd Ed. at \nsimplestbitcoinbook.com 🧡\n\n#plebchain 💜",
+      "score": 30,
+      "nip05": "simplestbitcoinbook@nostrplebs.com",
+      "lud16": "thesimplestbitcoinbook@getalby.com",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1aaf5y63mgrkdgxqkjj7ypyqzc98n06smu5yq3q575rwygl5c3pgsmap5m6",
+      "name": "totallyhumanwriter",
+      "picture": "https://blossom.primal.net/291b071f361ee605ec47ea7fe2c9203cda6decbd4f50e639dec2b8b289f0f2fa.jpg",
+      "bio": "✍️ Writing for ₿itcoin leaders & companies (check my 'proof of words') | 📚 Author, Editor & Ghostwriter | 🐈‍⬛🐈‍⬛ Cat observer",
+      "score": 25,
+      "nip05": "totallyhumanwriter@BitcoinNostr.com",
+      "lud16": "ivorycrab14@primal.net",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub13azkhgg9nvc4gmzc69pd6rhp6watauetvxqshl0vj057k67yzmysan9wlq",
+      "name": "Their motto is deception.",
+      "picture": "https://static.noauthority.social/accounts/avatars/111/754/835/944/696/882/original/45b069f4efc78534.png",
+      "bio": "I'm a writer, very much into music, movies, and books, interested in geo-politics and information sharing, who also travels around the world twice a year, having visited 119 countries thus far.",
+      "score": 25,
+      "nip05": "SiRrogueKnight@noauthority-social.mostr.pub",
+      "lud16": "",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub13azkhgg9nvc4gmzc69pd6rhp6watauetvxqshl0vj057k67yzmysan9wlq",
+      "name": "Their motto is deception.",
+      "picture": "https://static.noauthority.social/accounts/avatars/111/754/835/944/696/882/original/45b069f4efc78534.png",
+      "bio": "I enjoy music, movies, books, geo-politics, information sharing, and traveling around the world twice a year.",
+      "score": 25,
+      "nip05": "SiRrogueKnight@noauthority-social.mostr.pub",
+      "lud16": "",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1s5yq6wadwrxde4lhfs56gn64hwzuhnfa6r9mj476r5s4hkunzgzqrs6q7z",
+      "name": "preston",
+      "picture": "https://i.imgur.com/Xf8iV9G.gif",
+      "bio": "Bitcoin & Books.\nGP at Ego Death Capital\n@PrestonPysh on Twitter.\n",
+      "score": 20,
+      "nip05": "preston@primal.net",
+      "lud16": "preston@primal.net",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1ch8a4xxsru2jkdynmx27a4xdknv72k5h8yjld702y3mf5k3puauqmszh48",
+      "name": "ismyhc",
+      "picture": "https://pbs.twimg.com/profile_images/1865047265749958656/z4wdOcUK_400x400.jpg",
+      "bio": "Building coolr.chat and Hollow a long form Nostr reader/publisher application. ",
+      "score": 20,
+      "nip05": "ismyhc@galaxoidlabs.com",
+      "lud16": "ismyhc@zbd.gg",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1yx5daemgy8fq973ckw5ecd4jt4ca7k2pzxv0evnjv7f96ddtkxnspduumh",
+      "name": "SullyMichaelvan",
+      "picture": "https://m.primal.net/KMKC.jpg",
+      "bio": "Writing the Great American Bitcoin Novel 📚🧡✍️",
+      "score": 20,
+      "nip05": "",
+      "lud16": "",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1fl8yl9m9n6mn9c90drxhltylgph3vtcguzlzdq9uth4pd7nnnzgsyweqxm",
+      "name": "davidshort",
+      "picture": "https://image.nostr.build/d0b9cef43bd0ae347416cbf4ea7248da942fa7f60ee28ec1a418a56f301d3e81.jpg",
+      "bio": "Product Manager | businessbooksandco.com podcast co-host | Bitcoin",
+      "score": 20,
+      "nip05": "",
+      "lud16": "user17970066@fountain.fm",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub10vlhsqm4qar0g42p8g3plqyktmktd8hnprew45w638xzezgja95qapsp42",
+      "name": "jimmysong",
+      "picture": "https://m.primal.net/Nksn.png",
+      "bio": "Bitcoin Expert\nOpen-Source Coder\nFollow me to learn #BTC\n\nAuthor of 5 Bitcoin books\n\nFiat Ruins Everything: https://fiatruinseverything.com\n\n\nPGP: C1D7 97BE 7D10 5291 228C D70C FAA6 17E3 2",
+      "score": 20,
+      "nip05": "jimmysong@programmingbitcoin.com",
+      "lud16": "jimmysong@primal.net",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1ap2pmfhsxv540je2pxlsrksj4cl8rndjhrq0h8tkdce3f9edkpvszzt4yp",
+      "name": "SovereignLife",
+      "picture": "https://nostr.build/i/nostr.build_dbd63430f9215acb247a4853853af4cbd95b19f454fb236bcbe62dbae3eb751d.png",
+      "bio": "Into Bitcoin since July 2011. Into Nostr since February 2023. Influenced by the works of Ayn Rand, Murray Rothbard, Ludwig von Mises, Andrew Galambos - and thought-provoking books including: The Sovereign Individual, How I Found Freedom in an Unfree World, The Path of Least Resistance, PT - The Perpetual Traveler. Professional drummer in my earlier life, digital nomad in my later life, and jazz lover most my life. We won't achieve meaningful freedom until four key \"separations from the state\" are done and dusted: Separation of church and state (mostly done), separation of money and state (in progress), separation of communication networks and state (early encouraging signs), separation of education and state (a long way to go).",
+      "score": 20,
+      "nip05": "sovereignlife@iris.to",
+      "lud16": "sovereignlife@getalby.com",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1l59ulrx34m5rle67ds8al32rs309hsl4p5nd9409cmfl55slnrqq8jq78u",
+      "name": "rare",
+      "picture": "https://coinos.io/api/public/7112d6b8393b8f14abb3668ba2d72109feda60532f12b03cc44679bc3a9e59b2.webp",
+      "bio": "writing — https://livingonbitcoin.substack.com\nteaching — https://getonbtc.com\nhelping — https://bitcoinbay.foundation\nmaking - https://thefictionfactory.substack.com",
+      "score": 20,
+      "nip05": "rare@nostrplebs.com",
+      "lud16": "rarehodl@coinos.io",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1j4095pqcqmddt7xq3zujd645c429wyzc3xyvgas5g04mrspm8npsjrr0sr",
+      "name": "JamPower",
+      "picture": "https://image.nostr.build/e7d260eb32a82ef01cbf1863d61b5161a29c003022700d1c124253ea17038527.jpg",
+      "bio": "Hi! I’m Jam Power—embracing the joy of life through #books, living in the moment, and staying strong in mind and body. #Fitness junkie and passionate about #Bitcoin!",
+      "score": 20,
+      "nip05": "jampower@nostrcheck.me",
+      "lud16": "jampower@primal.net",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1rrr6pjacat6c6gx8h8r5zj4j45h2g06gq8plt0xpzag4g075rrhqwc6ehl",
+      "name": "SVRN",
+      "picture": "https://image.nostr.build/9324d39ec1e6d484b2670f83f6ac2e08dcc2da6600e76d6cd30a489af3dab90d.jpg",
+      "bio": "Publishing books. Freedom, Bitcoin. Voluntarist.  Learning to code. English/Dutch",
+      "score": 20,
+      "nip05": "svrnhdl@svrnhdl.com",
+      "lud16": "juststarfish4@primal.net",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1art8cs66ffvnqns5zs5qa9fwlctmusj5lj38j94lv0ulw0j54wjqhpm0w5",
+      "name": "Aaron van Wirdum",
+      "picture": "https://pbs.twimg.com/profile_images/1588594916325720064/a4eCZfBw_400x400.jpg",
+      "bio": "Author of The Genesis Book.\n\nFormer Editor-in-Chief at Bitcoin Magazine.",
+      "score": 20,
+      "nip05": "",
+      "lud16": "richcabinet09@walletofsatoshi.com",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1ktgaplzmwud8qsg9f67764au80eq76wvhwwunw80gv5qr5j8ma7qca5ma5",
+      "name": "gs",
+      "picture": "https://pbs.twimg.com/profile_images/1428364776447496207/M5t0qbDx_400x400.jpg",
+      "bio": "Being healthy, wealthy and wise is simple:\neat meat, buy bitcoin, read books",
+      "score": 20,
+      "nip05": "gs@nostrplebs.com",
+      "lud16": "crimsoncrab1@primal.net",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1dmt9lmhphth8eataegwnpdy9txwd5gcujhuz3sxfg4vm8xh4n8tsl4e03n",
+      "name": "shiryoryo",
+      "picture": "https://nostr.build/i/p/nostr.build_639c8a3e029358c94afd77ef845b948a3159ec1ec1ef884d6cc906ccd7c35c18.gif",
+      "bio": "🟣Co-creator and writer of fynstr.com (semi-finalist)\n🟣Damus translator\n🟣An intrinsically introvert inspired writer through mood, beauty, poems, melody and color 🌻\n🟣My soul consists of: •traveling✈️•galaxy🌌 •dragon🐉 •black & purple🖤💜 • fluffy bear🐻 •book📖 •cat🐈 •snow❄️ •blue sky🦋 •sarcasm🤪 •sun☀️\n🟣Bitcoin/LN/Zap make me addicted\n🟣Orange 💊 through #nostr ",
+      "score": 20,
+      "nip05": "shiryuryok@getalby.com",
+      "lud16": "",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub12ye6p9r6h6qpg3wrfch4v9gas6g0g7y6knrkxf6mzstxuax9sv8sdxrdku",
+      "name": "HeatherEverdeen",
+      "picture": "https://image.nostr.build/0378f2a1fad352b0d4adfcdf62a738ebf0c102d036c51e7ebe2f354ba31a6e97.jpg",
+      "bio": "Here on Purpose.\nOne Love\nLearner Mother Lover Dreamer Writer Artist Art\nBitcoin, Freedom, Nature, Cosmos, Feminine, Origin, Travel, Art, Music, science, books, poetry, spiritual awakening and growth, tantra, healing 🌿 🖤✨\n\n\nIntuitive\nShamaness \nMystic\nHuman\n\n\nWhat the fuck",
+      "score": 20,
+      "nip05": "",
+      "lud16": "brashfender24@walletofsatoshi.com",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1905c85e2nr25650up3wxjw0hs2arlz9xd4zw02juanaftyag3eyqsn3w9x",
+      "name": "OmniFinn",
+      "picture": "https://blossom.primal.net/82e1989daacee68c7facf72b67025e4b5eba797374309f6e2c7e2f8c6dac5751.jpg",
+      "bio": "Shadowy Super Publisher\nA citadel starts with a library.\n📚 Book a free call with me: starfishbook.com\nServices: konsensusnetwork.com",
+      "score": 20,
+      "nip05": "OmniFinn@primal.net",
+      "lud16": "OmniFinn@primal.net",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1905c85e2nr25650up3wxjw0hs2arlz9xd4zw02juanaftyag3eyqsn3w9x",
+      "name": "OmniFinn",
+      "picture": "https://m.primal.net/QUMS.jpg",
+      "bio": "Shadowy Super Publisher\nA citadel starts with a library.\n📚 Book a free call with me: starfishbook.com\nServices: konsensusnetwork.com",
+      "score": 20,
+      "nip05": "OmniFinn@primal.net",
+      "lud16": "OmniFinn@primal.net",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1jdyaqyngdj4tgmmtlm7j7npkr3fwzjcumcwdqf68dc9wd5lf39rqwlfwsu",
+      "name": "MichelleZ",
+      "picture": "https://image.nostr.build/f1f174d54ab28bbe09348d3eb17a6d3f5ffb0c99f9d43463239271c57b87c965.jpg",
+      "bio": "sexylibrarian on GitHub\nFounder @MyLibrarian\nAuthor & Journalist \nBeThereNovel.com\nLove it when Lightning strikes⚡️at first sight ✨",
+      "score": 20,
+      "nip05": "michelle@henhouse.social",
+      "lud16": "flaxzebra2@primal.net",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub175nul9cvufswwsnpy99lvyhg7ad9nkccxhkhusznxfkr7e0zxthql9g6w0",
+      "name": "alp",
+      "picture": "https://blossom.primal.net/67a9572438929066c3fbb4bb4e4c6633ef095408e6529fe9ffd0fcf1ca172e34.png",
+      "bio": "Muslim, Turkish man living in Germany, Internet veteran, husband and father.\n\nMy Projects:\n✨ #NoorNote, a premium Linux & MacOS desktop Nostr client: https://noornote.app/\n✨ #NoorSigner, a CLI Linux & MacOS desktop Key Signer: https://github.com/77elements/noorsigner\n\nBook \"The White Ram Lamb\": A dystopian Muslim cyberpunk science fiction novel\nhttps://mslmdvlpmnt.com/the-white-ram-lamb/\n\nOther small projects:\n- Muslims Follow Pack: https://following.space/d/bsb40kv9nwr4\n- ZapStar 💫 - Find out who zaps you the most: https://mslmdvlpmnt.com/zapstar/\n- Search npubs by keywords: https://mslmdvlpmnt.com/SearchInNpub/\n- Relay Inspector: https://mslmdvlpmnt.com/tools/relay-inspector.html",
+      "score": 20,
+      "nip05": "alp@nostrplebs.com",
+      "lud16": "shiny-crab-70@rizful.com",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1ap9fscjl92zclacmaa0nneurr5js85ymuem6ew0ftu8f6eztvpds8qchga",
+      "name": "plebeian",
+      "picture": "https://cdn.nostr.build/i/2a224b6a3e1d0972de092468e2e8965d25ef43f408412fd8c70bac7987569c35.jpg",
+      "bio": "Hodler, node runner, coffee drinker, book reader, coder, painter",
+      "score": 20,
+      "nip05": "",
+      "lud16": "gildedmorocco51@walletofsatoshi.com",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1ltt9gry09lf2z6396rvzmk2a8wkh3yx5xhgkjzzg5znh62yr53rs0hk97y",
+      "name": "parman_the",
+      "picture": "https://image.nostr.build/68e3ab41b4b7cfd486fc4d8202affc290c1238f478629e8e3a5c64b2f6a46b46.png",
+      "bio": "Bitcoin KYC cleaner (it's true), Bitcoin security and self-custody mentor, Bitcoin author, and private key whisperer.\n\nPGP: E7C061D4C5E5BC98\n\nCreator of Parmanode https://parmanode.com\n\nCreator of ParmaDrive https://parmanode.com/parmadrive\n\nCreator of ParmanodL https://parmanode.com/parmanodl\n\nCreator of ParmAirGap https://parmanode.com/parmairgap\n\nCreator of BitVotr Protocol https://bitvotr.com\n\nBitcoin Mentorship https://armantheparman.com/mentorship\n\nKYC Free Collaborative Custody Service https://armantheparman.com/parmanvault\n\nLost Bitcoin/Crypto Recovery Service https://armantheparman.com/recovery/\n\nSecurity Review Service https://armantheparman.com/bsr\n\nAssiter of Boomers https://bitcoin4boomers.com\n\nEssays",
+      "score": 20,
+      "nip05": "parman@nostrich.cc",
+      "lud16": "dandysack84@walletofsatoshi.com",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv",
+      "name": "sovereign_community_infrastructure_",
+      "picture": "https://image.nostr.build/8b56182de1a50838fc03c1cf56118a3080cb946495fa9bdc5bfcbb7792dd4503.jpg",
+      "bio": "Welcome to Our Bitcoin Store\n\nWe are a small, passionate team dedicated to providing quality Bitcoin-focused tools and accessories. Our current offerings include:\n\nBitcoin wallets\nSeed storage plates\nNostr signing devices\nESP32 miners\n3D-printed cases and hardware\nSatscards & Boltzcards\nAs we grow, so will our inventory and expertise in serving you. If you're interested in any of our products, please feel free to inquire about shipping. Thank you for your support! ⚡\n\nOnchain\nEcash\nLayer-2\nLiquid\nAccepted\n☆.𓋼𓍊 𓆏 𓍊𓋼𓍊.☆\n\n⠀⠀⠀⠀⣿⡇⠀⢸⣿⡇⠀⠀⠀⠀\n⠸⠿⣿⣿⣿⡿⠿⠿⣿⣿⣿⣶⣄⠀\n⠀⠀⢸⣿⣿⡇⠀⠀⠀⠈⣿⣿⣿⠀\n⠀⠀⢸⣿⣿⡇⠀⠀⢀⣠⣿⣿⠟⠀\n⠀⠀⢸⣿⣿⡿⠿⠿⠿⣿⣿⣥⣄⠀\n⠀⠀⢸⣿⣿⡇⠀⠀⠀⠀⢻⣿⣿⣧\n⠀⠀⢸⣿⣿⡇⠀⠀⠀⠀⣼⣿⣿⣿\n⢰⣶⣿⣿⣿⣷⣶⣶⣾⣿⣿⠿⠛⠁\n⠀⠀⠀⠀⣿⡇⠀⢸⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n\n🌐 Let's Connect:\n\nNpub Address: \nfreedomfete@npub.cash\n\nEmail Address: \nhttps://flowcrypt.com/me/parityday\n\nLightning Address: \nmoraltimer63@walletofsatoshi.com\n\nlibretech@orangepillapp.com\n\nInternet Radio\n\nhttp://voxarcana.libretechsystems.xyz:8000/?type=http\n\nBlogs- \nhttps://haven.libretechsystems.xyz/ (Haven, Open Source)\n\nhttps://memos.eshgham.one/ (Memos, Open Source)\n\nhttps://freedomtech.eshgham.one\n\nhttps://ublog.libretechsystems.xyz\n\nhttps://nblog.libretechsystems.xyz\n\nhttps://zoryaprivacy.libretechsystems.xyz/\n\nhttps://sigmaenterprise.github.io/\n\nPodcast\n\nhttps://freedomtech.eshgham.one/episodes\n\nStore Page (Hosted On Blossom servers)\n\nhttps://w3.do/uALvGfWz\n\nLightning Layer Hash\n\nhttps://w3.do/P95otzTc\n\nLightning Layer Hash Books\n\nhttps://w3.do/bepcT-KZ\n\nHosting Plans\n\nhttps://w3.do/KKrjIv8o (All Prices in TTD) Payment is Bitcoin and Lightning\n\nFeel free to reach out for collaboration opportunities, inquiries, or just to say hello! 🚀✨\n",
+      "score": 20,
+      "nip05": "sovereign-community-infrastructure@nostrprotocol.libretechsystems.xyz",
+      "lud16": "libretech-systems@rizful.com",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1aqakd28d95muqlg6h6nwrvqq5925n354prayckr424k49vzjds4s0c237n",
+      "name": "mike",
+      "picture": "https://i.nostr.build/S7E8cXcLjAvMRwNY.jpg",
+      "bio": "Building \"Brian\", my first brain in silicon \n\nLord Provost of Bitcoin\nFully vested Chief AI Officer (CAIO)\nFormer, failed, Chief VLOG Officer\nFormer Chief Shitpost Officer - NOSTR Inc.\n\nNode runner - Miner - Author\n\nMy public relay: https://nortis.nostr1.com/\nMy book: https://mikehardcastle.com/my-book-why-bitcoin/",
+      "score": 20,
+      "nip05": "mike@mikehardcastle.com",
+      "lud16": "mike@mikehardcastle.com",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1j0ht2m9jgs6mccyvkffd2dlnfusmqfx9mjlwg6fsmfwxm9rfuwdq40w6rf",
+      "name": "nogoodkid",
+      "picture": "https://blossom.primal.net/242135978e50f4d9798909e74585ea7ff3d80fde1cdb68c0d39dc18fe66faefe.gif",
+      "bio": "Design & creative collabs.\nIdeas, brands, logos, merch, web, books.\n💀 Check https://www.nogoodkid.com/",
+      "score": 20,
+      "nip05": "dworis@nostrplebs.com",
+      "lud16": "nogoodkid@wallet.yakihonne.com",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1te43vvz6akg0mkdm8hmkznrmrdqe8fhc3kkp4349a40yt3x57p5q63qwzc",
+      "name": "JoeBoonie",
+      "picture": "https://blossom.primal.net/9f7427c06cefff67aac2376bd0bbf3e991f150a7ef444349264eb3e20b51769c.gif",
+      "bio": "A GenXer, Louisiana native, who mines fiat as an insurance agent, gamer Dad, amateur photography, and moon enthusiast. I follow back. I love it here!\n\n#nostr since 3/13/2024. 🥳                                                              \n\n🩶 Dad's story ended 10-27-2025. Grief has inspired a book I started to author in 2026.\n#humuhumunukunukuāpuaʻa",
+      "score": 20,
+      "nip05": "jjoeboonie@zaps.lol",
+      "lud16": "theboonie@getalby.com",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1508rk9udkqcvt0wdm5d20jdfzflvk9l3da764awcy95xpd6c357qkrtwu3",
+      "name": "Why Carnivore",
+      "picture": "https://pbs.twimg.com/profile_images/1701410338678206464/JkZJqdr3.jpg",
+      "bio": "IN PROGRESS: The most comprehensive collection of research, presentations, books, movies, and testimonials on the #CarnivoreDiet ever created. Stay tuned 🥩📚",
+      "score": 20,
+      "nip05": "",
+      "lud16": "whycarnivore@getalby.com",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1msmd5n5qknf5yuweyjz8983k99g9p79k4gt6ycy06srv2pft2x6sh4wg77",
+      "name": "Stephan",
+      "picture": "https://blossom.primal.net/b97074cba733a88af2ee2058a58bc61d37559d4b4c60b2d1f29cf3d7c313333f.png",
+      "bio": "Builder, book author, entrepreneur, podcaster. Living in El Salvador.",
+      "score": 20,
+      "nip05": "bentyn@nostr.lol",
+      "lud16": "superdog19@primal.net",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1t6jxfqz9hv0lygn9thwndekuahwyxkgvycyscjrtauuw73gd5k7sqvksrw",
+      "name": "Constant",
+      "picture": "https://cdn.satellite.earth/7f9e4c4b5ab39da8e0a07d58d050fe4411da92788b09fc583caf324cb83b2a23.jpeg",
+      "bio": "Writing a book about Nostr\n\nCeterum censeo NIP-03 omnibus esse utendum",
+      "score": 20,
+      "nip05": "Constant@techno-ethica.com",
+      "lud16": "constant@lnbits.beyourownbank.nl",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1t6jxfqz9hv0lygn9thwndekuahwyxkgvycyscjrtauuw73gd5k7sqvksrw",
+      "name": "Constant",
+      "picture": "https://cdn.satellite.earth/c6eb12104ff7ea744361d8d32e72035409e3ee85e93ac5d57696008ea58c61b9.jpg",
+      "bio": "Writing a book about Nostr\n\nCeterum censeo NIP-03 omnibus esse utendum",
+      "score": 20,
+      "nip05": "Constant@techno-ethica.com",
+      "lud16": "constant@lnbits.beyourownbank.nl",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub18hdy2qy2qwga0ye7rtnucwuyf07erjfdmm7s74wwdt7sy4mk7tdsdd8059",
+      "name": "Kevin's Bacon",
+      "picture": "https://pfp.nostr.build/6ad67713e4f4c96e49e062e3364f4f82647d11910396d2bcd563c6ddefa63dda.jpg",
+      "bio": "Natural Law Anarchist 🏴 | Bitcoin Noderunner and Miner 🧡 | Aristotelian | Student of Nature | Highly Sensitive Person | High IQ Retard | Austrian Economist | Autodidact | Polymath | Selfish Prick | Excellent Source of Protein and Triglycerides\n\nIntellectual honesty is key.\nConsent is king.\nChaos is self-regulating.\nAuthority of any man over another is necessarily a fiction.",
+      "score": 20,
+      "nip05": "kb@mynostr.com",
+      "lud16": "kevinsbacon@coinos.io",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub15jqgr8thxgsfnhxufcu05ucja8kgr0guu4ud82cm2h36ml6ulmns25pxvw",
+      "name": "Tirodem",
+      "picture": "https://m.primal.net/MpzM.jpg",
+      "bio": "CPO, QA & co-founder @ be-BOP.io\nDreamer @ PVH-Labs & PVH-Éditions\nSenior QA Analyst & NostR enthusiast\nLaBookinerie / beBOP buidler\nLeft hand of Ludomire\nWriter / Game designer / Dad",
+      "score": 20,
+      "nip05": "",
+      "lud16": "tirodem@be-bop.io",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1m2mvvpjugwdehtaskrcl7ksvdqnnhnjur9v6g9v266nss504q7mqvlr8p9",
+      "name": "Juraj",
+      "picture": "https://juraj.bednar.io/assets/socials/profile.jpg?a",
+      "bio": "I don’t seek rigid structure — I seek resonance\n\nLearn how to use Bitcoin for more than just saving in my 📖Cryptocurrencies - Hack your way to a better life.\n\nVibe coding, reality bending, cypherpunk visions.\n\nGet my books and courses here:\nhttps://hackyourself.io/shop\nhttps://juraj.bednar.io/shop\n\n(You'll learn skills no one else is teaching!)\n\nPodcasts 🎙️:\nOption Plus - https://optionplus.io/\nReči o živote, vesmíre a vôbec: https://juraj.bednar.io/reci-o-zivote/\nAko vyhackovať otcovstvo: https://otcovia.com/",
+      "score": 20,
+      "nip05": "juraj@bitpunk.fm",
+      "lud16": "juraj-bzzz@pay.cypherpunk.today",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1s5kgfmzkjdyrts5cv9rzwk2a7k0gmdepmwy252ekhup3ecwyy4psnwj9c5",
+      "name": "WolfMacbeth",
+      "picture": "https://image.nostr.build/85dcd3e446d54bd11ef052b67ad7c488d3bffc718773283ef68b1f33cb2af80d.jpg",
+      "bio": "These two are my core beliefs, #Bitcoin embodies hope for people, while #literature offers hope to the reader.",
+      "score": 20,
+      "nip05": "wolfmc@iris.to",
+      "lud16": "adb7387171bc2f07@coinos.io",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub1jeqhakwnjf3hp2y8gv8uly95d7asn64y3y0wex7usl5sye4s9f2sgznmal",
+      "name": "tuma",
+      "picture": "https://image.nostr.build/ab3a8fa1ecd0525a658c886eec23fce20ac342ea1a3b434223df85db86859bb3.jpg",
+      "bio": "#Bitcoin, #Freedom and my personal pursuit of #Happiness\nOpen-source Writer\nFOSS Reporter @ npub1z6dx97fxn94j3z9c3pvgsellnywqgakmj82d7rrr3jdlgy2nqgnq5uf7n9\nAuthor of Inside Bitcoin Code: https://open.substack.com/pub/insidebitcoincode\nContributor @ npub1hkuk45c6c6h3y0rks0z4wa0wyyud5ru0qy0rn9x4dgnjwrnfy46s5a432p\nFounder Bitcoiners Varese\nBuilding “Sats Tracker”: npub1zuql93d6885nckrehq7m85x59cu44cpm6579hexxrlw3900lszds46u7mw\nSometimes #photographer @ npub1m85lkfcs73qgpdmm5l5zsjr0wd2khccum6vl8u39v7dvt407tcdq6uxjkj",
+      "score": 20,
+      "nip05": "tuma@nostrplebs.com",
+      "lud16": "tuma@minibits.cash",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    },
+    {
+      "npub": "npub19ma2w9dmk3kat0nt0k5dwuqzvmg3va9ezwup0zkakhpwv0vcwvcsg8axkl",
+      "name": "vinney...axkl",
+      "picture": "https://vcavallo.nyc3.cdn.digitaloceanspaces.com/images/denim-shirt-sideways.jpeg",
+      "bio": "Engineer at https://opennode.com\n\nWorking on https://catallax.network - decentralized labor/bounty protocol\nand: https://attestr.app/ - mutual agreements signed on nostr\n\nDo you like sharing paywalled content to nostr? Install this extension: https://chromewebstore.google.com/detail/readtorelay/gfncdikmbmefjjbahjhgkodnhepikecj -  https://github.com/vcavallo/ReadToRelay\n\nOrder print books with bitcoin! https://whitepaperbooks.com",
+      "score": 20,
+      "nip05": "vcavallo@vinneycavallo.com",
+      "lud16": "vinney@minibits.cash",
+      "categories": [
+        "books"
+      ],
+      "tags": [
+        "books"
+      ],
+      "activity": "medium",
+      "contentTypes": [
+        "text"
+      ],
+      "addedAt": "2026-02-13",
+      "updatedAt": "2026-02-13"
+    }
+  ],
+  "updatedAccounts": [
+    {
+      "pubkey": "84dee6e676e5bb67b4ad4e042cf70cbd8681155db535942fcc6a0533858a7240",
+      "npub": "npub1sn0wdenkukak0d9dfczzeacvhkrgz92ak56egt7vdgzn8pv2wfqqhrjdv9",
+      "name": "Snowden",
+      "username": "Snowden",
+      "picture": "https://nostr.build/i/p/6838p.jpeg",
+      "bio": "Bio: I used to work for the government. Now I work for the public. Author, \"Permanent Record\": https://us.macmillan.com/books/9781250237231/permanentrecord",
+      "nip05": "Snowden@Nostr-Check.com",
+      "lud16": "snowden@getalby.com",
+      "website": "edwardsnowden.substack.com",
+      "score": 20,
+      "existingCategories": [
+        "jumpstart"
+      ],
+      "newCategories": [
+        "jumpstart",
+        "books"
+      ]
+    },
+    {
+      "pubkey": "2248fe0518a40ef52013abd98602bfb7110d5f544d43f56fe5522e6273582fdb",
+      "npub": "npub1yfy0upgc5s802gqn40vcvq4lkugs6h65f4pl2ml92ghxyu6c9ldsxq3tu8",
+      "name": "bitcoin4all",
+      "username": "bitcoin4all",
+      "picture": "https://m.primal.net/KbVw.jpg",
+      "bio": "I wrote a kids book that you can only buy with Bitcoin called The Winds Of Uncertainty. You can buy it from my website. The e-book and a video of me reading it aloud are free. \n\nwww.satoshigeneral.com\n\nBitcoin only dad, husband, business owner. ",
+      "nip05": "TallBrian@primal.net",
+      "lud16": "TallBrian@primal.net",
+      "website": "www.satoshigeneral.com",
+      "score": 20,
+      "existingCategories": [
+        "parents"
+      ],
+      "newCategories": [
+        "parents",
+        "books"
+      ]
+    },
+    {
+      "pubkey": "c3ae4ad8e06a91c200475d69ca90440d6d54de729d3d1e5afacfbdb6e54d46cb",
+      "npub": "npub1cwhy4k8qd2guyqz8t45u4yzyp4k4fhnjn573ukh6e77mde2dgm9s2lujc5",
+      "name": "beejay",
+      "username": "beejay",
+      "picture": "https://image.nostr.build/9f3e46eb78f8e6ef6ea7771358e088095423c5f0083362ecfa5e2da50224de47.jpg",
+      "bio": "Twin Cities MN native - Old lady, tech nerd, cookbook author\n\nLow sugar ground beef jerky @ https://mailboxmeat.com/\nFree keto recipes at @ https://ketobeejay.npub.pro/\n\nLow carb for T2D\nFaith >>> religion 🙏\nI ♥ silly cat GIFs \n#anarchist #agorist N=1",
+      "nip05": "beejay@nip-05.com",
+      "lud16": "beejay@rizful.com",
+      "website": "https://ketolish.us/",
+      "score": 20,
+      "existingCategories": [
+        "foodies"
+      ],
+      "newCategories": [
+        "foodies",
+        "books"
+      ]
+    }
+  ],
+  "skipped": 2600
+}

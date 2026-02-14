@@ -16,7 +16,7 @@ export function TourTooltip() {
   const position = currentStepData?.position ?? 'bottom';
   const padding = currentStepData?.spotlightPadding ?? 8;
 
-  const { tooltipRect } = useTourElement(targetSelector, position, padding);
+  const { tooltipRect, targetCenter } = useTourElement(targetSelector, position, padding);
 
   // Animation delay
   useEffect(() => {
@@ -48,8 +48,7 @@ export function TourTooltip() {
       role="alert"
       aria-live="polite"
     >
-      {/* Arrow */}
-      <div className={`tour-tooltip__arrow tour-tooltip__arrow--${position}`} />
+      {/* Arrows removed - they were causing positioning issues */}
 
       {/* Header */}
       <div className="tour-tooltip__header">

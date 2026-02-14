@@ -76,7 +76,7 @@ export function TourControls() {
         {state.hasCompleted || state.hasSkipped ? (
           <button
             className="tour-controls__btn tour-controls__btn--ghost"
-            onClick={restartTour}
+            onClick={() => restartTour()}
             aria-label="Restart tour"
             title="Restart"
           >

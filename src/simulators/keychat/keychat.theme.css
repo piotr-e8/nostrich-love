@@ -1,0 +1,128 @@
+/**
+ * Keychat Theme
+ * Material Design 3 inspired with Keychat brand colors
+ */
+
+.keychat-simulator {
+  --keychat-primary: #2D7FF9;
+  --keychat-secondary: #1E40AF;
+  --keychat-accent: #F59E0B;
+  --keychat-background: #FFFFFF;
+  --keychat-surface: #F8FAFC;
+  --keychat-text: #1E293B;
+  --keychat-text-secondary: #64748B;
+  
+  width: 100%;
+  height: 100%;
+  font-family: 'Roboto', system-ui, -apple-system, sans-serif;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.keychat-simulator.dark {
+  --keychat-background: #0F172A;
+  --keychat-surface: #1E293B;
+  --keychat-text: #F8FAFC;
+  --keychat-text-secondary: #94A3B8;
+}
+
+/* Mobile Frame Styling - simplified for MobilePhoneFrame */
+.keychat-simulator .mobile-frame {
+  width: 100%;
+  height: 100%;
+}
+
+/* Remove conflicting absolute positioning */
+.keychat-simulator .mobile-notch,
+.keychat-simulator .android-status-bar {
+  display: none;
+}
+
+/* Keychat Content Area - Fixed flex layout */
+.keychat-simulator-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Bottom Navigation - Fixed at bottom */
+.keychat-bottom-nav {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px 0 calc(8px + env(safe-area-inset-bottom, 8px));
+  background: var(--keychat-background);
+  border-top: 1px solid var(--keychat-surface);
+  z-index: 100;
+}
+
+/* Material Design 3 Card Styling */
+.md-card {
+  background: var(--keychat-surface);
+  border-radius: 16px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* Chat Bubble Styling */
+.chat-bubble {
+  max-width: 80%;
+  padding: 12px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.chat-bubble-incoming {
+  background: var(--keychat-surface);
+  color: var(--keychat-text);
+  border-bottom-left-radius: 4px;
+}
+
+.chat-bubble-outgoing {
+  background: var(--keychat-primary);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+/* Bottom Navigation Animation */
+.bottom-nav-indicator {
+  position: absolute;
+  bottom: 0;
+  width: 40px;
+  height: 3px;
+  background: var(--keychat-primary);
+  border-radius: 3px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ripple Effect */
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transform: scale(10, 10);
+  opacity: 0;
+  transition: transform 0.5s, opacity 1s;
+}
+
+.ripple:active::after {
+  transform: scale(0, 0);
+  opacity: 0.3;
+  transition: 0s;
+}

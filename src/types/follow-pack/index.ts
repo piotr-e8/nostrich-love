@@ -4,13 +4,20 @@ export type CategoryId =
   // Follow pack categories from imported naddr data
   | 'jumpstart'
   | 'artists'
+  | 'photography'
+  | 'musicians'
+  | 'permaculture'
+  | 'parents'
+  | 'christians'
+  | 'foodies'
   | 'mystics'
   | 'cool_people'
   | 'sovereign'
   | 'legit'
   | 'niche'
   | 'merchants'
-  | 'doomscrolling';
+  | 'doomscrolling'
+  | 'books';
 
 export type ActivityLevel = 'high' | 'medium' | 'low';
 

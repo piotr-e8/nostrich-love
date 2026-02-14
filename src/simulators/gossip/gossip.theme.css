@@ -459,7 +459,7 @@
   border-radius: var(--gossip-radius-lg);
   width: 90%;
   max-width: 600px;
-  max-height: 90vh;
+  max-height: 80vh;
   overflow: hidden;
 }
 

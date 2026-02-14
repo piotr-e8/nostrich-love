@@ -1,0 +1,44 @@
+---
+/**
+ * Olas Simulator Page
+ * Photo-first Nostr client simulation - Sidebar Navigation Layout
+ */
+
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/layout/Header.astro';
+import { olasConfig } from '../../simulators/shared/configs';
+import OlasSimulatorWithTour from '../../simulators/olas/OlasSimulatorWithTour';
+import { SimulatorClient } from '../../simulators/shared/types';
+import SimulatorSidebar from '../../components/navigation/SimulatorSidebar';
+import MobilePhoneFrame from '../../simulators/shared/components/MobilePhoneFrame';
+
+const title = `Try ${olasConfig.name} - Nostr Client Simulator`;
+const description = olasConfig.description;
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <div class="simulator-page min-h-screen bg-gray-100 dark:bg-gray-950">
+    <div class="flex h-[calc(100vh-4rem)]">
+      {/* Sidebar Navigation */}
+      <SimulatorSidebar 
+        client:load 
+        currentClient={SimulatorClient.OLAS}
+        className="h-full"
+      />
+      
+      {/* Main Content Area - Simulator stays centered and fixed */}
+      <div class="flex-1 relative h-full overflow-hidden">
+        {/* Simulator Container - Centered with mobile phone frame */}
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+          <MobilePhoneFrame client:load platform="ios">
+            <OlasSimulatorWithTour client:load />
+          </MobilePhoneFrame>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<!-- Tour button functionality handled by SimulatorSidebar React component -->

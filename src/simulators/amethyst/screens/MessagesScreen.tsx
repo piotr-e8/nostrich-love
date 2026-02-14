@@ -29,7 +29,7 @@ const mockConversations: Conversation[] = [
     id: '1',
     user: {
       name: 'fiatjaf',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=fiatjaf',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=fiatjaf',
       handle: 'fiatjaf@fiatjaf.com',
       isVerified: true,
       isOnline: true,
@@ -43,7 +43,7 @@ const mockConversations: Conversation[] = [
     id: '2',
     user: {
       name: 'PabloF7z',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=pablo',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=pablo',
       handle: 'pablo@damus.io',
       isVerified: true,
       isOnline: false,
@@ -57,7 +57,7 @@ const mockConversations: Conversation[] = [
     id: '3',
     user: {
       name: 'Will Casarin',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=jb55',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=jb55',
       handle: 'jb55@jb55.com',
       isVerified: true,
       isOnline: true,
@@ -71,7 +71,7 @@ const mockConversations: Conversation[] = [
     id: '4',
     user: {
       name: 'Vitor Pamplona',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=vitor',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=vitor',
       handle: 'vitor@vitorpamplona.com',
       isVerified: true,
       isOnline: false,
@@ -85,7 +85,7 @@ const mockConversations: Conversation[] = [
     id: '5',
     user: {
       name: 'ODELL',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=odell',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=odell',
       handle: '@odell',
       isOnline: true,
     },

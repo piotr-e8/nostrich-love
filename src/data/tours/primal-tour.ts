@@ -1,6 +1,6 @@
 /**
  * Primal Web Simulator Tour
- * Interactive, event-driven guided tour for Primal client
+ * Tour drives the simulator - user clicks Next, tour navigates simulator
  */
 
 import type { TourConfig, TourStep } from '../../components/tour';
@@ -20,10 +20,7 @@ const primalTourSteps: TourStep[] = [
     title: 'Key-Based Login',
     content: 'Primal uses Nostr\'s key system. Login with your existing nsec (private key) or generate new keys. No passwords, no email - just cryptography! Extensions like Alby or nos2x are the safest option.',
     position: 'bottom',
-    trigger: 'action',
-    actionType: 'login',
     allowClickThrough: true,
-    action: 'Login with your key or extension to continue',
     spotlightPadding: 16,
   },
   {
@@ -32,10 +29,7 @@ const primalTourSteps: TourStep[] = [
     title: 'Optimized Feed',
     content: 'Primal\'s feed loads quickly with infinite scroll. See posts from followed accounts with threaded replies. The interface prioritizes content readability. This is where you will discover content!',
     position: 'top',
-    trigger: 'action',
-    actionType: 'navigate_home',
     allowClickThrough: true,
-    action: 'Click the Home icon to view your feed',
     spotlightPadding: 8,
   },
   {
@@ -44,10 +38,7 @@ const primalTourSteps: TourStep[] = [
     title: 'Quick Compose',
     content: 'Create posts easily from anywhere. Support for text formatting, mentions (@username), hashtags (#topic), and custom emojis. Your post reaches all connected relays instantly.',
     position: 'bottom',
-    trigger: 'action',
-    actionType: 'compose',
     allowClickThrough: true,
-    action: 'Click to start writing a post',
     spotlightPadding: 12,
   },
   {
@@ -56,10 +47,7 @@ const primalTourSteps: TourStep[] = [
     title: 'Publish Your Note',
     content: 'Write something interesting and hit post! Your note will be cryptographically signed and broadcast to all connected relays. Once published, it is permanent on the Nostr network.',
     position: 'bottom',
-    trigger: 'action',
-    actionType: 'post',
     allowClickThrough: true,
-    action: 'Type a message and click "Post" to publish',
     spotlightPadding: 12,
   },
   {
@@ -68,10 +56,7 @@ const primalTourSteps: TourStep[] = [
     title: 'User Profiles',
     content: 'View detailed profiles with stats, posts, media, and followers. Edit your own profile with rich metadata including NIP-05 identifiers and Lightning addresses. This is your identity on Nostr!',
     position: 'bottom',
-    trigger: 'action',
-    actionType: 'view_profile',
     allowClickThrough: true,
-    action: 'Click your profile picture to view your profile',
     spotlightPadding: 16,
   },
   {
@@ -80,10 +65,7 @@ const primalTourSteps: TourStep[] = [
     title: 'Following Users',
     content: 'Find interesting people by browsing your network. When you follow someone, their posts appear in your feed. Your follows are stored in your account and synced across all Nostr clients.',
     position: 'left',
-    trigger: 'action',
-    actionType: 'follow',
     allowClickThrough: true,
-    action: 'Click "Follow" on any user profile',
     spotlightPadding: 8,
   },
   {
@@ -92,10 +74,7 @@ const primalTourSteps: TourStep[] = [
     title: 'Lightning Zaps',
     content: 'Primal has excellent Lightning Network integration. Send Bitcoin sats (zaps) to reward great content. Setup your own Lightning address to receive tips too! You can also like and reply to posts.',
     position: 'top',
-    trigger: 'action',
-    actionType: 'like',
     allowClickThrough: true,
-    action: 'Click the heart icon to like a post',
     spotlightPadding: 8,
   },
   {
@@ -104,10 +83,7 @@ const primalTourSteps: TourStep[] = [
     title: 'Settings & Security',
     content: 'Manage your account, backup your keys, adjust notification preferences, and configure the app. Remember to backup your private key securely - if you lose it, you lose access to your account!',
     position: 'center',
-    trigger: 'action',
-    actionType: 'navigate_settings',
     allowClickThrough: true,
-    action: 'Click the Settings icon to explore options',
     spotlightPadding: 0,
   },
   {

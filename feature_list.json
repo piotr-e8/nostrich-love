@@ -1,0 +1,278 @@
+{
+  "app_name": "Amethyst",
+  "version": "1.05.1",
+  "platform": "Android",
+  "min_android_version": "8.0 (API 26)",
+  "developer": "Vitor Pamplona",
+  "license": "MIT",
+  "repository": "https://github.com/vitorpamplona/amethyst",
+  "website": "https://amethyst.social",
+  
+  "core_features": [
+    {
+      "category": "Social",
+      "features": [
+        "Home feed with posts from followed users",
+        "Follow/unfollow users (NIP-02)",
+        "Replies and threaded conversations (NIP-10)",
+        "Reposts and quote posts (NIP-18)",
+        "Emoji reactions (NIP-25)",
+        "User mentions in posts",
+        "Infinity scroll for seamless browsing",
+        "Markdown support in posts"
+      ]
+    },
+    {
+      "category": "Messaging",
+      "features": [
+        "Encrypted direct messages (NIP-04, NIP-17)",
+        "Private zaps (NIP-57)",
+        "Public chats (NIP-28)",
+        "Relay-based group chats (NIP-29)",
+        "Live chat during streams (NIP-53)"
+      ]
+    },
+    {
+      "category": "Media",
+      "features": [
+        "Image/Video/URL previews",
+        "In-app image capture",
+        "In-app video capture",
+        "Video events (NIP-71)",
+        "Media grid layouts",
+        "Blurhash loading placeholders"
+      ]
+    },
+    {
+      "category": "Identity",
+      "features": [
+        "NIP-05 DNS verification display",
+        "Extended profile fields (NIP-24)",
+        "External identity linking (NIP-39)",
+        "Badge support (NIP-58)",
+        "Multiple account switching",
+        "QR code login",
+        "Mnemonic seed phrase (NIP-06)"
+      ]
+    },
+    {
+      "category": "Discovery",
+      "features": [
+        "Hashtag following",
+        "Custom hashtags",
+        "Relay search (NIP-50)",
+        "Trending content",
+        "Full-text search",
+        "Lists (NIP-51)"
+      ]
+    },
+    {
+      "category": "Lightning",
+      "features": [
+        "Zaps/micropayments (NIP-57)",
+        "Zap splits to multiple recipients",
+        "Zap goals/fundraising (NIP-75)",
+        "Wallet Connect integration (NIP-47)",
+        "Lightning invoice previews"
+      ]
+    },
+    {
+      "category": "Live Streaming",
+      "features": [
+        "Live activities/streams (NIP-53)",
+        "Live chat integration",
+        "Stream indicators/badges",
+        "Audio track streaming (zapstr.live)"
+      ]
+    },
+    {
+      "category": "Communities",
+      "features": [
+        "Moderated communities (NIP-72)",
+        "Community discovery",
+        "Community moderation tools",
+        "Workspaces for organization"
+      ]
+    },
+    {
+      "category": "Content Creation",
+      "features": [
+        "Text notes with markdown",
+        "Long-form articles (NIP-23)",
+        "Calendar events (NIP-52)",
+        "Polls (NIP-69)",
+        "Draft events",
+        "Event sets"
+      ]
+    },
+    {
+      "category": "Commerce",
+      "features": [
+        "Marketplace listings (NIP-15)",
+        "Classifieds (NIP-99)",
+        "Bounty support (nostrbounties.com)"
+      ]
+    }
+  ],
+  
+  "unique_differentiating_features": [
+    {
+      "feature": "In-Device Translation",
+      "description": "Automatic translation without external services"
+    },
+    {
+      "feature": "Live Streaming",
+      "description": "Native support for live video with integrated chat"
+    },
+    {
+      "feature": "Zap Splits",
+      "description": "Split lightning payments among multiple recipients"
+    },
+    {
+      "feature": "Video Capture",
+      "description": "Native in-app video recording and uploading"
+    },
+    {
+      "feature": "Multiple Accounts",
+      "description": "Easy switching between multiple Nostr identities"
+    },
+    {
+      "feature": "Workspaces",
+      "description": "Organized content spaces for power users"
+    },
+    {
+      "feature": "F-Droid Support",
+      "description": "De-googled flavor available for privacy"
+    },
+    {
+      "feature": "Desktop App",
+      "description": "Compose Multiplatform desktop version available"
+    },
+    {
+      "feature": "Infinity Scroll",
+      "description": "Seamless infinite scrolling with lazy loading"
+    },
+    {
+      "feature": "Push Notifications",
+      "description": "Google FCM and Unified Push support"
+    }
+  ],
+  
+  "ui_components": {
+    "navigation": [
+      "Bottom navigation bar",
+      "Tab-based content switching",
+      "Swipe gestures between tabs",
+      "Floating action button (FAB)",
+      "Bottom sheets for actions",
+      "Navigation drawer (optional)"
+    ],
+    "content_display": [
+      "Card-based post layout",
+      "Avatar + content standard layout",
+      "Thread/reply indicators",
+      "Media grid for galleries",
+      "Action bar (like, boost, zap, reply)",
+      "Profile header with stats",
+      "Notification cards",
+      "Relay status indicators"
+    ],
+    "inputs": [
+      "Text input with markdown toolbar",
+      "Image picker",
+      "Video recorder",
+      "Mention autocomplete",
+      "Hashtag suggestions",
+      "Emoji picker",
+      "QR code scanner"
+    ],
+    "feedback": [
+      "Snackbar notifications",
+      "Toast messages",
+      "Progress indicators",
+      "Skeleton loading screens",
+      "Pull-to-refresh"
+    ],
+    "modals": [
+      "Bottom sheets",
+      "Dialogs for confirmations",
+      "Full-screen viewers",
+      "Profile sheets"
+    ]
+  },
+  
+  "missing_features": [
+    "Stories/Highlights (Instagram-style)",
+    "Advanced search filters",
+    "Bookmark saving for posts",
+    "Scheduled post publishing",
+    "Analytics dashboard",
+    "Bulk actions (select multiple)",
+    "Custom theme creation",
+    "Home screen widgets",
+    "Voice messages",
+    "Video stories",
+    "Pinned posts",
+    "Post drafts auto-save",
+    "Reading time estimates",
+    "Content warnings for all media"
+  ],
+  
+  "nip_implementation_status": {
+    "fully_implemented": [
+      "NIP-01", "NIP-02", "NIP-04", "NIP-05", "NIP-06", "NIP-09",
+      "NIP-10", "NIP-11", "NIP-12", "NIP-13", "NIP-14", "NIP-15",
+      "NIP-16", "NIP-17", "NIP-18", "NIP-19", "NIP-21", "NIP-23",
+      "NIP-24", "NIP-25", "NIP-28", "NIP-29", "NIP-30", "NIP-31",
+      "NIP-32", "NIP-33", "NIP-34", "NIP-35", "NIP-36", "NIP-38",
+      "NIP-39", "NIP-40", "NIP-42", "NIP-44", "NIP-46", "NIP-47",
+      "NIP-49", "NIP-50", "NIP-51", "NIP-52", "NIP-53", "NIP-54",
+      "NIP-56", "NIP-57", "NIP-58", "NIP-59", "NIP-65", "NIP-69",
+      "NIP-71", "NIP-72", "NIP-75", "NIP-78", "NIP-84", "NIP-89",
+      "NIP-90", "NIP-92", "NIP-94", "NIP-96", "NIP-98", "NIP-99"
+    ],
+    "partially_implemented": [
+      "NIP-03 (OpenTimestamps)",
+      "NIP-46 (Nostr Connect)",
+      "NIP-55 (Inline Metadata)",
+      "NIP-95 (Binary Blobs)"
+    ],
+    "not_implemented": [
+      "NIP-07 (WebBrowser Signer - not applicable)",
+      "NIP-08 (Old-style mentions - deprecated)",
+      "NIP-20 (Command Results - deprecated)",
+      "NIP-26 (Delegated Signing - won't implement)",
+      "NIP-45 (Event Counts - won't implement)",
+      "NIP-48 (Proxy Tags - not applicable)"
+    ]
+  },
+  
+  "gesture_support": [
+    "Pull-to-refresh",
+    "Swipe between tabs",
+    "Swipe actions on list items",
+    "Long-press for context menus",
+    "Double-tap to like",
+    "Pinch to zoom on images",
+    "Swipe to dismiss notifications"
+  ],
+  
+  "accessibility_features": [
+    "Android accessibility framework",
+    "Screen reader (TalkBack) support",
+    "High contrast mode",
+    "Font scaling support",
+    "Content descriptions",
+    "Focus management",
+    "Semantic markup"
+  ],
+  
+  "performance_features": [
+    "Lazy loading for infinite scroll",
+    "Image caching with blurhash",
+    "Local database for offline access",
+    "Background sync",
+    "Efficient relay pooling",
+    "Memory management for large lists"
+  ]
+}

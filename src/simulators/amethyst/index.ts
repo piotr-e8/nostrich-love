@@ -13,6 +13,7 @@ export type { AmethystSimulatorProps, TabId } from './AmethystSimulator';
 export { BottomNav } from './components/BottomNav';
 export { MaterialCard } from './components/MaterialCard';
 export { FloatingActionButton, ExtendedFAB } from './components/FloatingActionButton';
+export { Drawer } from './components/Drawer';
 
 // Screens
 export { LoginScreen } from './screens/LoginScreen';
@@ -23,6 +24,7 @@ export { MessagesScreen } from './screens/MessagesScreen';
 export { ProfileScreen } from './screens/ProfileScreen';
 export { SettingsScreen } from './screens/SettingsScreen';
 export { ComposeScreen } from './screens/ComposeScreen';
+export { VideoScreen } from './screens/VideoScreen';
 
 // Theme
 import './amethyst.theme.css';

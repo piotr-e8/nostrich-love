@@ -2,6 +2,7 @@ import React, { useState, useCallback, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BottomNav } from './components/BottomNav';
 import { FloatingActionButton } from './components/FloatingActionButton';
+import { Drawer } from './components/Drawer';
 import { LoginScreen } from './screens/LoginScreen';
 import { HomeScreen } from './screens/HomeScreen';
 import { SearchScreen } from './screens/SearchScreen';
@@ -10,13 +11,14 @@ import { MessagesScreen } from './screens/MessagesScreen';
 import { ProfileScreen } from './screens/ProfileScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
 import { ComposeScreen } from './screens/ComposeScreen';
+import { VideoScreen } from './screens/VideoScreen';
 import { useParentTheme } from '../shared/hooks/useParentTheme';
 import './amethyst.theme.css';
 import type { MockUser } from '../../data/mock';
 import { TourContext } from '../../components/tour';
 
 // Types
-export type TabId = 'home' | 'search' | 'notifications' | 'messages' | 'profile';
+export type TabId = 'home' | 'search' | 'video' | 'notifications' | 'messages' | 'profile';
 
 export interface AmethystSimulatorProps {
   className?: string;
@@ -26,6 +28,7 @@ export function AmethystSimulator({ className = '' }: AmethystSimulatorProps) {
   const [activeTab, setActiveTab] = useState<TabId>('home');
   const [isComposeOpen, setIsComposeOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const parentTheme = useParentTheme();
   const tourContext = useContext(TourContext);
   const registerAction = (actionType: string) => {
@@ -93,6 +96,8 @@ export function AmethystSimulator({ className = '' }: AmethystSimulatorProps) {
         );
       case 'search':
         return <SearchScreen key="search" />;
+      case 'video':
+        return <VideoScreen key="video" />;
       case 'notifications':
         return <NotificationsScreen key="notifications" />;
       case 'messages':
@@ -113,7 +118,7 @@ export function AmethystSimulator({ className = '' }: AmethystSimulatorProps) {
   if (!isAuthenticated) {
     return (
       <div 
-        className={`amethyst-simulator mobile-frame ${getThemeClass()} ${className}`}
+        className={`amethyst-simulator ${getThemeClass()} ${className}`}
         data-theme={parentTheme}
       >
         <LoginScreen onLogin={handleLogin} />
@@ -123,32 +128,26 @@ export function AmethystSimulator({ className = '' }: AmethystSimulatorProps) {
 
   return (
     <div 
-      className={`amethyst-simulator mobile-frame ${getThemeClass()} ${className}`}
+      className={`amethyst-simulator ${getThemeClass()} ${className}`}
       data-theme={parentTheme}
     >
-      {/* Android Status Bar */}
-      <div className="android-status-bar">
-        <span className="text-sm font-medium">9:41</span>
-        <div className="flex items-center gap-1">
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-          </svg>
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-          </svg>
-          <div className="flex items-center">
-            <div className="w-6 h-3 border border-current rounded-sm relative">
-              <div className="absolute inset-0.5 bg-current rounded-sm" style={{ width: '70%' }} />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Notch */}
-      <div className="mobile-notch" />
+      {/* Drawer Navigation */}
+      <Drawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        activeTab={activeTab}
+        onTabChange={(tab) => {
+          setActiveTab(tab as TabId);
+          setIsDrawerOpen(false);
+        }}
+        onOpenSettings={() => {
+          setIsSettingsOpen(true);
+          setIsDrawerOpen(false);
+        }}
+      />
 
       {/* Main Content Area */}
-      <div className="amethyst-simulator-content">
+      <div className="amethyst-simulator-content pb-20">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -184,7 +183,7 @@ export function AmethystSimulator({ className = '' }: AmethystSimulatorProps) {
       </AnimatePresence>
 
       {/* Bottom Navigation - Only show on main tabs */}
-      {activeTab !== 'profile' && (
+      {activeTab !== 'profile' && activeTab !== 'video' && (
         <BottomNav 
           activeTab={activeTab} 
           onTabChange={handleTabChange}
@@ -237,9 +236,6 @@ export function AmethystSimulator({ className = '' }: AmethystSimulatorProps) {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Home Indicator */}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-[var(--md-on-surface-variant)]/30 rounded-full z-50" />
     </div>
   );
 }

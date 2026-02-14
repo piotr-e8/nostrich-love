@@ -32,7 +32,7 @@ const mockNotifications: Notification[] = [
     type: 'zap',
     user: {
       name: 'fiatjaf',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=fiatjaf',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=fiatjaf',
       handle: 'fiatjaf@fiatjaf.com',
     },
     amount: 1000,
@@ -45,7 +45,7 @@ const mockNotifications: Notification[] = [
     type: 'like',
     user: {
       name: 'PabloF7z',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=pablo',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=pablo',
       handle: 'pablo@damus.io',
     },
     content: 'Just shipped a new feature...',
@@ -57,7 +57,7 @@ const mockNotifications: Notification[] = [
     type: 'repost',
     user: {
       name: 'Will Casarin',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=jb55',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=jb55',
       handle: 'jb55@jb55.com',
     },
     content: 'Bitcoin fixes this. Nostr fixes the rest.',
@@ -69,7 +69,7 @@ const mockNotifications: Notification[] = [
     type: 'follow',
     user: {
       name: 'Vitor Pamplona',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=vitor',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=vitor',
       handle: 'vitor@vitorpamplona.com',
     },
     timestamp: '2h',
@@ -80,7 +80,7 @@ const mockNotifications: Notification[] = [
     type: 'reply',
     user: {
       name: 'ODELL',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=odell',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=odell',
       handle: '@odell',
     },
     content: 'This is the way.',
@@ -92,7 +92,7 @@ const mockNotifications: Notification[] = [
     type: 'mention',
     user: {
       name: 'Stacker News',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=sn',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=sn',
       handle: 'sn@stacker.news',
     },
     content: '@you check this out!',

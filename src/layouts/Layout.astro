@@ -3,6 +3,7 @@ import "../styles/globals.css";
 import SEO from "../components/SEO.astro";
 import { siteConfig } from "../config/site";
 import type { SEOProps } from "../config/seo-types";
+import { StreakBannerWrapper } from "../components/gamification/StreakBannerWrapper";
 
 interface Props extends SEOProps {}
 
@@ -145,6 +146,42 @@ const props = Astro.props;
       Skip to content
     </a>
     
+    <!-- Streak Banner - Shows when user has an active streak -->
+    <StreakBannerWrapper client:only="react" />
+    
     <slot />
+    
+    <!-- Gamification Scripts -->
+    <script is:inline>
+      // Initialize gamification state from localStorage
+      (function() {
+        try {
+          const gamificationData = localStorage.getItem('nostrich-gamification-v1');
+          if (!gamificationData) {
+            // Initialize default state
+            const defaultState = {
+              badges: {},
+              progress: {
+                completedGuides: [],
+                streakDays: 0,
+                lastActive: null
+              },
+              stats: {
+                keysGenerated: false,
+                firstPostMade: false,
+                firstZapReceived: false,
+                accountsFollowed: 0,
+                keysBackedUp: false,
+                relaysConnected: 0
+              },
+              version: 1
+            };
+            localStorage.setItem('nostrich-gamification-v1', JSON.stringify(defaultState));
+          }
+        } catch (e) {
+          console.error('Error initializing gamification:', e);
+        }
+      })();
+    </script>
   </body>
 </html>

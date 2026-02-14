@@ -1,0 +1,75 @@
+---
+interface Props {
+  name: string;
+  npub: string;
+  avatar: string;
+  bio: string;
+  recentPost?: string;
+}
+
+const { name, npub, avatar, bio, recentPost } = Astro.props;
+
+// Generate a nostr client follow URL (will work with various clients)
+const followUrl = `https://primal.net/p/${npub}`;
+---
+
+<div class="group p-6 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-friendly-purple-300 dark:hover:border-friendly-purple-600 transition-all duration-300 shadow-sm hover:shadow-md">
+  <!-- Header with Avatar and Name -->
+  <div class="flex items-start gap-4 mb-4">
+    <div class="flex-shrink-0 w-14 h-14 rounded-full bg-gradient-to-br from-friendly-purple-100 to-friendly-gold-100 dark:from-friendly-purple-900/30 dark:to-friendly-gold-900/20 flex items-center justify-center text-3xl border-2 border-friendly-purple-200 dark:border-friendly-purple-700">
+      {avatar}
+    </div>
+    <div class="flex-1 min-w-0">
+      <h3 class="font-bold text-gray-900 dark:text-white text-lg truncate group-hover:text-friendly-purple-600 dark:group-hover:text-friendly-purple-400 transition-colors">
+        {name}
+      </h3>
+      <p class="text-xs text-gray-500 font-mono truncate">
+        {npub.slice(0, 12)}...{npub.slice(-6)}
+      </p>
+    </div>
+  </div>
+
+  <!-- Bio -->
+  <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3">
+    {bio}
+  </p>
+
+  <!-- Recent Post Preview (if available) -->
+  {recentPost && (
+    <div class="mb-4 p-3 rounded-lg bg-friendly-warm-50 dark:bg-gray-700/50 border border-friendly-purple-100 dark:border-gray-600">
+      <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Recent post:</p>
+      <p class="text-sm text-gray-700 dark:text-gray-300 line-clamp-2 italic">
+        "{recentPost}"
+      </p>
+    </div>
+  )}
+
+  <!-- Follow Button -->
+  <a
+    href={followUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-friendly-purple-600 hover:bg-friendly-purple-700 rounded-lg transition-all duration-200 hover:shadow-md"
+  >
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+    </svg>
+    View Profile
+  </a>
+</div>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

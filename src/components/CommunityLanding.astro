@@ -1,0 +1,248 @@
+---
+// CommunityLanding.astro - Reusable template for community landing pages
+// Usage: Import and pass props for title, description, valueProps, featuredCreators, samplePosts, etc.
+
+export interface Props {
+  title: string;
+  description: string;
+  valueProps: Array<{
+    icon: string;
+    title: string;
+    description: string;
+  }>;
+  featuredCreators: Array<{
+    name: string;
+    handle: string;
+    description: string;
+    avatar?: string;
+  }>;
+  samplePosts: Array<{
+    author: string;
+    handle: string;
+    content: string;
+    image?: string | boolean;
+    likes: number;
+    zaps: number;
+    timeAgo: string;
+  }>;
+  communityType: 'photographers' | 'musicians' | string;
+  ctaText?: string;
+  displayName: string;
+  contentType?: string;
+}
+
+const { 
+  title, 
+  description, 
+  valueProps, 
+  featuredCreators, 
+  samplePosts,
+  communityType,
+  displayName,
+  contentType,
+  ctaText: ctaTextProp
+} = Astro.props;
+
+const ctaText = ctaTextProp ?? `Join ${displayName} on Nostr`;
+
+const themeColor = communityType === 'photographers' ? 'purple' : 'indigo';
+const accentColor = communityType === 'photographers' ? 'amber' : 'pink';
+---
+
+<!-- Hero Section -->
+<section class={`relative overflow-hidden bg-gradient-to-br from-${themeColor}-50 via-white to-${accentColor}-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800`}>
+  <div class="absolute inset-0 overflow-hidden">
+    <div class={`absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-${themeColor}-200/30 to-transparent rounded-full blur-3xl animate-pulse`}></div>
+    <div class={`absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-to-tr from-${accentColor}-200/20 to-transparent rounded-full blur-3xl animate-pulse`} style="animation-delay: 1s;"></div>
+  </div>
+  
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-${themeColor}-100 dark:bg-${themeColor}-900/30 text-${themeColor}-700 dark:text-${themeColor}-300 text-sm font-medium mb-6`}>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        Nostr Community
+      </div>
+      
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-white">
+        {title}
+      </h1>
+      
+      <p class="text-xl sm:text-2xl text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed">
+        {description}
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/follow-pack"
+          class={`inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-${themeColor}-600 hover:bg-${themeColor}-700 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5`}
+        >
+          {ctaText}
+          <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+        <a
+          href="/guides"
+          class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 rounded-xl transition-all duration-200"
+        >
+          View All Guides
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Value Propositions -->
+<section class="py-20 bg-white dark:bg-gray-900">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          Why {displayName} Choose Nostr
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          Built for creators who want control, not corporate algorithms.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {valueProps.map((prop) => (
+          <div class="text-center p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
+            <div class="text-4xl mb-4">{prop.icon}</div>
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">{prop.title}</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">{prop.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Creators -->
+<section class="py-20 bg-gray-50 dark:bg-gray-900/50">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          Featured {displayName}
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          Follow these creators to get started. Your feed fills with quality content from day one.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {featuredCreators.map((creator) => (
+          <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
+            <div class="flex items-center gap-4 mb-4">
+              <div class={`w-12 h-12 rounded-full bg-${themeColor}-100 dark:bg-${themeColor}-900/30 flex items-center justify-center text-xl`}>
+                {creator.name.charAt(0)}
+              </div>
+              <div>
+                <h3 class="font-bold text-gray-900 dark:text-white">{creator.name}</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">@{creator.handle}</p>
+              </div>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">{creator.description}</p>
+            <button class={`w-full py-2 px-4 rounded-lg border-2 border-${themeColor}-200 dark:border-${themeColor}-700 text-${themeColor}-700 dark:text-${themeColor}-400 font-medium hover:bg-${themeColor}-50 dark:hover:bg-${themeColor}-900/20 transition-colors`}>
+              Follow
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sample Posts -->
+<section class="py-20 bg-white dark:bg-gray-900">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          See What's Being Shared
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-400">
+          Real posts from the community. No compression, no algorithmic filtering.
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        {samplePosts.map((post) => (
+          <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
+            <div class="flex items-center gap-3 mb-4">
+              <div class={`w-10 h-10 rounded-full bg-${themeColor}-100 dark:bg-${themeColor}-900/30 flex items-center justify-center`}>
+                {post.author.charAt(0)}
+              </div>
+              <div>
+                <p class="font-semibold text-gray-900 dark:text-white">{post.author}</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">@{post.handle} · {post.timeAgo}</p>
+              </div>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 mb-4">{post.content}</p>
+            {post.image && (
+              <div class={`w-full h-48 bg-${themeColor}-100 dark:bg-${themeColor}-900/20 rounded-xl mb-4 flex items-center justify-center text-gray-400`}>
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+            )}
+            <div class="flex items-center gap-6 text-sm text-gray-500 dark:text-gray-400">
+              <div class="flex items-center gap-1">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+                {post.likes}
+              </div>
+              <div class="flex items-center gap-1">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                {post.zaps} sats
+              </div>
+              <div class="flex items-center gap-1">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                </svg>
+                Share
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class={`py-20 bg-gradient-to-br from-${themeColor}-100 via-white to-${accentColor}-50 dark:from-${themeColor}-900/20 dark:via-gray-900 dark:to-${accentColor}-900/10`}>
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        Ready to Share Your {contentType}?
+      </h2>
+      <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">
+        Join thousands of {communityType} already building their audience on Nostr. No algorithm, no compression, no corporate middleman.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/follow-pack"
+          class={`inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-${themeColor}-600 hover:bg-${themeColor}-700 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl`}
+        >
+          Get the {contentType} Follow Pack
+          <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+        <a
+          href="/guides"
+          class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 rounded-xl transition-all duration-200"
+        >
+          Read Getting Started Guide
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

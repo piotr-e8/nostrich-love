@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
+import { GamificationExplainerWrapper } from '../../components/gamification/GamificationExplainerWrapper';
 
 interface Guide {
   id: string;
@@ -236,15 +237,10 @@ const pathConfig = {
     <!-- Sticky Path Indicator -->
     <div id="path-indicator" class="sticky top-0 z-40 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800 hidden">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span id="current-path-icon" class="text-lg"></span>
-            <span class="text-sm text-gray-600 dark:text-gray-400">Viewing as:</span>
-            <span id="current-path-label" class="font-semibold text-friendly-purple-600 dark:text-friendly-purple-400"></span>
-          </div>
-          <button id="change-path-btn" class="text-sm text-friendly-purple-600 hover:text-friendly-purple-700 font-medium">
-            Change Path
-          </button>
+        <div class="flex items-center gap-2">
+          <span id="current-path-icon" class="text-lg"></span>
+          <span class="text-sm text-gray-600 dark:text-gray-400">Viewing as:</span>
+          <span id="current-path-label" class="font-semibold text-friendly-purple-600 dark:text-friendly-purple-400"></span>
         </div>
       </div>
     </div>
@@ -305,6 +301,20 @@ const pathConfig = {
             <p id="progress-text" class="text-sm text-gray-500 dark:text-gray-400 mt-2">
               Start your first guide to see progress
             </p>
+          </div>
+          
+          <!-- Gamification Explainer Link -->
+          <div class="mt-6">
+            <button
+              id="how-does-this-work-btn"
+              type="button"
+              class="inline-flex items-center gap-2 text-sm font-medium text-friendly-purple-600 dark:text-friendly-purple-400 hover:text-friendly-purple-700 dark:hover:text-friendly-purple-300 transition-colors"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              How does this work?
+            </button>
           </div>
         </div>
       </div>
@@ -370,7 +380,7 @@ const pathConfig = {
                   </p>
                 </div>
                 {sectionIndex === 0 && (
-                  <span class="px-3 py-1 bg-friendly-purple-100 text-friendly-purple-700 dark:bg-friendly-purple-800/60 dark:text-friendly-purple-200 text-sm font-medium rounded-full">
+                  <span class="px-3 py-1 bg-friendly-purple-100 text-friendly-purple-700 dark:bg-friendly-purple-900 dark:text-friendly-purple-200 text-sm font-medium rounded-full">
                     Start Here
                   </span>
                 )}
@@ -482,6 +492,9 @@ const pathConfig = {
   </main>
 
   <Footer />
+  
+  <!-- Gamification Explainer Modal -->
+  <GamificationExplainerWrapper client:load buttonId="how-does-this-work-btn" totalGuides={15} />
 </Layout>
 
 <script>
@@ -578,10 +591,24 @@ const pathConfig = {
   // Calculate progress
   function calculateProgress() {
     const guides = getProgressData();
-    const totalGuides = document.querySelectorAll('.guide-card').length;
-    const completedGuides = Object.values(guides).filter(g => g.status === 'completed').length;
+
+    // Only count visible guide cards (not display: none)
+    const allCards = document.querySelectorAll('.guide-card');
+    const visibleCards = Array.from(allCards).filter(card => {
+      // Check if card is visible (not display: none)
+      return card.style.display !== 'none' &&
+             !card.classList.contains('hidden');
+    });
+    const totalGuides = visibleCards.length;
+
+    // Count completed guides that are currently visible
+    const completedGuides = visibleCards.filter(card => {
+      const guideId = card.getAttribute('data-guide-id');
+      return guides[guideId]?.status === 'completed';
+    }).length;
+
     const percentage = totalGuides > 0 ? Math.round((completedGuides / totalGuides) * 100) : 0;
-    
+
     return {
       total: totalGuides,
       completed: completedGuides,
@@ -685,6 +712,9 @@ const pathConfig = {
         card.style.order = index;
       }
     });
+
+    // Update progress bar to reflect visible guides only
+    updateProgressOverview();
   }
   
   // Update path indicator UI
@@ -703,11 +733,11 @@ const pathConfig = {
     // Update active state of path selector buttons
     document.querySelectorAll('.path-selector-btn').forEach((btn) => {
       if (btn.dataset.path === path) {
-        btn.classList.add('border-friendly-purple-500', 'bg-friendly-purple-50');
-        btn.classList.remove('border-gray-200', 'bg-white');
+        btn.classList.remove('border-gray-200', 'bg-white', 'dark:border-gray-700', 'dark:bg-gray-800');
+        btn.classList.add('border-friendly-purple-500', 'bg-friendly-purple-50', 'dark:bg-friendly-purple-700/30');
       } else {
-        btn.classList.remove('border-friendly-purple-500', 'bg-friendly-purple-50');
-        btn.classList.add('border-gray-200', 'bg-white');
+        btn.classList.remove('border-friendly-purple-500', 'bg-friendly-purple-50', 'dark:bg-friendly-purple-700/30');
+        btn.classList.add('border-gray-200', 'bg-white', 'dark:border-gray-700', 'dark:bg-gray-800');
       }
     });
   }
@@ -762,14 +792,6 @@ const pathConfig = {
         }
       });
     });
-    
-    // Change path button
-    const changePathBtn = document.getElementById('change-path-btn');
-    if (changePathBtn) {
-      changePathBtn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    }
     
     // Advanced toggle
     const toggleAdvancedBtn = document.getElementById('toggle-advanced');

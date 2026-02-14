@@ -20,6 +20,8 @@ export enum SimulatorClient {
   YAKIHONNE = 'yakihonne',
   CORACLE = 'coracle',
   GOSSIP = 'gossip',
+  KEYCHAT = 'keychat',
+  OLAS = 'olas',
 }
 
 export interface SimulatorConfig {

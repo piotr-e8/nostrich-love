@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import type { CuratedAccount, CategoryId, UserSelection, FilterState } from '../../types/follow-pack';
 import { curatedAccounts, categories } from '../../data/follow-pack';
 import { AccountBrowser } from './AccountBrowser';
@@ -102,6 +102,26 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
 
   // Calculate total pages
   const totalPages = Math.ceil(filteredAccounts.length / ACCOUNTS_PER_PAGE);
+
+  // Parse URL query parameters on client side (for static sites)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    const params = new URLSearchParams(window.location.search);
+    const categoryParam = params.get('category');
+    
+    if (categoryParam) {
+      // Validate that it's a known category
+      const validCategoryIds: CategoryId[] = ['jumpstart', 'artists', 'photography', 'musicians', 'permaculture', 'parents', 'christians', 'foodies', 'mystics', 'cool_people', 'sovereign', 'legit', 'niche', 'merchants', 'doomscrolling', 'books'];
+      
+      if (validCategoryIds.includes(categoryParam as CategoryId)) {
+        setFilterState(prev => ({
+          ...prev,
+          categories: [categoryParam as CategoryId],
+        }));
+      }
+    }
+  }, []);
 
   // Reset to first page when filters change
   React.useEffect(() => {

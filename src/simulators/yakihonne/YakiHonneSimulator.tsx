@@ -183,26 +183,8 @@ export function YakiHonneSimulator({ className = '' }: YakiHonneSimulatorProps) 
       className={`yakihonne-simulator ${parentTheme === 'dark' ? 'dark' : ''} ${className}`}
       data-theme={parentTheme}
     >
-      {/* Status Bar */}
-      <div className="yakihonne-status-bar">
-        <span>9:41</span>
-        <div className="flex items-center gap-1">
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-          </svg>
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-          </svg>
-          <div className="flex items-center">
-            <div className="w-6 h-3 border border-current rounded-sm relative">
-              <div className="absolute inset-0.5 bg-current rounded-sm" style={{ width: '70%' }} />
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Main Content Area */}
-      <div className="yakihonne-content">
+      <div className="yakihonne-content pb-20">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -254,9 +236,6 @@ export function YakiHonneSimulator({ className = '' }: YakiHonneSimulatorProps) 
           );
         })}
       </nav>
-
-      {/* Home Indicator */}
-      <div className="yakihonne-home-indicator" />
 
       {/* Compose Modal */}
       <ComposeScreen

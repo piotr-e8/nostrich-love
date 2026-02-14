@@ -1,0 +1,275 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../layout/Header.astro';
+import Footer from '../layout/Footer.astro';
+import FeaturedCreator from './FeaturedCreator.astro';
+
+interface Creator {
+  name: string;
+  npub: string;
+  avatar: string;
+  bio: string;
+  recentPost?: string;
+}
+
+interface SamplePost {
+  author: string;
+  avatar: string;
+  content: string;
+  timestamp: string;
+  likes: number;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  icon: string;
+  theme: 'friendly' | 'cyberpunk';
+  heroGradient: string;
+  valueProps: {
+    title: string;
+    description: string;
+  };
+  benefits: Array<{
+    icon: string;
+    title: string;
+    description: string;
+  }>;
+  creators: Creator[];
+  samplePosts: SamplePost[];
+  followPackUrl: string;
+}
+
+const { 
+  title, 
+  description, 
+  icon, 
+  theme,
+  heroGradient,
+  valueProps,
+  benefits,
+  creators,
+  samplePosts,
+  followPackUrl
+} = Astro.props;
+---
+
+<Layout title={title} description={description} data-theme={theme}>
+  <Header />
+  
+  <main id="main-content" class="theme-bg-primary transition-colors duration-500">
+    <!-- Hero Section -->
+    <section class={`relative min-h-[500px] flex items-center ${heroGradient}`}>
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-friendly-purple-200/30 to-transparent rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-to-tr from-friendly-gold-200/20 to-transparent rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+      </div>
+      
+      <div class="relative z-10 w-full">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+          <div class="max-w-4xl mx-auto text-center">
+            <!-- Icon -->
+            <div class="inline-flex items-center justify-center w-20 h-20 mb-6 rounded-3xl bg-white dark:bg-gray-800 shadow-lg border-2 border-friendly-purple-200 dark:border-friendly-purple-700">
+              <span class="text-5xl">{icon}</span>
+            </div>
+            
+            <!-- Title -->
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-white">
+              {title}
+            </h1>
+            
+            <!-- Description -->
+            <p class="text-xl sm:text-2xl text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed">
+              {description}
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="#join"
+                class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-friendly-purple-600 hover:bg-friendly-purple-700 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+              >
+                Join on Nostr
+                <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </a>
+              <a
+                href={followPackUrl}
+                class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-friendly-purple-700 dark:text-friendly-purple-400 bg-white dark:bg-gray-800 border-2 border-friendly-purple-200 dark:border-friendly-purple-700 hover:border-friendly-purple-400 dark:hover:border-friendly-purple-500 rounded-xl transition-all duration-200"
+              >
+                <svg class="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                Get Follow Pack
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Value Proposition Section -->
+    <section class="py-20 bg-white dark:bg-gray-900">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              {valueProps.title}
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              {valueProps.description}
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {benefits.map((benefit) => (
+              <div class="p-8 rounded-2xl bg-gradient-to-br from-friendly-purple-50 to-white dark:bg-gray-800 dark:bg-none border border-friendly-purple-100 dark:border-gray-700 hover:border-friendly-purple-300 dark:hover:border-friendly-purple-600 transition-all duration-300 group">
+                <div class="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                  {benefit.icon}
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">
+                  {benefit.title}
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                  {benefit.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Creators Section -->
+    <section class="py-20 bg-friendly-warm-50 dark:bg-gray-900/50 border-y border-friendly-purple-100 dark:border-gray-700">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+              Featured Creators
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Discover amazing {title.toLowerCase().replace('nostr for ', '')} already sharing their work on Nostr
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {creators.map((creator) => (
+              <FeaturedCreator {...creator} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sample Posts Section -->
+    <section class="py-20 bg-white dark:bg-gray-900">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+              See What's Being Shared
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400">
+              Real posts from the community (recreated for privacy)
+            </p>
+          </div>
+
+          <div class="space-y-6">
+            {samplePosts.map((post) => (
+              <div class="p-6 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="text-3xl">{post.avatar}</div>
+                  <div>
+                    <p class="font-semibold text-gray-900 dark:text-white">{post.author}</p>
+                    <p class="text-sm text-gray-500">{post.timestamp}</p>
+                  </div>
+                </div>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                  {post.content}
+                </p>
+                <div class="flex items-center gap-6 text-gray-500">
+                  <button class="flex items-center gap-2 hover:text-friendly-purple-600 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                    <span>{post.likes}</span>
+                  </button>
+                  <button class="flex items-center gap-2 hover:text-friendly-purple-600 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                    </svg>
+                    <span>Share</span>
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Join CTA Section -->
+    <section id="join" class="py-20 bg-gradient-to-br from-friendly-purple-100 via-white to-friendly-gold-50 dark:from-friendly-purple-900/30 dark:via-gray-900 dark:to-friendly-gold-900/20">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+            Join {title.replace('Nostr for ', '')} on Nostr
+          </h2>
+          <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+            Start sharing your work in minutes. No phone number. No ID verification. No algorithms hiding your content.
+          </p>
+          
+          <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <a
+              href="/guides"
+              class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-friendly-purple-600 hover:bg-friendly-purple-700 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+            >
+              Get Started
+              <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+            <a
+              href={followPackUrl}
+              class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-friendly-purple-700 dark:text-friendly-purple-400 bg-white dark:bg-gray-800 border-2 border-friendly-purple-200 dark:border-friendly-purple-700 hover:border-friendly-purple-400 dark:hover:border-friendly-purple-500 rounded-xl transition-all duration-200"
+            >
+              <svg class="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+              Import Follow Pack
+            </a>
+          </div>
+
+          <!-- How to Join Steps -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
+            <div class="text-center">
+              <div class="w-12 h-12 mx-auto mb-4 rounded-full bg-friendly-purple-100 dark:bg-friendly-purple-900/50 flex items-center justify-center text-xl font-bold text-friendly-purple-600">
+                1
+              </div>
+              <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Get a Client</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Download Damus (iOS) or Amethyst (Android)</p>
+            </div>
+            <div class="text-center">
+              <div class="w-12 h-12 mx-auto mb-4 rounded-full bg-friendly-purple-100 dark:bg-friendly-purple-900/50 flex items-center justify-center text-xl font-bold text-friendly-purple-600">
+                2
+              </div>
+              <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Create Keys</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400">One tap to generate your secure account</p>
+            </div>
+            <div class="text-center">
+              <div class="w-12 h-12 mx-auto mb-4 rounded-full bg-friendly-purple-100 dark:bg-friendly-purple-900/50 flex items-center justify-center text-xl font-bold text-friendly-purple-600">
+                3
+              </div>
+              <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Start Posting</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Share your work with the community</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

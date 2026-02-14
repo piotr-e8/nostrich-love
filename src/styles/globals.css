@@ -76,6 +76,17 @@
   .border-border {
     border-color: hsl(var(--border));
   }
+  
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
 }
 
 /* Prose Typography Improvements */
@@ -200,4 +211,138 @@
 
 .animate-shine {
   animation: shine 0.6s ease-in-out;
+}
+
+/* Gamification Styles */
+
+/* Progress Tracker Styles */
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.5s ease-out;
+}
+
+/* Streak Banner Animations */
+@keyframes flame-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.animate-flame {
+  animation: flame-pulse 2s ease-in-out infinite;
+}
+
+/* Badge Display Styles */
+.badge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 1rem;
+}
+
+.badge-item {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.badge-item:hover {
+  transform: translateY(-2px);
+}
+
+.badge-locked {
+  filter: grayscale(100%);
+  opacity: 0.5;
+}
+
+.badge-unlocked {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+/* Activity Feed Styles */
+.activity-item {
+  transition: background-color 0.2s ease;
+}
+
+.activity-item:hover {
+  background-color: rgba(var(--color-gray-50), 0.5);
+}
+
+.dark .activity-item:hover {
+  background-color: rgba(var(--color-gray-700), 0.3);
+}
+
+/* Celebration Effects */
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100%) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.confetti {
+  animation: confetti-fall 3s ease-out forwards;
+}
+
+/* Milestone Progress */
+.milestone-bar {
+  background: linear-gradient(90deg, var(--friendly-purple) 0%, var(--friendly-gold) 100%);
+}
+
+/* Responsive adjustments for gamification */
+@media (max-width: 640px) {
+  .gamification-compact {
+    padding: 0.5rem;
+  }
+  
+  .badge-grid {
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 0.5rem;
+  }
+}
+
+/* Dark mode specific gamification styles */
+.dark .streak-banner {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(239, 68, 68, 0.2) 100%);
+}
+
+.dark .progress-tracker {
+  background: rgba(31, 41, 55, 0.8);
+}
+
+/* Animation for new badge unlock */
+@keyframes badge-pop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.badge-unlock-animation {
+  animation: badge-pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Guide completion celebration */
+@keyframes completion-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 20px rgba(139, 92, 246, 0);
+  }
+}
+
+.completion-celebration {
+  animation: completion-pulse 2s ease-in-out infinite;
 }

@@ -17,3 +17,6 @@ export { NoteCard as PrimalWebNoteCard } from './web/components/NoteCard';
 
 // Mobile Screens
 export { SettingsScreen as PrimalMobileSettingsScreen } from './mobile/screens/SettingsScreen';
+
+// Tour styles
+import '../../components/tour/tour.css';

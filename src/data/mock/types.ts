@@ -77,6 +77,8 @@ export interface MockNote {
   hashtags?: string[];      // Extracted hashtags
   links?: string[];         // URLs in content
   category: ContentCategory;
+  community?: string;       // Community/forum the note was posted in
+  isLive?: boolean;         // Whether the post is from a live stream
 }
 
 // Mock Thread (conversation)

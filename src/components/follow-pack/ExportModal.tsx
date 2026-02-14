@@ -748,19 +748,20 @@ export const ExportModal: React.FC<ExportModalProps> = ({
         <div className="flex-1 overflow-y-auto p-6">
           {activeTab === 'qr' && (
             <div className="text-center">
-              <div className="bg-white p-4 rounded-xl inline-block mb-4 shadow-sm">
+              <div className="bg-white p-4 rounded-xl inline-block mb-4 shadow-sm" style={{ maxWidth: 'min(100%, 280px)' }}>
                 {qrError ? (
                   <div className="w-64 h-64 flex items-center justify-center text-red-500">
                     <p>{qrError}</p>
                   </div>
                 ) : (
-                  <canvas 
-                    ref={canvasRef}
-                    className="rounded-lg"
-                    width={256}
-                    height={256}
-                    style={{ maxWidth: '100%', height: 'auto', display: 'block' }}
-                  />
+                  <div className="w-64 h-64 flex items-center justify-center">
+                    <canvas 
+                      ref={canvasRef}
+                      className="rounded-lg max-w-full max-h-full object-contain"
+                      width={256}
+                      height={256}
+                    />
+                  </div>
                 )}
               </div>
               

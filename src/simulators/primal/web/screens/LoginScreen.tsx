@@ -38,7 +38,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
         pubkey: generatedKeys.npub,
         displayName: 'New User',
         username: 'newuser',
-        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${generatedKeys.npub}`,
+        avatar: `https://api.dicebear.com/7.x/bottts/svg?seed=${generatedKeys.npub}`,
         bio: 'Just joined Nostr!',
         followersCount: 0,
         followingCount: 0,

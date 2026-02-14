@@ -33,7 +33,7 @@ export {
   hasCompletedTour,
   hasSkippedTour,
   shouldAutoStartTour,
-  type TourProgress
+  type TourProgress as TourProgressData
 } from './tourStorage';
 
 // Import CSS

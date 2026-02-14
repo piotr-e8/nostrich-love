@@ -9,7 +9,8 @@ import {
   getTourProgress, 
   markTourCompleted, 
   markTourSkipped, 
-  shouldAutoStartTour 
+  shouldAutoStartTour,
+  resetTourProgress
 } from './tourStorage';
 
 export const TourContext = createContext<TourContextValue | null>(null);
@@ -144,9 +145,14 @@ export function TourProvider({ children, autoStart = true }: TourProviderProps) 
         expectedActionType: null,
       }));
       
+      // Call onEnter callback for the new step (e.g., to navigate simulator)
+      const nextStep = config.steps[nextStepIndex];
+      if (nextStep?.onEnter) {
+        setTimeout(() => nextStep.onEnter!(), 0);
+      }
+      
       // Update waiting state for the next step
       setTimeout(() => {
-        const nextStep = config.steps[nextStepIndex];
         if (nextStep && nextStep.trigger === 'action' && nextStep.actionType) {
           setState(prev => ({
             ...prev,
@@ -175,13 +181,23 @@ export function TourProvider({ children, autoStart = true }: TourProviderProps) 
     }, 0);
   }, [config, state.currentStep, updateWaitingState]);
 
-  const restartTour = useCallback(() => {
-    if (!config) return;
+  const restartTour = useCallback((tourConfig?: TourConfig) => {
+    // Use provided config or fall back to current config
+    const configToUse = tourConfig || config;
+    if (!configToUse) return;
+    
+    // Reset localStorage progress
+    resetTourProgress(configToUse.id);
+    
+    // If using a new config, set it first
+    if (tourConfig && tourConfig !== config) {
+      setConfig(tourConfig);
+    }
     
     setState({
       isActive: true,
       currentStep: 0,
-      totalSteps: config.steps.length,
+      totalSteps: configToUse.steps.length,
       hasCompleted: false,
       hasSkipped: false,
       waitingForAction: false,
@@ -190,7 +206,7 @@ export function TourProvider({ children, autoStart = true }: TourProviderProps) 
     
     // Check if first step needs action
     setTimeout(() => {
-      const firstStep = config.steps[0];
+      const firstStep = configToUse.steps[0];
       if (firstStep && firstStep.trigger === 'action' && firstStep.actionType) {
         setState(prev => ({
           ...prev,

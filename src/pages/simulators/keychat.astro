@@ -1,0 +1,44 @@
+---
+/**
+ * Keychat Simulator Page
+ * Android Nostr client simulation - Sidebar Navigation Layout
+ */
+
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/layout/Header.astro';
+import { keychatConfig } from '../../simulators/shared/configs';
+import KeychatSimulatorWithTour from '../../simulators/keychat/KeychatSimulatorWithTour';
+import { SimulatorClient } from '../../simulators/shared/types';
+import SimulatorSidebar from '../../components/navigation/SimulatorSidebar';
+import MobilePhoneFrame from '../../simulators/shared/components/MobilePhoneFrame';
+
+const title = `Try ${keychatConfig.name} - Nostr Client Simulator`;
+const description = keychatConfig.description;
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <div class="simulator-page min-h-screen bg-gray-100 dark:bg-gray-950">
+    <div class="flex h-[calc(100vh-4rem)]">
+      {/* Sidebar Navigation */}
+      <SimulatorSidebar 
+        client:load 
+        currentClient={SimulatorClient.KEYCHAT}
+        className="h-full"
+      />
+      
+      {/* Main Content Area - Simulator stays centered and fixed */}
+      <div class="flex-1 relative h-full overflow-hidden">
+        {/* Simulator Container - Centered with mobile phone frame */}
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+          <MobilePhoneFrame client:load platform="android">
+            <KeychatSimulatorWithTour client:load />
+          </MobilePhoneFrame>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<!-- Tour button functionality handled by SimulatorSidebar React component -->

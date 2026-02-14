@@ -1,0 +1,27 @@
+# Amethyst Screenshot URLs
+
+## Source: nostrapps.com
+## App: Amethyst (Android)
+## Date: 2026-02-13
+
+### All Screenshots
+
+1. https://cdn.satellite.earth/03b136945e39297d8d9a6cf97af702de038a2b594a89fc988a78dff97667e2eb.webp
+2. https://cdn.satellite.earth/9f3138becf917f83e471c85128859def0a9b4e063dc2c8cfbfcb99035bb73018.webp
+3. https://cdn.satellite.earth/4e676f41809805ef84719c244c84b36e1b3af69698b92e30e947b4812e7ff241.webp
+
+### Icon
+
+https://cdn.satellite.earth/1a4d9d7bb7f3e481aeb5f98b6626b5b4b85d90d59f4d4b00ffa7edbf1c19d6e7.png
+
+### CDN Pattern
+
+Base URL: https://cdn.satellite.earth/
+Format: {SHA256_hash}.{extension}
+Extensions: .webp (screenshots), .png (icons)
+
+### Screen Types (TBD - requires image analysis)
+
+- Screen 1: Main feed/home view
+- Screen 2: Profile or post view
+- Screen 3: Settings or compose view

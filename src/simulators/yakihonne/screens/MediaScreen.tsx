@@ -17,7 +17,7 @@ const mockMediaItems = [
     thumbnail: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=300',
     author: {
       name: 'Bitcoin Artist',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=artist1',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=artist1',
     },
     likes: 234,
     zaps: 89,
@@ -30,7 +30,7 @@ const mockMediaItems = [
     thumbnail: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=300',
     author: {
       name: 'Crypto Vision',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=artist2',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=artist2',
     },
     likes: 567,
     zaps: 234,
@@ -43,7 +43,7 @@ const mockMediaItems = [
     thumbnail: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=300',
     author: {
       name: 'Tech Reviewer',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=reviewer',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=reviewer',
     },
     likes: 123,
     zaps: 45,
@@ -57,7 +57,7 @@ const mockMediaItems = [
     thumbnail: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300',
     author: {
       name: 'Nature Lover',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=nature',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=nature',
     },
     likes: 890,
     zaps: 445,
@@ -70,7 +70,7 @@ const mockMediaItems = [
     thumbnail: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300',
     author: {
       name: 'Space Explorer',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=space',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=space',
     },
     likes: 445,
     zaps: 178,
@@ -83,7 +83,7 @@ const mockMediaItems = [
     thumbnail: 'https://images.unsplash.com/photo-1526304640152-d4619684e484?w=300',
     author: {
       name: 'Bitcoin Art',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=bitcoinart',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=bitcoinart',
     },
     likes: 678,
     zaps: 290,
@@ -96,7 +96,7 @@ const mockMediaItems = [
     thumbnail: 'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=300',
     author: {
       name: 'Trading Pro',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=trader',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=trader',
     },
     likes: 234,
     zaps: 120,
@@ -110,7 +110,7 @@ const mockMediaItems = [
     thumbnail: 'https://images.unsplash.com/photo-1621504450168-b8c4375443a2?w=300',
     author: {
       name: 'Meme Lord',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=meme',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=meme',
     },
     likes: 1234,
     zaps: 567,
@@ -123,7 +123,7 @@ const mockMediaItems = [
     thumbnail: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=300',
     author: {
       name: 'Finance Guru',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=finance',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=finance',
     },
     likes: 789,
     zaps: 340,

@@ -1,0 +1,272 @@
+# Workflow: Add Community Landing Page
+# Creates a new community landing page with real accounts from follow-pack
+
+workflow:
+  id: add-community-landing-page
+  name: Add Community Landing Page
+  description: >
+    Creates a new community landing page (e.g., nostr-for-bitcoiners) with:
+    - Real accounts from /follow-pack instead of mock data
+    - Featured creators section using follow-pack AccountCard component
+    - Auto-creates category and finds accounts if needed
+    - "Follow These Accounts" button linking to follow-pack with category preselected
+  version: 1.0.0
+
+  inputs:
+    - name: community_name
+      type: string
+      required: true
+      description: Name of the community (e.g., "Bitcoiners", "Developers", "Writers")
+    
+    - name: description
+      type: string
+      required: true
+      description: Short description for the community (e.g., "Connect with bitcoiners on Nostr")
+    
+    - name: icon
+      type: string
+      required: false
+      default: "🌟"
+      description: Emoji icon for the community
+    
+    - name: theme
+      type: string
+      required: false
+      default: "friendly"
+      description: Theme style (friendly or cyberpunk)
+    
+    - name: value_props_title
+      type: string
+      required: true
+      description: Title for value proposition section
+    
+    - name: value_props_description
+      type: string
+      required: true
+      description: Description for value proposition section
+    
+    - name: benefits
+      type: array
+      required: true
+      description: Array of 3 benefits with icon, title, description
+    
+    - name: category_id
+      type: string
+      required: true
+      description: Follow-pack category ID (e.g., "bitcoiners")
+    
+    - name: category_name
+      type: string
+      required: true
+      description: Display name for the category (e.g., "Bitcoiners")
+    
+    - name: search_source_npub
+      type: string
+      required: false
+      description: Optional - npub to search follows from if category needs accounts
+    
+    - name: account_input_type
+      type: string
+      required: false
+      default: "none"
+      description: How to add accounts - "none", "naddr", "npubs", or "search_follows"
+    
+    - name: account_input_data
+      type: string
+      required: false
+      description: Input data for accounts (naddr, npubs, or source npub)
+
+  steps:
+    - id: validate_inputs
+      name: Validate Inputs
+      agent: code-agent
+      description: Validate community name, slug, and inputs
+      inputs:
+        community_name: "{{workflow.inputs.community_name}}"
+        description: "{{workflow.inputs.description}}"
+        category_id: "{{workflow.inputs.category_id}}"
+      outputs:
+        - slug
+        - validation_status
+      decision_gate: false
+
+    - id: check_category_exists
+      name: Check Category Exists
+      agent: code-agent
+      description: Check if category exists in follow-pack system
+      inputs:
+        category_id: "{{workflow.inputs.category_id}}"
+        categories_file: "src/data/follow-pack/categories.ts"
+      outputs:
+        - category_exists
+        - accounts_in_category
+      decision_gate: false
+
+    - id: create_category
+      name: Create Category
+      agent: code-agent
+      depends_on: [check_category_exists]
+      condition: "{{steps.check_category_exists.outputs.category_exists}} == false"
+      description: Add new category to follow-pack categories.ts
+      inputs:
+        category_id: "{{workflow.inputs.category_id}}"
+        category_name: "{{workflow.inputs.category_name}}"
+        category_icon: "{{workflow.inputs.icon}}"
+        categories_file: "src/data/follow-pack/categories.ts"
+        types_file: "src/types/follow-pack/index.ts"
+      outputs:
+        - category_created
+      decision_gate: false
+
+    - id: run_follow_pack_workflow
+      name: Add Accounts to Category
+      agent: orchestrator-agent
+      depends_on: [create_category]
+      condition: "{{workflow.inputs.account_input_type}} != 'none' && {{steps.check_category_exists.outputs.accounts_in_category}} < 5"
+      description: Run follow-pack workflow to populate category with accounts
+      inputs:
+        workflow_id: "add-follow-pack-accounts"
+        input_type: "{{workflow.inputs.account_input_type}}"
+        input_data: "{{workflow.inputs.account_input_data}}"
+        category: "{{workflow.inputs.category_id}}"
+      outputs:
+        - accounts_added
+      decision_gate: false
+
+    - id: update_community_component
+      name: Update CommunityLanding Component
+      agent: code-agent
+      description: Update CommunityLanding to use real accounts from follow-pack
+      inputs:
+        component_file: "src/components/community/CommunityLanding.astro"
+        changes:
+          - replace_mock_creators_with_react_component
+          - add_follow_pack_integration
+          - remove_sample_posts
+        follow_pack_component: "FeaturedCreatorsFromPack"
+      outputs:
+        - component_updated
+      decision_gate: false
+
+    - id: create_featured_creators_component
+      name: Create Featured Creators Component
+      agent: code-agent
+      description: Create React component that displays accounts from follow-pack category
+      inputs:
+        component_name: "FeaturedCreatorsFromPack"
+        target_location: "src/components/community/FeaturedCreatorsFromPack.tsx"
+        pattern_reference: "src/components/follow-pack/AccountCard.tsx"
+        features:
+          - display_accounts_from_category
+          - link_to_follow_pack
+          - show_top_6_accounts
+          - use_account_card_ui
+      outputs:
+        - component_file
+      decision_gate: false
+
+    - id: create_landing_page
+      name: Create Landing Page
+      agent: code-agent
+      depends_on: [validate_inputs, update_community_component]
+      description: Create the Astro community landing page
+      inputs:
+        template: "src/pages/nostr-for-artists.astro"
+        target_location: "src/pages/nostr-for-{{steps.validate_inputs.outputs.slug}}.astro"
+        community_name: "{{workflow.inputs.community_name}}"
+        slug: "{{steps.validate_inputs.outputs.slug}}"
+        description: "{{workflow.inputs.description}}"
+        icon: "{{workflow.inputs.icon}}"
+        theme: "{{workflow.inputs.theme}}"
+        value_props_title: "{{workflow.inputs.value_props_title}}"
+        value_props_description: "{{workflow.inputs.value_props_description}}"
+        benefits: "{{workflow.inputs.benefits}}"
+        category_id: "{{workflow.inputs.category_id}}"
+        follow_pack_url: "/follow-pack?category={{workflow.inputs.category_id}}"
+        use_real_accounts: true
+        include_sample_posts: false
+      outputs:
+        - page_file
+      decision_gate: false
+
+    - id: update_navigation
+      name: Update Navigation
+      agent: code-agent
+      depends_on: [create_landing_page]
+      description: Add community page to navigation
+      inputs:
+        page_slug: "{{steps.validate_inputs.outputs.slug}}"
+        community_name: "{{workflow.inputs.community_name}}"
+        navigation_files:
+          - "src/components/layout/Footer.astro"
+          - "src/components/layout/Header.astro"
+      outputs:
+        - navigation_updated
+      decision_gate: false
+
+    - id: update_community_landing_index
+      name: Update Community Landing Index
+      agent: code-agent
+      depends_on: [create_landing_page]
+      description: Add new community to community landing index page
+      inputs:
+        slug: "{{steps.validate_inputs.outputs.slug}}"
+        community_name: "{{workflow.inputs.community_name}}"
+        description: "{{workflow.inputs.description}}"
+        icon: "{{workflow.inputs.icon}}"
+        category_id: "{{workflow.inputs.category_id}}"
+        index_page: "src/pages/communities.astro"
+      outputs:
+        - index_updated
+      decision_gate: false
+
+    - id: quality_check
+      name: Quality Assurance
+      agent: qa-agent
+      depends_on: [create_landing_page, update_navigation]
+      description: Verify landing page implementation
+      inputs:
+        page_file: "src/pages/nostr-for-{{steps.validate_inputs.outputs.slug}}.astro"
+        checklist:
+          - page_builds_successfully
+          - links_to_follow_pack_correct
+          - category_exists_in_follow_pack
+          - navigation_updated
+          - no_sample_posts
+          - typescript_valid
+      outputs:
+        - qa_report
+        - success_status
+      decision_gate: true
+
+    - id: final_integration
+      name: Final Integration
+      agent: integration-agent
+      depends_on: [quality_check]
+      description: Apply any fixes and finalize
+      inputs:
+        qa_report: "{{steps.quality_check.outputs.qa_report}}"
+      outputs:
+        - final_status
+      decision_gate: false
+
+  outputs:
+    - name: page_url
+      source: validate_inputs.slug
+      description: URL path for the new landing page (/nostr-for-{slug})
+    
+    - name: page_file
+      source: create_landing_page.page_file
+      description: Path to the created landing page
+    
+    - name: category_id
+      source: workflow.inputs.category_id
+      description: Follow-pack category ID used
+    
+    - name: accounts_added
+      source: run_follow_pack_workflow.accounts_added
+      description: Number of accounts added to category (if applicable)
+    
+    - name: qa_status
+      source: quality_check.success_status
+      description: Final QA approval status

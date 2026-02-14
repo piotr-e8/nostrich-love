@@ -39,6 +39,7 @@ export function CyberpunkHeroAnimation({ className }: { className?: string }) {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [relayNodes, setRelayNodes] = useState<RelayNode[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
+  const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
 
   useEffect(() => {
     setMounted(true);
@@ -49,7 +50,12 @@ export function CyberpunkHeroAnimation({ className }: { className?: string }) {
     
     const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
     mediaQuery.addEventListener('change', handler);
-    return () => mediaQuery.removeEventListener('change', handler);
+    return () => {
+      mediaQuery.removeEventListener('change', handler);
+      // Clear all pending timeouts on unmount
+      timeoutsRef.current.forEach(timeout => clearTimeout(timeout));
+      timeoutsRef.current = [];
+    };
   }, []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
@@ -77,10 +83,13 @@ export function CyberpunkHeroAnimation({ className }: { className?: string }) {
     
     setRelayNodes(prev => [...prev, newNode]);
     
-    // Remove node after 3 seconds
-    setTimeout(() => {
+    // Remove node after 3 seconds - track timeout for cleanup
+    const timeout = setTimeout(() => {
       setRelayNodes(prev => prev.filter(n => n.id !== newNode.id));
+      // Remove timeout from ref after it fires
+      timeoutsRef.current = timeoutsRef.current.filter(t => t !== timeout);
     }, 3000);
+    timeoutsRef.current.push(timeout);
   }, [prefersReducedMotion]);
 
   // if (!mounted) {

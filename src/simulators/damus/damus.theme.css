@@ -244,7 +244,7 @@
   padding: 8px 0 24px;
   background: var(--damus-bg);
   border-top: 1px solid var(--damus-border);
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
@@ -379,7 +379,7 @@
   border-radius: var(--damus-ios-radius-lg) var(--damus-ios-radius-lg) 0 0;
   width: 100%;
   max-width: 500px;
-  max-height: 90vh;
+  max-height: 80vh;
   transform: translateY(100%);
   transition: transform 0.3s ease;
 }
@@ -464,34 +464,56 @@
 /* Simulator Container */
 .damus-simulator {
   position: relative;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main content area - Scrollable */
+.damus-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* FAB - Fixed position */
+.damus-fab {
+  position: absolute;
+  bottom: 90px;
+  right: 16px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--damus-purple);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--damus-shadow-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  z-index: 50;
+}
+
+.damus-fab:active {
+  transform: scale(0.95);
+  background: var(--damus-purple-dark);
+}
+
+/* Mobile Phone Frame Context */
+.mobile-phone-frame-wrapper .damus-simulator {
+  border-radius: 40px;
+  height: 100%;
 }
 
 /* Responsive adjustments */
 @media (min-width: 768px) {
   .damus-simulator {
-    max-width: 430px;
-    margin: 0 auto;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
     border-radius: 40px;
-    overflow: hidden;
-    min-height: 100vh;
-    position: relative;
-  }
-  
-  .damus-tab-bar {
-    position: absolute;
-    max-width: 430px;
-    margin: 0 auto;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 0 0 40px 40px;
-  }
-  
-  .damus-fab {
-    position: absolute;
-    right: 16px;
   }
 }
 

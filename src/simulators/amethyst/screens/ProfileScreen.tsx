@@ -29,7 +29,7 @@ export function ProfileScreen({ onBack }: ProfileScreenProps) {
   const currentUser = {
     name: 'You',
     handle: 'you@nostr.local',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=currentuser',
+    avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=currentuser',
     banner: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
     bio: 'Nostr enthusiast ⚡️ Building on Bitcoin. Freedom advocate.',
     location: 'Cyberspace',

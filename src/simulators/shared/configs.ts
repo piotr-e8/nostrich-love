@@ -1,6 +1,6 @@
 /**
  * Simulator Configurations
- * Pre-defined configurations for all 7 Nostr client simulators
+ * Pre-defined configurations for all Nostr client simulators
  */
 
 import { SimulatorClient, SimulatorFeature, SimulatorView } from './types';
@@ -190,6 +190,51 @@ export const gossipConfig: SimulatorConfig = {
 };
 
 /**
+ * Keychat - Android Super App
+ * Bitcoin wallet + Secure chat + Mini apps
+ */
+export const keychatConfig: SimulatorConfig = {
+  id: SimulatorClient.KEYCHAT,
+  name: 'Keychat',
+  description: 'Super app for Bitcoiners with sovereign identity, ecash wallet, and secure chat.',
+  platform: 'android',
+  primaryColor: '#2D7FF9', // Bright blue
+  secondaryColor: '#1E40AF', // Dark blue
+  icon: '/icons/keychat.svg',
+  supportedFeatures: [
+    SimulatorFeature.DM,
+    SimulatorFeature.ZAPS,
+    SimulatorFeature.SEARCH,
+    SimulatorFeature.BADGES,
+    SimulatorFeature.NIP05,
+    SimulatorFeature.MUTE_LIST,
+  ],
+  defaultView: SimulatorView.MESSAGES,
+};
+
+/**
+ * Olas - Photo-first Nostr client
+ * Instagram-style interface for sharing photos and videos
+ */
+export const olasConfig: SimulatorConfig = {
+  id: SimulatorClient.OLAS,
+  name: 'Olas',
+  description: 'Photo-first Nostr client for sharing and discovering visual content.',
+  platform: 'ios',
+  primaryColor: '#FF6B6B', // Coral
+  secondaryColor: '#FF8E53', // Orange
+  icon: '/icons/olas.svg',
+  supportedFeatures: [
+    SimulatorFeature.ZAPS,
+    SimulatorFeature.SEARCH,
+    SimulatorFeature.RELAYS,
+    SimulatorFeature.NIP05,
+    SimulatorFeature.MUTE_LIST,
+  ],
+  defaultView: SimulatorView.FEED,
+};
+
+/**
  * All simulator configs collection
  */
 export const allSimulatorConfigs: Record<SimulatorClient, SimulatorConfig> = {
@@ -200,6 +245,8 @@ export const allSimulatorConfigs: Record<SimulatorClient, SimulatorConfig> = {
   [SimulatorClient.YAKIHONNE]: yakihonneConfig,
   [SimulatorClient.CORACLE]: coracleConfig,
   [SimulatorClient.GOSSIP]: gossipConfig,
+  [SimulatorClient.KEYCHAT]: keychatConfig,
+  [SimulatorClient.OLAS]: olasConfig,
 };
 
 /**

@@ -30,6 +30,7 @@ export { useParentTheme } from './hooks/useParentTheme';
 export { SimulatorShell } from './components/SimulatorShell';
 export { MockKeyDisplay } from './components/MockKeyDisplay';
 export { NoteCard } from './components/NoteCard';
+export { MobilePhoneFrame } from './components/MobilePhoneFrame';
 
 // Utilities
 export * from './utils/mockKeys';

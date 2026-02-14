@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background -->
+  <rect width="100" height="100" rx="20" fill="#2D7FF9"/>
+  
+  <!-- Lock Body -->
+  <rect x="25" y="45" width="50" height="40" rx="8" fill="white"/>
+  
+  <!-- Lock Shackle -->
+  <path d="M35 45V35a15 15 0 0130 0v10" stroke="white" stroke-width="8" fill="none" stroke-linecap="round"/>
+  
+  <!-- Keyhole -->
+  <circle cx="50" cy="60" r="6" fill="#2D7FF9"/>
+  <rect x="47" y="60" width="6" height="12" rx="3" fill="#2D7FF9"/>
+  
+  <!-- Lightning Bolt (Bitcoin symbol) -->
+  <path d="M65 25L55 40h8l-6 12 12-14h-8l8-13z" fill="#F59E0B"/>
+</svg>

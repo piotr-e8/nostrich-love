@@ -17,7 +17,7 @@ const mockArticles = [
     coverImage: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800',
     author: {
       name: 'Jack Dorsey',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=jack',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=jack',
       nip05: 'jack@nostr.com',
     },
     readTime: '12 min read',
@@ -34,7 +34,7 @@ const mockArticles = [
     coverImage: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=800',
     author: {
       name: 'Michael Saylor',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=saylor',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=saylor',
       nip05: 'saylor@bitcoin.com',
     },
     readTime: '18 min read',
@@ -51,7 +51,7 @@ const mockArticles = [
     coverImage: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800',
     author: {
       name: 'Elizabeth Stark',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=elizabeth',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=elizabeth',
       nip05: 'stark@lightning.org',
     },
     readTime: '15 min read',
@@ -68,7 +68,7 @@ const mockArticles = [
     coverImage: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800',
     author: {
       name: 'Andreas Antonopoulos',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=andreas',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=andreas',
       nip05: 'andreas@aantonop.org',
     },
     readTime: '22 min read',
@@ -85,7 +85,7 @@ const mockArticles = [
     coverImage: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800',
     author: {
       name: 'Pablo Fernandez',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=pablo',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=pablo',
       nip05: 'pablo@relay.dev',
     },
     readTime: '25 min read',

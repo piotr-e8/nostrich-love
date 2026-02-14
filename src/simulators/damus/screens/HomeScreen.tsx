@@ -106,7 +106,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
       <div 
         className="overflow-y-auto"
         onScroll={handleScroll}
-        style={{ height: 'calc(100vh - 140px)' }}
+        style={{ height: 'calc(100% - 140px)' }}
       >
         {notesWithAuthors.map(({ note, author }) => (
           <NoteCard
