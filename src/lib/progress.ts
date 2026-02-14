@@ -6,6 +6,7 @@
  */
 
 import { LEARNING_PATHS, type LearningPathId } from '../data/learning-paths';
+import { checkAndAwardBadges } from '../utils/gamification';
 
 // Use existing gamification storage key
 const STORAGE_KEY = 'nostrich-gamification-v1';
@@ -31,6 +32,7 @@ interface GamificationData {
   badges?: Record<string, unknown>;
   progress?: {
     completedGuides: string[];
+    completedGuidesWithTimestamps?: { id: string; completedAt: string }[];
     streakDays: number;
     lastActive: number | null;
     activePath?: LearningPathId;
@@ -71,6 +73,42 @@ function getGamificationData(): GamificationData {
     stats: {},
     version: 1
   };
+}
+
+/**
+ * Migrate legacy path storage to unified gamification storage
+ * Handles migration from 'nostrich-user-path' to 'nostrich-gamification-v1'
+ */
+function migrateLegacyData(): void {
+  if (typeof window === 'undefined') return;
+  
+  try {
+    const oldPath = localStorage.getItem('nostrich-user-path');
+    if (!oldPath) return;
+    
+    const data = getGamificationData();
+    
+    // Only migrate if no activePath set yet
+    if (!data.progress?.activePath) {
+      if (!data.progress) {
+        data.progress = { completedGuides: [], streakDays: 0, lastActive: Date.now() };
+      }
+      
+      data.progress.activePath = oldPath as LearningPathId;
+      saveGamificationData(data);
+      
+      // Clean up old key
+      localStorage.removeItem('nostrich-user-path');
+      console.log('[Guides] Migrated legacy path storage:', oldPath);
+    }
+  } catch (e) {
+    console.error('[Guides] Migration error:', e);
+  }
+}
+
+// Run migration on module load
+if (typeof window !== 'undefined') {
+  migrateLegacyData();
 }
 
 /**
@@ -142,9 +180,20 @@ export function markGuideCompleted(guideSlug: string): void {
     data.progress = { completedGuides: [], streakDays: 0, lastActive: Date.now() };
   }
   
+  // Initialize timestamps array if not exists
+  if (!data.progress.completedGuidesWithTimestamps) {
+    data.progress.completedGuidesWithTimestamps = [];
+  }
+  
   // Add to global completed guides if not already there
   if (!data.progress.completedGuides.includes(guideSlug)) {
     data.progress.completedGuides.push(guideSlug);
+    
+    // Track completion timestamp
+    data.progress.completedGuidesWithTimestamps.push({
+      id: guideSlug,
+      completedAt: new Date().toISOString()
+    });
   }
   
   // Also update path-specific progress
@@ -168,6 +217,16 @@ export function markGuideCompleted(guideSlug: string): void {
   
   data.progress.lastActive = Date.now();
   saveGamificationData(data);
+  
+  console.log('[progress.ts] Guide marked complete:', guideSlug, 'Total:', data.progress.completedGuides.length);
+  
+  // Check for new badges after marking complete
+  try {
+    const result = checkAndAwardBadges();
+    console.log('[progress.ts] Badges checked:', result);
+  } catch (error) {
+    console.error('[progress.ts] Error checking badges:', error);
+  }
 }
 
 /**

@@ -9,6 +9,7 @@ import { CategoryFilter } from './CategoryFilter';
 import { ActivityFilter } from './ActivityFilter';
 import { SortDropdown } from './SortDropdown';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { recordActivity } from '../../utils/gamificationEngine';
 
 interface FollowPackFinderProps {
   initialSelectedCategories?: CategoryId[];
@@ -45,6 +46,11 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
   
   // Export modal state
   const [isExportOpen, setIsExportOpen] = useState(false);
+
+  // Record account selection (triggers community-builder badge at 10+ accounts and streak)
+  useEffect(() => {
+    recordActivity('followAccounts', { count: selectedNpubs.size });
+  }, [selectedNpubs]);
 
   // Filter and sort accounts
   const filteredAccounts = useMemo(() => {

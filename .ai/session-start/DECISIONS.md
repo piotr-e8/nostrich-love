@@ -112,6 +112,74 @@ integration-agent → finalize
 
 ---
 
+## Task Execution Strategy
+
+### 2026-02-14: When to Use Deep Planning vs Direct Execution
+
+**Simple Tasks:** Direct execution with workflow
+- 1-3 files
+- Single component
+- Clear scope
+
+**Complex Tasks:** Deep planning first (NEW)
+- 5+ files
+- Cross-component
+- Data layer changes
+- Multiple root causes
+- Navigation/architecture changes
+
+**Process for Complex Tasks:**
+1. Root cause analysis (don't fix symptoms)
+2. Orchestrator consultation
+3. Detailed phase plan
+4. Agent context preparation
+5. Execution with verification
+
+**Reference:** `.ai/memory/execution-patterns.md`
+
+---
+
+## Proactive Documentation
+
+### 2026-02-14: Log Pattern Evolution Automatically
+
+**Decision:** When we discover better approaches, document immediately
+
+**Rule:** 
+- Pause execution when pattern emerges
+- Update LESSONS_LEARNED.md, DECISIONS.md, PREFERENCES.md
+- Create pattern documentation
+- Resume execution
+
+**Why:** Build institutional knowledge continuously
+
+---
+
+## Shared localStorage Data Format - 2026-02-14
+
+**Decision**: When multiple systems write to the same localStorage key, the canonical format is defined by `gamification.ts` (the most comprehensive system), and all writers must merge their updates rather than overwrite.
+
+**Context**: `progressService.ts` and `gamification.ts` were both writing to `nostrich-gamification-v1` with incompatible formats, causing data corruption.
+
+**Your Feedback**: 
+> "can you debug: why is guide progress not working?"
+
+**Reasoning**:
+- Gamification system has the most complete data structure (badges, stats, progress, version)
+- Progress tracking only needs to update the `progress.completedGuides` field
+- Overwriting destroys badges, stats, and other gamification data
+- Merge strategy preserves all data while allowing incremental updates
+
+**Implementation**:
+- `progressService.ts` now reads existing data before writing
+- Converts internal `ProgressData` format to gamification format
+- Merges updates into existing structure
+- Preserves badges, stats, and other fields it doesn't manage
+
+**Pattern**: Canonical format = gamification structure. All writers = merge-first strategy.
+
+---
+
 ## Add to This File
 
 **When to add entries**:

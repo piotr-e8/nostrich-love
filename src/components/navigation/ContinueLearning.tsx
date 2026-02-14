@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ArrowRight, BookOpen, CheckCircle, GraduationCap, X } from 'lucide-react';
 import { cn } from '../../lib/utils';
-import { LEARNING_PATHS, getNextGuideInPath } from '../../data/learning-paths';
+import { LEARNING_PATHS } from '../../data/learning-paths';
 import { getActivePath } from '../../lib/progress';
 
 interface ContinueLearningProps {
@@ -31,33 +31,37 @@ export function ContinueLearning({
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [nextGuide, setNextGuide] = useState(initialNextGuide);
   const [activePath, setActivePath] = useState<string>('general');
+  const [isPathComplete, setIsPathComplete] = useState(false);
 
   // Calculate path-based next guide on mount
   useEffect(() => {
-    // Get current guide slug from URL
-    const pathParts = window.location.pathname.split('/');
-    const currentGuideSlug = pathParts[pathParts.length - 1];
-    
-    // Get user's active path from localStorage
-    const userPath = getActivePath();
-    setActivePath(userPath);
-    
-    // Get path configuration
-    const pathConfig = LEARNING_PATHS[userPath];
-    
-    if (pathConfig && pathConfig.sequence.includes(currentGuideSlug)) {
-      // Calculate path-based next guide
-      const nextSlug = getNextGuideInPath(currentGuideSlug, userPath);
-      
-      if (nextSlug) {
-        // Use guide titles map if available
-        const title = guideTitles?.[nextSlug] || formatGuideTitle(nextSlug);
-        setNextGuide({ slug: nextSlug, title });
+    try {
+      const pathParts = window.location.pathname.split('/');
+      const currentSlug = pathParts[pathParts.length - 1];
+
+      const userPath = getActivePath();
+      setActivePath(userPath);
+
+      const pathConfig = LEARNING_PATHS[userPath];
+
+      if (pathConfig?.sequence.includes(currentSlug)) {
+        const currentIndex = pathConfig.sequence.indexOf(currentSlug);
+
+        if (currentIndex === pathConfig.sequence.length - 1) {
+          setIsPathComplete(true);
+          setNextGuide(undefined);
+        } else {
+          const nextSlug = pathConfig.sequence[currentIndex + 1];
+          const title = guideTitles?.[nextSlug] || formatGuideTitle(nextSlug);
+          setNextGuide({ slug: nextSlug, title });
+          setIsPathComplete(false);
+        }
       } else {
         setNextGuide(undefined);
       }
+    } catch (error) {
+      console.error('[ContinueLearning] Error:', error);
     }
-    // If guide not in path, fall back to initial props
   }, [guideTitles]);
 
   // Helper to format guide title (fallback)
@@ -122,7 +126,39 @@ export function ContinueLearning({
   };
 
   // Hide overlay when actively viewing quiz
-  if (!nextGuide || !isVisible || isViewingQuiz) return null;
+  if (!isVisible || isViewingQuiz) return null;
+
+  // Path complete variant
+  if (isPathComplete) {
+    return (
+      <div className={cn(
+        'fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-lg',
+        'animate-in fade-in duration-500 slide-in-from-bottom-4',
+        className
+      )}>
+        <div className="bg-white dark:bg-gray-900 rounded-2xl border-2 border-green-300 dark:border-green-700 shadow-2xl p-6">
+          <div className="text-center">
+            <div className="text-4xl mb-2">🎉</div>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+              Path Complete!
+            </h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+              You've finished the {LEARNING_PATHS[activePath]?.label} learning path
+            </p>
+            <a
+              href="/guides"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
+            >
+              Explore Other Paths
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!nextGuide) return null;
 
   return (
     <div

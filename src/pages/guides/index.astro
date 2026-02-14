@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
 import { GamificationExplainerWrapper } from '../../components/gamification/GamificationExplainerWrapper';
+import { ContinueReadingCard } from '../../components/navigation/ContinueReadingCard';
 
 interface Guide {
   id: string;
@@ -353,6 +354,9 @@ const pathConfig = {
     <!-- Guides Grid -->
     <section class="py-16" id="guides-grid">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Continue Reading Card -->
+        <ContinueReadingCard client:load />
+        
         <div class="space-y-16">
           {guideSections.map((section, sectionIndex) => (
             <div 
@@ -501,57 +505,53 @@ const pathConfig = {
   // Storage keys - unified with gamification system
   const STORAGE_KEY = 'nostrich-gamification-v1';
   const PRIVACY_SETTINGS_KEY = 'nostrich-privacy-settings';
-  const PATH_STORAGE_KEY = 'nostrich-user-path';
   
   // Path configuration (must match server-side config)
   const pathConfig = {
     beginner: {
       label: 'Beginners',
       icon: '👋',
-      sequence: ['what-is-nostr', 'quickstart', 'finding-community', 'zaps-and-lightning', 'relays-demystified', 'nip05-identity', 'nostr-tools', 'troubleshooting', 'faq'],
-      hideAdvanced: true,
-    },
-    // Backwards compatibility alias
-    general: {
-      label: 'Beginners',
-      icon: '👋',
-      sequence: ['what-is-nostr', 'quickstart', 'finding-community', 'zaps-and-lightning', 'relays-demystified', 'nip05-identity', 'nostr-tools', 'troubleshooting', 'faq'],
+      sequence: ['what-is-nostr', 'keys-and-security', 'quickstart', 'relays-demystified', 'nip05-identity', 'zaps-and-lightning', 'finding-community', 'nostr-tools', 'troubleshooting'],
       hideAdvanced: true,
     },
     bitcoiner: {
       label: 'Bitcoiner',
       icon: '₿',
-      sequence: ['quickstart', 'zaps-and-lightning', 'finding-community', 'multi-client', 'protocol-comparison', 'relays-demystified', 'nip05-identity', 'privacy-security'],
+      sequence: ['quickstart', 'zaps-and-lightning', 'relays-demystified', 'finding-community', 'nostr-tools', 'troubleshooting', 'relay-guide', 'faq'],
       hideAdvanced: false,
     },
     privacy: {
       label: 'Privacy Advocate',
       icon: '🔒',
-      sequence: ['what-is-nostr', 'keys-and-security', 'privacy-security', 'nip17-private-messages', 'relays-demystified', 'finding-community', 'multi-client'],
+      sequence: ['what-is-nostr', 'keys-and-security', 'quickstart', 'relays-demystified', 'privacy-security', 'nip05-identity', 'troubleshooting', 'faq'],
       hideAdvanced: false,
     },
   };
 
-  // Get stored path
+  // Get stored path from unified gamification storage
   function getUserPath() {
     try {
-      // Support both 'beginner' (new) and 'general' (legacy) paths
-      const stored = localStorage.getItem(PATH_STORAGE_KEY);
-      if (stored === 'general') {
-        // Migrate legacy path to new name
-        localStorage.setItem(PATH_STORAGE_KEY, 'beginner');
-        return 'beginner';
+      const data = localStorage.getItem(STORAGE_KEY);
+      if (data) {
+        const parsed = JSON.parse(data);
+        return parsed.progress?.activePath || 'beginner';
       }
-      return stored || 'beginner';
     } catch (e) {
-      return 'beginner';
+      console.error('Error reading path:', e);
     }
+    return 'beginner';
   }
   
-  // Set user path
+  // Set user path in unified gamification storage
   function setUserPath(path) {
     try {
-      localStorage.setItem(PATH_STORAGE_KEY, path);
+      const data = localStorage.getItem(STORAGE_KEY);
+      let parsed = data ? JSON.parse(data) : { progress: {} };
+      if (!parsed.progress) {
+        parsed.progress = {};
+      }
+      parsed.progress.activePath = path;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
     } catch (e) {
       console.error('Error saving path:', e);
     }
@@ -689,7 +689,7 @@ const pathConfig = {
   
   // Filter guides by path
   function filterGuidesByPath(path) {
-    const config = pathConfig[path] || pathConfig.general;
+    const config = pathConfig[path] || pathConfig.beginner;
     const sequence = config.sequence;
     const cards = document.querySelectorAll('.guide-card');
     
@@ -725,7 +725,7 @@ const pathConfig = {
   
   // Update path indicator UI
   function updatePathIndicator(path) {
-    const config = pathConfig[path] || pathConfig.general;
+    const config = pathConfig[path] || pathConfig.beginner;
     const indicator = document.getElementById('path-indicator');
     const iconEl = document.getElementById('current-path-icon');
     const labelEl = document.getElementById('current-path-label');
@@ -820,7 +820,7 @@ const pathConfig = {
   searchInput?.addEventListener('input', (e) => {
     const query = e.target?.value?.toLowerCase() || '';
     const currentPath = getUserPath();
-    const config = pathConfig[currentPath] || pathConfig.general;
+    const config = pathConfig[currentPath] || pathConfig.beginner;
     
     document.querySelectorAll('.guide-card').forEach((card) => {
       const guideId = card.getAttribute('data-guide-id');

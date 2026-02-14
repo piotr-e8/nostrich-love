@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Check, Circle, Lock, ChevronDown, ArrowLeft, AlertCircle } from 'lucide-react';
 import { cn } from '../../lib/utils';
-import { getProgressData, checkPrerequisites } from '../../lib/progressService';
+import { loadGamificationData } from '../../utils/gamification';
 
 export interface EnhancedGuideCompletionIndicatorProps {
   guides: Array<{
@@ -37,13 +37,36 @@ export function EnhancedGuideCompletionIndicator({
 
   useEffect(() => {
     const loadProgress = () => {
-      const data = getProgressData();
-      setProgress(data.guides);
-      
-      // Check incomplete prerequisites
-      if (currentGuidePrerequisites.length > 0) {
-        const { incomplete } = checkPrerequisites(currentGuideSlug, currentGuidePrerequisites);
-        setIncompletePrereqs(incomplete);
+      try {
+        const gamificationData = loadGamificationData();
+        const completedGuides = gamificationData.progress?.completedGuides || [];
+        
+        // Convert to component's expected format
+        const progressMap: Record<string, GuideProgress> = {};
+        completedGuides.forEach((slug: string) => {
+          progressMap[slug] = {
+            guideId: slug,
+            status: 'completed',
+            timeSpentSeconds: 0,
+            maxScrollDepth: 100,
+            checklistCompleted: [],
+            lastVisitedAt: new Date().toISOString(),
+            completedAt: new Date().toISOString()
+          };
+        });
+        
+        setProgress(progressMap);
+        
+        // Check incomplete prerequisites
+        if (currentGuidePrerequisites.length > 0) {
+          const incomplete = currentGuidePrerequisites.filter(
+            prereq => !completedGuides.includes(prereq)
+          );
+          setIncompletePrereqs(incomplete);
+        }
+      } catch (error) {
+        console.error('[EnhancedGuideCompletionIndicator] Error loading progress:', error);
+        setProgress({});
       }
     };
     

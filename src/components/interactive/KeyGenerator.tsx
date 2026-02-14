@@ -23,6 +23,7 @@ import {
   saveToLocalStorage,
   loadFromLocalStorage,
 } from "../../lib/utils";
+import { recordActivity } from "../../utils/gamificationEngine";
 
 // Helper function to convert Uint8Array to hex string (browser-compatible)
 function bytesToHex(bytes: Uint8Array): string {
@@ -146,6 +147,9 @@ export function KeyGenerator({
 
     setKeys(keyPair);
 
+    // Record key generation (triggers key-master badge and streak)
+    recordActivity('generateKeys');
+
     // Generate QR codes
     try {
       const npubQr = await QRCode.toDataURL(keyPair.npub, { width: 200 });
@@ -207,6 +211,9 @@ IMPORTANT SECURITY WARNINGS:
 
     downloadFile(`nostr-keys-${Date.now()}.txt`, content);
     showToast("Keys downloaded successfully", "success");
+    
+    // Record key backup (triggers security-conscious badge and streak)
+    recordActivity('backupKeys');
   };
 
   const toggleSecurityCheck = (id: string) => {

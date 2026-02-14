@@ -1502,7 +1502,88 @@ describe('Progress Tracking', () => {
 
 ---
 
-**Document Version**: 1.0  
-**Last Updated**: February 2025  
+## 11. Bug Fixes & Improvements
+
+### 11.1 localStorage Data Format Conflict (Fixed 2026-02-14)
+
+**Issue:** Guide progress key `nostrich-gamification-v1:progress` was being deleted when visiting a guide and scrolling.
+
+**Root Cause:** Two systems were writing incompatible data formats to the same localStorage key:
+- `progressService.ts` - Saved data in `ProgressData` format (with `deviceId`, `schemaVersion`, `guides` object, etc.)
+- `gamification.ts` / `progress.ts` - Expected `GamificationData` format (with `badges`, `progress.completedGuides` array, `stats`, `version`)
+
+When `useProgressTracking.ts` called `updateGuideProgress()` on scroll, `saveProgressData()` **overwrote** the gamification data with the incompatible `ProgressData` format, corrupting localStorage.
+
+**Fix Applied:**
+
+Updated `saveProgressData()` in `src/lib/progressService.ts` (lines 130-174) to merge with existing data instead of overwriting:
+
+```typescript
+function saveProgressData(data: ProgressData): void {
+  // ... validation code ...
+  
+  // Merge with existing gamification data to preserve badges, stats, etc.
+  let existingData: Record<string, unknown> = {};
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      existingData = JSON.parse(stored);
+    }
+  } catch (e) {
+    console.error('Error reading existing gamification data:', e);
+  }
+  
+  // Convert guides object to completedGuides array format
+  const completedGuides = Object.values(cleanedData.guides)
+    .filter(g => g.status === 'completed')
+    .map(g => g.guideId);
+  
+  // Merge: keep existing gamification data, update progress fields
+  const mergedData = {
+    ...existingData,
+    progress: {
+      ...(existingData.progress as Record<string, unknown> || {}),
+      completedGuides,
+      lastActive: new Date().toISOString(),
+    },
+    version: (existingData.version as number) || 1,
+  };
+  
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(mergedData));
+}
+```
+
+**Lessons Learned:**
+
+1. **Multiple writers + single storage key = conflict risk**
+   - When two systems share localStorage, define one canonical format
+   - All writers must conform to that format
+   - Use merge strategy to preserve data from other writers
+   - Never assume you own the entire storage object
+
+2. **Pattern: Merge-First LocalStorage Updates**
+   ```typescript
+   function updateSharedStorage(key: string, updates: Partial<Data>) {
+     // 1. Read existing
+     const existing = JSON.parse(localStorage.getItem(key) || '{}');
+     
+     // 2. Merge (deep merge for nested objects)
+     const merged = deepMerge(existing, updates);
+     
+     // 3. Write back
+     localStorage.setItem(key, JSON.stringify(merged));
+   }
+   ```
+
+**Affected Files:**
+- `src/lib/progressService.ts` - Fixed (lines 130-174)
+- `src/lib/progress.ts` - Uses gamification format (unchanged)
+- `src/utils/gamification.ts` - Defines canonical format (unchanged)
+- `src/lib/useProgressTracking.ts` - Triggers updates (unchanged)
+
+---
+
+**Document Version**: 1.1  
+**Last Updated**: February 2026  
 **Author**: Agent 3 - Progress Tracking Spec Writer  
 **Review Status**: Ready for Implementation

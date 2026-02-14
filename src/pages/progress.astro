@@ -136,7 +136,7 @@ const totalGuides = 16; // Total number of guides
         <div class="max-w-3xl mx-auto">
           <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Next Steps</h2>
           
-          <div id="next-steps" class="bg-gradient-to-br from-friendly-purple-50 to-friendly-gold-50 dark:from-friendly-purple-900/20 dark:to-friendly-gold-900/10 rounded-2xl border-2 border-friendly-purple-200 dark:border-friendly-purple-700 p-8">
+          <div id="next-steps" class="bg-gradient-to-br from-friendly-purple-50 to-friendly-gold-50 dark:from-friendly-purple-900 dark:to-friendly-gold-900 rounded-2xl border-2 border-friendly-purple-200 dark:border-friendly-purple-600 p-8">
             <div class="flex items-start gap-4">
               <div class="w-12 h-12 rounded-xl bg-friendly-purple-100 dark:bg-friendly-purple-900/30 flex items-center justify-center flex-shrink-0">
                 <svg class="w-6 h-6 text-friendly-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -203,8 +203,7 @@ const totalGuides = 16; // Total number of guides
 </Layout>
 
 <script>
-  const STORAGE_KEY = 'nostrich-progress-v1';
-  const GAMIFICATION_KEY = 'nostrich-gamification-v1';
+  const STORAGE_KEY = 'nostrich-gamification-v1';
   const TOTAL_GUIDES = 16;
 
   // Guide metadata for display
@@ -226,44 +225,54 @@ const totalGuides = 16; // Total number of guides
     'faq': { title: 'FAQ', category: 'Advanced' },
   };
 
+  // Learning paths with recommended sequences
+  const learningPaths: Record<string, string[]> = {
+    beginner: ['what-is-nostr', 'quickstart', 'finding-community', 'zaps-and-lightning', 'relays-demystified', 'nip05-identity', 'nostr-tools', 'troubleshooting', 'faq'],
+    bitcoiner: ['quickstart', 'zaps-and-lightning', 'finding-community', 'multi-client', 'protocol-comparison', 'relays-demystified', 'nip05-identity', 'privacy-security'],
+    privacy: ['what-is-nostr', 'keys-and-security', 'privacy-security', 'nip17-private-messages', 'relays-demystified', 'finding-community', 'multi-client'],
+  };
+
+  // Get user's active path
+  function getActivePath(): string {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return parsed.progress?.activePath || 'beginner';
+      }
+    } catch (e) {
+      console.error('Error reading active path:', e);
+    }
+    return 'beginner';
+  }
+
   // Get progress data from localStorage
   function getProgressData() {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
-        return parsed.guides || {};
+        return {
+          completedGuides: parsed.progress?.completedGuides || [],
+          completedWithTimestamps: parsed.progress?.completedGuidesWithTimestamps || []
+        };
       }
     } catch (e) {
       console.error('Error reading progress data:', e);
     }
-    return {};
-  }
-
-  // Get gamification data
-  function getGamificationData() {
-    try {
-      const stored = localStorage.getItem(GAMIFICATION_KEY);
-      if (stored) {
-        return JSON.parse(stored);
-      }
-    } catch (e) {
-      console.error('Error reading gamification data:', e);
-    }
-    return null;
+    return { completedGuides: [], completedWithTimestamps: [] };
   }
 
   // Calculate progress
   function calculateProgress() {
-    const guides = getProgressData();
-    const completedGuides = Object.values(guides).filter((g: any) => g.status === 'completed');
+    const { completedGuides } = getProgressData();
     const percentage = TOTAL_GUIDES > 0 ? Math.round((completedGuides.length / TOTAL_GUIDES) * 100) : 0;
     
     return {
       total: TOTAL_GUIDES,
       completed: completedGuides.length,
       percentage: percentage,
-      completedGuideIds: Object.keys(guides).filter((id) => guides[id].status === 'completed'),
+      completedGuideIds: completedGuides,
     };
   }
 
@@ -283,10 +292,26 @@ const totalGuides = 16; // Total number of guides
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   }
 
+  // Get streak data from gamification
+  function getStreakData() {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return {
+          streakDays: parsed.progress?.streakDays || 0
+        };
+      }
+    } catch (e) {
+      console.error('Error reading streak data:', e);
+    }
+    return { streakDays: 0 };
+  }
+
   // Update summary cards
   function updateSummaryCards() {
     const progress = calculateProgress();
-    const gamification = getGamificationData();
+    const streakData = getStreakData();
     
     // Update guides completed count
     const guidesCountEl = document.getElementById('guides-completed-count');
@@ -297,7 +322,7 @@ const totalGuides = 16; // Total number of guides
     // Update streak count
     const streakCountEl = document.getElementById('streak-count');
     if (streakCountEl) {
-      const streakDays = gamification?.progress?.streakDays || 0;
+      const streakDays = streakData.streakDays;
       streakCountEl.textContent = `${streakDays} day${streakDays !== 1 ? 's' : ''}`;
     }
     
@@ -337,18 +362,16 @@ const totalGuides = 16; // Total number of guides
 
   // Update recent activity
   function updateRecentActivity() {
-    const guides = getProgressData();
+    const { completedWithTimestamps } = getProgressData();
     const container = document.getElementById('recent-activity');
     
     if (!container) return;
     
-    // Get completed guides with timestamps
-    const completedGuides = Object.entries(guides)
-      .filter(([_, data]: [string, any]) => data.status === 'completed' && data.completedAt)
-      .map(([id, data]: [string, any]) => ({
-        id,
-        ...data,
-        metadata: guideMetadata[id] || { title: id, category: 'Unknown' },
+    // Get completed guides with timestamps, sorted by completion date
+    const completedGuides = completedWithTimestamps
+      .map((guide: any) => ({
+        ...guide,
+        metadata: guideMetadata[guide.id] || { title: guide.id, category: 'Unknown' },
       }))
       .sort((a: any, b: any) => new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime())
       .slice(0, 5); // Show last 5
@@ -401,15 +424,23 @@ const totalGuides = 16; // Total number of guides
       titleEl.textContent = '🎉 You\'ve completed all guides!';
       descEl.textContent = 'Congratulations! You\'re now a Nostr expert. Consider sharing your knowledge with others.';
     } else {
-      // Find next incomplete guide
-      const guideIds = Object.keys(guideMetadata);
+      // Find next incomplete guide based on active learning path
+      const activePath = getActivePath();
+      const pathSequence = learningPaths[activePath] || learningPaths.beginner;
       const completedIds = progress.completedGuideIds;
-      const nextGuideId = guideIds.find(id => !completedIds.includes(id));
+      
+      // Find first incomplete guide in the path sequence
+      const nextGuideId = pathSequence.find(id => !completedIds.includes(id));
       
       if (nextGuideId && guideMetadata[nextGuideId]) {
         const guide = guideMetadata[nextGuideId];
+        const pathLabel = activePath === 'beginner' ? 'Beginner' : activePath === 'bitcoiner' ? 'Bitcoiner' : 'Privacy Advocate';
         titleEl.textContent = `Next up: ${guide.title}`;
-        descEl.textContent = `Continue your ${guide.category.toLowerCase()} journey with this guide.`;
+        descEl.textContent = `Continue your ${pathLabel} path journey with this ${guide.category.toLowerCase()} guide.`;
+      } else {
+        // If all guides in path are complete, suggest browsing all guides
+        titleEl.textContent = 'Path Complete! 🎉';
+        descEl.textContent = `You've completed all guides in the ${activePath} path. Great job!`;
       }
     }
   }
@@ -423,7 +454,7 @@ const totalGuides = 16; // Total number of guides
     
     // Listen for storage changes
     window.addEventListener('storage', (e) => {
-      if (e.key === STORAGE_KEY || e.key === GAMIFICATION_KEY) {
+      if (e.key === STORAGE_KEY) {
         updateSummaryCards();
         updateProgressBar();
         updateRecentActivity();

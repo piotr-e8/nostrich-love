@@ -33,6 +33,7 @@ import {
   saveToLocalStorage,
   loadFromLocalStorage,
 } from "../../lib/utils";
+import { recordActivity } from "../../utils/gamificationEngine";
 
 type Topic = "all" | "bitcoin" | "tech" | "general" | "art" | "music";
 type RelayType = "all" | "free" | "paid";
@@ -419,6 +420,9 @@ export function RelayExplorer({
       selected: Array.from(selectedRelays),
       custom: customRelays,
     });
+    
+    // Record relay selection (triggers relay-explorer badge at 3+ relays and streak)
+    recordActivity('selectRelays', { count: selectedRelays.size });
   }, [selectedRelays, customRelays]);
 
   // Show toast helper

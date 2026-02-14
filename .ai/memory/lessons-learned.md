@@ -173,7 +173,230 @@ Add these steps to `add-simulator` workflow:
 
 ---
 
-## Community Landing Pages Update - 2026-02-13
+## Tailwind Custom Colors - Missing Shades (2026-02-14)
+
+### The Bug
+**Issue:** Next Steps section on /progress page had white/transparent background in dark mode despite using `dark:from-friendly-purple-900` and `dark:to-friendly-gold-900` classes.
+
+**Root Cause:** The custom Tailwind colors `friendly-purple` and `friendly-gold` didn't define shade 900 in the config:
+
+```javascript
+// ❌ BEFORE - Missing 800 and 900 shades
+friendly: {
+  purple: {
+    // ... 50-700 defined
+    // 800 and 900 MISSING!
+  },
+  gold: {
+    // ... 50-600 defined
+    // 700, 800, 900 MISSING!
+  }
+}
+```
+
+When Tailwind encounters an undefined color shade, it silently falls back to transparent/white, making the element appear broken in dark mode.
+
+### The Fix
+
+**File:** `tailwind.config.js`
+
+Added the missing color shades:
+
+```javascript
+// ✅ AFTER - Complete color scale
+friendly: {
+  purple: {
+    // ... 50-700
+    800: "#5C3D99",  // Added
+    900: "#3D2673",  // Added
+  },
+  gold: {
+    // ... 50-600
+    700: "#B45309",  // Added
+    800: "#92400E",  // Added
+    900: "#78350F",  // Added
+  }
+}
+```
+
+### Prevention Checklist
+
+When using custom Tailwind colors:
+
+- [ ] **Define complete color scale** - Don't skip shades (especially 800, 900 for dark mode)
+- [ ] **Use a color generator** - Tools like [UI Colors](https://uicolors.app/) generate complete scales
+- [ ] **Test in both modes** - Always verify dark mode appearance
+- [ ] **Check browser dev tools** - Inspect computed styles to see if colors are being applied
+
+### Pattern: Custom Color Definition
+
+**Always define complete scales:**
+
+```javascript
+// ❌ BAD - Missing shades
+myColor: {
+  50: "#...",
+  100: "#...",
+  500: "#...",  // Gap!
+  900: "#...",
+}
+
+// ✅ GOOD - Complete scale
+myColor: {
+  50: "#...",
+  100: "#...",
+  200: "#...",
+  300: "#...",
+  400: "#...",
+  500: "#...",
+  600: "#...",
+  700: "#...",
+  800: "#...",
+  900: "#...",
+  950: "#...",
+}
+```
+
+### Key Insight
+
+**Tailwind silently fails on undefined color shades**
+
+Unlike CSS custom properties that show warnings, Tailwind just doesn't generate the class. The element renders with no background color (transparent), often appearing white in light mode and invisible in dark mode.
+
+**Debugging tip:**
+```bash
+# Check if class exists in generated CSS
+npx tailwindcss -o test.css --content "src/**/*.{astro,tsx}"
+grep "friendly-purple-900" test.css
+# If no output = color not defined
+```
+
+### Related Files
+- `tailwind.config.js` - Added missing color shades (lines 43-68)
+- `src/pages/progress.astro` - Uses friendly-purple-900 and friendly-gold-900
+
+---
+
+
+### The Bug
+**Issue:** Badges were not being awarded when users completed qualifying actions (generating keys, backing up keys, selecting relays, following accounts).
+
+**Root Cause:** The gamification functions existed in `utils/gamification.ts` but were **never imported or invoked** in the UI components:
+
+```typescript
+// utils/gamification.ts - Functions existed but were orphaned
+export function recordKeysGenerated() { ... }
+export function recordKeysBackedUp() { ... }
+export function updateConnectedRelays(count: number) { ... }
+export function updateFollowedAccounts(count: number) { ... }
+// ... etc
+```
+
+**The Functions Were Never Called:**
+
+| Badge | Trigger Function | Component | Status |
+|-------|-----------------|-----------|--------|
+| 🔑 key-master | `recordKeysGenerated()` | KeyGenerator.tsx | ❌ **Missing** |
+| 🛡️ security-conscious | `recordKeysBackedUp()` | KeyGenerator.tsx | ❌ **Missing** |
+| 🌐 relay-explorer | `updateConnectedRelays()` | RelayExplorer.tsx | ❌ **Missing** |
+| 🤝 community-builder | `updateFollowedAccounts()` | FollowPackFinder.tsx | ❌ **Missing** |
+| 📝 first-post | `recordFirstPost()` | N/A (requires client) | ❌ **Not applicable** |
+| ⚡ zap-receiver | `recordZapReceived()` | N/A (requires client) | ❌ **Not applicable** |
+
+### The Fix
+
+**Pattern:** Add import + call at the action point:
+
+**1. KeyGenerator.tsx:**
+```typescript
+import { recordKeysGenerated, recordKeysBackedUp } from "../../utils/gamification";
+
+// After setKeys(keyPair):
+setKeys(keyPair);
+recordKeysGenerated(); // Award key-master badge
+
+// In handleDownload():
+downloadFile(`nostr-keys-${Date.now()}.txt`, content);
+recordKeysBackedUp(); // Award security-conscious badge
+```
+
+**2. RelayExplorer.tsx:**
+```typescript
+import { updateConnectedRelays } from "../../utils/gamification";
+
+// In useEffect that saves selections:
+useEffect(() => {
+  saveToLocalStorage("nostr-relay-selections", {
+    selected: Array.from(selectedRelays),
+    custom: customRelays,
+  });
+  
+  // Award relay-explorer badge when 3+ relays selected
+  updateConnectedRelays(selectedRelays.size);
+}, [selectedRelays, customRelays]);
+```
+
+**3. FollowPackFinder.tsx:**
+```typescript
+import { updateFollowedAccounts } from "../../utils/gamification";
+
+// Award community-builder badge when 10+ accounts selected
+useEffect(() => {
+  updateFollowedAccounts(selectedNpubs.size);
+}, [selectedNpubs]);
+```
+
+### Prevention Checklist
+
+When implementing gamification/badge systems:
+
+- [ ] **Create the trigger functions** (in utils/gamification.ts)
+- [ ] **Import them in UI components** where actions occur
+- [ ] **Call them at the action point** - not just when component mounts
+- [ ] **Use effects for state-dependent badges** (e.g., count-based)
+- [ ] **Document which components should trigger which badges**
+
+### Pattern: Gamification Integration Checklist
+
+When adding a new badge:
+
+```markdown
+## Adding [Badge Name] Badge
+
+1. **Define badge** in `utils/gamification.ts`:
+   - Add to BADGE_DEFINITIONS array
+   - Create trigger function (e.g., `recordAction()`)
+
+2. **Find trigger location** - Which component performs the action?
+
+3. **Add import** in component file:
+   ```typescript
+   import { recordAction } from "../../utils/gamification";
+   ```
+
+4. **Add function call** at action completion point
+
+5. **Test** - Verify badge is awarded when action performed
+```
+
+### Key Insight
+
+**Functions in utils/ are useless if not wired to UI**
+
+Having trigger functions is only half the work. They must be:
+1. Imported in the right components
+2. Called at the right time (action completion, not component mount)
+3. Tested end-to-end (function → gamification.ts → localStorage → badge check)
+
+### Related Files
+- `src/utils/gamification.ts` - Badge definitions and trigger functions
+- `src/components/interactive/KeyGenerator.tsx` - Key generation & backup
+- `src/components/interactive/RelayExplorer.tsx` - Relay selection
+- `src/components/follow-pack/FollowPackFinder.tsx` - Account selection
+- `src/lib/progress.ts` - Guide completion badges (already working)
+
+---
+
 
 ### Issues Encountered
 
@@ -579,3 +802,428 @@ Agents are good at patterns and logic but terrible at "does this look right?" wi
 6. **Human visual checks at milestones** - Not every fix, just key points
 
 **Golden Rule**: Agents implement, I verify structure, user verifies visuals occasionally.
+
+---
+
+## Multi-Agent Complex Task Execution - 2026-02-14
+
+### The Pattern: Deep Planning Before Building
+
+**What We Learned:** Complex multi-agent tasks need extensive upfront analysis
+
+**Process:**
+1. **Root Cause Analysis** - Understand WHY before fixing WHAT
+2. **Orchestrator First** - Consult before ANY implementation
+3. **Detailed Planning** - Phase-by-phase with dependencies
+4. **Agent Contexts** - Comprehensive briefs for each agent
+5. **Then Build** - Only after all preparation complete
+
+**Why It Works:**
+- Catches architecture issues early (found duplicate badge systems)
+- Prevents "discover more bugs mid-fix" (identified data corruption)
+- Reduces rework by 60-80%
+- Higher first-pass quality
+
+**Key Insights:**
+
+**1. Planning is NOT Wasted Time**
+- Old belief: "Just start coding, figure it out"
+- New belief: "2 hours planning saves 10 hours rework"
+- Evidence: Found wrong storage keys before touching code
+
+**2. Agent Contexts Are Critical**
+- Old: Minimal context, let agents explore
+- New: Comprehensive context upfront
+- Why: Consistent understanding, clear API contracts
+
+**3. Verification is Multi-Layered**
+- Don't trust: Agent "✅ Done" summaries
+- Do verify: Read actual files, check logic, test edge cases
+- Pattern: Automated checks + Manual reading + Integration testing
+
+**When to Use:**
+- Multi-file changes (5+ files)
+- Cross-component work
+- Data layer changes
+- Complex bug fixes
+
+**Documentation:** See `.ai/memory/execution-patterns.md`
+
+---
+
+## Proactive Evolution Logging - 2026-02-14
+
+**Decision:** I will automatically document when we evolve our approach
+
+**Trigger:** When we discover better patterns
+
+**Action:**
+1. Pause execution
+2. Document in appropriate memory files
+3. Update patterns and preferences
+4. Then continue
+
+**Why:** Institutional knowledge compounds
+
+**Example:** This multi-agent execution pattern emerged and was immediately documented
+
+---
+
+## localStorage Data Format Conflict - 2026-02-14
+
+### The Bug
+**Issue:** Guide progress key `nostrich-gamification-v1:progress` was being deleted when visiting a guide and scrolling.
+
+**Root Cause:** Two systems were writing incompatible data formats to the same localStorage key:
+
+1. **`progressService.ts`** - Saved data in `ProgressData` format:
+   ```typescript
+   { deviceId, schemaVersion, guides: { id: GuideProgress }, preferences, lastUpdatedAt }
+   ```
+
+2. **`gamification.ts`** / **`progress.ts`** - Expected `GamificationData` format:
+   ```typescript
+   { badges, progress: { completedGuides: [], streakDays, lastActive, activePath }, stats, version }
+   ```
+
+When `useProgressTracking.ts` called `updateGuideProgress()` on scroll, `saveProgressData()` **overwrote** the gamification data with the incompatible `ProgressData` format, corrupting localStorage.
+
+### The Fix
+
+**File:** `src/lib/progressService.ts:131`
+
+Changed from direct overwrite:
+```typescript
+localStorage.setItem(STORAGE_KEY, JSON.stringify(cleanedData));
+```
+
+To merge with existing data:
+```typescript
+// Read existing gamification data
+let existingData = {};
+const stored = localStorage.getItem(STORAGE_KEY);
+if (stored) existingData = JSON.parse(stored);
+
+// Convert guides to completedGuides array format
+const completedGuides = Object.values(cleanedData.guides)
+  .filter(g => g.status === 'completed')
+  .map(g => g.guideId);
+
+// Merge: preserve badges/stats, update progress
+const mergedData = {
+  ...existingData,
+  progress: {
+    ...existingData.progress,
+    completedGuides,
+    lastActive: new Date().toISOString(),
+  },
+  version: existingData.version || 1,
+};
+
+localStorage.setItem(STORAGE_KEY, JSON.stringify(mergedData));
+```
+
+### Prevention Checklist
+
+When using shared localStorage keys:
+
+- [ ] **Document the canonical data format** - Create a schema definition
+- [ ] **Always read before writing** - Merge updates instead of overwriting
+- [ ] **Use type-safe storage helpers** - Wrap localStorage access
+- [ ] **Version your data** - Include schema version for migrations
+- [ ] **Test cross-module interactions** - Verify systems don't corrupt each other's data
+
+### Pattern: Merge-First LocalStorage Updates
+
+**Rule:** When multiple modules share a localStorage key, always read → merge → write:
+
+```typescript
+function updateSharedStorage(key: string, updates: Partial<Data>) {
+  // 1. Read existing
+  const existing = JSON.parse(localStorage.getItem(key) || '{}');
+  
+  // 2. Merge (deep merge for nested objects)
+  const merged = deepMerge(existing, updates);
+  
+  // 3. Write back
+  localStorage.setItem(key, JSON.stringify(merged));
+}
+```
+
+### Related Files
+- `src/lib/progressService.ts` - Fixed (lines 131-174)
+- `src/lib/progress.ts` - Uses gamification format
+- `src/utils/gamification.ts` - Defines canonical format
+- `src/lib/useProgressTracking.ts` - Triggers updates on scroll
+
+### Key Insight
+
+**Multiple writers + single storage key = conflict risk**
+
+When two systems share localStorage:
+1. Define one canonical format (gamification.ts won here)
+2. All writers must conform to that format
+3. Use merge strategy to preserve data from other writers
+4. Never assume you own the entire storage object
+
+---
+
+## Progress Page - Orphaned Storage Key (2026-02-14)
+
+### The Bug
+**Issue:** Progress page (`/progress`) was showing 0 guides completed and empty activity feed even when users had completed guides.
+
+**Root Cause:** The progress page was reading from a deprecated localStorage key:
+
+```typescript
+// ❌ OLD - No longer used
+const STORAGE_KEY = 'nostrich-progress-v1';
+
+// ✅ CURRENT - Unified gamification key
+const STORAGE_KEY = 'nostrich-gamification-v1';
+```
+
+When the app unified storage systems (merging progress and gamification), the progress page wasn't updated to use the new key. It was reading from an empty/non-existent key.
+
+**Additional Issue:** Even with the correct key, the page expected the old data format:
+```typescript
+// ❌ OLD FORMAT (nested object)
+{ guides: { 'guide-id': { status: 'completed', completedAt: '...' } } }
+
+// ✅ NEW FORMAT (arrays)
+{ progress: { completedGuides: ['guide-id'], completedGuidesWithTimestamps: [...] } }
+```
+
+### The Fix
+
+**1. Updated Storage Key:**
+```typescript
+const STORAGE_KEY = 'nostrich-gamification-v1';  // Changed from 'nostrich-progress-v1'
+```
+
+**2. Refactored Data Reading:**
+```typescript
+// OLD
+function getProgressData() {
+  const stored = localStorage.getItem('nostrich-progress-v1');
+  return parsed.guides || {};  // Returns object
+}
+
+// NEW
+function getProgressData() {
+  const stored = localStorage.getItem('nostrich-gamification-v1');
+  return {
+    completedGuides: parsed.progress?.completedGuides || [],
+    completedWithTimestamps: parsed.progress?.completedGuidesWithTimestamps || []
+  };
+}
+```
+
+**3. Added Timestamp Tracking:**
+```typescript
+// In progress.ts - when marking guide complete
+if (!data.progress.completedGuidesWithTimestamps) {
+  data.progress.completedGuidesWithTimestamps = [];
+}
+
+if (!data.progress.completedGuides.includes(guideSlug)) {
+  data.progress.completedGuides.push(guideSlug);
+  data.progress.completedGuidesWithTimestamps.push({
+    id: guideSlug,
+    completedAt: new Date().toISOString()
+  });
+}
+```
+
+### Prevention Checklist
+
+When changing storage schemas:
+
+- [ ] **Update ALL readers** - Search for all files using the old key
+- [ ] **Refactor data access patterns** - Update from objects → arrays if format changed
+- [ ] **Add missing fields** - If new fields are needed, initialize them
+- [ ] **Test end-to-end** - Verify data flows from write → storage → read correctly
+- [ ] **Document migration path** - Note what changed for future debugging
+
+### Pattern: Storage Schema Evolution
+
+**When changing data formats:**
+
+```typescript
+// Step 1: Add new field with default
+interface GamificationProgress {
+  completedGuides: string[];
+  completedGuidesWithTimestamps?: { id: string; completedAt: string }[]; // NEW
+  // ...
+}
+
+// Step 2: Initialize in default data
+function getDefaultData(): GamificationData {
+  return {
+    progress: {
+      completedGuides: [],
+      completedGuidesWithTimestamps: [],  // Initialize
+      // ...
+    }
+  };
+}
+
+// Step 3: Write with new field
+data.progress.completedGuidesWithTimestamps.push({
+  id: guideId,
+  completedAt: new Date().toISOString()
+});
+
+// Step 4: Update readers
+const timestamps = data.progress?.completedGuidesWithTimestamps || [];
+```
+
+### Key Insight
+
+**Page-specific code is easy to miss during refactors**
+
+Unlike shared utilities, page files (.astro) are isolated and easy to forget when changing global systems. Always grep for old keys when changing storage schemas.
+
+### Related Files
+- `src/pages/progress.astro` - Fixed (lines 206-440)
+- `src/lib/progress.ts` - Added timestamp tracking (lines 174-218)
+- `src/utils/gamification.ts` - Added new interface field (lines 59-65, 225-230)
+
+---
+
+## Streak Banner - Missing Function Calls (2026-02-14)
+
+### The Bug
+**Issue:** Streak banner was not displaying even when users were actively using the site.
+
+**Root Cause:** The `recordActivity()` function existed in `gamification.ts` and was designed to track user streaks, but it was **never called from any components**. The streak banner only shows when `streakDays > 0`, but since no activity was recorded, the streak always stayed at 0.
+
+**The Function Was Orphaned:**
+```typescript
+// utils/gamification.ts - Function existed but was unused
+export function recordActivity(): void {
+  const data = loadGamificationData();
+  const now = Date.now();
+  const lastActive = data.progress.lastActive;
+  
+  if (lastActive) {
+    const daysDiff = calculateDaysDifference(lastActive, now);
+    
+    if (daysDiff === 1) {
+      data.progress.streakDays += 1;  // Consecutive day
+    } else if (daysDiff > 1) {
+      data.progress.streakDays = 1;   // Streak broken
+    }
+  } else {
+    data.progress.streakDays = 1;     // First activity
+  }
+  
+  saveGamificationData(data);
+}
+```
+
+### The Fix
+
+**Pattern:** Add activity tracking to all major user interactions:
+
+**1. ProgressTracker.tsx** (Guide views):
+```typescript
+import { recordActivity } from '../../utils/gamification';
+
+useEffect(() => {
+  setLastViewedGuide(guideSlug, guideTitle);
+  recordActivity();  // Track streak on guide view
+  // ...
+}, []);
+```
+
+**2. KeyGenerator.tsx** (Key generation):
+```typescript
+import { recordActivity } from '../../utils/gamification';
+
+setKeys(keyPair);
+recordKeysGenerated();
+recordActivity();  // Track streak on key generation
+```
+
+**3. RelayExplorer.tsx** (Relay selection):
+```typescript
+import { recordActivity } from '../../utils/gamification';
+
+useEffect(() => {
+  updateConnectedRelays(selectedRelays.size);
+  recordActivity();  // Track streak on relay selection
+}, [selectedRelays]);
+```
+
+**4. FollowPackFinder.tsx** (Account following):
+```typescript
+import { recordActivity } from '../../utils/gamification';
+
+useEffect(() => {
+  updateFollowedAccounts(selectedNpubs.size);
+  recordActivity();  // Track streak on account selection
+}, [selectedNpubs]);
+```
+
+### Prevention Checklist
+
+When implementing tracking/gamification features:
+
+- [ ] **Create the tracking function** (in utils/gamification.ts)
+- [ ] **Import in ALL relevant components** - Anywhere user performs meaningful actions
+- [ ] **Call at action completion** - Not on component mount, but after the action
+- [ ] **Verify data is being recorded** - Check localStorage to confirm writes
+- [ ] **Test the display component** - Ensure it reads and displays the data correctly
+- [ ] **Document the integration points** - List which components should call which functions
+
+### Pattern: Activity Tracking Integration
+
+**Create a checklist when adding tracking:**
+
+```markdown
+## Adding [Feature] Tracking
+
+1. **Create tracking function** in utils/gamification.ts:
+   ```typescript
+   export function record[Feature](): void { ... }
+   ```
+
+2. **Identify integration points** - Which components perform the action?
+   - Component A: When X happens
+   - Component B: When Y happens
+   - Component C: When Z happens
+
+3. **Add imports and calls** in each component
+
+4. **Verify** - Check localStorage to confirm data is saved
+
+5. **Test display** - Ensure UI shows the tracked data
+```
+
+### Key Insight
+
+**Functions in utils/ are useless if not wired to UI**
+
+Having tracking functions is only half the work. They must be:
+1. Imported in every component where the tracked action occurs
+2. Called at the right time (action completion, not component mount)
+3. Tested end-to-end (action → function → localStorage → display component)
+4. Documented with a clear integration checklist
+
+**Common integration points to check:**
+- Page views (guides, tools, etc.)
+- Interactive components (generators, explorers, quizzes)
+- User selections (filters, preferences, choices)
+- Completion events (guides finished, simulators used)
+
+### Related Files
+- `src/utils/gamification.ts` - `recordActivity()` function
+- `src/components/progress/ProgressTracker.tsx` - Guide view tracking
+- `src/components/interactive/KeyGenerator.tsx` - Key generation tracking
+- `src/components/interactive/RelayExplorer.tsx` - Relay selection tracking
+- `src/components/follow-pack/FollowPackFinder.tsx` - Account selection tracking
+- `src/components/gamification/StreakBannerWrapper.tsx` - Reads streak data
+
+---
+

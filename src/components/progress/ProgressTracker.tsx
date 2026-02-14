@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { setLastViewedGuide, markGuideCompleted } from '../../lib/progress';
+import { setLastViewedGuide } from '../../lib/progress';
+import { recordActivity, markGuideComplete } from '../../utils/gamificationEngine';
 
 interface ProgressTrackerProps {
   guideSlug: string;
@@ -17,6 +18,9 @@ export function ProgressTracker({ guideSlug, guideTitle }: ProgressTrackerProps)
     // Track that user viewed this guide (for resume feature)
     setLastViewedGuide(guideSlug, guideTitle);
     
+    // Record view activity (triggers streak)
+    recordActivity('viewGuide');
+    
     // Set up scroll listener for completion tracking
     let hasCompleted = false;
     const COMPLETION_THRESHOLD = 0.8; // 80% scroll
@@ -26,9 +30,15 @@ export function ProgressTracker({ guideSlug, guideTitle }: ProgressTrackerProps)
       
       const scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
       
+      // Debug logging
+      if (scrollPercent > 0.5) {
+        console.log('[ProgressTracker] Scroll progress:', Math.round(scrollPercent * 100) + '%');
+      }
+      
       if (scrollPercent >= COMPLETION_THRESHOLD) {
+        console.log('[ProgressTracker] Guide completed:', guideSlug);
         hasCompleted = true;
-        markGuideCompleted(guideSlug);
+        markGuideComplete(guideSlug);
       }
     };
     

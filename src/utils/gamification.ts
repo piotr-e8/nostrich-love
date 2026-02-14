@@ -58,8 +58,17 @@ export interface BadgeStatus {
 /** User progress tracking */
 export interface GamificationProgress {
   completedGuides: string[]; // Array of guide IDs
+  completedGuidesWithTimestamps?: { id: string; completedAt: string }[]; // NEW: Track when guides were completed
   streakDays: number; // Consecutive days active
   lastActive: number | null; // Unix timestamp of last activity
+  activePath?: string; // Currently selected learning path
+  pathProgress?: Record<string, PathProgress>; // Per-path progress tracking
+}
+
+export interface PathProgress {
+  completedGuides: string[];
+  startedAt: number;
+  lastActiveAt: number;
 }
 
 /** Additional statistics for progress calculation */
@@ -215,8 +224,11 @@ function getDefaultData(): GamificationData {
     badges,
     progress: {
       completedGuides: [],
+      completedGuidesWithTimestamps: [],
       streakDays: 0,
       lastActive: null,
+      activePath: 'beginner',
+      pathProgress: {},
     },
     stats: {
       keysGenerated: false,

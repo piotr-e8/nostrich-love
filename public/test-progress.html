@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Progress Test</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .log { background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Progress & Badge Test</h1>
+    <div id="logs"></div>
+    
+    <button onclick="checkStorage()">Check Storage</button>
+    <button onclick="simulateCompletion()">Simulate Guide Completion</button>
+    <button onclick="clearStorage()">Clear Storage</button>
+    
+    <script>
+        const STORAGE_KEY = 'nostrich-gamification-v1';
+        
+        function log(msg) {
+            const div = document.createElement('div');
+            div.className = 'log';
+            div.textContent = new Date().toLocaleTimeString() + ': ' + msg;
+            document.getElementById('logs').appendChild(div);
+            console.log(msg);
+        }
+        
+        function checkStorage() {
+            log('=== Checking Storage ===');
+            try {
+                const data = localStorage.getItem(STORAGE_KEY);
+                if (data) {
+                    const parsed = JSON.parse(data);
+                    log('Found data!');
+                    log('Completed guides: ' + (parsed.progress?.completedGuides?.length || 0));
+                    log('Active path: ' + (parsed.progress?.activePath || 'none'));
+                    log('Badges earned: ' + Object.entries(parsed.badges || {}).filter(([k,v]) => v.earned).length);
+                } else {
+                    log('No data found in localStorage');
+                }
+            } catch (e) {
+                log('Error: ' + e.message);
+            }
+        }
+        
+        function simulateCompletion() {
+            log('=== Simulating Guide Completion ===');
+            
+            // Simulate what happens when guide is completed
+            const guideSlug = 'test-guide-' + Date.now();
+            
+            try {
+                // Get current data
+                const stored = localStorage.getItem(STORAGE_KEY);
+                let data = stored ? JSON.parse(stored) : {
+                    badges: {},
+                    progress: { completedGuides: [], streakDays: 0, lastActive: null, activePath: 'beginner' },
+                    stats: {},
+                    version: 1
+                };
+                
+                // Mark guide complete
+                if (!data.progress) {
+                    data.progress = { completedGuides: [], streakDays: 0, lastActive: Date.now() };
+                }
+                
+                if (!data.progress.completedGuides.includes(guideSlug)) {
+                    data.progress.completedGuides.push(guideSlug);
+                    data.progress.lastActive = Date.now();
+                }
+                
+                // Save
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                
+                log('Guide marked complete: ' + guideSlug);
+                log('Total completed: ' + data.progress.completedGuides.length);
+                
+                // Check badges
+                checkBadges(data);
+                
+            } catch (e) {
+                log('Error: ' + e.message);
+            }
+        }
+        
+        function checkBadges(data) {
+            const completedCount = data.progress.completedGuides.length;
+            log('Checking badges for ' + completedCount + ' completed guides');
+            
+            // Check knowledge-seeker (3 guides)
+            if (completedCount >= 3) {
+                log('✓ Should earn: knowledge-seeker');
+            }
+            
+            // Check nostr-graduate (9 guides)
+            if (completedCount >= 9) {
+                log('✓ Should earn: nostr-graduate');
+            }
+        }
+        
+        function clearStorage() {
+            localStorage.removeItem(STORAGE_KEY);
+            log('Storage cleared');
+        }
+        
+        // Initial check
+        checkStorage();
+    </script>
+</body>
+</html>

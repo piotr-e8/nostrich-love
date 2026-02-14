@@ -30,6 +30,23 @@
   - ❌ Wrong: Directly implementing sidebar navigation
   - ✅ Correct: Spawn hr-agent → "What team do we need for navigation redesign?"
 
+### Complex Task Execution (NEW - 2026-02-14)
+- **Current**: ✅ **DEEP PLANNING** - For 5+ files or cross-component work
+- **Process**: 
+  1. Root cause analysis
+  2. Orchestrator consultation  
+  3. Detailed phase planning
+  4. Agent context preparation
+  5. Then build
+- **Why**: 2 hours planning saves 10 hours rework
+- **Reference**: `.ai/memory/execution-patterns.md`
+
+### Proactive Evolution Logging (NEW - 2026-02-14)
+- **Current**: ✅ **ENABLED** - Automatically document when we evolve
+- **Behavior**: When better patterns emerge, pause and document
+- **Files**: LESSONS_LEARNED.md, DECISIONS.md, PREFERENCES.md
+- **Why**: Institutional knowledge compounds
+
 ### Session Management
 - **Current**: ✅ **TASK-BASED** - New session per distinct task
 - **Strategy**: Start fresh for each workflow or unrelated work

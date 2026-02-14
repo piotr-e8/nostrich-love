@@ -6,14 +6,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { StreakBanner } from './StreakBanner';
-
-interface GamificationData {
-  progress?: {
-    streakDays?: number;
-    lastActive?: number;
-  };
-  streakDays?: number;
-}
+import { getStreakInfo } from '../../utils/gamificationEngine';
 
 const DISMISS_KEY = 'nostrich-streak-banner-dismissed';
 
@@ -31,33 +24,29 @@ export function StreakBannerWrapper() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Load from localStorage
+    // Load streak data
     const loadStreakData = () => {
       try {
-        const data = localStorage.getItem('nostrich-gamification-v1');
         const dismissedData = localStorage.getItem(DISMISS_KEY);
+        const { streakDays } = getStreakInfo();
         
-        if (data) {
-          const parsed: GamificationData = JSON.parse(data);
-          const days = parsed.progress?.streakDays || parsed.streakDays || 0;
-          setStreakDays(days);
+        setStreakDays(streakDays);
+        
+        // Determine if banner should be visible
+        let shouldShow = streakDays > 0;
+        
+        // Check if banner was dismissed today
+        if (shouldShow && dismissedData) {
+          const dismissedDate = new Date(dismissedData);
+          const today = new Date();
           
-          // Determine if banner should be visible
-          let shouldShow = days > 0;
-          
-          // Check if banner was dismissed today
-          if (shouldShow && dismissedData) {
-            const dismissedDate = new Date(dismissedData);
-            const today = new Date();
-            
-            if (isSameDay(dismissedDate, today)) {
-              // Banner was dismissed today, don't show it
-              shouldShow = false;
-            }
+          if (isSameDay(dismissedDate, today)) {
+            // Banner was dismissed today, don't show it
+            shouldShow = false;
           }
-          
-          setIsVisible(shouldShow);
         }
+        
+        setIsVisible(shouldShow);
       } catch (e) {
         console.error('Error loading streak data:', e);
       }
@@ -65,16 +54,11 @@ export function StreakBannerWrapper() {
 
     loadStreakData();
 
-    // Listen for storage changes
-    window.addEventListener('storage', loadStreakData);
-    
-    // Listen for custom streak update events
-    const handleStreakUpdate = () => loadStreakData();
-    window.addEventListener('streak-updated', handleStreakUpdate);
+    // Listen for gamification updates
+    window.addEventListener('gamification-updated', loadStreakData);
 
     return () => {
-      window.removeEventListener('storage', loadStreakData);
-      window.removeEventListener('streak-updated', handleStreakUpdate);
+      window.removeEventListener('gamification-updated', loadStreakData);
     };
   }, []);
 

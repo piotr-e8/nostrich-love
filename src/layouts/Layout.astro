@@ -156,30 +156,72 @@ const props = Astro.props;
       // Initialize gamification state from localStorage
       (function() {
         try {
-          const gamificationData = localStorage.getItem('nostrich-gamification-v1');
-          if (!gamificationData) {
-            // Initialize default state
-            const defaultState = {
-              badges: {},
-              progress: {
-                completedGuides: [],
-                streakDays: 0,
-                lastActive: null
-              },
-              stats: {
-                keysGenerated: false,
-                firstPostMade: false,
-                firstZapReceived: false,
-                accountsFollowed: 0,
-                keysBackedUp: false,
-                relaysConnected: 0
-              },
-              version: 1
-            };
-            localStorage.setItem('nostrich-gamification-v1', JSON.stringify(defaultState));
+          const STORAGE_KEY = 'nostrich-gamification-v1';
+          const stored = localStorage.getItem(STORAGE_KEY);
+          
+          // Default state structure
+          const defaultState = {
+            badges: {},
+            progress: {
+              completedGuides: [],
+              streakDays: 0,
+              lastActive: null,
+              activePath: 'beginner',
+              pathProgress: {}
+            },
+            stats: {
+              keysGenerated: false,
+              firstPostMade: false,
+              firstZapReceived: false,
+              accountsFollowed: 0,
+              keysBackedUp: false,
+              relaysConnected: 0
+            },
+            version: 1
+          };
+          
+          // Badge definitions that must exist
+          const badgeIds = ['key-master', 'first-post', 'zap-receiver', 'community-builder', 
+                           'knowledge-seeker', 'nostr-graduate', 'security-conscious', 'relay-explorer'];
+          
+          let data;
+          
+          if (!stored) {
+            // No data exists - create default
+            data = defaultState;
+            // Initialize all badges as not earned
+            badgeIds.forEach(id => {
+              data.badges[id] = { earned: false, earnedAt: 0 };
+            });
+          } else {
+            // Data exists - parse and validate
+            data = JSON.parse(stored);
+            
+            // Ensure all required fields exist (migration)
+            if (!data.progress) data.progress = defaultState.progress;
+            if (!data.stats) data.stats = defaultState.stats;
+            if (!data.badges) data.badges = {};
+            
+            // Ensure new progress fields exist
+            if (!data.progress.completedGuides) data.progress.completedGuides = [];
+            if (!data.progress.streakDays) data.progress.streakDays = 0;
+            if (!data.progress.activePath) data.progress.activePath = 'beginner';
+            if (!data.progress.pathProgress) data.progress.pathProgress = {};
+            
+            // Ensure all badges exist
+            badgeIds.forEach(id => {
+              if (!data.badges[id]) {
+                data.badges[id] = { earned: false, earnedAt: 0 };
+              }
+            });
           }
+          
+          // Save the validated/updated data
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+          console.log('[Layout] Gamification data initialized/validated');
+          
         } catch (e) {
-          console.error('Error initializing gamification:', e);
+          console.error('[Layout] Error initializing gamification:', e);
         }
       })();
     </script>

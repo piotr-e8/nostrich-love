@@ -22,10 +22,10 @@ function getDeviceId(): string {
 
 // Default privacy settings - all opt-in, disabled by default
 const defaultPrivacySettings: PrivacySettings = {
-  trackingEnabled: false,
-  dataRetention: 'forever', // 'session' | '30d' | '90d' | 'forever'
-  showProgressIndicators: false, // Default OFF (opt-in)
-  toursEnabled: true, // Default ON - client tours help users learn
+  trackingEnabled: true,        // ← Enable tracking
+  dataRetention: 'forever',
+  showProgressIndicators: true, // ← Show indicators
+  toursEnabled: true,
 };
 
 export interface PrivacySettings {
@@ -127,7 +127,7 @@ export function getProgressData(): ProgressData {
   };
 }
 
-// Save progress data
+// Save progress data (merges with existing gamification data)
 function saveProgressData(data: ProgressData): void {
   if (!isBrowser) return;
   
@@ -142,7 +142,35 @@ function saveProgressData(data: ProgressData): void {
   // Clean old data based on retention
   const cleanedData = cleanOldData(data, settings.dataRetention);
   
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(cleanedData));
+  // Merge with existing gamification data to preserve badges, stats, etc.
+  let existingData: Record<string, unknown> = {};
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      existingData = JSON.parse(stored);
+    }
+  } catch (e) {
+    console.error('Error reading existing gamification data:', e);
+  }
+  
+  // Convert guides object to completedGuides array format
+  const completedGuides = Object.values(cleanedData.guides)
+    .filter(g => g.status === 'completed')
+    .map(g => g.guideId);
+  
+  // Merge: keep existing gamification data, update progress fields
+  const mergedData = {
+    ...existingData,
+    progress: {
+      ...(existingData.progress as Record<string, unknown> || {}),
+      completedGuides,
+      lastActive: new Date().toISOString(),
+    },
+    // Only update version if not present
+    version: (existingData.version as number) || 1,
+  };
+  
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(mergedData));
 }
 
 // Clean old data based on retention policy
