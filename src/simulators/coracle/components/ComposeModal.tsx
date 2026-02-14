@@ -94,7 +94,7 @@ export const ComposeModal: React.FC<ComposeModalProps> = ({
             {/* User Avatar */}
             <div className="flex-shrink-0">
               <img
-                src={currentUser?.avatar || 'https://api.dicebear.com/7.x/bottts/svg?seed=default'}
+                src={`https://api.dicebear.com/7.x/bottts/svg?seed=${currentUser?.pubkey || currentUser?.username || 'default'}`}
                 alt={currentUser?.displayName || 'User'}
                 className="w-10 h-10 rounded-full bg-gray-100 object-cover"
               />

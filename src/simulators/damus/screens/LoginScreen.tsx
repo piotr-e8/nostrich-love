@@ -50,7 +50,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col damus-safe-top damus-safe-bottom" data-tour="damus-login">
+    <div className="min-h-screen bg-[var(--damus-bg)] flex flex-col damus-safe-top damus-safe-bottom" data-tour="damus-login">
       {/* Header */}
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
         {/* Logo */}
@@ -60,14 +60,14 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
           </svg>
         </div>
         
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Damus</h1>
-        <p className="text-gray-500 text-center mb-12">The decentralized social network</p>
+        <h1 className="text-3xl font-bold text-[var(--damus-text)] mb-2">Damus</h1>
+        <p className="text-[var(--damus-text-secondary)] text-center mb-12">The decentralized social network</p>
 
         {/* Tabs */}
-        <div className="flex w-full max-w-sm mb-8 bg-gray-100 rounded-xl p-1">
+        <div className="flex w-full max-w-sm mb-8 bg-[var(--damus-bg-secondary)] rounded-xl p-1">
           <button
             className={`flex-1 py-3 text-sm font-medium rounded-lg transition-all ${
-              activeTab === 'login' ? 'bg-white text-purple-600 shadow-sm' : 'text-gray-600'
+              activeTab === 'login' ? 'bg-[var(--damus-bg)] text-purple-600 shadow-sm' : 'text-[var(--damus-text-secondary)]'
             }`}
             onClick={() => setActiveTab('login')}
           >
@@ -75,7 +75,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
           </button>
           <button
             className={`flex-1 py-3 text-sm font-medium rounded-lg transition-all ${
-              activeTab === 'generate' ? 'bg-white text-purple-600 shadow-sm' : 'text-gray-600'
+              activeTab === 'generate' ? 'bg-[var(--damus-bg)] text-purple-600 shadow-sm' : 'text-[var(--damus-text-secondary)]'
             }`}
             onClick={() => setActiveTab('generate')}
           >
@@ -87,7 +87,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
         {activeTab === 'login' && (
           <div className="w-full max-w-sm space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-[var(--damus-text-secondary)] mb-2">
                 Public Key (npub)
               </label>
               <input
@@ -99,7 +99,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-[var(--damus-text-secondary)] mb-2">
                 Private Key (nsec)
               </label>
               <input
@@ -116,7 +116,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
             >
               Sign In
             </button>
-            <p className="text-xs text-gray-400 text-center mt-4">
+            <p className="text-xs text-[var(--damus-text-tertiary)] text-center mt-4">
               Demo: Click "Sign In" to use a mock account
             </p>
           </div>
@@ -127,7 +127,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
           <div className="w-full max-w-sm">
             {!generatedKeys ? (
               <div className="text-center">
-                <p className="text-gray-600 mb-6">
+                <p className="text-[var(--damus-text-secondary)] mb-6">
                   Create a new Nostr identity with a public/private key pair.
                 </p>
                 <button
@@ -140,11 +140,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
             ) : (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-[var(--damus-text-secondary)] mb-2">
                     Public Key (npub)
                   </label>
                   <div className="damus-key-display">
-                    <span className="text-gray-600">{generatedKeys.npub}</span>
+                    <span className="text-[var(--damus-text-secondary)]">{generatedKeys.npub}</span>
                     <button
                       onClick={() => handleCopy(generatedKeys.npub, 'Public key')}
                       className="copy-btn text-purple-600 hover:text-purple-700"
@@ -154,11 +154,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-[var(--damus-text-secondary)] mb-2">
                     Private Key (nsec) - Keep Secret!
                   </label>
                   <div className="damus-key-display bg-red-50 border-red-200">
-                    <span className="text-gray-600">{generatedKeys.nsec}</span>
+                    <span className="text-[var(--damus-text-secondary)]">{generatedKeys.nsec}</span>
                     <button
                       onClick={() => handleCopy(generatedKeys.nsec, 'Private key')}
                       className="copy-btn text-purple-600 hover:text-purple-700"
@@ -192,7 +192,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
 
       {/* Footer */}
       <div className="px-6 py-4 text-center">
-        <p className="text-xs text-gray-400">
+        <p className="text-xs text-[var(--damus-text-tertiary)]">
           By signing in, you agree to the Terms of Service
         </p>
       </div>

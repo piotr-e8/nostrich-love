@@ -34,7 +34,7 @@ const damusTourSteps: TourStep[] = [
   },
   {
     id: 'damus-compose',
-    target: '.damus-compose-btn, [data-tour="damus-compose"], [data-action="compose"]',
+    target: '[data-tour="damus-compose"]',
     title: 'Create a Post',
     content: 'Tap here to compose a new note (post). You can write text, mention users with @, and add hashtags. Posts are limited to 2800 characters and go to all your relays.',
     position: 'left',
@@ -43,7 +43,7 @@ const damusTourSteps: TourStep[] = [
   },
   {
     id: 'damus-post',
-    target: '.damus-post-btn, [data-tour="damus-post"]',
+    target: '[data-tour="damus-post"]',
     title: 'Publish Your Note',
     content: 'Write something interesting and hit post! Your note will be signed with your private key and broadcast to all connected relays. Once posted, it is permanent on the network.',
     position: 'bottom',

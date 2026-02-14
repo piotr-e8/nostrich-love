@@ -148,7 +148,7 @@ export function SettingsScreen({ theme, onThemeChange, onBack }: SettingsScreenP
   ];
 
   return (
-    <div className="flex flex-col h-full bg-[var(--yh-background)]">
+    <div className="flex flex-col h-full bg-[var(--yh-background)]" data-tour="yakihonne-unique">
       {/* Header */}
       <div className="yakihonne-header">
         <button 

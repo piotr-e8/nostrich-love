@@ -49,7 +49,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
   ] as const;
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full" data-tour="snort-settings">
       {/* Header */}
       <div className="snort-header">
         <div className="flex items-center gap-3">

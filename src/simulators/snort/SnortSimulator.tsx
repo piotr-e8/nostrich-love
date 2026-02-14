@@ -59,7 +59,17 @@ const loadMockData = async () => {
   return mockDataCache;
 };
 
-export const SnortSimulator: React.FC = () => {
+export interface SimulatorCommand {
+  type: 'login' | 'navigate' | 'compose' | 'post' | 'viewProfile';
+  payload?: any;
+}
+
+interface SnortSimulatorProps {
+  tourCommand?: SimulatorCommand | null;
+  onCommandHandled?: () => void;
+}
+
+export const SnortSimulator: React.FC<SnortSimulatorProps> = ({ tourCommand, onCommandHandled }) => {
   const parentTheme = useParentTheme();
   const tourContext = useContext(TourContext);
   const registerAction = (actionType: string) => {
@@ -163,6 +173,70 @@ export const SnortSimulator: React.FC = () => {
   const handleReply = useCallback((parentId: string, content: string) => {
     console.log('[Snort] Reply to', parentId, ':', content);
   }, []);
+
+  // Handle tour commands
+  useEffect(() => {
+    if (!tourCommand) return;
+
+    console.log('[SnortSimulator] Processing command:', tourCommand);
+
+    switch (tourCommand.type) {
+      case 'login':
+        if (!state.isAuthenticated) {
+          // Create mock user
+          const mockUser: MockUser = {
+            pubkey: 'npub1snort123',
+            displayName: 'Snort User',
+            username: 'snortuser',
+            avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=snort',
+            bio: 'Exploring Nostr with Snort',
+            followersCount: 256,
+            followingCount: 128,
+            createdAt: Date.now() / 1000,
+            lastActive: Date.now() / 1000,
+          };
+          handleLogin(mockUser);
+        }
+        break;
+
+      case 'navigate':
+        const screen = tourCommand.payload as SnortScreen;
+        if (['login', 'timeline', 'thread', 'profile', 'relays', 'settings'].includes(screen)) {
+          setState(prev => ({ ...prev, currentScreen: screen }));
+        }
+        break;
+
+      case 'compose':
+        if (state.isAuthenticated) {
+          setState(prev => ({ ...prev, isComposeOpen: true }));
+        }
+        break;
+
+      case 'post':
+        if (state.isAuthenticated) {
+          setState(prev => ({ ...prev, isComposeOpen: true }));
+          // Simulate post after a short delay
+          setTimeout(() => {
+            handlePost('Tour test post!');
+            setState(prev => ({ ...prev, isComposeOpen: false }));
+          }, 500);
+        }
+        break;
+
+      case 'viewProfile':
+        if (state.isAuthenticated) {
+          setState(prev => ({
+            ...prev,
+            selectedProfile: state.currentUser,
+            currentScreen: 'profile',
+          }));
+        }
+        break;
+    }
+
+    // Mark command as handled
+    onCommandHandled?.();
+  }, [tourCommand, state.isAuthenticated, state.currentUser, handleLogin, handlePost, onCommandHandled]);
 
   const toggleTheme = useCallback(() => {
     setState(prev => ({
@@ -299,7 +373,7 @@ export const SnortSimulator: React.FC = () => {
                 className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-slate-800 transition-colors"
               >
                 <img
-                  src={state.currentUser.avatar}
+                  src={`https://api.dicebear.com/7.x/bottts/svg?seed=${state.currentUser?.pubkey || state.currentUser?.username || 'default'}`}
                   alt={state.currentUser.displayName}
                   className="w-10 h-10 rounded-full"
                 />

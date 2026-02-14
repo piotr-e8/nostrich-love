@@ -25,8 +25,8 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
-        <p className="text-gray-500">User not found</p>
+      <div className="min-h-screen flex items-center justify-center bg-[var(--damus-bg)]">
+        <p className="text-[var(--damus-text-secondary)]">User not found</p>
       </div>
     );
   }
@@ -46,22 +46,22 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-white pb-24" data-tour="damus-profile">
+    <div className="min-h-screen bg-[var(--damus-bg)] pb-24" data-tour="damus-profile">
       {/* Navigation Header */}
-      <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200">
+      <div className="sticky top-0 z-50 bg-[var(--damus-bg)]/95 backdrop-blur-md border-b border-[var(--damus-border)]">
         <div className="flex items-center justify-between px-4 py-3">
           <button
             onClick={() => onNavigate('home')}
-            className="p-2 -ml-2 text-gray-600 hover:text-gray-900"
+            className="p-2 -ml-2 text-[var(--damus-text-secondary)] hover:text-[var(--damus-text)]"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          <span className="font-semibold text-gray-900">{user.displayName}</span>
+          <span className="font-semibold text-[var(--damus-text)]">{user.displayName}</span>
           <button
             onClick={() => onNavigate('settings')}
-            className="p-2 -mr-2 text-gray-600 hover:text-gray-900"
+            className="p-2 -mr-2 text-[var(--damus-text-secondary)] hover:text-[var(--damus-text)]"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
@@ -82,7 +82,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
             src={user.avatar}
             alt={user.displayName}
             size="lg"
-            className="damus-avatar-lg border-4 border-white shadow-md"
+            className="damus-avatar-lg border-4 border-[var(--damus-bg)] shadow-md"
           />
           {isOwnProfile ? (
             <button
@@ -106,25 +106,25 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
 
         {/* Name and Handle */}
         <div className="mb-4">
-          <h1 className="text-xl font-bold text-gray-900">{user.displayName}</h1>
-          <p className="text-gray-500">@{user.username}</p>
+          <h1 className="text-xl font-bold text-[var(--damus-text)]">{user.displayName}</h1>
+          <p className="text-[var(--damus-text-secondary)]">@{user.username}</p>
           {user.nip05 && (
             <div className="flex items-center gap-1 mt-1">
               <svg className="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
-              <span className="text-sm text-gray-600">{user.nip05}</span>
+              <span className="text-sm text-[var(--damus-text-secondary)]">{user.nip05}</span>
             </div>
           )}
         </div>
 
         {/* Bio */}
         {user.bio && (
-          <p className="text-gray-900 mb-4 whitespace-pre-wrap">{user.bio}</p>
+          <p className="text-[var(--damus-text)] mb-4 whitespace-pre-wrap">{user.bio}</p>
         )}
 
         {/* Location & Website */}
-        <div className="flex flex-wrap gap-4 mb-4 text-sm text-gray-500">
+        <div className="flex flex-wrap gap-4 mb-4 text-sm text-[var(--damus-text-secondary)]">
           {user.location && (
             <div className="flex items-center gap-1">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -160,18 +160,18 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
         {/* Stats */}
         <div className="flex gap-6 mb-4">
           <div className="flex gap-1">
-            <span className="font-bold text-gray-900">{formatNumber(user.followingCount)}</span>
-            <span className="text-gray-500">Following</span>
+            <span className="font-bold text-[var(--damus-text)]">{formatNumber(user.followingCount)}</span>
+            <span className="text-[var(--damus-text-secondary)]">Following</span>
           </div>
           <div className="flex gap-1">
-            <span className="font-bold text-gray-900">{formatNumber(user.followersCount)}</span>
-            <span className="text-gray-500">Followers</span>
+            <span className="font-bold text-[var(--damus-text)]">{formatNumber(user.followersCount)}</span>
+            <span className="text-[var(--damus-text-secondary)]">Followers</span>
           </div>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="border-b border-gray-200">
+      <div className="border-b border-[var(--damus-border)]">
         <div className="flex">
           {(['posts', 'replies', 'likes'] as const).map((tab) => (
             <button
@@ -180,7 +180,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
               className={`flex-1 py-3 text-sm font-medium capitalize transition-colors relative ${
                 activeTab === tab
                   ? 'text-purple-600'
-                  : 'text-gray-500 hover:text-gray-700'
+                  : 'text-[var(--damus-text-secondary)] hover:text-[var(--damus-text)]'
               }`}
             >
               {tab}
@@ -205,11 +205,11 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           ))
         ) : activeTab === 'posts' ? (
           <div className="py-12 text-center">
-            <p className="text-gray-500">No posts yet</p>
+            <p className="text-[var(--damus-text-secondary)]">No posts yet</p>
           </div>
         ) : (
           <div className="py-12 text-center">
-            <p className="text-gray-500">Coming soon</p>
+            <p className="text-[var(--damus-text-secondary)]">Coming soon</p>
           </div>
         )}
       </div>

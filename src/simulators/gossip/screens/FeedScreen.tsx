@@ -69,7 +69,7 @@ export const FeedScreen: React.FC<FeedScreenProps> = ({
             >
               <div className="gossip-note-header">
                 <img
-                  src={author.avatar}
+                  src={`https://api.dicebear.com/7.x/bottts/svg?seed=${author.pubkey || author.username || 'default'}`}
                   alt={author.username}
                   className="gossip-note-avatar"
                   onClick={(e) => {

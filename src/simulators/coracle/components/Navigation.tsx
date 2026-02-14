@@ -110,7 +110,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                   className="w-9 h-9 rounded-full overflow-hidden border-2 border-gray-200 hover:border-indigo-300 transition-colors"
                 >
                   <img
-                    src={currentUser.avatar}
+                    src={`https://api.dicebear.com/7.x/bottts/svg?seed=${currentUser?.pubkey || currentUser?.username || 'default'}`}
                     alt={currentUser.displayName}
                     className="w-full h-full object-cover"
                   />

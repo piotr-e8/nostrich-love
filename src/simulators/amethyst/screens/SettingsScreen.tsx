@@ -42,7 +42,7 @@ export function SettingsScreen({ onBack }: SettingsScreenProps) {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[var(--md-background)]">
+    <div className="flex flex-col h-full bg-[var(--md-background)]" data-tour="amethyst-settings">
       {/* App Bar */}
       <div className="md-app-bar sticky top-0 z-20">
         <motion.button

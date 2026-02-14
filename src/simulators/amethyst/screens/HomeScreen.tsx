@@ -222,7 +222,7 @@ export function HomeScreen({ onOpenCompose }: HomeScreenProps) {
                   </div>
                 ) : (
                   <img
-                    src={story.avatar}
+                    src={`https://api.dicebear.com/7.x/bottts/svg?seed=${story.id || 'default'}`}
                     alt={story.name}
                     className="story-avatar"
                   />

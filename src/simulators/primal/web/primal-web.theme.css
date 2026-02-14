@@ -188,6 +188,8 @@
   width: 100%;
   border-right: 1px solid var(--primal-border);
   min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 /* Navigation Items */

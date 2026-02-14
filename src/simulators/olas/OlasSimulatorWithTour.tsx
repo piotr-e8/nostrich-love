@@ -2,16 +2,11 @@ import React, { useState, useRef, useCallback } from 'react';
 import { TourWrapper } from '../../components/tour';
 import { olasTourConfig } from '../../data/tours/olas-tour';
 import { OlasSimulator as OlasSimulatorBase } from './OlasSimulator';
-import type { TabId } from './OlasSimulator';
-
-interface OlasSimulatorCommand {
-  type: 'login' | 'navigate' | 'viewProfile' | 'viewNotifications' | 'compose';
-  payload?: string;
-}
+import type { TabId, SimulatorCommand } from './OlasSimulator';
 
 export function OlasSimulatorWithTour() {
-  const [commandQueue, setCommandQueue] = useState<OlasSimulatorCommand[]>([]);
-  const [currentCommand, setCurrentCommand] = useState<OlasSimulatorCommand | null>(null);
+  const [commandQueue, setCommandQueue] = useState<SimulatorCommand[]>([]);
+  const [currentCommand, setCurrentCommand] = useState<SimulatorCommand | null>(null);
   const lastStepRef = useRef<number>(-1);
   const isProcessingRef = useRef(false);
 
@@ -37,7 +32,7 @@ export function OlasSimulatorWithTour() {
     }, 100);
   }, [commandQueue]);
 
-  const queueCommands = useCallback((commands: OlasSimulatorCommand[]) => {
+  const queueCommands = useCallback((commands: SimulatorCommand[]) => {
     console.log('[OlasSimulator] Queueing commands:', commands);
     setCommandQueue(commands);
     if (commands.length > 0) {
@@ -56,7 +51,7 @@ export function OlasSimulatorWithTour() {
     
     console.log('[OlasSimulator] Tour step changed to:', stepIndex);
     
-    const stepCommands: Record<number, OlasSimulatorCommand[]> = {
+    const stepCommands: Record<number, SimulatorCommand[]> = {
       0: [], // Welcome
       1: [], // Login
       2: [{ type: 'login' }, { type: 'navigate', payload: 'home' }], // Stories
@@ -86,7 +81,10 @@ export function OlasSimulatorWithTour() {
         console.log('Olas tour skipped');
       }}
     >
-      <OlasSimulatorBase />
+      <OlasSimulatorBase 
+        tourCommand={currentCommand}
+        onCommandHandled={handleCommandHandled}
+      />
     </TourWrapper>
   );
 }

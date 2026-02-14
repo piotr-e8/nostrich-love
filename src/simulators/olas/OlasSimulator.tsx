@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BottomNav } from './components/BottomNav';
 import { HomeScreen } from './screens/HomeScreen';
@@ -15,11 +15,18 @@ import { TourContext } from '../../components/tour';
 export type TabId = 'home' | 'discover' | 'upload' | 'notifications' | 'profile';
 export type OlasScreen = TabId;
 
-export interface OlasSimulatorProps {
-  className?: string;
+export interface SimulatorCommand {
+  type: 'login' | 'navigate' | 'viewProfile' | 'viewNotifications' | 'compose';
+  payload?: string;
 }
 
-export function OlasSimulator({ className = '' }: OlasSimulatorProps) {
+export interface OlasSimulatorProps {
+  className?: string;
+  tourCommand?: SimulatorCommand | null;
+  onCommandHandled?: () => void;
+}
+
+export function OlasSimulator({ className = '', tourCommand, onCommandHandled }: OlasSimulatorProps) {
   const [activeTab, setActiveTab] = useState<TabId>('home');
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const parentTheme = useParentTheme();
@@ -78,6 +85,66 @@ export function OlasSimulator({ className = '' }: OlasSimulatorProps) {
     return parentTheme === 'dark' ? 'dark' : '';
   };
 
+  // Handle tour commands
+  useEffect(() => {
+    if (!tourCommand) return;
+    
+    console.log('[OlasSimulator] Processing command:', tourCommand);
+    
+    switch (tourCommand.type) {
+      case 'login':
+        if (!isAuthenticated) {
+          handleLogin({
+            pubkey: 'test-pubkey',
+            displayName: 'Photo Lover',
+            username: 'photolover',
+            avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=photo',
+            bio: 'Capturing moments on Nostr',
+            website: '',
+            lightningAddress: '',
+            nip05: 'photo@olas.app',
+            followersCount: 128,
+            followingCount: 56,
+            createdAt: Date.now() / 1000,
+            lastActive: Date.now() / 1000,
+            isVerified: true
+          });
+        }
+        break;
+        
+      case 'navigate':
+        const tab = tourCommand.payload as TabId;
+        if (['home', 'discover', 'notifications', 'profile'].includes(tab)) {
+          setActiveTab(tab);
+          setIsUploadOpen(false);
+        }
+        break;
+        
+      case 'viewProfile':
+        if (isAuthenticated) {
+          setActiveTab('profile');
+          setIsUploadOpen(false);
+        }
+        break;
+        
+      case 'viewNotifications':
+        if (isAuthenticated) {
+          setActiveTab('notifications');
+          setIsUploadOpen(false);
+        }
+        break;
+        
+      case 'compose':
+        if (isAuthenticated) {
+          setIsUploadOpen(true);
+        }
+        break;
+    }
+    
+    // Mark command as handled
+    onCommandHandled?.();
+  }, [tourCommand, isAuthenticated, onCommandHandled]);
+
   const renderScreen = () => {
     if (!isAuthenticated) {
       return (
@@ -93,18 +160,19 @@ export function OlasSimulator({ className = '' }: OlasSimulatorProps) {
             <button
               onClick={() => handleLogin({
                 pubkey: 'test-pubkey',
-                npub: 'npub1test',
                 displayName: 'Photo Lover',
-                name: 'photolover',
-                picture: 'https://api.dicebear.com/7.x/bottts/svg?seed=photo',
-                about: 'Capturing moments on Nostr',
+                username: 'photolover',
+                avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=photo',
+                bio: 'Capturing moments on Nostr',
                 website: '',
-                lud16: '',
+                lightningAddress: '',
                 nip05: 'photo@olas.app',
-                followers: 128,
-                following: 56,
-                relays: ['wss://relay.olas.app']
-              } as MockUser)}
+                followersCount: 128,
+                followingCount: 56,
+                createdAt: Date.now() / 1000,
+                lastActive: Date.now() / 1000,
+                isVerified: true
+              })}
               className="w-full py-3 px-6 bg-gradient-to-r from-[#FF6B6B] to-[#FF8E53] text-white font-semibold rounded-xl hover:opacity-90 transition-opacity"
             >
               Start Exploring
@@ -129,7 +197,7 @@ export function OlasSimulator({ className = '' }: OlasSimulatorProps) {
   };
 
   return (
-    <div className={`olas-simulator w-full h-full flex flex-col bg-white ${getThemeClass()} ${className}`}>
+    <div className={`olas-simulator relative w-full h-full flex flex-col bg-white ${getThemeClass()} ${className}`}>
       <AnimatePresence mode="wait">
         {isUploadOpen ? (
           <UploadScreen

@@ -49,12 +49,12 @@ export const ComposeScreen: React.FC<ComposeScreenProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-[var(--damus-bg)] flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--damus-border)]">
         <button
           onClick={onCancel}
-          className="text-gray-600 hover:text-gray-900 font-medium"
+          className="text-[var(--damus-text-secondary)] hover:text-[var(--damus-text)] font-medium"
         >
           Cancel
         </button>
@@ -67,6 +67,7 @@ export const ComposeScreen: React.FC<ComposeScreenProps> = ({
               ? 'damus-btn-primary'
               : 'bg-purple-300 text-white cursor-not-allowed'
           } px-6`}
+          data-tour="damus-post"
         >
           {isPosting ? (
             <svg className="w-5 h-5 damus-spin" fill="none" viewBox="0 0 24 24">
@@ -81,11 +82,11 @@ export const ComposeScreen: React.FC<ComposeScreenProps> = ({
 
       {/* Reply Context */}
       {isReply && replyTo && (
-        <div className="px-4 py-3 bg-gray-50 border-b border-gray-200">
-          <p className="text-sm text-gray-500">
+        <div className="px-4 py-3 bg-[var(--damus-bg-secondary)] border-b border-[var(--damus-border)]">
+          <p className="text-sm text-[var(--damus-text-secondary)]">
             Replying to <span className="text-purple-600 font-medium">@{replyTo.author?.username || 'user'}</span>
           </p>
-          <p className="text-sm text-gray-400 truncate mt-1">
+          <p className="text-sm text-[var(--damus-text-tertiary)] truncate mt-1">
             {replyTo.content.slice(0, 100)}{replyTo.content.length > 100 ? '...' : ''}
           </p>
         </div>
@@ -111,14 +112,14 @@ export const ComposeScreen: React.FC<ComposeScreenProps> = ({
             onChange={(e) => setContent(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={isReply ? "Add your reply..." : "What's on your mind?"}
-            className="w-full h-full min-h-[200px] resize-none border-0 focus:outline-none text-lg text-gray-900 placeholder-gray-400"
+            className="w-full h-full min-h-[200px] resize-none border-0 focus:outline-none text-lg text-[var(--damus-text)] placeholder-[var(--damus-text-tertiary)]"
             style={{ fontFamily: 'inherit' }}
           />
         </div>
       </div>
 
       {/* Toolbar */}
-      <div className="border-t border-gray-200 px-4 py-3">
+      <div className="border-t border-[var(--damus-border)] px-4 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             {/* Image Upload */}
@@ -166,7 +167,7 @@ export const ComposeScreen: React.FC<ComposeScreenProps> = ({
           {/* Character Count */}
           <div className="flex items-center gap-3">
             <div className={`text-sm ${
-              isOverLimit ? 'text-red-500' : charCount > maxChars * 0.8 ? 'text-yellow-500' : 'text-gray-400'
+              isOverLimit ? 'text-red-500' : charCount > maxChars * 0.8 ? 'text-yellow-500' : 'text-[var(--damus-text-tertiary)]'
             }`}>
               {charCount}/{maxChars}
             </div>
@@ -201,7 +202,7 @@ export const ComposeScreen: React.FC<ComposeScreenProps> = ({
       </div>
 
       {/* Keyboard hint */}
-      <div className="bg-gray-50 px-4 py-2 text-xs text-gray-400 text-center">
+      <div className="bg-[var(--damus-bg-secondary)] px-4 py-2 text-xs text-[var(--damus-text-tertiary)] text-center">
         Press Cmd+Enter to post
       </div>
     </div>

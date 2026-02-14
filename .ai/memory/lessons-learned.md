@@ -484,3 +484,98 @@ useEffect(() => {
 - [x] Add `aspect-ratio` to simulator CSS standards
 - [ ] Update simulator style guide with aspect ratio requirements
 - [ ] Create visual regression test for simulator proportions
+
+---
+
+## Agent Coordination & Verification - 2026-02-14
+
+### The Problem: Blind Trust in Agent Results
+
+**Issue**: Spawned agent to fix 27 tour/simulator issues. Agent returned "✅ All fixed!" but visual bugs remained:
+- Amethyst scroll still broken
+- Damus tour highlighted wrong elements
+- Olas tab bar still outside device
+- Primal tour selector mismatch
+
+**Root Cause**: 
+- No verification step after agent work
+- No feedback loop - claimed success without reading actual changed files
+- Scope too large (27 issues, 7 simulators) = context overload
+- Visual bugs need code analysis, not just "done" claims
+
+### The Solution: Hybrid Verification Workflow
+
+**New Pattern for Multi-File Visual/UI Fixes:**
+
+1. **Pre-Work: Feed Context FIRST**
+   - Agents MUST read audit reports before touching code
+   - Provide reference implementations (Keychat = gold standard)
+   - Specific file paths and line numbers from audits
+   - No guessing which files need changes
+
+2. **Smaller Batches**
+   - 3-4 related issues max per agent task
+   - Prevents context overload
+   - Easier to verify and debug
+
+3. **I Verify by Code Analysis**
+   - Read actual changed files after agents claim "done"
+   - Verify CSS positioning (fixed/absolute/relative)
+   - Check selectors match tour config
+   - Trace prop flow through components
+   - Catch 90% of issues from code alone
+
+4. **Decision Gates**
+   - Pause after each batch for user go/no-go
+   - User only does final visual check (10% of work)
+
+5. **Feedback Loop**
+   - If I catch issues in verification → send agents back
+   - Iterate until code is correct
+
+### What I Can Verify from Code
+
+**Structure & Positioning:**
+- CSS positioning properties and containment
+- DOM structure and parent/child relationships
+- Overflow and scroll properties
+- Flexbox/grid layout logic
+
+**Tour System:**
+- Tour config selectors matching actual DOM attributes
+- Data-tour attributes present on correct elements
+- Command prop flow: wrapper → base → useEffect
+
+**What Requires Human Visual Check:**
+- Exact pixel positioning
+- Animation smoothness
+- "Does it feel right?"
+
+### Prevention Checklist
+
+Before declaring agent work "complete":
+- [ ] Read all modified files
+- [ ] Verify selectors match between tour config and components
+- [ ] Check positioning logic (parent relative + child absolute = contained)
+- [ ] Trace prop passing through component hierarchy
+- [ ] Verify imports and exports are correct
+- [ ] Compare against reference implementation (Keychat pattern)
+
+### Key Insight
+
+**I can verify CODE correctness, but NOT VISUAL correctness.**
+
+Agents are good at patterns and logic but terrible at "does this look right?" without human eyes. My job is to catch structural issues from code analysis; user's job is occasional visual spot-check.
+
+---
+
+## Summary: Agent Coordination Best Practices
+
+1. **Always provide audit reports upfront** - Don't make agents discover issues
+2. **Use reference implementations** - "Copy exactly from Keychat"
+3. **Small batches with verification** - 3-4 issues, then verify
+4. **I read changed files** - Don't trust "✅ Done" summaries
+5. **Iterate on failures** - Send back until code is correct
+6. **Human visual checks at milestones** - Not every fix, just key points
+
+**Golden Rule**: Agents implement, I verify structure, user verifies visuals occasionally.

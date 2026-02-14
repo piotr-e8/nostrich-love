@@ -258,7 +258,7 @@ export function FeedScreen({ onOpenCompose, onZap }: FeedScreenProps) {
   });
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full" data-tour="yakihonne-feed">
       {/* Header */}
       <div className="yakihonne-header">
         <div className="yakihonne-logo">

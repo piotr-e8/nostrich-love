@@ -30,7 +30,7 @@ export function UploadScreen({ onClose, onUpload }: UploadScreenProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="olas-upload fixed inset-0 z-50 bg-black flex flex-col"
+      className="olas-upload absolute inset-0 z-50 bg-black flex flex-col"
       data-tour="olas-upload"
     >
       {/* Header */}

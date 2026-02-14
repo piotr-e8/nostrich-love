@@ -8,6 +8,7 @@
 // Main Simulator
 export { OlasSimulator } from './OlasSimulator';
 export type { OlasScreen, TabId } from './OlasSimulator';
+export { OlasSimulatorWithTour } from './OlasSimulatorWithTour';
 
 // Screens
 export { HomeScreen } from './screens/HomeScreen';

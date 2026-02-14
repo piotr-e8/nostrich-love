@@ -164,6 +164,7 @@ export function NoteCard({
               onClick={handleZap}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
+              data-tour="primal-zaps"
             >
               <Zap className={zapped ? 'text-yellow-500 fill-current' : 'group-hover:text-yellow-500'} />
               <span>{zapCount > 0 ? zapCount : ''}</span>

@@ -61,7 +61,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
             {/* Avatar */}
             <div className="flex-shrink-0">
               <img
-                src={user.avatar}
+                src={`https://api.dicebear.com/7.x/bottts/svg?seed=${user.pubkey || user.username || 'default'}`}
                 alt={user.displayName}
                 className="w-24 h-24 rounded-full bg-gray-100 object-cover border-4 border-white shadow-md"
               />

@@ -517,16 +517,14 @@
   }
 }
 
-/* Dark mode support (ready for future) */
-@media (prefers-color-scheme: dark) {
-  .damus-simulator.dark {
-    --damus-bg: #000000;
-    --damus-bg-secondary: #1C1C1E;
-    --damus-bg-tertiary: #2C2C2E;
-    --damus-text: #FFFFFF;
-    --damus-text-secondary: #8E8E93;
-    --damus-text-tertiary: #636366;
-    --damus-border: #38383A;
-    --damus-border-light: #2C2C2E;
-  }
+/* Dark mode support */
+.damus-simulator.dark {
+  --damus-bg: #000000;
+  --damus-bg-secondary: #1C1C1E;
+  --damus-bg-tertiary: #2C2C2E;
+  --damus-text: #FFFFFF;
+  --damus-text-secondary: #8E8E93;
+  --damus-text-tertiary: #636366;
+  --damus-border: #38383A;
+  --damus-border-light: #2C2C2E;
 }

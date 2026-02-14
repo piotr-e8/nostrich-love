@@ -30,7 +30,7 @@ export function HomeScreen({ onNewPost, showToast }: HomeScreenProps) {
   };
 
   return (
-    <div className="min-h-full">
+    <div className="min-h-full" data-tour="primal-feed">
       {/* Header */}
       <div className="primal-header">
         <h1 className="primal-header-title">Home</h1>
@@ -53,7 +53,7 @@ export function HomeScreen({ onNewPost, showToast }: HomeScreenProps) {
       </div>
 
       {/* Compose Box */}
-      <div className="primal-compose border-b border-[var(--primal-border)]">
+      <div className="primal-compose border-b border-[var(--primal-border)]" data-tour="primal-compose">
         <div className="flex gap-4">
           <div className="primal-avatar primal-avatar-small" />
           <div className="flex-1">

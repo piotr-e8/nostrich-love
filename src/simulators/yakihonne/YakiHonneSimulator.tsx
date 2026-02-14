@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Home, 
@@ -25,11 +25,18 @@ import './yakihonne.theme.css';
 
 export type TabId = 'feed' | 'articles' | 'media' | 'profile' | 'wallet' | 'settings';
 
-export interface YakiHonneSimulatorProps {
-  className?: string;
+export interface SimulatorCommand {
+  type: 'login' | 'navigate' | 'compose' | 'post' | 'viewProfile';
+  payload?: any;
 }
 
-export function YakiHonneSimulator({ className = '' }: YakiHonneSimulatorProps) {
+export interface YakiHonneSimulatorProps {
+  className?: string;
+  tourCommand?: SimulatorCommand | null;
+  onCommandHandled?: () => void;
+}
+
+export function YakiHonneSimulator({ className = '', tourCommand, onCommandHandled }: YakiHonneSimulatorProps) {
   const parentTheme = useParentTheme();
   const tourContext = useContext(TourContext);
   const registerAction = (actionType: string) => {
@@ -104,6 +111,67 @@ export function YakiHonneSimulator({ className = '' }: YakiHonneSimulatorProps) 
     setWalletBalance(prev => prev + amount);
     showToast(`Received ${amount.toLocaleString()} sats! ⚡`, 'success');
   }, [showToast]);
+
+  // Handle tour commands
+  useEffect(() => {
+    if (!tourCommand) return;
+    
+    console.log('[YakiHonneSimulator] Processing command:', tourCommand);
+    
+    switch (tourCommand.type) {
+      case 'login':
+        if (!isAuthenticated) {
+          // Create mock user
+          const mockUser: MockUser = {
+            pubkey: 'npub1yakihonne123',
+            displayName: 'YakiHonne User',
+            username: 'yakihonneuser',
+            avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=yakihonne',
+            bio: 'Exploring Nostr with YakiHonne',
+            followersCount: 88,
+            followingCount: 44,
+            createdAt: Date.now() / 1000,
+            lastActive: Date.now() / 1000,
+          };
+          handleLogin(mockUser);
+        }
+        break;
+        
+      case 'navigate':
+        const tab = tourCommand.payload as TabId;
+        if (['feed', 'articles', 'media', 'profile', 'wallet', 'settings'].includes(tab)) {
+          setActiveTab(tab);
+        }
+        break;
+        
+      case 'compose':
+        if (isAuthenticated) {
+          setComposeType('post');
+          setIsComposeOpen(true);
+        }
+        break;
+        
+      case 'post':
+        if (isAuthenticated) {
+          setComposeType('post');
+          setIsComposeOpen(true);
+          // Simulate post after a short delay
+          setTimeout(() => {
+            handleNewPost('Tour test post!', 'post');
+          }, 500);
+        }
+        break;
+        
+      case 'viewProfile':
+        if (isAuthenticated) {
+          setActiveTab('profile');
+        }
+        break;
+    }
+    
+    // Mark command as handled
+    onCommandHandled?.();
+  }, [tourCommand, isAuthenticated, handleLogin, handleNewPost, onCommandHandled]);
 
   // Render active screen
   const renderScreen = () => {

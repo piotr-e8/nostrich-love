@@ -55,9 +55,9 @@ export const TimelineScreen: React.FC<TimelineScreenProps> = ({
   }, [notes, userMap]);
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full" data-tour="snort-feed">
       {/* Header */}
-      <div className="snort-header">
+      <div className="snort-header" data-tour="snort-compose">
         <h1 className="snort-header-title">Timeline</h1>
         <div className="snort-header-actions">
           <button
@@ -105,7 +105,7 @@ export const TimelineScreen: React.FC<TimelineScreenProps> = ({
           <div className="flex gap-3">
             {currentUser && (
               <img
-                src={currentUser.avatar}
+                src={`https://api.dicebear.com/7.x/bottts/svg?seed=${currentUser?.pubkey || currentUser?.username || 'default'}`}
                 alt={currentUser.displayName}
                 className="w-10 h-10 rounded-full flex-shrink-0"
               />

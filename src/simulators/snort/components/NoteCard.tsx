@@ -218,7 +218,7 @@ export const NoteCard: React.FC<NoteCardProps> = ({
         {/* Header */}
         <div className="snort-note-header">
           <img
-            src={author.avatar}
+            src={`https://api.dicebear.com/7.x/bottts/svg?seed=${author.pubkey || author.username || 'default'}`}
             alt={author.displayName}
             className="snort-note-avatar"
             onClick={(e) => {
@@ -262,7 +262,7 @@ export const NoteCard: React.FC<NoteCardProps> = ({
         )}
 
         {/* Actions */}
-        <div className="snort-note-actions">
+        <div className="snort-note-actions" data-tour="snort-interactions">
           <button
             onClick={(e) => {
               e.stopPropagation();

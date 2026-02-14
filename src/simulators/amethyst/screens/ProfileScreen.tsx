@@ -63,7 +63,7 @@ export function ProfileScreen({ onBack }: ProfileScreenProps) {
   });
 
   return (
-    <div className="flex flex-col h-full bg-[var(--md-background)]">
+    <div className="flex flex-col h-full bg-[var(--md-background)]" data-tour="amethyst-profile">
       {/* App Bar */}
       <div className="md-app-bar sticky top-0 z-20">
         <motion.button
@@ -125,6 +125,7 @@ export function ProfileScreen({ onBack }: ProfileScreenProps) {
               <motion.button
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsFollowing(!isFollowing)}
+                data-tour="amethyst-follow"
                 className={`md-button ${isFollowing ? 'md-button-outlined' : 'md-button-filled'} text-sm py-2 px-6`}
               >
                 {isFollowing ? 'Following' : 'Edit Profile'}

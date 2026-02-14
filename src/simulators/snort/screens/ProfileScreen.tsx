@@ -65,7 +65,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full" data-tour="snort-profile">
       {/* Header */}
       <div className="snort-header">
         <div className="flex items-center gap-3">
@@ -87,7 +87,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
         <div className="snort-profile-info">
           <div className="flex justify-between items-start">
             <img
-              src={user.avatar}
+              src={`https://api.dicebear.com/7.x/bottts/svg?seed=${user.pubkey || user.username || 'default'}`}
               alt={user.displayName}
               className="snort-profile-avatar"
             />
@@ -102,6 +102,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
                   </button>
                   <button
                     onClick={handleFollow}
+                    data-tour="snort-follow"
                     className={`snort-btn snort-btn-sm ${isFollowing ? 'snort-btn-secondary' : 'snort-btn-primary'}`}
                   >
                     {isFollowing ? 'Following' : 'Follow'}

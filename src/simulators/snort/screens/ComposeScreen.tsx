@@ -112,7 +112,7 @@ export const ComposeScreen: React.FC<ComposeScreenProps> = ({
           <div className="flex gap-3">
             {currentUser && (
               <img
-                src={currentUser.avatar}
+                src={`https://api.dicebear.com/7.x/bottts/svg?seed=${currentUser?.pubkey || currentUser?.username || 'default'}`}
                 alt={currentUser.displayName}
                 className="w-10 h-10 rounded-full flex-shrink-0"
               />

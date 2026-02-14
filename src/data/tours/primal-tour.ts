@@ -8,7 +8,7 @@ import type { TourConfig, TourStep } from '../../components/tour';
 const primalTourSteps: TourStep[] = [
   {
     id: 'primal-welcome',
-    target: '.primal-simulator',
+    target: '.primal-web',
     title: 'Welcome to Primal',
     content: 'Primal is a fast, modern web-based Nostr client. It is optimized for speed and provides a clean Twitter-like experience right in your browser. Let us explore together!',
     position: 'center',
@@ -88,7 +88,7 @@ const primalTourSteps: TourStep[] = [
   },
   {
     id: 'primal-complete',
-    target: '.primal-simulator',
+    target: '.primal-web',
     title: 'Mastered Primal!',
     content: 'You now understand Primal! It is a great web client for Nostr beginners and power users alike. Your same keys work here as in any other Nostr app. Stay sovereign!',
     position: 'center',

@@ -110,7 +110,7 @@ export function ProfileScreen({ user, onOpenSettings }: ProfileScreenProps) {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full" data-tour="yakihonne-profile">
       {/* Header */}
       <div className="yakihonne-header">
         <div className="flex items-center gap-3">

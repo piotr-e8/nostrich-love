@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BottomNav } from './components/BottomNav';
 import { FloatingActionButton } from './components/FloatingActionButton';
@@ -20,11 +20,18 @@ import { TourContext } from '../../components/tour';
 // Types
 export type TabId = 'home' | 'search' | 'video' | 'notifications' | 'messages' | 'profile';
 
-export interface AmethystSimulatorProps {
-  className?: string;
+export interface SimulatorCommand {
+  type: 'login' | 'navigate' | 'compose' | 'post' | 'viewProfile' | 'back' | 'openSettings';
+  payload?: any;
 }
 
-export function AmethystSimulator({ className = '' }: AmethystSimulatorProps) {
+export interface AmethystSimulatorProps {
+  className?: string;
+  tourCommand?: SimulatorCommand | null;
+  onCommandHandled?: () => void;
+}
+
+export function AmethystSimulator({ className = '', tourCommand, onCommandHandled }: AmethystSimulatorProps) {
   const [activeTab, setActiveTab] = useState<TabId>('home');
   const [isComposeOpen, setIsComposeOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -83,6 +90,84 @@ export function AmethystSimulator({ className = '' }: AmethystSimulatorProps) {
   const getThemeClass = () => {
     return parentTheme === 'dark' ? 'dark' : '';
   };
+  
+  // Get background/text colors based on theme
+  const getThemeColors = () => {
+    return parentTheme === 'dark' 
+      ? 'bg-[var(--md-background)] text-[var(--md-on-background)]' 
+      : 'bg-[var(--md-background)] text-[var(--md-on-background)]';
+  };
+
+  // Handle tour commands
+  useEffect(() => {
+    if (!tourCommand) return;
+    
+    console.log('[AmethystSimulator] Processing command:', tourCommand);
+    
+    switch (tourCommand.type) {
+      case 'login':
+        if (!isAuthenticated) {
+          // Create mock user
+          const mockUser: MockUser = {
+            pubkey: 'npub1amethyst123',
+            displayName: 'Amethyst User',
+            username: 'amethystuser',
+            avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=amethyst',
+            bio: 'Exploring Nostr with Amethyst',
+            followersCount: 42,
+            followingCount: 10,
+            createdAt: Date.now() / 1000,
+            lastActive: Date.now() / 1000,
+          };
+          handleLogin(mockUser);
+        }
+        break;
+        
+      case 'navigate':
+        const tab = tourCommand.payload as TabId;
+        if (['home', 'search', 'video', 'notifications', 'messages', 'profile'].includes(tab)) {
+          setActiveTab(tab);
+        }
+        break;
+        
+      case 'compose':
+        if (isAuthenticated) {
+          setIsComposeOpen(true);
+        }
+        break;
+        
+      case 'post':
+        if (isAuthenticated) {
+          setIsComposeOpen(true);
+          // Simulate post after a short delay
+          setTimeout(() => {
+            handleNewPost('Tour test post!');
+            setIsComposeOpen(false);
+          }, 500);
+        }
+        break;
+        
+      case 'viewProfile':
+        if (isAuthenticated) {
+          setActiveTab('profile');
+        }
+        break;
+        
+      case 'openSettings':
+        if (isAuthenticated) {
+          setIsSettingsOpen(true);
+        }
+        break;
+        
+      case 'back':
+        setIsAuthenticated(false);
+        setCurrentUser(null);
+        break;
+    }
+    
+    // Mark command as handled
+    onCommandHandled?.();
+  }, [tourCommand, isAuthenticated, handleLogin, handleNewPost, onCommandHandled]);
 
   // Render active screen
   const renderScreen = () => {

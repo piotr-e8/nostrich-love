@@ -49,7 +49,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-h-full bg-[var(--md-background)] flex flex-col" data-tour="amethyst-login">
+    <div className="min-h-full bg-[var(--md-background)] flex flex-col overflow-y-auto" data-tour="amethyst-login">
       {/* Material Design App Bar */}
       <div className="bg-[var(--md-primary)] text-[var(--md-on-primary)] px-4 py-4">
         <div className="flex items-center gap-3">

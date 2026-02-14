@@ -110,7 +110,7 @@ export function MaterialCard({
           className="relative z-10"
         >
           <img
-            src={post.author.avatar}
+            src={`https://api.dicebear.com/7.x/bottts/svg?seed=${post.author.handle || post.author.name || 'default'}`}
             alt={post.author.name}
             className="md-avatar"
           />
@@ -204,7 +204,7 @@ export function MaterialCard({
       )}
 
       {/* Action Buttons */}
-      <div className="px-4 py-2 flex items-center justify-between border-t border-[var(--md-outline-variant)]">
+      <div className="px-4 py-2 flex items-center justify-between border-t border-[var(--md-outline-variant)]" data-tour="amethyst-actions">
         <motion.button
           whileTap={{ scale: 0.9 }}
           transition={{ type: 'spring', stiffness: 500, damping: 30 }}

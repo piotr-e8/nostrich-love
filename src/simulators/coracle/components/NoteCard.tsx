@@ -69,7 +69,7 @@ export const NoteCard: React.FC<NoteCardProps> = ({
               className="flex-shrink-0"
             >
               <img
-                src={author.avatar}
+                src={`https://api.dicebear.com/7.x/bottts/svg?seed=${author.pubkey || author.username || 'default'}`}
                 alt={author.displayName}
                 className="w-10 h-10 rounded-full bg-gray-100 object-cover hover:ring-2 hover:ring-indigo-300 transition-all"
               />

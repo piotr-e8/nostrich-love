@@ -51,6 +51,7 @@ export function SettingsScreen({ isOpen, onClose, theme, onThemeChange }: Settin
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-[var(--primal-surface)] z-50 overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
+            data-tour="primal-settings"
           >
             {/* Header */}
             <div className="sticky top-0 bg-[var(--primal-surface)]/80 backdrop-blur-md border-b border-[var(--primal-border)] p-4 flex items-center gap-4">

@@ -43,7 +43,7 @@ const icons = {
 
 export function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
   return (
-    <nav className="olas-bottom-nav fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-2 pb-safe z-50">
+    <nav className="olas-bottom-nav absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-2 pb-safe z-50">
       <div className="flex items-center justify-around h-14 max-w-md mx-auto">
         {navItems.map((item) => {
           if (item.isFab) {

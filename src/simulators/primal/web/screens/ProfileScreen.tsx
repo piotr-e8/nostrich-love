@@ -23,7 +23,7 @@ export function ProfileScreen({ showToast }: ProfileScreenProps) {
   const handleReply = () => showToast('Reply', 'info');
 
   return (
-    <div className="min-h-full">
+    <div className="min-h-full" data-tour="primal-profile">
       {/* Header */}
       <div className="primal-header">
         <div>
@@ -48,6 +48,7 @@ export function ProfileScreen({ showToast }: ProfileScreenProps) {
             onClick={handleFollow}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
+            data-tour="primal-follow"
           >
             {isFollowing ? 'Following' : 'Follow'}
           </motion.button>

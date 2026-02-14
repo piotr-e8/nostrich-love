@@ -11,17 +11,24 @@ import { LeftSidebar } from './components/LeftSidebar';
 import { RightSidebar } from './components/RightSidebar';
 import { ComposeModal } from './components/ComposeModal';
 import { useParentTheme } from '../../shared/hooks/useParentTheme';
-import type { MockUser } from '../../../../data/mock';
+import type { MockUser } from '../../../data/mock';
 import { TourContext } from '../../../components/tour';
 import './primal-web.theme.css';
 
 export type TabId = 'home' | 'explore' | 'notifications' | 'messages' | 'profile';
 
-export interface PrimalWebSimulatorProps {
-  className?: string;
+export interface SimulatorCommand {
+  type: 'login' | 'navigate' | 'compose' | 'post' | 'viewProfile';
+  payload?: any;
 }
 
-export function PrimalWebSimulator({ className = '' }: PrimalWebSimulatorProps) {
+export interface PrimalWebSimulatorProps {
+  className?: string;
+  tourCommand?: SimulatorCommand | null;
+  onCommandHandled?: () => void;
+}
+
+export function PrimalWebSimulator({ className = '', tourCommand, onCommandHandled }: PrimalWebSimulatorProps) {
   const parentTheme = useParentTheme();
   const tourContext = useContext(TourContext);
   const registerAction = (actionType: string) => {
@@ -74,6 +81,68 @@ export function PrimalWebSimulator({ className = '' }: PrimalWebSimulatorProps) 
     registerAction('compose');
     setIsComposeOpen(true);
   }, [registerAction]);
+
+  // Handle tour commands
+  useEffect(() => {
+    if (!tourCommand) return;
+
+    console.log('[PrimalWebSimulator] Processing command:', tourCommand);
+
+    switch (tourCommand.type) {
+      case 'login':
+        if (!isAuthenticated) {
+          // Create mock user
+          const mockUser: MockUser = {
+            pubkey: 'npub1primal123',
+            displayName: 'Primal User',
+            username: 'primaluser',
+            avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=primal',
+            bio: 'Exploring Nostr with Primal',
+            followersCount: 128,
+            followingCount: 56,
+            createdAt: Date.now() / 1000,
+            lastActive: Date.now() / 1000,
+          };
+          handleLogin(mockUser);
+        }
+        break;
+
+      case 'navigate':
+        const tab = tourCommand.payload as TabId;
+        if (['home', 'explore', 'notifications', 'messages', 'profile'].includes(tab)) {
+          setActiveTab(tab);
+          setIsSettingsOpen(false);
+        }
+        break;
+
+      case 'compose':
+        if (isAuthenticated) {
+          setIsComposeOpen(true);
+        }
+        break;
+
+      case 'post':
+        if (isAuthenticated) {
+          setIsComposeOpen(true);
+          // Simulate post after a short delay
+          setTimeout(() => {
+            handlePost('Tour test post!');
+            setIsComposeOpen(false);
+          }, 500);
+        }
+        break;
+
+      case 'viewProfile':
+        if (isAuthenticated) {
+          setActiveTab('profile');
+          setIsSettingsOpen(false);
+        }
+        break;
+    }
+
+    // Mark command as handled
+    onCommandHandled?.();
+  }, [tourCommand, isAuthenticated, handleLogin, handlePost, onCommandHandled]);
 
   const renderScreen = () => {
     switch (activeTab) {

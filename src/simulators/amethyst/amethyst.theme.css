@@ -136,8 +136,8 @@
   --md-easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
 }
 
-/* Dark Theme */
-[data-theme="dark"] {
+/* Dark Theme - Scoped to amethyst-simulator with data-theme="dark" */
+.amethyst-simulator[data-theme="dark"] {
   --md-primary: #D0BCFF;
   --md-on-primary: #381E72;
   --md-primary-container: #4F378B;

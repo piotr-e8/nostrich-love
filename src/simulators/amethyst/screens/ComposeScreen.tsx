@@ -101,6 +101,7 @@ export function ComposeScreen({ isOpen, onClose, onPost }: ComposeScreenProps) {
                 whileTap={{ scale: 0.95 }}
                 onClick={handlePost}
                 disabled={!content.trim() || isOverLimit}
+                data-tour="amethyst-post"
                 className={`px-6 py-2 rounded-full font-semibold text-sm transition-all ${
                   content.trim() && !isOverLimit
                     ? 'bg-[var(--md-primary)] text-[var(--md-on-primary)]'

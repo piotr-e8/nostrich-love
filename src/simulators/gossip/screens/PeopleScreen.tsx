@@ -35,7 +35,7 @@ export const PeopleScreen: React.FC<PeopleScreenProps> = ({
             >
               <div className="gossip-person-header">
                 <img
-                  src={user.avatar}
+                  src={`https://api.dicebear.com/7.x/bottts/svg?seed=${user.pubkey || user.username || 'default'}`}
                   alt={user.username}
                   className="gossip-person-avatar"
                 />

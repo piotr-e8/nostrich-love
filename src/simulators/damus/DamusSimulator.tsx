@@ -237,7 +237,7 @@ export const DamusSimulator: React.FC<DamusSimulatorProps> = ({
 
   return (
     <div 
-      className={`damus-simulator h-full ${parentTheme === 'dark' ? 'dark bg-gray-900 text-white' : 'bg-white text-gray-900'} ${className}`}
+      className={`damus-simulator h-full ${parentTheme === 'dark' ? 'dark' : ''} ${className}`}
       data-theme={parentTheme}
     >
       <div className="damus-content h-full pb-20">

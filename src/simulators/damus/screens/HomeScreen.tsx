@@ -48,9 +48,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
   }));
 
   return (
-    <div className="min-h-screen bg-white pb-24" data-tour="damus-home">
+    <div className="min-h-screen bg-[var(--damus-bg)] pb-24" data-tour="damus-home">
       {/* Navigation Header */}
-      <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200">
+      <div className="sticky top-0 z-50 bg-[var(--damus-bg)]/95 backdrop-blur-md border-b border-[var(--damus-border)]">
         <div className="flex items-center justify-between px-4 py-3">
           <button
             onClick={() => onNavigate('profile')}
@@ -64,13 +64,13 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
             />
           </button>
           
-          <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+          <div className="flex items-center gap-1 bg-[var(--damus-bg-secondary)] rounded-lg p-1">
             <button
               onClick={() => setActiveFilter('feed')}
               className={`px-4 py-1.5 text-sm font-medium rounded-md transition-all ${
                 activeFilter === 'feed'
-                  ? 'bg-white text-gray-900 shadow-sm'
-                  : 'text-gray-500'
+                  ? 'bg-[var(--damus-bg)] text-[var(--damus-text)] shadow-sm'
+                  : 'text-[var(--damus-text-secondary)]'
               }`}
             >
               Following
@@ -79,8 +79,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               onClick={() => setActiveFilter('global')}
               className={`px-4 py-1.5 text-sm font-medium rounded-md transition-all ${
                 activeFilter === 'global'
-                  ? 'bg-white text-gray-900 shadow-sm'
-                  : 'text-gray-500'
+                  ? 'bg-[var(--damus-bg)] text-[var(--damus-text)] shadow-sm'
+                  : 'text-[var(--damus-text-secondary)]'
               }`}
             >
               Global
@@ -98,7 +98,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
           </svg>
-          <span className="ml-2 text-sm text-gray-600">Refreshing...</span>
+          <span className="ml-2 text-sm text-[var(--damus-text-secondary)]">Refreshing...</span>
         </div>
       )}
 

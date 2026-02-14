@@ -33,7 +33,7 @@ export const ThreadScreen: React.FC<ThreadScreenProps> = ({
       <div key={n.id} className={`gossip-note ${!isMain ? 'gossip-thread-reply' : ''}`}>
         <div className="gossip-note-header">
           <img
-            src={author.avatar}
+            src={`https://api.dicebear.com/7.x/bottts/svg?seed=${author.pubkey || author.username || 'default'}`}
             alt={author.username}
             className="gossip-note-avatar"
             onClick={() => onViewProfile(author)}
