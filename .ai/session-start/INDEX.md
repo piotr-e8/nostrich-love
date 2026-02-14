@@ -43,7 +43,7 @@ progress/                  # Task progress (root level)
 
 ## What I Read on Session Start
 
-**🔄 AUTO-READ SEQUENCE**: When INDEX.md is read, automatically read all 9 files below in order:
+**🔄 AUTO-READ SEQUENCE**: When INDEX.md is read, automatically read all 10 files below in order:
 
 1. **[PREFERENCES.md](PREFERENCES.md)** - User settings & workflow enforcement
 2. **[AGENTS.md](AGENTS.md)** - Available agents and capabilities  
@@ -52,10 +52,13 @@ progress/                  # Task progress (root level)
 5. **[SYSTEM.md](SYSTEM.md)** - System architecture
 6. **[DECISIONS.md](DECISIONS.md)** - Key architectural decisions
 7. **[MISTAKES.md](MISTAKES.md)** - Errors to avoid
-8. **[../memory/lessons-learned.md](../memory/lessons-learned.md)** - Patterns from past sessions
-9. **[../memory/preferences/user-style.md](../memory/preferences/user-style.md)** - User communication style & preferences
+8. **[LESSONS_LEARNED.md](LESSONS_LEARNED.md)** - Session-specific lessons & verification checklist ⚠️ **CRITICAL: Read before implementation**
+9. **[../memory/lessons-learned.md](../memory/lessons-learned.md)** - Patterns from past sessions
+10. **[../memory/preferences/user-style.md](../memory/preferences/user-style.md)** - User communication style & preferences
 
 **Note**: This is the single entry point. Reading INDEX.md triggers the full initialization sequence automatically.
+
+**⚠️ SPECIAL ATTENTION**: LESSONS_LEARNED.md contains critical debugging lessons from recent sessions that MUST be applied to all future work.
 
 ---
 

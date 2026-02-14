@@ -6,11 +6,19 @@
  */
 
 import { GAMIFICATION_CONFIG, type ActivityId, type BadgeId } from '../config/gamification';
+import { SKILL_LEVELS, type SkillLevel } from '../data/learning-paths';
+import { 
+  loadGamificationData, 
+  saveGamificationData,
+  completeGuide,
+  completeGuideInLevel,
+  recordActivity as recordGamificationActivity
+} from './gamification';
 
 const STORAGE_KEY = 'nostrich-gamification-v1';
 const CURRENT_VERSION = 1;
 
-// Storage format
+// Storage format - MUST match gamification.ts interface
 interface GamificationData {
   badges: Record<string, { earned: boolean; earnedAt: number }>;
   progress: {
@@ -18,6 +26,16 @@ interface GamificationData {
     completedGuidesWithTimestamps: { id: string; completedAt: string }[];
     streakDays: number;
     lastActive: number | null;
+    // NEW: Skill level fields (from Phase 1)
+    currentLevel: 'beginner' | 'intermediate' | 'advanced';
+    unlockedLevels: ('beginner' | 'intermediate' | 'advanced')[];
+    manualUnlock: boolean;
+    completedByLevel: {
+      beginner: string[];
+      intermediate: string[];
+      advanced: string[];
+    };
+    lastInterestFilter: string | null;
   };
   stats: Record<string, number | boolean>;
   version: number;
@@ -43,6 +61,16 @@ function getDefaultData(): GamificationData {
       completedGuidesWithTimestamps: [],
       streakDays: 0,
       lastActive: null,
+      // NEW: Skill level defaults
+      currentLevel: 'beginner',
+      unlockedLevels: ['beginner'],
+      manualUnlock: false,
+      completedByLevel: {
+        beginner: [],
+        intermediate: [],
+        advanced: []
+      },
+      lastInterestFilter: null
     },
     stats: {},
     version: CURRENT_VERSION,
@@ -73,6 +101,27 @@ function loadData(): GamificationData {
         parsed.progress.completedGuidesWithTimestamps = [];
       }
       
+      // NEW: Ensure skill level fields exist (migration for Phase 1)
+      if (!parsed.progress.currentLevel) {
+        parsed.progress.currentLevel = 'beginner';
+      }
+      if (!parsed.progress.unlockedLevels) {
+        parsed.progress.unlockedLevels = ['beginner'];
+      }
+      if (parsed.progress.manualUnlock === undefined) {
+        parsed.progress.manualUnlock = false;
+      }
+      if (!parsed.progress.completedByLevel) {
+        parsed.progress.completedByLevel = {
+          beginner: [],
+          intermediate: [],
+          advanced: []
+        };
+      }
+      if (parsed.progress.lastInterestFilter === undefined) {
+        parsed.progress.lastInterestFilter = null;
+      }
+      
       return parsed;
     }
   } catch (error) {
@@ -98,6 +147,7 @@ function saveData(data: GamificationData): void {
 /**
  * Record an activity
  * This is the main function to call from components
+ * Delegates streak tracking to gamification.ts to avoid data conflicts
  * 
  * @param activityId - The activity that occurred (from config)
  * @param metadata - Optional metadata (e.g., count, guideId, etc.)
@@ -106,7 +156,8 @@ export function recordActivity(
   activityId: ActivityId,
   metadata?: { count?: number; guideId?: string }
 ): void {
-  const data = loadData();
+  // Use gamification.ts data to avoid conflicts
+  const data = loadGamificationData() as unknown as GamificationData;
   const activity = GAMIFICATION_CONFIG.activities[activityId];
   
   if (!activity) {
@@ -116,18 +167,18 @@ export function recordActivity(
 
   console.log(`[Gamification] Recording activity: ${activity.name}`);
 
-  // 1. Update streak if configured
+  // 1. Update streak if configured (using local logic)
   if (activity.triggers.streak) {
     updateStreak(data);
   }
 
-  // 2. Check and award badges if configured
+  // 2. Check and award badges if configured (using local logic)
   if (activity.triggers.badges.length > 0) {
     checkAndAwardBadgesForActivity(data, activityId, metadata);
   }
 
-  // 3. Save updated data
-  saveData(data);
+  // 3. Save updated data using gamification.ts to maintain data integrity
+  saveGamificationData(data as any);
   
   // 4. Dispatch event for real-time updates
   if (isBrowser()) {
@@ -236,31 +287,35 @@ function awardBadge(data: GamificationData, badgeId: string): void {
 
 /**
  * Mark a guide as completed
- * Convenience function for guide completion
+ * Delegates to gamification.ts to avoid data conflicts
  */
 export function markGuideComplete(guideId: string): void {
-  const data = loadData();
+  const guideLevel = getGuideLevel(guideId);
   
-  // Add to completed guides if not already there
-  if (!data.progress.completedGuides.includes(guideId)) {
-    data.progress.completedGuides.push(guideId);
-    data.progress.completedGuidesWithTimestamps.push({
-      id: guideId,
-      completedAt: new Date().toISOString(),
-    });
-    
-    saveData(data);
-    
-    // Now record the activity (which will check badges)
-    recordActivity('completeGuide', { guideId });
+  if (guideLevel) {
+    // Use gamification.ts function which handles completedByLevel properly
+    completeGuideInLevel(guideId, guideLevel);
+  } else {
+    // Fallback: use completeGuide for guides not in any level
+    completeGuide(guideId);
   }
+}
+
+/**
+ * Get the skill level for a guide
+ */
+function getGuideLevel(guideId: string): SkillLevel | null {
+  if (SKILL_LEVELS.beginner.sequence.includes(guideId)) return 'beginner';
+  if (SKILL_LEVELS.intermediate.sequence.includes(guideId)) return 'intermediate';
+  if (SKILL_LEVELS.advanced.sequence.includes(guideId)) return 'advanced';
+  return null;
 }
 
 /**
  * Get current streak info
  */
 export function getStreakInfo(): { streakDays: number; lastActive: number | null } {
-  const data = loadData();
+  const data = loadGamificationData() as unknown as GamificationData;
   return {
     streakDays: data.progress.streakDays,
     lastActive: data.progress.lastActive,
@@ -271,7 +326,7 @@ export function getStreakInfo(): { streakDays: number; lastActive: number | null
  * Get all earned badges
  */
 export function getEarnedBadges(): string[] {
-  const data = loadData();
+  const data = loadGamificationData() as unknown as GamificationData;
   return Object.entries(data.badges)
     .filter(([_, status]) => status.earned)
     .map(([badgeId]) => badgeId);
@@ -288,7 +343,7 @@ export function getBadgeProgress(): Array<{
   earned: boolean;
   progress: number;
 }> {
-  const data = loadData();
+  const data = loadGamificationData() as unknown as GamificationData;
   
   return Object.entries(GAMIFICATION_CONFIG.badges).map(([badgeId, badge]) => {
     const earned = data.badges[badgeId]?.earned || false;

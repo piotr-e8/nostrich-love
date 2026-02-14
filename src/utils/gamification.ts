@@ -14,6 +14,7 @@
  */
 
 import { generateSecretKey, getPublicKey, finalizeEvent, nip19 } from 'nostr-tools';
+import { SKILL_LEVELS } from '../data/learning-paths';
 
 // =============================================================================
 // TYPES
@@ -57,12 +58,28 @@ export interface BadgeStatus {
 
 /** User progress tracking */
 export interface GamificationProgress {
+  // EXISTING FIELDS (keep these)
   completedGuides: string[]; // Array of guide IDs
-  completedGuidesWithTimestamps?: { id: string; completedAt: string }[]; // NEW: Track when guides were completed
+  completedGuidesWithTimestamps?: { id: string; completedAt: string }[]; // Track when guides were completed
   streakDays: number; // Consecutive days active
   lastActive: number | null; // Unix timestamp of last activity
+
+  // LEGACY FIELDS (keep for migration, mark deprecated)
+  /** @deprecated Use currentLevel instead */
   activePath?: string; // Currently selected learning path
+  /** @deprecated Use completedByLevel instead */
   pathProgress?: Record<string, PathProgress>; // Per-path progress tracking
+
+  // NEW FIELDS (add these)
+  currentLevel: 'beginner' | 'intermediate' | 'advanced';
+  unlockedLevels: ('beginner' | 'intermediate' | 'advanced')[];
+  manualUnlock: boolean;
+  completedByLevel: {
+    beginner: string[];
+    intermediate: string[];
+    advanced: string[];
+  };
+  lastInterestFilter: string | null;
 }
 
 export interface PathProgress {
@@ -223,12 +240,26 @@ function getDefaultData(): GamificationData {
   return {
     badges,
     progress: {
+      // Existing
       completedGuides: [],
       completedGuidesWithTimestamps: [],
       streakDays: 0,
       lastActive: null,
-      activePath: 'beginner',
-      pathProgress: {},
+
+      // Legacy (for migration detection)
+      activePath: undefined,
+      pathProgress: undefined,
+
+      // NEW
+      currentLevel: 'beginner',
+      unlockedLevels: ['beginner'],
+      manualUnlock: false,
+      completedByLevel: {
+        beginner: [],
+        intermediate: [],
+        advanced: []
+      },
+      lastInterestFilter: null
     },
     stats: {
       keysGenerated: false,
@@ -239,6 +270,110 @@ function getDefaultData(): GamificationData {
       relaysConnected: 0,
     },
     version: CURRENT_VERSION,
+  };
+}
+
+/**
+ * Migrate from old path-based system to new skill-level system
+ * 
+ * OLD FORMAT:
+ * {
+ *   progress: {
+ *     activePath: 'bitcoiner',
+ *     pathProgress: {
+ *       bitcoiner: { completedGuides: ['guide1', 'guide2'] }
+ *     }
+ *   }
+ * }
+ * 
+ * NEW FORMAT:
+ * {
+ *   progress: {
+ *     currentLevel: 'intermediate',
+ *     unlockedLevels: ['beginner', 'intermediate'],
+ *     completedByLevel: {
+ *       beginner: ['guide1'],
+ *       intermediate: ['guide2'],
+ *       advanced: []
+ *     }
+ *   }
+ * }
+ */
+function migrateFromLegacyPaths(data: GamificationData): GamificationData {
+  // If no legacy data, return as-is
+  if (!data.progress?.activePath && !data.progress?.pathProgress) {
+    return data;
+  }
+
+  const activePath = data.progress.activePath;
+  const pathProgress = data.progress.pathProgress || {};
+
+  // Map old paths to new levels
+  const pathToLevel: Record<string, 'beginner' | 'intermediate' | 'advanced'> = {
+    'beginner': 'beginner',
+    'bitcoiner': 'intermediate',
+    'privacy': 'beginner',
+    'general': 'beginner'
+  };
+
+  const currentLevel = activePath ? pathToLevel[activePath] || 'beginner' : 'beginner';
+
+  // Determine unlocked levels based on current level
+  const allLevels: ('beginner' | 'intermediate' | 'advanced')[] = ['beginner', 'intermediate', 'advanced'];
+  const currentIndex = allLevels.indexOf(currentLevel);
+  const unlockedLevels = allLevels.slice(0, currentIndex + 1);
+
+  // Distribute completed guides to appropriate levels using SKILL_LEVELS sequence
+  const completedByLevel = {
+    beginner: [] as string[],
+    intermediate: [] as string[],
+    advanced: [] as string[]
+  };
+
+  // Get all completed guides from legacy structure
+  const allCompletedGuides = new Set<string>();
+  Object.values(pathProgress).forEach((progress) => {
+    if (progress?.completedGuides) {
+      progress.completedGuides.forEach((guideId: string) => {
+        allCompletedGuides.add(guideId);
+      });
+    }
+  });
+
+  // Also check old completedGuides array
+  if (data.progress?.completedGuides) {
+    data.progress.completedGuides.forEach((guideId: string) => {
+      allCompletedGuides.add(guideId);
+    });
+  }
+
+  // Distribute guides to appropriate levels using imported SKILL_LEVELS
+  allCompletedGuides.forEach((guideId) => {
+    // Find which level this guide belongs to
+    if (SKILL_LEVELS.beginner.sequence.includes(guideId)) {
+      completedByLevel.beginner.push(guideId);
+    } else if (SKILL_LEVELS.intermediate.sequence.includes(guideId)) {
+      completedByLevel.intermediate.push(guideId);
+    } else if (SKILL_LEVELS.advanced.sequence.includes(guideId)) {
+      completedByLevel.advanced.push(guideId);
+    }
+  });
+
+  // Update the data structure
+  // Remove legacy fields to prevent infinite migration loops
+  const progressWithoutLegacy = { ...data.progress };
+  delete (progressWithoutLegacy as any).activePath;
+  delete (progressWithoutLegacy as any).pathProgress;
+  
+  return {
+    ...data,
+    progress: {
+      ...progressWithoutLegacy,
+      currentLevel,
+      unlockedLevels,
+      manualUnlock: false,
+      completedByLevel,
+    }
   };
 }
 
@@ -255,7 +390,7 @@ export function loadGamificationData(): GamificationData {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       const parsed = JSON.parse(stored) as GamificationData;
-      
+
       // Migration: ensure all badge IDs exist
       const defaultData = getDefaultData();
       BADGE_DEFINITIONS.forEach((badge) => {
@@ -263,7 +398,42 @@ export function loadGamificationData(): GamificationData {
           parsed.badges[badge.id] = { earned: false, earnedAt: 0 };
         }
       });
-      
+
+      // Migration: check if we need to migrate from legacy paths
+      const hasActivePath = parsed.progress?.activePath !== undefined;
+      const hasPathProgress = parsed.progress?.pathProgress !== undefined;
+      if (hasActivePath || hasPathProgress) {
+        console.log('[Gamification] Migrating from legacy path system...', { hasActivePath, hasPathProgress, activePath: parsed.progress?.activePath });
+        const migrated = migrateFromLegacyPaths(parsed);
+        console.log('[Gamification] Migration complete, checking for old fields:', { 
+          hasActivePathAfter: 'activePath' in migrated.progress, 
+          hasPathProgressAfter: 'pathProgress' in migrated.progress 
+        });
+        saveGamificationData(migrated); // Save migrated data immediately
+        return migrated;
+      }
+
+      // Migration: ensure new fields exist (for users who started after Phase 1)
+      if (!parsed.progress?.currentLevel) {
+        parsed.progress.currentLevel = 'beginner';
+      }
+      if (!parsed.progress?.unlockedLevels) {
+        parsed.progress.unlockedLevels = ['beginner'];
+      }
+      if (parsed.progress?.manualUnlock === undefined) {
+        parsed.progress.manualUnlock = false;
+      }
+      if (!parsed.progress?.completedByLevel) {
+        parsed.progress.completedByLevel = {
+          beginner: [],
+          intermediate: [],
+          advanced: []
+        };
+      }
+      if (parsed.progress?.lastInterestFilter === undefined) {
+        parsed.progress.lastInterestFilter = null;
+      }
+
       return parsed;
     }
   } catch (error) {
@@ -281,7 +451,34 @@ export function saveGamificationData(data: GamificationData): void {
   if (!isBrowser()) return;
 
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    // Read existing data directly from localStorage (without triggering migration)
+    let existing: GamificationData;
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      existing = JSON.parse(stored);
+    } else {
+      existing = getDefaultData();
+    }
+    
+    // Merge data
+    const merged = {
+      ...existing,
+      ...data,
+      badges: { ...existing.badges, ...data.badges },
+      progress: {
+        ...existing.progress,
+        ...data.progress,
+        completedByLevel: {
+          beginner: data.progress?.completedByLevel?.beginner || existing.progress?.completedByLevel?.beginner || [],
+          intermediate: data.progress?.completedByLevel?.intermediate || existing.progress?.completedByLevel?.intermediate || [],
+          advanced: data.progress?.completedByLevel?.advanced || existing.progress?.completedByLevel?.advanced || []
+        }
+      },
+      stats: { ...existing.stats, ...data.stats }
+    };
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+    console.log('[saveGamificationData] Saved data with unlockedLevels:', merged.progress.unlockedLevels);
   } catch (error) {
     console.warn('Error saving gamification data:', error);
   }
@@ -868,6 +1065,219 @@ export function getNextBadgeToEarn(): EarnedBadge | null {
 }
 
 // =============================================================================
+// SKILL LEVEL FUNCTIONS (NEW)
+// =============================================================================
+
+/**
+ * Get the user's current skill level
+ */
+export function getCurrentLevel(): 'beginner' | 'intermediate' | 'advanced' {
+  const data = loadGamificationData();
+  return data.progress?.currentLevel || 'beginner';
+}
+
+/**
+ * Set the user's current skill level
+ */
+export function setCurrentLevel(level: 'beginner' | 'intermediate' | 'advanced'): void {
+  const data = loadGamificationData();
+  data.progress.currentLevel = level;
+  saveGamificationData(data);
+}
+
+/**
+ * Get array of unlocked levels
+ */
+export function getUnlockedLevels(): ('beginner' | 'intermediate' | 'advanced')[] {
+  const data = loadGamificationData();
+  return data.progress?.unlockedLevels || ['beginner'];
+}
+
+/**
+ * Check if a specific level is unlocked
+ */
+export function isLevelUnlocked(level: 'beginner' | 'intermediate' | 'advanced'): boolean {
+  const data = loadGamificationData();
+  return data.progress?.unlockedLevels?.includes(level) || false;
+}
+
+/**
+ * Unlock a specific level
+ * @param level - The level to unlock
+ * @param data - Optional data object (to avoid reloading from storage)
+ */
+export function unlockLevel(level: 'beginner' | 'intermediate' | 'advanced', data?: GamificationData): void {
+  console.log(`[unlockLevel] Called for ${level}`, data ? '(with data)' : '(will load)');
+  
+  if (!data) {
+    data = loadGamificationData();
+  }
+  
+  console.log(`[unlockLevel] Current unlockedLevels:`, data.progress.unlockedLevels);
+  console.log(`[unlockLevel] Already includes ${level}?`, data.progress.unlockedLevels.includes(level));
+  
+  if (!data.progress.unlockedLevels.includes(level)) {
+    data.progress.unlockedLevels.push(level);
+    // Sort to maintain order
+    const order = ['beginner', 'intermediate', 'advanced'];
+    data.progress.unlockedLevels.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+    
+    console.log(`[unlockLevel] After push, unlockedLevels:`, data.progress.unlockedLevels);
+    console.log(`[unlockLevel] Calling saveGamificationData...`);
+    saveGamificationData(data);
+    console.log(`[unlockLevel] Save complete`);
+  } else {
+    console.log(`[unlockLevel] Level ${level} already unlocked, skipping`);
+  }
+}
+
+/**
+ * Manually unlock all levels
+ */
+export function unlockAllLevels(): void {
+  const data = loadGamificationData();
+  data.progress.unlockedLevels = ['beginner', 'intermediate', 'advanced'];
+  data.progress.manualUnlock = true;
+  saveGamificationData(data);
+}
+
+/**
+ * Check if user has manually unlocked all levels
+ */
+export function hasManualUnlock(): boolean {
+  const data = loadGamificationData();
+  return data.progress?.manualUnlock || false;
+}
+
+/**
+ * Get completed guides for a specific level
+ */
+export function getCompletedInLevel(level: 'beginner' | 'intermediate' | 'advanced'): string[] {
+  const data = loadGamificationData();
+  return data.progress?.completedByLevel?.[level] || [];
+}
+
+/**
+ * Check if a guide is completed in its level
+ */
+export function isGuideCompletedInLevel(
+  guideId: string,
+  level: 'beginner' | 'intermediate' | 'advanced'
+): boolean {
+  const data = loadGamificationData();
+  return data.progress?.completedByLevel?.[level]?.includes(guideId) || false;
+}
+
+/**
+ * Mark a guide as completed in its level
+ * Also checks if next level should be unlocked
+ */
+export function completeGuideInLevel(
+  guideId: string,
+  level: 'beginner' | 'intermediate' | 'advanced'
+): void {
+  const data = loadGamificationData();
+
+  // Add to level-specific completed list
+  if (!data.progress.completedByLevel[level].includes(guideId)) {
+    data.progress.completedByLevel[level].push(guideId);
+  }
+
+  // Also add to global completed list (for backwards compatibility)
+  if (!data.progress.completedGuides.includes(guideId)) {
+    data.progress.completedGuides.push(guideId);
+  }
+
+  // Check if we should unlock the next level (pass data to avoid reloading)
+  checkAndUnlockNextLevel(level, data);
+
+  saveGamificationData(data);
+
+  // Trigger badge check
+  checkAndAwardBadges();
+}
+
+/**
+ * Check if next level should be unlocked (70% or 4/6 threshold)
+ * @param currentLevel - The level to check
+ * @param data - Optional data object (to avoid reloading from storage)
+ */
+function checkAndUnlockNextLevel(currentLevel: 'beginner' | 'intermediate' | 'advanced', data?: GamificationData): void {
+  if (!data) {
+    data = loadGamificationData();
+  }
+  const completedInLevel = data.progress.completedByLevel[currentLevel].length;
+
+  // Get total guides in this level from SKILL_LEVELS
+  const totalInLevel = SKILL_LEVELS[currentLevel]?.sequence?.length || 0;
+
+  // Threshold: 70% or 4 guides, whichever is higher
+  const threshold = Math.max(4, Math.ceil(totalInLevel * 0.7));
+
+  console.log(`[checkAndUnlockNextLevel] ${currentLevel}: ${completedInLevel}/${totalInLevel} (threshold: ${threshold})`);
+
+  if (completedInLevel >= threshold) {
+    const levels: ('beginner' | 'intermediate' | 'advanced')[] = ['beginner', 'intermediate', 'advanced'];
+    const currentIndex = levels.indexOf(currentLevel);
+    const nextLevel = levels[currentIndex + 1];
+
+    if (nextLevel && !data.progress.unlockedLevels.includes(nextLevel)) {
+      console.log(`[checkAndUnlockNextLevel] Unlocking ${nextLevel}!`);
+      unlockLevel(nextLevel, data); // Pass data to avoid overwriting
+
+      // Dispatch event for UI updates
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('levelUnlocked', {
+          detail: { level: nextLevel, previousLevel: currentLevel }
+        }));
+      }
+    } else if (nextLevel) {
+      console.log(`[checkAndUnlockNextLevel] ${nextLevel} already unlocked`);
+    }
+  } else {
+    console.log(`[checkAndUnlockNextLevel] Threshold not met for ${currentLevel}`);
+  }
+}
+
+/**
+ * Get progress stats for a specific level
+ */
+export function getLevelProgress(level: 'beginner' | 'intermediate' | 'advanced'): {
+  completed: number;
+  total: number;
+  percentage: number;
+  canUnlockNext: boolean;
+} {
+  const data = loadGamificationData();
+
+  const completed = data.progress?.completedByLevel?.[level]?.length || 0;
+  const total = SKILL_LEVELS[level]?.sequence?.length || 0;
+  const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+  const threshold = Math.max(4, Math.ceil(total * 0.7));
+  const canUnlockNext = completed >= threshold;
+
+  return { completed, total, percentage, canUnlockNext };
+}
+
+/**
+ * Get last used interest filter
+ */
+export function getLastInterestFilter(): string | null {
+  const data = loadGamificationData();
+  return data.progress?.lastInterestFilter || null;
+}
+
+/**
+ * Set last used interest filter
+ */
+export function setLastInterestFilter(filter: string | null): void {
+  const data = loadGamificationData();
+  data.progress.lastInterestFilter = filter;
+  saveGamificationData(data);
+}
+
+// =============================================================================
 // REACT HOOK (Optional)
 // =============================================================================
 
@@ -875,7 +1285,7 @@ export function getNextBadgeToEarn(): EarnedBadge | null {
  * React hook for using gamification in components
  * This is a simple wrapper - for production, consider using useLocalStorage
  * or a state management library
- * 
+ *
  * Example usage:
  * ```tsx
  * const { badges, progress, completeGuide } = useGamification();
@@ -920,6 +1330,21 @@ export function useGamification() {
     formatBadgeEarnedDate,
     getBadgeRarityColor,
     
+    // NEW: Skill level functions
+    getCurrentLevel,
+    setCurrentLevel,
+    getUnlockedLevels,
+    isLevelUnlocked,
+    unlockLevel,
+    unlockAllLevels,
+    hasManualUnlock,
+    getCompletedInLevel,
+    isGuideCompletedInLevel,
+    completeGuideInLevel,
+    getLevelProgress,
+    getLastInterestFilter,
+    setLastInterestFilter,
+    
     // Constants
     BADGE_DEFINITIONS,
     TOTAL_BEGINNER_GUIDES,
@@ -960,4 +1385,19 @@ export default {
   getBadgeRarityColor,
   getNextBadgeToEarn,
   useGamification,
+
+  // NEW: Skill level exports
+  getCurrentLevel,
+  setCurrentLevel,
+  getUnlockedLevels,
+  isLevelUnlocked,
+  unlockLevel,
+  unlockAllLevels,
+  hasManualUnlock,
+  getCompletedInLevel,
+  isGuideCompletedInLevel,
+  completeGuideInLevel,
+  getLevelProgress,
+  getLastInterestFilter,
+  setLastInterestFilter,
 };

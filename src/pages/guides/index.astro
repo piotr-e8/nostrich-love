@@ -4,228 +4,174 @@ import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
 import { GamificationExplainerWrapper } from '../../components/gamification/GamificationExplainerWrapper';
 import { ContinueReadingCard } from '../../components/navigation/ContinueReadingCard';
+import { GuidesContainer } from '../../components/guides/GuidesContainer';
+import { SKILL_LEVELS, type SkillLevel } from '../../data/learning-paths';
 
-interface Guide {
+// Guide metadata mapping
+const guideMetadata: Record<string, {
+  title: string;
+  description: string;
+  estimatedTime: string;
+  difficulty: SkillLevel;
+  tags: string[];
+}> = {
+  'what-is-nostr': {
+    title: 'What is Nostr?',
+    description: 'Understanding the basics of the decentralized social protocol and how it differs from traditional social media.',
+    estimatedTime: '5 min',
+    difficulty: 'beginner',
+    tags: ['basics', 'overview'],
+  },
+  'keys-and-security': {
+    title: 'Keys & Security',
+    description: 'Learn how to generate, save, and protect your Nostr keys. The complete security guide for beginners.',
+    estimatedTime: '8 min',
+    difficulty: 'beginner',
+    tags: ['security', 'keys'],
+  },
+  'quickstart': {
+    title: 'Quickstart',
+    description: 'Get up and running with Nostr in minutes with this hands-on quickstart guide.',
+    estimatedTime: '10 min',
+    difficulty: 'beginner',
+    tags: ['getting-started'],
+  },
+  'finding-community': {
+    title: 'Finding Community',
+    description: 'Discover how to find and join communities on Nostr.',
+    estimatedTime: '10 min',
+    difficulty: 'beginner',
+    tags: ['community', 'social'],
+  },
+  'faq': {
+    title: 'FAQ',
+    description: 'Frequently asked questions about Nostr, answered in plain English.',
+    estimatedTime: '10 min',
+    difficulty: 'beginner',
+    tags: ['faq', 'help'],
+  },
+  'relays-demystified': {
+    title: 'Relays Demystified',
+    description: 'Deep dive into how relays work with simple analogies and interactive tools.',
+    estimatedTime: '10 min',
+    difficulty: 'beginner',
+    tags: ['relays', 'technical'],
+  },
+  'nip05-identity': {
+    title: 'NIP-05 Identity',
+    description: 'Set up your NIP-05 identifier and get a human-readable name like you@domain.com.',
+    estimatedTime: '12 min',
+    difficulty: 'intermediate',
+    tags: ['identity', 'nip-05'],
+  },
+  'zaps-and-lightning': {
+    title: 'Zaps & Lightning Network',
+    description: 'Master the art of sending and receiving Bitcoin payments (zaps) over the Lightning Network.',
+    estimatedTime: '20 min',
+    difficulty: 'intermediate',
+    tags: ['bitcoin', 'lightning', 'zaps'],
+  },
+  'nostr-tools': {
+    title: 'Essential Nostr Tools',
+    description: 'A curated directory of the most useful Nostr tools and services for key management, media hosting, analytics, and more.',
+    estimatedTime: '10 min',
+    difficulty: 'intermediate',
+    tags: ['tools', 'resources'],
+  },
+  'troubleshooting': {
+    title: 'Troubleshooting',
+    description: 'Common issues and how to fix them. From empty feeds to relay problems.',
+    estimatedTime: '15 min',
+    difficulty: 'intermediate',
+    tags: ['help', 'support'],
+  },
+  'multi-client': {
+    title: 'Using Multiple Clients',
+    description: 'How to use multiple clients simultaneously and keep your data in sync.',
+    estimatedTime: '10 min',
+    difficulty: 'intermediate',
+    tags: ['clients', 'sync'],
+  },
+  'relay-guide': {
+    title: 'Relay Guide',
+    description: 'Everything you need to know about choosing, connecting to, and managing relays.',
+    estimatedTime: '15 min',
+    difficulty: 'intermediate',
+    tags: ['relays', 'technical'],
+  },
+  'privacy-security': {
+    title: 'Privacy & Security',
+    description: 'Advanced privacy and security practices for power users.',
+    estimatedTime: '20 min',
+    difficulty: 'advanced',
+    tags: ['privacy', 'security'],
+  },
+  'nip17-private-messages': {
+    title: 'NIP-17: Private Direct Messages',
+    description: 'Learn about NIP-17, the secure replacement for NIP-04, and how to migrate your private messaging in Nostr',
+    estimatedTime: '12 min',
+    difficulty: 'advanced',
+    tags: ['privacy', 'nip-17', 'messaging'],
+  },
+  'protocol-comparison': {
+    title: 'Complete Protocol Comparison',
+    description: 'A comprehensive technical comparison of the three major decentralized social protocols. Learn the architecture, trade-offs, and which protocol fits your needs.',
+    estimatedTime: '15 min',
+    difficulty: 'advanced',
+    tags: ['technical', 'comparison'],
+  },
+};
+
+// Build skill levels data with guides
+type GuideWithHref = {
   id: string;
   title: string;
   description: string;
   estimatedTime: string;
-  difficulty: 'beginner' | 'intermediate' | 'advanced';
-  completed: boolean;
-  prerequisites?: string[];
+  difficulty: SkillLevel;
   href: string;
-}
-
-interface GuideSection {
-  title: string;
-  level: 'beginner' | 'intermediate' | 'advanced';
-  guides: Guide[];
-}
-
-const guideSections: GuideSection[] = [
-  {
-    title: 'Getting Started',
-    level: 'beginner',
-    guides: [
-      {
-        id: 'protocol-comparison',
-        title: 'Complete Protocol Comparison',
-        description: 'A comprehensive technical comparison of the three major decentralized social protocols. Learn the architecture, trade-offs, and which protocol fits your needs.',
-        estimatedTime: '15 min',
-        difficulty: 'beginner',
-        completed: false,
-        href: '/guides/protocol-comparison',
-      },
-      {
-        id: 'what-is-nostr',
-        title: 'What is Nostr?',
-        description: 'Understanding the basics of the decentralized social protocol and how it differs from traditional social media.',
-        estimatedTime: '5 min',
-        difficulty: 'beginner',
-        completed: false,
-        href: '/guides/what-is-nostr',
-      },
-      {
-        id: 'keys-and-security',
-        title: 'Keys & Security',
-        description: 'Learn how to generate, save, and protect your Nostr keys. The complete security guide for beginners.',
-        estimatedTime: '8 min',
-        difficulty: 'beginner',
-        completed: false,
-        href: '/guides/keys-and-security',
-      },
-      {
-        id: 'quickstart',
-        title: 'Quickstart',
-        description: 'Get up and running with Nostr in minutes with this hands-on quickstart guide.',
-        estimatedTime: '10 min',
-        difficulty: 'beginner',
-        completed: false,
-        href: '/guides/quickstart',
-      },
-    ],
-  },
-  {
-    title: 'Intermediate',
-    level: 'intermediate',
-    guides: [
-      {
-        id: 'relays-demystified',
-        title: 'Relays Demystified',
-        description: 'Deep dive into how relays work with simple analogies and interactive tools.',
-        estimatedTime: '10 min',
-        difficulty: 'intermediate',
-        completed: false,
-        prerequisites: ['keys-and-security', 'quickstart'],
-        href: '/guides/relays-demystified',
-      },
-      {
-        id: 'nip05-identity',
-        title: 'NIP-05 Identity',
-        description: 'Set up your NIP-05 identifier and get a human-readable name like you@domain.com.',
-        estimatedTime: '12 min',
-        difficulty: 'intermediate',
-        completed: false,
-        prerequisites: ['keys-and-security'],
-        href: '/guides/nip05-identity',
-      },
-      {
-        id: 'zaps-and-lightning',
-        title: 'Zaps & Lightning Network',
-        description: 'Master the art of sending and receiving Bitcoin payments (zaps) over the Lightning Network.',
-        estimatedTime: '20 min',
-        difficulty: 'intermediate',
-        completed: false,
-        prerequisites: ['nip05-identity'],
-        href: '/guides/zaps-and-lightning',
-      },
-      {
-        id: 'finding-community',
-        title: 'Finding Community',
-        description: 'Discover how to find and join communities on Nostr.',
-        estimatedTime: '10 min',
-        difficulty: 'intermediate',
-        completed: false,
-        prerequisites: ['quickstart'],
-        href: '/guides/finding-community',
-      },
-      {
-        id: 'nostr-tools',
-        title: 'Essential Nostr Tools',
-        description: 'A curated directory of the most useful Nostr tools and services for key management, media hosting, analytics, and more.',
-        estimatedTime: '10 min',
-        difficulty: 'intermediate',
-        completed: false,
-        prerequisites: ['keys-and-security', 'quickstart'],
-        href: '/guides/nostr-tools',
-      },
-      {
-        id: 'troubleshooting',
-        title: 'Troubleshooting',
-        description: 'Common issues and how to fix them. From empty feeds to relay problems.',
-        estimatedTime: '15 min',
-        difficulty: 'intermediate',
-        completed: false,
-        href: '/guides/troubleshooting',
-      },
-    ],
-  },
-  {
-    title: 'Advanced',
-    level: 'advanced',
-    guides: [
-      {
-        id: 'relay-guide',
-        title: 'Relay Guide',
-        description: 'Everything you need to know about choosing, connecting to, and managing relays.',
-        estimatedTime: '15 min',
-        difficulty: 'advanced',
-        completed: false,
-        prerequisites: ['relays-demystified'],
-        href: '/guides/relay-guide',
-      },
-      {
-        id: 'privacy-security',
-        title: 'Privacy & Security',
-        description: 'Advanced privacy and security practices for power users.',
-        estimatedTime: '20 min',
-        difficulty: 'advanced',
-        completed: false,
-        prerequisites: ['keys-and-security'],
-        href: '/guides/privacy-security',
-      },
-      {
-        id: 'nip17-private-messages',
-        title: 'NIP-17: Private Direct Messages',
-        description: 'Learn about NIP-17, the secure replacement for NIP-04, and how to migrate your private messaging in Nostr',
-        estimatedTime: '12 min',
-        difficulty: 'advanced',
-        completed: false,
-        prerequisites: ['keys-and-security'],
-        href: '/guides/nip17-private-messages',
-      },
-      {
-        id: 'multi-client',
-        title: 'Using Multiple Clients',
-        description: 'How to use multiple clients simultaneously and keep your data in sync.',
-        estimatedTime: '10 min',
-        difficulty: 'advanced',
-        completed: false,
-        prerequisites: ['quickstart'],
-        href: '/guides/multi-client',
-      },
-      {
-        id: 'faq',
-        title: 'FAQ',
-        description: 'Frequently asked questions about Nostr, answered in plain English.',
-        estimatedTime: '10 min',
-        difficulty: 'advanced',
-        completed: false,
-        href: '/guides/faq',
-      },
-    ],
-  },
-];
-
-const totalGuides = guideSections.reduce((acc, section) => acc + section.guides.length, 0);
-const completedGuides = 0;
-const progressPercentage = Math.round((completedGuides / totalGuides) * 100);
-
-const difficultyColors = {
-  beginner: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
-  intermediate: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
-  advanced: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
+  tags: string[];
 };
 
-const difficultyLabels = {
-  beginner: 'Beginner',
-  intermediate: 'Intermediate',
-  advanced: 'Advanced',
+type SkillLevelData = {
+  id: SkillLevel;
+  label: string;
+  icon: string;
+  description: string;
+  unlockThreshold: number;
+  guides: GuideWithHref[];
 };
 
-const pathConfig = {
-  beginner: {
-    label: 'Beginners',
-    icon: '👋',
-    description: 'Simple path, no technical jargon',
-    sequence: ['what-is-nostr', 'quickstart', 'finding-community', 'zaps-and-lightning', 'relays-demystified', 'nip05-identity', 'nostr-tools', 'troubleshooting', 'faq'],
-    hideAdvanced: true,
-  },
-  bitcoiner: {
-    label: 'Bitcoiner',
-    icon: '₿',
-    description: 'Skip basics, focus on clients and Lightning',
-    sequence: ['quickstart', 'zaps-and-lightning', 'finding-community', 'multi-client', 'protocol-comparison', 'relays-demystified', 'nip05-identity', 'privacy-security'],
-    hideAdvanced: false,
-  },
-  privacy: {
-    label: 'Privacy Advocate',
-    icon: '🔒',
-    description: 'Security-first approach',
-    sequence: ['what-is-nostr', 'keys-and-security', 'privacy-security', 'nip17-private-messages', 'relays-demystified', 'finding-community', 'multi-client'],
-    hideAdvanced: false,
-  },
-};
+const skillLevels: SkillLevelData[] = (['beginner', 'intermediate', 'advanced'] as SkillLevel[]).map(levelId => {
+  const level = SKILL_LEVELS[levelId];
+  const guides = level.sequence.map(slug => {
+    const meta = guideMetadata[slug] || {
+      title: slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+      description: 'Guide description coming soon.',
+      estimatedTime: '10 min',
+      difficulty: levelId,
+      tags: [],
+    };
+    
+    return {
+      id: slug,
+      ...meta,
+      href: `/guides/${slug}`,
+    };
+  });
+  
+  return {
+    id: levelId,
+    label: level.label,
+    icon: level.icon,
+    description: level.description,
+    unlockThreshold: level.unlockThreshold,
+    guides,
+  };
+});
+
+// Calculate totals
+const totalGuides = skillLevels.reduce((acc, level) => acc + level.guides.length, 0);
 ---
 
 <Layout
@@ -235,17 +181,6 @@ const pathConfig = {
   <Header />
 
   <main id="main-content">
-    <!-- Sticky Path Indicator -->
-    <div id="path-indicator" class="sticky top-0 z-40 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800 hidden">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
-        <div class="flex items-center gap-2">
-          <span id="current-path-icon" class="text-lg"></span>
-          <span class="text-sm text-gray-600 dark:text-gray-400">Viewing as:</span>
-          <span id="current-path-label" class="font-semibold text-friendly-purple-600 dark:text-friendly-purple-400"></span>
-        </div>
-      </div>
-    </div>
-
     <!-- Hero Section -->
     <section class="relative overflow-hidden">
       <div class="absolute inset-0 bg-gradient-to-br from-friendly-purple-100/50 via-transparent to-friendly-gold-100/30 dark:from-friendly-purple-900/30 dark:to-friendly-gold-900/20" />
@@ -258,41 +193,16 @@ const pathConfig = {
             </span>
           </h1>
           <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">
-            Comprehensive guides to take you from complete beginner to Nostr power user. 
-            Learn at your own pace with hands-on tutorials.
+            Progressive skill levels from beginner to advanced. Unlock new levels as you complete guides and master the protocol.
           </p>
           
-          <!-- Path Selector -->
-          <div class="mb-8">
-            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
-              Choose your learning path
-            </p>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {Object.entries(pathConfig).map(([key, config]) => (
-                <button
-                  type="button"
-                  class="path-selector-btn p-4 rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-friendly-purple-400 dark:hover:border-friendly-purple-500 transition-all duration-200 bg-white dark:bg-gray-800 text-left"
-                  data-path={key}
-                >
-                  <div class="flex items-center gap-3">
-                    <span class="text-2xl">{config.icon}</span>
-                    <div>
-                      <div class="font-bold text-gray-900 dark:text-white">{config.label}</div>
-                      <div class="text-sm text-gray-500 dark:text-gray-400">{config.description}</div>
-                    </div>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-          
           <!-- Progress Overview -->
-          <div id="progress-overview" class="bg-white dark:bg-gray-800 rounded-2xl border-2 border-friendly-purple-200 dark:border-friendly-purple-700 p-6 shadow-sm max-w-md mx-auto hidden">
+          <div id="progress-overview" class="bg-white dark:bg-gray-800 rounded-2xl border-2 border-friendly-purple-200 dark:border-friendly-purple-700 p-6 shadow-sm max-w-md mx-auto mb-8 hidden">
             <div class="flex items-center justify-between mb-2">
               <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Your Progress</span>
-              <span id="progress-percentage" class="text-2xl font-bold text-friendly-purple-600">0%</span>
+              <span id="progress-percentage" class="text-2xl font-bold text-friendly-purple-600 dark:text-friendly-purple-400">0%</span>
             </div>
-            <div class="h-3 w-full bg-gray-200 rounded-full overflow-hidden">
+            <div class="h-3 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
               <div 
                 id="progress-bar"
                 class="h-full bg-gradient-to-r from-friendly-purple-500 to-friendly-purple-300 rounded-full transition-all duration-500"
@@ -303,20 +213,7 @@ const pathConfig = {
               Start your first guide to see progress
             </p>
           </div>
-          
-          <!-- Gamification Explainer Link -->
-          <div class="mt-6">
-            <button
-              id="how-does-this-work-btn"
-              type="button"
-              class="inline-flex items-center gap-2 text-sm font-medium text-friendly-purple-600 dark:text-friendly-purple-400 hover:text-friendly-purple-700 dark:hover:text-friendly-purple-300 transition-colors"
-            >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              How does this work?
-            </button>
-          </div>
+
         </div>
       </div>
     </section>
@@ -333,7 +230,7 @@ const pathConfig = {
               type="text"
               id="guide-search"
               placeholder="Search guides..."
-              class="w-full pl-12 pr-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              class="w-full pl-12 pr-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-friendly-purple-400 focus:border-transparent"
             />
           </div>
           <!-- Progress Legend -->
@@ -351,130 +248,38 @@ const pathConfig = {
       </div>
     </section>
 
-    <!-- Guides Grid -->
-    <section class="py-16" id="guides-grid">
+    <!-- Interest Filter & Guide Sections - Full Width -->
+    <section class="py-12">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Continue Reading Card -->
-        <ContinueReadingCard client:load />
-        
-        <div class="space-y-16">
-          {guideSections.map((section, sectionIndex) => (
-            <div 
-              class="guide-section" 
-              data-level={section.level}
-              data-section-index={sectionIndex}
-            >
-              <div class="flex items-center gap-4 mb-8">
-                <div class={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                  section.level === 'beginner' ? 'bg-green-100 dark:bg-green-900/30' :
-                  section.level === 'intermediate' ? 'bg-yellow-100 dark:bg-yellow-900/30' :
-                  'bg-red-100 dark:bg-red-900/30'
-                }`}>
-                  <span class="text-2xl">
-                    {section.level === 'beginner' ? '🌱' :
-                     section.level === 'intermediate' ? '🚀' : '⚡'}
-                  </span>
-                </div>
-                <div class="flex-1">
-                  <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{section.title}</h2>
-                  <p class="text-gray-600 dark:text-gray-400">
-                    {section.level === 'beginner' ? 'Start your Nostr journey here' :
-                     section.level === 'intermediate' ? 'Level up your Nostr skills' :
-                     'Master the protocol (Advanced)'}
-                  </p>
-                </div>
-                {sectionIndex === 0 && (
-                  <span class="px-3 py-1 bg-friendly-purple-100 text-friendly-purple-700 dark:bg-friendly-purple-900 dark:text-friendly-purple-200 text-sm font-medium rounded-full">
-                    Start Here
-                  </span>
-                )}
-                {section.level === 'advanced' && (
-                  <button 
-                    type="button"
-                    id="toggle-advanced"
-                    class="ml-auto px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors flex items-center gap-2"
-                  >
-                    <span>Show Advanced</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-                )}
-              </div>
-              
-              {section.level === 'advanced' && (
-                <div class="mb-4 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
-                  <p class="text-sm text-amber-800 dark:text-amber-200">
-                    <span class="font-semibold">Heads up:</span> Advanced guides cover complex topics like relay management, privacy hardening, and multi-client strategies. Complete the beginner and intermediate guides first.
-                  </p>
-                </div>
-              )}
-              
-              <div 
-                class={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${section.level === 'advanced' ? 'advanced-guides-grid' : ''}`}
-                style={section.level === 'advanced' ? 'display: none;' : ''}
-              >
-                {section.guides.map((guide) => (
-                  <a
-                    href={guide.href}
-                    class="guide-card group p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 hover:border-friendly-purple-400 dark:hover:border-friendly-purple-500 transition-all duration-200 hover:shadow-lg hover:-translate-y-1"
-                    data-guide-id={guide.id}
-                    data-title={guide.title.toLowerCase()}
-                    data-description={guide.description.toLowerCase()}
-                    data-difficulty={guide.difficulty}
-                  >
-                    <div class="flex items-start justify-between mb-4">
-                      <span class={`px-3 py-1 text-xs font-medium rounded-full ${difficultyColors[guide.difficulty]}`}>
-                        {difficultyLabels[guide.difficulty]}
-                      </span>
-                      <div class="flex items-center gap-2">
-                        <div class="progress-indicator" data-guide-id={guide.id} title="Loading progress...">
-                          <div class="w-2.5 h-2.5 rounded-full bg-gray-300 opacity-0 transition-opacity duration-300"></div>
-                        </div>
-                        <div class="flex items-center gap-1 text-sm text-gray-500">
-                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                          {guide.estimatedTime}
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-friendly-purple-600 dark:group-hover:text-friendly-purple-400 transition-colors">
-                      {guide.title}
-                    </h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                      {guide.description}
-                    </p>
-                    
-                    {guide.prerequisites && guide.prerequisites.length > 0 && (
-                      <div class="flex items-center gap-2 text-xs text-amber-600">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
-                        Prerequisites required
-                      </div>
-                    )}
-                    
-                    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between">
-                      <span class="text-sm font-medium text-friendly-purple-600 dark:text-friendly-purple-400 group-hover:underline">
-                        Start Learning
-                      </span>
-                      <svg class="w-5 h-5 text-gray-400 group-hover:text-friendly-purple-500 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
-          ))}
+        <GuidesContainer 
+          client:only="react"
+          skillLevels={skillLevels.map(level => ({
+            id: level.id,
+            guides: level.guides,
+            unlockThreshold: level.unlockThreshold
+          }))}
+        />
+          
+        <!-- Gamification Explainer Link -->
+        <div class="text-center mt-8">
+          <button
+            id="how-does-this-work-btn"
+            type="button"
+            class="inline-flex items-center gap-2 text-sm font-medium text-friendly-purple-600 dark:text-friendly-purple-400 hover:text-friendly-purple-700 dark:hover:text-friendly-purple-300 transition-colors"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            How does this work?
+          </button>
         </div>
       </div>
     </section>
 
+
+
     <!-- CTA Section -->
-    <section class="py-20 bg-gradient-to-br from-primary to-secondary">
+    <section class="py-20 bg-gradient-to-br from-friendly-purple-600 to-friendly-purple-400">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 class="text-3xl font-bold text-white mb-4">
           Not sure where to start?
@@ -484,7 +289,7 @@ const pathConfig = {
         </p>
         <a
           href="/tools"
-          class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-primary bg-white rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+          class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-friendly-purple-600 bg-white rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
         >
           Explore Tools
           <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -498,348 +303,5 @@ const pathConfig = {
   <Footer />
   
   <!-- Gamification Explainer Modal -->
-  <GamificationExplainerWrapper client:load buttonId="how-does-this-work-btn" totalGuides={15} />
+  <GamificationExplainerWrapper client:load buttonId="how-does-this-work-btn" totalGuides={totalGuides} />
 </Layout>
-
-<script>
-  // Storage keys - unified with gamification system
-  const STORAGE_KEY = 'nostrich-gamification-v1';
-  const PRIVACY_SETTINGS_KEY = 'nostrich-privacy-settings';
-  
-  // Path configuration (must match server-side config)
-  const pathConfig = {
-    beginner: {
-      label: 'Beginners',
-      icon: '👋',
-      sequence: ['what-is-nostr', 'keys-and-security', 'quickstart', 'relays-demystified', 'nip05-identity', 'zaps-and-lightning', 'finding-community', 'nostr-tools', 'troubleshooting'],
-      hideAdvanced: true,
-    },
-    bitcoiner: {
-      label: 'Bitcoiner',
-      icon: '₿',
-      sequence: ['quickstart', 'zaps-and-lightning', 'relays-demystified', 'finding-community', 'nostr-tools', 'troubleshooting', 'relay-guide', 'faq'],
-      hideAdvanced: false,
-    },
-    privacy: {
-      label: 'Privacy Advocate',
-      icon: '🔒',
-      sequence: ['what-is-nostr', 'keys-and-security', 'quickstart', 'relays-demystified', 'privacy-security', 'nip05-identity', 'troubleshooting', 'faq'],
-      hideAdvanced: false,
-    },
-  };
-
-  // Get stored path from unified gamification storage
-  function getUserPath() {
-    try {
-      const data = localStorage.getItem(STORAGE_KEY);
-      if (data) {
-        const parsed = JSON.parse(data);
-        return parsed.progress?.activePath || 'beginner';
-      }
-    } catch (e) {
-      console.error('Error reading path:', e);
-    }
-    return 'beginner';
-  }
-  
-  // Set user path in unified gamification storage
-  function setUserPath(path) {
-    try {
-      const data = localStorage.getItem(STORAGE_KEY);
-      let parsed = data ? JSON.parse(data) : { progress: {} };
-      if (!parsed.progress) {
-        parsed.progress = {};
-      }
-      parsed.progress.activePath = path;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
-    } catch (e) {
-      console.error('Error saving path:', e);
-    }
-  }
-  
-  // Get privacy settings
-  function getPrivacySettings() {
-    const defaultSettings = {
-      trackingEnabled: true,
-      showProgressIndicators: true,
-    };
-    try {
-      const stored = localStorage.getItem(PRIVACY_SETTINGS_KEY);
-      if (stored) {
-        return { ...defaultSettings, ...JSON.parse(stored) };
-      }
-    } catch (e) {
-      console.error('Error reading privacy settings:', e);
-    }
-    return defaultSettings;
-  }
-
-  // Get progress data from unified gamification storage
-  function getProgressData() {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        // Convert completedGuides array to expected format
-        const completedGuides = parsed.progress?.completedGuides || [];
-        const guides = {};
-        completedGuides.forEach(guideId => {
-          guides[guideId] = { status: 'completed' };
-        });
-        return guides;
-      }
-    } catch (e) {
-      console.error('Error reading progress data:', e);
-    }
-    return {};
-  }
-  
-  // Calculate progress
-  function calculateProgress() {
-    const guides = getProgressData();
-
-    // Only count visible guide cards (not display: none)
-    const allCards = document.querySelectorAll('.guide-card');
-    const visibleCards = Array.from(allCards).filter(card => {
-      // Check if card is visible (not display: none)
-      return card.style.display !== 'none' &&
-             !card.classList.contains('hidden');
-    });
-    const totalGuides = visibleCards.length;
-
-    // Count completed guides that are currently visible
-    const completedGuides = visibleCards.filter(card => {
-      const guideId = card.getAttribute('data-guide-id');
-      return guides[guideId]?.status === 'completed';
-    }).length;
-
-    const percentage = totalGuides > 0 ? Math.round((completedGuides / totalGuides) * 100) : 0;
-
-    return {
-      total: totalGuides,
-      completed: completedGuides,
-      percentage: percentage,
-    };
-  }
-  
-  // Update progress overview
-  function updateProgressOverview() {
-    const progress = calculateProgress();
-    const overview = document.getElementById('progress-overview');
-    const percentageEl = document.getElementById('progress-percentage');
-    const barEl = document.getElementById('progress-bar');
-    const textEl = document.getElementById('progress-text');
-    
-    if (!overview || !percentageEl || !barEl || !textEl) return;
-    
-    if (progress.completed > 0) {
-      overview.classList.remove('hidden');
-      percentageEl.textContent = `${progress.percentage}%`;
-      barEl.style.width = `${progress.percentage}%`;
-      
-      if (progress.percentage === 100) {
-        textEl.textContent = '🎉 Congratulations! You\'ve completed all guides!';
-      } else {
-        const remaining = progress.total - progress.completed;
-        textEl.textContent = `${progress.completed} of ${progress.total} guides completed (${remaining} to go)`;
-      }
-    } else {
-      overview.classList.add('hidden');
-    }
-  }
-
-  // Update progress indicators
-  function updateProgressIndicators() {
-    const settings = getPrivacySettings();
-    const guides = getProgressData();
-    const indicators = document.querySelectorAll('.progress-indicator');
-
-    indicators.forEach((indicator) => {
-      const guideId = indicator.getAttribute('data-guide-id');
-      const dot = indicator.querySelector('div');
-      if (!dot) return;
-
-      if (!settings.trackingEnabled || !settings.showProgressIndicators) {
-        dot.classList.add('opacity-0');
-        indicator.removeAttribute('title');
-        return;
-      }
-
-      const progress = guides[guideId];
-      const status = progress?.status || 'not-started';
-
-      dot.classList.remove('bg-green-500', 'bg-blue-400', 'bg-gray-300', 'opacity-0');
-
-      switch (status) {
-        case 'completed':
-          dot.classList.add('bg-green-500');
-          indicator.setAttribute('title', 'Completed');
-          break;
-        case 'engaged':
-        case 'viewed':
-          dot.classList.add('bg-blue-400');
-          indicator.setAttribute('title', 'In progress');
-          break;
-        default:
-          dot.classList.add('bg-gray-300', 'opacity-0');
-          indicator.removeAttribute('title');
-      }
-    });
-  }
-  
-  // Filter guides by path
-  function filterGuidesByPath(path) {
-    const config = pathConfig[path] || pathConfig.beginner;
-    const sequence = config.sequence;
-    const cards = document.querySelectorAll('.guide-card');
-    
-    cards.forEach((card) => {
-      const guideId = card.getAttribute('data-guide-id');
-      const difficulty = card.getAttribute('data-difficulty');
-      
-      // Hide advanced guides for general public
-      if (config.hideAdvanced && difficulty === 'advanced') {
-        card.style.display = 'none';
-        return;
-      }
-      
-      // Show/hide based on path sequence
-      if (sequence.includes(guideId)) {
-        card.style.display = 'block';
-      } else {
-        card.style.display = 'none';
-      }
-    });
-    
-    // Reorder guides in each section based on sequence
-    sequence.forEach((guideId, index) => {
-      const card = document.querySelector(`[data-guide-id="${guideId}"]`);
-      if (card) {
-        card.style.order = index;
-      }
-    });
-
-    // Update progress bar to reflect visible guides only
-    updateProgressOverview();
-  }
-  
-  // Update path indicator UI
-  function updatePathIndicator(path) {
-    const config = pathConfig[path] || pathConfig.beginner;
-    const indicator = document.getElementById('path-indicator');
-    const iconEl = document.getElementById('current-path-icon');
-    const labelEl = document.getElementById('current-path-label');
-    
-    if (indicator && iconEl && labelEl) {
-      indicator.classList.remove('hidden');
-      iconEl.textContent = config.icon;
-      labelEl.textContent = config.label;
-    }
-    
-    // Update active state of path selector buttons
-    document.querySelectorAll('.path-selector-btn').forEach((btn) => {
-      if (btn.dataset.path === path) {
-        btn.classList.remove('border-gray-200', 'bg-white', 'dark:border-gray-700', 'dark:bg-gray-800');
-        btn.classList.add('border-friendly-purple-500', 'bg-friendly-purple-50', 'dark:bg-friendly-purple-700/30');
-      } else {
-        btn.classList.remove('border-friendly-purple-500', 'bg-friendly-purple-50', 'dark:bg-friendly-purple-700/30');
-        btn.classList.add('border-gray-200', 'bg-white', 'dark:border-gray-700', 'dark:bg-gray-800');
-      }
-    });
-  }
-  
-  // Toggle advanced guides
-  function toggleAdvancedGuides() {
-    const grid = document.querySelector('.advanced-guides-grid');
-    const btn = document.getElementById('toggle-advanced');
-    
-    if (!grid || !btn) return;
-    
-    const isHidden = grid.style.display === 'none';
-    grid.style.display = isHidden ? 'grid' : 'none';
-    
-    const span = btn.querySelector('span');
-    const svg = btn.querySelector('svg');
-    
-    if (span) {
-      span.textContent = isHidden ? 'Hide Advanced' : 'Show Advanced';
-    }
-    if (svg) {
-      svg.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
-    }
-  }
-
-  // Initialize
-  if (typeof window !== 'undefined') {
-    // Check for path in URL or storage
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlPath = urlParams.get('path');
-    const currentPath = urlPath && pathConfig[urlPath] ? urlPath : getUserPath();
-    
-    // Initialize UI
-    updatePathIndicator(currentPath);
-    filterGuidesByPath(currentPath);
-    updateProgressIndicators();
-    updateProgressOverview();
-    
-    // Path selector buttons
-    document.querySelectorAll('.path-selector-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const path = btn.dataset.path;
-        if (path && pathConfig[path]) {
-          setUserPath(path);
-          updatePathIndicator(path);
-          filterGuidesByPath(path);
-          
-          // Update URL without reloading
-          const url = new URL(window.location);
-          url.searchParams.set('path', path);
-          window.history.pushState({}, '', url);
-        }
-      });
-    });
-    
-    // Advanced toggle
-    const toggleAdvancedBtn = document.getElementById('toggle-advanced');
-    if (toggleAdvancedBtn) {
-      toggleAdvancedBtn.addEventListener('click', toggleAdvancedGuides);
-    }
-    
-    // Listen for storage changes
-    window.addEventListener('storage', (e) => {
-      if (e.key === STORAGE_KEY || e.key === PRIVACY_SETTINGS_KEY) {
-        updateProgressIndicators();
-        updateProgressOverview();
-      }
-    });
-  }
-
-  // Search functionality
-  const searchInput = document.getElementById('guide-search');
-  
-  searchInput?.addEventListener('input', (e) => {
-    const query = e.target?.value?.toLowerCase() || '';
-    const currentPath = getUserPath();
-    const config = pathConfig[currentPath] || pathConfig.beginner;
-    
-    document.querySelectorAll('.guide-card').forEach((card) => {
-      const guideId = card.getAttribute('data-guide-id');
-      const title = card.getAttribute('data-title') || '';
-      const description = card.getAttribute('data-description') || '';
-      const difficulty = card.getAttribute('data-difficulty');
-      
-      const matchesSearch = title.includes(query) || description.includes(query);
-      const isInPath = config.sequence.includes(guideId);
-      const isAdvancedHidden = config.hideAdvanced && difficulty === 'advanced';
-      
-      if (matchesSearch && isInPath && !isAdvancedHidden) {
-        card.style.display = 'block';
-      } else if (query) {
-        card.style.display = 'none';
-      } else {
-        // Reset to path-based visibility
-        card.style.display = isInPath && !isAdvancedHidden ? 'block' : 'none';
-      }
-    });
-  });
-</script>
