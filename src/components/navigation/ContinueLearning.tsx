@@ -1,8 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ArrowRight, BookOpen, CheckCircle, GraduationCap, X } from 'lucide-react';
+import { ArrowRight, BookOpen, CheckCircle, GraduationCap, X, Lock } from 'lucide-react';
 import { cn } from '../../lib/utils';
-import { LEARNING_PATHS } from '../../data/learning-paths';
-import { getActivePath } from '../../lib/progress';
+import { SKILL_LEVELS, type SkillLevel, getNextLevel } from '../../data/learning-paths';
+import { 
+  getCurrentLevelLocal as getCurrentLevel, 
+  getCompletedGuidesInLevel as getCompletedInLevel, 
+  getLevelProgressLocal as getLevelProgress,
+  isLevelUnlockedLocal as isLevelUnlocked,
+  getUnlockedLevelsLocal as getUnlockedLevels
+} from '../../lib/progress';
 
 interface ContinueLearningProps {
   nextGuide?: {
@@ -30,32 +36,78 @@ export function ContinueLearning({
   const [isViewingQuiz, setIsViewingQuiz] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [nextGuide, setNextGuide] = useState(initialNextGuide);
-  const [activePath, setActivePath] = useState<string>('general');
-  const [isPathComplete, setIsPathComplete] = useState(false);
+  const [currentLevel, setCurrentLevel] = useState<SkillLevel>('beginner');
+  const [isLevelComplete, setIsLevelComplete] = useState(false);
+  const [nextLevelInfo, setNextLevelInfo] = useState<{
+    level: SkillLevel | null;
+    unlocked: boolean;
+    guidesNeeded: number;
+    completedCount: number;
+    totalInCurrent: number;
+  } | null>(null);
 
-  // Calculate path-based next guide on mount
+  // Calculate level-based next guide on mount
   useEffect(() => {
     try {
       const pathParts = window.location.pathname.split('/');
       const currentSlug = pathParts[pathParts.length - 1];
 
-      const userPath = getActivePath();
-      setActivePath(userPath);
+      const userLevel = getCurrentLevel() as SkillLevel;
+      setCurrentLevel(userLevel);
 
-      const pathConfig = LEARNING_PATHS[userPath];
+      const levelConfig = SKILL_LEVELS[userLevel];
+      const levelProgress = getLevelProgress(userLevel);
+      const completedCount = getCompletedInLevel(userLevel).length;
+      const totalInLevel = levelConfig.sequence.length;
 
-      if (pathConfig?.sequence.includes(currentSlug)) {
-        const currentIndex = pathConfig.sequence.indexOf(currentSlug);
+      // Check if current level is complete
+      const isComplete = completedCount >= totalInLevel;
+      setIsLevelComplete(isComplete);
 
-        if (currentIndex === pathConfig.sequence.length - 1) {
-          setIsPathComplete(true);
+      // Get next level info
+      const nextLevel = getNextLevel(userLevel);
+      if (nextLevel) {
+        const nextUnlocked = isLevelUnlocked(nextLevel);
+        const threshold = SKILL_LEVELS[nextLevel].unlockThreshold;
+        const guidesNeeded = Math.max(0, threshold - completedCount);
+        
+        setNextLevelInfo({
+          level: nextLevel,
+          unlocked: nextUnlocked,
+          guidesNeeded,
+          completedCount,
+          totalInCurrent: totalInLevel
+        });
+
+        // If level complete, no next guide in current level
+        if (isComplete) {
           setNextGuide(undefined);
-        } else {
-          const nextSlug = pathConfig.sequence[currentIndex + 1];
-          const title = guideTitles?.[nextSlug] || formatGuideTitle(nextSlug);
-          setNextGuide({ slug: nextSlug, title });
-          setIsPathComplete(false);
+          return;
         }
+      } else {
+        setNextLevelInfo(null);
+      }
+
+      // Find next incomplete guide in current level
+      if (levelConfig?.sequence.includes(currentSlug)) {
+        const currentIndex = levelConfig.sequence.indexOf(currentSlug);
+        
+        // Look for next incomplete guide after current
+        for (let i = currentIndex + 1; i < levelConfig.sequence.length; i++) {
+          const nextSlug = levelConfig.sequence[i];
+          const isCompleted = getCompletedInLevel(userLevel).includes(nextSlug);
+          
+          if (!isCompleted) {
+            const title = guideTitles?.[nextSlug] || formatGuideTitle(nextSlug);
+            setNextGuide({ slug: nextSlug, title });
+            setIsLevelComplete(false);
+            return;
+          }
+        }
+
+        // If we've gone through all guides and they're all complete
+        setNextGuide(undefined);
+        setIsLevelComplete(true);
       } else {
         setNextGuide(undefined);
       }
@@ -96,7 +148,7 @@ export function ContinueLearning({
   }, [hasQuiz, quizSelector]);
 
   useEffect(() => {
-    if (!nextGuide) return;
+    if (!nextGuide && !isLevelComplete) return;
 
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -116,7 +168,7 @@ export function ContinueLearning({
     handleScroll(); // Check initial position
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [nextGuide, threshold, isDismissed, checkQuizVisibility]);
+  }, [nextGuide, isLevelComplete, threshold, isDismissed, checkQuizVisibility]);
 
   const scrollToQuiz = () => {
     const quizElement = document.querySelector(quizSelector);
@@ -125,11 +177,62 @@ export function ContinueLearning({
     }
   };
 
+  const navigateToNextLevel = () => {
+    if (!nextLevelInfo?.level) return;
+    
+    const nextLevel = nextLevelInfo.level;
+    const nextLevelConfig = SKILL_LEVELS[nextLevel];
+    
+    if (nextLevelInfo.unlocked && nextLevelConfig) {
+      // Navigate to first guide in next level
+      const firstGuide = nextLevelConfig.sequence[0];
+      window.location.href = `/guides/${firstGuide}`;
+    }
+  };
+
   // Hide overlay when actively viewing quiz
   if (!isVisible || isViewingQuiz) return null;
 
-  // Path complete variant
-  if (isPathComplete) {
+  // Level complete variant
+  if (isLevelComplete) {
+    const currentLevelConfig = SKILL_LEVELS[currentLevel];
+    
+    // Check if this is the final level (Advanced)
+    const isFinalLevel = !nextLevelInfo?.level;
+    
+    if (isFinalLevel) {
+      return (
+        <div className={cn(
+          'fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-lg',
+          'animate-in fade-in duration-500 slide-in-from-bottom-4',
+          className
+        )}>
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border-2 border-green-300 dark:border-green-700 shadow-2xl p-6">
+            <div className="text-center">
+              <div className="text-4xl mb-2">🎉</div>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                All Levels Complete!
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                Congratulations! You've completed all {currentLevelConfig.label} guides and mastered Nostr!
+              </p>
+              <a
+                href="/guides"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
+              >
+                <CheckCircle className="w-4 h-4" />
+                Explore All Guides
+              </a>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    
+    const nextLevelLabel = nextLevelInfo?.level 
+      ? SKILL_LEVELS[nextLevelInfo.level].label 
+      : '';
+    
     return (
       <div className={cn(
         'fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-lg',
@@ -140,18 +243,42 @@ export function ContinueLearning({
           <div className="text-center">
             <div className="text-4xl mb-2">🎉</div>
             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
-              Path Complete!
+              Level Complete!
             </h3>
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              You've finished the {LEARNING_PATHS[activePath]?.label} learning path
+              You've completed all {currentLevelConfig.label} guides!
             </p>
-            <a
-              href="/guides"
-              className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
-            >
-              Explore Other Paths
-              <ArrowRight className="w-4 h-4" />
-            </a>
+            
+            {nextLevelInfo?.unlocked ? (
+              <button
+                onClick={navigateToNextLevel}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
+              >
+                Continue to {nextLevelLabel}
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            ) : (
+              <div className="space-y-3">
+                <div className="flex items-center justify-center gap-2 text-amber-600 dark:text-amber-400">
+                  <Lock className="w-4 h-4" />
+                  <span className="text-sm font-medium">
+                    {nextLevelLabel} is Locked
+                  </span>
+                </div>
+                {nextLevelInfo && nextLevelInfo.guidesNeeded > 0 && (
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    Complete {nextLevelInfo.guidesNeeded} more {currentLevelConfig.label} guide{nextLevelInfo.guidesNeeded !== 1 ? 's' : ''} to unlock {nextLevelLabel}
+                  </p>
+                )}
+                <a
+                  href="/guides"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                >
+                  <BookOpen className="w-4 h-4" />
+                  Browse All Guides
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>

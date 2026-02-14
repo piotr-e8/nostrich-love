@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { BookOpen, ArrowRight, Clock, ChevronRight, X, RotateCcw } from 'lucide-react';
 import { cn } from '../../lib/utils';
-import { LEARNING_PATHS } from '../../data/learning-paths';
-import { getLastViewedGuide, getCurrentPathProgress, hasRecentProgress, getActivePath } from '../../lib/progress';
+import { SKILL_LEVELS, type SkillLevel } from '../../data/learning-paths';
+import { getCurrentLevel, getLevelProgress } from '../../utils/gamification';
+import { getLastViewedGuide, hasRecentProgress } from '../../lib/progress';
 
 interface ResumeBannerProps {
   className?: string;
@@ -12,8 +13,8 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
   const [lastViewed, setLastViewed] = useState<ReturnType<typeof getLastViewedGuide>>(null);
-  const [pathProgress, setPathProgress] = useState<ReturnType<typeof getCurrentPathProgress> | null>(null);
-  const [activePath, setActivePath] = useState<string>('beginner');
+  const [levelProgress, setLevelProgress] = useState<ReturnType<typeof getLevelProgress> | null>(null);
+  const [currentLevel, setCurrentLevelState] = useState<SkillLevel>('beginner');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -22,12 +23,12 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
     // Check for recent progress
     if (hasRecentProgress()) {
       const lastGuide = getLastViewedGuide();
-      const path = getActivePath();
-      const progress = getCurrentPathProgress();
-      
+      const level = getCurrentLevel();
+      const progress = getLevelProgress(level);
+
       setLastViewed(lastGuide);
-      setActivePath(path);
-      setPathProgress(progress);
+      setCurrentLevelState(level);
+      setLevelProgress(progress);
       
       // Check if dismissed in this session
       const dismissed = sessionStorage.getItem('nostrich-resume-dismissed');
@@ -61,15 +62,15 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
     return null;
   }
 
-  const pathConfig = LEARNING_PATHS[activePath];
-  const pathLabel = pathConfig?.label || 'Your Path';
-  const pathIcon = pathConfig?.icon || '📚';
-  
+  const levelConfig = SKILL_LEVELS[currentLevel];
+  const levelLabel = levelConfig?.label || 'Your Level';
+  const levelIcon = levelConfig?.icon || '📚';
+
   // Calculate time since last viewed
   const timeSince = Date.now() - lastViewed.timestamp;
   const daysSince = Math.floor(timeSince / (1000 * 60 * 60 * 24));
   const hoursSince = Math.floor(timeSince / (1000 * 60 * 60));
-  
+
   let timeText: string;
   if (daysSince > 0) {
     timeText = daysSince === 1 ? 'Yesterday' : `${daysSince} days ago`;
@@ -79,11 +80,10 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
     timeText = 'Recently';
   }
 
-  // Calculate progress percentage
-  const progressPercentage = pathProgress?.percentage || 0;
-  const completedCount = pathProgress?.completed || 0;
-  const totalCount = pathProgress?.total || pathConfig?.sequence.length || 0;
-  const nextGuide = pathProgress?.nextGuide;
+  // Calculate progress
+  const progressPercentage = levelProgress?.percentage || 0;
+  const completedCount = levelProgress?.completed || 0;
+  const totalCount = levelProgress?.total || levelConfig?.sequence.length || 0;
 
   return (
     <div 
@@ -97,7 +97,7 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
           {/* Left side - Welcome back message */}
           <div className="flex items-start gap-4 flex-1">
             <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-2xl">
-              {pathIcon}
+              {levelIcon}
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
@@ -105,7 +105,7 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
                   Welcome back!
                 </h2>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  Continue your {pathLabel} journey
+                  Continue your {levelLabel} journey
                 </span>
               </div>
               
@@ -139,12 +139,7 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
 
               {/* Progress text */}
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                {completedCount} of {totalCount} guides completed
-                {nextGuide && (
-                  <span className="ml-2">
-                    • Next: <span className="text-primary font-medium">{formatGuideTitle(nextGuide)}</span>
-                  </span>
-                )}
+                {completedCount}/{totalCount} {levelLabel} guides completed
               </p>
             </div>
           </div>
@@ -172,7 +167,7 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
               className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
               <RotateCcw className="w-4 h-4" />
-              Switch Path
+              Switch Level
             </button>
           </div>
 
