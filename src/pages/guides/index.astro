@@ -498,8 +498,8 @@ const pathConfig = {
 </Layout>
 
 <script>
-  // Storage keys
-  const STORAGE_KEY = 'nostrich-progress-v1';
+  // Storage keys - unified with gamification system
+  const STORAGE_KEY = 'nostrich-gamification-v1';
   const PRIVACY_SETTINGS_KEY = 'nostrich-privacy-settings';
   const PATH_STORAGE_KEY = 'nostrich-user-path';
   
@@ -574,13 +574,19 @@ const pathConfig = {
     return defaultSettings;
   }
 
-  // Get progress data
+  // Get progress data from unified gamification storage
   function getProgressData() {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
-        return parsed.guides || {};
+        // Convert completedGuides array to expected format
+        const completedGuides = parsed.progress?.completedGuides || [];
+        const guides = {};
+        completedGuides.forEach(guideId => {
+          guides[guideId] = { status: 'completed' };
+        });
+        return guides;
       }
     } catch (e) {
       console.error('Error reading progress data:', e);

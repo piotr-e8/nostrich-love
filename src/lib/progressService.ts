@@ -1,7 +1,8 @@
 // Progress tracking service for anonymous localStorage-based progress
 // Aligned with Nostr values: privacy-first, no server contact, user control
+// Now unified with gamification system (nostrich-gamification-v1)
 
-const STORAGE_KEY = 'nostrich-progress-v1';
+const STORAGE_KEY = 'nostrich-gamification-v1';
 const DEVICE_ID_KEY = 'nostrich-device-id';
 const PRIVACY_SETTINGS_KEY = 'nostrich-privacy-settings';
 
@@ -74,7 +75,7 @@ export function updatePrivacySettings(settings: Partial<PrivacySettings>): void 
   localStorage.setItem(PRIVACY_SETTINGS_KEY, JSON.stringify(updated));
 }
 
-// Get full progress data
+// Get full progress data (reads from unified gamification storage)
 export function getProgressData(): ProgressData {
   if (!isBrowser) {
     return {
@@ -90,12 +91,27 @@ export function getProgressData(): ProgressData {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       const parsed = JSON.parse(stored);
+      // Convert gamification format (completedGuides array) to guides object format
+      const guides: Record<string, GuideProgress> = {};
+      const completedGuides = parsed.progress?.completedGuides || [];
+      completedGuides.forEach((guideId: string) => {
+        guides[guideId] = {
+          guideId,
+          status: 'completed',
+          timeSpentSeconds: 0,
+          maxScrollDepth: 100,
+          checklistCompleted: [],
+          lastVisitedAt: new Date().toISOString(),
+          completedAt: new Date().toISOString(),
+        };
+      });
+      
       return {
-        deviceId: parsed.deviceId || getDeviceId(),
-        schemaVersion: parsed.schemaVersion || 1,
-        guides: parsed.guides || {},
+        deviceId: getDeviceId(),
+        schemaVersion: 1,
+        guides,
         preferences: getPrivacySettings(),
-        lastUpdatedAt: parsed.lastUpdatedAt || new Date().toISOString(),
+        lastUpdatedAt: parsed.progress?.lastActive ? new Date(parsed.progress.lastActive).toISOString() : new Date().toISOString(),
       };
     }
   } catch (e) {

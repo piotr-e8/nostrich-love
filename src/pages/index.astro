@@ -5,6 +5,7 @@ import Footer from '../components/layout/Footer.astro';
 import { ActivityFeed } from '../components/activity/ActivityFeed';
 import { ProgressTracker } from '../components/gamification/ProgressTracker';
 import { CyberpunkHeroAnimation } from '../components/CyberpunkAnimation';
+import { ResumeBanner } from '../components/navigation/ResumeBanner';
 
 const title = 'Nostrich.love - Social Media That Respects You';
 const description = 'Try decentralized social media without the complexity. Join thousands leaving Twitter for a platform that puts you in control—not algorithms or corporations.';
@@ -123,6 +124,8 @@ const paths = [
 <Layout title={title} description={description} data-theme="friendly">
   <Header />
   
+  <ResumeBanner client:load />
+
   <main id="main-content" class="theme-bg-primary transition-colors duration-500">
     <!-- Hero Section - Friendly Theme -->
     <section class="relative min-h-[700px] flex items-center bg-gradient-to-br from-friendly-purple-100 via-friendly-warm-50 to-white dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">

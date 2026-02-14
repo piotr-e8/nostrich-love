@@ -38,6 +38,7 @@ import { PostFlowSimulator } from '../../components/ui/PostFlowSimulator';
 import { InteractiveChecklist, ChecklistProgress } from '../../components/InteractiveChecklist';
 import { H2, H3 } from '../../components/ReadingTimeHeading';
 import { MinimalProgressBar, GuidePositionIndicator } from '../../components/progress/MinimalProgress';
+import { ProgressTracker } from '../../components/progress/ProgressTracker';
 import { GuideNavigation } from '../../components/navigation/GuideNavigation';
 import { ContinueLearning } from '../../components/navigation/ContinueLearning';
 import { GuideCompletionIndicator } from '../../components/navigation/GuideCompletionIndicator';
@@ -47,8 +48,9 @@ import { PrerequisiteModal } from '../../components/navigation/PrerequisiteModal
 import { BadgeEarnedModalListener } from '../../components/gamification/BadgeEarnedModalListener';
 import { BadgeDisplay } from '../../components/gamification/BadgeDisplay';
 import type { Badge } from '../../components/gamification/types';
+import { LEARNING_PATHS, getPreviousGuideInPath, getNextGuideInPath, getGuidePositionInPath, getPathLength } from '../../data/learning-paths';
 
-// Guide order for progress tracking - must match the order in guides/index.astro
+// Legacy GUIDE_ORDER for backward compatibility and general path
 const GUIDE_ORDER = [
   'protocol-comparison',
   'what-is-nostr',
@@ -93,36 +95,32 @@ const description = guide.data.description ?? 'Learn how to use Nostr with our b
 const { Content } = await guide.render();
 const categoryLabel = guide.data.category ? guide.data.category.replace(/-/g, ' ') : undefined;
 
-// Calculate guide position for progress indicator
+// Get user's active path from localStorage (default to 'general' if not set)
+// This runs on server, so we'll pass the path ID to client components
 const guideSlug = guide.slug.replace('en/', '');
-const currentGuideNum = GUIDE_ORDER.indexOf(guideSlug) + 1;
-const totalGuides = GUIDE_ORDER.length;
+
+// Calculate position for both global order and path-based
+const currentGuideNumGlobal = GUIDE_ORDER.indexOf(guideSlug) + 1;
+const totalGuidesGlobal = GUIDE_ORDER.length;
+
+// Path-based calculations will be done client-side
+// For server-side rendering, we'll use a placeholder that client JS will update
 const estimatedTimeMinutes = parseInt(guide.data.estimatedTime?.match(/\d+/)?.[0] || '10');
 
 // Check if guide has a quiz by looking for Quiz component imports in the raw body
 const hasQuiz = guide.body?.includes('Quiz') || false;
 
-// Calculate prev/next guides for navigation
-const prevGuideSlug = currentGuideNum > 1 ? GUIDE_ORDER[currentGuideNum - 2] : null;
-const nextGuideSlug = currentGuideNum < totalGuides ? GUIDE_ORDER[currentGuideNum] : null;
-
-// Get guide titles for prev/next navigation
+// Get guide titles for all guides (used by client-side navigation)
 const allGuides = await getCollection('guides');
 const guidesMap = new Map(allGuides.filter(g => g.slug.startsWith('en/')).map(g => [g.slug.replace('en/', ''), g]));
 
-const prevGuide = prevGuideSlug ? {
-  slug: prevGuideSlug,
-  title: guidesMap.get(prevGuideSlug)?.data.title || prevGuideSlug,
-  description: guidesMap.get(prevGuideSlug)?.data.description
-} : undefined;
+// Build guide titles map for client-side navigation
+const guideTitles: Record<string, string> = {};
+for (const [slug, guideData] of guidesMap) {
+  guideTitles[slug] = guideData.data.title || slug;
+}
 
-const nextGuide = nextGuideSlug ? {
-  slug: nextGuideSlug,
-  title: guidesMap.get(nextGuideSlug)?.data.title || nextGuideSlug,
-  description: guidesMap.get(nextGuideSlug)?.data.description
-} : undefined;
-
-// Build guide list for completion indicator
+// Build guide list for completion indicator (global order for now)
 const guideList = GUIDE_ORDER.map(slug => ({
   slug,
   title: guidesMap.get(slug)?.data.title || slug
@@ -137,6 +135,22 @@ const prerequisiteData = prerequisites.map(prereqSlug => {
     title: prereqGuide?.data.title || prereqSlug
   };
 });
+
+// Calculate prev/next based on global order (path-based navigation handled client-side)
+const prevGuideSlug = currentGuideNumGlobal > 1 ? GUIDE_ORDER[currentGuideNumGlobal - 2] : null;
+const nextGuideSlug = currentGuideNumGlobal < totalGuidesGlobal ? GUIDE_ORDER[currentGuideNumGlobal] : null;
+
+const prevGuide = prevGuideSlug ? {
+  slug: prevGuideSlug,
+  title: guidesMap.get(prevGuideSlug)?.data.title || prevGuideSlug,
+  description: guidesMap.get(prevGuideSlug)?.data.description
+} : undefined;
+
+const nextGuide = nextGuideSlug ? {
+  slug: nextGuideSlug,
+  title: guidesMap.get(nextGuideSlug)?.data.title || nextGuideSlug,
+  description: guidesMap.get(nextGuideSlug)?.data.description
+} : undefined;
 
 // Components to make available in MDX
 // Note: Interactive React components need client:load directive added in MDX
@@ -184,6 +198,8 @@ const components = {
 
   <MinimalProgressBar client:load guideId={guideSlug} estimatedTimeMinutes={estimatedTimeMinutes} />
 
+  <ProgressTracker client:load guideSlug={guideSlug} guideTitle={guide.data.title} />
+
   {/* Show modal for critical guides with incomplete prerequisites */}
   {prerequisites.length > 0 && guide.data.isCritical && (
     <PrerequisiteModal
@@ -204,7 +220,7 @@ const components = {
           <article class="prose prose-lg dark:prose-invert max-w-none px-6 sm:px-10 lg:px-12 py-10">
             <div class="flex items-center justify-between mb-2">
               <p class="text-sm uppercase tracking-wide text-primary font-semibold">Guide</p>
-              <GuidePositionIndicator client:load currentGuide={currentGuideNum} totalGuides={totalGuides} />
+              <GuidePositionIndicator client:load currentGuide={currentGuideNumGlobal} totalGuides={totalGuidesGlobal} />
             </div>
             
             <EnhancedGuideCompletionIndicator 
@@ -257,11 +273,12 @@ const components = {
             <Content components={components} />
             
             <GuideNavigation 
-              client:load
+              client:load 
               prevGuide={prevGuide}
               nextGuide={nextGuide}
-              currentGuideNum={currentGuideNum}
-              totalGuides={totalGuides}
+              currentGuideNum={currentGuideNumGlobal}
+              totalGuides={totalGuidesGlobal}
+              guideTitles={guideTitles}
             />
           </article>
         </div>
@@ -269,7 +286,7 @@ const components = {
     </section>
   </main>
 
-  <ContinueLearning client:load nextGuide={nextGuide} threshold={0.8} hasQuiz={hasQuiz} />
+  <ContinueLearning client:load nextGuide={nextGuide} guideTitles={guideTitles} threshold={0.8} hasQuiz={hasQuiz} />
 
   <!-- Badge Earned Modal - Listens for badge-earned events -->
   <BadgeEarnedModalListener client:only="react" />
@@ -277,7 +294,7 @@ const components = {
   <Footer />
 </Layout>
 
-<script is:inline define:vars={{ guideSlug, currentGuideNum, totalGuides }}>
+<script is:inline define:vars={{ guideSlug, currentGuideNumGlobal, totalGuidesGlobal }}>
   // Guide completion tracking and gamification
   (function() {
     const STORAGE_KEY = 'nostrich-gamification';
@@ -448,7 +465,7 @@ const components = {
       }
       
       // Check all guides badge
-      if (completedCount >= totalGuides && !data.badgesEarned.includes('completionist')) {
+      if (completedCount >= totalGuidesGlobal && !data.badgesEarned.includes('completionist')) {
         data.badgesEarned.push('completionist');
         newlyEarned.push(BADGES['completionist']);
       }
@@ -517,6 +534,9 @@ const components = {
     let observer;
     
     function initProgressTracking() {
+      // Note: setLastViewedGuide is called by ProgressTracker React component
+      // This inline script only handles completion tracking and badges
+      
       // Check if we've already completed this guide
       const data = getGamificationData();
       if (data.guidesCompleted.includes(guideSlug)) {

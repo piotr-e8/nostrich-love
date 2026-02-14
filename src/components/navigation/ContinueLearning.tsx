@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ArrowRight, BookOpen, CheckCircle, GraduationCap, X } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { LEARNING_PATHS, getNextGuideInPath } from '../../data/learning-paths';
+import { getActivePath } from '../../lib/progress';
 
 interface ContinueLearningProps {
   nextGuide?: {
@@ -8,6 +10,7 @@ interface ContinueLearningProps {
     title: string;
     description?: string;
   };
+  guideTitles?: Record<string, string>; // Map of slug -> title
   threshold?: number; // Scroll percentage threshold (0-1)
   className?: string;
   hasQuiz?: boolean; // Whether the current guide has a quiz
@@ -15,7 +18,8 @@ interface ContinueLearningProps {
 }
 
 export function ContinueLearning({
-  nextGuide,
+  nextGuide: initialNextGuide,
+  guideTitles,
   threshold = 0.8,
   className,
   hasQuiz = false,
@@ -25,6 +29,44 @@ export function ContinueLearning({
   const [isDismissed, setIsDismissed] = useState(false);
   const [isViewingQuiz, setIsViewingQuiz] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const [nextGuide, setNextGuide] = useState(initialNextGuide);
+  const [activePath, setActivePath] = useState<string>('general');
+
+  // Calculate path-based next guide on mount
+  useEffect(() => {
+    // Get current guide slug from URL
+    const pathParts = window.location.pathname.split('/');
+    const currentGuideSlug = pathParts[pathParts.length - 1];
+    
+    // Get user's active path from localStorage
+    const userPath = getActivePath();
+    setActivePath(userPath);
+    
+    // Get path configuration
+    const pathConfig = LEARNING_PATHS[userPath];
+    
+    if (pathConfig && pathConfig.sequence.includes(currentGuideSlug)) {
+      // Calculate path-based next guide
+      const nextSlug = getNextGuideInPath(currentGuideSlug, userPath);
+      
+      if (nextSlug) {
+        // Use guide titles map if available
+        const title = guideTitles?.[nextSlug] || formatGuideTitle(nextSlug);
+        setNextGuide({ slug: nextSlug, title });
+      } else {
+        setNextGuide(undefined);
+      }
+    }
+    // If guide not in path, fall back to initial props
+  }, [guideTitles]);
+
+  // Helper to format guide title (fallback)
+  function formatGuideTitle(slug: string): string {
+    return slug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
 
   // Detect if user is viewing quiz section
   const checkQuizVisibility = useCallback(() => {
