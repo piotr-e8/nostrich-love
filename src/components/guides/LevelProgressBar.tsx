@@ -9,6 +9,8 @@ export interface LevelProgressBarProps {
   level: SkillLevel;
   showThreshold?: boolean;
   className?: string;
+  showNextLevelUnlock?: boolean;
+  nextLevelName?: string;
 }
 
 const levelColors = {
@@ -52,6 +54,8 @@ export const LevelProgressBar: React.FC<LevelProgressBarProps> = ({
   level,
   showThreshold = true,
   className = '',
+  showNextLevelUnlock = false,
+  nextLevelName,
 }) => {
   const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
   const thresholdPercentage = total > 0 ? Math.round((threshold / total) * 100) : 0;
@@ -103,20 +107,20 @@ export const LevelProgressBar: React.FC<LevelProgressBarProps> = ({
         </span>
       </div>
 
-      {/* Unlock Status */}
-      {nextLevel && (
+      {/* Unlock Status - Only show when explicitly enabled AND there's a next level */}
+      {showNextLevelUnlock && nextLevel && (
         <div className="mt-2">
           {canUnlockNext ? (
             <span className="text-sm text-green-600 dark:text-green-400 font-medium">
-              ✓ Ready to unlock {nextLevel}!
+              ✓ Ready to unlock {nextLevelName || nextLevel}!
             </span>
           ) : isCloseToUnlock ? (
             <span className={`text-sm font-medium ${colors.text} animate-pulse`}>
-              Complete {remainingToUnlock} more {levelNames[level].toLowerCase()} guide{remainingToUnlock !== 1 ? 's' : ''} to unlock {nextLevel}
+              Complete {remainingToUnlock} more {levelNames[level].toLowerCase()} guide{remainingToUnlock !== 1 ? 's' : ''} to unlock {nextLevelName || nextLevel}
             </span>
           ) : (
             <span className="text-sm text-gray-500 dark:text-gray-500">
-              Complete {threshold} guides to unlock {nextLevel}
+              Complete {threshold} {levelNames[level].toLowerCase()} guides to unlock {nextLevelName || nextLevel}
             </span>
           )}
         </div>

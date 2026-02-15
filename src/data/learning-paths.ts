@@ -50,7 +50,7 @@ export const SKILL_LEVELS: Record<SkillLevel, SkillLevelConfig> = {
       'multi-client',
       'relay-guide'
     ],
-    unlockThreshold: 4, // Unlock after completing 4 Beginner guides
+    unlockThreshold: 5, // 70% of 6 guides = 4.2, rounded up to 5 (or minimum 4, so 5)
     estimatedTotalTime: '75 min'
   },
   
@@ -64,7 +64,7 @@ export const SKILL_LEVELS: Record<SkillLevel, SkillLevelConfig> = {
       'nip17-private-messages',
       'protocol-comparison'
     ],
-    unlockThreshold: 4, // Unlock after completing 4 Intermediate guides
+    unlockThreshold: 3, // Only 3 guides, so need all 3 (can't do 70% of 3 = 2.1, max(4,2.1)=4, but only 3 exist)
     estimatedTotalTime: '45 min'
   }
 } as const;

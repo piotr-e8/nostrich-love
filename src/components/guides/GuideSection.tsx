@@ -6,6 +6,7 @@ import { GuideCard, type Guide } from './GuideCard';
 import { LevelProgressBar } from './LevelProgressBar';
 import { UnlockButton } from './UnlockButton';
 import { getUnlockedLevelsLocal, getCompletedGuidesInLevel, getLevelProgressLocal } from '../../lib/progress';
+import { SKILL_LEVELS } from '../../data/learning-paths';
 
 export type SkillLevel = 'beginner' | 'intermediate' | 'advanced';
 
@@ -129,8 +130,13 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
   }, [filteredGuides, completedGuideIds]);
 
   // Calculate previous level progress for unlock button
-  const previousLevelCompleted = prevLevel ? unlockThreshold : completedCount;
-  const previousLevelTotal = prevLevel ? totalCount : totalCount;
+  // BUG FIX: Use actual completed count from previous level, not threshold
+  const previousLevelCompleted = prevLevel 
+    ? getCompletedGuidesInLevel(prevLevel).length 
+    : completedCount;
+  const previousLevelTotal = prevLevel 
+    ? SKILL_LEVELS[prevLevel].sequence.length 
+    : totalCount;
 
   // Don't render locked state details until client-side to avoid hydration mismatch
   // Show loading state on server, real state on client
@@ -182,13 +188,15 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
           />
         </div>
 
-        {/* Locked Progress Bar */}
+        {/* Locked Progress Bar - Show PREVIOUS level progress to indicate unlock progress */}
         <div className="mb-6">
           <LevelProgressBar
-            completed={completedCount}
-            total={totalCount}
+            completed={previousLevelCompleted}
+            total={previousLevelTotal}
             threshold={unlockThreshold}
-            level={level}
+            level={prevLevel || 'beginner'}
+            showNextLevelUnlock={true}
+            nextLevelName={config.title}
           />
         </div>
 
@@ -250,13 +258,14 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
         </div>
       </div>
 
-      {/* Progress Bar */}
+      {/* Progress Bar - Show current level progress WITHOUT unlock status (that's for locked sections) */}
       <div className="mb-6">
         <LevelProgressBar
           completed={completedCount}
           total={totalCount}
           threshold={unlockThreshold}
           level={level}
+          showNextLevelUnlock={false}
         />
       </div>
 
