@@ -86,7 +86,32 @@
 - Locked card sizing on small screens
 - Progress bar visibility
 
-### 10. Accessibility Improvements
+### 10. Light Mode Audit & Fixes
+**Status:** Issues detected (user reported)  
+**Scope:** Full UI review in light mode  
+
+**Known Issues:**
+- [ ] TBD - Several issues identified
+
+**Checklist:**
+- [ ] Progress page - Current Level text sizing
+- [ ] Recent Activity section visibility
+- [ ] Guide cards contrast ratios
+- [ ] Locked state cards visibility
+- [ ] Filter tabs styling
+- [ ] Navigation buttons
+- [ ] Text readability throughout
+- [ ] Border colors (too light/too dark)
+- [ ] Background colors
+- [ ] Icon visibility
+
+**Tools:**
+- Browser dev tools - toggle light/dark mode
+- Check contrast ratios (WCAG guidelines)
+- Verify all `dark:` classes have light mode equivalents
+- Test on different screens
+
+### 11. Accessibility Improvements
 - ARIA labels on locked sections
 - Keyboard navigation for unlock buttons
 - Focus states for interactive elements
@@ -112,6 +137,7 @@
 - [ ] Threshold text matches actual logic (4 or 5)
 - [ ] Current Level text sizing fixed on /progress page
 - [ ] Recent Activity section working on /progress page
+- [ ] Light mode issues fixed (contrast, visibility, styling)
 - [ ] Manual unlock works in settings
 - [ ] All filters work correctly
 - [ ] Mobile responsive
@@ -123,12 +149,13 @@
 ## Notes
 
 **Priority Order:**
-1. Fix threshold text (user-facing bug)
-2. Remove redundant button (cleanup)
-3. Center filter (polish)
-4. Manual unlock (feature)
-5. Filter logic (nice-to-have)
-6. Performance/Accessibility (Phase 11?)
+1. Light mode fixes (visibility issues - high impact)
+2. Fix threshold text (user-facing bug)
+3. Remove redundant button (cleanup)
+4. Center filter (polish)
+5. Manual unlock (feature)
+6. Filter logic (nice-to-have)
+7. Performance/Accessibility (Phase 11?)
 
 **Dependencies:**
 - Manual unlock needs settings page (Phase 7)
@@ -137,5 +164,5 @@
 ---
 
 **Created:** 2026-02-14  
-**Updated:** 2026-02-14  
+**Updated:** 2026-02-15  
 **Status:** Pending (to be tackled after main implementation)

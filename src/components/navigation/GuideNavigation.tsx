@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { cn } from '../../lib/utils';
-import { LEARNING_PATHS } from '../../data/learning-paths';
-import { getActivePath } from '../../lib/progress';
+import { SKILL_LEVELS, type SkillLevel } from '../../data/learning-paths';
+import { getCurrentLevelLocal, isLevelUnlockedLocal } from '../../lib/progress';
 
 interface GuideInfo {
   slug: string;
@@ -21,9 +21,12 @@ export function GuideNavigation({
   const [prevGuide, setPrevGuide] = useState<GuideInfo | null>(null);
   const [nextGuide, setNextGuide] = useState<GuideInfo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isPathComplete, setIsPathComplete] = useState(false);
-  const [showOffPathMessage, setShowOffPathMessage] = useState(false);
-  const [activePath, setActivePath] = useState<string>('beginner');
+  const [isLevelComplete, setIsLevelComplete] = useState(false);
+  const [showOffLevelMessage, setShowOffLevelMessage] = useState(false);
+  const [currentLevel, setCurrentLevel] = useState<SkillLevel>('beginner');
+  const [isNextLevelUnlocked, setIsNextLevelUnlocked] = useState(false);
+  const [nextLevelFirstGuide, setNextLevelFirstGuide] = useState<string | null>(null);
+  const [nextLevel, setNextLevel] = useState<SkillLevel | null>(null);
 
   useEffect(() => {
     try {
@@ -31,30 +34,47 @@ export function GuideNavigation({
       const pathParts = window.location.pathname.split('/');
       const currentSlug = pathParts[pathParts.length - 1];
       
-      // Get user's active path from localStorage
-      const userPath = getActivePath();
-      setActivePath(userPath);
+      // Get user's current level from localStorage
+      const userLevel = getCurrentLevelLocal();
+      setCurrentLevel(userLevel);
       
-      const pathConfig = LEARNING_PATHS[userPath];
+      const levelConfig = SKILL_LEVELS[userLevel];
       
-      // CASE 1: Guide not in current path
-      if (!pathConfig?.sequence.includes(currentSlug)) {
-        setShowOffPathMessage(true);
+      // CASE 1: Guide not in current level
+      if (!levelConfig?.sequence.includes(currentSlug)) {
+        setShowOffLevelMessage(true);
         setPrevGuide(null);
         setNextGuide(null);
         setIsLoading(false);
         return;
       }
       
-      // CASE 2: Guide is in path - calculate navigation
-      const currentIndex = pathConfig.sequence.indexOf(currentSlug);
+      // CASE 2: Guide is in level - calculate navigation
+      const currentIndex = levelConfig.sequence.indexOf(currentSlug);
       
-      // Check if this is the last guide
-      if (currentIndex === pathConfig.sequence.length - 1) {
-        setIsPathComplete(true);
+      // Check if this is the last guide in the level
+      if (currentIndex === levelConfig.sequence.length - 1) {
+        setIsLevelComplete(true);
+        
+        // Check if next level exists and is unlocked
+        const levels: SkillLevel[] = ['beginner', 'intermediate', 'advanced'];
+        const currentLevelIndex = levels.indexOf(userLevel);
+        const nextLvl = levels[currentLevelIndex + 1];
+        
+        if (nextLvl) {
+          setNextLevel(nextLvl);
+          const isNextUnlocked = isLevelUnlockedLocal(nextLvl);
+          setIsNextLevelUnlocked(isNextUnlocked);
+          if (isNextUnlocked) {
+            // Get first guide of next level
+            const nextLevelFirst = SKILL_LEVELS[nextLvl].sequence[0];
+            setNextLevelFirstGuide(nextLevelFirst);
+          }
+        }
+        
         // Previous guide (if not first)
         if (currentIndex > 0) {
-          const prevSlug = pathConfig.sequence[currentIndex - 1];
+          const prevSlug = levelConfig.sequence[currentIndex - 1];
           setPrevGuide({
             slug: prevSlug,
             title: guideTitles?.[prevSlug] || formatTitle(prevSlug)
@@ -62,12 +82,15 @@ export function GuideNavigation({
         }
         setNextGuide(null);
       } else {
-        // Normal case - middle of path
-        setIsPathComplete(false);
+        // Normal case - middle of level
+        setIsLevelComplete(false);
+        setNextLevel(null);
+        setIsNextLevelUnlocked(false);
+        setNextLevelFirstGuide(null);
         
         // Previous guide
         if (currentIndex > 0) {
-          const prevSlug = pathConfig.sequence[currentIndex - 1];
+          const prevSlug = levelConfig.sequence[currentIndex - 1];
           setPrevGuide({
             slug: prevSlug,
             title: guideTitles?.[prevSlug] || formatTitle(prevSlug)
@@ -77,7 +100,7 @@ export function GuideNavigation({
         }
         
         // Next guide
-        const nextSlug = pathConfig.sequence[currentIndex + 1];
+        const nextSlug = levelConfig.sequence[currentIndex + 1];
         setNextGuide({
           slug: nextSlug,
           title: guideTitles?.[nextSlug] || formatTitle(nextSlug)
@@ -109,13 +132,13 @@ export function GuideNavigation({
     );
   }
 
-  // Off-path message
-  if (showOffPathMessage) {
+  // Off-level message
+  if (showOffLevelMessage) {
     return (
       <div className={cn('border-t border-gray-200 dark:border-gray-800 pt-8 mt-12', className)}>
         <div className="text-center">
           <p className="text-gray-600 dark:text-gray-400 mb-4">
-            This guide isn't part of your current {LEARNING_PATHS[activePath]?.label || 'selected'} path
+            This guide isn't part of your current {SKILL_LEVELS[currentLevel]?.label || 'selected'} level
           </p>
           <div className="flex justify-center gap-4">
             <a 
@@ -131,18 +154,36 @@ export function GuideNavigation({
     );
   }
 
-  // Path complete celebration
-  if (isPathComplete) {
+  // Level complete celebration with level boundary handling
+  if (isLevelComplete) {
     return (
       <div className={cn('border-t border-gray-200 dark:border-gray-800 pt-8 mt-12', className)}>
         <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-2xl p-8 text-center mb-8">
           <div className="text-4xl mb-4">🎉</div>
           <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            Path Complete!
+            {SKILL_LEVELS[currentLevel]?.label} Complete!
           </h3>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
-            You've completed all guides in the {LEARNING_PATHS[activePath]?.label} path
+            You've completed all {SKILL_LEVELS[currentLevel]?.label} guides
           </p>
+          
+          {/* If next level is unlocked, show continue button */}
+          {isNextLevelUnlocked && nextLevelFirstGuide && nextLevel && (
+            <a
+              href={`/guides/${nextLevelFirstGuide}`}
+              className="inline-flex items-center px-6 py-3 bg-primary text-white rounded-xl hover:bg-primary/90 transition-colors"
+            >
+              Continue to {SKILL_LEVELS[nextLevel]?.label}
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </a>
+          )}
+          
+          {/* If next level is locked, show requirements */}
+          {!isNextLevelUnlocked && nextLevel && (
+            <div className="text-sm text-gray-500">
+              Complete more {SKILL_LEVELS[currentLevel]?.label} guides to unlock {SKILL_LEVELS[nextLevel]?.label}
+            </div>
+          )}
         </div>
         
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
@@ -163,9 +204,9 @@ export function GuideNavigation({
           
           <a
             href="/guides"
-            className="inline-flex items-center justify-center px-6 py-3 bg-primary text-white rounded-xl hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center justify-center px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors"
           >
-            Explore Other Paths
+            Explore All Guides
             <ArrowRight className="w-4 h-4 ml-2" />
           </a>
         </div>
@@ -190,7 +231,7 @@ export function GuideNavigation({
           </a>
         ) : (
           <div className="flex-1 text-sm text-gray-500">
-            Start of {LEARNING_PATHS[activePath]?.label} Path
+            Start of {SKILL_LEVELS[currentLevel]?.label} Level
           </div>
         )}
         
