@@ -1188,6 +1188,17 @@ export function completeGuideInLevel(
     data.progress.completedGuides.push(guideId);
   }
 
+  // Add to completed guides with timestamps for Recent Activity
+  if (!data.progress.completedGuidesWithTimestamps) {
+    data.progress.completedGuidesWithTimestamps = [];
+  }
+  if (!data.progress.completedGuidesWithTimestamps.find(g => g.id === guideId)) {
+    data.progress.completedGuidesWithTimestamps.push({
+      id: guideId,
+      completedAt: new Date().toISOString()
+    });
+  }
+
   // Check if we should unlock the next level (pass data to avoid reloading)
   checkAndUnlockNextLevel(level, data);
 

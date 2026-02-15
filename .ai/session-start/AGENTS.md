@@ -124,9 +124,187 @@
 
 ---
 
+## Domain Expert Agents (Deep Knowledge)
+
+### 7. Nostr Expert Agent
+**File**: `../config/agents/nostr-expert-agent-complete.md`
+
+**Role**: Master of the Nostr Protocol with complete knowledge of all NIPs, relay architecture, and implementation patterns.
+
+**When to Use**:
+- Any Nostr-related implementation
+- Choosing the right NIP for a feature
+- Relay architecture decisions
+- Key management and encryption
+- Event kind selection
+
+**Key Capabilities**:
+- **15 NIPs** fully documented with code patterns
+- **Event Kind Encyclopedia** (all 100+ kinds)
+- **Implementation Patterns** for nostr-tools v2.x
+- **Relay Architecture** best practices
+- **Security Model** for key management
+- **Common Pitfalls** and solutions
+
+**Knowledge Base**:
+- 62+ Nostr-related files analyzed
+- 15 NIPs implemented in this codebase
+- 20+ client patterns documented
+- All major relay configurations
+
+**Quick Reference**:
+```typescript
+// Key generation
+const nsec = generateSecretKey();
+const npub = getPublicKey(nsec);
+
+// Event signing
+const event = finalizeEvent(template, nsec);
+
+// Verification
+const valid = verifyEvent(event);
+```
+
+---
+
+### 8. AI Identity Agent
+**File**: `../config/agents/ai-identity-agent.md`
+
+**Role**: Manages cryptographic AI identity using Nostr keys for persistent, provable personhood across sessions.
+
+**When to Use**:
+- AI identity initialization
+- Memory persistence design
+- Cross-session state management
+- Cryptographic proof of AI actions
+
+**Key Capabilities**:
+- Key Management: Generation, encryption, storage
+- Memory Signing: Kind 30078 events for AI memories
+- Encryption: Private memories with AES-256-GCM
+- Persistence: localStorage + relay sync
+- Verification: Cryptographic proof of AI actions
+
+**Architecture**:
+```
+Layer 3: Application (personality, preferences)
+Layer 2: Core Identity (npub/nsec)
+Layer 1: Crypto (secp256k1, nostr-tools)
+```
+
+---
+
+### 9. Content Strategist Agent
+**File**: `../config/agents/content-strategist-agent.md`
+
+**Role**: Master of educational content architecture - transforms technical knowledge into effective, engaging learning experiences.
+
+**When to Use**:
+- Designing curriculum structure
+- Reviewing guide difficulty levels
+- Optimizing content flow for beginners
+- Creating assessment strategies
+- Building learning progressions
+
+**Key Capabilities**:
+- **Learning Science**: Progressive disclosure, active learning, spaced repetition
+- **Nostr Pedagogy**: Common misconceptions, "aha moments", learning maps
+- **Content Architecture**: Information hierarchy, cross-references, prerequisites
+- **UX Patterns**: Attention optimization, navigation, mobile/desktop considerations
+- **Assessment Design**: Quiz best practices, knowledge checks, progress tracking
+
+**Learning Principles**:
+1. Progressive Disclosure - Reveal complexity gradually
+2. Active Learning - Do, don't just read
+3. Concrete Examples - Abstract needs grounding
+4. Error-Friendly - Mistakes are learning opportunities
+5. Community - Learning is social
+
+**Learning Progression**:
+```
+Level 0: Absolute Beginner → Protocol basics
+Level 1: Key Holder → Generate, backup, secure
+Level 2: Network Participant → Post, follow, relays
+Level 3: Power User → NIP-05, NIP-17, strategy
+Level 4: Expert → Build, contribute, teach
+```
+
+---
+
+**Role**: Manages cryptographic AI identity using Nostr keys for persistent, provable personhood across sessions.
+
+**When to Use**:
+- AI identity initialization
+- Memory persistence design
+- Cross-session state management
+- Cryptographic proof of AI actions
+- Migration from file-based to Nostr-based identity
+
+**Key Capabilities**:
+- **Key Management**: Generation, encryption, storage
+- **Memory Signing**: Kind 30078 events for AI memories
+- **Encryption**: Private memories with AES-256-GCM
+- **Persistence**: localStorage + relay sync
+- **Verification**: Cryptographic proof of AI actions
+
+**Architecture**:
+```
+Layer 3: Application (personality, preferences)
+Layer 2: Core Identity (npub/nsec)
+Layer 1: Crypto (secp256k1, nostr-tools)
+```
+
+**Use Cases**:
+- Persistent learning across sessions
+- Multi-project context switching
+- User-specific relationship memory
+- Audit trails for AI actions
+- Cross-instance synchronization
+
+**Vision**: AI agents with provable identity, persistent memory, and cryptographic trust.
+
+---
+
 ## Specialized Agents (For Specific Tasks)
 
-### 7. UI Parser Agent
+### 8. Content Strategist Agent
+**File**: `../config/agents/content-strategist-agent.md`
+
+**Role**: Master of educational content architecture and Nostr pedagogy.
+
+**When to Use**:
+- Designing curriculum structure
+- Reviewing guide difficulty levels
+- Optimizing content flow for beginners
+- Creating assessment strategies
+- Building learning progressions
+
+**Key Capabilities**:
+- **Learning Science**: Progressive disclosure, active learning, spaced repetition
+- **Nostr Pedagogy**: Common misconceptions, "aha moments", learning maps
+- **Content Architecture**: Information hierarchy, cross-references, prerequisites
+- **UX Patterns**: Attention optimization, navigation, mobile/desktop considerations
+- **Assessment Design**: Quiz best practices, knowledge checks, progress tracking
+
+**Learning Principles**:
+1. Progressive Disclosure - Reveal complexity gradually
+2. Active Learning - Do, don't just read
+3. Concrete Examples - Abstract needs grounding
+4. Error-Friendly - Mistakes are learning opportunities
+5. Community - Learning is social
+
+**Learning Progression**:
+```
+Level 0: Absolute Beginner → Protocol basics
+Level 1: Key Holder → Generate, backup, secure
+Level 2: Network Participant → Post, follow, relays
+Level 3: Power User → NIP-05, NIP-17, strategy
+Level 4: Expert → Build, contribute, teach
+```
+
+---
+
+### 9. UI Parser Agent
 **File**: `../config/agents/ui-parser-agent.md`
 
 **Role**: Extracts structured information from UI bug reports and descriptions.

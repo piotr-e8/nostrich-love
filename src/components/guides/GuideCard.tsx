@@ -63,7 +63,7 @@ const LockedCard: React.FC<{ level: SkillLevel; unlockRequirement: string; index
       {/* Lock Icon Centered */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div className={`transition-transform duration-200 ${isHovered ? 'scale-110' : ''}`}>
-          <Lock className="w-12 h-12 text-gray-400 dark:text-gray-500" />
+          <Lock className="w-12 h-12 text-gray-500 dark:text-gray-500" />
         </div>
       </div>
 
@@ -71,7 +71,7 @@ const LockedCard: React.FC<{ level: SkillLevel; unlockRequirement: string; index
       {isHovered && (
         <div className="absolute inset-0 bg-gray-100/95 dark:bg-gray-800/95 rounded-2xl flex items-center justify-center p-4">
           <div className="text-center">
-            <Lock className="w-8 h-8 text-gray-400 dark:text-gray-500 mx-auto mb-2" />
+            <Lock className="w-8 h-8 text-gray-500 dark:text-gray-500 mx-auto mb-2" />
             <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">
               {unlockRequirement}
             </p>
@@ -82,7 +82,7 @@ const LockedCard: React.FC<{ level: SkillLevel; unlockRequirement: string; index
       {/* Level Indicator at Bottom */}
       <div className="absolute bottom-4 left-6 right-6 flex items-center justify-between">
         <span className={`w-2 h-2 rounded-full ${levelColors[level]}`} />
-        <span className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+        <span className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider">
           Locked
         </span>
       </div>

@@ -119,7 +119,7 @@ export const LevelProgressBar: React.FC<LevelProgressBarProps> = ({
               Complete {remainingToUnlock} more {levelNames[level].toLowerCase()} guide{remainingToUnlock !== 1 ? 's' : ''} to unlock {nextLevelName || nextLevel}
             </span>
           ) : (
-            <span className="text-sm text-gray-500 dark:text-gray-500">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               Complete {threshold} {levelNames[level].toLowerCase()} guides to unlock {nextLevelName || nextLevel}
             </span>
           )}

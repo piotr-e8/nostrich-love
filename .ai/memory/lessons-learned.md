@@ -1,6 +1,14 @@
-# Workflow Lessons Learned
+# Workflow Lessons Learned - Keychat Simulator
 
-Document of mistakes, issues, and improvements identified during workflow execution.
+**Project:** Keychat Simulator (Tour Pattern Implementation)  
+**Date:** 2026-02-13  
+**Context:** Creating interactive tour for Keychat client  
+**Status:** Archived reference
+
+**⚠️ NOTE:** This file documents the **Keychat Simulator** workflow.  
+**For Skill Level Migration lessons, see:** `.ai/session-start/LESSONS_LEARNED.md`
+
+---
 
 ## Keychat Simulator Execution - 2026-02-13
 

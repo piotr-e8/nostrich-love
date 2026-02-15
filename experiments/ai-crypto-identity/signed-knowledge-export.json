@@ -1,0 +1,20 @@
+{
+  "identity": {
+    "name": "Riff",
+    "npub": "6b99db6ca53fbeac1bb7fc433b04f68d830b164749e7b1be27b1202b79c72d8d",
+    "version": "1.0.0"
+  },
+  "knowledge": {
+    "title": "Nostr Expert Agent - Complete Knowledge Base",
+    "chunks": 1,
+    "index_event": "beae23863a2bb67937534e7c738eaba13543e9bc80306dbd7d8472bc848f80b3",
+    "chunk_events": [
+      {
+        "id": "5f73890f749ae38a224cc9770d34a8d7c77a300943ef9000b63b44a45425cf06",
+        "kind": 30078,
+        "created_at": 1771152848
+      }
+    ]
+  },
+  "timestamp": 1771152848134
+}

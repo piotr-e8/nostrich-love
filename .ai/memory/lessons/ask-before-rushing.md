@@ -1,7 +1,10 @@
 # Lesson: Ask for Help/Context Before Moving On
 
 **Date:** 2026-02-13
-**Context:** Fixing UI bugs in Nostr simulators
+**Context:** Fixing UI bugs in Nostr simulators  
+**Type:** General working principle (applies to all projects)
+
+**Applies to:** Skill Level Migration, Keychat Simulator, and all future work
 
 ## The Lesson
 

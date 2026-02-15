@@ -164,18 +164,18 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
         {/* Locked Header */}
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
           <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${config.bgColor} opacity-50`}>
-            <Lock className="w-6 h-6 text-gray-400" />
+            <Lock className="w-6 h-6 text-gray-500 dark:text-gray-400" />
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-3">
-              <h2 className="text-2xl font-bold text-gray-500 dark:text-gray-500">
+              <h2 className="text-2xl font-bold text-gray-600 dark:text-gray-400">
                 {config.title}
               </h2>
-              <span className="px-2 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-xs font-medium rounded">
+              <span className="px-2 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs font-medium rounded">
                 Locked
               </span>
             </div>
-            <p className="text-gray-500 dark:text-gray-500">
+            <p className="text-gray-600 dark:text-gray-400">
               Complete {unlockThreshold} {prevLevel ? levelNames[prevLevel].toLowerCase() : 'beginner'} guides to unlock
             </p>
           </div>
@@ -213,7 +213,7 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
           ))}
           {totalCount > 3 && (
             <div className="flex items-center justify-center h-[200px] bg-gray-100 dark:bg-gray-800 rounded-2xl border-2 border-dashed border-gray-300 dark:border-gray-600">
-              <span className="text-gray-400 dark:text-gray-500 text-sm">
+              <span className="text-gray-500 dark:text-gray-400 text-sm">
                 +{totalCount - 3} more locked
               </span>
             </div>

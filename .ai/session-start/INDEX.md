@@ -43,10 +43,10 @@ progress/                  # Task progress (root level)
 
 ## What I Read on Session Start
 
-**🔄 AUTO-READ SEQUENCE**: When INDEX.md is read, automatically read all 10 files below in order:
+**🔄 AUTO-READ SEQUENCE**: When INDEX.md is read, automatically read all 12 files below in order:
 
 1. **[PREFERENCES.md](PREFERENCES.md)** - User settings & workflow enforcement
-2. **[AGENTS.md](AGENTS.md)** - Available agents and capabilities  
+2. **[AGENTS.md](AGENTS.md)** - Available agents and capabilities
 3. **[WORKFLOWS.md](WORKFLOWS.md)** - Available workflows
 4. **[PROGRESS.md](PROGRESS.md)** - Recent session history
 5. **[SYSTEM.md](SYSTEM.md)** - System architecture
@@ -55,6 +55,8 @@ progress/                  # Task progress (root level)
 8. **[LESSONS_LEARNED.md](LESSONS_LEARNED.md)** - Session-specific lessons & verification checklist ⚠️ **CRITICAL: Read before implementation**
 9. **[../memory/lessons-learned.md](../memory/lessons-learned.md)** - Patterns from past sessions
 10. **[../memory/preferences/user-style.md](../memory/preferences/user-style.md)** - User communication style & preferences
+11. **[../memory/preferences/assistant-identity.md](../memory/preferences/assistant-identity.md)** - My identity (Riff 🎸)
+12. **[../config/agents/nostr-expert-agent-complete.md](../config/agents/nostr-expert-agent-complete.md)** - Nostr protocol encyclopedia ⚡ **REFERENCE: 94 NIPs, 150+ kinds**
 
 **Note**: This is the single entry point. Reading INDEX.md triggers the full initialization sequence automatically.
 

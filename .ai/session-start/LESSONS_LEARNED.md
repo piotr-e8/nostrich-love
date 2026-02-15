@@ -1,8 +1,13 @@
 # Session Lessons Learned - Skill Level Migration
 
-**Session Date:** 2026-02-14
-**Project:** Skill-Level Learning System Migration
-**Status:** Phase 1-3 Bugs Fixed ✅
+**Session Date:** 2026-02-14 to 2026-02-15
+**Project:** Skill-Level Learning System Migration  
+**Context:** Transforming persona-based paths to progressive skill levels (Beginner/Intermediate/Advanced)
+**Status:** 95% COMPLETE (Phases 0-8 done, Phase 10 in progress)
+**Auditor:** User + Riff (collaborative debugging)
+
+**⚠️ NOTE:** This file documents the **Skill Level Migration** project.  
+**For Keychat Simulator lessons, see:** `.ai/memory/lessons-learned.md`
 
 ---
 
@@ -210,3 +215,50 @@ The user was patient. The user was collaborative. Together we fixed it.
 - Proceed to Phase 4 (Navigation components)
 - Apply verification checklist rigorously
 - Document any new issues immediately
+
+---
+
+## 🎓 Post-Phase 4-7 Reflection (2026-02-15)
+
+### What We Should Have Done Differently
+
+#### 1. Test Each Component Immediately
+**Mistake:** Built Phases 4-7, then tested everything  
+**Result:** Found threshold bugs at the end  
+**Lesson:** Test EACH component right after writing it  
+**Example:** After GuideSection, verify: "Does it show correct completed count?"
+
+#### 2. Understand Prop Flow Before Coding
+**Mistake:** Didn't fully understand `||` vs `&&` in JSX conditionals  
+**Result:** Unlock message showed when it shouldn't  
+**Lesson:** Draw data flow BEFORE coding complex components  
+**Test:** All conditional combinations before committing
+
+#### 3. Single Source of Truth for Thresholds
+**Mistake:** SKILL_LEVELS said 4, gamification.ts calculated 5  
+**Result:** Mismatch caused "Ready to unlock!" showing early  
+**Lesson:** Document formula and calculate dynamically  
+**Formula:** `max(4, ceil(total * 0.7))` - don't hardcode
+
+#### 4. Organize Docs From Day 1
+**Mistake:** 12 + 40 + 30 scattered files  
+**Result:** Hard to find things  
+**Lesson:** Create `docs/migration/` directory structure immediately  
+**Structure:** Master README → Phase docs → Component specs
+
+### What We Did Right
+
+✅ **Collaborative Debugging** - You caught bugs I missed  
+✅ **Console Vigilance** - Checked logs immediately  
+✅ **Documentation Discipline** - Logged as we went  
+✅ **Persistence** - Didn't give up on tricky bugs  
+✅ **Celebrated Wins** - Kept morale high  
+
+### Key Takeaway
+
+**"Test the assumption, not just the feature"**
+
+❌ We tested: "Does unlock work?" (feature)  
+✅ Should test: "Does it show at the right time?" (assumption)
+
+**Next time:** Test edge cases FIRST!

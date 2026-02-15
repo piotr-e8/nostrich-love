@@ -63,14 +63,16 @@ export const GuidesContainer: React.FC<GuidesContainerProps> = ({
   return (
     <>
       {/* Interest Filter */}
-      <div className="mb-8">
+      <div className="mb-8 text-center">
         <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
           Filter by interest
         </p>
-        <InterestFilter 
-          activeFilter={activeFilter}
-          onFilterChange={handleFilterChange}
-        />
+        <div className="flex justify-center">
+          <InterestFilter 
+            activeFilter={activeFilter}
+            onFilterChange={handleFilterChange}
+          />
+        </div>
       </div>
 
       {/* Guide Sections */}
