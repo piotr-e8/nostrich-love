@@ -101,6 +101,14 @@ export const GAMIFICATION_CONFIG = {
       rarity: 'common' as const,
       requirement: 'Select 3 or more relays in the Relay Explorer',
     },
+    'privacy-expert': {
+      id: 'privacy-expert',
+      name: 'Privacy Expert',
+      description: 'Scored 100% on the Privacy & Security quiz',
+      icon: '🛡️',
+      rarity: 'epic' as const,
+      requirement: 'Complete the Privacy & Security quiz with a perfect score',
+    },
   } satisfies Record<string, BadgeDefinition>,
 
   // ============================================================================
@@ -264,6 +272,26 @@ export const GAMIFICATION_CONFIG = {
         badges: [
           {
             badgeId: 'zap-receiver',
+            trigger: { type: 'boolean' },
+          },
+        ],
+      },
+    } satisfies ActivityDefinition,
+
+    /**
+     * Completing a quiz
+     * - Counts toward streak
+     * - Awards privacy-expert badge for perfect score on privacy quiz
+     */
+    completeQuiz: {
+      id: 'complete-quiz',
+      name: 'Complete Quiz',
+      description: 'User completed an interactive quiz',
+      triggers: {
+        streak: true,
+        badges: [
+          {
+            badgeId: 'privacy-expert',
             trigger: { type: 'boolean' },
           },
         ],

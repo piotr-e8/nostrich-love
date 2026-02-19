@@ -8,7 +8,7 @@ prerequisites: ["keys-and-security", "quickstart"]
 ---
 
 import { Callout } from "@components/ui/Callout";
-import { SecurityQuiz } from "@components/interactive/SecurityQuiz";
+import { PrivacySecurityQuiz } from "@components/interactive/PrivacySecurityQuiz";
 import { CTAButton } from "@components/CTAButton";
 
 {/* ProgressIndicator temporarily disabled - will be implemented with actual tracking later */}
@@ -464,22 +464,7 @@ Please unfollow the old account and follow this one.
 
 ## Test Your Knowledge
 
-<SecurityQuiz />
-
----
-
-## Next Steps
-
-<div className="cta-section my-12 text-center py-8 bg-primary/5 rounded-lg">
-  <h3 className="text-2xl font-bold mb-4">Ready to Find Your Community?</h3>
-  <p className="text-muted-foreground mb-6">
-    Learn strategies for discovering people, communities, and conversations that
-    matter to you.
-  </p>
-  <CTAButton variant="primary" size="lg" href="/guides/finding-community">
-    Continue: Finding Your Community →
-  </CTAButton>
-</div>
+<PrivacySecurityQuiz client:load />
 
 ---
 
