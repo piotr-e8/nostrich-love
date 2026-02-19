@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ArrowRight, BookOpen, CheckCircle, GraduationCap, X, Lock } from 'lucide-react';
 import { cn } from '../../lib/utils';
-import { SKILL_LEVELS, type SkillLevel, getNextLevel } from '../../data/learning-paths';
+import { SKILL_LEVELS, type SkillLevel, getNextLevel, getGuideLevel } from '../../data/learning-paths';
 import { 
-  getCurrentLevelLocal as getCurrentLevel, 
   getCompletedGuidesInLevel as getCompletedInLevel, 
   getLevelProgressLocal as getLevelProgress,
-  isLevelUnlockedLocal as isLevelUnlocked,
-  getUnlockedLevelsLocal as getUnlockedLevels
+  isLevelUnlockedLocal as isLevelUnlocked
 } from '../../lib/progress';
 
 interface ContinueLearningProps {
@@ -52,12 +50,21 @@ export function ContinueLearning({
       const pathParts = window.location.pathname.split('/');
       const currentSlug = pathParts[pathParts.length - 1];
 
-      const userLevel = getCurrentLevel() as SkillLevel;
-      setCurrentLevel(userLevel);
+      // Determine which level this guide belongs to (not user's current level)
+      const guideLevel = getGuideLevel(currentSlug);
+      
+      if (!guideLevel) {
+        // Guide not found in any level
+        setNextGuide(undefined);
+        setIsLevelComplete(false);
+        return;
+      }
+      
+      setCurrentLevel(guideLevel);
 
-      const levelConfig = SKILL_LEVELS[userLevel];
-      const levelProgress = getLevelProgress(userLevel);
-      const completedCount = getCompletedInLevel(userLevel).length;
+      const levelConfig = SKILL_LEVELS[guideLevel];
+      const levelProgress = getLevelProgress(guideLevel);
+      const completedCount = getCompletedInLevel(guideLevel).length;
       const totalInLevel = levelConfig.sequence.length;
 
       // Check if current level is complete
@@ -65,7 +72,7 @@ export function ContinueLearning({
       setIsLevelComplete(isComplete);
 
       // Get next level info
-      const nextLevel = getNextLevel(userLevel);
+      const nextLevel = getNextLevel(guideLevel);
       if (nextLevel) {
         const nextUnlocked = isLevelUnlocked(nextLevel);
         const threshold = SKILL_LEVELS[nextLevel].unlockThreshold;
@@ -95,7 +102,7 @@ export function ContinueLearning({
         // Look for next incomplete guide after current
         for (let i = currentIndex + 1; i < levelConfig.sequence.length; i++) {
           const nextSlug = levelConfig.sequence[i];
-          const isCompleted = getCompletedInLevel(userLevel).includes(nextSlug);
+          const isCompleted = getCompletedInLevel(guideLevel).includes(nextSlug);
           
           if (!isCompleted) {
             const title = guideTitles?.[nextSlug] || formatGuideTitle(nextSlug);

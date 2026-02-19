@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { cn } from '../../lib/utils';
-import { SKILL_LEVELS, type SkillLevel } from '../../data/learning-paths';
-import { getCurrentLevelLocal, isLevelUnlockedLocal } from '../../lib/progress';
+import { SKILL_LEVELS, type SkillLevel, getGuideLevel } from '../../data/learning-paths';
+import { isLevelUnlockedLocal } from '../../lib/progress';
 
 interface GuideInfo {
   slug: string;
@@ -34,14 +34,11 @@ export function GuideNavigation({
       const pathParts = window.location.pathname.split('/');
       const currentSlug = pathParts[pathParts.length - 1];
       
-      // Get user's current level from localStorage
-      const userLevel = getCurrentLevelLocal();
-      setCurrentLevel(userLevel);
+      // Determine which level this guide belongs to (not user's current level)
+      const guideLevel = getGuideLevel(currentSlug);
       
-      const levelConfig = SKILL_LEVELS[userLevel];
-      
-      // CASE 1: Guide not in current level
-      if (!levelConfig?.sequence.includes(currentSlug)) {
+      if (!guideLevel) {
+        // Guide not found in any level
         setShowOffLevelMessage(true);
         setPrevGuide(null);
         setNextGuide(null);
@@ -49,7 +46,10 @@ export function GuideNavigation({
         return;
       }
       
-      // CASE 2: Guide is in level - calculate navigation
+      setCurrentLevel(guideLevel);
+      const levelConfig = SKILL_LEVELS[guideLevel];
+      
+      // Calculate navigation within this guide's level
       const currentIndex = levelConfig.sequence.indexOf(currentSlug);
       
       // Check if this is the last guide in the level
@@ -58,7 +58,7 @@ export function GuideNavigation({
         
         // Check if next level exists and is unlocked
         const levels: SkillLevel[] = ['beginner', 'intermediate', 'advanced'];
-        const currentLevelIndex = levels.indexOf(userLevel);
+        const currentLevelIndex = levels.indexOf(guideLevel);
         const nextLvl = levels[currentLevelIndex + 1];
         
         if (nextLvl) {
