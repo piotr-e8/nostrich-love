@@ -11,7 +11,7 @@ import { ProtocolComparison } from "@components/ProtocolComparison";
 import { NostrSimulator } from "@components/NostrSimulator";
 import { WhatIsNostrQuiz } from "@components/interactive/WhatIsNostrQuiz";
 
-<ProgressIndicator current={1} total={4} estimatedTime="5 minutes" />
+{ /* <ProgressIndicator current={1} total={4} estimatedTime="5 minutes" /> */ }
 
 { /* <div className="simulator-section my-12"> */ }
   { /* <NostrSimulator client:load /> */ }
@@ -105,7 +105,7 @@ Don't worry about memorizing everything. You'll learn by doing. But here's the m
   Your secret key looks like: `nsec1q...9x`
 </HoverCard>
 
-- Looks like: `nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq`
+- Looks like: <code className="break-all text-sm">nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
 - This proves you own your public key
 - **RED ALERT: Never share this with anyone**
 - Lose it = permanent loss. No "forgot password" option
