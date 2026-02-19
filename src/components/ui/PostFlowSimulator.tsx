@@ -46,15 +46,15 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
   return (
     <div
       className={cn(
-        "bg-gray-800/30 border border-border-dark rounded-2xl p-6",
+        "bg-gray-100 dark:bg-white dark:bg-gray-800/30 border border-border-dark rounded-2xl p-6",
         className,
       )}
     >
       <div className="text-center mb-6">
-        <h3 className="text-lg font-semibold text-white mb-2">
+        <h3 className="text-lg font-semibold 	ext-gray-900 dark:text-white mb-2">
           How Posts Flow
         </h3>
-        <p className="text-sm text-gray-400">
+        <p className="text-sm 	ext-gray-600 dark:text-gray-400">
           See how your posts travel through the Nostr network
         </p>
       </div>
@@ -74,15 +74,15 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
                 }}
                 className={cn(
                   "flex flex-col items-center gap-2 p-4 rounded-xl transition-all",
-                  isActive ? "bg-primary-500/20" : "bg-gray-800",
+                  isActive ? "bg-primary-500/20" : "bg-white dark:bg-gray-800",
                 )}
               >
                 <div
                   className={cn(
                     "w-12 h-12 rounded-xl flex items-center justify-center",
                     isActive
-                      ? "bg-primary-500 text-white"
-                      : "bg-gray-700 text-gray-400",
+                      ? "bg-primary-500 	ext-gray-900 dark:text-white"
+                      : "bg-gray-200 dark:bg-gray-700 	ext-gray-600 dark:text-gray-400",
                   )}
                 >
                   <Icon className="w-6 h-6" />
@@ -114,7 +114,7 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
       <div className="flex justify-center gap-3">
         <button
           onClick={() => setIsPlaying(!isPlaying)}
-          className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-sm font-medium transition-all"
+          className="px-4 py-2 bg-primary-600 hover:bg-primary-700 	ext-gray-900 dark:text-white rounded-lg text-sm font-medium transition-all"
         >
           {isPlaying ? "Pause" : "Play Animation"}
         </button>
@@ -123,18 +123,18 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
             setIsPlaying(false);
             setStep(0);
           }}
-          className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm font-medium transition-all"
+          className="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 	ext-gray-900 dark:text-white rounded-lg text-sm font-medium transition-all"
         >
           Reset
         </button>
       </div>
 
-      <div className="mt-6 p-4 bg-gray-900/50 rounded-xl">
+      <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-900/50 rounded-xl">
         <div className="flex items-center gap-3 mb-3">
           <Send className="w-5 h-5 text-primary-500" />
-          <span className="text-sm font-medium text-white">Current Step:</span>
+          <span className="text-sm font-medium 	ext-gray-900 dark:text-white">Current Step:</span>
         </div>
-        <p className="text-sm text-gray-400">
+        <p className="text-sm 	ext-gray-600 dark:text-gray-400">
           {step === 0 && "You write a post and sign it with your private key."}
           {step === 1 &&
             "Your client sends the post to Relay 1, which verifies the signature and stores it."}

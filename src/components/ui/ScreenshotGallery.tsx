@@ -43,11 +43,11 @@ export function ScreenshotGallery({
     return (
       <div
         className={cn(
-          "bg-gray-800/50 border border-border-dark rounded-xl p-8 text-center",
+          "bg-gray-100 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl p-8 text-center",
           className,
         )}
       >
-        <p className="text-gray-500">No screenshots available</p>
+        <p className="text-gray-500 dark:text-gray-400">No screenshots available</p>
       </div>
     );
   }
@@ -58,7 +58,7 @@ export function ScreenshotGallery({
     <>
       <div className={cn("space-y-4", className)}>
         {/* Main Image */}
-        <div className="relative aspect-video bg-gray-800 rounded-xl overflow-hidden border border-border-dark">
+        <div className="relative aspect-video bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700">
           <img
             src={currentScreenshot.src}
             alt={currentScreenshot.alt || "Screenshot"}
@@ -93,7 +93,7 @@ export function ScreenshotGallery({
 
         {/* Caption */}
         {currentScreenshot.caption && (
-          <p className="text-center text-gray-400 text-sm">
+          <p className="text-center text-gray-600 dark:text-gray-400 text-sm">
             {currentScreenshot.caption}
           </p>
         )}

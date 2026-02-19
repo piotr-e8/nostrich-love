@@ -395,7 +395,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span className="text-gray-500">Public Key</span>
-                        <code className="text-gray-700 bg-gray-100 px-2 py-0.5 rounded">
+                        <code className="text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded">
                           {currentUser?.pubkey.slice(0, 20)}...
                         </code>
                       </div>

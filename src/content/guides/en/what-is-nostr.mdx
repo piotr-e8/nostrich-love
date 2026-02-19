@@ -11,8 +11,7 @@ import { ProtocolComparison } from "@components/ProtocolComparison";
 import { NostrSimulator } from "@components/NostrSimulator";
 import { WhatIsNostrQuiz } from "@components/interactive/WhatIsNostrQuiz";
 
-{/* ProgressIndicator temporarily disabled - will be implemented with actual tracking later */}
-{/* <ProgressIndicator current={1} total={4} estimatedTime="5 minutes" /> */}
+<ProgressIndicator current={1} total={4} estimatedTime="5 minutes" />
 
 { /* <div className="simulator-section my-12"> */ }
   { /* <NostrSimulator client:load /> */ }
@@ -92,7 +91,7 @@ Don't worry about memorizing everything. You'll learn by doing. But here's the m
   Your public identity on Nostr looks like: `npub1q...9x`
 </HoverCard>
 
-- Looks like: `npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq`
+- Looks like: <code className="break-all text-sm">npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
 - Share this freely—it's how people find and follow you
 - Think of it like your email address or phone number
 - **Green light: Safe to share anywhere**

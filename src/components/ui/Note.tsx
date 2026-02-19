@@ -59,7 +59,7 @@ export function Note({ children, type = "info", title, className }: NoteProps) {
               {title}
             </h4>
           )}
-          <div className="text-gray-300 text-sm">{children}</div>
+          <div className="text-gray-700 dark:text-gray-300 text-sm">{children}</div>
         </div>
       </div>
     </div>

@@ -169,10 +169,7 @@
   color: rgb(255 255 255);
 }
 
-.dark .prose code {
-  color: rgb(244 114 182);
-  background-color: rgba(31, 41, 55, 0.5);
-}
+
 
 /* Custom key display boxes for dark mode */
 .key-display {
@@ -345,4 +342,46 @@
 
 .completion-celebration {
   animation: completion-pulse 2s ease-in-out infinite;
+}
+
+/* Shiki syntax highlighting - theme switching support */
+.shiki {
+  background-color: transparent !important;
+}
+
+.shiki code {
+  background-color: transparent !important;
+}
+
+/* Astro code blocks with dual themes */
+.astro-code {
+  background-color: #fff !important;
+}
+
+.dark .astro-code {
+  background-color: var(--shiki-dark-bg, #24292e) !important;
+  color: var(--shiki-dark, #e1e4e8) !important;
+}
+
+/* Ensure spans use dark colors in dark mode */
+.dark .astro-code span {
+  color: var(--shiki-dark, inherit) !important;
+}
+
+/* Light theme (default) - show light, hide dark */
+.shiki .line[data-theme="dark"] {
+  display: none;
+}
+
+.shiki .line[data-theme="light"] {
+  display: block;
+}
+
+/* Dark theme - show dark, hide light */
+.dark .shiki .line[data-theme="dark"] {
+  display: block;
+}
+
+.dark .shiki .line[data-theme="light"] {
+  display: none;
 }

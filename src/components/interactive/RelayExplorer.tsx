@@ -653,10 +653,10 @@ export function RelayExplorer({
           >
             <Globe className="w-8 h-8 text-primary-500" />
           </motion.div>
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+          <h2 className="text-2xl md:text-3xl font-bold 	ext-gray-900 dark:text-white mb-2">
             Relay Explorer
           </h2>
-          <p className="text-gray-400 max-w-lg mx-auto">
+          <p className="	ext-gray-600 dark:text-gray-400 max-w-lg mx-auto">
             Browse and connect to Nostr relays. Relays store and distribute your
             posts. Connect to multiple relays for better reliability.
           </p>
@@ -671,18 +671,18 @@ export function RelayExplorer({
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-primary-500 rounded-xl flex items-center justify-center">
-                <Zap className="w-6 h-6 text-white" />
+                <Zap className="w-6 h-6 	ext-gray-900 dark:text-white" />
               </div>
               <div>
-                <h3 className="font-semibold text-white">New to Nostr?</h3>
-                <p className="text-sm text-gray-400">
+                <h3 className="font-semibold 	ext-gray-900 dark:text-white">New to Nostr?</h3>
+                <p className="text-sm 	ext-gray-600 dark:text-gray-400">
                   Start with our recommended starter pack of 5 reliable relays
                 </p>
               </div>
             </div>
             <button
               onClick={selectStarterPack}
-              className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all whitespace-nowrap"
+              className="px-6 py-3 bg-primary-600 hover:bg-primary-700 	ext-gray-900 dark:text-white rounded-xl font-medium transition-all whitespace-nowrap"
             >
               Add Starter Pack
             </button>
@@ -700,13 +700,13 @@ export function RelayExplorer({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search relays..."
-                className="w-full pl-10 pr-4 py-3 bg-gray-900 border border-border-dark rounded-xl text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border border-border-dark rounded-xl 	ext-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
               />
             </div>
             <button
               onClick={checkAllRelays}
               disabled={isChecking}
-              className="px-4 py-3 bg-gray-700 hover:bg-gray-600 disabled:bg-gray-800 text-white rounded-xl font-medium transition-all inline-flex items-center gap-2"
+              className="px-4 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 disabled:bg-gray-100 dark:bg-gray-800 	ext-gray-900 dark:text-white rounded-xl font-medium transition-all inline-flex items-center gap-2"
             >
               <RefreshCw
                 className={cn("w-5 h-5", isChecking && "animate-spin")}
@@ -726,8 +726,8 @@ export function RelayExplorer({
                   className={cn(
                     "inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all",
                     topicFilter === option.value
-                      ? "bg-primary-500 text-white"
-                      : "bg-gray-800 text-gray-400 hover:bg-gray-700",
+                      ? "bg-primary-500 	ext-gray-900 dark:text-white"
+                      : "bg-gray-100 dark:bg-gray-800 	ext-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:bg-gray-700",
                   )}
                 >
                   {option.icon}
@@ -745,8 +745,8 @@ export function RelayExplorer({
                   className={cn(
                     "inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all",
                     typeFilter === option.value
-                      ? "bg-primary-500 text-white"
-                      : "bg-gray-800 text-gray-400 hover:bg-gray-700",
+                      ? "bg-primary-500 	ext-gray-900 dark:text-white"
+                      : "bg-gray-100 dark:bg-gray-800 	ext-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:bg-gray-700",
                   )}
                 >
                   {option.icon}
@@ -766,13 +766,13 @@ export function RelayExplorer({
                 onChange={(e) => setCustomRelayInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && addCustomRelay()}
                 placeholder="Add custom relay (e.g., wss://relay.example.com)"
-                className="w-full pl-10 pr-4 py-3 bg-gray-900 border border-border-dark rounded-xl text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border border-border-dark rounded-xl 	ext-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
               />
             </div>
             <button
               onClick={addCustomRelay}
               disabled={!customRelayInput.trim()}
-              className="px-4 py-3 bg-primary-600 disabled:bg-gray-700 text-white rounded-xl font-medium transition-all inline-flex items-center gap-2"
+              className="px-4 py-3 bg-primary-600 disabled:bg-gray-200 dark:bg-gray-700 	ext-gray-900 dark:text-white rounded-xl font-medium transition-all inline-flex items-center gap-2"
             >
               <Plus className="w-5 h-5" />
               Add
@@ -781,9 +781,9 @@ export function RelayExplorer({
 
           {/* Selected Count */}
           {selectedRelays.size > 0 && (
-            <div className="flex items-center justify-between bg-gray-800/50 rounded-xl p-3">
-              <span className="text-gray-400">
-                <span className="text-white font-medium">
+            <div className="flex items-center justify-between bg-gray-100 dark:bg-gray-800/50 rounded-xl p-3">
+              <span className="	ext-gray-600 dark:text-gray-400">
+                <span className="	ext-gray-900 dark:text-white font-medium">
                   {selectedRelays.size}
                 </span>{" "}
                 relay(s) selected
@@ -791,14 +791,14 @@ export function RelayExplorer({
               <div className="flex gap-2">
                 <button
                   onClick={copySelectedRelays}
-                  className="px-3 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm transition-all inline-flex items-center gap-2"
+                  className="px-3 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 	ext-gray-900 dark:text-white rounded-lg text-sm transition-all inline-flex items-center gap-2"
                 >
                   <Copy className="w-4 h-4" />
                   Copy
                 </button>
                 <button
                   onClick={downloadRelayList}
-                  className="px-3 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm transition-all inline-flex items-center gap-2"
+                  className="px-3 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 	ext-gray-900 dark:text-white rounded-lg text-sm transition-all inline-flex items-center gap-2"
                 >
                   <Download className="w-4 h-4" />
                   Download
@@ -808,7 +808,7 @@ export function RelayExplorer({
                     setSelectedRelays(new Set());
                     onSelectRelays?.([]);
                   }}
-                  className="px-3 py-2 text-gray-400 hover:text-white rounded-lg text-sm transition-all"
+                  className="px-3 py-2 	ext-gray-600 dark:text-gray-400 hover:	ext-gray-900 dark:text-white rounded-lg text-sm transition-all"
                 >
                   Clear
                 </button>
@@ -831,7 +831,7 @@ export function RelayExplorer({
                   "relative border rounded-xl p-4 transition-all cursor-pointer",
                   selectedRelays.has(relay.url)
                     ? "border-primary-500 bg-primary-500/10"
-                    : "border-border-dark hover:border-gray-600 hover:bg-gray-800/30",
+                    : "border-border-dark hover:border-gray-600 hover:bg-gray-100 dark:bg-gray-800/30",
                 )}
                 onClick={() => toggleRelaySelection(relay.url)}
               >
@@ -846,7 +846,7 @@ export function RelayExplorer({
                     )}
                   >
                     {selectedRelays.has(relay.url) && (
-                      <Check className="w-4 h-4 text-white" />
+                      <Check className="w-4 h-4 	ext-gray-900 dark:text-white" />
                     )}
                   </div>
                 </div>
@@ -860,10 +860,10 @@ export function RelayExplorer({
                       REGION_COLORS[relay.region],
                     )}
                   >
-                    <Globe className="w-6 h-6 text-white" />
+                    <Globe className="w-6 h-6 	ext-gray-900 dark:text-white" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h3 className="font-semibold text-white truncate">
+                    <h3 className="font-semibold 	ext-gray-900 dark:text-white truncate">
                       {relay.name}
                     </h3>
                     <div className="flex items-center gap-2 text-xs text-gray-500">
@@ -874,13 +874,13 @@ export function RelayExplorer({
                 </div>
 
                 {/* Description */}
-                <p className="text-sm text-gray-400 mb-3 line-clamp-2">
+                <p className="text-sm 	ext-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
                   {relay.description}
                 </p>
 
                 {/* Stats */}
                 <div className="flex items-center gap-3 text-xs mb-3">
-                  <span className="flex items-center gap-1 text-gray-400">
+                  <span className="flex items-center gap-1 	ext-gray-600 dark:text-gray-400">
                     <Users className="w-3 h-3" />
                     {relay.userCount}
                   </span>
@@ -919,7 +919,7 @@ export function RelayExplorer({
                   {relay.features.slice(0, 2).map((feature) => (
                     <span
                       key={feature}
-                      className="text-xs bg-gray-800 text-gray-400 px-2 py-1 rounded-full"
+                      className="text-xs bg-gray-100 dark:bg-gray-800 	ext-gray-600 dark:text-gray-400 px-2 py-1 rounded-full"
                     >
                       {feature}
                     </span>
@@ -947,10 +947,10 @@ export function RelayExplorer({
         {filteredRelays.length === 0 && (
           <div className="text-center py-12">
             <Server className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-white mb-2">
+            <h3 className="text-xl font-semibold 	ext-gray-900 dark:text-white mb-2">
               No relays found
             </h3>
-            <p className="text-gray-400">
+            <p className="	ext-gray-600 dark:text-gray-400">
               Try adjusting your filters or add a custom relay
             </p>
           </div>
@@ -960,26 +960,26 @@ export function RelayExplorer({
         <div className="mt-8 pt-6 border-t border-border-dark">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
-              <p className="text-2xl font-bold text-white">{relays.length}</p>
-              <p className="text-sm text-gray-400">Popular Relays</p>
+              <p className="text-2xl font-bold 	ext-gray-900 dark:text-white">{relays.length}</p>
+              <p className="text-sm 	ext-gray-600 dark:text-gray-400">Popular Relays</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-success-500">
                 {relays.filter((r) => r.status === "online").length}
               </p>
-              <p className="text-sm text-gray-400">Online Now</p>
+              <p className="text-sm 	ext-gray-600 dark:text-gray-400">Online Now</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-primary-500">
                 {relays.filter((r) => r.type === "free").length}
               </p>
-              <p className="text-sm text-gray-400">Free Relays</p>
+              <p className="text-sm 	ext-gray-600 dark:text-gray-400">Free Relays</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-warning-500">
                 {selectedRelays.size}
               </p>
-              <p className="text-sm text-gray-400">Selected</p>
+              <p className="text-sm 	ext-gray-600 dark:text-gray-400">Selected</p>
             </div>
           </div>
         </div>
@@ -994,9 +994,9 @@ export function RelayExplorer({
             exit={{ opacity: 0, y: 20, x: "-50%" }}
             className={cn(
               "fixed bottom-6 left-1/2 px-6 py-3 rounded-xl shadow-2xl z-50 flex items-center gap-2",
-              toast.type === "success" && "bg-success-500 text-white",
-              toast.type === "error" && "bg-error-500 text-white",
-              toast.type === "info" && "bg-primary-500 text-white",
+              toast.type === "success" && "bg-success-500 	ext-gray-900 dark:text-white",
+              toast.type === "error" && "bg-error-500 	ext-gray-900 dark:text-white",
+              toast.type === "info" && "bg-primary-500 	ext-gray-900 dark:text-white",
             )}
           >
             {toast.type === "success" && <Check className="w-5 h-5" />}

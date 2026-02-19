@@ -22,7 +22,7 @@ export function ValueCard({
   return (
     <div
       className={cn(
-        "bg-gray-800/30 border border-border-dark rounded-xl p-6 hover:bg-gray-800/50 transition-all",
+        "bg-white dark:bg-gray-800/30 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all",
         className,
       )}
     >
@@ -38,8 +38,8 @@ export function ValueCard({
           <Icon className="w-6 h-6 text-primary-500" />
         )}
       </div>
-      <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
-      <p className="text-gray-400 text-sm">{description}</p>
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{title}</h3>
+      <p className="text-gray-600 dark:text-gray-400 text-sm">{description}</p>
     </div>
   );
 }

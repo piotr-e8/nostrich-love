@@ -439,17 +439,17 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
           >
             <Wrench className="w-8 h-8 text-primary-500" />
           </motion.div>
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+          <h2 className="text-2xl md:text-3xl font-bold 	ext-gray-900 dark:text-white mb-2">
             Troubleshooting Wizard
           </h2>
-          <p className="text-gray-400">
+          <p className="	ext-gray-600 dark:text-gray-400">
             Let's diagnose and fix your Nostr issue step by step
           </p>
         </div>
 
         {/* Progress Indicator */}
         <div className="flex items-center gap-2 mb-6">
-          <div className="flex-1 h-2 bg-gray-700 rounded-full overflow-hidden">
+          <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-primary-500"
               initial={{ width: 0 }}
@@ -461,7 +461,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               transition={{ duration: 0.3 }}
             />
           </div>
-          <span className="text-sm text-gray-400">
+          <span className="text-sm 	ext-gray-600 dark:text-gray-400">
             Step {history.length + (solution ? 1 : 0)}
           </span>
         </div>
@@ -470,7 +470,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
         {(history.length > 0 || solution) && (
           <button
             onClick={goBack}
-            className="mb-4 inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+            className="mb-4 inline-flex items-center gap-2 	ext-gray-600 dark:text-gray-400 hover:	ext-gray-900 dark:text-white transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />
             Back
@@ -502,24 +502,24 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               </div>
 
               {/* Title */}
-              <h3 className="text-xl font-bold text-white mb-2">
+              <h3 className="text-xl font-bold 	ext-gray-900 dark:text-white mb-2">
                 {solution.title}
               </h3>
-              <p className="text-gray-400 mb-6">{solution.description}</p>
+              <p className="	ext-gray-600 dark:text-gray-400 mb-6">{solution.description}</p>
 
               {/* Steps */}
-              <div className="bg-gray-800/50 rounded-xl p-4 mb-6">
-                <h4 className="font-medium text-white mb-3 flex items-center gap-2">
+              <div className="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 mb-6">
+                <h4 className="font-medium 	ext-gray-900 dark:text-white mb-3 flex items-center gap-2">
                   <Check className="w-5 h-5 text-primary-500" />
                   Steps to Fix
                 </h4>
                 <ol className="space-y-3">
                   {solution.steps.map((step, i) => (
                     <li key={i} className="flex items-start gap-3">
-                      <span className="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center text-white text-sm font-medium flex-shrink-0">
+                      <span className="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center 	ext-gray-900 dark:text-white text-sm font-medium flex-shrink-0">
                         {i + 1}
                       </span>
-                      <span className="text-gray-300">{step}</span>
+                      <span className="	ext-gray-700 dark:text-gray-300">{step}</span>
                     </li>
                   ))}
                 </ol>
@@ -536,7 +536,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
                     {solution.tips.map((tip, i) => (
                       <li
                         key={i}
-                        className="text-sm text-gray-400 flex items-start gap-2"
+                        className="text-sm 	ext-gray-600 dark:text-gray-400 flex items-start gap-2"
                       >
                         <span className="text-info-500">•</span>
                         {tip}
@@ -549,7 +549,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               {/* Resources */}
               {solution.resources && solution.resources.length > 0 && (
                 <div className="mb-6">
-                  <h4 className="font-medium text-white mb-3">
+                  <h4 className="font-medium 	ext-gray-900 dark:text-white mb-3">
                     Helpful Resources
                   </h4>
                   <div className="flex flex-wrap gap-2">
@@ -571,14 +571,14 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={reset}
-                  className="flex-1 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all inline-flex items-center justify-center gap-2"
+                  className="flex-1 py-3 bg-primary-600 hover:bg-primary-700 	ext-gray-900 dark:text-white rounded-xl font-medium transition-all inline-flex items-center justify-center gap-2"
                 >
                   <RotateCcw className="w-5 h-5" />
                   Start Over
                 </button>
                 <button
                   onClick={() => setShowDiagnosticInfo(true)}
-                  className="py-3 px-4 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-medium transition-all inline-flex items-center justify-center gap-2"
+                  className="py-3 px-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 	ext-gray-900 dark:text-white rounded-xl font-medium transition-all inline-flex items-center justify-center gap-2"
                 >
                   <FileText className="w-5 h-5" />
                   Save Diagnostic Info
@@ -593,7 +593,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               exit={{ opacity: 0, y: -20 }}
             >
               {/* Question */}
-              <h3 className="text-xl font-bold text-white mb-6">
+              <h3 className="text-xl font-bold 	ext-gray-900 dark:text-white mb-6">
                 {currentQuestion.text}
               </h3>
 
@@ -606,12 +606,12 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
                     className="w-full text-left p-4 border border-border-dark hover:border-primary-500 hover:bg-primary-500/5 rounded-xl transition-all group"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gray-800 group-hover:bg-primary-500/20 rounded-xl flex items-center justify-center transition-colors">
-                        <span className="text-gray-400 group-hover:text-primary-500 transition-colors">
+                      <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 group-hover:bg-primary-500/20 rounded-xl flex items-center justify-center transition-colors">
+                        <span className="	ext-gray-600 dark:text-gray-400 group-hover:text-primary-500 transition-colors">
                           {option.icon || <ArrowRight className="w-5 h-5" />}
                         </span>
                       </div>
-                      <span className="font-medium text-white flex-1">
+                      <span className="font-medium 	ext-gray-900 dark:text-white flex-1">
                         {option.label}
                       </span>
                       <ChevronRight className="w-5 h-5 text-gray-500 group-hover:text-primary-500" />
@@ -627,7 +627,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
         {!solution && history.length > 0 && (
           <button
             onClick={reset}
-            className="mt-6 text-gray-400 hover:text-white text-sm transition-colors inline-flex items-center gap-2"
+            className="mt-6 	ext-gray-600 dark:text-gray-400 hover:	ext-gray-900 dark:text-white text-sm transition-colors inline-flex items-center gap-2"
           >
             <RotateCcw className="w-4 h-4" />
             Start Over
@@ -636,13 +636,13 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
 
         {/* Footer - Still Need Help */}
         <div className="mt-8 pt-6 border-t border-border-dark">
-          <p className="text-center text-gray-400 mb-4">Still need help?</p>
+          <p className="text-center 	ext-gray-600 dark:text-gray-400 mb-4">Still need help?</p>
           <div className="flex flex-wrap justify-center gap-3">
             <a
               href="https://snort.social"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:bg-gray-700 	ext-gray-700 dark:text-gray-300 rounded-lg transition-colors"
             >
               <MessageCircle className="w-4 h-4" />
               Ask on Nostr
@@ -651,7 +651,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               href="https://github.com/nostr-protocol/nostr"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:bg-gray-700 	ext-gray-700 dark:text-gray-300 rounded-lg transition-colors"
             >
               <ExternalLink className="w-4 h-4" />
               Documentation
@@ -677,14 +677,14 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               className="bg-surface border border-border-dark rounded-2xl p-6 max-w-md w-full"
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 className="text-xl font-bold text-white mb-4">
+              <h3 className="text-xl font-bold 	ext-gray-900 dark:text-white mb-4">
                 Diagnostic Information
               </h3>
-              <p className="text-gray-400 text-sm mb-4">
+              <p className="	ext-gray-600 dark:text-gray-400 text-sm mb-4">
                 Copy this information when asking for help. It helps developers
                 understand your setup.
               </p>
-              <div className="bg-gray-900 rounded-xl p-4 mb-4 font-mono text-xs text-gray-400 space-y-2">
+              <div className="bg-white dark:bg-gray-900 rounded-xl p-4 mb-4 font-mono text-xs 	ext-gray-600 dark:text-gray-400 space-y-2">
                 <p>
                   <span className="text-gray-600">Date:</span>{" "}
                   {diagnosticInfo.timestamp}
@@ -705,14 +705,14 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               <div className="flex gap-3">
                 <button
                   onClick={copyDiagnosticInfo}
-                  className="flex-1 px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all inline-flex items-center justify-center gap-2"
+                  className="flex-1 px-4 py-3 bg-primary-600 hover:bg-primary-700 	ext-gray-900 dark:text-white rounded-xl font-medium transition-all inline-flex items-center justify-center gap-2"
                 >
                   <Copy className="w-4 h-4" />
                   Copy
                 </button>
                 <button
                   onClick={() => setShowDiagnosticInfo(false)}
-                  className="px-4 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-medium transition-all"
+                  className="px-4 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 	ext-gray-900 dark:text-white rounded-xl font-medium transition-all"
                 >
                   Close
                 </button>

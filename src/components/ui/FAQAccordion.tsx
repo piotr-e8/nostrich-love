@@ -56,13 +56,13 @@ export function FAQAccordion({
   return (
     <div
       className={cn(
-        "border border-border-dark rounded-xl overflow-hidden bg-gray-800/30 mb-6",
+        "border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden bg-white dark:bg-gray-800/30 mb-6",
         className,
       )}
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-start gap-4 p-5 text-left hover:bg-gray-800/50 transition-all"
+        className="w-full flex items-start gap-4 p-5 text-left hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all"
         aria-expanded={isOpen}
       >
         <div className="flex-1">
@@ -79,17 +79,17 @@ export function FAQAccordion({
               </span>
             )}
           </div>
-          <h3 className="text-lg font-semibold text-white">{question}</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{question}</h3>
         </div>
         <div
           className={cn(
-            "w-8 h-8 rounded-lg bg-gray-700 flex items-center justify-center flex-shrink-0 transition-all",
+            "w-8 h-8 rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center flex-shrink-0 transition-all",
             isOpen && "bg-primary-500 rotate-180",
           )}
         >
           <ChevronDown
             className={cn(
-              "w-5 h-5 text-gray-400 transition-colors",
+              "w-5 h-5 text-gray-500 dark:text-gray-400 transition-colors",
               isOpen && "text-white",
             )}
           />
@@ -104,8 +104,8 @@ export function FAQAccordion({
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <div className="px-5 pb-5 pt-0 border-t border-border-dark">
-              <div className="pt-4 prose prose-invert prose-sm max-w-none">
+            <div className="px-5 pb-5 pt-0 border-t border-gray-200 dark:border-gray-700">
+              <div className="pt-4 prose dark:prose-invert prose-sm max-w-none">
                 {children}
               </div>
             </div>

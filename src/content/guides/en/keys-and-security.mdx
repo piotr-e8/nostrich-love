@@ -29,8 +29,6 @@ The good news? Securing your keys is straightforward. Follow this guide and you'
 
 ## Understanding Keys (2 minutes)
 
-## Understanding Keys (2 minutes)
-
 Nostr uses cryptography to secure your identity. Don't worry—you don't need to understand the math. Just think of it like a lock and key system.
 
 ### What Is a Key Pair?
@@ -103,6 +101,8 @@ Think of it like this: There are more possible private keys than grains of sand 
 ---
 
 ## Generate Your Keys (3 minutes)
+
+> 💡 **Tip:** While this key generator creates keys safely in your browser, you can also generate keys directly in most Nostr clients (like Damus, Amethyst, or Iris). Think of this tool as a "simulator" to practice with before using a real client.
 
 <KeyGenerator client:load />
 
@@ -179,7 +179,10 @@ This rule comes from professional data management. Follow it religiously.
 2. ✅ Written on paper, stored in safe
 3. ✅ Encrypted USB drive in different location
 
-**GOOD:** 4. ✅ Encrypted cloud storage (iCloud/Google Drive with encryption) 5. ✅ Metal seed plate (fireproof/waterproof)
+**GOOD:**
+
+4. ✅ Encrypted cloud storage (iCloud/Google Drive with encryption)
+5. ✅ Metal seed plate (fireproof/waterproof)
 
 **NEVER DO:**
 
@@ -264,15 +267,6 @@ These are real. Learn from them:
 **"The 'helpful' stranger"**
 
 > "Someone DM'd me offering to 'verify my account.' Asked for my nsec to 'link it properly.' I gave it to them. They stole my account and started posting scams." — @learnedthehardway
-
-### Quick Quiz
-
-**Which is safe to share?**
-
-- [ ] nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-- [x] npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-
-**Answer:** Only the npub (starts with "npub"). Never share anything starting with "nsec".
 
 ---
 

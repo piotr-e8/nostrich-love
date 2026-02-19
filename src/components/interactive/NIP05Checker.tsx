@@ -261,7 +261,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
 
   return (
     <div className={cn("max-w-2xl mx-auto p-6", className)}>
-      <div className="bg-surface border border-border-dark rounded-2xl p-6 md:p-8">
+      <div className="bg-surface border border-gray-200 dark:border-gray-700 rounded-2xl p-6 md:p-8">
         {/* Header */}
         <div className="text-center mb-8">
           <motion.div
@@ -274,7 +274,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
             NIP-05 Checker
           </h2>
-          <p className="text-gray-400 max-w-md mx-auto">
+          <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
             Verify NIP-05 identifiers (like user@domain.com). These provide
             human-readable names on Nostr.
           </p>
@@ -303,12 +303,12 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                 <h3 className="font-semibold text-info-500 mb-2">
                   About NIP-05
                 </h3>
-                <p className="text-sm text-gray-400 mb-3">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                   NIP-05 is a protocol for verifying Nostr identities using DNS.
                   It lets you use an email-like address (user@domain.com)
                   instead of a long npub string.
                 </p>
-                <ul className="text-sm text-gray-400 space-y-1">
+                <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
                   <li className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-success-500 flex-shrink-0 mt-0.5" />
                     <span>Get a human-readable username</span>
@@ -339,14 +339,14 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                 e.key === "Enter" && !isChecking && checkNIP05()
               }
               placeholder="Enter identifier (e.g., jack@cash.app)"
-              className="w-full pl-12 pr-4 py-4 bg-gray-900 border border-border-dark rounded-xl text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none text-lg"
+              className="w-full pl-12 pr-4 py-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:outline-none text-lg"
             />
           </div>
 
           <button
             onClick={checkNIP05}
             disabled={!identifier.trim() || isChecking}
-            className="w-full py-4 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-700 text-white rounded-xl font-medium transition-all flex items-center justify-center gap-2"
+            className="w-full py-4 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-400 dark:disabled:bg-gray-400 dark:disabled:bg-gray-700 text-white rounded-xl font-medium transition-all flex items-center justify-center gap-2"
           >
             {isChecking ? (
               <>
@@ -394,13 +394,13 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                 <div className="bg-success-500/10 border border-success-500/30 rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-12 h-12 bg-success-500 rounded-full flex items-center justify-center">
-                      <Check className="w-6 h-6 text-white" />
+                      <Check className="w-6 h-6 text-white dark:text-white" />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-success-500">
                         Valid NIP-05!
                       </h3>
-                      <p className="text-gray-400">
+                      <p className="text-gray-600 dark:text-gray-400">
                         This identifier is correctly configured
                       </p>
                     </div>
@@ -416,7 +416,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                           className="w-16 h-16 rounded-full object-cover"
                         />
                         <div>
-                          <p className="font-semibold text-white text-lg">
+                          <p className="font-semibold text-gray-900 dark:text-white text-lg">
                             {result.name}
                           </p>
                           <p className="text-primary-500">
@@ -426,11 +426,11 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                       </div>
                     ) : (
                       <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center">
+                        <div className="w-16 h-16 bg-gray-300 dark:bg-gray-700 rounded-full flex items-center justify-center">
                           <User className="w-8 h-8 text-gray-500" />
                         </div>
                         <div>
-                          <p className="font-semibold text-white text-lg">
+                          <p className="font-semibold text-gray-900 dark:text-white text-lg">
                             {result.name}
                           </p>
                           <p className="text-primary-500">
@@ -441,11 +441,11 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                     )}
 
                     {result.about && (
-                      <p className="text-gray-400">{result.about}</p>
+                      <p className="text-gray-600 dark:text-gray-400">{result.about}</p>
                     )}
 
                     {/* Public Key */}
-                    <div className="bg-gray-900 rounded-lg p-4">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
                       <p className="text-sm text-gray-500 mb-1">
                         Public Key (npub)
                       </p>
@@ -455,9 +455,9 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                         </code>
                         <button
                           onClick={() => handleCopy(result.npub!, "Public key")}
-                          className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
+                          className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                         >
-                          <Copy className="w-4 h-4 text-gray-400" />
+                          <Copy className="w-4 h-4 text-gray-600 dark:text-gray-400" />
                         </button>
                       </div>
                     </div>
@@ -472,7 +472,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                           {result.relays.slice(0, 3).map((relay) => (
                             <div
                               key={relay}
-                              className="flex items-center gap-2 text-sm text-gray-400"
+                              className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
                             >
                               <Globe className="w-4 h-4" />
                               {relay}
@@ -493,7 +493,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                       <h3 className="text-xl font-bold text-error-500">
                         Invalid NIP-05
                       </h3>
-                      <p className="text-gray-400">
+                      <p className="text-gray-600 dark:text-gray-400">
                         This identifier could not be verified
                       </p>
                     </div>
@@ -501,11 +501,11 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
 
                   {/* Error Details */}
                   {result.errorType && ERROR_MESSAGES[result.errorType] && (
-                    <div className="bg-gray-900 rounded-lg p-4 mb-4">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 mb-4">
                       <h4 className="font-semibold text-error-500 mb-1">
                         {ERROR_MESSAGES[result.errorType].title}
                       </h4>
-                      <p className="text-gray-400 text-sm mb-2">
+                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
                         {ERROR_MESSAGES[result.errorType].description}
                       </p>
                       <p className="text-sm">
@@ -515,10 +515,10 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                     </div>
                   )}
 
-                  <p className="text-gray-400 text-sm">{result.error}</p>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">{result.error}</p>
 
                   {/* Get NIP-05 CTA */}
-                  <div className="mt-4 pt-4 border-t border-border-dark">
+                  <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                     <button
                       onClick={() => setShowProviders(true)}
                       className="text-primary-500 hover:text-primary-400 font-medium inline-flex items-center gap-2"
@@ -533,7 +533,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
               {/* Clear Button */}
               <button
                 onClick={clearResult}
-                className="w-full mt-4 py-3 text-gray-400 hover:text-white transition-colors"
+                className="w-full mt-4 py-3 text-gray-600 dark:text-gray-400 hover:text-white transition-colors"
               >
                 Check Another
               </button>
@@ -543,7 +543,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
 
         {/* Get NIP-05 Providers */}
         {(!result || showProviders) && (
-          <div className="mt-8 pt-8 border-t border-border-dark">
+          <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
             <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5 text-primary-500" />
               Get Your Own NIP-05
@@ -555,13 +555,13 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                   href={provider.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-4 bg-gray-800/50 hover:bg-gray-800 border border-border-dark hover:border-primary-500 rounded-xl transition-all group"
+                  className="flex items-center justify-between p-4 bg-gray-100/50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-primary-500 rounded-xl transition-all group"
                 >
                   <div>
                     <p className="font-medium text-white group-hover:text-primary-500 transition-colors">
                       {provider.name}
                     </p>
-                    <p className="text-sm text-gray-400">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       {provider.description}
                     </p>
                   </div>

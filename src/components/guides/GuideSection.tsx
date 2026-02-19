@@ -103,6 +103,19 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
     }
   }, [level]);
 
+  // Listen for levelUnlocked event to update UI in real-time
+  useEffect(() => {
+    const handleLevelUnlocked = (event: CustomEvent<{ level: SkillLevel }>) => {
+      if (event.detail.level === level) {
+        const unlockedLevels = getUnlockedLevelsLocal();
+        setIsLocked(!unlockedLevels.includes(level));
+      }
+    };
+
+    window.addEventListener('levelUnlocked', handleLevelUnlocked as EventListener);
+    return () => window.removeEventListener('levelUnlocked', handleLevelUnlocked as EventListener);
+  }, [level]);
+
   // Filter guides based on interest filter
   const filteredGuides = React.useMemo(() => {
     if (!activeFilter) return guides;

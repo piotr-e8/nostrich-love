@@ -32,7 +32,7 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
   return (
     <div
       className={cn(
-        "bg-gray-800/30 border border-border-dark rounded-2xl p-6",
+        "bg-white dark:bg-gray-800/30 border border-gray-200 dark:border-gray-700 rounded-2xl p-6",
         className,
       )}
     >
@@ -40,15 +40,15 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
         <div className="w-16 h-16 mx-auto bg-amber-500/20 rounded-2xl flex items-center justify-center mb-4">
           <Zap className="w-8 h-8 text-amber-500" />
         </div>
-        <h3 className="text-xl font-bold text-white mb-2">Zap Simulator</h3>
-        <p className="text-gray-400 text-sm">
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Zap Simulator</h3>
+        <p className="text-gray-600 dark:text-gray-400 text-sm">
           Practice sending zaps without spending real sats
         </p>
       </div>
 
       <div className="space-y-4">
         <div>
-          <label className="text-sm text-gray-400 mb-2 block">
+          <label className="text-sm text-gray-600 dark:text-gray-400 mb-2 block">
             Amount (sats)
           </label>
           <div className="flex flex-wrap gap-2 mb-3">
@@ -63,7 +63,7 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
                   "px-4 py-2 rounded-lg text-sm font-medium transition-all",
                   amount === preset && !customAmount
                     ? "bg-amber-500 text-white"
-                    : "bg-gray-700 text-gray-300 hover:bg-gray-600",
+                    : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600",
                 )}
               >
                 {preset.toLocaleString()}
@@ -78,16 +78,16 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
               setCustomAmount(e.target.value);
               setAmount(parseInt(e.target.value) || 0);
             }}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-amber-500"
+            className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:border-amber-500"
           />
         </div>
 
-        <div className="bg-gray-900 rounded-lg p-4">
+        <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-gray-400">Lightning Invoice</span>
+            <span className="text-sm text-gray-600 dark:text-gray-400">Lightning Invoice</span>
             <button
               onClick={handleCopy}
-              className="text-sm text-amber-500 hover:text-amber-400 flex items-center gap-1"
+              className="text-sm text-amber-600 dark:text-amber-500 hover:text-amber-700 dark:hover:text-amber-400 flex items-center gap-1"
             >
               {copied ? (
                 <Check className="w-4 h-4" />
@@ -97,7 +97,7 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
               {copied ? "Copied!" : "Copy"}
             </button>
           </div>
-          <div className="font-mono text-xs text-gray-500 break-all">
+          <div className="font-mono text-xs text-gray-500 dark:text-gray-500 break-all">
             lnurl1dp68gurn8ghj7ampd3kx2ar0veekzar0wd5xjtnrdakj7tnhv4kxctttdehhwm30d3h82unvwqhhgmmjwscqzzsxqrpcgupzqvdkxsmm4w4ek2njsmqx93rz8sctjhjlyk
           </div>
         </div>
@@ -116,11 +116,11 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-green-500/20 border border-green-500/30 rounded-lg p-4 text-center"
+            className="bg-green-100 dark:bg-green-500/20 border border-green-300 dark:border-green-500/30 rounded-lg p-4 text-center"
           >
-            <Zap className="w-6 h-6 text-green-500 mx-auto mb-2" />
-            <p className="text-green-400 font-medium">Zap sent successfully!</p>
-            <p className="text-green-400/70 text-sm">
+            <Zap className="w-6 h-6 text-green-600 dark:text-green-500 mx-auto mb-2" />
+            <p className="text-green-700 dark:text-green-400 font-medium">Zap sent successfully!</p>
+            <p className="text-green-600 dark:text-green-400/70 text-sm">
               (This was a simulation - no real sats were sent)
             </p>
           </motion.div>

@@ -157,7 +157,7 @@ export const RelaysScreen: React.FC<RelaysScreenProps> = ({
                       )}
                     </div>
                     
-                    <code className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                    <code className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">
                       {relay.url}
                     </code>
                     

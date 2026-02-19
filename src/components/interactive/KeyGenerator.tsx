@@ -226,7 +226,7 @@ IMPORTANT SECURITY WARNINGS:
 
   return (
     <div className={cn("max-w-3xl mx-auto p-6", className)}>
-      <div className="bg-surface border border-border-dark rounded-2xl p-6 md:p-8">
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 md:p-8">
         {/* Header */}
         <div className="text-center mb-8">
           <motion.div
@@ -236,10 +236,10 @@ IMPORTANT SECURITY WARNINGS:
           >
             <Shield className="w-8 h-8 text-primary-500" />
           </motion.div>
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
             Generate Your Nostr Keys
           </h2>
-          <p className="text-gray-400 max-w-lg mx-auto">
+          <p className="text-gray-600 dark:text-gray-400 max-w-lg mx-auto">
             Create a secure key pair to access Nostr. Your keys are generated
             locally in your browser and never sent to any server.
           </p>
@@ -255,7 +255,7 @@ IMPORTANT SECURITY WARNINGS:
             <button
               onClick={generateKeys}
               disabled={isGenerating}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-600 text-white font-semibold rounded-xl transition-all disabled:cursor-not-allowed"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-300 dark:disabled:bg-gray-600 text-white font-semibold rounded-xl transition-all disabled:cursor-not-allowed"
             >
               {isGenerating ? (
                 <RefreshCw className="w-5 h-5 animate-spin" />
@@ -267,14 +267,14 @@ IMPORTANT SECURITY WARNINGS:
 
             {isGenerating && (
               <div className="mt-6 max-w-md mx-auto">
-                <div className="flex items-center justify-between text-sm text-gray-400 mb-2">
+                <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
                   <span className="flex items-center gap-2">
                     <Lock className="w-4 h-4" />
                     Collecting entropy...
                   </span>
                   <span>{Math.min(100, Math.round(entropyProgress))}%</span>
                 </div>
-                <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+                <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                   <motion.div
                     className="h-full bg-gradient-to-r from-primary-500 to-success-500"
                     initial={{ width: 0 }}
@@ -297,14 +297,14 @@ IMPORTANT SECURITY WARNINGS:
               className="space-y-6"
             >
               {/* Security Warning */}
-              <div className="bg-warning-500/10 border border-warning-500/30 rounded-xl p-4">
+              <div className="bg-yellow-50 dark:yellow-900/20 border border-yellow-200 dark:yellow-800 rounded-xl p-4">
                 <div className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-warning-500 flex-shrink-0 mt-0.5" />
+                  <AlertTriangle className="w-5 h-5 text-yellow-700 dark:text-yellow-400 flex-shrink-0 mt-0.5" />
                   <div>
-                    <h3 className="font-semibold text-warning-500 mb-1">
+                    <h3 className="font-semibold text-yellow-700 dark:text-yellow-400 mb-1">
                       Critical Security Notice
                     </h3>
-                    <p className="text-sm text-gray-300">
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
                       Your private key (nsec) is like a password. Anyone with
                       access to it can control your account. Complete the
                       security checklist below before copying or downloading
@@ -315,7 +315,7 @@ IMPORTANT SECURITY WARNINGS:
               </div>
 
               {/* Security Checklist */}
-              <div className="bg-gray-800/50 rounded-xl p-4 border border-border-dark">
+              <div className="bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl p-4 border border-border-dark">
                 <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
                   <Shield className="w-4 h-4 text-primary-500" />
                   Security Checklist
@@ -328,7 +328,7 @@ IMPORTANT SECURITY WARNINGS:
                         "flex items-start gap-3 p-3 rounded-lg cursor-pointer transition-all",
                         check.checked
                           ? "bg-success-500/10"
-                          : "hover:bg-gray-700/50",
+                          : "hover:bg-gray-100 dark:hover:bg-gray-700/50",
                       )}
                     >
                       <div
@@ -336,7 +336,7 @@ IMPORTANT SECURITY WARNINGS:
                           "w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 mt-0.5 transition-all",
                           check.checked
                             ? "bg-success-500 border-success-500"
-                            : "border-gray-500 hover:border-primary-500",
+                            : "border-gray-400 dark:border-gray-500 hover:border-primary-500",
                         )}
                       >
                         {check.checked && (
@@ -352,7 +352,7 @@ IMPORTANT SECURITY WARNINGS:
                       <span
                         className={cn(
                           "text-sm",
-                          check.checked ? "text-success-500" : "text-gray-300",
+                          check.checked ? "text-success-500" : "text-gray-600 dark:text-gray-300",
                         )}
                       >
                         {check.label}
@@ -364,20 +364,20 @@ IMPORTANT SECURITY WARNINGS:
                 {/* Progress Bar */}
                 <div className="mt-4">
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="text-gray-400">
+                    <span className="text-gray-600 dark:text-gray-400">
                       Security Acknowledgment
                     </span>
                     <span
                       className={cn(
                         "font-medium",
-                        allChecksPassed ? "text-success-500" : "text-gray-400",
+                        allChecksPassed ? "text-success-500" : "text-gray-600 dark:text-gray-400",
                       )}
                     >
                       {securityChecks.filter((c) => c.checked).length}/
                       {securityChecks.length}
                     </span>
                   </div>
-                  <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+                  <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                     <motion.div
                       className="h-full bg-gradient-to-r from-primary-500 to-success-500"
                       initial={{ width: 0 }}
@@ -391,7 +391,7 @@ IMPORTANT SECURITY WARNINGS:
               </div>
 
               {/* Public Key */}
-              <div className="bg-success-500/5 border border-success-500/30 rounded-xl p-4">
+              <div className="bg-green-50 dark:green-900/10 border border-success-500/30 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <Unlock className="w-5 h-5 text-success-500" />
@@ -399,21 +399,21 @@ IMPORTANT SECURITY WARNINGS:
                       Public Key (npub)
                     </h3>
                   </div>
-                  <span className="text-xs bg-success-500/20 text-success-500 px-2 py-1 rounded-full">
+                  <span className="text-xs bg-green-100 dark:green-900/30 text-success-500 px-2 py-1 rounded-full">
                     Safe to share
                   </span>
                 </div>
-                <p className="text-sm text-gray-400 mb-3">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                   This is your public identifier. Share it with others so they
                   can find and follow you.
                 </p>
-                <div className="bg-gray-900 rounded-lg p-3 font-mono text-sm text-success-500 break-all mb-3">
+                <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-3 font-mono text-sm text-success-500 break-all mb-3">
                   {keys.npub}
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => handleCopy(keys.npub, "Public key")}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-success-500/20 hover:bg-success-500/30 text-success-500 rounded-lg transition-all"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 dark:green-900/30 hover:bg-success-500/30 text-success-500 rounded-lg transition-all"
                   >
                     <Copy className="w-4 h-4" />
                     Copy
@@ -422,7 +422,7 @@ IMPORTANT SECURITY WARNINGS:
                     <a
                       href={qrCodeData.npub}
                       download="npub-qr.png"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg transition-all"
                     >
                       <QrCode className="w-4 h-4" />
                       QR Code
@@ -432,7 +432,7 @@ IMPORTANT SECURITY WARNINGS:
               </div>
 
               {/* Private Key */}
-              <div className="bg-error-500/5 border border-error-500/30 rounded-xl p-4">
+              <div className="bg-red-50 dark:red-900/10 border border-error-500/30 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <Lock className="w-5 h-5 text-error-500" />
@@ -440,21 +440,21 @@ IMPORTANT SECURITY WARNINGS:
                       Private Key (nsec)
                     </h3>
                   </div>
-                  <span className="text-xs bg-error-500/20 text-error-500 px-2 py-1 rounded-full">
+                  <span className="text-xs bg-red-100 dark:red-900/30 text-error-500 px-2 py-1 rounded-full">
                     NEVER SHARE
                   </span>
                 </div>
-                <p className="text-sm text-gray-400 mb-3">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                   This is your password. Anyone with this can control your
                   account. Keep it secret and secure.
                 </p>
-                <div className="bg-gray-900 rounded-lg p-3 font-mono text-sm text-error-500 break-all mb-3 flex items-center justify-between gap-3">
+                <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-3 font-mono text-sm text-error-500 break-all mb-3 flex items-center justify-between gap-3">
                   <span className={showPrivateKey ? "" : "blur-sm select-none"}>
                     {showPrivateKey ? keys.nsec : "•".repeat(keys.nsec.length)}
                   </span>
                   <button
                     onClick={() => setShowPrivateKey(!showPrivateKey)}
-                    className="p-2 hover:bg-gray-800 rounded-lg transition-all flex-shrink-0"
+                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all flex-shrink-0"
                     aria-label={
                       showPrivateKey ? "Hide private key" : "Show private key"
                     }
@@ -469,14 +469,14 @@ IMPORTANT SECURITY WARNINGS:
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => handleCopy(keys.nsec, "Private key")}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-error-500/20 hover:bg-error-500/30 text-error-500 rounded-lg transition-all"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-red-100 dark:red-900/30 hover:bg-error-500/30 text-error-500 rounded-lg transition-all"
                   >
                     <Copy className="w-4 h-4" />
                     Copy
                   </button>
                   <button
                     onClick={handleDownload}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg transition-all"
                   >
                     <Download className="w-4 h-4" />
                     Download Backup
@@ -485,7 +485,7 @@ IMPORTANT SECURITY WARNINGS:
                     <a
                       href={qrCodeData.nsec}
                       download="nsec-qr.png"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg transition-all"
                     >
                       <QrCode className="w-4 h-4" />
                       QR Code
@@ -502,7 +502,7 @@ IMPORTANT SECURITY WARNINGS:
                     setSecurityChecks(SECURITY_CHECKS);
                     setQrCodeData(null);
                   }}
-                  className="text-sm text-gray-400 hover:text-white transition-all inline-flex items-center gap-2"
+                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-white transition-all inline-flex items-center gap-2"
                 >
                   <RefreshCw className="w-4 h-4" />
                   Generate new key pair
@@ -527,18 +527,18 @@ IMPORTANT SECURITY WARNINGS:
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-surface border border-border-dark rounded-2xl p-6 max-w-md w-full"
+              className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 max-w-md w-full"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 bg-warning-500/20 rounded-full flex items-center justify-center">
-                  <AlertTriangle className="w-6 h-6 text-warning-500" />
+                  <AlertTriangle className="w-6 h-6 text-yellow-700 dark:text-yellow-400" />
                 </div>
                 <h3 className="text-xl font-bold text-white">
                   Security Warning
                 </h3>
               </div>
-              <p className="text-gray-300 mb-6">
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
                 You haven't completed all security acknowledgments. Copying your
                 keys without understanding the risks could result in permanent
                 loss of access.
@@ -546,7 +546,7 @@ IMPORTANT SECURITY WARNINGS:
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowWarningModal(false)}
-                  className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all"
+                  className="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg transition-all"
                 >
                   Go Back
                 </button>
@@ -556,7 +556,7 @@ IMPORTANT SECURITY WARNINGS:
                     pendingAction?.();
                     setPendingAction(null);
                   }}
-                  className="flex-1 px-4 py-2 bg-warning-500/20 hover:bg-warning-500/30 text-warning-500 rounded-lg transition-all"
+                  className="flex-1 px-4 py-2 bg-warning-500/20 hover:bg-yellow-200 dark:yellow-800 text-yellow-700 dark:text-yellow-400 rounded-lg transition-all"
                 >
                   Copy Anyway
                 </button>

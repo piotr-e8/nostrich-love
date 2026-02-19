@@ -206,7 +206,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
               <div className="p-4">
                 <p className="text-sm text-slate-400 mb-2">Your public key (npub) can be shared with others.</p>
                 <div className="flex gap-2">
-                  <code className="flex-1 p-3 bg-slate-900 rounded-lg text-sm text-teal-400 break-all font-mono">
+                  <code className="flex-1 p-3 bg-gray-100 dark:bg-slate-900 rounded-lg text-sm text-teal-600 dark:text-teal-400 break-all font-mono">
                     {currentUser.pubkey}
                   </code>
                   <button
@@ -231,7 +231,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
                   Warning: Never share your private key with anyone!
                 </p>
                 <div className="flex gap-2">
-                  <code className="flex-1 p-3 bg-slate-900 rounded-lg text-sm text-slate-500 break-all font-mono">
+                  <code className="flex-1 p-3 bg-gray-100 dark:bg-slate-900 rounded-lg text-sm text-gray-600 dark:text-slate-500 break-all font-mono">
                     {showPrivateKey ? 'nsec1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' : '••••••••••••••••••••••••••••••••••••••••••••••••••'}
                   </code>
                   <button

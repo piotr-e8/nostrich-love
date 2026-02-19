@@ -197,7 +197,6 @@ const components = {
   <Header />
 
   <MinimalProgressBar client:load guideId={guideSlug} estimatedTimeMinutes={estimatedTimeMinutes} />
-
   <ProgressTracker client:load guideSlug={guideSlug} guideTitle={guide.data.title} />
 
   {/* Show modal for critical guides with incomplete prerequisites */}
@@ -219,17 +218,17 @@ const components = {
         <div class="max-w-3xl mx-auto bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-lg">
           <article class="prose prose-lg dark:prose-invert max-w-none px-6 sm:px-10 lg:px-12 py-10">
             <div class="flex items-center justify-between mb-2">
-              <p class="text-sm uppercase tracking-wide text-primary font-semibold">Guide</p>
-              <GuidePositionIndicator client:load currentGuide={currentGuideNumGlobal} totalGuides={totalGuidesGlobal} />
+              <!-- <p class="text-sm uppercase tracking-wide text-primary font-semibold">Guide</p> -->
+              <!-- <GuidePositionIndicator client:load currentGuide={currentGuideNumGlobal} totalGuides={totalGuidesGlobal} /> -->
             </div>
             
-            <EnhancedGuideCompletionIndicator 
-              client:load 
-              guides={guideList} 
-              currentGuideSlug={guideSlug}
-              currentGuidePrerequisites={prerequisites}
-              className="mb-6" 
-            />
+            <!-- <EnhancedGuideCompletionIndicator -->
+            <!--   client:load  -->
+            <!--   guides={guideList}  -->
+            <!--   currentGuideSlug={guideSlug} -->
+            <!--   currentGuidePrerequisites={prerequisites} -->
+            <!--   className="mb-6"  -->
+            <!-- />  -->
             <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-3">{guide.data.title}</h1>
 
             {guide.data.description && (

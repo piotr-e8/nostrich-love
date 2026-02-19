@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
-import { KeyGenerator, ClientRecommender, NIP05Checker, RelayExplorer, RelayPlayground, FollowPackFinder } from '../components/interactive';
+import { KeyGenerator, NIP05Checker, RelayPlayground, FollowPackFinder } from '../components/interactive';
 
 const title = 'Interactive Tools';
 const description = 'Free browser-based tools for Nostr: key generator, client recommender, NIP-05 checker, follow pack finder, and relay explorer. Generate keys securely in your browser.';
@@ -23,13 +23,6 @@ const tools = [
     component: FollowPackFinder,
   },
   {
-    id: 'client-recommender',
-    title: 'Client Recommender',
-    description: 'Answer a few questions and find the perfect Nostr client for your needs.',
-    icon: '💻',
-    component: ClientRecommender,
-  },
-  {
     id: 'nip05-checker',
     title: 'NIP-05 Checker',
     description: 'Verify your NIP-05 identifier is set up correctly and troubleshoot issues.',
@@ -37,18 +30,18 @@ const tools = [
     component: NIP05Checker,
   },
   {
-    id: 'relay-explorer',
-    title: 'Relay Explorer',
-    description: 'Explore public Nostr relays, check their status, and find the best ones for you.',
-    icon: '📡',
-    component: RelayExplorer,
-  },
-  {
     id: 'relay-playground',
     title: 'Relay Playground',
     description: 'Interactive relay testing: connect live, check health metrics, and explore NIP support. Learn how relays work hands-on.',
     icon: '🧪',
     component: RelayPlayground,
+  },
+  {
+    id: 'client-simulators',
+    title: 'Client Simulators',
+    description: 'Try out 7 different Nostr clients in your browser before choosing your favorite. No installation required.',
+    icon: '📱',
+    href: '/simulators',
   },
 ];
 ---
@@ -91,33 +84,28 @@ const tools = [
               </div>
               {tool.id === 'key-generator' && <div class="max-w-3xl mx-auto"><KeyGenerator client:load /></div>}
               {tool.id === 'follow-pack-finder' && <FollowPackFinder client:load />}
-              {tool.id === 'client-recommender' && <div class="max-w-3xl mx-auto"><ClientRecommender client:load /></div>}
               {tool.id === 'nip05-checker' && <div class="max-w-3xl mx-auto"><NIP05Checker client:load /></div>}
-              {tool.id === 'relay-explorer' && <div class="max-w-3xl mx-auto"><RelayExplorer client:load /></div>}
               {tool.id === 'relay-playground' && <RelayPlayground client:load />}
+              {tool.id === 'client-simulators' && (
+                <div class="max-w-3xl mx-auto text-center py-8">
+                  <a 
+                    href="/simulators" 
+                    class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-friendly-purple-600 hover:bg-friendly-purple-700 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl"
+                  >
+                    Try Client Simulators
+                    <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </a>
+                </div>
+              )}
             </div>
           ))}
         </div>
       </div>
     </section>
 
-    <!-- Security Notice -->
-    <section class="py-12">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-2xl mx-auto text-center">
-          <div class="p-6 bg-success-500/10 rounded-2xl border border-success-500/20">
-            <h3 class="text-lg font-semibold text-success-600 dark:text-success-400 mb-2">
-              🔒 Your Privacy Matters
-            </h3>
-            <p class="text-gray-600 dark:text-gray-400">
-              All keys are generated locally in your browser using the Web Crypto API. 
-              Nothing is sent to our servers. You can verify this by checking the source code 
-              or using developer tools.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+
   </main>
 
   <Footer />

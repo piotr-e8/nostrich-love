@@ -1,0 +1,107 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = 'Privacy Policy';
+const description = 'Privacy policy for Nostrich.love - how we handle your data';
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 max-w-3xl">
+      <div class="mb-8">
+        <a href="/" class="text-friendly-purple-600 dark:text-friendly-purple-400 hover:underline text-sm mb-4 inline-block">
+          ← Back to Nostrich.love
+        </a>
+      </div>
+      
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Privacy Policy</h1>
+      <p class="text-gray-500 dark:text-gray-400 italic mb-8">Last updated: February 2025</p>
+
+      <div class="prose prose-gray dark:prose-invert max-w-none">
+        <p class="text-gray-700 dark:text-gray-300">
+          Nostrich.love is committed to protecting your privacy. This privacy policy
+          explains how we handle your data.
+        </p>
+
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">Our Privacy-First Approach</h2>
+        <p class="text-gray-700 dark:text-gray-300">Nostrich.love is designed with privacy at its core:</p>
+        <ul class="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
+          <li><strong>No cookies</strong> - We don't use tracking cookies</li>
+          <li>
+            <strong>No personal data collection</strong> - We don't ask for or store
+            personal information
+          </li>
+          <li>
+            <strong>No third-party trackers</strong> - No Facebook pixels, Google
+            Analytics, or similar
+          </li>
+          <li>
+            <strong>Keys stay in your browser</strong> - When you generate Nostr
+            keys, they never leave your device
+          </li>
+        </ul>
+
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">What Data We Collect</h2>
+
+        <h3 class="text-lg font-medium text-gray-900 dark:text-white mt-6 mb-3">Analytics</h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          We use Cloudflare Web Analytics to understand how visitors use our site:
+        </p>
+        <ul class="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
+          <li>Anonymous visit statistics (page views, referrer)</li>
+          <li>No personally identifiable information</li>
+          <li>No cookies used for analytics</li>
+          <li>Data retained for minimal time</li>
+        </ul>
+
+        <h3 class="text-lg font-medium text-gray-900 dark:text-white mt-6 mb-3">Local Storage</h3>
+        <p class="text-gray-700 dark:text-gray-300">We store certain preferences locally in your browser:</p>
+        <ul class="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
+          <li>Your progress through guides (optional)</li>
+          <li>Quiz answers and checklist states</li>
+          <li>Theme preference (dark/light mode)</li>
+        </ul>
+        <p class="text-gray-700 dark:text-gray-300">
+          This data stays on your device and is never transmitted to our servers.
+        </p>
+
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">Nostr Keys</h2>
+        <p class="text-gray-700 dark:text-gray-300">
+          <strong>Important:</strong> When you use our key generator or other
+          interactive tools:
+        </p>
+        <ul class="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
+          <li>Keys are generated entirely in your browser</li>
+          <li>We never see, store, or transmit your private keys (nsec)</li>
+          <li>Public keys (npub) are only used for display purposes</li>
+          <li>You are responsible for backing up your keys securely</li>
+        </ul>
+
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">External Links</h2>
+        <p class="text-gray-700 dark:text-gray-300">
+          Our site contains links to external Nostr clients and services. We are not
+          responsible for the privacy practices of these third-party sites. We
+          encourage you to review their privacy policies.
+        </p>
+
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">Contact</h2>
+        <p class="text-gray-700 dark:text-gray-300">
+          If you have questions about this privacy policy, please contact us at:
+          <a href="mailto:hello@nostrich.love" class="text-friendly-purple-600 dark:text-friendly-purple-400 hover:underline">hello@nostrich.love</a>
+        </p>
+
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">Changes to This Policy</h2>
+        <p class="text-gray-700 dark:text-gray-300">
+          We may update this privacy policy from time to time. Any changes will be
+          posted on this page with an updated date.
+        </p>
+      </div>
+
+      <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
+        <a href="/" class="text-friendly-purple-600 dark:text-friendly-purple-400 hover:underline">
+          ← Back to Nostrich.love
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>

@@ -450,7 +450,7 @@ export function RelayPlayground({ className }: { className?: string }) {
 
   return (
     <div className={cn("max-w-7xl mx-auto p-4 md:p-6", className)}>
-      <div className="bg-surface border border-border-dark rounded-2xl p-6 md:p-8">
+      <div className="bg-surface border border-gray-200 dark:border-gray-700 rounded-2xl p-6 md:p-8">
         {/* Header */}
         <div className="text-center mb-8">
           <motion.div
@@ -463,28 +463,28 @@ export function RelayPlayground({ className }: { className?: string }) {
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
             Relay Playground
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Explore, test, and learn about Nostr relays. Only online relays are shown. No keys required - just open WebSocket connections and see what happens.
           </p>
         </div>
 
         {/* Stats Overview */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-gray-800/50 rounded-xl p-4 text-center">
+          <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
             <div className="text-3xl font-bold text-success-500">{onlineCount}</div>
-            <div className="text-sm text-gray-400">Online Relays</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Online Relays</div>
           </div>
-          <div className="bg-gray-800/50 rounded-xl p-4 text-center">
+          <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
             <div className="text-3xl font-bold text-error-500">{offlineCount}</div>
-            <div className="text-sm text-gray-400">Currently Offline</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Currently Offline</div>
           </div>
-          <div className="bg-gray-800/50 rounded-xl p-4 text-center">
+          <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
             <div className="text-3xl font-bold text-white">{relays.length}</div>
-            <div className="text-sm text-gray-400">Total Monitored</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Total Monitored</div>
           </div>
-          <div className="bg-gray-800/50 rounded-xl p-4 text-center">
+          <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
             <div className="text-3xl font-bold text-primary-500">{avgLatency}ms</div>
-            <div className="text-sm text-gray-400">Avg Latency</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Avg Latency</div>
           </div>
         </div>
 
@@ -504,7 +504,7 @@ export function RelayPlayground({ className }: { className?: string }) {
                 "flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all",
                 activeTab === tab.id
                   ? "bg-primary-500 text-white"
-                  : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-600 dark:text-gray-400 dark:hover:bg-gray-700"
               )}
             >
               <tab.icon className="w-4 h-4" />
@@ -514,7 +514,7 @@ export function RelayPlayground({ className }: { className?: string }) {
           <button
             onClick={checkAllRelays}
             disabled={isCheckingAll}
-            className="ml-auto flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 disabled:bg-gray-800 text-white rounded-lg font-medium transition-all"
+            className="ml-auto flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 disabled:bg-gray-800 text-white rounded-lg font-medium transition-all"
           >
             <RefreshCw className={cn("w-4 h-4", isCheckingAll && "animate-spin")} />
             {isCheckingAll ? "Checking..." : "Refresh All"}
@@ -529,7 +529,7 @@ export function RelayPlayground({ className }: { className?: string }) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search relays by name, URL, or location..."
-            className="w-full pl-10 pr-4 py-3 bg-gray-900 border border-border-dark rounded-xl text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
+            className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:outline-none"
           />
         </div>
 
@@ -610,7 +610,7 @@ function ConnectionLab({
       {/* Relay Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {relays.length === 0 ? (
-          <div className="col-span-3 text-center py-12 text-gray-400">
+          <div className="col-span-3 text-center py-12 text-gray-600 dark:text-gray-400">
             <Server className="w-12 h-12 mx-auto mb-4 opacity-50" />
             <p>No online relays found. Click &quot;Refresh All&quot; to check relay status.</p>
           </div>
@@ -624,7 +624,7 @@ function ConnectionLab({
                 "relative p-4 border rounded-xl cursor-pointer transition-all",
                 selectedRelay?.id === relay.id
                   ? "border-primary-500 bg-primary-500/10"
-                  : "border-gray-700 hover:border-gray-600 bg-gray-800/30"
+                  : "border-gray-300 hover:border-gray-400 dark:border-gray-700 dark:hover:border-gray-600 bg-gray-100/30 dark:bg-gray-800/30"
               )}
             >
               {/* Connection Status Indicator */}
@@ -659,7 +659,7 @@ function ConnectionLab({
                 </div>
               </div>
 
-              <p className="text-sm text-gray-400 mb-3 line-clamp-2">{relay.description}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">{relay.description}</p>
 
               <div className="flex items-center justify-between text-xs text-gray-500">
                 <span className="flex items-center gap-1">
@@ -670,7 +670,7 @@ function ConnectionLab({
                   "px-2 py-0.5 rounded-full",
                   relay.status === "online" ? "bg-green-500/20 text-green-400" :
                   relay.status === "offline" ? "bg-red-500/20 text-red-400" :
-                  "bg-gray-500/20 text-gray-400"
+                  "bg-gray-500/20 text-gray-600 dark:text-gray-400"
                 )}>
                   {relay.status}
                 </span>
@@ -687,16 +687,16 @@ function ConnectionLab({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="bg-gray-800/50 border border-gray-700 rounded-xl p-6"
+            className="bg-gray-100/50 dark:bg-gray-800/50 border border-gray-700 rounded-xl p-6"
           >
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h3 className="text-xl font-semibold text-white">{selectedRelay.name}</h3>
-                <p className="text-gray-400">{selectedRelay.url}</p>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{selectedRelay.name}</h3>
+                <p className="text-gray-600 dark:text-gray-400">{selectedRelay.url}</p>
               </div>
               <button
                 onClick={() => onSelectRelay(null as any)}
-                className="text-gray-500 hover:text-white"
+                className="text-gray-500 hover:text-gray-700 dark:hover:text-white"
               >
                 <XCircle className="w-6 h-6" />
               </button>
@@ -723,7 +723,7 @@ function ConnectionLab({
               )}
               <button
                 onClick={() => copyToClipboard(selectedRelay.url)}
-                className="flex items-center gap-2 px-4 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-medium transition-all"
+                className="flex items-center gap-2 px-4 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-xl font-medium transition-all"
               >
                 <Copy className="w-5 h-5" />
                 Copy URL
@@ -731,7 +731,7 @@ function ConnectionLab({
             </div>
 
             {/* Connection State Display */}
-            <div className="bg-gray-900 rounded-xl p-4 font-mono text-sm">
+            <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 p-4 font-mono text-sm">
               <div className="text-gray-500 mb-2">// Connection Status</div>
               <div className="text-green-400">
                 {selectedRelay.connectionState === "idle" && "awaiting connection..."}
@@ -794,7 +794,7 @@ function HealthDashboard({
     >
       {/* Sort Controls */}
       <div className="flex items-center gap-4">
-        <span className="text-gray-400 text-sm">Sort by:</span>
+        <span className="text-gray-600 dark:text-gray-400 text-sm">Sort by:</span>
         <div className="flex gap-2">
           {[
             { key: "latency" as const, label: "Latency" },
@@ -807,7 +807,7 @@ function HealthDashboard({
                 "px-3 py-1.5 rounded-lg text-sm font-medium transition-all",
                 sortBy === option.key
                   ? "bg-primary-500 text-white"
-                  : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-600 dark:text-gray-400 dark:hover:bg-gray-700"
               )}
             >
               {option.label}
@@ -817,30 +817,30 @@ function HealthDashboard({
       </div>
 
       {/* Health Table */}
-      <div className="bg-gray-800/30 rounded-xl overflow-hidden border border-gray-700">
+      <div className="bg-gray-100/30 dark:bg-gray-800/30 rounded-xl overflow-hidden border border-gray-700">
         <table className="w-full">
-          <thead className="bg-gray-800/50">
+          <thead className="bg-gray-100/50 dark:bg-gray-800/50">
             <tr>
-              <th className="text-left px-4 py-3 text-sm font-medium text-gray-400">Relay</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-gray-400">Location</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-gray-400">Latency</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-gray-400">Last Checked</th>
+              <th className="text-left px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Relay</th>
+              <th className="text-left px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Location</th>
+              <th className="text-left px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Latency</th>
+              <th className="text-left px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Last Checked</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-700">
             {sortedRelays.map((relay) => (
-              <tr key={relay.id} className="hover:bg-gray-800/30 transition-colors">
+              <tr key={relay.id} className="hover:bg-gray-100/30 dark:bg-gray-800/30 transition-colors">
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
                     <Server className="w-4 h-4 text-gray-500" />
                     <div>
-                      <div className="font-medium text-white">{relay.name}</div>
+                      <div className="font-medium text-gray-900 dark:text-white">{relay.name}</div>
                       <div className="text-xs text-gray-500">{relay.url}</div>
                     </div>
                   </div>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="flex items-center gap-1 text-gray-400">
+                  <span className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
                     <Globe className="w-3 h-3" />
                     {relay.location}
                   </span>
@@ -848,7 +848,7 @@ function HealthDashboard({
                 <td className={cn("px-4 py-3 font-mono", getLatencyColor(relay.latency))}>
                   {relay.latency ? `${relay.latency}ms` : "—"}
                 </td>
-                <td className="px-4 py-3 text-gray-400 text-sm">
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400 text-sm">
                   {relay.lastChecked ? 
                     new Date(relay.lastChecked).toLocaleTimeString() : 
                     "Never"
@@ -867,7 +867,7 @@ function HealthDashboard({
             <CheckCircle2 className="w-5 h-5" />
             Excellent (&lt; 100ms)
           </div>
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
             These relays are very close to you geographically or have excellent infrastructure. 
             You will have the best experience with these.
           </p>
@@ -877,7 +877,7 @@ function HealthDashboard({
             <Activity className="w-5 h-5" />
             Good (100-300ms)
           </div>
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
             These relays are usable but may be farther away. You will still have a good experience, 
             but posts might take slightly longer to load.
           </p>
@@ -887,7 +887,7 @@ function HealthDashboard({
             <AlertCircle className="w-5 h-5" />
             Slow (&gt; 300ms)
           </div>
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
             These relays are either very far away or experiencing issues. Consider using closer 
             relays for better performance.
           </p>
@@ -949,11 +949,11 @@ function NIPDetector({
                 "p-3 rounded-xl border text-left transition-all",
                 selectedNIP === nip
                   ? "border-purple-500 bg-purple-500/20"
-                  : "border-gray-700 hover:border-purple-500/50 bg-gray-800/30"
+                  : "border-gray-700 hover:border-purple-500/50 bg-gray-100/30 dark:bg-gray-800/30"
               )}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-lg font-bold text-white">NIP-{nip}</span>
+                <span className="text-lg font-bold text-gray-900 dark:text-white">NIP-{nip}</span>
                 <span className={cn(
                   "text-xs font-medium px-2 py-0.5 rounded-full",
                   percentage >= 70 ? "bg-green-500/20 text-green-400" :
@@ -963,7 +963,7 @@ function NIPDetector({
                   {percentage}%
                 </span>
               </div>
-              <div className="text-xs text-gray-400 line-clamp-2">
+              <div className="text-xs text-gray-600 dark:text-gray-400 line-clamp-2">
                 {NIP_DESCRIPTIONS[nip] || "Unknown NIP"}
               </div>
               <div className="mt-2 text-xs text-gray-500">
@@ -981,16 +981,16 @@ function NIPDetector({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="bg-gray-800/50 border border-gray-700 rounded-xl p-6"
+            className="bg-gray-100/50 dark:bg-gray-800/50 border border-gray-700 rounded-xl p-6"
           >
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h3 className="text-xl font-semibold text-white">NIP-{selectedNIP}</h3>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">NIP-{selectedNIP}</h3>
                 <p className="text-purple-400">{NIP_DESCRIPTIONS[selectedNIP]}</p>
               </div>
               <button
                 onClick={() => setSelectedNIP(null)}
-                className="text-gray-500 hover:text-white"
+                className="text-gray-500 hover:text-gray-700 dark:hover:text-white"
               >
                 <XCircle className="w-6 h-6" />
               </button>
@@ -1027,7 +1027,7 @@ function NIPDetector({
                     </span>
                   ))}
                 {relays.filter(r => !r.supportedNIPs.includes(selectedNIP)).length > 10 && (
-                  <span className="px-3 py-1 bg-gray-700 text-gray-400 rounded-full text-sm">
+                  <span className="px-3 py-1 bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-600 dark:text-gray-400 rounded-full text-sm">
                     +{relays.filter(r => !r.supportedNIPs.includes(selectedNIP)).length - 10} more
                   </span>
                 )}
@@ -1038,23 +1038,23 @@ function NIPDetector({
       </AnimatePresence>
 
       {/* Common NIPs */}
-      <div className="bg-gray-800/30 rounded-xl p-6 border border-gray-700">
+      <div className="bg-gray-100/30 dark:bg-gray-800/30 rounded-xl p-6 border border-gray-700">
         <h3 className="text-lg font-semibold text-white mb-4">Most Common NIPs</h3>
         <div className="space-y-3">
           {[1, 2, 4, 9, 11, 40, 42].map((nip) => (
             <div key={nip} className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <span className="w-12 font-mono text-gray-400">NIP-{nip}</span>
+                <span className="w-12 font-mono text-gray-600 dark:text-gray-400">NIP-{nip}</span>
                 <span className="text-gray-300">{NIP_DESCRIPTIONS[nip]}</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-32 h-2 bg-gray-700 rounded-full overflow-hidden">
+                <div className="w-32 h-2 bg-gray-300 dark:bg-gray-700 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-primary-500 rounded-full"
                     style={{ width: `${getSupportPercentage(nip)}%` }}
                   />
                 </div>
-                <span className="text-sm text-gray-400 w-12 text-right">
+                <span className="text-sm text-gray-600 dark:text-gray-400 w-12 text-right">
                   {getSupportPercentage(nip)}%
                 </span>
               </div>
@@ -1188,10 +1188,10 @@ function EventStreamViewer({
       </div>
 
       {/* Controls */}
-      <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 space-y-4">
+      <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-6 border border-gray-700 space-y-4">
         {/* Relay Selection */}
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">Select Relay</label>
+          <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Select Relay</label>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {relays.slice(0, 8).map((relay) => (
               <button
@@ -1216,7 +1216,7 @@ function EventStreamViewer({
 
         {/* Event Kinds */}
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">Event Types</label>
+          <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Event Types</label>
           <div className="flex flex-wrap gap-2">
             {EVENT_KINDS.map((kind) => (
               <button
@@ -1227,7 +1227,7 @@ function EventStreamViewer({
                   "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all",
                   selectedKinds.includes(kind.kind)
                     ? "bg-primary-500 text-white"
-                    : "bg-gray-700 text-gray-400",
+                    : "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-600 dark:text-gray-400",
                   isStreaming && "opacity-50 cursor-not-allowed"
                 )}
               >
@@ -1240,7 +1240,7 @@ function EventStreamViewer({
 
         {/* Max Events */}
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">
+          <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">
             Max Events: {maxEvents}
           </label>
           <input
@@ -1250,7 +1250,7 @@ function EventStreamViewer({
             value={maxEvents}
             onChange={(e) => setMaxEvents(Number(e.target.value))}
             disabled={isStreaming}
-            className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+            className="w-full h-2 bg-gray-300 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer"
           />
         </div>
 
@@ -1260,7 +1260,7 @@ function EventStreamViewer({
             <button
               onClick={startStreaming}
               disabled={!selectedRelay || selectedKinds.length === 0}
-              className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 disabled:bg-gray-700 text-white rounded-xl font-medium"
+              className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 dark:disabled:bg-gray-700 text-white rounded-xl font-medium"
             >
               <Play className="w-5 h-5" />
               Start Streaming
@@ -1276,7 +1276,7 @@ function EventStreamViewer({
           )}
           <button
             onClick={() => setEvents([])}
-            className="flex items-center gap-2 px-4 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-medium"
+            className="flex items-center gap-2 px-4 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-xl font-medium"
           >
             <Trash2 className="w-5 h-5" />
             Clear
@@ -1285,7 +1285,7 @@ function EventStreamViewer({
       </div>
 
       {/* Events Display */}
-      <div className="bg-gray-800/30 rounded-xl border border-gray-700 overflow-hidden">
+      <div className="bg-gray-100/30 dark:bg-gray-800/30 rounded-xl border border-gray-700 overflow-hidden">
         <div className="p-4 border-b border-gray-700 flex items-center justify-between">
           <h3 className="font-semibold text-white flex items-center gap-2">
             <Eye className="w-5 h-5" />
@@ -1306,7 +1306,7 @@ function EventStreamViewer({
           ) : (
             <div className="divide-y divide-gray-700">
               {events.map((evt, idx) => (
-                <div key={idx} className="p-4 hover:bg-gray-800/50">
+                <div key={idx} className="p-4 hover:bg-gray-100/50 dark:bg-gray-800/50">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="px-2 py-0.5 bg-primary-500/20 text-primary-400 rounded text-xs">
                       Kind {evt.event.kind}
@@ -1429,16 +1429,16 @@ function QueryTester({
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Query Builder */}
-        <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
+        <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-6 border border-gray-700">
           <h3 className="text-lg font-semibold text-white mb-4">Query Builder</h3>
 
           {/* Relay */}
           <div className="mb-4">
-            <label className="block text-sm text-gray-400 mb-2">Target Relay</label>
+            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-2">Target Relay</label>
             <select
               value={selectedRelay?.id || ""}
               onChange={(e) => setSelectedRelay(relays.find(r => r.id === e.target.value) || null)}
-              className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white"
+              className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-lg text-gray-900 dark:text-white"
             >
               <option value="">Select relay...</option>
               {relays.map(r => (
@@ -1449,7 +1449,7 @@ function QueryTester({
 
           {/* Kinds */}
           <div className="mb-4">
-            <label className="block text-sm text-gray-400 mb-2">Event Kinds</label>
+            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-2">Event Kinds</label>
             <div className="flex flex-wrap gap-2">
               {EVENT_KINDS.map(kind => (
                 <button
@@ -1459,7 +1459,7 @@ function QueryTester({
                     "px-3 py-1.5 rounded-lg text-sm transition-all",
                     queryKinds.includes(kind.kind)
                       ? "bg-primary-500 text-white"
-                      : "bg-gray-700 text-gray-400"
+                      : "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-600 dark:text-gray-400"
                   )}
                 >
                   {kind.label}
@@ -1470,14 +1470,14 @@ function QueryTester({
 
           {/* Limit */}
           <div className="mb-4">
-            <label className="block text-sm text-gray-400 mb-2">Limit: {limit}</label>
+            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-2">Limit: {limit}</label>
             <input
               type="range"
               min="1"
               max="50"
               value={limit}
               onChange={(e) => setLimit(Number(e.target.value))}
-              className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+              className="w-full h-2 bg-gray-300 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer"
             />
           </div>
 
@@ -1485,7 +1485,7 @@ function QueryTester({
           <button
             onClick={runQuery}
             disabled={!selectedRelay || queryKinds.length === 0 || isQuerying}
-            className="w-full py-3 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-700 text-white rounded-xl font-medium"
+            className="w-full py-3 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-400 dark:disabled:bg-gray-700 text-white rounded-xl font-medium"
           >
             {isQuerying ? (
               <span className="flex items-center justify-center gap-2">
@@ -1502,12 +1502,12 @@ function QueryTester({
         {/* Results */}
         <div>
           <div className="flex items-center justify-between mb-4">
-            <span className="text-gray-400">Results: <strong className="text-white">{results.length}</strong></span>
+            <span className="text-gray-600 dark:text-gray-400">Results: <strong className="text-white">{results.length}</strong></span>
             <button
               onClick={() => setShowRaw(!showRaw)}
               className={cn(
                 "px-3 py-1.5 rounded-lg text-sm transition-all",
-                showRaw ? "bg-primary-500 text-white" : "bg-gray-700 text-gray-400"
+                showRaw ? "bg-primary-500 text-white" : "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-600 dark:text-gray-400"
               )}
             >
               {showRaw ? "Hide" : "Show"} Raw JSON
@@ -1516,15 +1516,15 @@ function QueryTester({
 
           {/* Raw JSON */}
           {showRaw && results.length > 0 && (
-            <div className="bg-gray-900 rounded-xl p-4 mb-4 overflow-x-auto">
-              <pre className="text-xs text-gray-300">
+            <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 p-4 mb-4 overflow-x-auto">
+              <pre className="text-xs text-gray-700 dark:text-gray-300">
                 {JSON.stringify(["REQ", "sub", { kinds: queryKinds, limit }], null, 2)}
               </pre>
             </div>
           )}
 
           {/* Results List */}
-          <div className="bg-gray-800/30 rounded-xl border border-gray-700 max-h-[500px] overflow-y-auto">
+          <div className="bg-gray-100/30 dark:bg-gray-800/30 rounded-xl border border-gray-700 max-h-[500px] overflow-y-auto">
             {results.length === 0 ? (
               <div className="text-center py-12 text-gray-500">
                 <p>No results yet. Run a query to fetch events.</p>
@@ -1532,7 +1532,7 @@ function QueryTester({
             ) : (
               <div className="divide-y divide-gray-700">
                 {results.map((evt, idx) => (
-                  <div key={idx} className="p-4 hover:bg-gray-800/50">
+                  <div key={idx} className="p-4 hover:bg-gray-100/50 dark:bg-gray-800/50">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="px-2 py-0.5 bg-primary-500/20 text-primary-400 rounded text-xs">
                         Kind {evt.kind}

@@ -218,36 +218,6 @@ const totalGuides = skillLevels.reduce((acc, level) => acc + level.guides.length
       </div>
     </section>
 
-    <!-- Search & Filter -->
-    <section class="py-8 bg-gray-50 dark:bg-gray-900/30 border-b border-gray-200 dark:border-gray-800">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-2xl mx-auto">
-          <div class="relative mb-4">
-            <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <input
-              type="text"
-              id="guide-search"
-              placeholder="Search guides..."
-              class="w-full pl-12 pr-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-friendly-purple-400 focus:border-transparent"
-            />
-          </div>
-          <!-- Progress Legend -->
-          <div class="flex items-center justify-center gap-6 text-sm text-gray-500 dark:text-gray-400">
-            <div class="flex items-center gap-2">
-              <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
-              <span>Completed</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <div class="w-2.5 h-2.5 rounded-full bg-blue-400"></div>
-              <span>In progress</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Interest Filter & Guide Sections - Full Width -->
     <section class="py-12">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -271,13 +241,13 @@ const totalGuides = skillLevels.reduce((acc, level) => acc + level.guides.length
           Not sure where to start?
         </h2>
         <p class="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-          Take our quick assessment to find the perfect starting point for your Nostr journey.
+          Begin with our beginner guides—they're designed to take you from zero to your first post.
         </p>
         <a
-          href="/tools"
+          href="/guides/what-is-nostr"
           class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-friendly-purple-600 bg-white rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
         >
-          Explore Tools
+          Start Learning
           <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>

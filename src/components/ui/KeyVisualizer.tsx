@@ -58,10 +58,10 @@ export function KeyVisualizer({
       </div>
       <code
         className={cn(
-          "block text-xs break-all rounded-xl bg-gray-900/90 p-3 font-mono text-white",
+          "block text-xs break-all rounded-xl bg-gray-100 dark:bg-gray-900/90 p-3 font-mono text-gray-900 dark:text-white",
           type === "nsec"
-            ? "border border-red-500/30"
-            : "border border-green-500/30",
+            ? "border border-red-500/30 dark:border-red-500/50"
+            : "border border-green-500/30 dark:border-green-500/50",
         )}
       >
         {type === "nsec" && !showPrivate ? maskKey(value) : value}

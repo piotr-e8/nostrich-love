@@ -42,7 +42,7 @@ export function RelayWorldMap({
   return (
     <div
       className={cn(
-        "bg-gray-800/30 border border-border-dark rounded-2xl p-6",
+        "bg-gray-100 dark:bg-gray-800/30 border border-border-dark rounded-2xl p-6",
         className,
       )}
     >
@@ -60,7 +60,7 @@ export function RelayWorldMap({
       </div>
 
       {/* Simplified World Map Visualization */}
-      <div className="relative h-48 bg-gray-900 rounded-xl overflow-hidden mb-6">
+      <div className="relative h-48 bg-white dark:bg-gray-900 rounded-xl overflow-hidden mb-6">
         {/* Grid pattern */}
         <div className="absolute inset-0 opacity-10">
           <svg width="100%" height="100%">
@@ -141,7 +141,7 @@ export function RelayWorldMap({
         {relays.map((relay, index) => (
           <div
             key={index}
-            className="flex items-center gap-3 p-3 bg-gray-900/50 rounded-lg"
+            className="flex items-center gap-3 p-3 bg-white dark:bg-gray-50 dark:bg-gray-900/50 rounded-lg"
           >
             <div
               className={cn(

@@ -23,7 +23,7 @@ export function NIP({
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        "flex items-start gap-4 p-4 bg-gray-800/30 border border-border-dark rounded-xl hover:bg-gray-800/50 hover:border-primary-500/50 transition-all group",
+        "flex items-start gap-4 p-4 bg-white dark:bg-gray-800/30 border border-gray-200 dark:border-gray-700 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:border-primary-500/50 transition-all group",
         className,
       )}
     >
@@ -37,8 +37,8 @@ export function NIP({
           </span>
           <ExternalLink className="w-3 h-3 text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
-        {title && <h4 className="font-semibold text-white mb-1">{title}</h4>}
-        {description && <p className="text-sm text-gray-400">{description}</p>}
+        {title && <h4 className="font-semibold text-gray-900 dark:text-white mb-1">{title}</h4>}
+        {description && <p className="text-sm text-gray-600 dark:text-gray-400">{description}</p>}
       </div>
     </a>
   );
