@@ -460,7 +460,7 @@ export function RelayPlayground({ className }: { className?: string }) {
           >
             <Globe className="w-8 h-8 text-primary-500" />
           </motion.div>
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
             Relay Playground
           </h2>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
@@ -600,9 +600,9 @@ function ConnectionLab({
     >
       {/* Educational Banner */}
       <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 flex items-start gap-3">
-        <Info className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
-        <div className="text-sm text-gray-300">
-          <strong className="text-blue-400">How it works:</strong> Click any relay to open a live WebSocket connection. 
+        <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+        <div className="text-sm text-gray-700 dark:text-gray-300">
+          <strong className="text-blue-600 dark:text-blue-400">How it works:</strong> Click any relay to open a live WebSocket connection. 
           You will see the connection process in real-time without needing any keys. This is exactly how Nostr clients connect to relays behind the scenes.
         </div>
       </div>
@@ -654,7 +654,7 @@ function ConnectionLab({
                   <Server className="w-5 h-5 text-blue-400" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="font-semibold text-white truncate">{relay.name}</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-white truncate">{relay.name}</h3>
                   <p className="text-xs text-gray-500 truncate">{relay.url}</p>
                 </div>
               </div>
@@ -997,7 +997,7 @@ function NIPDetector({
             </div>
 
             <div className="mb-4">
-              <h4 className="font-semibold text-white mb-2">Supported by:</h4>
+              <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Supported by:</h4>
               <div className="flex flex-wrap gap-2">
                 {relays
                   .filter(r => r.supportedNIPs.includes(selectedNIP))
@@ -1013,7 +1013,7 @@ function NIPDetector({
             </div>
 
             <div>
-              <h4 className="font-semibold text-white mb-2">Not supported by:</h4>
+              <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Not supported by:</h4>
               <div className="flex flex-wrap gap-2">
                 {relays
                   .filter(r => !r.supportedNIPs.includes(selectedNIP))
@@ -1038,8 +1038,8 @@ function NIPDetector({
       </AnimatePresence>
 
       {/* Common NIPs */}
-      <div className="bg-gray-100/30 dark:bg-gray-800/30 rounded-xl p-6 border border-gray-700">
-        <h3 className="text-lg font-semibold text-white mb-4">Most Common NIPs</h3>
+      <div className="bg-gray-100/30 dark:bg-gray-800/30 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Most Common NIPs</h3>
         <div className="space-y-3">
           {[1, 2, 4, 9, 11, 40, 42].map((nip) => (
             <div key={nip} className="flex items-center justify-between">
@@ -1285,9 +1285,9 @@ function EventStreamViewer({
       </div>
 
       {/* Events Display */}
-      <div className="bg-gray-100/30 dark:bg-gray-800/30 rounded-xl border border-gray-700 overflow-hidden">
-        <div className="p-4 border-b border-gray-700 flex items-center justify-between">
-          <h3 className="font-semibold text-white flex items-center gap-2">
+      <div className="bg-gray-100/30 dark:bg-gray-800/30 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+          <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
             <Eye className="w-5 h-5" />
             Events Stream ({events.length})
           </h3>
@@ -1429,8 +1429,8 @@ function QueryTester({
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Query Builder */}
-        <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-          <h3 className="text-lg font-semibold text-white mb-4">Query Builder</h3>
+        <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Query Builder</h3>
 
           {/* Relay */}
           <div className="mb-4">

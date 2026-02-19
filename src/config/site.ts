@@ -9,7 +9,7 @@ export const siteConfig = {
   description:
     "A comprehensive beginner-friendly guide to Nostr - the decentralized social protocol. Learn how to get started, generate keys, choose clients, and join the censorship-resistant social web at Nostrich.love",
   url: "https://nostrich.love",
-  ogImage: "/og-image.png",
+  ogImage: "/preview_image.png",
 
   // SEO Defaults
   seo: {
@@ -17,7 +17,7 @@ export const siteConfig = {
     titleTemplate: "%s | Nostrich.love",
     defaultDescription:
       "A comprehensive beginner guide to Nostr - the decentralized social network protocol. Learn how to get started, generate keys, choose clients, and join the censorship-resistant social web at Nostrich.love",
-    defaultImage: "/og-image.png",
+    defaultImage: "/preview_image.png",
     language: "en",
   },
 

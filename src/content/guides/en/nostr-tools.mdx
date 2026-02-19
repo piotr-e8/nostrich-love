@@ -8,7 +8,7 @@ prerequisites: ["keys-and-security", "quickstart"]
 ---
 
 import { Callout } from "@components/ui/Callout";
-import { CTA } from "@components/ui/CTA";
+import { CTAButton } from "@components/CTAButton";
 
 Nostr has a rich ecosystem of tools and services that make using the protocol easier. Here's a curated list of essential tools organized by category.
 
@@ -26,6 +26,12 @@ Nostr has a rich ecosystem of tools and services that make using the protocol ea
 - **URL:** [nostr-tools.com](https://nostr-tools.com)
 - **What it does:** Convert between npub/hex/nsec formats
 - **Why use it:** Useful for developers or when you need different key formats
+
+**NAK (Nostr Army Knife)**
+- **URL:** [nak.nostr.com](https://nak.nostr.com)
+- **What it does:** Command-line tool and web interface for Nostr operations
+- **Features:** Key generation, event signing, relay interaction, debugging
+- **Best for:** Developers and power users who need CLI tools
 
 **Nostr Key Generator**
 - **What it does:** Generate new key pairs offline
@@ -60,14 +66,10 @@ Nostr has a rich ecosystem of tools and services that make using the protocol ea
 - **What it does:** Simple image hosting service
 - **Features:** Fast uploads, permanent storage
 
-**Video Nostr**
-- **URL:** [video.nostr.com](https://video.nostr.com)
-- **What it does:** Video hosting optimized for Nostr
-- **Features:** Adaptive streaming, multiple quality options
-
 ### File Sharing
 
 **Nostr Files**
+- **URL:** [nostrfiles.com](https://nostrfiles.com)
 - **What it does:** General file hosting for Nostr users
 - **Best for:** PDFs, documents, and other files
 
@@ -80,7 +82,8 @@ Nostr has a rich ecosystem of tools and services that make using the protocol ea
 **NostrPlebs**
 - **URL:** [nostrplebs.com](https://nostrplebs.com)
 - **What it does:** NIP-05 identifiers (you@nostrplebs.com)
-- **Cost:** Free tier available, paid plans ~$12-15/year
+- **Cost:** Paid only - 12,500-65,000 sats/year (pricing based on username length)
+- **Note:** No free tier available
 - **Best for:** Getting a human-readable identifier quickly
 
 **NostrCheck**
@@ -92,13 +95,6 @@ Nostr has a rich ecosystem of tools and services that make using the protocol ea
 - **URL:** [getalby.com](https://getalby.com)
 - **What it does:** Lightning wallet + NIP-05
 - **Best for:** Combining payments and identity
-
-### Verification Tools
-
-**Nostr.guru**
-- **URL:** [nostr.guru](https://nostr.guru)
-- **What it does:** Explore Nostr events and verify NIP-05
-- **Features:** Event viewer, profile lookup, relay inspection
 
 ---
 
@@ -112,16 +108,13 @@ Nostr has a rich ecosystem of tools and services that make using the protocol ea
 - **Features:** Top zapped content, historical data, leaderboards
 - **Best for:** Creators tracking their earnings
 
-**Nostrudel Ninja**
-- **URL:** [nostrudel.ninja](https://nostrudel.ninja)
-- **What it does:** Advanced Nostr analytics
-- **Features:** Network visualization, follower analysis, zap tracking
+### Network Discovery & Stats
 
-### Network Discovery
-
-**Nostr.band** (Note: Currently in flux, check status)
-- **What it did:** Nostr search and discovery
-- **Status:** Service may have changed - verify current availability
+**Stats.OtherStuff**
+- **URL:** [stats.otherstuff.org](https://stats.otherstuff.org)
+- **What it does:** Nostr network statistics and analytics
+- **Features:** Global metrics, relay statistics, network growth data
+- **Best for:** Understanding the overall Nostr ecosystem
 
 **Primal Explore**
 - **URL:** [primal.net/explore](https://primal.net/explore)
@@ -198,9 +191,6 @@ Nostr has a rich ecosystem of tools and services that make using the protocol ea
 
 ## Search & Indexing
 
-**Nostr.band Search** (if available)
-- Full-text search across Nostr
-
 **Primal Search**
 - Built into Primal client
 - Fast, comprehensive results
@@ -222,6 +212,18 @@ Nostr has a rich ecosystem of tools and services that make using the protocol ea
 - **GitHub:** [github.com/nbd-wtf/nostr-tools](https://github.com/nbd-wtf/nostr-tools)
 - **What it does:** Core JavaScript library for Nostr
 - **Best for:** Building web apps
+
+**NDK (Nostr Development Kit)**
+- **GitHub:** [github.com/nostr-dev-kit/ndk](https://github.com/nostr-dev-kit/ndk)
+- **What it does:** Comprehensive TypeScript SDK for Nostr
+- **Features:** React hooks, cache management, relay pool optimization
+- **Best for:** Modern TypeScript/React applications
+
+**Khatru**
+- **GitHub:** [github.com/fiatjaf/khatru](https://github.com/fiatjaf/khatru)
+- **What it does:** Go framework for building Nostr relays
+- **Features:** Modular design, easy to extend, production-ready
+- **Best for:** Developers building custom relay implementations
 
 **Nostr Python**
 - Various Python libraries for Nostr development
@@ -245,10 +247,22 @@ Nostr has a rich ecosystem of tools and services that make using the protocol ea
 
 ### Signer Apps
 
-**Nostr Signer Apps**
-- Dedicated apps for secure key signing
+**Primal Signer (iOS)**
+- **Built into Primal app**
+- **What it does:** Secure key storage with biometric authentication
+- **Features:** FaceID/TouchID protection, no separate app needed
+- **Best for:** iOS users who want built-in security
+
+**Amber (Android)**
+- **Dedicated signer app for Android**
+- **What it does:** Secure key signing with approval prompts
+- **Features:** Multiple key support, detailed signing requests
+- **Best for:** Android users wanting maximum security
+
+**Other Signer Apps**
+- Various dedicated apps for secure key signing
 - Keep your nsec off your main device
-- Examples: Amber (Android), various iOS options
+- Search your app store for "Nostr signer"
 
 ### VPN & Tor
 
@@ -304,27 +318,6 @@ Quick reference:
 | **Wallet** | Alby | Web users | Free |
 | **Wallet** | Phoenix | Mobile self-custody | Free |
 | **Search** | Primal | Discovery | Free |
-
----
-
-## Related Topics
-
-Explore these guides to put the tools into practice:
-
-<CTA
-  href="/guides/zaps-and-lightning"
-  title="Set Up Zaps"
-  description="Learn how to send and receive Bitcoin tips on Nostr"
-  buttonText="Zaps Guide →"
-/>
-
-<CTA
-  href="/guides/nip05-identity"
-  title="Get Your NIP-05"
-  description="Set up your human-readable identifier"
-  buttonText="NIP-05 Guide →"
-  variant="outline"
-/>
 
 ---
 

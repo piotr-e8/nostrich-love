@@ -261,13 +261,13 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
   };
 
   const optionVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 10 },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
       transition: {
-        delay: i * 0.08,
-        duration: 0.3,
+        delay: i * 0.05,
+        duration: 0.25,
         ease: [0.22, 1, 0.36, 1] as const,
       },
     }),
@@ -454,6 +454,27 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
               const isAnswer = option.id === currentQuestion.correctId;
               const showState = Boolean(selectedOption);
 
+              // Determine button styling based on state
+              let buttonClasses = "w-full rounded-2xl border px-4 py-3 text-left transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ";
+              
+              if (showState) {
+                // After an answer is selected
+                if (isAnswer) {
+                  buttonClasses += "border-success-500 bg-success-500/10 shadow-md ";
+                } else if (isSelected) {
+                  buttonClasses += "border-error-500 bg-error-500/10 shadow-md ";
+                } else {
+                  buttonClasses += "border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800/50 ";
+                }
+              } else {
+                // Default state - before any selection
+                if (isSelected) {
+                  buttonClasses += "border-primary bg-primary/10 shadow-md ";
+                } else {
+                  buttonClasses += "border-gray-200 bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800/50 dark:hover:bg-gray-800 hover:shadow-sm ";
+                }
+              }
+
               return (
                 <motion.button
                   key={option.id}
@@ -466,19 +487,7 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
                   type="button"
                   onClick={() => !showState && handleSelect(option.id)}
                   disabled={showState}
-                  className={cn(
-                    "w-full rounded-2xl border px-4 py-3 text-left transition-all duration-300",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
-                    isSelected && "border-primary bg-primary/10 shadow-md",
-                    showState && isAnswer && "border-success-500 bg-success-500/10 shadow-md",
-                    showState &&
-                      isSelected &&
-                      !isAnswer &&
-                      "border-error-500 bg-error-500/10 shadow-md",
-                    !isSelected &&
-                      !showState &&
-                      "border-gray-200 bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800/50 dark:hover:bg-gray-800 hover:shadow-sm",
-                  )}
+                  className={buttonClasses}
                 >
                   <div className="flex items-center gap-3">
                     {renderOptionIcon(option.id)}

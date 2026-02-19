@@ -11,18 +11,55 @@ interface Relay {
 }
 
 interface RelayVisualizerProps {
-  relays: Relay[];
-  userNpub: string;
+  relays?: Relay[];
+  userNpub?: string;
   className?: string;
   onRelayToggle?: (relayId: string) => void;
 }
 
+// Demo relays for standalone usage
+const DEMO_RELAYS: Relay[] = [
+  {
+    id: "relay-damus",
+    url: "wss://relay.damus.io",
+    name: "Damus",
+    status: "connected",
+    latency: 45,
+    users: 15000,
+  },
+  {
+    id: "relay-nos",
+    url: "wss://nos.lol",
+    name: "Nos",
+    status: "connected",
+    latency: 62,
+    users: 8200,
+  },
+  {
+    id: "relay-snort",
+    url: "wss://relay.snort.social",
+    name: "Snort",
+    status: "disconnected",
+    latency: undefined,
+    users: undefined,
+  },
+];
+
 export function RelayVisualizer({
-  relays = [],
-  userNpub = "",
+  relays: propRelays,
+  userNpub = "npub1demo...",
   className,
   onRelayToggle,
 }: RelayVisualizerProps) {
+  // Use provided relays or demo data
+  const [relays, setRelays] = useState<Relay[]>(propRelays || DEMO_RELAYS);
+
+  // Update relays if props change
+  useEffect(() => {
+    if (propRelays) {
+      setRelays(propRelays);
+    }
+  }, [propRelays]);
   const [activeConnections, setActiveConnections] = useState<string[]>([]);
   const [dataPackets, setDataPackets] = useState<
     Array<{ id: string; relayId: string; progress: number }>

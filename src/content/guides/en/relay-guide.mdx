@@ -11,6 +11,7 @@ import { CTAButton } from "@components/CTAButton";
 import { Callout } from "@components/ui/Callout";
 import { RelayVisualizer } from "@components/ui/RelayVisualizer";
 import { RelayGuideQuiz } from "@components/interactive/RelayGuideQuiz";
+import { RelayPlayground } from "@components/interactive/RelayPlayground";
 
 {/* ProgressIndicator temporarily disabled - will be implemented with actual tracking later */}
 {/* <ProgressIndicator current={3} total={6} estimatedTime="12 minutes" /> */}
@@ -18,6 +19,12 @@ import { RelayGuideQuiz } from "@components/interactive/RelayGuideQuiz";
 ## How Relays Work (3 minutes)
 
 <RelayVisualizer />
+
+<Callout type="info">
+  **Building on Previous Knowledge:** This section briefly reviews the post office 
+  analogy from [Relays Demystified](/guides/relays-demystified). If you remember 
+  how relays work, feel free to skip to [Types of Relays](#types-of-relays).
+</Callout>
 
 ### The Simple Explanation
 
@@ -245,6 +252,14 @@ wss://nostr.wine              (Quality paid option - optional)
   Don't add 50+ random relays. It wastes bandwidth and slows down your client.
   Stick to 5-10 quality relays.
 </Callout>
+
+---
+
+## Relay Testing & Exploration
+
+Try before you commit! Test relay speeds and see which ones work best for your location before adding them to your relay list.
+
+<RelayPlayground client:load />
 
 ---
 
@@ -534,21 +549,6 @@ npm start
 - One missed post
 - Temporary slowdown
 - Minor inconvenience
-
----
-
-## Next Steps
-
-<div className="cta-section my-12 text-center py-8 bg-primary/5 rounded-lg">
-  <h3 className="text-2xl font-bold mb-4">Ready to Secure Your Setup?</h3>
-  <p className="text-muted-foreground mb-6">
-    Learn advanced privacy and security practices to protect your Nostr
-    identity.
-  </p>
-  <CTAButton variant="primary" size="lg" href="/guides/privacy-security">
-    Continue: Privacy & Security Deep Dive →
-  </CTAButton>
-</div>
 
 ---
 

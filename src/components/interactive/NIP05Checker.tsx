@@ -71,7 +71,7 @@ const ERROR_MESSAGES: Record<
 
 const NIP05_PROVIDERS = [
   {
-    name: "NostrPlek",
+    name: "NostrPlebs.com",
     url: "https://nostrplebs.com",
     price: "$3/year",
     description: "Get verified in minutes",
@@ -533,7 +533,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
               {/* Clear Button */}
               <button
                 onClick={clearResult}
-                className="w-full mt-4 py-3 text-gray-600 dark:text-gray-400 hover:text-white transition-colors"
+                className="w-full mt-4 py-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 Check Another
               </button>
@@ -544,7 +544,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
         {/* Get NIP-05 Providers */}
         {(!result || showProviders) && (
           <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-            <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5 text-primary-500" />
               Get Your Own NIP-05
             </h3>
@@ -558,7 +558,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                   className="flex items-center justify-between p-4 bg-gray-100/50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-primary-500 rounded-xl transition-all group"
                 >
                   <div>
-                    <p className="font-medium text-white group-hover:text-primary-500 transition-colors">
+                    <p className="font-medium text-gray-900 dark:text-white group-hover:text-primary-500 transition-colors">
                       {provider.name}
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
