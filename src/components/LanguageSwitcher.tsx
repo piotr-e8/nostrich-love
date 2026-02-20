@@ -9,6 +9,7 @@ interface LanguageSwitcherProps {
 const languages = [
   { code: "en", label: "English", flag: "🇬🇧" },
   { code: "pl", label: "Polski", flag: "🇵🇱" },
+  { code: "es", label: "Español", flag: "🇪🇸" },
 ];
 
 export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
@@ -20,10 +21,36 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
     setMounted(true);
     // Detect current language from URL
     const path = window.location.pathname;
+    const isGuidesPage = path.includes('/guides/') || path.endsWith('/guides');
+    
     if (path.startsWith("/pl/")) {
       setCurrentLang("pl");
-    } else {
+      // If we're on a non-guides page with /pl/ prefix, redirect back to English
+      if (!isGuidesPage && path !== '/pl/') {
+        window.location.href = path.replace(/^\/pl/, '') || '/';
+        return;
+      }
+    } else if (path.startsWith("/es/")) {
+      setCurrentLang("es");
+      // If we're on a non-guides page with /es/ prefix, redirect back to English
+      if (!isGuidesPage && path !== '/es/') {
+        window.location.href = path.replace(/^\/es/, '') || '/';
+        return;
+      }
+    } else if (path.startsWith("/en/")) {
       setCurrentLang("en");
+    } else {
+      // Check if there's a saved preference in localStorage
+      const savedLang = localStorage.getItem('preferredLanguage');
+      if (savedLang && ['en', 'pl', 'es'].includes(savedLang)) {
+        setCurrentLang(savedLang);
+        // Only redirect to locale-prefixed URL if we're on a guides page
+        if (savedLang !== 'en' && isGuidesPage) {
+          window.location.href = `/${savedLang}${path}`;
+        }
+      } else {
+        setCurrentLang("en");
+      }
     }
   }, []);
 
@@ -31,16 +58,26 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
     const currentPath = window.location.pathname;
     let newPath: string;
 
-    if (langCode === "en") {
-      // Remove /pl/ prefix for English
-      newPath = currentPath.replace(/^\/pl/, "") || "/";
-    } else {
-      // Add /pl/ prefix for Polish
-      if (currentPath.startsWith("/pl/")) {
-        newPath = currentPath;
+    // Save preference
+    localStorage.setItem('preferredLanguage', langCode);
+
+    // Check if we're on a guides page (the only translated content)
+    const isGuidesPage = currentPath.includes('/guides/') || currentPath.endsWith('/guides');
+
+    if (isGuidesPage) {
+      // For guides, use locale-prefixed URLs
+      // Remove any existing locale prefix
+      const pathWithoutLocale = currentPath.replace(/^\/(en|pl|es)(\/|$)/, '/') || '/';
+
+      if (langCode === "en") {
+        newPath = `/en${pathWithoutLocale}`;
       } else {
-        newPath = "/pl" + currentPath;
+        newPath = `/${langCode}${pathWithoutLocale}`;
       }
+    } else {
+      // For all other pages, stay on English version
+      // Remove any locale prefix if present
+      newPath = currentPath.replace(/^\/(pl|es)\//, '/');
     }
 
     window.location.href = newPath;

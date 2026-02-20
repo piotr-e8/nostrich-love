@@ -6,6 +6,8 @@ import { GuideSection } from './GuideSection';
 import type { SkillLevel } from './GuideCard';
 import type { Guide } from './GuideCard';
 import { getLastInterestFilterLocal, setLastInterestFilterLocal, unlockLevelLocal } from '../../lib/progress';
+import type { Locale } from '../../i18n';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface GuideLevelData {
   id: SkillLevel;
@@ -15,6 +17,7 @@ interface GuideLevelData {
 
 interface GuidesContainerProps {
   skillLevels: GuideLevelData[];
+  locale?: Locale;
 }
 
 // Helper to get last viewed guide from localStorage
@@ -38,7 +41,9 @@ function getLastViewedGuide(): { slug: string; timestamp: number } | null {
  */
 export const GuidesContainer: React.FC<GuidesContainerProps> = ({
   skillLevels,
+  locale = 'en',
 }) => {
+  const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [isClient, setIsClient] = useState(false);
@@ -126,7 +131,7 @@ export const GuidesContainer: React.FC<GuidesContainerProps> = ({
       {/* Search */}
       <div className="mb-8">
         <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 text-center">
-          Search guides
+          {t('ui.search.placeholder')}
         </p>
         <div className="relative max-w-xl mx-auto">
           <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -134,7 +139,7 @@ export const GuidesContainer: React.FC<GuidesContainerProps> = ({
             </svg>
           <input
             type="text"
-            placeholder="Type to search guides..."
+            placeholder={t('ui.search.placeholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-12 pr-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-friendly-purple-400 focus:border-transparent"

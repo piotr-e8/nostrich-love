@@ -1,0 +1,174 @@
+---
+title: "Nostr Wyjaśniony Prosto"
+description: "Zrozum Nostr w 5 minut. Dowiedz się, jak działa zdecentralizowane social media, dlaczego to ważne i czym różni się od tradycyjnych platform."
+estimatedTime: "5 minut"
+priority: 2
+category: "getting-started"
+---
+
+import { HoverCard } from "@components/HoverCard";
+import { ProtocolComparison } from "@components/ProtocolComparison";
+import { NostrSimulator } from "@components/NostrSimulator";
+import { WhatIsNostrQuiz } from "@components/interactive/WhatIsNostrQuiz";
+
+### Problem (1 minuta czytania)
+
+**Nie jesteś właścicielem swojej obecności w social media.**
+
+Kiedy budujesz swoją markę na Twitterze, Instagramie czy Facebooku, budujesz na cudzym gruncie. Oto co to oznacza:
+
+### Ryzyko platformy jest realne
+
+- **Bany się zdarzają.** Pomyłka, kontrowersyjna opinia lub fałszywe zgłoszenie mogą zamknąć Ci dostęp do lat treści i połączeń
+- **Algorytmy się zmieniają.** Twoje posty mogą docierać do 10 000 osób jednego dnia i 200 następnego — bez ostrzeżenia czy wyjaśnienia
+- **Twoi followers nie są Twoi.** Jeśli platforma Cię zbanuje, tracisz dostęp do publiczności, którą budowałeś latami
+- **Blokada danych.** Twoje posty, zdjęcia i wiadomości są uwięzione w bazie danych jednej firmy
+
+### Podstawowy problem
+
+Wielkie firmy technologiczne kontrolują:
+
+- Kto może mówić
+- Kto może Cię słyszeć
+- Jakie treści są promowane
+- Czy możesz eksportować swoje dane
+
+**To nie jest tylko niewygodne — to stawia Twoją cyfrową tożsamość w niebezpieczeństwie.**
+
+---
+
+### Rozwiązanie: Protokół vs Platforma (2 minuty czytania)
+
+Nostr rozwiązuje to, zmieniając jedną fundamentalną rzecz: **To protokół, nie platforma.**
+
+### Pomyśl o emailu
+
+Prawdopodobnie używasz emaila codziennie, nie zastanawiając się nad tą magią:
+
+- Ktoś na Gmailu może napisać do kogoś na Outlooku
+- Możesz przejść z Yahoo na ProtonMail i zachować książkę adresową
+- Żadna pojedyncza firma nie kontroluje całego emaila
+
+**Email to protokół.** Każdy może zbudować aplikację emailową. Każdy może komunikować się z każdym. Nikt nie jest właścicielem sieci.
+
+**Nostr działa w ten sam sposób.**
+
+### Wyjaśnienie różnicy
+
+<ProtocolComparison />
+
+** scentralizowane (Twitter, Facebook):** Jedna firma posiada wszystko. Mogą Cię zbanować, zmienić zasady lub całkowicie zamknąć.
+
+**Sfederowane (Mastodon):** Wiele serwerów, które mogą ze sobą rozmawiać, ale każdy właściciel serwera ma władzę nad swoimi użytkownikami.
+
+**Nostr:** Żadne serwery nie posiadają Twojej tożsamości. Ty trzymasz klucze. Ty wybierasz, gdzie publikować. Możesz zmienić aplikację w dowolnym momencie.
+
+### Co to oznacza dla Ciebie
+
+- **Jedna tożsamość, wszędzie.** Twoje klucze działają w każdej aplikacji Nostr
+- **Twoje dane podążają za Tobą.** Zmieniasz klienta? Twoje posty i followers idą z Tobą
+- **Nikt nie może Cię zbanować.** Mogą Cię ignorować, ale nie mogą powstrzymać Cię od publikowania
+- **Wiele wyborów.** Używaj aplikacji z interfejsem, który kochasz
+
+---
+
+### Kluczowe koncepcje (2 minuty czytania)
+
+Nie martw się o zapamiętanie wszystkiego. Nauczysz się przez praktykę. Ale oto model mentalny:
+
+### Klucz publiczny (npub) = Twoja nazwa użytkownika
+
+<HoverCard
+  term="Klucz publiczny"
+  definition="Długi ciąg znaków zaczynający się od 'npub1', który identyfikuje Cię publicznie. Bezpieczny do udostępniania wszędzie."
+>
+  Twoja publiczna tożsamość na Nostr wygląda tak: `npub1q...9x`
+</HoverCard>
+
+- Wygląda tak: <code className="break-all text-sm">npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
+- Udostępniaj to swobodnie — to jak ludzie Cię znajdują i obserwują
+- Myśl o tym jak o adresie email lub numerze telefonu
+- **Zielone światło: Bezpieczne do udostępniania wszędzie**
+
+### Klucz prywatny (nsec) = Twoje hasło
+
+<HoverCard
+  term="Klucz prywatny"
+  definition="Tajny ciąg znaków zaczynający się od 'nsec1', który udowadnia, że to Ty. NIGDY tego nie udostępniaj. Utrata = utrata konta."
+>
+  Twój tajny klucz wygląda tak: `nsec1q...9x`
+</HoverCard>
+
+- Wygląda tak: <code className="break-all text-sm">nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
+- To udowadnia, że jesteś właścicielem swojego klucza publicznego
+- **CZERWONY ALARM: Nigdy tego nie udostępniaj nikomu**
+- Utrata = trwała strata. Nie ma opcji "zapomniałem hasła"
+
+### Relaye = Poczty
+
+<HoverCard
+  term="Relaye"
+  definition="Serwery, które przechowują i przekazują wiadomości Nostr. Wybierasz, do których się łączysz i możesz zmieniać w dowolnym momencie."
+>
+  Relaye są jak poczty dla Twoich postów
+</HoverCard>
+
+- Serwery, które przechowują i udostępniają wiadomości Nostr
+- Ty wybierasz, z których korzystasz (i możesz używać wielu)
+- Niektóre są darmowe, niektóre wymagają płatności
+- [ZAAWANSOWANE] Możesz nawet uruchomić własny
+
+### Klienci = Aplikacje
+
+<HoverCard
+  term="Klienci"
+  definition="Aplikacje, których używasz do interakcji z Nostr — jak Damus, Amethyst lub Iris. Możesz zmieniać klientów w dowolnym momencie bez utraty tożsamości."
+>
+  Klienci są jak Gmail vs Apple Mail — różne interfejsy, ten sam protokół
+</HoverCard>
+
+- Aplikacja, której używasz do publikowania, przeglądania i wiadomości
+- Przykłady: Damus (iOS), Amethyst (Android), Iris (web)
+- Zmieniaj w dowolnym momencie — nigdy nie jesteś uwięziony
+
+---
+
+### Dlaczego to ma znaczenie (1 minuta czytania)
+
+### Zalety
+
+✅ **Nikt nie może Cię zbanować.** Mogą ignorować Twoje posty, ale nie mogą powstrzymać Cię od publikowania
+
+✅ **Twoje dane są przenośne.** Każdy post, każdy follower, każdy polubienie — to wszystko jest Twoje do przeniesienia
+
+✅ **Brak reklam czy algorytmów.** Większość klientów pokazuje chronologiczne feedy. Twoja uwaga nie jest produktem
+
+✅ **Odporność.** Jeśli jeden relay przestanie działać, Twoja tożsamość przetrwa. Jeśli jeden klient zostanie zamknięty, przechodzisz na inny
+
+### Odpowiedzialność
+
+⚠️ **Jesteś odpowiedzialny za swoje klucze.** Utrata nsec = utrata tożsamości na zawsze. Nie ma działu obsługi klienta, do którego możesz zadzwonić
+
+⚠️ **Brak przycisku "cofnij"."** Usunięte posty mogą utrzymywać się na relayach. Pomyśl, zanim opublikujesz
+
+⚠️ **Krzywa uczenia.** To jest nowe, inne i niektóre części są jeszcze surowe
+
+### Czy warto?
+
+To zależy od tego, co cenisz:
+
+- **Jeśli chcesz prostoty:** Tradycyjne platformy są łatwiejsze (na razie)
+- **Jeśli chcesz wolności:** Nostr daje Ci kontrolę, której żadna platforma nie może zapewnić
+- **Jeśli jesteś ciekawy:** Najlepszy sposób na naukę to spróbowanie
+
+---
+
+## Sprawdź swoją wiedzę
+
+Gotowy sprawdzić, czego się nauczyłeś? Rozwiąż ten szybki quiz:
+
+<WhatIsNostrQuiz client:load />
+
+---
+
+_Chasz zagłębić się bardziej? Sprawdź nasze [FAQ](/pl/guides/faq), aby poznać więcej tematów._

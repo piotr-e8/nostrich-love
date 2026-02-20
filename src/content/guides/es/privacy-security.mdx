@@ -1,0 +1,493 @@
+---
+title: "Inmersión Profunda en Privacidad y Seguridad"
+description: "Prácticas avanzadas de seguridad para Nostr. Protege tu identidad, previene fugas de metadatos y mantén tu privacidad mientras usas redes sociales descentralizadas."
+estimatedTime: "15 minutos"
+priority: 9
+category: "advanced"
+prerequisites: ["keys-and-security", "quickstart"]
+---
+
+import { Callout } from "@components/ui/Callout";
+import { PrivacySecurityQuiz } from "@components/interactive/PrivacySecurityQuiz";
+import { CTAButton } from "@components/CTAButton";
+
+{/* ProgressIndicator temporarily disabled - will be implemented with actual tracking later */}
+{/* <ProgressIndicator current={4} total={6} estimatedTime="15 minutos" /> */}
+
+## Modelo de Amenazas (3 minutos)
+
+### ¿Contra Qué te Estás Protegiendo?
+
+Antes de sumergirnos en prácticas de seguridad, entendamos qué amenazas existen en Nostr:
+
+**Nivel de Amenaza 1: Privacidad Casual**
+
+- **Preocupación:** No quieres que empleadores/familia vean todo
+- **Amenazas:** Publicaciones públicas, asociación de perfiles
+- **Solución:** Identidades separadas
+
+**Nivel de Amenaza 2: Evitación Activa**
+
+- **Preocupación:** Evitar personas/plataformas específicas
+- **Amenazas:** Doxxing, acoso, stalking
+- **Solución:** Cuenta anónima, OPSEC
+
+**Nivel de Amenaza 3: Alta Seguridad**
+
+- **Preocupación:** Denunciantes, activistas, personas de alto perfil
+- **Amenazas:** Actores estatales, ataques sofisticados
+- **Solución:** OPSEC avanzado, claves air-gapped
+
+### Qué Protege Nostr
+
+✅ **Resistencia a la Censura**
+
+- Ninguna plataforma puede banearte
+- Tu identidad no puede ser confiscada
+- Las publicaciones se distribuyen a través de la red
+
+✅ **Propiedad de Datos**
+
+- Tú controlas tus claves
+- Portable entre clientes
+- Ninguna compañía posee tu grafo
+
+### Qué Nostr No Protege
+
+❌ **Público Por Defecto**
+
+- Todas las publicaciones son públicas (a menos que sean DMs encriptados)
+- Posibles fugas de metadatos
+- Análisis de contenido posible
+
+❌ **Sin Garantías de Anonimato**
+
+- Tu npub es pseudónimo, no anónimo
+- Los patrones pueden revelar identidad
+- Las direcciones IP son visibles para los relays
+
+<Callout type="info">
+  **Expectativas realistas:** Nostr proporciona resistencia a la censura, no anonimato
+  perfecto. Entiende la diferencia.
+</Callout>
+
+---
+
+## Separación de Identidades (3 minutos)
+
+### ¿Por Qué Múltiples Identidades?
+
+La mayoría de las personas deberían tener **al menos dos** identidades Nostr:
+
+**1. Identidad Pública**
+
+- Vinculada a nombre real
+- Uso profesional
+- Presencia de figura pública
+- Reputación a largo plazo
+
+**2. Identidad Privada/Pseudónima**
+
+- No vinculada a nombre real
+- Intereses personales
+- Opiniones controvertidas
+- Pruebas/experimentación
+
+### Cuándo Separar
+
+**Definitivamente separa:**
+
+- Vida personal vs profesional
+- Diferentes intereses (trabajo, hobbies, política)
+- Probando nuevos clientes/apps
+- Financiera (propinas) vs social
+
+**Puedes combinar:**
+
+- Amigos cercanos que saben todo
+- Uso casual de bajo riesgo
+- Persona ya pública
+
+### Gestionando Múltiples Claves
+
+**Opción 1: Diferentes Clientes**
+
+- Usa Damus para identidad pública
+- Usa Amethyst para identidad privada
+- Simple, pero limitado a dispositivo
+
+**Opción 2: Apps Firmadoras Nostr**
+
+- Usa Amber (Android) o similar
+- Múltiples claves en una app
+- Más flexible
+
+**Opción 3: Dispositivos Separados**
+
+- Teléfono para lo público
+- Tablet para lo privado
+- Máxima aislamiento
+
+<Callout type="tip">
+  **Empieza simple:** Crea una cuenta pseudónima primero. Agrega una pública
+  más tarde si es necesario.
+</Callout>
+
+---
+
+## Apps Firmadoras (3 minutos)
+
+### ¿Qué Son los Firmadores?
+
+**Las apps firmadoras** almacenan tus claves privadas de forma segura y firman mensajes para otras apps.
+
+**Cómo funciona:**
+
+1. La app firmadora mantiene tu nsec
+2. El cliente pide "firma este mensaje"
+3. La app firmadora aprueba y firma
+4. El cliente nunca ve tu nsec
+
+### Beneficios
+
+✅ **Aislamiento de Claves**
+
+- Nsec nunca deja el firmador
+- Los clientes no pueden robar claves
+- Cliente comprometido = claves seguras
+
+✅ **Aprobación Requerida**
+
+- Ves lo que estás firmando
+- Previene publicaciones accidentales
+- Control sobre acciones
+
+✅ **Múltiples Clientes**
+
+- Usa las mismas claves entre apps
+- Identidad consistente
+- Cambio fácil
+
+### Apps Firmadoras Populares
+
+**Amber (Android)**
+
+- Mejor firmador en móvil
+- Código abierto
+- Desarrollo activo
+- Soporta múltiples claves
+
+**Primal (iOS)**
+
+- Almacenamiento seguro integrado
+- No necesita app firmadora separada
+- Las claves se quedan en el dispositivo
+- Simple e intuitivo
+
+**Otras Opciones:**
+
+- **Nostr Connect** (protocolo multiplataforma)
+- **Extensiones de navegador** (Alby puede firmar)
+- **Wallets de hardware** [AVANZADO]
+
+### Configurando Amber
+
+1. **Descarga** desde Play Store
+2. **Crea o importa** claves
+3. **Configura como firmador por defecto** en ajustes de Android
+4. **Abre cliente Nostr** - solicitará firma
+5. **Aprueba peticiones** en Amber
+
+### Cuándo Usar Firmadores
+
+**Altamente recomendado:**
+
+- Usuarios serios de Nostr
+- Cuentas de alto valor
+- Múltiples clientes
+- Usuarios conscientes de seguridad
+
+**No necesario:**
+
+- Pruebas casuales
+- Cuentas de bajo valor
+- Uso de cliente único
+- Principiantes (agrega más tarde)
+
+<Callout type="warning">
+  **Crítico:** Tu app firmadora se convierte en un punto único de falla. ¡Hazle
+  backup de forma segura!
+</Callout>
+
+---
+
+## Rotación de Claves (2 minutos)
+
+### ¿Qué es la Rotación de Claves?
+
+**La rotación de claves** significa crear nuevas claves y migrar tus seguidos a ellas.
+
+### Cuándo Rotar
+
+**Rota:**
+
+- Sospechas compromiso
+- Clave privada expuesta accidentalmente
+- Moviendo de custodial a auto-custodial
+- Práctica de seguridad periódica
+
+**No rotes casualmente:**
+
+- Pierdes todo el historial
+- Confundes a seguidores
+- Rompes conexiones NIP-05
+
+### Cómo Rotar
+
+**Paso 1: Prepara**
+
+1. Genera nuevas claves de forma segura
+2. Hazles backup adecuadamente
+3. Prueba nueva cuenta
+
+**Paso 2: Anuncia**
+
+1. Publica desde cuenta antigua: "Moviendo a [nuevo npub]"
+2. Fija la publicación
+3. Actualiza bio con nuevo npub
+4. Espera unos días
+
+**Paso 3: Migra**
+
+1. Sigue a tus antiguos seguidos en la nueva cuenta
+2. Actualiza NIP-05 si tienes uno
+3. Dile a contactos cercanos directamente
+
+**Paso 4: Atardecer**
+
+1. Publica desde cuenta antigua periódicamente: "Movido a [nuevo]"
+2. Mantén cuenta antigua como redirección
+3. Eventualmente abandona cuenta antigua
+
+<Callout type="tip">
+  **Pro tip:** Si tienes un NIP-05, puedes actualizarlo para apuntar a tu nuevo
+  npub. La gente usando tu NIP-05 automáticamente seguirá tu nueva cuenta.
+</Callout>
+
+---
+
+## Fugas de Metadatos (5 minutos)
+
+### ¿Qué Metadatos Se Filtran?
+
+Incluso publicaciones "anónimas" pueden revelar identidad a través de:
+
+**1. Estilo de Escritura**
+
+- Elecciones de vocabulario
+- Patrones de gramática
+- Uso de emojis
+- Hábitos de capitalización
+
+**2. Pistas de Contenido**
+
+- Ubicaciones mencionadas
+- Eventos específicos
+- Chistes internos
+- Conocimiento único
+
+**3. Patrones de Timing**
+
+- Cuándo publicas (zona horaria)
+- Tiempos de respuesta
+- Horas activas
+
+**4. Filtraciones Técnicas**
+
+- Direcciones IP (visibles para relays)
+- Versión de software del cliente
+- Huellas digitales de dispositivo
+
+**5. Grafo Social**
+
+- A quién sigues
+- Quién te sigue
+- Patrones de interacción
+
+### Estrategias de Prevención
+
+**1. Estilos de Escritura Separados**
+
+- Usa vocabulario diferente
+- Varía la estructura de oraciones
+- Diferentes hábitos de emojis
+
+**2. Sé Vago**
+
+- No menciones fechas específicas
+- Evita identificadores únicos
+- Generaliza ubicaciones
+
+**3. Usa Tor/VPN**
+
+- Oculta IP de los relays
+- Usa diferentes IPs por identidad
+- Considera Tor para máxima privacidad
+
+**4. Limita Info del Cliente**
+
+- Algunos clientes filtran info de versión
+- Revisa qué envía tu cliente
+- Usa clientes enfocados en privacidad
+
+**5. Controla el Grafo Social**
+
+- No sigas a las mismas personas
+- Círculos diferentes
+- Limita interacciones entre identidades
+
+### Contaminación Cruzada de Identidades
+
+**Qué NO hacer:**
+
+- ❌ Menciona tu otra cuenta
+- ❌ Publica el mismo contenido simultáneamente
+- ❌ Siga exactamente a las mismas personas
+- ❌ Usa las mismas frases/jerga
+- ❌ Responde a los mismos hilos
+- ❌ Publica desde ambos en la misma conversación
+
+**Prácticas seguras:**
+
+- ✅ Contenido completamente separado
+- ✅ Diferentes temas/intereses
+- ✅ Diferentes horas activas
+- ✅ Sin referencias cruzadas
+- ✅ Asume que están mirando
+
+<Callout type="warning">
+  **Chequeo de paranoia:** Si necesitas anonimato verdadero, asume que un adversario
+  motivado está analizando todo. Actúa en consecuencia.
+</Callout>
+
+---
+
+## Lista de Verificación de OPSEC (2 minutos)
+
+### Seguridad Básica (Todos)
+
+- [ ] Backup de claves en 3+ lugares
+- [ ] Usa gestor de contraseñas
+- [ ] Nunca captures claves en screenshot
+- [ ] Nunca compartas nsec
+- [ ] Mantén software del cliente actualizado
+- [ ] Usa claves únicas por identidad
+
+### Seguridad Mejorada (Usuarios Activos)
+
+- [ ] Usa app firmadora
+- [ ] Dispositivos/cuentas separadas
+- [ ] VPN/Tor para publicaciones sensibles
+- [ ] Rotación regular de claves (anual)
+- [ ] Monitorea por impersonadores
+- [ ] Documenta procedimientos de recuperación
+
+### Seguridad Máxima (Alto Riesgo)
+
+- [ ] Generación de claves air-gapped
+- [ ] Módulos de seguridad de hardware
+- [ ] Relay auto-hospedado
+- [ ] Conexiones solo Tor
+- [ ] Múltiples capas de identidad
+- [ ] Auditorías de OPSEC regulares
+- [ ] Consulta legal
+
+### Audítate a Ti Mismo
+
+**Preguntas para hacerte:**
+
+1. Si alguien quisiera doxxearme, ¿qué encontrarían?
+2. ¿Mis múltiples identidades son realmente separadas?
+3. ¿Qué pasa si me roban el teléfono?
+4. ¿A quién le diría si me comprometieron?
+5. ¿Cuál es mi plan de recuperación?
+
+---
+
+## Planificación de Recuperación (2 minutos)
+
+### Si Sospechas Compromiso
+
+**Acciones inmediatas:**
+
+1. **Deja de publicar** desde cuenta comprometida
+2. **Documenta** qué pasó
+3. **Genera nuevas claves** en dispositivo seguro
+4. **Anuncia** el compromiso (si es público)
+5. **Rota** a nuevas claves
+6. **Investiga** cómo pasó
+
+### Construyendo un Plan de Recuperación
+
+**Antes de que lo necesites:**
+
+1. **Contactos de confianza** - ¿Quién puede verificar tu nueva identidad?
+2. **Prueba de identidad** - ¿Cómo probarás que eres tú?
+3. **Comunicación fuera de banda** - ¿Cómo contactar seguidores si Nostr está comprometido?
+4. **Control NIP-05** - ¿Puedes actualizar tu identificador?
+5. **Estrategia de backup** - ¿Cómo están respaldadas las claves?
+
+### Plantilla de Comunicación
+
+Si estás comprometido, publica algo como:
+
+```
+⚠️ ALERTA DE SEGURIDAD ⚠️
+
+Mi cuenta [npub antiguo] ha sido comprometida.
+
+Mi nueva cuenta es: [nuevo npub]
+
+Este mensaje está firmado por ambas claves para probar la transición.
+
+[Mensaje firmado desde nueva clave]
+
+Por favor deja de seguir la cuenta antigua y sigue esta.
+```
+
+<Callout type="info">
+  **Espera lo mejor, planifica lo peor.** Tener un plan de recuperación reduce
+  el pánico si algo sale mal.
+</Callout>
+
+---
+
+## Pon a Prueba Tu Conocimiento
+
+<PrivacySecurityQuiz client:load />
+
+---
+
+## Referencia Rápida
+
+**Seguridad Mínima:**
+
+- 3 backups de claves
+- Gestor de contraseñas
+- Nunca compartas nsec
+
+**Seguridad Mejorada:**
+
+- Usa app firmadora
+- Identidades separadas
+- VPN para privacidad
+- Auditorías regulares
+
+**Seguridad Máxima:**
+
+- Claves air-gapped
+- Wallets de hardware
+- Solo Tor
+- OPSEC profesional
+
+**Recuerda:** La seguridad es un viaje, no un destino. Empieza con lo básico, mejora con el tiempo.

@@ -1,0 +1,531 @@
+---
+title: "Nostr vs ActivityPub vs Bluesky: Comparación Completa de Protocolos"
+description: "Una comparación técnica exhaustiva de los tres principales protocolos sociales descentralizados. Aprende la arquitectura, los trade-offs y qué protocolo se adapta mejor a tus necesidades."
+estimatedTime: "15 minutos"
+priority: 3
+category: "advanced"
+---
+
+import { HoverCard } from "@components/HoverCard";
+import { ProtocolComparison } from "@components/ProtocolComparison";
+import { CTAButton } from "@components/CTAButton";
+import { ProtocolComparisonQuiz } from "@components/interactive/ProtocolComparisonQuiz";
+
+## Resumen Ejecutivo
+
+El panorama de redes sociales descentralizadas tiene tres protocolos principales compitiendo por adopción: **Nostr** (Notes and Other Stuff Transmitted by Relays), **ActivityPub** (el protocolo que impulsa Mastodon) y **AT Protocol de Bluesky**. Cada uno representa un enfoque fundamentalmente diferente para resolver el mismo problema: cómo crear redes sociales sin control centralizado.
+
+| Característica            | Nostr                              | ActivityPub (Mastodon)     | Bluesky AT Protocol           |
+| ------------------------- | ---------------------------------- | -------------------------- | ----------------------------- |
+| **Modelo de Identidad**   | Claves auto-soberanas              | Handles asignados por servidor | Handles basados en dominio + DIDs |
+| **Resistencia a la Censura** | Muy Alta                        | Moderada                   | Moderada                      |
+| **Tipo de Red**           | Red de relays sin permisos         | Servidores federados       | Arquitectura PDS + Relay      |
+| **Portabilidad de Datos** | Nativa                             | Dependiente del servidor   | Nativa (con backups)          |
+| **Escala Actual**         | ~5M usuarios                       | ~15M usuarios              | ~25M usuarios                 |
+| **Mejor Para**            | Activistas, cypherpunks, Bitcoiners | Comunidades, organizaciones | Usuarios mainstream, periodistas |
+
+### ¿Quién Debería Usar Qué Protocolo?
+
+- **Elige Nostr** si la resistencia a la censura es tu prioridad principal, quieres verdadera propiedad de datos, o eres parte de la comunidad Bitcoin/criptografía
+- **Elige ActivityPub/Mastodon** si quieres una red establecida con apps maduras, moderación comunitaria fuerte, o necesitas ejecutar un servidor para tu organización
+- **Elige Bluesky** si quieres una experiencia de usuario pulida, respaldo corporativo para longevidad, o estás migrando desde Twitter y quieres familiaridad
+
+---
+
+## Arquitectura de Protocolo
+
+Entender cómo funciona cada protocolo técnicamente ayuda a explicar sus diferentes fortalezas y limitaciones.
+
+### Nostr: El Modelo Cliente-Relay
+
+Nostr es elegantemente simple: solo son clientes y relays.
+
+```
+┌─────────────┐         ┌─────────────┐         ┌─────────────┐
+│   Client    │◄───────►│   Relay 1   │◄───────►│   Client    │
+│   (Tú)      │         │  (Público)  │         │  (Amigo)    │
+└─────────────┘         └─────────────┘         └─────────────┘
+       │                       │
+       │                ┌─────────────┐
+       └───────────────►│   Relay 2   │
+                        │  (Privado)  │
+                        └─────────────┘
+```
+
+**Cómo Funciona:**
+
+1. **Tu Identidad:** Un par de claves criptográficas (npub/nsec) generadas localmente en tu dispositivo
+2. **Publicar:** Firmas eventos con tu clave privada y los envías a los relays de tu elección
+3. **Leer:** Tu cliente consulta múltiples relays para obtener publicaciones de las personas que sigues
+4. **Sin Registro Central:** Cualquiera puede ejecutar un relay; no se necesita aprobación para unirse a la red
+
+<HoverCard
+  term="Relay"
+  definition="Un servidor que almacena y retransmite eventos de Nostr. Los relays no saben quién eres—solo validan firmas y almacenan datos."
+>
+  Los relays son tuberías simples que almacenan mensajes firmados
+</HoverCard>
+
+**Características Clave:**
+
+- **Sin Estado:** Los relays no mantienen cuentas de usuario ni relaciones
+- **Redundante:** Puedes usar 10+ relays simultáneamente; si uno te censura, otros aún tienen tus datos
+- **Protocolo Simple:** Todo el protocolo son ~2,000 líneas de especificación
+- **Sin Federación:** Los relays no se comunican entre sí; los clientes agregan de múltiples fuentes
+
+### ActivityPub: El Modelo de Servidor Federado
+
+ActivityPub crea una federación de servidores interconectados, como el email pero para redes sociales.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      RED FEDERADA                            │
+├─────────────┐    ┌─────────────┐    ┌─────────────────────┐ │
+│  Server A   │◄──►│  Server B   │◄──►│     Server C        │ │
+│ (mastodon. │    │ (fosstodon. │    │ (infosec.exchange)  │ │
+│  social)    │    │  org)       │    │                     │ │
+└──────┬──────┘    └──────┬──────┘    └──────────┬──────────┘ │
+       │                  │                      │            │
+       ▼                  ▼                      ▼            │
+  ┌─────────┐        ┌─────────┐          ┌─────────┐         │
+  │ Users   │        │ Users   │          │ Users   │         │
+  │ @alice  │        │ @bob    │          │ @carol  │         │
+  └─────────┘        └─────────┘          └─────────┘         │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Cómo Funciona:**
+
+1. **Tu Identidad:** Asignada por el servidor al que te unes (ej., @user@server.com)
+2. **Publicar:** Tu servidor almacena tus publicaciones y las envía a los servidores de tus seguidores
+3. **Federación:** Los servidores se comunican usando el protocolo ActivityPub para compartir publicaciones en toda la red
+4. **Administración de Instancia:** Cada servidor tiene administradores que establecen reglas y moderan contenido
+
+**Características Clave:**
+
+- **Centrado en Instancia:** Tu servidor es tu hogar; almacena tus datos y gestiona tu identidad
+- **Servidor-a-Servidor:** Los servidores se comunican activamente y comparten contenido
+- **Moderado:** Cada servidor establece sus propias políticas de contenido y puede bloquear otros servidores
+- **Ecosistema Maduro:** 5+ años de desarrollo, mejores prácticas establecidas
+
+### Bluesky AT Protocol: El Modelo de Almacenamiento de Datos Personal
+
+Bluesky combina ideas de ambos enfoques con un enfoque en la experiencia de usuario y respaldo corporativo.
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                    ARQUITECTURA BLUESKY                       │
+├──────────────────────────────────────────────────────────────┤
+│                                                              │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────────┐  │
+│  │  Client App │    │  Client App │    │   Client App    │  │
+│  │  (Bluesky)  │    │  (Graysky)  │    │   (Otro)        │  │
+│  └──────┬──────┘    └──────┬──────┘    └────────┬────────┘  │
+│         │                  │                     │           │
+│         └──────────────────┼─────────────────────┘           │
+│                            │                                 │
+│         ┌──────────────────┼──────────────────┐              │
+│         │                  ▼                  │              │
+│         │         ┌─────────────┐             │              │
+│         │         │  Relay      │             │              │
+│         │         │  (Indexer)  │             │              │
+│         │         └──────┬──────┘             │              │
+│         │                │                    │              │
+│         ▼                ▼                    ▼              │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐       │
+│  │    PDS      │    │    PDS      │    │    PDS      │       │
+│  │(alice.com)  │    │(bob.host)   │    │(carol.net)  │       │
+│  └─────────────┘    └─────────────┘    └─────────────┘       │
+│  Almacenes de Datos Personales                               │
+└──────────────────────────────────────────────────────────────┘
+```
+
+**Cómo Funciona:**
+
+1. **Tu Identidad:** Un Decentralized Identifier (DID) que puede vincularse a handles de dominio
+2. **Personal Data Store (PDS):** Tus datos viven en un PDS—inicialmente hospedado por Bluesky, pero puede ser auto-hospedado
+3. **Relay/Indexer:** Bluesky ejecuta relays que agregan datos de todos los PDS y construyen índices de búsqueda
+4. **Independencia de Cliente:** Cualquier app puede leer de la red de relays usando tu DID
+
+**Características Clave:**
+
+- **Enfoque Híbrido:** Combina propiedad de datos del usuario con indexación centralizada
+- **Handles de Dominio:** Tu identidad puede vincularse a dominios que controlas (alice.com)
+- **Descentralización Gradual:** Actualmente centralizado, pero diseñado para volverse más descentralizado con el tiempo
+- **Respaldo Comercial:** Bluesky PBC proporciona estabilidad y recursos para desarrollo
+
+---
+
+## Diferencias Clave
+
+### Identidad y Autenticación
+
+| Aspecto            | Nostr                  | ActivityPub            | Bluesky                             |
+| ------------------ | ---------------------- | ---------------------- | ----------------------------------- |
+| **Tipo de Identidad** | Par de claves criptográficas | Handle asignado por servidor | DID + dominio opcional              |
+| **Gestión de Claves** | El usuario mantiene la clave privada | El servidor gestiona claves | El usuario o PDS gestiona claves    |
+| **Recuperación**   | Ninguna (inmutable)    | El servidor puede resetear | Recuperación de cuenta vía PDS      |
+| **Portabilidad**   | Las claves funcionan en todas partes | Handle vinculado al servidor | El DID es portable, los handles pueden cambiar |
+
+**Nostr** toma el enfoque más radical: tu identidad es puramente criptográfica. Pierdes tu clave privada (nsec) y tu identidad se ha ido para siempre. Esto es una característica para resistencia a la censura—ninguna autoridad puede confiscar o resetear tu identidad—pero requiere gestión cuidadosa de claves.
+
+**ActivityPub** usa autenticación tradicional basada en servidor. Esto es familiar (como el email) y permite reseteos de contraseña, pero crea lock-in: tu identidad está vinculada a tu servidor. Si mastodon.social te banea, pierdes @yourname@mastodon.social.
+
+**Bluesky** ofrece un punto medio: tu identidad central es un DID (decentralized identifier) que persiste independientemente de los cambios de handle. Puedes moverte entre proveedores de PDS mientras mantienes tu identidad, similar a portar un número de teléfono entre operadores.
+
+### Resistencia a la Censura
+
+**Nostr: Resistencia Máxima**
+
+- Ninguna autoridad central puede banearte del protocolo
+- Cualquiera puede ejecutar un relay; solo necesitas uno para participar
+- El contenido está firmado criptográficamente—no puede ser falsificado o modificado
+- Si un relay te bloquea, usa otro
+- _Trade-off:_ El spam es más difícil de prevenir; la moderación es del lado del cliente
+
+**ActivityPub: Federación Moderada**
+
+- Tu administrador de servidor puede banearte de su instancia
+- Los servidores pueden desfederar (bloquear) otros servidores completamente
+- Crea "espacios seguros" pero también cámaras de eco
+- _Trade-off:_ Fuerte moderación comunitaria pero potencial para fragmentación
+
+**Bluesky: Moderación Corporativa**
+
+- Bluesky PBC puede moderar a nivel de relay
+- Los PDS auto-hospedados proporcionan algo de independencia
+- La verificación basada en dominio crea sistemas de reputación
+- _Trade-off:_ Mejor prevención de spam, pero depende de la buena voluntad de Bluesky
+
+### Escalabilidad y Rendimiento
+
+**Nostr:**
+
+- ✅ Escalado horizontal: más relays = más capacidad
+- ✅ Sin punto único de fallo
+- ⚠️ El cliente debe consultar múltiples relays (intensivo en ancho de banda)
+- ⚠️ Sin vista global; el descubrimiento de contenido es difícil
+- ⚠️ Los costos de almacenamiento de relays pueden limitar la retención de historial
+
+**ActivityPub:**
+
+- ✅ Eficiente: los servidores solo obtienen lo que sus usuarios necesitan
+- ✅ Patrones de escalado establecidos (ver Mastodon.social)
+- ⚠️ Las caídas de instancia afectan a todos sus usuarios
+- ⚠️ El "timeline federado" no escala a millones de usuarios
+
+**Bluesky:**
+
+- ✅ El relay centralizado proporciona consultas rápidas y consistentes
+- ✅ Infraestructura profesional (CDN, caching, etc.)
+- ⚠️ Actualmente centralizado; verdadera descentralización por determinar
+- ⚠️ El relay es un cuello de botella y punto potencial de control
+
+### Portabilidad de Datos
+
+**Nostr:**
+
+- ✅ Portabilidad nativa: tus datos existen en múltiples relays
+- ✅ Cambia de cliente instantáneamente: solo importa tu nsec
+- ✅ Sin vendor lock-in por diseño
+- ⚠️ No hay garantía de persistencia de datos (los relays pueden eliminar datos antiguos)
+
+**ActivityPub:**
+
+- ⚠️ La exportación de datos depende de tu servidor
+- ⚠️ Moverte de servidor = nueva identidad
+- ⚠️ Los seguidores no se transfieren automáticamente (la "migración de cuenta" es parcial)
+- ✅ Algunos servidores ofrecen buenas herramientas de exportación
+
+**Bluesky:**
+
+- ✅ Diseñado para portabilidad desde el principio
+- ✅ Todos los datos accesibles vía API
+- ✅ Herramientas de migración de cuenta integradas
+- ⚠️ Actualmente depende del PDS hospedado por Bluesky
+
+### Consideraciones de Privacidad
+
+**Nostr:**
+
+- ✅ No se requiere número de teléfono ni email
+- ✅ Pseudónimo por defecto
+- ⚠️ Todas las publicaciones son públicas (los DMs encriptados son opcionales)
+- ⚠️ El análisis de metadatos es posible (qué relays usas, cuándo publicas)
+
+**ActivityPub:**
+
+- ⚠️ Los administradores de servidor pueden leer DMs
+- ⚠️ El email generalmente se requiere para registro
+- ✅ Publicaciones privadas posibles (depende del servidor)
+- ✅ Algunas instancias priorizan la privacidad
+
+**Bluesky:**
+
+- ⚠️ La verificación por teléfono es cada vez más requerida
+- ⚠️ Bluesky PBC tiene acceso a los datos
+- ⚠️ Se fomenta la política de nombre real (handles de dominio)
+- ✅ Controles de privacidad en el protocolo
+
+### Experiencia del Desarrollador
+
+**Nostr:**
+
+- ✅ Protocolo extremadamente simple (aprende en un día)
+- ✅ No se requiere servidor para construir un cliente
+- ✅ Ecosistema open-source próspero
+- ⚠️ Fragmentado (muchos estándares/NIPs competidores)
+- ⚠️ Características integradas limitadas (debes implementar todo)
+
+**ActivityPub:**
+
+- ✅ Librerías maduras en muchos lenguajes
+- ✅ Estándar W3C bien documentado
+- ✅ Implementaciones existentes para estudiar
+- ⚠️ Protocolo complejo (ActivityStreams + ActivityPub)
+- ⚠️ Desarrollo de servidor requerido para la mayoría de las apps
+
+**Bluesky:**
+
+- ✅ APIs modernas y bien diseñadas
+- ✅ Fuerte soporte de TypeScript
+- ✅ Comunidad de desarrolladores activa
+- ⚠️ El protocolo aún está evolucionando
+- ⚠️ Actualmente dependiente de la infraestructura de Bluesky
+
+---
+
+## Recomendaciones de Casos de Uso
+
+### Elige Nostr Si...
+
+✅ **La resistencia a la censura es innegociable**
+
+- Eres periodista en un país autoritario
+- Discutes temas políticamente sensibles
+- Has sido baneado de otras plataformas
+
+✅ **Valoras la simplicidad y propiedad**
+
+- Quieres poseer verdaderamente tu identidad
+- Prefieres tecnología minimalista y alineada con Bitcoin
+- Aceptas la responsabilidad de la gestión de claves
+
+✅ **Estás construyendo en el ecosistema Bitcoin**
+
+- La integración con Lightning Network es importante
+- Quieres transferencia de valor resistente a la censura
+- Ya estás familiarizado con la gestión de claves
+
+**Mejores Clientes:** Damus (iOS), Amethyst (Android), Iris (Web), Primal (Todas las plataformas)
+
+### Elige ActivityPub/Mastodon Si...
+
+✅ **Quieres una red establecida y madura**
+
+- Necesitas software confiable y bien probado
+- La moderación comunitaria es importante para ti
+- Quieres unirte a comunidades existentes (infosec, académicos, artistas)
+
+✅ **Estás ejecutando una comunidad u organización**
+
+- Necesitas control a nivel de servidor
+- Quieres establecer guías comunitarias
+- Necesitas herramientas de moderación para tu grupo
+
+✅ **Prefieres patrones de redes sociales familiares**
+
+- Te gusta la interfaz tipo Twitter
+- Quieres publicaciones privadas y configuraciones de privacidad granulares
+- La moderación basada en servidor te atrae
+
+**Mejores Servidores:** mastodon.social (general), fosstodon.org (tech), infosec.exchange (seguridad), hachyderm.io (tech)
+
+### Elige Bluesky Si...
+
+✅ **Quieres una experiencia mainstream pulida**
+
+- Estás migrando desde Twitter y quieres familiaridad
+- La experiencia de usuario es tu prioridad principal
+- Quieres soporte y desarrollo profesional
+
+✅ **Eres creador de contenido o figura pública**
+
+- La verificación de dominio es importante para ti
+- Quieres elección algorítmica (múltiples feeds)
+- Necesitas infraestructura confiable
+
+✅ **Confías en la descentralización respaldada por corporaciones**
+
+- Crees que la descentralización gradual es realista
+- Quieres recursos respaldados por VC para crecimiento
+- Aceptas trade-offs por usabilidad
+
+**Mejores Clientes:** App oficial de Bluesky, Graysky (móvil), Tokimeki (web)
+
+---
+
+## Guías de Migración
+
+### Mudándote desde Twitter
+
+Los tres protocolos ofrecen rutas de escape desde Twitter/X, pero la experiencia difiere:
+
+**Twitter → Nostr:**
+
+1. **Encuentra tu comunidad:** Nostr aún es de nicho; busca tus intereses
+2. **Sigue puentes de Twitter:** Algunas cuentas reflejan Twitter a Nostr
+3. **Publica cruzada inicialmente:** Usa herramientas como NostrPad o copia y pega manualmente
+4. **Abraza las diferencias:** Sin algoritmos, sin viralidad—solo feeds cronológicos
+5. **Construye lentamente:** Nostr recompensa el engagement auténtico sobre conteos de seguidores
+
+**Twitter → ActivityPub/Mastodon:**
+
+1. **Elige tu servidor:** Investiga instancias alineadas con tus intereses
+2. **Usa herramientas de migración:** Existen herramientas de exportación de Twitter → importación a Mastodon
+3. **Sigue puentes de Twitter:** @TwitterBridge y servicios similares
+4. **Aprende la cultura:** Advertencias de contenido, texto alternativo y etiqueta de federación
+5. **Trae tu red:** Muchas comunidades de Twitter tienen espejos en Mastodon
+
+**Twitter → Bluesky:**
+
+1. **Transición más fácil:** La interfaz es muy similar al Twitter antiguo
+2. **Encuentra a tu gente:** Bluesky tiene la mayoría de los migrantes de Twitter
+3. **Usa verificación de dominio:** Reclama tu dominio para credibilidad
+4. **Explora feeds personalizados:** El marketplace de algoritmos de Bluesky reemplaza el feed único de Twitter
+5. **Publica cruzada fácilmente:** La mayoría de las herramientas soportan Bluesky nativamente
+
+### Estrategias de Publicación Cruzada
+
+**El Enfoque Puente:**
+
+- Usa servicios como [Nostr2Twitter](https://nostr2twitter.com), [Mastodon-Twitter Crossposter](https://crossposter.masto.donte.com.br/), o [herramientas nativas de Bluesky](https://bsky.app)
+- Publica en una plataforma, refleja en otras
+- _Pro:_ Alcance máximo | _Con:_ Conversaciones fragmentadas
+
+**El Enfoque Centro:**
+
+- Elige una plataforma como tu "hogar"
+- Comparte manualmente el mejor contenido a otras
+- _Pro:_ Engagement auténtico en cada plataforma | _Con:_ Intensivo en tiempo
+
+**El Enfoque Separación:**
+
+- Contenido diferente para cada plataforma
+- Nostr: Pensamientos sin censura, contenido Bitcoin
+- ActivityPub: Discusiones comunitarias, intereses de nicho
+- Bluesky: Presencia profesional, contenido mainstream
+- _Pro:_ Contenido apropiado para la plataforma | _Con:_ Más difícil de mantener
+
+### Checklist de Migración
+
+**Antes de Dejar Twitter:**
+
+- [ ] Exporta tus datos de Twitter (Configuración → Tu Cuenta → Descargar un archivo)
+- [ ] Guarda contactos y conversaciones importantes
+- [ ] Anuncia tu mudanza (fija un tweet con tus nuevos handles)
+- [ ] Actualiza tu bio con enlaces a nuevos protocolos
+- [ ] Configura publicación cruzada si lo deseas
+
+**Primera Semana en la Nueva Plataforma:**
+
+- [ ] Completa tu perfil (foto, bio, enlaces)
+- [ ] Sigue 50-100 personas para sembrar tu timeline
+- [ ] Publica un mensaje de introducción
+- [ ] Interactúa con las publicaciones de otros (responder, repostear)
+- [ ] Únete a comunidades/hashtags relevantes
+
+**Primer Mes:**
+
+- [ ] Establece ritmo de publicación
+- [ ] Construye base inicial de seguidores
+- [ ] Aprende características específicas de la plataforma
+- [ ] Contribuye valor (no solo promociones)
+- [ ] Evalúa si este es tu nuevo hogar
+
+---
+
+## Perspectivas Futuras
+
+### Roadmaps de Protocolo
+
+**Nostr:**
+
+- **Desarrollo de NIP:** Mejora continua vía Nostr Improvement Proposals
+- **Integración Lightning:** Integración más profunda de pagos Bitcoin/Lightning
+- **Mensajería Privada:** Comunicaciones encriptadas mejoradas (NIP-17)
+- **Sistemas de Reputación:** Reputación descentralizada sin autoridades centrales
+- **Innovación de Relays:** Modelos de relays pagados para sostenibilidad
+
+**ActivityPub:**
+
+- **Fediverse Futures:** Grupos, eventos e interacciones más ricas
+- **Migración Mejorada:** Mejor portabilidad de cuentas entre instancias
+- **Herramientas de Moderación:** Listas de bloqueo compartidas y filtrado colaborativo
+- **ActivityPub 2.0:** Posible evolución del protocolo para mejor escalado
+
+**Bluesky:**
+
+- **Auto-Hospedaje:** Lanzamiento de auto-hospedaje de Personal Data Store (PDS)
+- **Federación:** Apertura de la red de relays a terceros
+- **Algoritmos Personalizados:** Algoritmos de feed más sofisticados
+- **Verificación:** Sistemas de verificación de identidad descentralizados
+
+### Posibilidades de Interoperabilidad
+
+**La Realidad del Puente:**
+
+- **Nostr ↔ ActivityPub:** Los puentes existen pero son imperfectos
+- **Bluesky ↔ Otros:** Bluesky está actualmente aislado pero planea puentes
+- **Identidad Cross-Protocolo:** La identidad unificada entre protocolos sigue siendo difícil
+
+**Desafíos Técnicos:**
+
+- Diferentes modelos de datos hacen que el bridging sin problemas sea difícil
+- Las políticas de moderación chocan entre protocolos
+- La prevención de spam difiere fundamentalmente
+
+**Soluciones Potenciales:**
+
+- **Clientes de publicación dual:** Apps que publican a múltiples protocolos simultáneamente
+- **Capas de identidad unificada:** Servicios que mapean identidades entre protocolos
+- **Puentes de solo lectura:** Consumir contenido de otros protocolos sin interacción completa
+
+### Escenarios de Coexistencia
+
+**Futuro Probable: Ecosistemas Complementarios**
+
+En lugar de que un protocolo "gane," es probable que veamos:
+
+1. **Nostr** sigue siendo la opción para comunicación resistente a la censura, alineada con Bitcoin
+2. **ActivityPub** continúa como la federación madura, enfocada en la comunidad
+3. **Bluesky** se convierte en la opción mainstream, amigable con corporaciones
+
+Cada uno sirve diferentes necesidades y valores, similar a cómo:
+
+- El email (federado) coexiste con Signal (centralizado pero encriptado) y Matrix (descentralizado)
+- Diferentes criptomonedas sirven diferentes casos de uso
+
+**Qué Significa Esto para Ti:**
+
+No tienes que elegir solo uno. Muchos usuarios mantienen presencia en los tres:
+
+- **Nostr** para discusión Bitcoin sin censura
+- **ActivityPub** para comunidades de nicho y contenido de formato largo
+- **Bluesky** para networking profesional y alcance mainstream
+
+El futuro de las redes sociales no es una sola plataforma—es un mundo nativo de protocolo donde los usuarios controlan sus identidades y los datos fluyen libremente entre redes.
+
+---
+
+## Pon a Prueba Tu Conocimiento de Protocolos
+
+¿Listo para ver si entiendes las diferencias clave entre protocolos?
+
+<ProtocolComparisonQuiz client:load />
+
+---
+
+_Actualizado: Febrero 2026 | Versiones de protocolo: Nostr (NIPs actual), ActivityPub (Recomendación W3C), AT Protocol (v1.0)_
+
+_¿Tienes preguntas? Únete a la discusión en [Nostr](https://primal.net/p/npub1beginner), [Mastodon](https://fosstodon.org/tags/nostr), o [Bluesky](https://bsky.app/search?q=nostr)._

@@ -1,0 +1,142 @@
+{
+  "guides": {
+    "whatIsNostr": {
+      "title": "Nostr Explained Simply",
+      "description": "Understand Nostr in 5 minutes. Learn how decentralized social media works, why it matters, and how it's different from traditional platforms.",
+      "content": {},
+      "quiz": {
+        "question1": {
+          "question": "What does Nostr stand for?",
+          "options": [
+            "New Open Source Technology",
+            "Notes and Other Stuff Transmitted by Relays",
+            "Network of Secure Transmission"
+          ],
+          "correctAnswer": "Notes and Other Stuff Transmitted by Relays",
+          "explanation": "Nostr stands for 'Notes and Other Stuff Transmitted by Relays' - it's a simple, open protocol for decentralized social media."
+        }
+      }
+    },
+    "keysAndSecurity": {
+      "title": "Keys & Security",
+      "description": "Learn how to generate, save, and protect your Nostr keys. The complete security guide for beginners.",
+      "content": {},
+      "quiz": {}
+    },
+    "quickstart": {
+      "title": "Quickstart",
+      "description": "Get up and running with Nostr in minutes with this hands-on quickstart guide.",
+      "content": {},
+      "quiz": {}
+    },
+    "findingCommunity": {
+      "title": "Finding Community",
+      "description": "Discover how to find and join communities on Nostr.",
+      "content": {},
+      "quiz": {}
+    },
+    "faq": {
+      "title": "FAQ",
+      "description": "Frequently asked questions about Nostr, answered in plain English.",
+      "content": {},
+      "quiz": {}
+    },
+    "relaysDemystified": {
+      "title": "Relays Demystified",
+      "description": "Deep dive into how relays work with simple analogies and interactive tools.",
+      "content": {},
+      "quiz": {}
+    },
+    "nip05Identity": {
+      "title": "NIP-05 Identity",
+      "description": "Set up your NIP-05 identifier and get a human-readable name like you@domain.com.",
+      "content": {},
+      "quiz": {}
+    },
+    "zapsAndLightning": {
+      "title": "Zaps & Lightning Network",
+      "description": "Master the art of sending and receiving Bitcoin payments (zaps) over the Lightning Network.",
+      "content": {},
+      "quiz": {}
+    },
+    "nostrTools": {
+      "title": "Essential Nostr Tools",
+      "description": "A curated directory of the most useful Nostr tools and services for key management, media hosting, analytics, and more.",
+      "content": {},
+      "quiz": {}
+    },
+    "troubleshooting": {
+      "title": "Troubleshooting",
+      "description": "Common issues and how to fix them. From empty feeds to relay problems.",
+      "content": {},
+      "quiz": {}
+    },
+    "multiClient": {
+      "title": "Using Multiple Clients",
+      "description": "How to use multiple clients simultaneously and keep your data in sync.",
+      "content": {},
+      "quiz": {}
+    },
+    "relayGuide": {
+      "title": "Relay Guide",
+      "description": "Everything you need to know about choosing, connecting to, and managing relays.",
+      "content": {},
+      "quiz": {}
+    },
+    "privacySecurity": {
+      "title": "Privacy & Security",
+      "description": "Advanced privacy and security practices for power users.",
+      "content": {},
+      "quiz": {}
+    },
+    "nip17PrivateMessages": {
+      "title": "NIP-17: Private Direct Messages",
+      "description": "Learn about NIP-17, the secure replacement for NIP-04, and how to migrate your private messaging in Nostr",
+      "content": {},
+      "quiz": {}
+    },
+    "protocolComparison": {
+      "title": "Complete Protocol Comparison",
+      "description": "A comprehensive technical comparison of the three major decentralized social protocols. Learn the architecture, trade-offs, and which protocol fits your needs.",
+      "content": {},
+      "quiz": {}
+    }
+  },
+  "ui": {
+    "buttons": {
+      "submit": "Submit",
+      "next": "Next",
+      "previous": "Previous",
+      "checkAnswer": "Check Answer",
+      "startLearning": "Start Learning",
+      "learnMore": "Learn More"
+    },
+    "search": {
+      "placeholder": "Search guides...",
+      "noResults": "No guides found matching your search.",
+      "searching": "Searching..."
+    },
+    "common": {
+      "loading": "Loading...",
+      "error": "Something went wrong",
+      "success": "Success!",
+      "minutes": "min"
+    },
+    "navigation": {
+      "nextGuide": "Next Guide",
+      "previousGuide": "Previous Guide",
+      "backToGuides": "Back to Guides"
+    },
+    "badges": {
+      "earned": "Earned",
+      "locked": "Locked",
+      "viewAll": "View All Badges"
+    },
+    "progress": {
+      "completed": "Completed",
+      "of": "of",
+      "guidesCompleted": "guides completed",
+      "currentStreak": "Current streak"
+    }
+  }
+}

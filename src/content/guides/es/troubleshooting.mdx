@@ -1,0 +1,446 @@
+---
+title: "Problemas Comunes y Soluciones"
+description: "Soluciones rápidas para los problemas y preguntas más comunes de Nostr"
+estimatedTime: "Guía de referencia"
+priority: 2
+category: "reference"
+prerequisites: ["keys-and-security", "quickstart"]
+---
+
+## Una guía de referencia rápida para los problemas más frecuentes que encuentran los usuarios de Nostr.
+
+import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz";
+
+## Problema: "Mi Feed está Vacío" 📭
+
+### Síntomas
+
+- No aparecen publicaciones
+- Mensaje de "No se encontraron eventos"
+- Timeline en blanco
+
+### Causas y Soluciones
+
+**1. No sigues a nadie**
+
+- **Causa**: Cuenta nueva sin seguidos
+- **Solución**: Busca usuarios o intereses, sigue 10-20 cuentas
+- **Solución rápida**: Sigue cuentas populares de la guía [Encontrar Comunidad](/guides/finding-community)
+
+**2. Problemas de conexión con relays**
+
+- **Causa**: No conectado a ningún relay
+- **Solución**: Revisa Ajustes → Relays, asegúrate de estar conectado a 3-5 relays
+- **Solución rápida**: Agrega relays populares: `wss://relay.damus.io`, `wss://nostr.wine`
+
+**3. La caché del cliente está vacía**
+
+- **Causa**: Instalación nueva o datos borrados
+- **Solución**: Espera 30-60 segundos para que cargue el contenido
+- **Solución rápida**: Desliza hacia abajo para actualizar (móvil) o presiona el botón de actualizar
+
+### Prevención
+
+- Conecta a múltiples relays durante la configuración
+- Sigue usuarios activos inmediatamente
+- Mantén tu cliente actualizado
+
+---
+
+## Problema: "No Puedo Ver Mis Publicaciones Antiguas" 🕐
+
+### Síntomas
+
+- Faltan publicaciones de ayer/hace una semana
+- "No hay notas" en tu perfil
+- Historial de publicaciones incompleto
+
+### Causas y Soluciones
+
+**1. Límites de almacenamiento de relays**
+
+- **Causa**: Los relays gratuitos borran contenido antiguo para ahorrar espacio
+- **Solución**: Conecta a más relays (aumenta la redundancia)
+- **A largo plazo**: Usa relays de pago o relay personal para contenido importante
+
+**2. Configuración diferente de relays**
+
+- **Causa**: Publicaste desde Cliente A (Relays X,Y), ahora usas Cliente B (Relays Z)
+- **Solución**: Asegúrate de que ambos clientes usen los mismos relays
+- **Solución rápida**: Importa tu lista de relays (NIP-65)
+
+**3. Contenido no transmitido**
+
+- **Causa**: El cliente no pudo publicar en todos los relays
+- **Solución**: Revisa qué relays recibieron tu publicación
+- **Nota**: Una vez publicado, no se puede retransmitir a nuevos relays retroactivamente
+
+### Qué Sincroniza vs Qué No
+
+| Dato               | Sincroniza entre Clientes | Notas                        |
+| ------------------ | ------------------------ | ----------------------------- |
+| Tus publicaciones  | ✅ Sí                    | Si se publican en relays compartidos |
+| Tus seguidos       | ✅ Sí                    | Datos públicos                |
+| Tus seguidores     | ✅ Sí                    | Datos públicos                |
+| Tu perfil          | ✅ Sí                    | Datos públicos                |
+| Borradores         | ❌ No                    | Almacenado localmente por cliente |
+| Ajustes de app     | ❌ No                    | Específico del cliente        |
+| Cuentas silenciadas| ⚠️ A veces               | Varía según el cliente        |
+
+---
+
+## Problema: "Mis Publicaciones No Aparecen" 📤
+
+### Síntomas
+
+- Publicaste pero nadie lo ve
+- Sin likes/respuestas/zaps
+- La publicación aparece localmente pero no en otros clientes
+
+### Causas y Soluciones
+
+**1. El relay no acepta publicaciones**
+
+- **Causa**: Limitado por tasa, baneado o relay caído
+- **Solución**: Revisa el estado del relay, prueba relays diferentes
+- **Prueba**: ¿Puedes ver tu publicación en un cliente web como Primal?
+
+**2. Conectado solo a relays de solo lectura**
+
+- **Causa**: Algunos relays solo permiten leer, no escribir
+- **Solución**: Revisa los ajustes del relay, asegúrate de tener relays de "escritura"
+- **Solución rápida**: Agrega `wss://relay.damus.io` (permite escribir)
+
+**3. Publicando demasiado rápido**
+
+- **Causa**: Alcanzando límites de tasa
+- **Solución**: Reduce la velocidad, espera unos minutos
+- **Nota**: La mayoría de los relays limitan a 1-5 publicaciones por segundo
+
+---
+
+## Problema: "Alguien se está haciendo pasar por mí" 🎭
+
+### Síntomas
+
+- Cuenta falsa con tu nombre/foto
+- Alguien diciendo ser tú
+- Seguidores confundidos preguntando qué cuenta es la real
+
+### Causas y Soluciones
+
+**1. Obtén verificación NIP-05**
+
+- **Solución**: Configura identidad NIP-05 (ver [guía](/guides/nip05-identity))
+- **Por qué**: El badge de verificado distingue lo real de lo falso
+
+**2. Comparte tu npub ampliamente**
+
+- **Solución**: Publica tu npub real en otras plataformas
+- **Por qué**: La gente puede verificar tu identidad criptográficamente
+
+**3. Reporta al impostor**
+
+- **Solución**: Usa la función de reporte del cliente o moderación comunitaria
+- **Nota**: No puedes eliminar su cuenta (es descentralizado), pero puedes bloquear/silenciar
+
+### Prevención
+
+- Verifícate con NIP-05 lo antes posible
+- Publica tu npub en Twitter/sitio web
+- Construye reputación rápidamente para que tu cuenta real sea obvia
+
+---
+
+## Problema: "Spam en Mi Feed" 🗑️
+
+### Síntomas
+
+- Contenido promocional no deseado
+- Cuentas bot publicando constantemente
+- Contenido fuera de tema o inapropiado
+
+### Causas y Soluciones
+
+**1. Siguiendo cuentas de spam**
+
+- **Solución**: Deja de seguir fuentes de spam
+- **Mejor**: No sigas masivamente; cura cuidadosamente
+
+**2. Relay con mala moderación**
+
+- **Solución**: Desconecta de relays de baja calidad
+- **Mejor**: Usa relays de pago o solo por invitación
+
+**3. Sin lista de silencio**
+
+- **Solución**: Crea una lista de silencio en tu cliente
+- **Cómo**: Perfil → Cuentas silenciadas → Agregar spammers
+
+### Mejores Prácticas
+
+- Silencia temprano, silencia a menudo
+- Usa relays específicos por interés
+- Habilita filtros de palabras si el cliente lo soporta
+- No sigas cuentas sin revisar su contenido primero
+
+---
+
+## Problema: "El Cliente se Bloquea" 💥
+
+### Síntomas
+
+- La app se cierra inesperadamente
+- Se congela o se vuelve no responde
+- Errores al cargar contenido
+
+### Causas y Soluciones
+
+**1. App desactualizada**
+
+- **Solución**: Actualiza a la última versión desde la app store
+- **iOS**: App Store → Actualizaciones
+- **Android**: Play Store → Gestionar apps
+
+**2. Demasiados relays**
+
+- **Causa**: Conectado a 20+ relays agobia al cliente
+- **Solución**: Reduce a 4-8 relays activos
+- **Optimiza**: Usa el modelo de outbox NIP-65
+
+**3. Caché corrupta**
+
+- **Solución**: Borra los datos de la app (no perderás publicaciones/seguidos)
+- **Opción nuclear**: Reinstala la app, reimporta las claves
+
+### Prueba un Cliente Diferente
+
+Si un cliente tiene problemas constantemente, prueba otro:
+
+| Plataforma          | Alternativa          |
+| ------------------- | -------------------- |
+| iOS (Damus)         | Nos, Nostur          |
+| Android (Amethyst)  | Primal web, Nostros  |
+| Web (Primal)        | Iris, Snort, Coracle |
+
+---
+
+## Problema: "Perdí Mis Claves" 🔑
+
+### Síntomas
+
+- No puedes iniciar sesión en el cliente
+- Sin backup de nsec/npub
+- Claves solo en un dispositivo que se rompió
+
+### La Verdad Dura
+
+> ⚠️ **Si no tienes un backup de tus claves, tu cuenta es irrecuperable.**
+
+Esto es por diseño—Nostr no tiene "olvidé mi contraseña" porque no hay servidor central que guarde tus claves.
+
+### Lo Que PUEDES Hacer
+
+**1. Busca backups**
+
+- Revisa gestores de contraseñas
+- Busca capturas de pantalla
+- Revisa el email por mensajes de bienvenida
+- Revisa otros dispositivos con el cliente instalado
+
+**2. Verifica si el cliente tiene las claves almacenadas**
+
+- Algunos clientes cachean las claves
+- Intenta iniciar sesión sin pegar la clave
+- Revisa extensiones del navegador (Alby, Nos2x)
+
+**3. Crea una nueva cuenta**
+
+- Genera nuevas claves
+- Anuncia en otras plataformas que la cuenta antigua se perdió
+- Empieza a reconstruir tus seguidos
+
+### Prevención (Haz Esto AHORA)
+
+1. **Escribe tu nsec** en papel
+2. **Almacena en un gestor de contraseñas** (1Password, Bitwarden)
+3. **Usa una app firmadora** (Amber, Nos2x) para evitar escribir el nsec
+4. **Haz múltiples backups** en diferentes ubicaciones
+
+---
+
+## Problema: "No Puedo Conectarme al Relay" 🔌
+
+### Síntomas
+
+- Error de "Conexión fallida"
+- El relay aparece como offline
+- Las publicaciones no se sincronizan
+
+### Causas y Soluciones
+
+**1. El relay está caído**
+
+- **Prueba**: Abre la URL del relay en el navegador (debería mostrar error o página ws)
+- **Solución**: Revisa la página de estado del relay o redes sociales
+- **Solución**: Elimina temporalmente, vuelve a agregar cuando regrese
+
+**2. Problemas de red**
+
+- **Prueba**: ¿Puedes acceder a otros sitios web?
+- **Solución**: Revisa la conexión a internet, prueba una red diferente
+- **Nota**: Algunas redes bloquean conexiones WebSocket
+
+**3. URL del relay incorrecta**
+
+- **Verifica**: Debe empezar con `wss://` (seguro) o `ws://` (inseguro)
+- **Error común**: `https://relay.com` en lugar de `wss://relay.com`
+- **Solución**: Edita la URL del relay en los ajustes
+
+**4. El relay está lleno**
+
+- **Causa**: Algunos relays gratuitos alcanzan límites de capacidad
+- **Solución**: Intenta más tarde o usa un relay diferente
+- **A largo plazo**: Considera un relay de pago
+
+---
+
+## Problema: "Los Zaps No Funcionan" ⚡
+
+### Síntomas
+
+- Botón de zap no responde
+- Errores de "Pago fallido"
+- No puedes enviar o recibir zaps
+
+### Causas y Soluciones
+
+**1. Sin wallet conectado**
+
+- **Solución**: Conecta una wallet Lightning en los ajustes del cliente
+- **Ver**: [Guía de Zaps](/guides/zaps-and-lightning)
+
+**2. Balance insuficiente**
+
+- **Revisa**: Balance de la wallet
+- **Solución**: Agrega fondos a tu wallet
+- **Mínimo**: Generalmente necesitas 100+ sats para comisiones
+
+**3. Wallet offline**
+
+- **Causa**: Las wallets no custodiales necesitan estar online
+- **Solución**: Abre tu app de wallet, asegúrate de que esté funcionando
+- **Alternativa**: Usa wallet custodial como Alby
+
+**4. Dirección Lightning incorrecta**
+
+- **Revisa**: ¿Es tu dirección Lightning correcta en el perfil?
+- **Prueba**: Intenta enviarte 10 sats a ti mismo
+- **Solución**: Actualiza la dirección en los ajustes del perfil
+
+---
+
+## Problema: "Las Imágenes No Cargan" 🖼️
+
+### Síntomas
+
+- Iconos de imagen rotos
+- Cargadores girando
+- Sin media en las publicaciones
+
+### Causas y Soluciones
+
+**1. Límites de media de los relays**
+
+- **Causa**: Algunos relays no almacenan imágenes, solo texto
+- **Solución**: Las imágenes están hospedadas en servidores separados (Blossom, etc.)
+- **Solución**: Verifica si las imágenes cargan en un cliente web
+
+**2. Host de imagen caído**
+
+- **Causa**: El servidor que hospeda la imagen está offline
+- **Prueba**: Intenta abrir la URL de la imagen directamente
+- **Nota**: No puedes hacer nada si el host está caído
+
+**3. Ajustes del cliente**
+
+- **Revisa**: Ajustes → Media → "Cargar imágenes"
+- **Algunos clientes**: Tienen modos de ahorro de datos que bloquean imágenes
+- **Solución**: Habilita la carga de media en los ajustes
+
+**4. Conexión lenta**
+
+- **Causa**: Imágenes grandes en internet lento
+- **Solución**: Espera a que cargue, o cambia a una red más rápida
+
+---
+
+## Árbol de Decisiones Rápido 🌳
+
+<TroubleshootingWizard />
+
+**¿Tienes problemas? Sigue esto:**
+
+1. **¿No puedes ver nada?** → Revisa los relays, agrega más
+2. **¿No puedes publicar?** → Revisa los relays de escritura, límites de tasa
+3. **¿Problemas de cuenta?** → Verifica que las claves sean correctas
+4. **¿La app se bloquea?** → Actualiza, borra caché, o prueba un cliente diferente
+5. **¿Sigues atascado?** → Ve abajo
+
+---
+
+## ¿Sigues Atascado? 🆘
+
+### Ayuda Comunitaria
+
+**Telegram:**
+
+- [Nostr Protocol](https://t.me/nostr_protocol) - Ayuda general
+- [Damus](https://t.me/damusios) - Específico de iOS
+- [Amethyst](https://t.me/AmethystNostr) - Específico de Android
+
+**Otras Plataformas:**
+
+- [r/nostr](https://reddit.com/r/nostr) - Comunidad de Reddit
+- [Stacker News](https://stacker.news) - Foro de Bitcoin/Nostr
+- Nostr mismo - Publica con el tag #help
+
+### Recursos
+
+- [Nostr Wiki](https://wiki.nostr.com)
+- [Documentación específica de clientes](https://github.com/damus-io/damus#documentation)
+- [Especificaciones NIP](https://github.com/nostr-protocol/nips)
+
+### Reportando Bugs
+
+Si encontraste un bug en un cliente:
+
+1. Verifica si ya está reportado (GitHub issues)
+2. Crea un reporte detallado de bug:
+   - Lo que esperabas
+   - Lo que realmente pasó
+   - Pasos para reproducir
+   - Versión del cliente y plataforma
+
+---
+
+## Guarda Esta Página 📑
+
+Mantén esta guía a mano para referencia rápida. ¡La mayoría de los problemas tienen soluciones simples una vez que sabes dónde buscar!
+
+---
+
+## Pon a Prueba Tus Habilidades de Solución de Problemas
+
+¿Crees que sabes cómo resolver problemas comunes de Nostr?
+
+<TroubleshootingQuiz client:load />
+
+---
+
+## Guías Relacionadas
+
+- [Relays Explicados](/guides/relays-demystified) - Soluciona problemas de conexión
+- [Guía de Inicio Rápido](/guides/quickstart) - Cambia de cliente
+- [Guía de Zaps](/guides/zaps-and-lightning) - Soluciona problemas de pagos
+- [Claves y Seguridad](/guides/keys-and-security) - Previene bloqueos

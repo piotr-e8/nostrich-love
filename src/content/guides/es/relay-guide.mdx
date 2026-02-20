@@ -1,0 +1,577 @@
+---
+title: "Guía de Gestión de Relays"
+description: "Domina los relays de Nostr. Aprende a elegir, configurar y optimizar tus conexiones de relays para mejor rendimiento y alcance."
+estimatedTime: "12 minutos"
+priority: 8
+category: "advanced"
+prerequisites: ["keys-and-security", "quickstart", "relays-demystified"]
+---
+
+import { CTAButton } from "@components/CTAButton";
+import { Callout } from "@components/ui/Callout";
+import { RelayVisualizer } from "@components/ui/RelayVisualizer";
+import { RelayGuideQuiz } from "@components/interactive/RelayGuideQuiz";
+import { RelayPlayground } from "@components/interactive/RelayPlayground";
+
+{/* ProgressIndicator temporarily disabled - will be implemented with actual tracking later */}
+{/* <ProgressIndicator current={3} total={6} estimatedTime="12 minutos" /> */}
+
+## Cómo Funcionan los Relays (3 minutos)
+
+<RelayVisualizer />
+
+<Callout type="info">
+  **Construyendo sobre Conocimiento Previo:** Esta sección revisa brevemente la analogía
+  de la oficina de correos de [Relays Desmitificados](/guides/relays-demystified). Si recuerdas
+  cómo funcionan los relays, siéntete libre de saltar a [Tipos de Relays](#types-of-relays).
+</Callout>
+
+### La Explicación Simple
+
+**Los relays son servidores que almacenan y reenvían tus mensajes de Nostr.**
+
+Piensa en ellos como oficinas de correos:
+
+- Dejas una carta (tu publicación) en tu oficina de correos local
+- Ellos la reenvían a otras oficinas de correos
+- Los destinatarios la recogen de su oficina de correos local
+
+En Nostr:
+
+- **Tú** escribes una nota (publicación)
+- **El cliente** la envía a los relays a los que te has conectado
+- **Los relays** la almacenan y comparten con otros relays
+- **Los seguidores** la reciben de los relays a los que están conectados
+
+### Por Qué Esto Importa
+
+**Sin punto único de falla:**
+
+- Si un relay se cae, otros siguen funcionando
+- Tus publicaciones existen en múltiples lugares
+- Tú controlas dónde viven tus datos
+
+**Resistencia a la censura:**
+
+- Nadie puede eliminar tus publicaciones de todos los relays
+- Siempre puedes cambiar a relays diferentes
+- La red encuentra rutas alrededor de bloqueos
+
+**Elección y competencia:**
+
+- Diferentes relays ofrecen diferentes características
+- Opciones gratuitas y de pago
+- Especializados vs uso general
+
+### Resumen Técnico [AVANZADO]
+
+Bajo el capó, los relays usan conexiones WebSocket:
+
+```
+Cliente ←→ WebSocket ←→ Servidor Relay ←→ Base de Datos
+```
+
+Cuando publicas:
+
+1. El cliente firma el mensaje con tu clave privada
+2. El cliente envía a los relays conectados vía WebSocket
+3. El relay valida la firma
+4. El relay almacena en la base de datos
+5. El relay transmite a los suscriptores
+
+<Callout type="info">
+  No necesitas entender los detalles técnicos. Solo sé que los relays hacen
+  que Nostr funcione sin control central.
+</Callout>
+
+---
+
+## Tipos de Relays (2 minutos)
+
+### Relays Públicos Gratuitos
+
+**Qué son:**
+
+- Operados por voluntarios o miembros de la comunidad
+- Sin costo de usar
+- Abiertos a todos
+
+**Pros:**
+
+- ✅ Gratis
+- ✅ Fácil de empezar
+- ✅ Grandes redes
+
+**Contras:**
+
+- ❌ Pueden ser lentos o poco confiables
+- ❌ Pueden tener tiempo de inactividad
+- ❌ Menos incentivo para mantener
+
+**Ejemplos:**
+
+- `wss://relay.damus.io` (más popular)
+- `wss://nos.lol`
+- `wss://relay.snort.social`
+
+### Relays de Pago
+
+**Qué son:**
+
+- Requieren pago para usar
+- Generalmente mayor calidad
+- Mejor rendimiento
+
+**Pros:**
+
+- ✅ Más confiables
+- ✅ Mejor rendimiento
+- ✅ Incentivo financiero para mantener
+- ✅ A menudo mejor moderación
+
+**Contras:**
+
+- ❌ Cuestan dinero
+- ❌ Pueden tener límites de uso
+- ❌ No necesarios para usuarios casuales
+
+**Ejemplos:**
+
+- `wss://nostr.wine` (de pago)
+- Varios relays privados
+
+### Relays Especializados
+
+**Qué son:**
+
+- Enfocados en temas específicos
+- Relays regionales
+- Específicos por aplicación
+
+**Pros:**
+
+- ✅ Contenido enfocado en temas
+- ✅ Comunidades de ideas afines
+- ✅ Relevancia regional
+
+**Contras:**
+
+- ❌ Alcance más pequeño
+- ❌ Pueden ser de nicho
+
+**Ejemplos:**
+
+- Relays enfocados en Bitcoin
+- Relays regionales (Europa, Asia, etc.)
+- Relays específicos por idioma
+
+<Callout type="tip">
+  **Empieza con relays públicos gratuitos.** Agrega de pago más tarde si necesitas mejor
+  rendimiento o quieres apoyar la red.
+</Callout>
+
+---
+
+## Elegir Relays (5 minutos)
+
+### Conjunto de Inicio Recomendado
+
+Conecta a estos 5 relays para buena cobertura:
+
+```
+wss://relay.damus.io          (Primario - más popular)
+wss://nos.lol                 (Rápido, confiable)
+wss://relay.snort.social      (Cliente popular)
+wss://nostr.wine              (Opción de pago de calidad - opcional)
+```
+
+<Callout type="info">
+  **Una Nota sobre Descentralización:** Mientras que los relays populares de arriba son excelentes para
+  empezar, depender solo de unos pocos relays grandes concentra el poder y
+  va en contra del ethos descentralizado de Nostr. A medida que te vuelvas más cómodo,
+  considera agregar relays más pequeños, operados por la comunidad y relays de pago para apoyar
+  la diversidad de la red. El objetivo es una mezcla saludable de relays grandes y pequeños—piensa
+  en ello como no poner todos tus huevos en una canasta.
+</Callout>
+
+### Criterios de Selección
+
+**1. Tiempo de Actividad/Confiabilidad**
+
+- Busca relays con >99% de tiempo de actividad
+- Revisa nostr.watch para estadísticas
+- Evita relays frecuentemente offline
+
+**2. Ubicación Geográfica**
+
+- Más cerca = menor latencia
+- Elige relays cerca de ti
+- Mezcla de regiones para alcance global
+
+**3. Política de Contenido**
+
+- Algunos filtran spam
+- Algunos permiten todo
+- Elige basado en tus preferencias
+
+**4. Rendimiento**
+
+- Tiempos de conexión rápidos
+- Baja latencia
+- Buen ancho de banda
+
+**5. Comunidad**
+
+- Operador activo
+- Responde a problemas
+- Transparente sobre políticas
+
+### Dónde Encontrar Relays
+
+- **nostr.watch** - Monitor de tiempo de actividad de relays
+- **nostr.info** - Directorio de relays
+- **Recomendaciones de clientes** - Muchos sugieren relays por defecto
+- **Listas comunitarias** - Compartidas en publicaciones de Nostr
+
+### ¿Cuántos Relays?
+
+| Tipo de Usuario | Recomendado | Máximo |
+| --------------- | ----------- | ------ |
+| Principiante    | 3-5         | 10     |
+| Usuario Activo  | 5-10        | 20     |
+| Usuario Avanzado| 10-15       | 30     |
+| Bot/Servicio    | 20+         | 50+    |
+
+**Más no siempre es mejor:**
+
+- Más relays = más ancho de banda
+- Rendimiento decreciente después de 10-15
+- Calidad sobre cantidad
+
+<Callout type="warning">
+  No agregues 50+ relays aleatorios. Desperdicia ancho de banda y ralentiza tu cliente.
+  Quédate con 5-10 relays de calidad.
+</Callout>
+
+---
+
+## Pruebas y Exploración de Relays
+
+¡Prueba antes de comprometerte! Prueba las velocidades de los relays y ve cuáles funcionan mejor para tu ubicación antes de agregarlos a tu lista de relays.
+
+<RelayPlayground client:load />
+
+---
+
+## Agregando Relays (3 minutos)
+
+### Pasos Genéricos (La Mayoría de Clientes)
+
+1. **Abrir Ajustes**
+   - Generalmente icono de engranaje o menú "Ajustes"
+
+2. **Encontrar Sección de Relays**
+   - Busca "Relays" o "Red"
+
+3. **Agregar Nuevo Relay**
+   - Haz clic en "+" o "Agregar Relay"
+   - Ingresa URL WebSocket: `wss://relay.example.com`
+   - Guardar
+
+4. **Verificar Conexión**
+   - Debería mostrar punto verde o "conectado"
+   - Puede tomar unos segundos
+
+### Instrucciones Específicas por Cliente
+
+**Damus (iOS):**
+
+1. Pestaña de Perfil → Ajustes (icono de engranaje)
+2. "Relays"
+3. Toca "+"
+4. Ingresa URL
+5. Toca "Agregar"
+
+**Amethyst (Android):**
+
+1. Menú lateral → Ajustes
+2. "Relays"
+3. Toca "+"
+4. Ingresa URL
+5. Guardar
+
+**Iris (Web):**
+
+1. Haz clic en foto de perfil → Ajustes
+2. Pestaña "Relays"
+3. Haz clic en "Agregar Relay"
+4. Ingresa URL
+5. Agregar
+
+**Primal (Web/Móvil):**
+
+1. Ajustes → Red
+2. "Agregar Relay"
+3. Ingresa URL
+4. Guardar
+
+### Solución de Problemas de Conexión
+
+**"Falló la conexión"**
+
+- Verifica que la URL es correcta (empieza con wss://)
+- Prueba http vs https (debería ser wss://)
+- El relay podría estar caído
+- Intenta de nuevo en unos minutos
+
+**"Tiempo de espera"**
+
+- El relay está lento o sobrecargado
+- Prueba un relay diferente
+- Revisa tu conexión a internet
+
+**No cargan publicaciones**
+
+- Puede necesitar esperar la sincronización
+- Intenta actualizar
+- Revisa si el relay tiene las publicaciones de tus seguidores
+
+---
+
+## Relays de Pago (3 minutos)
+
+### ¿Por Qué Pagar?
+
+**Beneficios:**
+
+- Tiempo de actividad garantizado
+- Mejor rendimiento
+- Soporte directo
+- Financieramente sostenible
+- A menudo mejores características
+
+**Cuándo actualizar:**
+
+- En serio sobre Nostr
+- Los relays gratuitos no cubren tus necesidades
+- Quieres apoyar la infraestructura
+- Necesitas características específicas
+
+### Opciones Populares de Pago
+
+**nostr.wine**
+
+- Costo: ~$5-10/mes
+- Características: Alto rendimiento, buen tiempo de actividad
+- Registro: Pago en sitio web
+
+**Relays Privados**
+
+- Costo: Varía
+- Características: Políticas personalizadas, comunidades privadas
+- Acceso: Invitación o pago
+
+### Configurando Relays de Pago
+
+1. **Elige proveedor**
+2. **Paga** (generalmente Bitcoin/Lightning)
+3. **Recibe credenciales** (si se requiere)
+4. **Agrega al cliente** (igual que relays gratuitos)
+5. **Disfruta mejor rendimiento**
+
+<Callout type="tip">
+  **Enfoque híbrido:** Usa 3-5 relays gratuitos + 1-2 relays de pago. Lo mejor de ambos
+  mundos.
+</Callout>
+
+---
+
+## Tu Propio Relay [AVANZADO] (10 minutos)
+
+### ¿Por Qué Ejecutar el Tuyo?
+
+**Beneficios:**
+
+- Control completo
+- Privacidad (tus datos se quedan contigo)
+- Políticas personalizadas
+- Experiencia de aprendizaje
+- Apoya la red
+
+**Requisitos:**
+
+- Servidor (VPS ~$5-20/mes)
+- Conocimiento técnico
+- Tiempo para mantener
+
+### Software de Relay Popular
+
+**strfry**
+
+- Lenguaje: C++
+- Pros: Rápido, ligero
+- Contras: Requiere compilación
+
+**nostr-rs-relay**
+
+- Lenguaje: Rust
+- Pros: Moderno, activamente desarrollado
+- Contras: Curva de aprendizaje
+
+**nostream**
+
+- Lenguaje: TypeScript
+- Pros: Configuración fácil, buena documentación
+- Contras: Requiere Node.js
+
+### Configuración Rápida (nostream)
+
+**Prerrequisitos:**
+
+- Servidor Ubuntu/Debian
+- Node.js 18+
+- PostgreSQL
+
+**Pasos:**
+
+```bash
+# Instalar dependencias
+sudo apt update
+sudo apt install nodejs npm postgresql
+
+# Clonar repositorio
+git clone https://github.com/Cameri/nostream.git
+cd nostream
+
+# Instalar paquetes
+npm install
+
+# Configurar
+cp .env.sample .env
+nano .env  # Editar ajustes
+
+# Construir
+npm run build
+
+# Iniciar
+npm start
+```
+
+**Conectar dominio:**
+
+1. Apunta dominio a IP del servidor
+2. Configura SSL (Let's Encrypt)
+3. Configura proxy inverso (nginx)
+
+**Mantenimiento:**
+
+- Monitorea espacio en disco
+- Actualiza software regularmente
+- Backup de base de datos
+- Monitorea logs
+
+<Callout type="warning">
+  Ejecutar un relay requiere mantenimiento continuo. No empieces a menos que estés
+  comprometido a mantenerlo funcionando.
+</Callout>
+
+---
+
+## Solución de Problemas (3 minutos)
+
+### Problemas Comunes
+
+**Feed está vacío**
+
+- No conectado a suficientes relays
+- Los relays están caídos
+- No sigues a suficientes personas
+
+**Solución:**
+
+1. Revisa conexiones de relays
+2. Agrega más relays populares
+3. Sigue más personas
+
+**Las publicaciones no aparecen**
+
+- El relay rechazó la publicación (límite de tasa, política de contenido)
+- El cliente no está transmitiendo
+- Problemas de red
+
+**Solución:**
+
+1. Revisa políticas del relay
+2. Prueba un relay diferente
+3. Reinicia el cliente
+
+**Rendimiento lento**
+
+- Demasiados relays
+- Relays lentos en la lista
+- Mala conexión
+
+**Solución:**
+
+1. Elimina relays lentos
+2. Quédate con 5-10 relays de calidad
+3. Revisa conexión a internet
+
+**No puedo conectarme al relay**
+
+- El relay está caído
+- La URL está mal
+- Firewall bloqueando
+
+**Solución:**
+
+1. Revisa estado del relay en nostr.watch
+2. Verifica formato de URL (wss://)
+3. Prueba red diferente
+
+### Herramientas de Monitoreo
+
+- **nostr.watch** - Tiempo de actividad y estadísticas de relays
+- **nostr.info** - Directorio e información de relays
+- **Estado de relay del cliente** - La mayoría de los clientes muestran estado de conexión
+
+### Cuándo Cambiar de Relays
+
+**Cambia si:**
+
+- Frecuentemente offline
+- Muy lento
+- Censurando contenido que te importa
+- Mejores alternativas disponibles
+
+**No cambies solo porque:**
+
+- Una publicación perdida
+- Ralentización temporal
+- Inconveniente menor
+
+---
+
+## Referencia Rápida
+
+**Relays Gratuitos Esenciales:**
+
+- `wss://relay.damus.io`
+- `wss://nos.lol`
+- `wss://relay.snort.social`
+
+**Conteo Recomendado:** 5-10 relays
+
+**Formato de Relay:** `wss://dominio.com` (debe empezar con wss://)
+
+**Monitoreo:** nostr.watch para estadísticas de tiempo de actividad
+
+**Soporte:** Agrega 1-2 relays de pago si en serio usas Nostr
+
+---
+
+## Pon a Prueba Tus Habilidades de Gestión de Relays
+
+¿Crees que entiendes los conceptos avanzados de relays?
+
+<RelayGuideQuiz client:load />

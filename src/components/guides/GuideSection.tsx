@@ -7,6 +7,7 @@ import { LevelProgressBar } from './LevelProgressBar';
 import { UnlockButton } from './UnlockButton';
 import { getUnlockedLevelsLocal, getCompletedGuidesInLevel, getLevelProgressLocal } from '../../lib/progress';
 import { SKILL_LEVELS } from '../../data/learning-paths';
+import { useTranslation } from '../../hooks/useTranslation';
 
 export type SkillLevel = 'beginner' | 'intermediate' | 'advanced';
 
@@ -79,6 +80,7 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
   inProgressGuideIds = [],
   activeFilter = null,
 }) => {
+  const { t } = useTranslation();
   const config = levelConfig[level];
   const prevLevel = previousLevel[level];
 
@@ -300,10 +302,7 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
         <div className="text-center py-12">
           <Sparkles className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
           <p className="text-gray-500 dark:text-gray-400">
-            No guides match the current filter
-          </p>
-          <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">
-            Try selecting a different interest category
+            {t('ui.search.noResults')}
           </p>
         </div>
       )}

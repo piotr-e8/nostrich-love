@@ -1,0 +1,142 @@
+{
+  "guides": {
+    "whatIsNostr": {
+      "title": "Nostr Wyjaśniony Prosto",
+      "description": "Zrozum Nostr w 5 minut. Dowiedz się, jak działa zdecentralizowane social media, dlaczego to ważne i czym różni się od tradycyjnych platform.",
+      "content": {},
+      "quiz": {
+        "question1": {
+          "question": "Co oznacza skrót Nostr?",
+          "options": [
+            "New Open Source Technology",
+            "Notes and Other Stuff Transmitted by Relays",
+            "Network of Secure Transmission"
+          ],
+          "correctAnswer": "Notes and Other Stuff Transmitted by Relays",
+          "explanation": "Nostr oznacza 'Notes and Other Stuff Transmitted by Relays' - to prosty, otwarty protokół dla zdecentralizowanych mediów społecznościowych."
+        }
+      }
+    },
+    "keysAndSecurity": {
+      "title": "Klucze i Bezpieczeństwo",
+      "description": "Dowiedz się, jak generować, zapisywać i chronić swoje klucze Nostr. Kompletny przewodnik po bezpieczeństwie dla początkujących.",
+      "content": {},
+      "quiz": {}
+    },
+    "quickstart": {
+      "title": "Szybki Start",
+      "description": "Zacznij korzystać z Nostr w ciągu kilku minut dzięki temu praktycznemu przewodnikowi.",
+      "content": {},
+      "quiz": {}
+    },
+    "findingCommunity": {
+      "title": "Znajdowanie Społeczności",
+      "description": "Odkryj, jak znaleźć i dołączyć do społeczności na Nostr.",
+      "content": {},
+      "quiz": {}
+    },
+    "faq": {
+      "title": "FAQ",
+      "description": "Często zadawane pytania o Nostr, wytłumaczone prostym językiem.",
+      "content": {},
+      "quiz": {}
+    },
+    "relaysDemystified": {
+      "title": "Relaye Rozwiane",
+      "description": "Dogłębne spojrzenie na działanie relayów z prostymi analogiami i interaktywnymi narzędziami.",
+      "content": {},
+      "quiz": {}
+    },
+    "nip05Identity": {
+      "title": "Tożsamość NIP-05",
+      "description": "Skonfiguruj swój identyfikator NIP-05 i uzyskaj czytelną nazwę w formacie ty@domena.pl.",
+      "content": {},
+      "quiz": {}
+    },
+    "zapsAndLightning": {
+      "title": "Zaps i Lightning Network",
+      "description": "Opanuj sztukę wysyłania i odbierania płatności Bitcoin (zaps) przez Lightning Network.",
+      "content": {},
+      "quiz": {}
+    },
+    "nostrTools": {
+      "title": "Niezbędne Narzędzia Nostr",
+      "description": "Katalog wyselekcjonowanych narzędzi i usług Nostr do zarządzania kluczami, hostowania mediów, analityki i nie tylko.",
+      "content": {},
+      "quiz": {}
+    },
+    "troubleshooting": {
+      "title": "Rozwiązywanie Problemów",
+      "description": "Typowe problemy i sposoby ich rozwiązania. Od pustych feedów po problemy z relayami.",
+      "content": {},
+      "quiz": {}
+    },
+    "multiClient": {
+      "title": "Korzystanie z Wielu Klientów",
+      "description": "Jak używać wielu klientów jednocześnie i utrzymywać synchronizację danych.",
+      "content": {},
+      "quiz": {}
+    },
+    "relayGuide": {
+      "title": "Przewodnik po Relayach",
+      "description": "Wszystko, co musisz wiedzieć o wyborze, łączeniu się i zarządzaniu relayami.",
+      "content": {},
+      "quiz": {}
+    },
+    "privacySecurity": {
+      "title": "Prywatność i Bezpieczeństwo",
+      "description": "Zaawansowane praktyki prywatności i bezpieczeństwa dla zaawansowanych użytkowników.",
+      "content": {},
+      "quiz": {}
+    },
+    "nip17PrivateMessages": {
+      "title": "NIP-17: Prywatne Wiadomości Bezpośrednie",
+      "description": "Dowiedz się o NIP-17, bezpiecznej alternatywie dla NIP-04, i jak migrować swoje prywatne wiadomości w Nostr",
+      "content": {},
+      "quiz": {}
+    },
+    "protocolComparison": {
+      "title": "Kompletne Porównanie Protokołów",
+      "description": "Wszechstronne techniczne porównanie trzech głównych protokołów zdecentralizowanych mediów społecznościowych. Poznaj architekturę, kompromisy i który protokół najlepiej odpowiada Twoim potrzebom.",
+      "content": {},
+      "quiz": {}
+    }
+  },
+  "ui": {
+    "buttons": {
+      "submit": "Wyślij",
+      "next": "Dalej",
+      "previous": "Wstecz",
+      "checkAnswer": "Sprawdź odpowiedź",
+      "startLearning": "Rozpocznij naukę",
+      "learnMore": "Dowiedz się więcej"
+    },
+    "search": {
+      "placeholder": "Szukaj poradników...",
+      "noResults": "Nie znaleziono poradników pasujących do wyszukiwania.",
+      "searching": "Wyszukiwanie..."
+    },
+    "common": {
+      "loading": "Ładowanie...",
+      "error": "Coś poszło nie tak",
+      "success": "Sukces!",
+      "minutes": "min"
+    },
+    "navigation": {
+      "nextGuide": "Następny poradnik",
+      "previousGuide": "Poprzedni poradnik",
+      "backToGuides": "Powrót do poradników"
+    },
+    "badges": {
+      "earned": "Zdobyte",
+      "locked": "Zablokowane",
+      "viewAll": "Zobacz wszystkie odznaki"
+    },
+    "progress": {
+      "completed": "Ukończono",
+      "of": "z",
+      "guidesCompleted": "ukończonych poradników",
+      "currentStreak": "Aktualna seria"
+    }
+  }
+}

@@ -19,6 +19,7 @@ interface ContinueLearningProps {
   className?: string;
   hasQuiz?: boolean; // Whether the current guide has a quiz
   quizSelector?: string; // CSS selector for quiz element (default: '[data-quiz]')
+  locale?: string;
 }
 
 export function ContinueLearning({
@@ -28,7 +29,9 @@ export function ContinueLearning({
   className,
   hasQuiz = false,
   quizSelector = '[data-quiz], [id*="quiz"], [class*="quiz"]',
+  locale = 'en',
 }: ContinueLearningProps) {
+  const guidesPrefix = locale === 'en' ? '/en/guides' : `/${locale}/guides`;
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
   const [isViewingQuiz, setIsViewingQuiz] = useState(false);
@@ -186,14 +189,14 @@ export function ContinueLearning({
 
   const navigateToNextLevel = () => {
     if (!nextLevelInfo?.level) return;
-    
+
     const nextLevel = nextLevelInfo.level;
     const nextLevelConfig = SKILL_LEVELS[nextLevel];
-    
+
     if (nextLevelInfo.unlocked && nextLevelConfig) {
       // Navigate to first guide in next level
       const firstGuide = nextLevelConfig.sequence[0];
-      window.location.href = `/guides/${firstGuide}`;
+      window.location.href = `${guidesPrefix}/${firstGuide}`;
     }
   };
 
@@ -224,7 +227,7 @@ export function ContinueLearning({
                 Congratulations! You've completed all {currentLevelConfig.label} guides and mastered Nostr!
               </p>
               <a
-                href="/guides"
+                href={guidesPrefix}
                 className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
               >
                 <CheckCircle className="w-4 h-4" />
@@ -278,7 +281,7 @@ export function ContinueLearning({
                   </p>
                 )}
                 <a
-                  href="/guides"
+                  href={guidesPrefix}
                   className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                 >
                   <BookOpen className="w-4 h-4" />
@@ -342,7 +345,7 @@ export function ContinueLearning({
               )}
 
               <a
-                href={`/guides/${nextGuide.slug}`}
+                href={`${guidesPrefix}/${nextGuide.slug}`}
                 className={cn(
                   'w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-colors',
                   hasQuiz && !quizCompleted

@@ -12,11 +12,13 @@ interface GuideInfo {
 interface GuideNavigationProps {
   guideTitles?: Record<string, string>;
   className?: string;
+  locale?: string;
 }
 
 export function GuideNavigation({
   guideTitles,
   className,
+  locale = 'en',
 }: GuideNavigationProps) {
   const [prevGuide, setPrevGuide] = useState<GuideInfo | null>(null);
   const [nextGuide, setNextGuide] = useState<GuideInfo | null>(null);
@@ -132,6 +134,8 @@ export function GuideNavigation({
     );
   }
 
+  const guidesPrefix = locale === 'en' ? '/en/guides' : `/${locale}/guides`;
+
   // Off-level message
   if (showOffLevelMessage) {
     return (
@@ -142,7 +146,7 @@ export function GuideNavigation({
           </p>
           <div className="flex justify-center gap-4">
             <a 
-              href="/guides" 
+              href={guidesPrefix} 
               className="inline-flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
@@ -170,7 +174,7 @@ export function GuideNavigation({
           {/* If next level is unlocked, show continue button */}
           {isNextLevelUnlocked && nextLevelFirstGuide && nextLevel && (
             <a
-              href={`/guides/${nextLevelFirstGuide}`}
+              href={`${guidesPrefix}/${nextLevelFirstGuide}`}
               className="inline-flex items-center px-6 py-3 bg-primary text-white rounded-xl hover:bg-primary/90 transition-colors"
             >
               Continue to {SKILL_LEVELS[nextLevel]?.label}
@@ -189,7 +193,7 @@ export function GuideNavigation({
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
           {prevGuide ? (
             <a
-              href={`/guides/${prevGuide.slug}`}
+              href={`${guidesPrefix}/${prevGuide.slug}`}
               className="group flex items-center gap-3 p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-primary/50 transition-all"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -203,7 +207,7 @@ export function GuideNavigation({
           )}
           
           <a
-            href="/guides"
+            href={guidesPrefix}
             className="inline-flex items-center justify-center px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors"
           >
             Explore All Guides
@@ -220,7 +224,7 @@ export function GuideNavigation({
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         {prevGuide ? (
           <a
-            href={`/guides/${prevGuide.slug}`}
+            href={`${guidesPrefix}/${prevGuide.slug}`}
             className="group flex items-center gap-3 p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-primary/50 transition-all"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -234,10 +238,10 @@ export function GuideNavigation({
             Start of {SKILL_LEVELS[currentLevel]?.label} Level
           </div>
         )}
-        
+
         {nextGuide ? (
           <a
-            href={`/guides/${nextGuide.slug}`}
+            href={`${guidesPrefix}/${nextGuide.slug}`}
             className="group flex items-center gap-3 p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-primary/50 transition-all sm:text-right"
           >
             <div className="flex-1">

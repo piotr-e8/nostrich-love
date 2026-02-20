@@ -1,0 +1,261 @@
+---
+title: "Inicio Rápido: Lánzate en 5 Minutos"
+description: "Tu vía rápida a Nostr. Verifica tus claves, elige un cliente y lánzate. Sin relleno, solo acción."
+estimatedTime: "5 minutos"
+priority: 4
+category: "getting-started"
+prerequisites: ["what-is-nostr", "keys-and-security"]
+---
+
+<div className="text-center mb-8">
+  <h1 className="text-4xl md:text-5xl font-bold mb-4">
+    ¿Listo para Lanzarte?
+  </h1>
+  <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+    Tres pasos rápidos de cero a tu primera publicación. Vamos a llevarte a Nostr.
+  </p>
+</div>
+
+---
+
+## Paso 1: Verificación de Prerrequisitos
+
+Antes de lanzarnos, ¿tienes tus claves Nostr listas?
+
+<div className="my-8 p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700">
+  <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
+    <a 
+      href="#step-2" 
+      className="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors"
+    >
+      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+      </svg>
+      Sí, tengo mis claves
+    </a>
+    <span className="text-gray-500">o</span>
+    <a 
+      href="/es/guides/keys-and-security" 
+      className="inline-flex items-center px-6 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-lg transition-colors"
+    >
+      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+      </svg>
+      Generar claves primero (2 min)
+    </a>
+  </div>
+  
+  <p className="mt-4 text-sm text-gray-600 dark:text-gray-400 text-center">
+    Necesitarás tu <code>npub</code> (clave pública) y <code>nsec</code> (clave privada) para continuar.
+  </p>
+</div>
+
+---
+
+## Paso 2: Elige Tu Cliente
+
+Nostr tiene docenas de clientes—piensa en ellos como apps de correo electrónico. Elige uno para empezar.
+
+### Opción A: Prueba Antes de Comprometerse ⭐ Recomendado
+
+Experimenta cómo se sienten diferentes clientes antes de descargar nada.
+
+<div className="my-6 p-6 bg-friendly-purple-50 dark:bg-friendly-purple-900/20 rounded-xl border-2 border-friendly-purple-200 dark:border-friendly-purple-800">
+  <div className="flex items-center gap-4 mb-4">
+    <div className="text-4xl">🎮</div>
+    <div>
+      <h3 className="text-lg font-bold text-friendly-purple-700 dark:text-friendly-purple-300">
+        Simulador Interactivo de Clientes
+      </h3>
+      <p className="text-sm text-gray-600 dark:text-gray-400">
+        Prueba Damus, Amethyst, Primal y 4 más en tu navegador—sin descargas, sin riesgo.
+      </p>
+    </div>
+  </div>
+  
+  <a 
+    href="/simulators" 
+    className="inline-flex items-center px-6 py-3 bg-friendly-purple-600 hover:bg-friendly-purple-700 text-white font-semibold rounded-lg transition-colors"
+  >
+    Probar Clientes Ahora
+    <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+    </svg>
+  </a>
+</div>
+
+### Opción B: Selección Rápida por Dispositivo
+
+¿Sabes lo que quieres? Elige tu plataforma:
+
+<div className="my-6 overflow-x-auto">
+  <table className="w-full">
+    <thead>
+      <tr className="border-b-2 border-gray-200 dark:border-gray-700">
+        <th className="text-left py-3 px-4 font-semibold text-gray-900 dark:text-white">Plataforma</th>
+        <th className="text-left py-3 px-4 font-semibold text-gray-900 dark:text-white">Mejor para Principiantes</th>
+        <th className="text-left py-3 px-4 font-semibold text-gray-900 dark:text-white">Alternativa</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr className="border-b border-gray-200 dark:border-gray-700">
+        <td className="py-3 px-4">
+          <span className="flex items-center gap-2">
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.74s1.93-.74 3.2-.74c3.22.07 4.63 2.92 4.63 2.92s-2.66 1.33-2.66 4.09c0 3.24 3.92 4.09 3.92 4.09s-.48 2.21-2.17 4.61zm-5.85-15.1c.72-.87 1.2-2.07 1.07-3.28-1.05.05-2.32.7-3.07 1.57-.66.76-1.24 1.99-1.09 3.17 1.16.09 2.34-.75 3.09-1.46z"/></svg>
+            iPhone/iPad
+          </span>
+        </td>
+        <td className="py-3 px-4">
+          <a href="https://damus.io" target="_blank" rel="noopener noreferrer" className="text-friendly-purple-600 hover:text-friendly-purple-700 font-medium">
+            Damus →
+          </a>
+        </td>
+        <td className="py-3 px-4">
+          <a href="https://primal.net" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
+            Primal
+          </a>
+        </td>
+      </tr>
+      <tr className="border-b border-gray-200 dark:border-gray-700">
+        <td className="py-3 px-4">
+          <span className="flex items-center gap-2">
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993.0001.5511-.4482.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993 0 .5511-.4482.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0225 3.503C15.5902 8.479 13.8532 8 12 8c-1.8532 0-3.5902.479-5.1371 1.2905l-2.0225-3.503a.416.416 0 00-.5676-.1521.416.416 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.343 14.6589.343 18.6617h23.314c0-4.0028-2.3459-7.475-5.7785-9.3403"/></svg>
+            Android
+          </span>
+        </td>
+        <td className="py-3 px-4">
+          <a href="https://play.google.com/store/apps/details?id=com.vitorpamplona.amethyst" target="_blank" rel="noopener noreferrer" className="text-friendly-purple-600 hover:text-friendly-purple-700 font-medium">
+            Amethyst →
+          </a>
+        </td>
+        <td className="py-3 px-4">
+          <a href="https://primal.net" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
+            Primal
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td className="py-3 px-4">
+          <span className="flex items-center gap-2">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            Web/Escritorio
+          </span>
+        </td>
+        <td className="py-3 px-4">
+          <a href="https://primal.net" target="_blank" rel="noopener noreferrer" className="text-friendly-purple-600 hover:text-friendly-purple-700 font-medium">
+            Primal →
+          </a>
+        </td>
+        <td className="py-3 px-4">
+          <a href="https://iris.to" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
+            Iris
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+---
+
+## Paso 3: Lista de Verificación de Lanzamiento
+
+Una última verificación antes de entrar en vivo:
+
+<div className="my-8 p-6 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl border-2 border-yellow-400 dark:border-yellow-600">
+  <h3 className="text-lg font-bold text-yellow-800 dark:text-yellow-400 mb-4 flex items-center gap-2">
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+    </svg>
+    Verificación de Seguridad
+  </h3>
+  
+  <div className="space-y-3">
+    <label className="flex items-start gap-3 cursor-pointer">
+      <input type="checkbox" className="mt-1 w-5 h-5 text-friendly-purple-600 rounded" />
+      <span className="text-gray-800 dark:text-gray-200">
+        He guardado mis claves en 3+ lugares seguros
+      </span>
+    </label>
+    <label className="flex items-start gap-3 cursor-pointer">
+      <input type="checkbox" className="mt-1 w-5 h-5 text-friendly-purple-600 rounded" />
+      <span className="text-gray-800 dark:text-gray-200">
+        Entiendo: perder mi nsec (clave privada) = perder mi cuenta para siempre
+      </span>
+    </label>
+  </div>
+</div>
+
+### ¡Estás Listo! 🚀
+
+Abre tu cliente elegido y pega tu nsec para iniciar sesión. Eso es todo—¡estás en Nostr!
+
+<div className="my-8 text-center">
+  <p className="text-gray-600 dark:text-gray-400 mb-4">
+    Si elegiste un cliente arriba, haz clic para abrirlo:
+  </p>
+  <a 
+    href="https://primal.net" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className="inline-flex items-center px-8 py-4 bg-friendly-purple-600 hover:bg-friendly-purple-700 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl"
+  >
+    Abrir Primal
+    <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+    </svg>
+  </a>
+  <p className="mt-2 text-sm text-gray-500">
+    O abre tu cliente elegido del Paso 2
+  </p>
+</div>
+
+---
+
+## Consejos Pro para Tu Primer Día
+
+Una vez que estés dentro, haz esto para maximizar tu experiencia:
+
+<div className="my-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div className="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
+    <div className="flex items-center gap-3 mb-3">
+      <div className="text-3xl">👥</div>
+      <h3 className="font-bold text-blue-800 dark:text-blue-400">Llena Tu Feed Primero</h3>
+    </div>
+    <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
+      Un feed vacío es la razón #1 por la que la gente abandona. Sigue 50+ cuentas curadas al instante.
+    </p>
+    <a 
+      href="/follow-pack" 
+      className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold"
+    >
+      Encontrar Gente a Seguir
+      <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
+  </div>
+  
+  <div className="p-6 bg-green-50 dark:bg-green-900/20 rounded-xl border border-green-200 dark:border-green-800">
+    <div className="flex items-center gap-3 mb-3">
+      <div className="text-3xl">📚</div>
+      <h3 className="font-bold text-green-800 dark:text-green-400">Sigue Aprendiendo</h3>
+    </div>
+    <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
+      Domina Nostr con nuestras guías paso a paso. Desde zaps hasta privacidad—te tenemos cubierto.
+    </p>
+    <a 
+      href="/guides" 
+      className="inline-flex items-center text-green-600 hover:text-green-700 font-semibold"
+    >
+      Explorar Todas las Guías
+      <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
+  </div>
+</div>
+
+---
+
+**¡Bienvenido a Nostr!** La revolución social descentralizada comienza contigo. 🎉

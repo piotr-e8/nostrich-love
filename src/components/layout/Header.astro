@@ -2,9 +2,9 @@
 import { DarkModeToggleSimple } from '../ui/DarkModeToggle';
 import { LanguageSwitcher } from '../LanguageSwitcher';
 import { LogoText } from '../ui/LogoText';
+import { GuidesLink } from '../navigation/GuidesLink';
 
 const navItems = [
-  { label: 'Guides', href: '/guides' },
   { label: 'Tools', href: '/tools' },
   { label: 'Glossary', href: '/glossary' },
   { label: 'Resources', href: '/resources' },
@@ -39,6 +39,7 @@ const toolItems = [
 
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex items-center gap-1" role="navigation" aria-label="Main navigation">
+        <GuidesLink client:load className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">Guides</GuidesLink>
         {navItems.map((item) => (
           <a
             href={item.href}
@@ -154,13 +155,14 @@ const toolItems = [
     </div>
 
     <!-- Mobile Navigation -->
-    <nav 
-      class="md:hidden hidden border-t border-gray-200 dark:border-gray-800 py-4" 
+    <nav
+      class="md:hidden hidden border-t border-gray-200 dark:border-gray-800 py-4"
       id="mobile-menu"
-      role="navigation" 
+      role="navigation"
       aria-label="Mobile navigation"
     >
       <div class="flex flex-col gap-2">
+        <GuidesLink client:load className="px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">Guides</GuidesLink>
         {navItems.map((item) => (
           <a
             href={item.href}

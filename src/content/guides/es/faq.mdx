@@ -1,0 +1,933 @@
+---
+title: "Preguntas Frecuentes"
+description: "Respuestas a las principales preguntas sobre Nostr. Aprende sobre llaves, clientes, relays, zaps y más. Respuestas rápidas para principiantes."
+estimatedTime: "10 minutos"
+priority: 5
+category: "reference"
+prerequisites: []
+---
+
+import { FAQAccordion } from "@components/ui/FAQAccordion";
+
+{/* Search functionality coming soon */}
+
+---
+
+### ¿Qué es Nostr, realmente?
+
+Nostr es un **protocolo**—como el email o la web. Define cómo se mueven los mensajes entre relays y clientes. Eso significa:
+
+- Ninguna empresa lo posee o controla
+- Puedes cambiar de apps sin perder tu identidad
+- Cualquiera puede construir su propia app o relay
+- Tú controlas tus propias llaves y datos
+
+[Aprende más: ¿Qué es Nostr? →](/guides/what-is-nostr)
+
+<FAQAccordion 
+  question="¿Cuál es la diferencia entre npub y nsec? ¿Cuál comparto?"
+  category="security"
+  client:load
+>
+  Estas son tus dos llaves que trabajan juntas:
+
+**npub** (llave pública) = Tu nombre de usuario
+
+- Empieza con: `npub1...`
+- **SEGURO COMPARTIR** 🟢
+- Esta es tu identidad pública en Nostr
+- Compártela en todas partes donde quieras que la gente te encuentre
+
+**nsec** (llave privada) = Tu contraseña
+
+- Empieza con: `nsec1...`
+- **NUNCA COMPARTAS** 🔴
+- Esto prueba que eres dueño de tu npub
+- Cualquiera con esto puede publicar como tú
+- Pierdes esto = pierdes tu cuenta para siempre
+
+**Regla simple:** Si empieza con "npub", compártelo. Si empieza con "nsec", guárdalo como si tu vida dependiera de ello.
+
+[Aprende más: Llaves y Seguridad →](/guides/keys-and-security)
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="Si pierdo mi llave privada, ¿puedo recuperar mi cuenta?"
+  category="security"
+  client:load
+>
+  **No. No hay recuperación.**
+
+Nostr no tiene:
+
+- Botón de "Olvidé mi contraseña"
+- Soporte al cliente
+- Administrador que pueda restablecer cuentas
+- Proceso de recuperación de cuenta
+
+Esto es por diseño. Nostr es descentralizado, lo que significa que no hay autoridad central a quién pedir ayuda.
+
+**Qué puedes hacer:**
+
+1. **Prevención:** Respaldar tu nsec en 3+ lugares (sigue la regla 3-2-1)
+2. **Mitigación:** Crear un nuevo par de llaves y decirle a tus seguidores sobre tu nueva cuenta
+3. **NIP-05:** Si tienes un identificador NIP-05, puedes redirigirlo a tu nuevo npub
+
+**Hablando claro:** La gente pierde acceso a cuentas todos los días. No seas uno de ellos. Respalda tus llaves AHORA.
+
+[Aprende más: La Regla de Respaldo 3-2-1 →](/guides/keys-and-security#the-3-2-1-backup-rule)
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Por qué necesito guardar estas largas cadenas de caracteres?"
+  category="basics"
+  client:load
+>
+  Esas "largas cadenas" son llaves criptográficas. Aquí está por qué parecen jeroglíficos:
+
+**Seguridad de 256 bits:** Cada llave tiene más combinaciones posibles que átomos en el universo observable. Esto hace imposible adivinar.
+
+**Matemática de una sola vía:** No puedes descubrir la llave privada de la llave pública. Es matemáticamente imposible.
+
+**No hay base de datos central:** A diferencia de Twitter o Facebook, no hay empresa almacenando pares "usuario: contraseña". ¡Tus llaves SON tu identidad!
+
+**¿Por qué no algo más simple?**
+
+- Las contraseñas simples son hackeadas
+- Las bases de datos centralizadas son violadas
+- Tu identidad necesita ser verdaderamente tuya—y eso requiere criptografía seria
+
+**La buena noticia:** No escribes estas a menudo. La mayoría de los clientes las almacenan de forma segura. Solo necesitas respaldarlas de forma segura.
+
+[Aprende más: Entendiendo Llaves →](/guides/keys-and-security#understanding-keys)
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Qué es un identificador NIP-05 y lo necesito?"
+  category="advanced"
+  client:load
+>
+  Un identificador NIP-05 es como un nombre de usuario legible por humanos para Nostr.
+
+**Sin NIP-05:** Eres identificado por tu npub
+
+- `npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq`
+
+**Con NIP-05:** Eres identificado por algo legible
+
+- `tu@ejemplo.com` o `tu@nostrplebs.com`
+
+**Beneficios:**
+
+- Fácil de recordar y compartir
+- Se ve más profesional
+- Puede ser verificado (prueba que controlas ese dominio)
+- Algunos clientes priorizan usuarios NIP-05 en búsquedas
+
+**¿Lo necesitas?**
+
+- **No requerido.** Puedes usar Nostr perfectamente bien sin él
+- **Recomendado** si eres serio sobre Nostr
+- **Esencial** si estás construyendo una marca o presencia pública
+
+**Cómo obtener uno:**
+
+1. Compra de proveedores (nostrplebs.com, nostrname.com) - $5-15/año
+2. Configura tu propio dominio (si tienes uno) - Gratis
+3. Opciones gratuitas de algunos servicios
+
+[Aprende más: Obtén un NIP-05 →](/guides/nip05-identity
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Qué cliente de Nostr debería usar? ¡Hay tantos!"
+  category="getting-started"
+  client:load
+>
+  Hay docenas de clientes de Nostr, cada uno con diferentes fortalezas. Aquí está una guía rápida:
+
+**Para Principiantes (Empieza Aquí):**
+
+- **Iris** (Web) - Funciona en cualquier dispositivo, no necesita instalación, interfaz simple
+- **Primal** (Web/iOS/Android) - Diseño hermoso, fácil descubrimiento
+- **Damus** (iOS) - Limpio, simple, genial para usuarios de iPhone
+
+**Para Usuarios Avanzados:**
+
+- **Amethyst** (Android) - Altamente personalizable, lleno de características
+- **Coracle** (Web) - Rápido, mínimo, atajos de teclado
+- **Snort** (Web) - Gran rendimiento, desarrollo activo
+
+**Clientes Especializados:**
+
+- **Nostrudel** - Enfocado en contenido de formato largo
+- **Plebstr** - Construido para comunidades y grupos
+- **Current** - Enfocado en música y medios
+
+**Cómo elegir:**
+
+1. Elige por plataforma (iOS, Android, Web, Escritorio)
+2. Prueba 2-3 que te atraigan
+3. Usa el que se sienta bien
+4. ¡Recuerda: Puedes cambiar en cualquier momento!
+
+**Consejo pro:** Empieza con Iris o Primal. Funcionan en todas partes y son amigables para principiantes.
+
+[Prueba nuestro Recomendador de Clientes →](/guides/quickstart#choose-your-first-client)
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="Si cambio de cliente, ¿mis publicaciones y seguidores vienen conmigo?"
+  category="basics"
+  client:load
+>
+  **¡Sí! Esta es la magia de Nostr.**
+
+Tu identidad (llaves) funciona en todos los clientes. Cuando cambias:
+
+**Lo que viene contigo:**
+
+- ✓ Tu identidad (mismo npub)
+- ✓ Tus seguidores (siguen tu npub, no la app)
+- ✓ Tus publicaciones (almacenadas en relays, no en la app)
+- ✓ Tu información de perfil
+- ✓ Tu lista de follows
+
+**Lo que podría no transferir:**
+
+- ✗ Configuraciones específicas de la app (temas, preferencias)
+- ✗ Borradores de publicaciones (si no se publicaron)
+- ✗ Marcadores locales (depende de la implementación)
+
+**Cómo cambiar:**
+
+1. Exporta tu nsec de tu cliente actual (o usa tu respaldo)
+2. Instala el nuevo cliente
+3. Importa/ingresa tu nsec
+4. Espera un momento para que los datos se sincronicen desde los relays
+5. ¡Estás de vuelta en acción!
+
+Esta es la razón por la que Nostr es poderoso—nunca estás atrapado en una sola app.
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Necesito crear una cuenta nueva para cada app?"
+  category="basics"
+  client:load
+>
+  **¡No! Una cuenta funciona en todas partes.**
+
+A diferencia de las redes sociales tradicionales donde Twitter, Instagram y TikTok son completamente separados, Nostr usa una identidad en todas las apps.
+
+**Cómo funciona:**
+
+- Tus llaves (npub/nsec) SON tu cuenta
+- Estas llaves funcionan en cada cliente de Nostr
+- Inicias sesión con las mismas llaves en todas partes
+
+**Ejemplo:**
+
+- Creas llaves una vez
+- Las usas en Damus (app iOS)
+- Las usas en Iris (app web)
+- Las usas en Amethyst (app Android)
+- Mismos seguidores, mismas publicaciones, misma identidad
+
+**Piensa en ello como el email:**
+
+- Tienes una dirección de email
+- Puedes revisarla en Gmail, Apple Mail o Outlook
+- Mismos emails en todas partes
+- Nostr funciona de la misma manera
+
+Esta es una de las superpotencias de Nostr—portabilidad verdadera.
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Qué son los relays y por qué necesito elegirlos?"
+  category="technical"
+  client:load
+>
+  **Los relays son las oficinas de correos de Nostr.**
+
+Almacenan y reenvían tus mensajes. Aquí está la versión simple:
+
+**Qué hacen los relays:**
+
+- Almacenan tus publicaciones
+- Comparten publicaciones con otros
+- Entregan mensajes a tus seguidores
+- Mantienen tus datos disponibles
+
+**Por qué los eliges:**
+Nostr es descentralizado—no hay servidor central. Tú eliges qué oficinas de correos usar. Diferentes relays tienen diferentes:
+
+- Velocidad
+- Confiabilidad
+- Políticas de contenido
+- Costo (algunos gratuitos, otros pagados)
+
+**¿Cuántos necesito?**
+
+- **Mínimo:** 3-5 relays confiables
+- **Punto óptimo:** 5-10 relays de calidad
+- **Máximo:** Más no siempre es mejor
+
+**Relays populares gratuitos:**
+
+- `wss://relay.damus.io`
+- `wss://nos.lol`
+- `wss://relay.snort.social`
+
+**No lo pienses demasiado:** La mayoría de los clientes se conectan automáticamente a buenos relays. Siempre puedes ajustar después.
+
+[Aprende más: Guía de Relays →](/guides/relay-guide)
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="Si publico en un relay, ¿todos lo verán?"
+  category="technical"
+  client:load
+>
+  **No automáticamente.** Esto confunde a muchos principiantes.
+
+**Cómo funciona realmente:**
+
+1. Publicas al Relay A
+2. Solo la gente conectada al Relay A lo ve inmediatamente
+3. Si tus seguidores están en el Relay B, no lo verán... todavía
+
+**Pero aquí está la buena noticia:**
+
+- La mayoría de los clientes se conectan a múltiples relays por defecto
+- El contenido popular se propaga a través de la red naturalmente
+- Tus seguidores pueden conectarse a los mismos relays que tú
+
+**Cómo maximizar el alcance:**
+
+1. Conéctate a relays populares (más gente ve tus publicaciones)
+2. Anima a los seguidores a usar los mismos relays
+3. Usa NIP-65 (recomendaciones de relays) [AVANZADO]
+4. Publica en múltiples relays
+
+**El trade-off:**
+
+- Más relays = mayor alcance
+- Más relays = más uso de datos
+- Encuentra tu balance
+
+**La conclusión:** Empieza con los relays por defecto. A medida que crezcas, puedes optimizar.
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Por qué mi feed está vacío? ¿Dónde está todo el mundo?"
+  category="troubleshooting"
+  client:load
+>
+  **¡El problema #1 de principiantes!** Aquí está por qué y cómo solucionarlo:
+
+**Por qué está vacío:**
+
+1. **No hay relays conectados** - Necesitas conectarte a servidores que almacenan publicaciones
+2. **No sigues a nadie** - Tu feed solo muestra a la gente que sigues
+3. **Cuenta nueva** - Toma tiempo descubrir y sincronizar contenido
+
+**Solución Rápida (2 minutos):**
+
+1. **Agrega relays populares:**
+   - Ve a Configuración → Relays
+   - Agrega estos:
+     - `wss://relay.damus.io`
+     - `wss://nos.lol`
+
+2. **Encuentra gente a quién seguir:**
+   - Busca temas que te gusten (#bitcoin, #photography)
+   - Revisa "Usuarios Sugeridos" en tu cliente
+   - Mira a quién siguen las cuentas populares
+   - Publica: "¿Nuevo aquí—a quién debería seguir?"
+
+3. **Espera 30-60 segundos** para que el contenido cargue
+
+**¿Todavía vacío?**
+
+- Revisa tu conexión a internet
+- Intenta un cliente diferente
+- Algunos relays podrían estar caídos (prueba otros)
+- Limpia caché/reinicia la app
+
+[Usa nuestra Guía de Solución de Problemas →](/guides/troubleshooting)
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿A qué relays debería conectarme?"
+  category="technical"
+  client:load
+>
+  **Empieza con estos relays confiables y gratuitos:**
+
+**Esenciales (Agrega Estos Primero):**
+
+```
+wss://relay.damus.io          (Más popular, muy confiable)
+wss://nos.lol                 (Rápido, bien mantenido)
+```
+
+**Extras Recomendados:**
+
+```
+wss://relay.snort.social      (Popular, buen uptime)
+wss://nostr.wine              (Relay de calidad)
+wss://relay.current.fyi       (Rápido, mínimo)
+```
+
+**Cómo elegir:**
+
+- **Empieza con 3-5** de la lista de arriba
+- **Agrega más** si quieres más diversidad de contenido
+- **Elimina** los lentos o poco confiables
+- **Presta atención** a cuáles funcionan mejor para ti
+
+**[AVANZADO] Relays especializados:**
+
+- Algunos se enfocan en temas específicos (Bitcoin, desarrollo de nostr)
+- Algunos requieren pago (a menudo mayor calidad)
+- Algunos son regionales (mejor para contenido local)
+
+**Consejo pro:** No agregues demasiados. 5-10 relays de calidad es mejor que 50 aleatorios.
+
+[Aprende más: Guía de Relays →](/guides/relay-guide)
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Cómo encuentro gente a quién seguir?"
+  category="getting-started"
+  client:load
+>
+  **Encontrar tu comunidad es la clave para disfrutar Nostr.** Aquí está cómo:
+
+**Método 1: Buscar Temas**
+
+- Busca hashtags: #bitcoin, #photography, #music, #nostr
+- Encuentra gente publicando sobre cosas que amas
+- Sigue a los interesantes
+
+**Método 2: Usuarios Sugeridos**
+
+- La mayoría de los clientes tienen secciones "Sugeridos" o "Descubrir"
+- Empieza con cuentas populares y activas
+- Revisa sus publicaciones recientes antes de seguir
+
+**Método 3: Sigue a los Seguidores**
+
+- Encuentra una persona que te guste
+- Mira a quién siguen
+- Sigue a gente con buen gusto
+
+**Método 4: Interactúa Públicamente**
+
+- Publica: "¿Nuevo en Nostr—a quién debería seguir?"
+- Usa hashtags relevantes a tus intereses
+- Responde a publicaciones que encuentres interesantes
+- La gente te encontrará
+
+**Método 5: Importar desde Twitter** [AVANZADO]
+
+- Algunas herramientas te permiten encontrar usuarios de Nostr que sigues en Twitter
+- Busca "nostr twitter bridge"
+
+**Calidad sobre cantidad:** Sigue 20-30 personas interesantes en lugar de 1,000 cuentas aleatorias. Tu feed será mucho mejor.
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Qué son los 'zaps' y cómo los configuro?"
+  category="advanced"
+  client:load
+>
+  **Los zaps son propinas en Bitcoin enviadas a través de Lightning Network.**
+
+Piensa en ellos como "me gusta con valor"—son una forma de apoyar a los creadores que disfrutas.
+
+**Cómo funcionan los zaps:**
+
+1. Alguien disfruta tu publicación
+2. Te "zapean" (envían Bitcoin)
+3. Recibes satoshis (pequeñas cantidades de Bitcoin)
+4. Instantáneo, bajas tarifas, global
+
+**Por qué son geniales:**
+
+- Apoya creadores directamente
+- Ninguna plataforma se lleva una comisión
+- Instantáneo y global
+- Crea ciclos de retroalimentación positivos
+- Forma divertida de interactuar
+
+**Cómo recibir zaps:**
+
+1. **Obtén un wallet Lightning:**
+   - Alby (extensión de navegador)
+   - Wallet of Satoshi (móvil, más fácil)
+   - Phoenix (móvil, más control)
+
+2. **Agrega a tu perfil:**
+   - Ve a configuración de perfil
+   - Agrega Lightning Address (se ve así: tu@walletofsatoshi.com)
+   - O agrega LNURL
+
+3. **Díselo a la gente:**
+   - Publica sobre ello
+   - "¡Zaps bienvenidos! ⚡"
+
+**Cómo enviar zaps:**
+
+- Busca el botón ⚡ en las publicaciones
+- Elige cantidad (puede ser pequeña, como 10 satoshis)
+- Confirma en tu wallet
+- ¡Listo!
+
+[Aprende más: Guía de Zaps →](/guides/zaps-and-lightning)
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Por qué no puedo ver mis publicaciones antiguas?"
+  category="troubleshooting"
+  client:load
+>
+  **Esto suele pasar por una de tres razones:**
+
+**Razón 1: Problemas de Relay**
+
+- Tus publicaciones están almacenadas en relays
+- Si un relay se cae, las publicaciones pueden desaparecer temporalmente
+- **Solución:** Conéctate a múltiples relays
+
+**Razón 2: Cliente Nuevo/Sincronización de Datos**
+
+- Cuando inicias sesión en un cliente nuevo, toma tiempo buscar publicaciones antiguas
+- Algunos clientes solo buscan historial reciente inicialmente
+- **Solución:** Espera unos minutos, o actualiza manualmente
+
+**Razón 3: Caché del Cliente**
+
+- Algunos clientes cachean datos localmente
+- Si el caché se limpia, necesitan volver a buscar
+- **Solución:** Arrastra para actualizar, o reinicia la app
+
+**Cómo prevenir esto:**
+
+1. **Usa múltiples relays** - No dependas solo de uno
+2. **Publica en relays confiables** - Tienen mejor uptime
+3. **[AVANZADO] Usa un servicio de respaldo** - Algunos servicios archivan tus publicaciones
+4. **Exporta tus datos periódicamente** - Guarda tu contenido localmente
+
+**Nota importante:** Incluso si no puedes ver publicaciones antiguas, podrían seguir existiendo en relays. Intenta:
+
+- Clientes diferentes
+- Relays diferentes
+- Exploradores de Nostr (nostr.guru)
+
+**Permanencia de datos en Nostr:**
+
+- Las publicaciones pueden persistir en relays indefinidamente
+- Pero los relays también pueden eliminar datos antiguos
+- Nada es verdaderamente "permanente" a menos que lo respaldes
+
+[Aprende más: Guía de Llaves y Seguridad →](/guides/keys-and-security)
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Por qué algunos de mis mensajes no se entregan?"
+  category="troubleshooting"
+  client:load
+>
+  Usualmente problemas de conectividad de relays. Los mensajes pueden no entregarse si: el recipiente está offline, los relays están caídos, o no estás conectado a los mismos relays. Verifica tus conexiones de relay, intenta agregar más relays, o espera la propagación. Usa múltiples relays para redundancia.
+
+**Causas comunes:**
+
+- Los relays del recipiente están offline o lentos
+- No estás conectado a relays que se superponen
+- Problemas de conectividad de red
+- Rate limiting del relay
+
+**Soluciones:**
+
+1. Verifica el estado del relay en la configuración de tu cliente
+2. Agrega 2-3 relays populares adicionales
+3. Espera 5-10 minutos para la propagación de red
+4. Vuelve a publicar si es necesario
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Cómo verifico la identidad de alguien?"
+  category="security"
+  client:load
+>
+  Busca identificadores NIP-05 (nombres legibles por humanos como ana@dominio.com). Verifica si su perfil tiene un badge de verificación. Verifica cruzadamente su npub en múltiples plataformas. Para contactos importantes, verifica a través de otro canal de comunicación. Ten cuidado con cuentas con ligeras variaciones de ortografía de nombres populares.
+
+**Métodos de verificación:**
+
+1. **Identificador NIP-05** - Busca el badge de marca de verificación
+2. **Verificación cruzada de plataformas** - Verifica el mismo npub en múltiples clientes
+3. **Confirmación externa** - Pregunta en otra plataforma en la que confíes
+4. **Red de confianza** - Mira si gente en quien confías los sigue
+
+<Callout type="warning">
+  Siempre verifica contactos importantes a través de un segundo canal. Los impostores a menudo
+  usan ligeras variaciones de ortografía de nombres populares.
+</Callout>
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Qué pasa si un relay elimina mi contenido?"
+  category="technical"
+  client:load
+>
+  Si un relay elimina tu contenido, todavía existe en otros relays a los que estás conectado. Sin embargo, nuevos usuarios en ese relay específico no verán publicaciones históricas. Por eso se recomienda usar múltiples relays—tus datos están distribuidos, no centralizados. Siempre puedes volver a publicar en nuevos relays.
+
+**Cómo funciona la eliminación:**
+
+- ❌ Eliminado de un relay ≠ eliminado en todas partes
+- ✅ El contenido permanece en otros relays a los que estás conectado
+- ✅ Los nuevos relays pueden sincronizar desde los existentes
+- ⚠️ Los nuevos usuarios en el relay eliminante no verán publicaciones antiguas
+
+<Callout type="tip">
+  Usa 5-10 relays para redundancia. Tu contenido está distribuido, haciendo
+  que la eliminación de un solo punto sea inefectiva.
+</Callout>
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Puedo editar o eliminar publicaciones?"
+  category="basics"
+  client:load
+>
+  Las publicaciones de Nostr son inmutables—no pueden editarse después de publicar. Puedes publicar una corrección o nota de seguimiento. Para eliminación, puedes enviar una solicitud de eliminación, pero los relays pueden o no honrarla. Piensa antes de publicar—la permanencia es una característica del protocolo.
+
+**La realidad:**
+
+- **No edición** - Publica una corrección en su lugar
+- **Solicitudes de eliminación** - Enviadas pero no garantizadas
+- **Discreción del relay** - Cada relay decide si honrar las solicitudes de eliminación
+- **Asume permanencia** - Siempre publica con esta mentalidad
+
+<Callout type="warning">
+  ¡Piensa antes de publicar! Nostr está diseñado para la permanencia. Una vez publicado,
+  el contenido puede existir en relays indefinidamente.
+</Callout>
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Por qué veo contenido diferente en diferentes clientes?"
+  category="technical"
+  client:load
+>
+  Cada cliente se conecta a diferentes relays por defecto. Tu feed depende de a qué relays estás conectado y a quién sigues. Si el Relay A tiene usuarios diferentes al Relay B, verás contenido diferente. Esto es normal—agrega más relays o sigue a más gente para ver contenido consistente entre clientes.
+
+**Por qué los feeds difieren:**
+
+- Las listas de relays por defecto varían por cliente
+- Diferente conectividad de relay = diferente contenido
+- El tiempo de sincronización varía entre clientes
+- La configuración personal de relay afecta la visibilidad
+
+**Solución para consistencia:**
+
+1. Usa los mismos relays en todos los clientes
+2. Importa tu lista de relays al cambiar
+3. Sigue a más gente para incrementar la superposición
+4. Permite tiempo para la sincronización inicial
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Cómo respaldo todo mi historial de Nostr?"
+  category="security"
+  client:load
+>
+  Usa herramientas como nostr-fetch o nak para exportar tus eventos. Respalda tu nsec (llave privada) de forma segura—esto es crítico. Tus eventos npub están almacenados en relays, pero tener un respaldo local es sabio. Considera usar un relay personal para almacenar tu historial completo.
+
+**Pasos de respaldo:**
+
+1. **Llave privada** - ¡Más importante! Respalda tu nsec
+2. **Exportación de eventos** - Usa la herramienta CLI nostr-fetch
+3. **Respaldo de relay** - Algunos servicios archivan tus publicaciones
+4. **Relay personal** - Ejecuta el tuyo propio para control completo
+
+**Herramientas:**
+
+- `nostr-fetch` - Exporta todos tus eventos
+- `nak` - Navaja suiza de Nostr para varias tareas
+- Relay personal - strfry, nostream, khatru
+
+<Callout type="info">
+  Tus publicaciones existen en relays, pero las llaves son irremplazables. La regla de respaldo 3-2-1
+  aplica más a tu nsec.
+</Callout>
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Cuál es la diferencia entre DMs NIP-04 y NIP-17?"
+  category="advanced"
+  client:load
+>
+  NIP-04 (obsoleto) usa encriptación de secreto compartido con vulnerabilidades conocidas. NIP-17 (recomendado) usa sealed sender y gift-wrap para mejor privacidad. NIP-17 oculta metadatos sobre quién envía mensajes a quién. Migra a clientes que soporten NIP-17 para mensajería privada segura.
+
+**Comparación:**
+
+| Característica      | NIP-04 (Viejo) | NIP-17 (Nuevo) |
+| ------------------- | -------------- | -------------- |
+| Encriptación de contenido | ✅ Sí        | ✅ Sí          |
+| Protección de metadatos | ❌ No        | ✅ Sí          |
+| Seguridad         | ⚠️ Vulnerable  | ✅ Seguro      |
+| Estado            | Obsoleto       | Recomendado    |
+
+<Callout type="tip">
+  Revisa la configuración de tu cliente y actualiza a NIP-17. Clientes modernos como
+  Amethyst, Damus y Primal lo soportan.
+</Callout>
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Cómo ejecuto mi propio relay?"
+  category="advanced"
+  client:load
+>
+  Opciones populares: strfry (Rust, alto rendimiento), nostream (TypeScript, fácil configuración), o khatru (Go). Requisitos: servidor (VPS ~$5-20/mes), nombre de dominio, conocimiento básico de CLI. Beneficios: soberanía de datos, políticas personalizadas, experiencia de aprendizaje. Ve nuestra Guía de Relays para instrucciones detalladas de configuración.
+
+**Opciones de software de relay:**
+
+- **strfry** - Rust, alto rendimiento, eficiente
+- **nostream** - TypeScript, configuración más fácil
+- **khatru** - Go, bien mantenido
+- **nostr-rs-relay** - Rust, probado en batalla
+
+**Requisitos:**
+
+- VPS (DigitalOcean, Linode, etc.): $5-20/mes
+- Nombre de dominio: $10-15/año
+- Conocimiento básico de Linux/CLI
+
+**Beneficios:**
+
+✅ Soberanía de datos completa
+✅ Políticas de contenido personalizadas
+✅ Experiencia de aprendizaje
+✅ Apoyando la red
+
+[Aprende más: Guía de Relays →](/guides/relay-guide)
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Mis DMs son realmente privados?"
+  category="security"
+  client:load
+>
+  Con NIP-17 (recomendado): Sí, el contenido está encriptado y los metadatos se minimizan. Con el viejo NIP-04: El contenido está encriptado pero las filtraciones de metadatos son posibles. Los operadores de relay pueden ver que estás mensajeando pero no el contenido o recipiente exacto con NIP-17. Para máxima privacidad, también usa VPN/Tor.
+
+**Niveles de privacidad:**
+
+**NIP-17 (¡Usa esto!):**
+
+- ✅ Contenido encriptado de extremo a extremo
+- ✅ Metadatos minimizados (sealed sender)
+- ⚠️ El relay ve actividad encriptada
+
+**NIP-04 (Obsoleto):**
+
+- ✅ Contenido encriptado
+- ❌ Filtraciones de metadatos posibles
+- ❌ Vulnerabilidades conocidas
+
+<Callout type="info">
+  Para máxima privacidad, combina NIP-17 con VPN o Tor. Esto oculta tu IP de
+  los relays.
+</Callout>
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Puede alguien robar mi cuenta si adivina mi npub?"
+  category="security"
+  client:load
+>
+  No. Tu npub (llave pública) está diseñada para compartirse—es como tu nombre de usuario. Tu nsec (llave privada) es tu contraseña. Mantén nsec secreto. Saber npub solo no puede comprometer tu cuenta. Comparte tu npub libremente, protege tu nsec religiosamente.
+
+**Hechos clave:**
+
+- **npub** = Nombre de usuario público ✅ Comparte libremente
+- **nsec** = Contraseña privada 🔒 Nunca compartas
+- **Matemática** - Imposible derivar nsec de npub
+- **Seguridad** - Criptografía de 256 bits te protege
+
+<Callout type="tip">
+  ¡Publica tu npub en todas partes! Está diseñado para ser público. Solo tu nsec necesita
+  protección.
+</Callout>
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Por qué es diferente la moderación de contenido en Nostr?"
+  category="basics"
+  client:load
+>
+  Nostr no tiene moderación central. Cada cliente y usuario decide qué mostrar/ocultar. Puedes: silenciar cuentas, bloquear usuarios, usar clientes con filtros de spam, elegir relays con políticas de contenido. Es moderación del lado del cliente vs del lado de la plataforma. La libertad viene con la responsabilidad de curar tu propia experiencia.
+
+**Cómo funciona la moderación:**
+
+| Tradicional         | Nostr               |
+| ------------------- | ------------------- |
+| La plataforma decide  | Tú decides          |
+| Reglas centralizadas | Elección personal   |
+| Bans de cuenta posibles | Tú controlas tu vista |
+| Una política para todos | Diversos enfoques   |
+
+**Tus herramientas:**
+
+- Silenciar cuentas
+- Bloquear usuarios
+- Elegir clientes con filtros
+- Seleccionar relays con políticas
+- Curar tus follows cuidadosamente
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Cómo encuentro a mis amigos de Twitter/X?"
+  category="getting-started"
+  client:load
+>
+  Revisa si han compartido su npub en la bio/publicaciones de Twitter. Usa identificadores NIP-05 si tienen uno (más fácil de recordar). Pregúntales directamente. Algunas herramientas escanean usuarios de Twitter que han publicado llaves de Nostr. Busca su handle de Twitter + "npub" en motores de búsqueda.
+
+**Métodos de búsqueda:**
+
+1. **Revisión de bio** - Busca npub o NIP-05 en su bio de Twitter
+2. **Tweets fijados** - Muchos comparten su Nostr ahí
+3. **Búsqueda** - "username npub" en Google
+4. **Pregunta directa** - Tweetea pidiendo su Nostr
+5. **Herramientas de bridge** - Algunos servicios escanean por llaves de Nostr
+
+**Consejo pro:** ¡Cuando los encuentres, publica su npub con un mensaje de bienvenida para que otros también puedan encontrarlos!
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Qué son los 'filtros de spam' y cómo funcionan?"
+  category="advanced"
+  client:load
+>
+  Los filtros de spam son algoritmos del lado del cliente que ocultan contenido de baja calidad. Analizan: edad de cuenta, red de confianza, patrones de contenido, recibos de zap. Cada cliente implementa diferente. Puedes usualmente ajustar la sensibilidad o deshabilitar. Los falsos positivos pasan—revisa "mostrar todo" si te faltan publicaciones legítimas.
+
+**Cómo funcionan los filtros:**
+
+- **Edad de cuenta** - Cuentas más nuevas filtradas más estrictamente
+- **Red de confianza** - A quién siguen importa
+- **Patrones de contenido** - Detección de comportamiento repetitivo/spam
+- **Historial de zaps** - Cuentas recibiendo zaps son más confiables
+
+**Ajustando filtros:**
+
+- La mayoría de los clientes te permiten cambiar la sensibilidad
+- Puedes deshabilitar completamente si lo deseas
+- Revisa regularmente la carpeta filtrada/spam
+- Reporta falsos positivos a los desarrolladores del cliente
+
+<Callout type="info">
+  Los filtros son del lado del cliente, no de toda la red. Cambia de cliente si no te gusta
+  el comportamiento del filtro actual.
+</Callout>
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Por qué mi feed muestra publicaciones antiguas de repente?"
+  category="troubleshooting"
+  client:load
+>
+  Esto pasa cuando: te conectas a un relay nuevo con datos antiguos, tu cliente re-sincroniza desde relays, o alguien zapea una publicación antigua trayéndola al tope. Nostr no tiene un "feed" cronológico—se agrega de múltiples fuentes. Que aparezcan publicaciones antiguas es comportamiento normal.
+
+**Por qué aparecen publicaciones antiguas:**
+
+- **Relay nuevo** - Conectado a relay con datos antiguos cacheados
+- **Re-sincronización** - Cliente refrescando desde relays
+- **Actividad de zap** - Alguien zapeó una publicación antigua
+- **Algoritmo** - Algunos clientes muestran contenido antiguo popular
+
+**¡Esto es normal!**
+
+A diferencia del feed cronológico de Twitter, Nostr agrega de muchas fuentes. El contenido no tiene un solo "tiempo"—existe donde existe.
+
+</FAQAccordion>
+
+<FAQAccordion 
+  question="¿Cómo funcionan técnicamente los zaps?"
+  category="advanced"
+  client:load
+>
+  Los zaps usan Bitcoin Lightning Network. Proceso: 1) El remitente crea una factura Lightning, 2) El remitente publica un recibo de zap (kind 9735) con prueba de pago, 3) El cliente muestra el zap con perfil del remitente, 4) El receptor recibe sats en su wallet Lightning. NIP-57 estandariza esto. Sin escrow o plataforma—pagos P2P directos.
+
+**Flujo técnico:**
+
+1. **Creación de factura** - El wallet del remitente crea una factura Lightning
+2. **Pago** - El remitente paga la factura
+3. **Recibo** - Evento tipo 9735 publicado con prueba de pago
+4. **Mostrar** - Los clientes muestran el zap con info del remitente
+5. **Liquidación** - El receptor recibe sats en su wallet
+
+**Puntos clave:**
+
+- Usa estándar NIP-57
+- P2P directo (sin intermediario)
+- Liquidación instantánea
+- Recibos públicos crean prueba social
+- Zaps privados opcionales disponibles
+
+<Callout type="info">
+  Los zaps son no-custodial—el dinero fluye directamente del remitente al receptor. Ninguna
+  plataforma retiene fondos.
+</Callout>
+
+</FAQAccordion>
+
+---
+
+## ¿Todavía Tienes Preguntas?
+
+### Pregunta a la Comunidad
+
+La comunidad de Nostr es servicial y acogedora:
+
+1. **Publica en Nostr** con el hashtag #asknostr
+2. **Únete a grupos de Telegram de Nostr**
+3. **Revisa Stacker News** (foro de bitcoin/nostr)
+4. **Busca exploradores de Nostr** por respuestas existentes
+
+### ¿Encontraste un Error?
+
+Esta guía mejora constantemente. Si algo no está claro o es incorrecto, envía mejoras en GitHub.
+
+---
+
+_Actualizado por última vez: Febrero 2026_

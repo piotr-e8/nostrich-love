@@ -1,0 +1,239 @@
+---
+title: "Cómo Viajan las Publicaciones: Relays Explicados"
+description: "Entiende cómo funcionan los relays de Nostr con analogías simples y herramientas interactivas"
+estimatedTime: "5-10 minutos"
+priority: 2
+category: "intermediate"
+prerequisites: ["keys-and-security", "quickstart"]
+---
+
+import { RelayWorldMap } from "@components/ui/RelayWorldMap";
+import { PostFlowSimulator } from "@components/ui/PostFlowSimulator";
+import { RelayExplorer } from "@components/interactive/RelayExplorer";
+import { TroubleshootingWizard } from "@components/interactive/TroubleshootingWizard";
+import { RelaysDemystifiedQuiz } from "@components/interactive/RelaysDemystifiedQuiz";
+
+Los relays son las oficinas de correos de Nostr. Ahí es donde viven tus mensajes y cómo viajan para llegar a otros usuarios.
+
+## La Analogía de la Oficina de Correos 🏤
+
+Imagina Nostr como una red de oficinas de correos alrededor del mundo.
+
+- **Tú** tienes un buzón (tus llaves)
+- **Los relays** son oficinas de correos
+- **Las publicaciones** son cartas que envías
+
+Aquí está la diferencia clave de las redes sociales tradicionales: **Tú eliges a dónde enviar tu correo.**
+
+```
+Redes Sociales Tradicionales:    Nostr:
+┌──────────────────┐        ┌──────────────────┐
+│ Un Servidor      │        │ Muchas Oficinas  │
+│ Grande           │        │ de Correos       │
+│ (Twitter/X)      │        │ (Relays)         │
+│                  │        │                  │
+│ Todos en         │        │ Tú eliges cuáles │
+│ un lugar         │        │ usar             │
+└──────────────────┘        └──────────────────┘
+```
+
+### El Poder de la Elección
+
+En Nostr, no estás encerrado en un proveedor de servicios. Puedes:
+
+- Enviar publicaciones a cualquier relay
+- Conectarte a múltiples relays
+- Cambiar de relay en cualquier momento
+- Ejecutar tu propio relay
+
+<RelayWorldMap />
+
+## Por Qué las Publicaciones No Se Sincronizan 🔄
+
+Aquí está la confusión más común que enfrentan los nuevos usuarios:
+
+> "¡Publiqué algo pero mi amigo no puede verlo!"
+
+### La Explicación Visual
+
+```
+Tu Conexión                    Conexión de Tu Amigo
+     │                                  │
+     ▼                                  ▼
+┌──────────┐                     ┌──────────┐
+│ Relay A  │         ❌          │ Relay B  │
+│ (wss://...│      Sin enlace     │(wss://...)│
+└──────────┘                     └──────────┘
+     │                                  │
+   Tus publicaciones                   Publicaciones de tu amigo
+```
+
+**Si publicas al Relay A y tu amigo solo usa el Relay B, no verá tu publicación.**
+
+### La Solución: Conecta a Múltiples Relays
+
+```
+Tu Conexión
+     │
+┌────┴────┐
+│ Relay A │
+│ Relay B │  ← ¡Conéctate a ambos!
+│ Relay C │
+└────┬────┘
+     │
+   Tus publicaciones → Llegan a más personas
+```
+
+La mayoría de los clientes de Nostr te conectan a varios relays por defecto. Pero entender esto ayuda cuando:
+
+- No puedes ver el contenido de alguien
+- Quieres unirte a una comunidad específica
+- Necesitas solucionar publicaciones faltantes
+
+<PostFlowSimulator client:load />
+
+## Elegiendo Relays 🔌
+
+### Recomendaciones por Defecto
+
+Si estás empezando, quédate con estos relays populares y confiables:
+
+| Relay                      | Descripción      | Confianza |
+| -------------------------- | ---------------- | --------- |
+| `wss://relay.damus.io`     | Relay principal de Damus | ⭐⭐⭐⭐⭐  |
+| `wss://nostr.wine`         | Relay general    | ⭐⭐⭐⭐    |
+| `wss://relay.snort.social` | Snort social     | ⭐⭐⭐⭐    |
+
+### Descubrimiento Basado en Intereses
+
+Las comunidades a menudo ejecutan sus propios relays para discusiones enfocadas:
+
+- **Bitcoin**: `wss://nostr.bitcoiner.social`
+- **Desarrollo**: `wss://relay.nostrdevs.com`
+- **Arte**: `wss://relay.nostrich.art`
+
+<RelayExplorer client:load />
+
+### Relays Gratuitos vs Pagados
+
+**Relays Gratuitos**
+
+- Abiertos a todos
+- Pueden tener límites de tasa
+- Pueden llenarse de spam
+- Geniales para principiantes
+
+**Relays Pagados**
+
+- Usualmente requieren una pequeña tarifa (a menudo 1000-5000 sats/mes)
+- Mejor rendimiento
+- Menos spam
+- Apoyan a los operadores de relays
+
+> 💡 **Consejo:** Empieza con relays gratuitos. Siempre puedes agregar los pagados más tarde.
+
+---
+
+## Avanzado: Modelo Outbox (NIP-65) [AVANZADO]
+
+<Note type="advanced">
+  Esta sección es opcional. Puedes usar Nostr perfectamente bien sin
+  entender NIP-65.
+</Note>
+
+### ¿Qué es NIP-65?
+
+NIP-65 introduce una forma más inteligente de manejar relays llamada el "modelo outbox".
+
+**En lugar de**: Tú conectándote manualmente a 10+ relays
+**Haces**: Publicar tu lista de relays preferidos una vez, dejar que los clientes lo resuelvan
+
+### Cómo Funciona
+
+```
+1. Publicas una lista de relays:
+   {
+     "read": ["wss://relay-a.com"],
+     "write": ["wss://relay-b.com"]
+   }
+
+2. Otros clientes leen esto y saben:
+    - Dónde encontrar tus publicaciones (relays de lectura)
+    - Dónde enviarte mensajes (relays de escritura)
+```
+
+### Configurando Relays Personales
+
+Para usuarios avanzados, ejecutar tu propio relay te da:
+
+- **Control completo** sobre tus datos
+- **Confiabilidad perfecta** (sin dependencia de otros)
+- **Privacidad** (solo tus datos en el relay)
+
+Software popular de relay personal:
+
+- [strfry](https://github.com/hoytech/strfry) - Implementación rápida en C++
+- [nostr-rs-relay](https://gitlab.com/soapbox-pub/nostr-rs-relay) - Implementación en Rust
+
+> 📚 Ve nuestra [Guía de Relays](/guides/relay-guide) para instrucciones detalladas de configuración.
+
+---
+
+## Referencia Rápida
+
+### Comandos Comunes de Relay
+
+En la mayoría de los clientes, puedes:
+
+- **Agregar relay**: Configuración → Relays → Agregar
+- **Eliminar relay**: Mantén presionado/clic en el relay → Eliminar
+- **Verificar estado**: La lista de relays muestra el estado de conexión
+
+### Mejores Prácticas
+
+1. **Conéctate a 4-8 relays** para buena cobertura
+2. **Incluye un relay de "escritura"** donde siempre publicas
+3. **Verifica el uptime del relay** antes de depender de él
+4. **Mantén tu lista de relays actualizada** a medida que la red crece
+
+---
+
+## Solución de Problemas
+
+### "No puedo ver ninguna publicación"
+
+- Verifica si estás conectado a algún relay (Configuración → Relays)
+- Intenta agregar relays populares de la lista de arriba
+- Espera un momento para que el contenido cargue
+
+### "Mis publicaciones desaparecen"
+
+- Algunos relays eliminan contenido antiguo para ahorrar espacio
+- Conéctate a más relays para redundancia
+- Considera un relay pagado para almacenamiento permanente
+
+### "El relay no se conecta"
+
+- Verifica tu conexión a internet
+- Intenta la URL del relay en un navegador (debería mostrar error/página ws)
+- El relay podría estar caído - prueba otro
+
+<TroubleshootingWizard client:load />
+
+---
+
+## Prueba Tu Comprensión
+
+¿Crees que entiendes los relays? Prueba tu conocimiento:
+
+<RelaysDemystifiedQuiz client:load />
+
+---
+
+## ¿Todavía Tienes Preguntas?
+
+Únete a la comunidad de Nostr:
+
+- [Nostr Reddit](https://reddit.com/r/nostr)
+- [Nostr Telegram](https://t.me/nostr_protocol)
+- [Stacker News](https://stacker.news) (foro de Bitcoin/Nostr)

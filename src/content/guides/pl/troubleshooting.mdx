@@ -1,0 +1,444 @@
+---
+title: "Powszechne Problemy i Rozwiązania"
+description: "Szybkie rozwiązania najczęstszych problemów i pytań dotyczących Nostr"
+estimatedTime: "Przewodnik referencyjny"
+priority: 2
+category: "reference"
+prerequisites: ["keys-and-security", "quickstart"]
+---
+
+## Szybki przewodnik referencyjny dla najczęstszych problemów, z jakimi borykają się użytkownicy Nostr.
+
+import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz";
+
+## Problem: "Mój Feed jest Pusty" 📭
+
+### Objawy
+
+- Nie pokazują się żadne posty
+- Komunikat "Nie znaleziono wydarzeń"
+- Pusta oś czasu
+
+### Przyczyny i Rozwiązania
+
+**1. Nie obserwujesz nikogo**
+
+- **Przyczyna**: Nowe konto bez obserwacji
+- **Rozwiązanie**: Wyszukaj użytkowników lub zainteresowania, obserwuj 10-20 kont
+- **Szybka naprawa**: Obserwuj popularne konta z przewodnika [Znajdowanie Społeczności](/guides/finding-community)
+
+**2. Problemy z połączeniem relayów**
+
+- **Przyczyna**: Brak połączenia z jakimikolwiek relayami
+- **Rozwiązanie**: Sprawdź Ustawienia → Relaye, upewnij się, że jesteś połączony z 3-5 relayami
+- **Szybka naprawa**: Dodaj popularne relaye: `wss://relay.damus.io`, `wss://nostr.wine`
+
+**3. Pamięć podręczna klienta jest pusta**
+
+- **Przyczyna**: Nowa instalacja lub wyczyszczone dane
+- **Rozwiązanie**: Poczekaj 30-60 sekund na załadowanie treści
+- **Szybka naprawa**: Pociągnij w dół, aby odświeżyć (mobilne) lub naciśnij przycisk odświeżania
+
+### Prewencja
+
+- Połącz się z wieloma relayami podczas konfiguracji
+- Obserwuj aktywnych użytkowników natychmiast
+- Utrzymuj klienta zaktualizowanego
+
+---
+
+## Problem: "Nie Widzę Swoich Starych Postów" 🕐
+
+### Objawy
+
+- Brak postów z wczoraj/tydzień temu
+- "Brak notatek" na Twoim profilu
+- Niepełna historia postów
+
+### Przyczyny i Rozwiązania
+
+**1. Limity przechowywania relayów**
+
+- **Przyczyna**: Darmowe relaye usuwają stare treści, aby zaoszczędzić miejsce
+- **Rozwiązanie**: Połącz się z większą liczbą relayów (zwiększa redundancję)
+- **Długoterminowo**: Używaj płatnych relayów lub osobistego relaya dla ważnych treści
+
+**2. Różna konfiguracja relayów**
+
+- **Przyczyna**: Postowałeś z Klienta A (Relaye X,Y), teraz używasz Klienta B (Relaye Z)
+- **Rozwiązanie**: Upewnij się, że obaj klienci używają tych samych relayów
+- **Szybka naprawa**: Zaimportuj swoją listę relayów (NIP-65)
+
+**3. Treść nie została rozesłana**
+
+- **Przyczyna**: Klient nie zdołał postować do wszystkich relayów
+- **Rozwiązanie**: Sprawdź, które relaye otrzymały Twój post
+- **Uwaga**: Raz postowane, nie można ponownie rozesłać do nowych relayów wstecznie
+
+### Co Synchronizuje Się vs Czego Nie
+
+| Dane           | Synchronizuje Się Między Klientami | Uwagi                      |
+| -------------- | -------------------- | -------------------------- |
+| Twoje posty     | ✅ Tak               | Jeśli postowane do wspólnych relayów |
+| Twoje obserwacje   | ✅ Tak               | Dane publiczne                |
+| Twoi obserwujący | ✅ Tak               | Dane publiczne                |
+| Twój profil   | ✅ Tak               | Dane publiczne                |
+| Wersje robocze         | ❌ Nie                | Przechowywane lokalnie na kliencie  |
+| Ustawienia aplikacji   | ❌ Nie                | Specyficzne dla klienta            |
+| Wyciszone konta | ⚠️ Czasami         | Zależy od klienta          |
+
+---
+
+## Problem: "Moje Posty Się Nie Pokazują" 📤
+
+### Objawy
+
+- Postowane, ale nikt tego nie widzi
+- Brak polubień/odpowiedzi/zapów
+- Post pojawia się lokalnie, ale nie na innych klientach
+
+### Przyczyny i Rozwiązania
+
+**1. Relay nie akceptuje postów**
+
+- **Przyczyna**: Rate limiting, ban lub relay nie działa
+- **Rozwiązanie**: Sprawdź status relaya, spróbuj innych relayów
+- **Test**: Czy widzisz swój post w kliencie web jak Primal?
+
+**2. Połączony tylko z relayami tylko-do-odczytu**
+
+- **Przyczyna**: Niektóre relaye pozwalają tylko na czytanie, nie pisanie
+- **Rozwiązanie**: Sprawdź ustawienia relayów, upewnij się, że masz relaye "do zapisu"
+- **Szybka naprawa**: Dodaj `wss://relay.damus.io` (pozwala na pisanie)
+
+**3. Postowanie za szybko**
+
+- **Przyczyna**: Przekraczanie limitów rate
+- **Rozwiązanie**: Zwolnij, poczekaj kilka minut
+- **Uwaga**: Większość relayów ogranicza do 1-5 postów na sekundę
+
+---
+
+## Problem: "Ktoś Podszywa Się Pod Mnie" 🎭
+
+### Objawy
+
+- Fałszywe konto z Twoim imieniem/zdjęciem
+- Ktoś twierdzi, że jest Tobą
+- Zdezorientowani obserwujący pytają, które konto jest prawdziwe
+
+### Przyczyny i Rozwiązania
+
+**1. Zdobądź weryfikację NIP-05**
+
+- **Rozwiązanie**: Skonfiguruj tożsamość NIP-05 (zobacz [przewodnik](/guides/nip05-identity))
+- **Dlaczego**: Odznaka weryfikacji odróżnia prawdziwe od fałszywego
+
+**2. Udostępnij swój npub szeroko**
+
+- **Rozwiązanie**: Opublikuj swój prawdziwy npub na innych platformach
+- **Dlaczego**: Ludzie mogą zweryfikować Twoją tożsamość kryptograficznie
+
+**3. Zgłoś oszusta**
+
+- **Rozwiązanie**: Użyj funkcji zgłaszania klienta lub moderacji społeczności
+- **Uwaga**: Nie możesz usunąć ich konta (zdecentralizowane), ale możesz zablokować/wyciszyć
+
+### Prewencja
+
+- Zweryfikuj się z NIP-05 tak szybko jak to możliwe
+- Opublikuj swój npub na Twitterze/stronie
+- Buduj reputację szybko, aby Twoje prawdziwe konto było oczywiste
+
+---
+
+## Problem: "Spam w Moim Feedzie" 🗑️
+
+### Objawy
+
+- Niechciana treść promocyjna
+- Konta botów postujące ciągle
+- Treści off-topic lub nieodpowiednie
+
+### Przyczyny i Rozwiązania
+
+**1. Obserwowanie kont spamowych**
+
+- **Rozwiązanie**: Przestań obserwować źródła spamu
+- **Lepiej**: Nie obserwuj masowo; kuruj ostrożnie
+
+**2. Relay ze słabą moderacją**
+
+- **Rozwiązanie**: Odłącz się od niskiej jakości relayów
+- **Lepiej**: Używaj płatnych lub tylko na zaproszenie relayów
+
+**3. Brak listy wyciszonych**
+
+- **Rozwiązanie**: Stwórz listę wyciszonych w swoim kliencie
+- **Jak**: Profil → Wyciszone konta → Dodaj spamerów
+
+### Najlepsze Praktyki
+
+- Wyciszaj wcześnie, wyciszuj często
+- Używaj relayów specyficznych dla zainteresowań
+- Włącz filtry słów, jeśli klient to obsługuje
+- Nie obserwuj kont bez sprawdzenia ich treści
+
+---
+
+## Problem: "Klient się Zawiesza" 💥
+
+### Objawy
+
+- Aplikacja zamyka się niespodziewanie
+- Zawiesza się lub staje się nie responsywna
+- Błędy podczas ładowania treści
+
+### Przyczyny i Rozwiązania
+
+**1. Przestarzała aplikacja**
+
+- **Rozwiązanie**: Zaktualizuj do najnowszej wersji ze sklepu
+- **iOS**: App Store → Aktualizacje
+- **Android**: Play Store → Zarządzaj aplikacjami
+
+**2. Za dużo relayów**
+
+- **Przyczyna**: Połączenie z 20+ relayami przytłacza klienta
+- **Rozwiązanie**: Zmniejsz do 4-8 aktywnych relayów
+- **Optymalizacja**: Użyj modelu outbox NIP-65
+
+**3. Uszkodzony cache**
+
+- **Rozwiązanie**: Wyczyść dane aplikacji (nie stracisz postów/obserwacji)
+- **Opcja atomowa**: Przeinstaluj aplikację, ponownie zaimportuj klucze
+
+### Spróbuj Innego Klienta
+
+Jeśli jeden klient ma ciągle problemy, spróbuj innego:
+
+| Platforma           | Alternatywa          |
+| ------------------ | -------------------- |
+| iOS (Damus)        | Nos, Nostur          |
+| Android (Amethyst) | Primal web, Nostros  |
+| Web (Primal)       | Iris, Snort, Coracle |
+
+---
+
+## Problem: "Zgubiłem Klucze" 🔑
+
+### Objawy
+
+- Nie możesz się zalogować do klienta
+- Brak backupu nsec/npub
+- Klucze tylko na jednym urządzeniu, które się zepsuło
+
+### Trudna Prawda
+
+> ⚠️ **Jeśli nie masz backupu swoich kluczy, Twoje konto jest nie do odzyskania.**
+
+To celowe—Nostr nie ma "zapomniałem hasła", ponieważ nie ma centralnego serwera przechowującego Twoje klucze.
+
+### Co Możesz Zrobić
+
+**1. Wyszukaj backupy**
+
+- Sprawdź menadżery haseł
+- Poszukaj zrzutów ekranu
+- Sprawdź e-mail dla wiadomości powitalnych
+- Sprawdź inne urządzenia z zainstalowanym klientem
+
+**2. Sprawdź, czy klient ma przechowane klucze**
+
+- Niektóre klienci cache'ują klucze
+- Spróbuj zalogować się bez wklejania klucza
+- Sprawdź rozszerzenia przeglądarki (Alby, Nos2x)
+
+**3. Utwórz nowe konto**
+
+- Wygeneruj nowe klucze
+- Ogłoś na innych platformach, że stare konto jest zgubione
+- Zacznij odbudowywać swoje obserwacje
+
+### Prewencja (Zrób To TERAZ)
+
+1. **Zapisz swój nsec** na papierze
+2. **Przechowuj w menadżerze haseł** (1Password, Bitwarden)
+3. **Używaj aplikacji signer** (Amber, Nos2x), aby unikać wpisywania nsec
+4. **Rób wiele backupów** w różnych lokalizacjach
+
+---
+
+## Problem: "Nie Mogę Połączyć Się z Relayem" 🔌
+
+### Objawy
+
+- Błąd "Połączenie nieudane"
+- Relay pokazuje się jako offline
+- Posty nie synchronizują się
+
+### Przyczyny i Rozwiązania
+
+**1. Relay nie działa**
+
+- **Test**: Otwórz URL relaya w przeglądarce (powinien pokazać błąd lub stronę ws)
+- **Rozwiązanie**: Sprawdź stronę statusu lub social media relaya
+- **Naprawa**: Tymczasowo usuń, dodaj ponownie, gdy wróci
+
+**2. Problemy z siecią**
+
+- **Test**: Czy masz dostęp do innych stron?
+- **Rozwiązanie**: Sprawdź połączenie internetowe, spróbuj innej sieci
+- **Uwaga**: Niektóre sieci blokują połączenia WebSocket
+
+**3. Zły URL relaya**
+
+- **Sprawdź**: Musi zaczynać się od `wss://` (bezpieczne) lub `ws://` (niebezpieczne)
+- **Częsty błąd**: `https://relay.com` zamiast `wss://relay.com`
+- **Naprawa**: Edytuj URL relaya w ustawieniach
+
+**4. Relay jest pełny**
+
+- **Przyczyna**: Niektóre darmowe relaye osiągają limity pojemności
+- **Rozwiązanie**: Spróbuj ponownie później lub użyj innego relaya
+- **Długoterminowo**: Rozważ płatny relay
+
+---
+
+## Problem: "Zapy Nie Działają" ⚡
+
+### Objawy
+
+- Przycisk zap nie responsywny
+- Błędy "Płatność nieudana"
+- Nie można wysyłać ani odbierać zapów
+
+### Przyczyny i Rozwiązania
+
+**1. Brak podłączonego portfela**
+
+- **Rozwiązanie**: Połącz portfel Lightning w ustawieniach klienta
+- **Zobacz**: [Przewodnik o Zapach](/guides/zaps-and-lightning)
+
+**2. Niewystarczające saldo**
+
+- **Sprawdź**: Saldo portfela
+- **Rozwiązanie**: Doładuj swój portfel
+- **Minimum**: Zazwyczaj potrzeba 100+ sats na opłaty
+
+**3. Portfel offline**
+
+- **Przyczyna**: Portfele non-custodial muszą być online
+- **Rozwiązanie**: Otwórz aplikację portfela, upewnij się, że działa
+- **Alternatywa**: Użyj portfela custodial jak Alby
+
+**4. Zły adres Lightning**
+
+- **Sprawdź**: Czy Twój adres Lightning w profilu jest poprawny?
+- **Test**: Spróbuj wysłać sobie 10 sats
+- **Naprawa**: Zaktualizuj adres w ustawieniach profilu
+
+---
+
+## Problem: "Obrazy Się Nie Ładują" 🖼️
+
+### Objawy
+
+- Zepsute ikony obrazów
+- Kręcące się loadery
+- Brak mediów w postach
+
+### Przyczyny i Rozwiązania
+
+**1. Limity mediów relaya**
+
+- **Przyczyna**: Niektóre relaye nie przechowują obrazów, tylko tekst
+- **Rozwiązanie**: Obrazy hostowane na osobnych serwerach (Blossom, itp.)
+- **Naprawa**: Sprawdź, czy obrazy ładują się w kliencie web
+
+**2. Host obrazów nie działa**
+
+- **Przyczyna**: Serwer hostujący obraz jest offline
+- **Test**: Spróbuj otworzyć URL obrazu bezpośrednio
+- **Uwaga**: Nic nie możesz zrobić, jeśli host nie działa
+
+**3. Ustawienia klienta**
+
+- **Sprawdź**: Ustawienia → Media → "Ładuj obrazy"
+- **Niektóre klienci**: Mają tryby oszczędzania danych blokujące obrazy
+- **Naprawa**: Włącz ładowanie mediów w ustawieniach
+
+**4. Powolne połączenie**
+
+- **Przyczyna**: Duże obrazy na wolnym internecie
+- **Rozwiązanie**: Poczekaj na załadowanie lub przełącz się na szybszą sieć
+
+---
+
+## Drzewo Decyzyjne 🌳
+
+**Masz problemy? Postępuj według tego:**
+
+1. **Nic nie widzisz?** → Sprawdź relaye, dodaj więcej
+2. **Nie możesz postować?** → Sprawdź relaye do zapisu, limity rate
+3. **Problemy z kontem?** → Zweryfikuj, czy klucze są poprawne
+4. **Aplikacja się zawiesza?** → Zaktualizuj, wyczyść cache lub spróbuj innego klienta
+5. **Wciąż utknąłeś?** → Zobacz poniżej
+
+---
+
+## Wciąż Utknąłeś? 🆘
+
+### Pomoc Społeczności
+
+**Telegram:**
+
+- [Nostr Protocol](https://t.me/nostr_protocol) - Ogólna pomoc
+- [Damus](https://t.me/damusios) - Specyficzne dla iOS
+- [Amethyst](https://t.me/AmethystNostr) - Specyficzne dla Androida
+
+**Inne Platformy:**
+
+- [r/nostr](https://reddit.com/r/nostr) - Społeczność Reddit
+- [Stacker News](https://stacker.news) - Forum Bitcoin/Nostr
+- Sam Nostr - Postuj z tagiem #help
+
+### Zasoby
+
+- [Nostr Wiki](https://wiki.nostr.com)
+- [Dokumentacja klientów](https://github.com/damus-io/damus#documentation)
+- [Specyfikacje NIP](https://github.com/nostr-protocol/nips)
+
+### Zgłaszanie Błędów
+
+Jeśli znalazłeś błąd w kliencie:
+
+1. Sprawdź, czy został już zgłoszony (GitHub issues)
+2. Utwórz szczegółowy raport o błędzie:
+   - Czego oczekiwałeś
+   - Co się faktycznie stało
+   - Kroki do odtworzenia
+   - Wersja klienta i platforma
+
+---
+
+## Dodaj Tę Stronę do Zakładek 📑
+
+Trzymaj ten przewodnik pod ręką dla szybkiej referencji. Większość problemów ma proste rozwiązania, gdy wiesz, gdzie szukać!
+
+---
+
+## Przetestuj Swoje Umiejętności Rozwiązywania Problemów
+
+Myślisz, że wiesz, jak rozwiązywać powszechne problemy Nostr?
+
+<TroubleshootingQuiz client:load />
+
+---
+
+## Powiązane Przewodniki
+
+- [Wyjaśnienie Relayów](/guides/relays-demystified) - Napraw problemy z połączeniem
+- [Przewodnik Quickstart](/guides/quickstart) - Zmień klienta
+- [Przewodnik o Zapach](/guides/zaps-and-lightning) - Napraw problemy z płatnościami
+- [Klucze i Bezpieczeństwo](/guides/keys-and-security) - Zapobiegaj blokadom
