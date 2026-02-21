@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 type Severity = "critical" | "warning" | "info";
 
@@ -34,161 +35,50 @@ interface Question {
   severity: Severity;
 }
 
-const QUESTIONS: Question[] = [
-  {
-    id: "why-multiple",
-    title: "Benefits of Multiple Clients",
-    prompt: "Why use multiple Nostr clients?",
-    options: [
-      {
-        id: "required",
-        label: "You need at least 3 clients to use Nostr",
-        description: "Mandatory requirement",
-      },
-      {
-        id: "optimization",
-        label: "Optimization, flexibility, different features for different tasks",
-        description: "Power user benefits",
-      },
-      {
-        id: "backup",
-        label: "In case one client gets hacked",
-        description: "Security concern",
-      },
-    ],
-    correctId: "optimization",
-    explanation:
-      "Multiple clients let you optimize your workflow—use the best tool for each task. Different clients have different strengths. You might use one for mobile, another for desktop, and another for specific features.",
-    severity: "info",
-  },
-  {
-    id: "what-syncs",
-    title: "Understanding Sync",
-    prompt: "What syncs automatically across clients?",
-    options: [
-      {
-        id: "everything",
-        label: "Everything including settings and drafts",
-        description: "Perfect sync",
-      },
-      {
-        id: "content",
-        label: "Posts, follows, profile info (but not settings or drafts)",
-        description: "Content sync only",
-      },
-      {
-        id: "nothing",
-        label: "Nothing—you start fresh on each client",
-        description: "No sync at all",
-      },
-    ],
-    correctId: "content",
-    explanation:
-      "Your posts, follows, and profile sync automatically because they're stored on relays. But client-specific things like settings, drafts, and themes don't sync—you need to configure those separately on each client.",
-    severity: "critical",
-  },
-  {
-    id: "workflow",
-    title: "Common Workflows",
-    prompt: "What's a common mobile + desktop workflow?",
-    options: [
-      {
-        id: "random",
-        label: "Use whichever is closest, no strategy needed",
-        description: "Casual approach",
-      },
-      {
-        id: "optimized",
-        label: "Desktop for writing/long-form, mobile for quick checks/notifications",
-        description: "Optimized workflow",
-      },
-      {
-        id: "same",
-        label: "Do exactly the same things on both devices",
-        description: "Identical usage",
-      },
-    ],
-    correctId: "optimized",
-    explanation:
-      "A common workflow: Desktop for writing long posts and heavy browsing (bigger screen, easier typing), mobile for quick checks, notifications, and on-the-go replies. Play to each device's strengths!",
-    severity: "info",
-  },
-  {
-    id: "switching",
-    title: "Switching Clients",
-    prompt: "What do you need to switch clients?",
-    options: [
-      {
-        id: "account",
-        label: "Create a new account on the new client",
-        description: "Fresh start",
-      },
-      {
-        id: "nsec",
-        label: "Your nsec (private key)",
-        description: "Your identity",
-      },
-      {
-        id: "password",
-        label: "Your Nostr password",
-        description: "Login credentials",
-      },
-    ],
-    correctId: "nsec",
-    explanation:
-      "To switch clients, you just need your nsec (private key). Import it into the new client and everything syncs automatically. Your identity works everywhere—no need to create new accounts!",
-    severity: "critical",
-  },
-  {
-    id: "testing",
-    title: "Safe Testing",
-    prompt: "How can you safely test a new client?",
-    options: [
-      {
-        id: "main",
-        label: "Use your main account to test thoroughly",
-        description: "Real-world testing",
-      },
-      {
-        id: "test-keys",
-        label: "Create test keys first, try with test account",
-        description: "Safe approach",
-      },
-      {
-        id: "skip",
-        label: "Skip testing—if it's on Nostr it must be safe",
-        description: "Trust blindly",
-      },
-    ],
-    correctId: "test-keys",
-    explanation:
-      "Always create test keys first when trying a new client. Test with a throwaway account before importing your real nsec. Only paste your real nsec into clients you trust!",
-    severity: "warning",
-  },
-];
-
 interface MultiClientQuizProps {
   className?: string;
 }
 
 export function MultiClientQuiz({ className }: MultiClientQuizProps) {
+  const { t, getValue } = useTranslation();
+  
+  // Get questions from translations using getValue to retrieve arrays/objects
+  const rawQuestions = getValue("guides.multiClient.quiz.questions");
+  const questions: Question[] = Array.isArray(rawQuestions) ? rawQuestions : [];
+  const quizTitle = t("guides.multiClient.quiz.title") || "Multi-Client Quiz";
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
   const [direction, setDirection] = useState(0);
 
-  const currentQuestion = QUESTIONS[currentIndex];
-  const total = QUESTIONS.length;
+  // Handle case where translations haven't loaded yet
+  if (!questions || questions.length === 0) {
+    return (
+      <div className={cn(
+        "rounded-3xl border border-gray-200 bg-white p-8 shadow-xl dark:border-gray-800 dark:bg-gray-900",
+        className
+      )}>
+        <div className="flex flex-col items-center text-center">
+          <MonitorSmartphone className="h-12 w-12 text-primary animate-pulse" />
+          <p className="mt-4 text-gray-600 dark:text-gray-300">{t("ui.quiz.loading")}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const currentQuestion = questions[currentIndex];
+  const total = questions.length;
   const answeredCount = Object.keys(answers).length;
 
   const score = useMemo(() => {
-    return QUESTIONS.reduce((acc, question) => {
+    return questions.reduce((acc: number, question: Question) => {
       if (answers[question.id] === question.correctId) {
         return acc + 1;
       }
       return acc;
     }, 0);
-  }, [answers]);
+  }, [answers, questions]);
 
   const handleSelect = (optionId: string) => {
     setAnswers((prev) => ({
@@ -280,7 +170,7 @@ export function MultiClientQuiz({ className }: MultiClientQuizProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            Multi-Client Knowledge: {successRate}%
+            {t("ui.quiz.gradeTitle").replace("{{title}}", quizTitle).replace("{{rate}}", successRate.toString())}
           </motion.h3>
           
           <motion.p 
@@ -289,7 +179,7 @@ export function MultiClientQuiz({ className }: MultiClientQuizProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            {score} / {total} correct answers
+            {t("ui.quiz.scoreDisplay").replace("{{score}}", score.toString()).replace("{{total}}", total.toString())}
           </motion.p>
 
           <motion.div 
@@ -299,15 +189,15 @@ export function MultiClientQuiz({ className }: MultiClientQuizProps) {
             transition={{ delay: 0.4 }}
           >
             <ResultRow
-              label="Workflow skills"
+              label={t("ui.quiz.conceptsMastered")}
               value={`${score} of ${total}`}
             />
             <ResultRow
-              label="Status"
+              label={t("ui.quiz.nextSteps")}
               value={
                 score === total
-                  ? "You're a multi-client power user!"
-                  : "You're ready to optimize your workflow."
+                  ? t("ui.quiz.perfectScore")
+                  : t("ui.quiz.reviewSections")
               }
             />
           </motion.div>
@@ -322,13 +212,13 @@ export function MultiClientQuiz({ className }: MultiClientQuizProps) {
               className="inline-flex items-center justify-center rounded-xl border border-primary/40 px-4 py-3 font-semibold text-primary transition hover:bg-primary/10"
               href="/guides/quickstart"
             >
-              Try Different Clients →
+              {t("ui.quiz.tryDifferentClients")}
             </a>
             <a
               className="inline-flex items-center justify-center rounded-xl border border-gray-300 px-4 py-3 font-semibold text-gray-800 transition hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
               href="/guides/privacy-security"
             >
-              Security Best Practices
+              {t("ui.quiz.securityBestPractices")}
             </a>
           </motion.div>
 
@@ -343,7 +233,7 @@ export function MultiClientQuiz({ className }: MultiClientQuizProps) {
             whileTap={{ scale: 0.98 }}
           >
             <RotateCcw className="h-4 w-4" />
-            Retake quiz
+            {t("ui.quiz.retakeQuiz")}
           </motion.button>
         </div>
       </motion.div>
@@ -369,7 +259,7 @@ export function MultiClientQuiz({ className }: MultiClientQuizProps) {
             animate={{ opacity: 1, x: 0 }}
             className="text-xs font-semibold uppercase tracking-wider text-primary"
           >
-            Multi-Client Quiz
+            {quizTitle}
           </motion.p>
           <motion.h3 
             key={`heading-${currentIndex}`}
@@ -387,7 +277,7 @@ export function MultiClientQuiz({ className }: MultiClientQuizProps) {
             transition={{ delay: 0.1 }}
             className="text-sm text-gray-500 dark:text-gray-400"
           >
-            Question {currentIndex + 1} of {total}
+            {t("ui.quiz.questionCounter").replace("{{current}}", (currentIndex + 1).toString()).replace("{{total}}", total.toString())}
           </motion.p>
         </div>
         <div className="w-full rounded-full bg-gray-100 p-1 dark:bg-gray-800 sm:w-56">
@@ -397,7 +287,7 @@ export function MultiClientQuiz({ className }: MultiClientQuizProps) {
             animate={{ width: `${Math.max(15, (answeredCount / total) * 100)}%` }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            {answeredCount}/{total} answered
+            {answeredCount}/{total} {t("ui.quiz.answered")}
           </motion.div>
         </div>
       </header>
@@ -519,7 +409,7 @@ export function MultiClientQuiz({ className }: MultiClientQuizProps) {
                       >
                         <CheckCircle2 className="h-4 w-4 text-success-500" />
                       </motion.span>
-                      <span className="font-semibold">Nice!</span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.correct")}</span>
                     </span>
                   ) : (
                     <span className="flex items-center gap-2">
@@ -530,7 +420,7 @@ export function MultiClientQuiz({ className }: MultiClientQuizProps) {
                       >
                         <XCircle className="h-4 w-4 text-error-500" />
                       </motion.span>
-                      <span className="font-semibold">Not quite</span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.incorrect")}</span>
                     </span>
                   )}
                   {" "}{currentQuestion.explanation}
@@ -548,9 +438,9 @@ export function MultiClientQuiz({ className }: MultiClientQuizProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          {currentQuestion.severity === "critical" && "Must Know"}
-          {currentQuestion.severity === "warning" && "Important"}
-          {currentQuestion.severity === "info" && "Good to Know"}
+          {currentQuestion.severity === "critical" && t("ui.quiz.severity.critical")}
+          {currentQuestion.severity === "warning" && t("ui.quiz.severity.warning")}
+          {currentQuestion.severity === "info" && t("ui.quiz.severity.info")}
         </motion.div>
 
         <div className="flex gap-3">
@@ -563,7 +453,7 @@ export function MultiClientQuiz({ className }: MultiClientQuizProps) {
             className="inline-flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition disabled:opacity-50 dark:border-gray-700 dark:text-gray-300"
           >
             <ChevronLeft className="h-4 w-4" />
-            Back
+            {t("ui.quiz.backButton")}
           </motion.button>
           <motion.button
             type="button"
@@ -573,7 +463,7 @@ export function MultiClientQuiz({ className }: MultiClientQuizProps) {
             whileTap={selectedOption ? { scale: 0.98 } : {}}
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2 text-sm font-semibold text-white shadow-md transition disabled:opacity-50 hover:shadow-lg"
           >
-            {currentIndex === total - 1 ? "See results" : "Next question"}
+            {currentIndex === total - 1 ? t("ui.quiz.seeResults") : t("ui.quiz.nextButton")}
             <ChevronRight className="h-4 w-4" />
           </motion.button>
         </div>

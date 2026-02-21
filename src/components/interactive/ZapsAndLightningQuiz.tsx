@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 type Severity = "critical" | "warning" | "info";
 
@@ -34,187 +35,50 @@ interface Question {
   severity: Severity;
 }
 
-const QUESTIONS: Question[] = [
-  {
-    id: "what-are-zaps",
-    title: "Zaps Explained",
-    prompt: "What are zaps in Nostr?",
-    options: [
-      {
-        id: "likes",
-        label: "Special types of likes with animations",
-        description: "Visual engagement only",
-      },
-      {
-        id: "bitcoin",
-        label: "Bitcoin tips sent over Lightning Network",
-        description: "Real value transfer",
-      },
-      {
-        id: "boosts",
-        label: "Paid post promotions for more visibility",
-        description: "Advertising feature",
-      },
-    ],
-    correctId: "bitcoin",
-    explanation:
-      "Zaps are Bitcoin tips sent over the Lightning Network. They're 'likes with value'—a way to support creators with real money instantly.",
-    severity: "info",
-  },
-  {
-    id: "wallet-types",
-    title: "Wallet Security",
-    prompt: "What's the key difference between custodial and non-custodial wallets?",
-    options: [
-      {
-        id: "speed",
-        label: "Custodial wallets are faster",
-        description: "Performance difference",
-      },
-      {
-        id: "control",
-        label: "Custodial: They hold your keys | Non-custodial: You control keys",
-        description: "Who controls your Bitcoin",
-      },
-      {
-        id: "cost",
-        label: "Non-custodial wallets are more expensive",
-        description: "Fee difference",
-      },
-    ],
-    correctId: "control",
-    explanation:
-      "With custodial wallets (like Alby), the provider holds your keys. With non-custodial wallets (like Phoenix), you control your own keys. 'Not your keys, not your coins!'",
-    severity: "warning",
-  },
-  {
-    id: "required",
-    title: "Using Nostr",
-    prompt: "Do you need Bitcoin to use Nostr?",
-    options: [
-      {
-        id: "yes",
-        label: "Yes, you need Bitcoin to create an account",
-        description: "Payment required",
-      },
-      {
-        id: "optional",
-        label: "No, zaps are completely optional",
-        description: "Free to use without zaps",
-      },
-      {
-        id: "later",
-        label: "You need it after your first month",
-        description: "Trial period",
-      },
-    ],
-    correctId: "optional",
-    explanation:
-      "Nostr is completely free to use! Zaps are optional. You can use Nostr forever without ever sending or receiving a single satoshi.",
-    severity: "info",
-  },
-  {
-    id: "receiving",
-    title: "Receiving Zaps",
-    prompt: "What do you need to receive zaps?",
-    options: [
-      {
-        id: "hardware",
-        label: "A hardware Bitcoin wallet",
-        description: "Physical device required",
-      },
-      {
-        id: "address",
-        label: "Lightning wallet with address added to your profile",
-        description: "Like you@walletofsatoshi.com",
-      },
-      {
-        id: "business",
-        label: "A registered business account",
-        description: "KYC requirements",
-      },
-    ],
-    correctId: "address",
-    explanation:
-      "To receive zaps, add your Lightning address (e.g., you@walletofsatoshi.com) to your Nostr profile. When someone zaps you, the sats go straight to your wallet!",
-    severity: "critical",
-  },
-  {
-    id: "amounts",
-    title: "Zap Etiquette",
-    prompt: "What's considered a standard 'thank you' zap amount?",
-    options: [
-      {
-        id: "ten",
-        label: "10 sats",
-        description: "Minimum viable",
-      },
-      {
-        id: "hundred",
-        label: "100 sats",
-        description: "Standard appreciation",
-      },
-      {
-        id: "thousand",
-        label: "1,000 sats",
-        description: "Exceptional content",
-      },
-    ],
-    correctId: "hundred",
-    explanation:
-      "100 sats is a standard 'thank you' zap. 21 sats is a minimum viable zap. 1,000+ sats says 'this was valuable.' Any amount shows appreciation!",
-    severity: "info",
-  },
-  {
-    id: "security",
-    title: "Wallet Security",
-    prompt: "What must you do when setting up a non-custodial wallet like Phoenix?",
-    options: [
-      {
-        id: "nothing",
-        label: "Nothing special—it just works",
-        description: "Zero setup required",
-      },
-      {
-        id: "seed",
-        label: "Write down and safely store the recovery seed phrase",
-        description: "Critical backup step",
-      },
-      {
-        id: "verify",
-        label: "Verify your identity with government ID",
-        description: "KYC process",
-      },
-    ],
-    correctId: "seed",
-    explanation:
-      "When using non-custodial wallets like Phoenix, you MUST write down the recovery seed phrase. Lose it = lose your Bitcoin forever. No exceptions!",
-    severity: "critical",
-  },
-];
-
 interface ZapsAndLightningQuizProps {
   className?: string;
 }
 
 export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
+  const { t, getValue } = useTranslation();
+  
+  // Get questions from translations using getValue to retrieve arrays/objects
+  const rawQuestions = getValue("guides.zapsAndLightning.quiz.questions");
+  const questions: Question[] = Array.isArray(rawQuestions) ? rawQuestions : [];
+  const quizTitle = t("guides.zapsAndLightning.quiz.title") || "Zaps and Lightning Quiz";
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
   const [direction, setDirection] = useState(0);
 
-  const currentQuestion = QUESTIONS[currentIndex];
-  const total = QUESTIONS.length;
+  // Handle case where translations haven't loaded yet
+  if (!questions || questions.length === 0) {
+    return (
+      <div className={cn(
+        "rounded-3xl border border-gray-200 bg-white p-8 shadow-xl dark:border-gray-800 dark:bg-gray-900",
+        className
+      )}>
+        <div className="flex flex-col items-center text-center">
+          <Zap className="h-12 w-12 text-primary animate-pulse" />
+          <p className="mt-4 text-gray-600 dark:text-gray-300">{t("ui.quiz.loading")}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const currentQuestion = questions[currentIndex];
+  const total = questions.length;
   const answeredCount = Object.keys(answers).length;
 
   const score = useMemo(() => {
-    return QUESTIONS.reduce((acc, question) => {
+    return questions.reduce((acc: number, question: Question) => {
       if (answers[question.id] === question.correctId) {
         return acc + 1;
       }
       return acc;
     }, 0);
-  }, [answers]);
+  }, [answers, questions]);
 
   const handleSelect = (optionId: string) => {
     setAnswers((prev) => ({
@@ -306,7 +170,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            Zap Knowledge: {successRate}%
+            {t("ui.quiz.gradeTitle").replace("{{title}}", quizTitle).replace("{{rate}}", successRate.toString())}
           </motion.h3>
           
           <motion.p 
@@ -315,7 +179,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            {score} / {total} correct answers
+            {t("ui.quiz.scoreDisplay").replace("{{score}}", score.toString()).replace("{{total}}", total.toString())}
           </motion.p>
 
           <motion.div 
@@ -325,15 +189,15 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
             transition={{ delay: 0.4 }}
           >
             <ResultRow
-              label="Zap concepts mastered"
+              label={t("ui.quiz.conceptsMastered")}
               value={`${score} of ${total}`}
             />
             <ResultRow
-              label="Next steps"
+              label={t("ui.quiz.nextSteps")}
               value={
                 score === total
-                  ? "You're ready to send and receive zaps!"
-                  : "Review the zaps guide sections you missed."
+                  ? t("ui.quiz.perfectScore")
+                  : t("ui.quiz.reviewSections")
               }
             />
           </motion.div>
@@ -348,13 +212,13 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
               className="inline-flex items-center justify-center rounded-xl border border-primary/40 px-4 py-3 font-semibold text-primary transition hover:bg-primary/10"
               href="/guides/nostr-tools"
             >
-              Find Wallet Tools →
+              {t("ui.quiz.findWalletTools")}
             </a>
             <a
               className="inline-flex items-center justify-center rounded-xl border border-gray-300 px-4 py-3 font-semibold text-gray-800 transition hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
               href="/guides/troubleshooting"
             >
-              Fix Zap Issues
+              {t("ui.quiz.fixZapIssues")}
             </a>
           </motion.div>
 
@@ -369,7 +233,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
             whileTap={{ scale: 0.98 }}
           >
             <RotateCcw className="h-4 w-4" />
-            Retake quiz
+            {t("ui.quiz.retakeQuiz")}
           </motion.button>
         </div>
       </motion.div>
@@ -395,7 +259,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
             animate={{ opacity: 1, x: 0 }}
             className="text-xs font-semibold uppercase tracking-wider text-primary"
           >
-            Zaps Quiz
+            {quizTitle}
           </motion.p>
           <motion.h3 
             key={`heading-${currentIndex}`}
@@ -413,7 +277,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
             transition={{ delay: 0.1 }}
             className="text-sm text-gray-500 dark:text-gray-400"
           >
-            Question {currentIndex + 1} of {total}
+            {t("ui.quiz.questionCounter").replace("{{current}}", (currentIndex + 1).toString()).replace("{{total}}", total.toString())}
           </motion.p>
         </div>
         <div className="w-full rounded-full bg-gray-100 p-1 dark:bg-gray-800 sm:w-56">
@@ -423,7 +287,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
             animate={{ width: `${Math.max(15, (answeredCount / total) * 100)}%` }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            {answeredCount}/{total} answered
+            {answeredCount}/{total} {t("ui.quiz.answered")}
           </motion.div>
         </div>
       </header>
@@ -545,7 +409,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
                       >
                         <CheckCircle2 className="h-4 w-4 text-success-500" />
                       </motion.span>
-                      <span className="font-semibold">Nice!</span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.correct")}</span>
                     </span>
                   ) : (
                     <span className="flex items-center gap-2">
@@ -556,7 +420,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
                       >
                         <XCircle className="h-4 w-4 text-error-500" />
                       </motion.span>
-                      <span className="font-semibold">Not quite</span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.incorrect")}</span>
                     </span>
                   )}
                   {" "}{currentQuestion.explanation}
@@ -574,9 +438,9 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          {currentQuestion.severity === "critical" && "Must Know"}
-          {currentQuestion.severity === "warning" && "Important"}
-          {currentQuestion.severity === "info" && "Good to Know"}
+          {currentQuestion.severity === "critical" && t("ui.quiz.severity.critical")}
+          {currentQuestion.severity === "warning" && t("ui.quiz.severity.warning")}
+          {currentQuestion.severity === "info" && t("ui.quiz.severity.info")}
         </motion.div>
 
         <div className="flex gap-3">
@@ -589,7 +453,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
             className="inline-flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition disabled:opacity-50 dark:border-gray-700 dark:text-gray-300"
           >
             <ChevronLeft className="h-4 w-4" />
-            Back
+            {t("ui.quiz.backButton")}
           </motion.button>
           <motion.button
             type="button"
@@ -599,7 +463,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
             whileTap={selectedOption ? { scale: 0.98 } : {}}
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2 text-sm font-semibold text-white shadow-md transition disabled:opacity-50 hover:shadow-lg"
           >
-            {currentIndex === total - 1 ? "See results" : "Next question"}
+            {currentIndex === total - 1 ? t("ui.quiz.seeResults") : t("ui.quiz.nextButton")}
             <ChevronRight className="h-4 w-4" />
           </motion.button>
         </div>

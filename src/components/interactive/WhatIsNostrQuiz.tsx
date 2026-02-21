@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 type Severity = "critical" | "warning" | "info";
 
@@ -33,187 +34,50 @@ interface Question {
   severity: Severity;
 }
 
-const QUESTIONS: Question[] = [
-  {
-    id: "protocol-vs-platform",
-    title: "Protocol vs Platform",
-    prompt: "What's the key difference between Nostr and Twitter?",
-    options: [
-      {
-        id: "faster",
-        label: "Nostr is faster than Twitter",
-        description: "Speed depends on many factors",
-      },
-      {
-        id: "protocol",
-        label: "Nostr is a protocol (like email), not a platform",
-        description: "Anyone can build apps on the protocol",
-      },
-      {
-        id: "free",
-        label: "Nostr is completely free with no costs",
-        description: "Some features like paid relays have costs",
-      },
-    ],
-    correctId: "protocol",
-    explanation:
-      "Nostr is a protocol like email or the web itself. This means no single company owns it, and you can switch apps without losing your identity.",
-    severity: "critical",
-  },
-  {
-    id: "key-types",
-    title: "Your Keys",
-    prompt: "Which key is safe to share publicly?",
-    options: [
-      {
-        id: "nsec",
-        label: "nsec (private key)",
-        description: "Starts with nsec1...",
-      },
-      {
-        id: "npub",
-        label: "npub (public key)",
-        description: "Starts with npub1...",
-      },
-      {
-        id: "both",
-        label: "Both are safe to share",
-        description: "Share freely with anyone",
-      },
-    ],
-    correctId: "npub",
-    explanation:
-      "Your npub (public key) is like your username—share it everywhere. Your nsec (private key) is like your password—never share it with anyone.",
-    severity: "critical",
-  },
-  {
-    id: "censorship",
-    title: "Censorship Resistance",
-    prompt: "Can someone ban you from Nostr entirely?",
-    options: [
-      {
-        id: "yes",
-        label: "Yes, the Nostr admin can ban anyone",
-        description: "There's centralized control",
-      },
-      {
-        id: "no",
-        label: "No, but they can ignore your posts",
-        description: "No central authority to ban you",
-      },
-      {
-        id: "sometimes",
-        label: "Only if you break the rules",
-        description: "There are terms of service",
-      },
-    ],
-    correctId: "no",
-    explanation:
-      "No central authority can ban you from Nostr. Individual relays can choose not to carry your posts, but you can always use different relays.",
-    severity: "info",
-  },
-  {
-    id: "relays",
-    title: "Relays Explained",
-    prompt: "What do relays do in Nostr?",
-    options: [
-      {
-        id: "mine",
-        label: "They mine Bitcoin for zaps",
-        description: "Processing Lightning payments",
-      },
-      {
-        id: "store",
-        label: "They store and forward messages",
-        description: "Like post offices for your posts",
-      },
-      {
-        id: "verify",
-        label: "They verify your identity",
-        description: "Check government-issued IDs",
-      },
-    ],
-    correctId: "store",
-    explanation:
-      "Relays are servers that store your posts and share them with others. You choose which relays to use, and can switch anytime.",
-    severity: "warning",
-  },
-  {
-    id: "portability",
-    title: "Data Portability",
-    prompt: "What happens to your data if you switch Nostr clients?",
-    options: [
-      {
-        id: "lost",
-        label: "You lose everything and start over",
-        description: "Data is trapped in the old app",
-      },
-      {
-        id: "transfer",
-        label: "You manually transfer your data",
-        description: "Export/import process required",
-      },
-      {
-        id: "automatic",
-        label: "It comes with you automatically",
-        description: "Posts and followers sync from relays",
-      },
-    ],
-    correctId: "automatic",
-    explanation:
-      "Your posts and followers are stored on relays, not in the app. When you switch clients, everything syncs automatically—you just need your keys.",
-    severity: "info",
-  },
-  {
-    id: "responsibility",
-    title: "Key Responsibility",
-    prompt: "What happens if you lose your private key (nsec)?",
-    options: [
-      {
-        id: "reset",
-        label: "You can reset it via email",
-        description: "Standard password reset process",
-      },
-      {
-        id: "support",
-        label: "Contact Nostr support to recover",
-        description: "Customer service can help",
-      },
-      {
-        id: "gone",
-        label: "You lose your account forever",
-        description: "No recovery possible",
-      },
-    ],
-    correctId: "gone",
-    explanation:
-      "There's no 'forgot password' in Nostr. No customer support. No admin to help. Lose your nsec = lose your account forever. Back it up safely!",
-    severity: "warning",
-  },
-];
-
 interface WhatIsNostrQuizProps {
   className?: string;
 }
 
 export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
+  const { t, getValue } = useTranslation();
+  
+  // Get questions from translations using getValue to retrieve arrays/objects
+  const rawQuestions = getValue("guides.whatIsNostr.quiz.questions");
+  const questions: Question[] = Array.isArray(rawQuestions) ? rawQuestions : [];
+  const quizTitle = t("guides.whatIsNostr.quiz.title") || "What is Nostr Quiz";
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
   const [direction, setDirection] = useState(0);
 
-  const currentQuestion = QUESTIONS[currentIndex];
-  const total = QUESTIONS.length;
+  // Handle case where translations haven't loaded yet
+  if (!questions || questions.length === 0) {
+    return (
+      <div className={cn(
+        "rounded-3xl border border-gray-200 bg-white p-8 shadow-xl dark:border-gray-800 dark:bg-gray-900",
+        className
+      )}>
+        <div className="flex flex-col items-center text-center">
+          <BookOpen className="h-12 w-12 text-primary animate-pulse" />
+          <p className="mt-4 text-gray-600 dark:text-gray-300">{t("ui.quiz.loading")}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const currentQuestion = questions[currentIndex];
+  const total = questions.length;
   const answeredCount = Object.keys(answers).length;
 
   const score = useMemo(() => {
-    return QUESTIONS.reduce((acc, question) => {
+    return questions.reduce((acc: number, question: Question) => {
       if (answers[question.id] === question.correctId) {
         return acc + 1;
       }
       return acc;
     }, 0);
-  }, [answers]);
+  }, [answers, questions]);
 
   const handleSelect = (optionId: string) => {
     setAnswers((prev) => ({
@@ -306,7 +170,7 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            Nostr Knowledge: {successRate}%
+            {t("ui.quiz.gradeTitle").replace("{{title}}", quizTitle).replace("{{rate}}", successRate.toString())}
           </motion.h3>
           
           <motion.p 
@@ -315,7 +179,7 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            {score} / {total} correct answers
+            {t("ui.quiz.scoreDisplay").replace("{{score}}", score.toString()).replace("{{total}}", total.toString())}
           </motion.p>
 
           <motion.div 
@@ -325,15 +189,15 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
             transition={{ delay: 0.4 }}
           >
             <ResultRow
-              label="Core concepts mastered"
+              label={t("ui.quiz.conceptsMastered")}
               value={`${score} of ${total}`}
             />
             <ResultRow
-              label="Next steps"
+              label={t("ui.quiz.nextSteps")}
               value={
                 score === total
-                  ? "You're ready to start using Nostr!"
-                  : "Review the guide sections you missed."
+                  ? t("ui.quiz.perfectScore")
+                  : t("ui.quiz.reviewSections")
               }
             />
           </motion.div>
@@ -348,13 +212,13 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
               className="inline-flex items-center justify-center rounded-xl border border-primary/40 px-4 py-3 font-semibold text-primary transition hover:bg-primary/10"
               href="/guides/keys-and-security"
             >
-              Learn About Keys →
+              {t("ui.quiz.reviewKeys")}
             </a>
             <a
               className="inline-flex items-center justify-center rounded-xl border border-gray-300 px-4 py-3 font-semibold text-gray-800 transition hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
               href="/guides/quickstart"
             >
-              Try Quickstart Guide
+              {t("ui.quiz.tryQuickstart")}
             </a>
           </motion.div>
 
@@ -369,7 +233,7 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
             whileTap={{ scale: 0.98 }}
           >
             <RotateCcw className="h-4 w-4" />
-            Retake quiz
+            {t("ui.quiz.retakeQuiz")}
           </motion.button>
         </div>
       </motion.div>
@@ -395,7 +259,7 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
             animate={{ opacity: 1, x: 0 }}
             className="text-xs font-semibold uppercase tracking-wider text-primary"
           >
-            Nostr Basics Quiz
+            {quizTitle}
           </motion.p>
           <motion.h3 
             key={`heading-${currentIndex}`}
@@ -413,7 +277,7 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
             transition={{ delay: 0.1 }}
             className="text-sm text-gray-500 dark:text-gray-400"
           >
-            Question {currentIndex + 1} of {total}
+            {t("ui.quiz.questionCounter").replace("{{current}}", (currentIndex + 1).toString()).replace("{{total}}", total.toString())}
           </motion.p>
         </div>
         <div className="w-full rounded-full bg-gray-100 p-1 dark:bg-gray-800 sm:w-56">
@@ -423,7 +287,7 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
             animate={{ width: `${Math.max(15, (answeredCount / total) * 100)}%` }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            {answeredCount}/{total} answered
+            {answeredCount}/{total} {t("ui.quiz.answered")}
           </motion.div>
         </div>
       </header>
@@ -545,7 +409,7 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
                       >
                         <CheckCircle2 className="h-4 w-4 text-success-500" />
                       </motion.span>
-                      <span className="font-semibold">Nice!</span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.correct")}</span>
                     </span>
                   ) : (
                     <span className="flex items-center gap-2">
@@ -556,7 +420,7 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
                       >
                         <XCircle className="h-4 w-4 text-error-500" />
                       </motion.span>
-                      <span className="font-semibold">Not quite</span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.incorrect")}</span>
                     </span>
                   )}
                   {" "}{currentQuestion.explanation}
@@ -574,9 +438,9 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          {currentQuestion.severity === "critical" && "Core Concept"}
-          {currentQuestion.severity === "warning" && "Important"}
-          {currentQuestion.severity === "info" && "Good to Know"}
+          {currentQuestion.severity === "critical" && t("ui.quiz.severity.critical")}
+          {currentQuestion.severity === "warning" && t("ui.quiz.severity.warning")}
+          {currentQuestion.severity === "info" && t("ui.quiz.severity.info")}
         </motion.div>
 
         <div className="flex gap-3">
@@ -589,7 +453,7 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
             className="inline-flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition disabled:opacity-50 dark:border-gray-700 dark:text-gray-300"
           >
             <ChevronLeft className="h-4 w-4" />
-            Back
+            {t("ui.quiz.backButton")}
           </motion.button>
           <motion.button
             type="button"
@@ -599,7 +463,7 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
             whileTap={selectedOption ? { scale: 0.98 } : {}}
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2 text-sm font-semibold text-white shadow-md transition disabled:opacity-50 hover:shadow-lg"
           >
-            {currentIndex === total - 1 ? "See results" : "Next question"}
+            {currentIndex === total - 1 ? t("ui.quiz.seeResults") : t("ui.quiz.nextButton")}
             <ChevronRight className="h-4 w-4" />
           </motion.button>
         </div>

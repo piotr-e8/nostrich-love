@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 import { recordActivity, awardBadge } from "../../utils/gamification";
 
 type Severity = "critical" | "warning" | "info";
@@ -32,155 +33,6 @@ interface Question {
   explanation: string;
   severity: Severity;
 }
-
-const QUESTIONS: Question[] = [
-  {
-    id: "threat-model",
-    title: "Threat Assessment",
-    prompt: "You're a software developer who wants to separate professional posts from personal opinions. What threat level applies?",
-    options: [
-      {
-        id: "level1",
-        label: "Level 1: Casual Privacy",
-        description: "Basic separation of personal/professional life",
-      },
-      {
-        id: "level2",
-        label: "Level 2: Active Avoidance",
-        description: "Avoiding doxxing, harassment, or stalking",
-      },
-      {
-        id: "level3",
-        label: "Level 3: High Security",
-        description: "Protection from state actors",
-      },
-    ],
-    correctId: "level1",
-    explanation:
-      "Separating professional from personal content is a Level 1 (Casual Privacy) concern. You just want to keep different aspects of your life separate, not hide from sophisticated adversaries.",
-    severity: "info",
-  },
-  {
-    id: "identity-separation",
-    title: "Identity Separation",
-    prompt: "You have a public professional account and a pseudonymous personal account. Which practice is SAFE?",
-    options: [
-      {
-        id: "same-thread",
-        label: "Post from both accounts in the same thread",
-      },
-      {
-        id: "mention",
-        label: "Mention your public account from your private one",
-      },
-      {
-        id: "separate",
-        label: "Keep completely separate content and social circles",
-        description: "No cross-references, different topics, different followers",
-      },
-    ],
-    correctId: "separate",
-    explanation:
-      "Complete separation is essential. Any connection between identities—same threads, mentions, writing style, or social circles—can reveal that two accounts belong to the same person.",
-    severity: "warning",
-  },
-  {
-    id: "signer-apps",
-    title: "Signer Apps (NIP-46)",
-    prompt: "What's the main benefit of using a signer app like Amber?",
-    options: [
-      {
-        id: "faster",
-        label: "Faster posting speed",
-      },
-      {
-        id: "isolation",
-        label: "Your private key never leaves the signer app",
-        description: "Client apps request signatures without seeing your nsec",
-      },
-      {
-        id: "customization",
-        label: "Better profile customization options",
-      },
-    ],
-    correctId: "isolation",
-    explanation:
-      "Signer apps provide key isolation—your nsec stays in the signer while client apps only request signatures. Even if a client is compromised, your keys remain safe.",
-    severity: "critical",
-  },
-  {
-    id: "metadata-leaks",
-    title: "Metadata Analysis",
-    prompt: "Which of these can reveal that two 'anonymous' accounts belong to the same person?",
-    options: [
-      {
-        id: "clients",
-        label: "Using different Nostr clients",
-      },
-      {
-        id: "timing",
-        label: "Posting at different times of day",
-      },
-      {
-        id: "patterns",
-        label: "Using the same unique phrases and following the same people",
-        description: "Writing style, vocabulary, and social graph analysis",
-      },
-    ],
-    correctId: "patterns",
-    explanation:
-      "Metadata analysis looks at writing style, vocabulary patterns, emoji usage, timing, and social graph connections. To maintain separate identities, you must vary all of these.",
-    severity: "warning",
-  },
-  {
-    id: "key-rotation",
-    title: "Key Rotation Strategy",
-    prompt: "When should you rotate your Nostr keys to a new identity?",
-    options: [
-      {
-        id: "monthly",
-        label: "Every month as routine maintenance",
-      },
-      {
-        id: "fresh",
-        label: "When you want a fresh start or new username",
-      },
-      {
-        id: "compromise",
-        label: "When you suspect compromise or accidental exposure",
-        description: "Nsec exposed, device stolen, or suspicious activity",
-      },
-    ],
-    correctId: "compromise",
-    explanation:
-      "Don't rotate casually—you lose all history and confuse followers. Only rotate when you suspect compromise (exposed nsec, stolen device, or suspicious activity).",
-    severity: "critical",
-  },
-  {
-    id: "recovery-planning",
-    title: "Incident Response",
-    prompt: "Your account is compromised. What's the FIRST thing you should do?",
-    options: [
-      {
-        id: "angry",
-        label: "Post an angry message calling out the attacker",
-      },
-      {
-        id: "generate",
-        label: "Immediately generate new keys and start posting",
-      },
-      {
-        id: "stop",
-        label: "Stop posting from the compromised account and document what happened",
-        description: "Contain the breach before taking recovery actions",
-      },
-    ],
-    correctId: "stop",
-    explanation:
-      "First, stop the bleeding—don't post from compromised accounts. Document the incident while it's fresh. Then create new keys, verify their security, and announce the rotation with proof you control both accounts.",
-    severity: "critical",
-  },
-];
 
 interface PrivacySecurityQuizProps {
   className?: string;
@@ -209,24 +61,46 @@ const OPTION_ICONS: Record<string, React.ReactNode> = {
 };
 
 export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
+  const { t, getValue } = useTranslation();
+  
+  // Get questions from translations using getValue to retrieve arrays/objects
+  const rawQuestions = getValue("guides.privacySecurity.quiz.questions");
+  const questions: Question[] = Array.isArray(rawQuestions) ? rawQuestions : [];
+  const quizTitle = t("guides.privacySecurity.quiz.title") || "Privacy & Security Quiz";
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
   const [direction, setDirection] = useState(0);
   const [badgeAwarded, setBadgeAwarded] = useState(false);
 
-  const currentQuestion = QUESTIONS[currentIndex];
-  const total = QUESTIONS.length;
+  // Handle case where translations haven't loaded yet
+  if (!questions || questions.length === 0) {
+    return (
+      <div className={cn(
+        "rounded-3xl border border-gray-200 bg-white p-8 shadow-xl dark:border-gray-800 dark:bg-gray-900",
+        className
+      )}>
+        <div className="flex flex-col items-center text-center">
+          <ShieldCheck className="h-12 w-12 text-primary animate-pulse" />
+          <p className="mt-4 text-gray-600 dark:text-gray-300">{t("ui.quiz.loading")}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const currentQuestion = questions[currentIndex];
+  const total = questions.length;
   const answeredCount = Object.keys(answers).length;
 
   const score = useMemo(() => {
-    return QUESTIONS.reduce((acc, question) => {
+    return questions.reduce((acc: number, question: Question) => {
       if (answers[question.id] === question.correctId) {
         return acc + 1;
       }
       return acc;
     }, 0);
-  }, [answers]);
+  }, [answers, questions]);
 
   // Award badge when quiz is completed with perfect score
   useEffect(() => {
@@ -341,7 +215,7 @@ export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            {isPerfect ? "Privacy Expert!" : "Privacy & Security Grade:"} {isPerfect ? "" : `${successRate}%`}
+            {isPerfect ? t("ui.quiz.perfectScoreTitle") : t("ui.quiz.gradeTitle").replace("{{title}}", quizTitle).replace("{{rate}}", successRate.toString())}
           </motion.h3>
           
           <motion.p 
@@ -350,7 +224,7 @@ export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            {score} / {total} correct answers
+            {t("ui.quiz.scoreDisplay").replace("{{score}}", score.toString()).replace("{{total}}", total.toString())}
           </motion.p>
 
           {badgeAwarded && (
@@ -360,7 +234,7 @@ export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.35 }}
             >
-              🏆 Badge Earned: Privacy Expert
+              🏆 {t("ui.quiz.badgeEarned")}: {t("ui.quiz.privacyExpert")}
             </motion.div>
           )}
 
@@ -371,15 +245,15 @@ export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
             transition={{ delay: 0.4 }}
           >
             <ResultRow
-              label="Advanced concepts mastered"
+              label={t("ui.quiz.conceptsMastered")}
               value={`${score} of ${total}`}
             />
             <ResultRow
-              label="Next steps"
+              label={t("ui.quiz.nextSteps")}
               value={
                 isPerfect
-                  ? "Excellent! You've mastered advanced privacy and security concepts."
-                  : "Review the privacy sections you missed to strengthen your security posture."
+                  ? t("ui.quiz.perfectScore")
+                  : t("ui.quiz.reviewSections")
               }
             />
           </motion.div>
@@ -394,13 +268,13 @@ export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
               className="inline-flex items-center justify-center rounded-xl border border-primary/40 px-4 py-3 font-semibold text-primary transition hover:bg-primary/10"
               href="/guides/privacy-security"
             >
-              Review Privacy Guide
+              {t("ui.quiz.reviewPrivacyGuide")}
             </a>
             <a
               className="inline-flex items-center justify-center rounded-xl border border-gray-300 px-4 py-3 font-semibold text-gray-800 transition hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
               href="/guides/keys-and-security"
             >
-              Back to Security Basics
+              {t("ui.quiz.backToSecurityBasics")}
             </a>
           </motion.div>
 
@@ -415,7 +289,7 @@ export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
             whileTap={{ scale: 0.98 }}
           >
             <RotateCcw className="h-4 w-4" />
-            Retake quiz
+            {t("ui.quiz.retakeQuiz")}
           </motion.button>
         </div>
       </motion.div>
@@ -441,7 +315,7 @@ export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
             animate={{ opacity: 1, x: 0 }}
             className="text-xs font-semibold uppercase tracking-wider text-primary"
           >
-            Privacy & Security Quiz
+            {quizTitle}
           </motion.p>
           <motion.h3 
             key={`heading-${currentIndex}`}
@@ -459,7 +333,7 @@ export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
             transition={{ delay: 0.1 }}
             className="text-sm text-gray-500 dark:text-gray-400"
           >
-            Question {currentIndex + 1} of {total}
+            {t("ui.quiz.questionCounter").replace("{{current}}", (currentIndex + 1).toString()).replace("{{total}}", total.toString())}
           </motion.p>
         </div>
         <div className="w-full rounded-full bg-gray-100 p-1 dark:bg-gray-800 sm:w-56">
@@ -469,7 +343,7 @@ export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
             animate={{ width: `${Math.max(15, (answeredCount / total) * 100)}%` }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            {answeredCount}/{total} answered
+            {answeredCount}/{total} {t("ui.quiz.answered")}
           </motion.div>
         </div>
       </header>
@@ -591,7 +465,7 @@ export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
                       >
                         <CheckCircle2 className="h-4 w-4 text-success-500" />
                       </motion.span>
-                      <span className="font-semibold">Nice!</span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.correct")}</span>
                     </span>
                   ) : (
                     <span className="flex items-center gap-2">
@@ -602,7 +476,7 @@ export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
                       >
                         <XCircle className="h-4 w-4 text-error-500" />
                       </motion.span>
-                      <span className="font-semibold">Not quite</span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.incorrect")}</span>
                     </span>
                   )}
                   {" "}{currentQuestion.explanation}
@@ -650,7 +524,7 @@ export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
           whileHover={selectedOption ? { scale: 1.02 } : {}}
           whileTap={selectedOption ? { scale: 0.98 } : {}}
         >
-          {currentIndex === total - 1 ? "Finish" : "Next"}
+          {currentIndex === total - 1 ? t("ui.quiz.seeResults") : t("ui.quiz.nextButton")}
           <ChevronRight className="h-4 w-4" />
         </motion.button>
       </footer>

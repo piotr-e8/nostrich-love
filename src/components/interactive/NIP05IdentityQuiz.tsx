@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 type Severity = "critical" | "warning" | "info";
 
@@ -34,161 +35,50 @@ interface Question {
   severity: Severity;
 }
 
-const QUESTIONS: Question[] = [
-  {
-    id: "purpose",
-    title: "What is NIP-05?",
-    prompt: "What does a NIP-05 identifier look like?",
-    options: [
-      {
-        id: "npub",
-        label: "npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-        description: "Long random string",
-      },
-      {
-        id: "nsec",
-        label: "nsec1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-        description: "Private key format",
-      },
-      {
-        id: "human",
-        label: "you@domain.com",
-        description: "Human-readable format",
-      },
-    ],
-    correctId: "human",
-    explanation:
-      "A NIP-05 identifier is a human-readable address like you@domain.com, making it much easier to share than long npub strings.",
-    severity: "info",
-  },
-  {
-    id: "benefits",
-    title: "Benefits",
-    prompt: "What's a major benefit of having a NIP-05?",
-    options: [
-      {
-        id: "security",
-        label: "It encrypts all your messages automatically",
-        description: "Enhanced security",
-      },
-      {
-        id: "appearance",
-        label: "Easy to share, professional appearance, verification badge",
-        description: "Multiple benefits",
-      },
-      {
-        id: "required",
-        label: "It's required to use Nostr",
-        description: "Mandatory for posting",
-      },
-    ],
-    correctId: "appearance",
-    explanation:
-      "NIP-05 gives you an easy-to-share identifier, looks more professional, and many clients show a verification badge. It's completely optional though!",
-    severity: "info",
-  },
-  {
-    id: "required-question",
-    title: "Is It Required?",
-    prompt: "Do you need a NIP-05 to use Nostr?",
-    options: [
-      {
-        id: "yes",
-        label: "Yes, you can't post without one",
-        description: "Mandatory requirement",
-      },
-      {
-        id: "no",
-        label: "No, it's optional but recommended",
-        description: "Nice to have",
-      },
-      {
-        id: "recommended",
-        label: "Only recommended for businesses",
-        description: "Professional accounts only",
-      },
-    ],
-    correctId: "no",
-    explanation:
-      "NIP-05 is completely optional! You can use Nostr perfectly well with just your npub. It's a convenience, not a requirement.",
-    severity: "warning",
-  },
-  {
-    id: "setup-location",
-    title: "Setup Requirements",
-    prompt: "Where must the nostr.json file be hosted for self-hosted NIP-05?",
-    options: [
-      {
-        id: "root",
-        label: "Anywhere on your website",
-        description: "Flexible location",
-      },
-      {
-        id: "specific",
-        label: "At /.well-known/nostr.json",
-        description: "Exact path required",
-      },
-      {
-        id: "subdomain",
-        label: "On a subdomain like nostr.yoursite.com",
-        description: "Separate domain",
-      },
-    ],
-    correctId: "specific",
-    explanation:
-      "For self-hosted NIP-05, the nostr.json file must be at the exact path /.well-known/nostr.json on your domain. This is where clients look for it.",
-    severity: "critical",
-  },
-  {
-    id: "centralization",
-    title: "Decentralization Concerns",
-    prompt: "Does using NIP-05 mean centralized identity?",
-    options: [
-      {
-        id: "yes-centralized",
-        label: "Yes, you're tied to one domain forever",
-        description: "Centralized control",
-      },
-      {
-        id: "no-flexible",
-        label: "No, you can have multiple and change anytime",
-        description: "Flexible and portable",
-      },
-      {
-        id: "sometimes",
-        label: "Only if you pay for it",
-        description: "Depends on provider",
-      },
-    ],
-    correctId: "no-flexible",
-    explanation:
-      "NIP-05 doesn't mean centralized identity! You can have multiple identifiers, change them anytime, and your npub is still your real identity. NIP-05 is just a pointer.",
-    severity: "warning",
-  },
-];
-
 interface NIP05IdentityQuizProps {
   className?: string;
 }
 
 export function NIP05IdentityQuiz({ className }: NIP05IdentityQuizProps) {
+  const { t, getValue } = useTranslation();
+  
+  // Get questions from translations using getValue to retrieve arrays/objects
+  const rawQuestions = getValue("guides.nip05Identity.quiz.questions");
+  const questions: Question[] = Array.isArray(rawQuestions) ? rawQuestions : [];
+  const quizTitle = t("guides.nip05Identity.quiz.title") || "NIP-05 Identity Quiz";
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
   const [direction, setDirection] = useState(0);
 
-  const currentQuestion = QUESTIONS[currentIndex];
-  const total = QUESTIONS.length;
+  // Handle case where translations haven't loaded yet
+  if (!questions || questions.length === 0) {
+    return (
+      <div className={cn(
+        "rounded-3xl border border-gray-200 bg-white p-8 shadow-xl dark:border-gray-800 dark:bg-gray-900",
+        className
+      )}>
+        <div className="flex flex-col items-center text-center">
+          <AtSign className="h-12 w-12 text-primary animate-pulse" />
+          <p className="mt-4 text-gray-600 dark:text-gray-300">{t("ui.quiz.loading")}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const currentQuestion = questions[currentIndex];
+  const total = questions.length;
   const answeredCount = Object.keys(answers).length;
 
   const score = useMemo(() => {
-    return QUESTIONS.reduce((acc, question) => {
+    return questions.reduce((acc: number, question: Question) => {
       if (answers[question.id] === question.correctId) {
         return acc + 1;
       }
       return acc;
     }, 0);
-  }, [answers]);
+  }, [answers, questions]);
 
   const handleSelect = (optionId: string) => {
     setAnswers((prev) => ({
@@ -280,7 +170,7 @@ export function NIP05IdentityQuiz({ className }: NIP05IdentityQuizProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            NIP-05 Knowledge: {successRate}%
+            {t("ui.quiz.gradeTitle").replace("{{title}}", quizTitle).replace("{{rate}}", successRate.toString())}
           </motion.h3>
           
           <motion.p 
@@ -289,7 +179,7 @@ export function NIP05IdentityQuiz({ className }: NIP05IdentityQuizProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            {score} / {total} correct answers
+            {t("ui.quiz.scoreDisplay").replace("{{score}}", score.toString()).replace("{{total}}", total.toString())}
           </motion.p>
 
           <motion.div 
@@ -299,15 +189,15 @@ export function NIP05IdentityQuiz({ className }: NIP05IdentityQuizProps) {
             transition={{ delay: 0.4 }}
           >
             <ResultRow
-              label="NIP-05 concepts mastered"
+              label={t("ui.quiz.conceptsMastered")}
               value={`${score} of ${total}`}
             />
             <ResultRow
-              label="Next steps"
+              label={t("ui.quiz.nextSteps")}
               value={
                 score === total
-                  ? "You're ready to get your NIP-05!"
-                  : "Review the NIP-05 sections you missed."
+                  ? t("ui.quiz.perfectScore")
+                  : t("ui.quiz.reviewSections")
               }
             />
           </motion.div>
@@ -324,13 +214,13 @@ export function NIP05IdentityQuiz({ className }: NIP05IdentityQuizProps) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Get Free NIP-05 →
+              {t("ui.quiz.getFreeNIP05")}
             </a>
             <a
               className="inline-flex items-center justify-center rounded-xl border border-gray-300 px-4 py-3 font-semibold text-gray-800 transition hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
               href="/guides/zaps-and-lightning"
             >
-              Learn About Zaps
+              {t("ui.quiz.learnZaps")}
             </a>
           </motion.div>
 
@@ -345,7 +235,7 @@ export function NIP05IdentityQuiz({ className }: NIP05IdentityQuizProps) {
             whileTap={{ scale: 0.98 }}
           >
             <RotateCcw className="h-4 w-4" />
-            Retake quiz
+            {t("ui.quiz.retakeQuiz")}
           </motion.button>
         </div>
       </motion.div>
@@ -371,7 +261,7 @@ export function NIP05IdentityQuiz({ className }: NIP05IdentityQuizProps) {
             animate={{ opacity: 1, x: 0 }}
             className="text-xs font-semibold uppercase tracking-wider text-primary"
           >
-            NIP-05 Quiz
+            {quizTitle}
           </motion.p>
           <motion.h3 
             key={`heading-${currentIndex}`}
@@ -389,7 +279,7 @@ export function NIP05IdentityQuiz({ className }: NIP05IdentityQuizProps) {
             transition={{ delay: 0.1 }}
             className="text-sm text-gray-500 dark:text-gray-400"
           >
-            Question {currentIndex + 1} of {total}
+            {t("ui.quiz.questionCounter").replace("{{current}}", (currentIndex + 1).toString()).replace("{{total}}", total.toString())}
           </motion.p>
         </div>
         <div className="w-full rounded-full bg-gray-100 p-1 dark:bg-gray-800 sm:w-56">
@@ -399,7 +289,7 @@ export function NIP05IdentityQuiz({ className }: NIP05IdentityQuizProps) {
             animate={{ width: `${Math.max(15, (answeredCount / total) * 100)}%` }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            {answeredCount}/{total} answered
+            {answeredCount}/{total} {t("ui.quiz.answered")}
           </motion.div>
         </div>
       </header>
@@ -521,7 +411,7 @@ export function NIP05IdentityQuiz({ className }: NIP05IdentityQuizProps) {
                       >
                         <CheckCircle2 className="h-4 w-4 text-success-500" />
                       </motion.span>
-                      <span className="font-semibold">Nice!</span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.correct")}</span>
                     </span>
                   ) : (
                     <span className="flex items-center gap-2">
@@ -532,7 +422,7 @@ export function NIP05IdentityQuiz({ className }: NIP05IdentityQuizProps) {
                       >
                         <XCircle className="h-4 w-4 text-error-500" />
                       </motion.span>
-                      <span className="font-semibold">Not quite</span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.incorrect")}</span>
                     </span>
                   )}
                   {" "}{currentQuestion.explanation}
@@ -550,9 +440,9 @@ export function NIP05IdentityQuiz({ className }: NIP05IdentityQuizProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          {currentQuestion.severity === "critical" && "Setup Essential"}
-          {currentQuestion.severity === "warning" && "Important"}
-          {currentQuestion.severity === "info" && "Good to Know"}
+          {currentQuestion.severity === "critical" && t("ui.quiz.severity.critical")}
+          {currentQuestion.severity === "warning" && t("ui.quiz.severity.warning")}
+          {currentQuestion.severity === "info" && t("ui.quiz.severity.info")}
         </motion.div>
 
         <div className="flex gap-3">
@@ -565,7 +455,7 @@ export function NIP05IdentityQuiz({ className }: NIP05IdentityQuizProps) {
             className="inline-flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition disabled:opacity-50 dark:border-gray-700 dark:text-gray-300"
           >
             <ChevronLeft className="h-4 w-4" />
-            Back
+            {t("ui.quiz.backButton")}
           </motion.button>
           <motion.button
             type="button"
@@ -575,7 +465,7 @@ export function NIP05IdentityQuiz({ className }: NIP05IdentityQuizProps) {
             whileTap={selectedOption ? { scale: 0.98 } : {}}
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2 text-sm font-semibold text-white shadow-md transition disabled:opacity-50 hover:shadow-lg"
           >
-            {currentIndex === total - 1 ? "See results" : "Next question"}
+            {currentIndex === total - 1 ? t("ui.quiz.seeResults") : t("ui.quiz.nextButton")}
             <ChevronRight className="h-4 w-4" />
           </motion.button>
         </div>

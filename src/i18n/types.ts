@@ -1,20 +1,34 @@
 // Type definitions for translations
 export type Locale = 'en' | 'pl' | 'es';
 
+export interface QuizOption {
+  id: string;
+  label: string;
+  description?: string;
+}
+
+export interface QuizQuestion {
+  id: string;
+  title: string;
+  prompt: string;
+  options: QuizOption[];
+  correctId: string;
+  explanation: string;
+  severity: 'critical' | 'warning' | 'info';
+}
+
+export interface QuizTranslation {
+  title: string;
+  questions: QuizQuestion[];
+}
+
 export interface GuideTranslation {
   title: string;
   description: string;
   content: {
     [key: string]: string;
   };
-  quiz?: {
-    [key: string]: {
-      question: string;
-      options: string[];
-      correctAnswer: string;
-      explanation: string;
-    };
-  };
+  quiz: QuizTranslation | {};
 }
 
 export interface Translations {
@@ -56,6 +70,29 @@ export interface Translations {
       of: string;
       guidesCompleted: string;
       currentStreak: string;
+    };
+    quiz: {
+      loading: string;
+      gradeTitle: string;
+      scoreDisplay: string;
+      conceptsMastered: string;
+      nextSteps: string;
+      perfectScore: string;
+      reviewSections: string;
+      retakeQuiz: string;
+      questionCounter: string;
+      backButton: string;
+      nextButton: string;
+      seeResults: string;
+      severity: {
+        critical: string;
+        warning: string;
+        info: string;
+      };
+      feedback: {
+        correct: string;
+        incorrect: string;
+      };
     };
   };
 }

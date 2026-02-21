@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 type Severity = "critical" | "warning" | "info";
 
@@ -34,161 +35,50 @@ interface Question {
   severity: Severity;
 }
 
-const QUESTIONS: Question[] = [
-  {
-    id: "hashtag-strategy",
-    title: "Hashtag Best Practices",
-    prompt: "How many relevant hashtags should you use per post?",
-    options: [
-      {
-        id: "many",
-        label: "10+ hashtags for maximum reach",
-        description: "Spam approach",
-      },
-      {
-        id: "few",
-        label: "2-5 hashtags",
-        description: "Quality over quantity",
-      },
-      {
-        id: "none",
-        label: "No hashtags needed",
-        description: "Skip them entirely",
-      },
-    ],
-    correctId: "few",
-    explanation:
-      "Use 2-5 relevant hashtags per post. This is the sweet spot—enough to be discovered, not so many that it looks spammy. Quality over quantity always wins.",
-    severity: "info",
-  },
-  {
-    id: "finding-people",
-    title: "Discovery Strategy",
-    prompt: "What's the 'follow the followers' method?",
-    options: [
-      {
-        id: "everyone",
-        label: "Follow everyone who follows you back",
-        description: "Reciprocal following",
-      },
-      {
-        id: "taste",
-        label: "Find one person you like, see who they follow, follow interesting ones",
-        description: "Curated discovery",
-      },
-      {
-        id: "algorithm",
-        label: "Let the algorithm recommend people for you",
-        description: "AI-powered suggestions",
-      },
-    ],
-    correctId: "taste",
-    explanation:
-      "The 'follow the followers' method: Find one person whose content you enjoy, check who they follow (they probably have good taste), then follow the interesting accounts you find there.",
-    severity: "info",
-  },
-  {
-    id: "starting-point",
-    title: "Building Your Feed",
-    prompt: "How many accounts should you aim to follow initially?",
-    options: [
-      {
-        id: "thousands",
-        label: "Follow 1000+ accounts immediately",
-        description: "Maximum content",
-      },
-      {
-        id: "fifty",
-        label: "50-100 active follows",
-        description: "Sweet spot for engagement",
-      },
-      {
-        id: "ten",
-        label: "Just 10 close friends",
-        description: "Minimal approach",
-      },
-    ],
-    correctId: "fifty",
-    explanation:
-      "Aim for 50-100 active follows to start. This gives you enough content for a lively feed without being overwhelming. You can always add more later as you discover interesting people.",
-    severity: "warning",
-  },
-  {
-    id: "engagement",
-    title: "Community Engagement",
-    prompt: "What's the 80/20 rule for engagement?",
-    options: [
-      {
-        id: "posting",
-        label: "Post 80% of the time, engage 20%",
-        description: "Content-focused",
-      },
-      {
-        id: "value",
-        label: "80% adding value, 20% self-promotion",
-        description: "Community-first approach",
-      },
-      {
-        id: "timing",
-        label: "Be active 80% of the day, rest 20%",
-        description: "Activity schedule",
-      },
-    ],
-    correctId: "value",
-    explanation:
-      "The 80/20 rule: Spend 80% of your energy adding value (thoughtful replies, sharing insights, helping others) and only 20% on self-promotion. This builds genuine community.",
-    severity: "info",
-  },
-  {
-    id: "dm-safety",
-    title: "DM Safety",
-    prompt: "What should you never share in DMs?",
-    options: [
-      {
-        id: "opinions",
-        label: "Your controversial opinions",
-        description: "Political views",
-      },
-      {
-        id: "nsec",
-        label: "Your private key (nsec)",
-        description: "Never share your nsec!",
-      },
-      {
-        id: "photos",
-        label: "Personal photos",
-        description: "Privacy concern",
-      },
-    ],
-    correctId: "nsec",
-    explanation:
-      "NEVER share your nsec (private key) in DMs or anywhere else! Anyone with your nsec can post as you and steal your account. No legitimate person or service will ever ask for it.",
-    severity: "critical",
-  },
-];
-
 interface FindingCommunityQuizProps {
   className?: string;
 }
 
 export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
+  const { t, getValue } = useTranslation();
+  
+  // Get questions from translations using getValue to retrieve arrays/objects
+  const rawQuestions = getValue("guides.findingCommunity.quiz.questions");
+  const questions: Question[] = Array.isArray(rawQuestions) ? rawQuestions : [];
+  const quizTitle = t("guides.findingCommunity.quiz.title") || "Finding Community Quiz";
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
   const [direction, setDirection] = useState(0);
 
-  const currentQuestion = QUESTIONS[currentIndex];
-  const total = QUESTIONS.length;
+  // Handle case where translations haven't loaded yet
+  if (!questions || questions.length === 0) {
+    return (
+      <div className={cn(
+        "rounded-3xl border border-gray-200 bg-white p-8 shadow-xl dark:border-gray-800 dark:bg-gray-900",
+        className
+      )}>
+        <div className="flex flex-col items-center text-center">
+          <Users className="h-12 w-12 text-primary animate-pulse" />
+          <p className="mt-4 text-gray-600 dark:text-gray-300">{t("ui.quiz.loading")}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const currentQuestion = questions[currentIndex];
+  const total = questions.length;
   const answeredCount = Object.keys(answers).length;
 
   const score = useMemo(() => {
-    return QUESTIONS.reduce((acc, question) => {
+    return questions.reduce((acc: number, question: Question) => {
       if (answers[question.id] === question.correctId) {
         return acc + 1;
       }
       return acc;
     }, 0);
-  }, [answers]);
+  }, [answers, questions]);
 
   const handleSelect = (optionId: string) => {
     setAnswers((prev) => ({
@@ -280,7 +170,7 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            Community Knowledge: {successRate}%
+            {t("ui.quiz.gradeTitle").replace("{{title}}", quizTitle).replace("{{rate}}", successRate.toString())}
           </motion.h3>
           
           <motion.p 
@@ -289,7 +179,7 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            {score} / {total} correct answers
+            {t("ui.quiz.scoreDisplay").replace("{{score}}", score.toString()).replace("{{total}}", total.toString())}
           </motion.p>
 
           <motion.div 
@@ -299,15 +189,15 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
             transition={{ delay: 0.4 }}
           >
             <ResultRow
-              label="Community skills mastered"
+              label={t("ui.quiz.conceptsMastered")}
               value={`${score} of ${total}`}
             />
             <ResultRow
-              label="Next steps"
+              label={t("ui.quiz.nextSteps")}
               value={
                 score === total
-                  ? "You're ready to build your Nostr community!"
-                  : "Keep these tips in mind as you explore."
+                  ? t("ui.quiz.perfectScore")
+                  : t("ui.quiz.reviewSections")
               }
             />
           </motion.div>
@@ -322,13 +212,13 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
               className="inline-flex items-center justify-center rounded-xl border border-primary/40 px-4 py-3 font-semibold text-primary transition hover:bg-primary/10"
               href="/guides/quickstart"
             >
-              Start Using Nostr →
+              {t("ui.quiz.startUsingNostr")}
             </a>
             <a
               className="inline-flex items-center justify-center rounded-xl border border-gray-300 px-4 py-3 font-semibold text-gray-800 transition hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
               href="/guides/zaps-and-lightning"
             >
-              Learn About Zaps
+              {t("ui.quiz.learnZaps")}
             </a>
           </motion.div>
 
@@ -343,7 +233,7 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
             whileTap={{ scale: 0.98 }}
           >
             <RotateCcw className="h-4 w-4" />
-            Retake quiz
+            {t("ui.quiz.retakeQuiz")}
           </motion.button>
         </div>
       </motion.div>
@@ -369,7 +259,7 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
             animate={{ opacity: 1, x: 0 }}
             className="text-xs font-semibold uppercase tracking-wider text-primary"
           >
-            Community Quiz
+            {quizTitle}
           </motion.p>
           <motion.h3 
             key={`heading-${currentIndex}`}
@@ -387,7 +277,7 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
             transition={{ delay: 0.1 }}
             className="text-sm text-gray-500 dark:text-gray-400"
           >
-            Question {currentIndex + 1} of {total}
+            {t("ui.quiz.questionCounter").replace("{{current}}", (currentIndex + 1).toString()).replace("{{total}}", total.toString())}
           </motion.p>
         </div>
         <div className="w-full rounded-full bg-gray-100 p-1 dark:bg-gray-800 sm:w-56">
@@ -397,7 +287,7 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
             animate={{ width: `${Math.max(15, (answeredCount / total) * 100)}%` }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            {answeredCount}/{total} answered
+            {answeredCount}/{total} {t("ui.quiz.answered")}
           </motion.div>
         </div>
       </header>
@@ -519,7 +409,7 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
                       >
                         <CheckCircle2 className="h-4 w-4 text-success-500" />
                       </motion.span>
-                      <span className="font-semibold">Nice!</span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.correct")}</span>
                     </span>
                   ) : (
                     <span className="flex items-center gap-2">
@@ -530,7 +420,7 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
                       >
                         <XCircle className="h-4 w-4 text-error-500" />
                       </motion.span>
-                      <span className="font-semibold">Not quite</span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.incorrect")}</span>
                     </span>
                   )}
                   {" "}{currentQuestion.explanation}
@@ -548,9 +438,9 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          {currentQuestion.severity === "critical" && "Safety Critical"}
-          {currentQuestion.severity === "warning" && "Important"}
-          {currentQuestion.severity === "info" && "Good to Know"}
+          {currentQuestion.severity === "critical" && t("ui.quiz.severity.critical")}
+          {currentQuestion.severity === "warning" && t("ui.quiz.severity.warning")}
+          {currentQuestion.severity === "info" && t("ui.quiz.severity.info")}
         </motion.div>
 
         <div className="flex gap-3">
@@ -563,7 +453,7 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
             className="inline-flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition disabled:opacity-50 dark:border-gray-700 dark:text-gray-300"
           >
             <ChevronLeft className="h-4 w-4" />
-            Back
+            {t("ui.quiz.backButton")}
           </motion.button>
           <motion.button
             type="button"
@@ -573,7 +463,7 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
             whileTap={selectedOption ? { scale: 0.98 } : {}}
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2 text-sm font-semibold text-white shadow-md transition disabled:opacity-50 hover:shadow-lg"
           >
-            {currentIndex === total - 1 ? "See results" : "Next question"}
+            {currentIndex === total - 1 ? t("ui.quiz.seeResults") : t("ui.quiz.nextButton")}
             <ChevronRight className="h-4 w-4" />
           </motion.button>
         </div>

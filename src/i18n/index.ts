@@ -25,6 +25,16 @@ export function getCurrentLocale(path: string = typeof window !== 'undefined' ? 
  * Falls back to English if translation missing
  */
 export function t(key: string, locale: Locale = getCurrentLocale()): string {
+  const result = getValue(key, locale);
+  return typeof result === 'string' ? result : key;
+}
+
+/**
+ * Get any value from translations (strings, objects, arrays)
+ * Supports dot notation: getValue('guides.whatIsNostr.quiz.questions')
+ * Falls back to English if translation missing
+ */
+export function getValue(key: string, locale: Locale = getCurrentLocale()): any {
   const keys = key.split('.');
   let value: any = translations[locale];
   
@@ -39,14 +49,14 @@ export function t(key: string, locale: Locale = getCurrentLocale()): string {
           value = value[k];
         } else {
           console.warn(`Translation key not found: ${key}`);
-          return key;
+          return undefined;
         }
       }
       break;
     }
   }
   
-  return typeof value === 'string' ? value : key;
+  return value;
 }
 
 /**

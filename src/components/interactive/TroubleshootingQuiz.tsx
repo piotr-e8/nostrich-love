@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 type Severity = "critical" | "warning" | "info";
 
@@ -35,187 +36,50 @@ interface Question {
   severity: Severity;
 }
 
-const QUESTIONS: Question[] = [
-  {
-    id: "empty-feed",
-    title: "Empty Feed",
-    prompt: "Why is your feed empty?",
-    options: [
-      {
-        id: "blocked",
-        label: "You've been banned from Nostr",
-        description: "Account suspension",
-      },
-      {
-        id: "relays",
-        label: "Not following anyone or not connected to relays",
-        description: "#1 beginner issue",
-      },
-      {
-        id: "waiting",
-        label: "You need to wait 24 hours for approval",
-        description: "Account activation required",
-      },
-    ],
-    correctId: "relays",
-    explanation:
-      "The #1 beginner issue is an empty feed. This usually means you're not following anyone or not connected to relays. Add popular relays like wss://relay.damus.io and follow some accounts!",
-    severity: "critical",
-  },
-  {
-    id: "missing-posts",
-    title: "Missing Old Posts",
-    prompt: "Why can't you see your old posts?",
-    options: [
-      {
-        id: "deleted",
-        label: "Nostr automatically deletes posts after 30 days",
-        description: "Built-in expiration",
-      },
-      {
-        id: "relay-limits",
-        label: "Relay storage limits or different relay configuration",
-        description: "Technical reasons",
-      },
-      {
-        id: "hidden",
-        label: "Your posts were flagged as spam",
-        description: "Content moderation",
-      },
-    ],
-    correctId: "relay-limits",
-    explanation:
-      "Free relays often delete old content to save space. Also, if you posted from Client A (Relays X,Y) and now use Client B (Relays Z), posts might not appear. Connect to multiple relays for redundancy!",
-    severity: "warning",
-  },
-  {
-    id: "lost-keys",
-    title: "Lost Keys",
-    prompt: "Can you recover your account if you lose your private key (nsec)?",
-    options: [
-      {
-        id: "email",
-        label: "Yes, use the 'Forgot Password' feature",
-        description: "Standard recovery",
-      },
-      {
-        id: "support",
-        label: "Yes, contact Nostr customer support",
-        description: "Help desk assistance",
-      },
-      {
-        id: "no-recovery",
-        label: "No, there is no recovery",
-        description: "Permanent loss",
-      },
-    ],
-    correctId: "no-recovery",
-    explanation:
-      "There is NO recovery for lost keys in Nostr. No 'forgot password', no customer support, no admin to help. This is by design for decentralization. Back up your nsec safely NOW!",
-    severity: "critical",
-  },
-  {
-    id: "relay-connection",
-    title: "Relay Connection",
-    prompt: "Relay URL must start with what?",
-    options: [
-      {
-        id: "https",
-        label: "https://",
-        description: "Standard web protocol",
-      },
-      {
-        id: "wss",
-        label: "wss:// (secure WebSocket)",
-        description: "WebSocket secure",
-      },
-      {
-        id: "nostr",
-        label: "nostr://",
-        description: "Custom protocol",
-      },
-    ],
-    correctId: "wss",
-    explanation:
-      "Relay URLs must start with wss:// (secure WebSocket) or ws:// (insecure). A common mistake is using https:// which won't work for relay connections.",
-    severity: "warning",
-  },
-  {
-    id: "impersonation",
-    title: "Impersonation",
-    prompt: "How can you protect against impersonation?",
-    options: [
-      {
-        id: "report",
-        label: "Report to Nostr authorities",
-        description: "Centralized reporting",
-      },
-      {
-        id: "nip05",
-        label: "Get NIP-05 verified and share your npub widely",
-        description: "Verification methods",
-      },
-      {
-        id: "legal",
-        label: "File a lawsuit",
-        description: "Legal action",
-      },
-    ],
-    correctId: "nip05",
-    explanation:
-      "Get a NIP-05 identifier (human-readable name like you@domain.com) which shows a verification badge in clients. Also share your real npub on other platforms so people can verify cryptographically.",
-    severity: "info",
-  },
-  {
-    id: "zap-issues",
-    title: "Zap Problems",
-    prompt: "Why might zaps not work?",
-    options: [
-      {
-        id: "maintenance",
-        label: "Nostr is doing scheduled maintenance",
-        description: "System downtime",
-      },
-      {
-        id: "wallet",
-        label: "No wallet connected, insufficient balance, or wallet offline",
-        description: "Common technical issues",
-      },
-      {
-        id: "banned",
-        label: "Your account was banned from sending zaps",
-        description: "Account restriction",
-      },
-    ],
-    correctId: "wallet",
-    explanation:
-      "Zap issues are usually: no wallet connected in settings, insufficient balance, or non-custodial wallet (like Phoenix) being offline. Check Settings → Wallet and ensure you have funds!",
-    severity: "warning",
-  },
-];
-
 interface TroubleshootingQuizProps {
   className?: string;
 }
 
 export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
+  const { t, getValue } = useTranslation();
+  
+  // Get questions from translations using getValue to retrieve arrays/objects
+  const rawQuestions = getValue("guides.troubleshooting.quiz.questions");
+  const questions: Question[] = Array.isArray(rawQuestions) ? rawQuestions : [];
+  const quizTitle = t("guides.troubleshooting.quiz.title") || "Troubleshooting Quiz";
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
   const [direction, setDirection] = useState(0);
 
-  const currentQuestion = QUESTIONS[currentIndex];
-  const total = QUESTIONS.length;
+  // Handle case where translations haven't loaded yet
+  if (!questions || questions.length === 0) {
+    return (
+      <div className={cn(
+        "rounded-3xl border border-gray-200 bg-white p-8 shadow-xl dark:border-gray-800 dark:bg-gray-900",
+        className
+      )}>
+        <div className="flex flex-col items-center text-center">
+          <Wrench className="h-12 w-12 text-primary animate-pulse" />
+          <p className="mt-4 text-gray-600 dark:text-gray-300">{t("ui.quiz.loading")}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const currentQuestion = questions[currentIndex];
+  const total = questions.length;
   const answeredCount = Object.keys(answers).length;
 
   const score = useMemo(() => {
-    return QUESTIONS.reduce((acc, question) => {
+    return questions.reduce((acc: number, question: Question) => {
       if (answers[question.id] === question.correctId) {
         return acc + 1;
       }
       return acc;
     }, 0);
-  }, [answers]);
+  }, [answers, questions]);
 
   const handleSelect = (optionId: string) => {
     setAnswers((prev) => ({
@@ -307,7 +171,7 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            Troubleshooting Knowledge: {successRate}%
+            {t("ui.quiz.gradeTitle").replace("{{title}}", quizTitle).replace("{{rate}}", successRate.toString())}
           </motion.h3>
           
           <motion.p 
@@ -316,7 +180,7 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            {score} / {total} correct answers
+            {t("ui.quiz.scoreDisplay").replace("{{score}}", score.toString()).replace("{{total}}", total.toString())}
           </motion.p>
 
           <motion.div 
@@ -326,15 +190,15 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
             transition={{ delay: 0.4 }}
           >
             <ResultRow
-              label="Problem-solving skills"
+              label={t("ui.quiz.conceptsMastered")}
               value={`${score} of ${total}`}
             />
             <ResultRow
-              label="Next steps"
+              label={t("ui.quiz.nextSteps")}
               value={
                 score === total
-                  ? "You're ready to solve Nostr issues!"
-                  : "Keep this guide bookmarked for reference."
+                  ? t("ui.quiz.perfectScore")
+                  : t("ui.quiz.reviewSections")
               }
             />
           </motion.div>
@@ -349,13 +213,13 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
               className="inline-flex items-center justify-center rounded-xl border border-primary/40 px-4 py-3 font-semibold text-primary transition hover:bg-primary/10"
               href="/guides/relay-guide"
             >
-              Advanced Relay Guide →
+              {t("ui.quiz.advancedRelayGuide")}
             </a>
             <a
               className="inline-flex items-center justify-center rounded-xl border border-gray-300 px-4 py-3 font-semibold text-gray-800 transition hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
               href="/guides/keys-and-security"
             >
-              Security Best Practices
+              {t("ui.quiz.securityBestPractices")}
             </a>
           </motion.div>
 
@@ -370,7 +234,7 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
             whileTap={{ scale: 0.98 }}
           >
             <RotateCcw className="h-4 w-4" />
-            Retake quiz
+            {t("ui.quiz.retakeQuiz")}
           </motion.button>
         </div>
       </motion.div>
@@ -396,7 +260,7 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
             animate={{ opacity: 1, x: 0 }}
             className="text-xs font-semibold uppercase tracking-wider text-primary"
           >
-            Troubleshooting Quiz
+            {quizTitle}
           </motion.p>
           <motion.h3 
             key={`heading-${currentIndex}`}
@@ -414,7 +278,7 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
             transition={{ delay: 0.1 }}
             className="text-sm text-gray-500 dark:text-gray-400"
           >
-            Question {currentIndex + 1} of {total}
+            {t("ui.quiz.questionCounter").replace("{{current}}", (currentIndex + 1).toString()).replace("{{total}}", total.toString())}
           </motion.p>
         </div>
         <div className="w-full rounded-full bg-gray-100 p-1 dark:bg-gray-800 sm:w-56">
@@ -424,7 +288,7 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
             animate={{ width: `${Math.max(15, (answeredCount / total) * 100)}%` }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            {answeredCount}/{total} answered
+            {answeredCount}/{total} {t("ui.quiz.answered")}
           </motion.div>
         </div>
       </header>
@@ -555,7 +419,7 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
                       >
                         <CheckCircle2 className="h-4 w-4 text-success-500" />
                       </motion.span>
-                      <span className="font-semibold">Nice!</span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.correct")}</span>
                     </span>
                   ) : (
                     <span className="flex items-center gap-2">
@@ -566,7 +430,7 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
                       >
                         <XCircle className="h-4 w-4 text-error-500" />
                       </motion.span>
-                      <span className="font-semibold">Not quite</span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.incorrect")}</span>
                     </span>
                   )}
                   {" "}{currentQuestion.explanation}
@@ -584,9 +448,9 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          {currentQuestion.severity === "critical" && "Critical Issue"}
-          {currentQuestion.severity === "warning" && "Common Problem"}
-          {currentQuestion.severity === "info" && "Good to Know"}
+          {currentQuestion.severity === "critical" && t("ui.quiz.severity.critical")}
+          {currentQuestion.severity === "warning" && t("ui.quiz.severity.warning")}
+          {currentQuestion.severity === "info" && t("ui.quiz.severity.info")}
         </motion.div>
 
         <div className="flex gap-3">
@@ -599,7 +463,7 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
             className="inline-flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition disabled:opacity-50 dark:border-gray-700 dark:text-gray-300"
           >
             <ChevronLeft className="h-4 w-4" />
-            Back
+            {t("ui.quiz.backButton")}
           </motion.button>
           <motion.button
             type="button"
@@ -609,7 +473,7 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
             whileTap={selectedOption ? { scale: 0.98 } : {}}
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2 text-sm font-semibold text-white shadow-md transition disabled:opacity-50 hover:shadow-lg"
           >
-            {currentIndex === total - 1 ? "See results" : "Next question"}
+            {currentIndex === total - 1 ? t("ui.quiz.seeResults") : t("ui.quiz.nextButton")}
             <ChevronRight className="h-4 w-4" />
           </motion.button>
         </div>

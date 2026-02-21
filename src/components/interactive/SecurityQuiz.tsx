@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 type Severity = "critical" | "warning" | "info";
 
@@ -33,179 +34,50 @@ interface Question {
   severity: Severity;
 }
 
-const QUESTIONS: Question[] = [
-  {
-    id: "sharing-keys",
-    title: "Key Safety",
-    prompt: "Which item can you safely share with anyone?",
-    options: [
-      {
-        id: "npub",
-        label: "Your npub (public key)",
-        description: "Lets others follow or message you",
-      },
-      {
-        id: "nsec",
-        label: "Your nsec (private key)",
-        description: "Used to sign posts",
-      },
-      {
-        id: "seed",
-        label: "Your 12/24 word seed phrase",
-        description: "Backups for lightning wallets",
-      },
-    ],
-    correctId: "npub",
-    explanation:
-      "npub keys are public identity. Anything that starts with nsec or a seed phrase must stay offline.",
-    severity: "critical",
-  },
-  {
-    id: "backup-rule",
-    title: "Backups",
-    prompt: "What's the safest long-term backup strategy for your keys?",
-    options: [
-      {
-        id: "photo",
-        label: "Screenshot the keys and store in iCloud/Google Photos",
-      },
-      {
-        id: "note",
-        label: "Paste keys in a notes app protected by FaceID",
-      },
-      {
-        id: "321",
-        label: "Follow the 3-2-1 rule (3 copies / 2 media / 1 offline)",
-      },
-    ],
-    correctId: "321",
-    explanation:
-      "Use at least three copies across two media types with one offline (paper, metal). Cloud screenshots are single points of failure.",
-    severity: "critical",
-  },
-  {
-    id: "suspicious-client",
-    title: "New Client Test",
-    prompt:
-      "A brand-new Nostr app asks you to paste your private key to log in. What's the best move?",
-    options: [
-      {
-        id: "paste",
-        label: "Paste the key if the app has more than 100 users",
-      },
-      {
-        id: "signer",
-        label:
-          "Use a signer / hardware key or wait until the client supports delegated signing",
-      },
-      {
-        id: "temp",
-        label: "Generate a throwaway key and migrate later",
-      },
-    ],
-    correctId: "signer",
-    explanation:
-      "Never paste your main private key into new clients. Use a signer (NIP-46) or hardware solution and wait until delegated signing is supported.",
-    severity: "warning",
-  },
-  {
-    id: "metadata",
-    title: "Metadata Hygiene",
-    prompt: "How do you minimize metadata leaks on Nostr?",
-    options: [
-      {
-        id: "gps",
-        label: "Leave location tags enabled—it helps discovery",
-      },
-      {
-        id: "personas",
-        label:
-          "Separate personas, strip EXIF data, avoid linking Lightning invoices between identities",
-      },
-      {
-        id: "follow",
-        label: "Follow as many relays as possible with one profile",
-      },
-    ],
-    correctId: "personas",
-    explanation:
-      "Use separate profiles, disable location metadata, and keep Lightning/Zap info isolated when anonymity matters.",
-    severity: "info",
-  },
-  {
-    id: "relay-strategy",
-    title: "Relay Strategy",
-    prompt:
-      "Which relay approach offers the best mix of reliability and privacy?",
-    options: [
-      {
-        id: "single",
-        label: "Use one mega-relay so everything is centralized",
-      },
-      {
-        id: "mix",
-        label:
-          "Use a small set of trusted paid relays + a rotating set for discovery",
-      },
-      {
-        id: "public",
-        label: "Only use free open relays and never curate",
-      },
-    ],
-    correctId: "mix",
-    explanation:
-      "Combining reputable paid relays with a few rotating public ones balances redundancy, spam resistance, and privacy.",
-    severity: "warning",
-  },
-  {
-    id: "zaps",
-    title: "Zap Safety",
-    prompt:
-      "You're setting up zaps for the first time. Which step keeps your funds safest?",
-    options: [
-      {
-        id: "custodial",
-        label: "Reuse the same custodial wallet for every identity",
-      },
-      {
-        id: "link",
-        label:
-          "Link a Lightning wallet you control and confirm zap requests before signing",
-      },
-      {
-        id: "email",
-        label: "Send your seed phrase to a relay so it can auto-withdraw",
-      },
-    ],
-    correctId: "link",
-    explanation:
-      "Connect a wallet you control, confirm each request, and avoid sharing custodial accounts between identities.",
-    severity: "info",
-  },
-];
-
 interface SecurityQuizProps {
   className?: string;
 }
 
 export function SecurityQuiz({ className }: SecurityQuizProps) {
+  const { t, getValue } = useTranslation();
+  
+  // Get questions from translations using getValue to retrieve arrays/objects
+  const rawQuestions = getValue("guides.keysAndSecurity.quiz.questions");
+  const questions: Question[] = Array.isArray(rawQuestions) ? rawQuestions : [];
+  const quizTitle = t("guides.keysAndSecurity.quiz.title") || "Security Quiz";
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
   const [direction, setDirection] = useState(0);
 
-  const currentQuestion = QUESTIONS[currentIndex];
-  const total = QUESTIONS.length;
+  // Handle case where translations haven't loaded yet
+  if (!questions || questions.length === 0) {
+    return (
+      <div className={cn(
+        "rounded-3xl border border-gray-200 bg-white p-8 shadow-xl dark:border-gray-800 dark:bg-gray-900",
+        className
+      )}>
+        <div className="flex flex-col items-center text-center">
+          <ShieldCheck className="h-12 w-12 text-primary animate-pulse" />
+          <p className="mt-4 text-gray-600 dark:text-gray-300">{t("ui.quiz.loading")}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const currentQuestion = questions[currentIndex];
+  const total = questions.length;
   const answeredCount = Object.keys(answers).length;
 
   const score = useMemo(() => {
-    return QUESTIONS.reduce((acc, question) => {
+    return questions.reduce((acc: number, question: Question) => {
       if (answers[question.id] === question.correctId) {
         return acc + 1;
       }
       return acc;
     }, 0);
-  }, [answers]);
+  }, [answers, questions]);
 
   const handleSelect = (optionId: string) => {
     setAnswers((prev) => ({
@@ -297,7 +169,7 @@ export function SecurityQuiz({ className }: SecurityQuizProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            Security Grade: {successRate}%
+            {t("ui.quiz.gradeTitle").replace("{{title}}", quizTitle).replace("{{rate}}", successRate.toString())}
           </motion.h3>
           
           <motion.p 
@@ -306,7 +178,7 @@ export function SecurityQuiz({ className }: SecurityQuizProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            {score} / {total} correct answers
+            {t("ui.quiz.scoreDisplay").replace("{{score}}", score.toString()).replace("{{total}}", total.toString())}
           </motion.p>
 
           <motion.div 
@@ -316,15 +188,15 @@ export function SecurityQuiz({ className }: SecurityQuizProps) {
             transition={{ delay: 0.4 }}
           >
             <ResultRow
-              label="Critical concepts mastered"
+              label={t("ui.quiz.conceptsMastered")}
               value={`${score} of ${total}`}
             />
             <ResultRow
-              label="Next steps"
+              label={t("ui.quiz.nextSteps")}
               value={
                 score === total
-                  ? "Share your knowledge—help onboard someone new."
-                  : "Review the sections you missed below."
+                  ? t("ui.quiz.perfectScore")
+                  : t("ui.quiz.reviewSections")
               }
             />
           </motion.div>
@@ -360,7 +232,7 @@ export function SecurityQuiz({ className }: SecurityQuizProps) {
             whileTap={{ scale: 0.98 }}
           >
             <RotateCcw className="h-4 w-4" />
-            Retake quiz
+            {t("ui.quiz.retakeQuiz")}
           </motion.button>
         </div>
       </motion.div>
@@ -386,7 +258,7 @@ export function SecurityQuiz({ className }: SecurityQuizProps) {
             animate={{ opacity: 1, x: 0 }}
             className="text-xs font-semibold uppercase tracking-wider text-primary"
           >
-            Security Quiz
+            {quizTitle}
           </motion.p>
           <motion.h3 
             key={`heading-${currentIndex}`}
@@ -404,7 +276,7 @@ export function SecurityQuiz({ className }: SecurityQuizProps) {
             transition={{ delay: 0.1 }}
             className="text-sm text-gray-500 dark:text-gray-400"
           >
-            Question {currentIndex + 1} of {total}
+            {t("ui.quiz.questionCounter").replace("{{current}}", (currentIndex + 1).toString()).replace("{{total}}", total.toString())}
           </motion.p>
         </div>
         <div className="w-full rounded-full bg-gray-100 p-1 dark:bg-gray-800 sm:w-56">
@@ -414,7 +286,7 @@ export function SecurityQuiz({ className }: SecurityQuizProps) {
             animate={{ width: `${Math.max(15, (answeredCount / total) * 100)}%` }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            {answeredCount}/{total} answered
+            {answeredCount}/{total} {t("ui.quiz.answered")}
           </motion.div>
         </div>
       </header>
@@ -536,7 +408,7 @@ export function SecurityQuiz({ className }: SecurityQuizProps) {
                       >
                         <CheckCircle2 className="h-4 w-4 text-success-500" />
                       </motion.span>
-                      <span className="font-semibold">Nice!</span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.correct")}</span>
                     </span>
                   ) : (
                     <span className="flex items-center gap-2">
@@ -547,7 +419,7 @@ export function SecurityQuiz({ className }: SecurityQuizProps) {
                       >
                         <XCircle className="h-4 w-4 text-error-500" />
                       </motion.span>
-                      <span className="font-semibold">Not quite</span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.incorrect")}</span>
                     </span>
                   )}
                   {" "}{currentQuestion.explanation}
@@ -565,9 +437,9 @@ export function SecurityQuiz({ className }: SecurityQuizProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          {currentQuestion.severity === "critical" && "P0 Critical"}
-          {currentQuestion.severity === "warning" && "Best Practice"}
-          {currentQuestion.severity === "info" && "Good to know"}
+          {currentQuestion.severity === "critical" && t("ui.quiz.severity.critical")}
+          {currentQuestion.severity === "warning" && t("ui.quiz.severity.warning")}
+          {currentQuestion.severity === "info" && t("ui.quiz.severity.info")}
         </motion.div>
 
         <div className="flex gap-3">
@@ -580,7 +452,7 @@ export function SecurityQuiz({ className }: SecurityQuizProps) {
             className="inline-flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition disabled:opacity-50 dark:border-gray-700 dark:text-gray-300"
           >
             <ChevronLeft className="h-4 w-4" />
-            Back
+            {t("ui.quiz.backButton")}
           </motion.button>
           <motion.button
             type="button"
@@ -590,7 +462,7 @@ export function SecurityQuiz({ className }: SecurityQuizProps) {
             whileTap={selectedOption ? { scale: 0.98 } : {}}
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2 text-sm font-semibold text-white shadow-md transition disabled:opacity-50 hover:shadow-lg"
           >
-            {currentIndex === total - 1 ? "See results" : "Next question"}
+            {currentIndex === total - 1 ? t("ui.quiz.seeResults") : t("ui.quiz.nextButton")}
             <ChevronRight className="h-4 w-4" />
           </motion.button>
         </div>

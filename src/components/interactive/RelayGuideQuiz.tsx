@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 type Severity = "critical" | "warning" | "info";
 
@@ -34,161 +35,50 @@ interface Question {
   severity: Severity;
 }
 
-const QUESTIONS: Question[] = [
-  {
-    id: "relay-types",
-    title: "Relay Types",
-    prompt: "What's the main difference between free and paid relays?",
-    options: [
-      {
-        id: "cost",
-        label: "Only the cost—functionality is identical",
-        description: "Price is the only factor",
-      },
-      {
-        id: "quality",
-        label: "Paid relays usually offer better performance and less spam",
-        description: "Quality difference",
-      },
-      {
-        id: "access",
-        label: "Free relays don't allow posting",
-        description: "Read-only restriction",
-      },
-    ],
-    correctId: "quality",
-    explanation:
-      "Paid relays typically offer better performance, higher reliability, less spam, and you're directly supporting relay operators. Free relays are great to start with, but paid options provide a premium experience.",
-    severity: "info",
-  },
-  {
-    id: "how-many",
-    title: "Relay Strategy",
-    prompt: "What's the recommended number of relays for an active user?",
-    options: [
-      {
-        id: "minimal",
-        label: "1-2 relays to keep it simple",
-        description: "Minimal approach",
-      },
-      {
-        id: "sweet",
-        label: "5-10 relays",
-        description: "Good balance",
-      },
-      {
-        id: "maximum",
-        label: "20+ relays for best coverage",
-        description: "More is better",
-      },
-    ],
-    correctId: "sweet",
-    explanation:
-      "5-10 relays is the sweet spot for active users. Too few and you miss content; too many and you waste bandwidth with diminishing returns. Quality over quantity!",
-    severity: "warning",
-  },
-  {
-    id: "why-pay",
-    title: "Upgrading to Paid",
-    prompt: "When should you consider paid relays?",
-    options: [
-      {
-        id: "immediately",
-        label: "Immediately when you start using Nostr",
-        description: "Required from day one",
-      },
-      {
-        id: "serious",
-        label: "When you're serious about Nostr or free relays aren't meeting needs",
-        description: "Upgrade when needed",
-      },
-      {
-        id: "never",
-        label: "Never—paid relays are a scam",
-        description: "Avoid entirely",
-      },
-    ],
-    correctId: "serious",
-    explanation:
-      "Consider paid relays when you're serious about Nostr long-term, free relays aren't meeting your performance needs, or you want to support the infrastructure. Start free, upgrade when it makes sense for you.",
-    severity: "info",
-  },
-  {
-    id: "own-relay",
-    title: "Running Your Own Relay",
-    prompt: "What are benefits of running your own relay?",
-    options: [
-      {
-        id: "money",
-        label: "You can charge others to use it",
-        description: "Revenue generation",
-      },
-      {
-        id: "control",
-        label: "Complete control, privacy, custom policies",
-        description: "Sovereignty benefits",
-      },
-      {
-        id: "speed",
-        label: "It's faster than using public relays",
-        description: "Performance advantage",
-      },
-    ],
-    correctId: "control",
-    explanation:
-      "Running your own relay gives you complete control over your data, enhanced privacy (only your data on the relay), and ability to set custom policies. It's about sovereignty, not speed or profit.",
-    severity: "info",
-  },
-  {
-    id: "decentralization",
-    title: "Decentralization Concerns",
-    prompt: "Why shouldn't you rely only on popular relays?",
-    options: [
-      {
-        id: "cost",
-        label: "They're more expensive than small relays",
-        description: "Price concern",
-      },
-      {
-        id: "centralization",
-        label: "Concentrates power and goes against Nostr's decentralized ethos",
-        description: "Philosophical alignment",
-      },
-      {
-        id: "speed",
-        label: "They're slower due to too many users",
-        description: "Performance issue",
-      },
-    ],
-    correctId: "centralization",
-    explanation:
-      "Relying only on a few large relays concentrates power and creates centralization risks. Nostr's strength comes from a diverse ecosystem of relays. Use a mix of large and small relays to support network health.",
-    severity: "warning",
-  },
-];
-
 interface RelayGuideQuizProps {
   className?: string;
 }
 
 export function RelayGuideQuiz({ className }: RelayGuideQuizProps) {
+  const { t, getValue } = useTranslation();
+  
+  // Get questions from translations using getValue to retrieve arrays/objects
+  const rawQuestions = getValue("guides.relayGuide.quiz.questions");
+  const questions: Question[] = Array.isArray(rawQuestions) ? rawQuestions : [];
+  const quizTitle = t("guides.relayGuide.quiz.title") || "Relay Guide Quiz";
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
   const [direction, setDirection] = useState(0);
 
-  const currentQuestion = QUESTIONS[currentIndex];
-  const total = QUESTIONS.length;
+  // Handle case where translations haven't loaded yet
+  if (!questions || questions.length === 0) {
+    return (
+      <div className={cn(
+        "rounded-3xl border border-gray-200 bg-white p-8 shadow-xl dark:border-gray-800 dark:bg-gray-900",
+        className
+      )}>
+        <div className="flex flex-col items-center text-center">
+          <Server className="h-12 w-12 text-primary animate-pulse" />
+          <p className="mt-4 text-gray-600 dark:text-gray-300">{t("ui.quiz.loading")}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const currentQuestion = questions[currentIndex];
+  const total = questions.length;
   const answeredCount = Object.keys(answers).length;
 
   const score = useMemo(() => {
-    return QUESTIONS.reduce((acc, question) => {
+    return questions.reduce((acc: number, question: Question) => {
       if (answers[question.id] === question.correctId) {
         return acc + 1;
       }
       return acc;
     }, 0);
-  }, [answers]);
+  }, [answers, questions]);
 
   const handleSelect = (optionId: string) => {
     setAnswers((prev) => ({
@@ -280,7 +170,7 @@ export function RelayGuideQuiz({ className }: RelayGuideQuizProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            Relay Management: {successRate}%
+            {t("ui.quiz.gradeTitle").replace("{{title}}", quizTitle).replace("{{rate}}", successRate.toString())}
           </motion.h3>
           
           <motion.p 
@@ -289,7 +179,7 @@ export function RelayGuideQuiz({ className }: RelayGuideQuizProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            {score} / {total} correct answers
+            {t("ui.quiz.scoreDisplay").replace("{{score}}", score.toString()).replace("{{total}}", total.toString())}
           </motion.p>
 
           <motion.div 
@@ -299,15 +189,15 @@ export function RelayGuideQuiz({ className }: RelayGuideQuizProps) {
             transition={{ delay: 0.4 }}
           >
             <ResultRow
-              label="Relay expertise"
+              label={t("ui.quiz.conceptsMastered")}
               value={`${score} of ${total}`}
             />
             <ResultRow
-              label="Next steps"
+              label={t("ui.quiz.nextSteps")}
               value={
                 score === total
-                  ? "You're a relay management expert!"
-                  : "Review the relay guide sections you missed."
+                  ? t("ui.quiz.perfectScore")
+                  : t("ui.quiz.reviewSections")
               }
             />
           </motion.div>
@@ -322,13 +212,13 @@ export function RelayGuideQuiz({ className }: RelayGuideQuizProps) {
               className="inline-flex items-center justify-center rounded-xl border border-primary/40 px-4 py-3 font-semibold text-primary transition hover:bg-primary/10"
               href="/guides/relays-demystified"
             >
-              Relay Basics →
+              {t("ui.quiz.relayBasics")}
             </a>
             <a
               className="inline-flex items-center justify-center rounded-xl border border-gray-300 px-4 py-3 font-semibold text-gray-800 transition hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
               href="/guides/troubleshooting"
             >
-              Fix Connection Issues
+              {t("ui.quiz.fixConnectionIssues")}
             </a>
           </motion.div>
 
@@ -343,7 +233,7 @@ export function RelayGuideQuiz({ className }: RelayGuideQuizProps) {
             whileTap={{ scale: 0.98 }}
           >
             <RotateCcw className="h-4 w-4" />
-            Retake quiz
+            {t("ui.quiz.retakeQuiz")}
           </motion.button>
         </div>
       </motion.div>
@@ -369,7 +259,7 @@ export function RelayGuideQuiz({ className }: RelayGuideQuizProps) {
             animate={{ opacity: 1, x: 0 }}
             className="text-xs font-semibold uppercase tracking-wider text-primary"
           >
-            Advanced Relay Quiz
+            {quizTitle}
           </motion.p>
           <motion.h3 
             key={`heading-${currentIndex}`}
@@ -387,7 +277,7 @@ export function RelayGuideQuiz({ className }: RelayGuideQuizProps) {
             transition={{ delay: 0.1 }}
             className="text-sm text-gray-500 dark:text-gray-400"
           >
-            Question {currentIndex + 1} of {total}
+            {t("ui.quiz.questionCounter").replace("{{current}}", (currentIndex + 1).toString()).replace("{{total}}", total.toString())}
           </motion.p>
         </div>
         <div className="w-full rounded-full bg-gray-100 p-1 dark:bg-gray-800 sm:w-56">
@@ -397,7 +287,7 @@ export function RelayGuideQuiz({ className }: RelayGuideQuizProps) {
             animate={{ width: `${Math.max(15, (answeredCount / total) * 100)}%` }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            {answeredCount}/{total} answered
+            {answeredCount}/{total} {t("ui.quiz.answered")}
           </motion.div>
         </div>
       </header>
@@ -519,7 +409,7 @@ export function RelayGuideQuiz({ className }: RelayGuideQuizProps) {
                       >
                         <CheckCircle2 className="h-4 w-4 text-success-500" />
                       </motion.span>
-                      <span className="font-semibold">Nice!</span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.correct")}</span>
                     </span>
                   ) : (
                     <span className="flex items-center gap-2">
@@ -530,7 +420,7 @@ export function RelayGuideQuiz({ className }: RelayGuideQuizProps) {
                       >
                         <XCircle className="h-4 w-4 text-error-500" />
                       </motion.span>
-                      <span className="font-semibold">Not quite</span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.incorrect")}</span>
                     </span>
                   )}
                   {" "}{currentQuestion.explanation}
@@ -548,9 +438,9 @@ export function RelayGuideQuiz({ className }: RelayGuideQuizProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          {currentQuestion.severity === "critical" && "Must Know"}
-          {currentQuestion.severity === "warning" && "Best Practice"}
-          {currentQuestion.severity === "info" && "Good to Know"}
+          {currentQuestion.severity === "critical" && t("ui.quiz.severity.critical")}
+          {currentQuestion.severity === "warning" && t("ui.quiz.severity.warning")}
+          {currentQuestion.severity === "info" && t("ui.quiz.severity.info")}
         </motion.div>
 
         <div className="flex gap-3">
@@ -563,7 +453,7 @@ export function RelayGuideQuiz({ className }: RelayGuideQuizProps) {
             className="inline-flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition disabled:opacity-50 dark:border-gray-700 dark:text-gray-300"
           >
             <ChevronLeft className="h-4 w-4" />
-            Back
+            {t("ui.quiz.backButton")}
           </motion.button>
           <motion.button
             type="button"
@@ -573,7 +463,7 @@ export function RelayGuideQuiz({ className }: RelayGuideQuizProps) {
             whileTap={selectedOption ? { scale: 0.98 } : {}}
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2 text-sm font-semibold text-white shadow-md transition disabled:opacity-50 hover:shadow-lg"
           >
-            {currentIndex === total - 1 ? "See results" : "Next question"}
+            {currentIndex === total - 1 ? t("ui.quiz.seeResults") : t("ui.quiz.nextButton")}
             <ChevronRight className="h-4 w-4" />
           </motion.button>
         </div>
