@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Send, Server, User, ArrowRight } from "lucide-react";
 import { cn } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 interface PostFlowSimulatorProps {
   className?: string;
 }
 
 export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
+  const { t } = useTranslation();
   const [step, setStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -22,24 +24,24 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
   }, [isPlaying]);
 
   const steps = [
-    { id: "user", label: "You", icon: User, description: "Create a post" },
+    { id: "user", label: t("postFlowSimulator.labels.yourDevice"), icon: User, description: t("postFlowSimulator.stages.create") },
     {
       id: "relay1",
-      label: "Relay 1",
+      label: `${t("postFlowSimulator.labels.relay")} 1`,
       icon: Server,
-      description: "Receives & stores",
+      description: t("postFlowSimulator.stages.send"),
     },
     {
       id: "relay2",
-      label: "Relay 2",
+      label: `${t("postFlowSimulator.labels.relay")} 2`,
       icon: Server,
-      description: "Receives & stores",
+      description: t("postFlowSimulator.stages.send"),
     },
     {
       id: "followers",
-      label: "Followers",
+      label: t("postFlowSimulator.labels.followers"),
       icon: User,
-      description: "See your post",
+      description: t("postFlowSimulator.stages.receive"),
     },
   ];
 
@@ -51,11 +53,11 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
       )}
     >
       <div className="text-center mb-6">
-        <h3 className="text-lg font-semibold 	ext-gray-900 dark:text-white mb-2">
-          How Posts Flow
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+          {t("postFlowSimulator.title")}
         </h3>
-        <p className="text-sm 	ext-gray-600 dark:text-gray-400">
-          See how your posts travel through the Nostr network
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          {t("postFlowSimulator.description")}
         </p>
       </div>
 
@@ -87,7 +89,7 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
                 >
                   <Icon className="w-6 h-6" />
                 </div>
-                <span className="text-xs text-gray-300">{s.label}</span>
+                <span className="text-xs text-gray-900 dark:text-white">{s.label}</span>
                 {isCurrent && (
                   <motion.span
                     initial={{ opacity: 0, y: -10 }}
@@ -114,34 +116,31 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
       <div className="flex justify-center gap-3">
         <button
           onClick={() => setIsPlaying(!isPlaying)}
-          className="px-4 py-2 bg-primary-600 hover:bg-primary-700 	ext-gray-900 dark:text-white rounded-lg text-sm font-medium transition-all"
+          className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-sm font-medium transition-all"
         >
-          {isPlaying ? "Pause" : "Play Animation"}
+          {isPlaying ? t("postFlowSimulator.buttons.pause") : t("postFlowSimulator.buttons.play")}
         </button>
         <button
           onClick={() => {
             setIsPlaying(false);
             setStep(0);
           }}
-          className="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 	ext-gray-900 dark:text-white rounded-lg text-sm font-medium transition-all"
+          className="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm font-medium transition-all"
         >
-          Reset
+          {t("postFlowSimulator.buttons.reset")}
         </button>
       </div>
 
       <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-900/50 rounded-xl">
         <div className="flex items-center gap-3 mb-3">
           <Send className="w-5 h-5 text-primary-500" />
-          <span className="text-sm font-medium 	ext-gray-900 dark:text-white">Current Step:</span>
+          <span className="text-sm font-medium text-gray-900 dark:text-white">{t("postFlowSimulator.currentStepLabel")}</span>
         </div>
-        <p className="text-sm 	ext-gray-600 dark:text-gray-400">
-          {step === 0 && "You write a post and sign it with your private key."}
-          {step === 1 &&
-            "Your client sends the post to Relay 1, which verifies the signature and stores it."}
-          {step === 2 &&
-            "Your client re-broadcasts the post to Relay 2, ensuring wider distribution across the network."}
-          {step === 3 &&
-            "Your followers connected to these relays receive and see your post in their feed."}
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          {step === 0 && t("postFlowSimulator.stepDescriptions.0")}
+          {step === 1 && t("postFlowSimulator.stepDescriptions.1")}
+          {step === 2 && t("postFlowSimulator.stepDescriptions.2")}
+          {step === 3 && t("postFlowSimulator.stepDescriptions.3")}
         </p>
       </div>
     </div>

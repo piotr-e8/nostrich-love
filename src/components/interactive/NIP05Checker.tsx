@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { nip19 } from "nostr-tools";
 import { cn, copyToClipboard } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 interface NIP05Result {
   identifier: string;
@@ -38,36 +39,36 @@ interface NIP05CheckerProps {
   className?: string;
 }
 
-const ERROR_MESSAGES: Record<
+const getErrorMessages = (t: (key: string) => string): Record<
   string,
   { title: string; description: string; fix: string }
-> = {
+> => ({
   format: {
-    title: "Invalid Format",
-    description: "Your identifier doesn't match the expected format.",
-    fix: "Use format: user@domain.com or _@domain.com",
+    title: t('nip05Checker.errors.invalidFormat.title'),
+    description: t('nip05Checker.errors.invalidFormat.description'),
+    fix: t('nip05Checker.errors.invalidFormat.fix'),
   },
   domain: {
-    title: "Domain Not Found",
-    description: "We couldn't connect to the domain.",
-    fix: "Check the spelling or wait and try again.",
+    title: t('nip05Checker.errors.domainNotFound.title'),
+    description: t('nip05Checker.errors.domainNotFound.description'),
+    fix: t('nip05Checker.errors.domainNotFound.fix'),
   },
   "not-found": {
-    title: "NIP-05 Not Configured",
-    description: "The domain exists but NIP-05 is not set up.",
-    fix: "Ask the domain owner to add NIP-05 configuration.",
+    title: t('nip05Checker.errors.notConfigured.title'),
+    description: t('nip05Checker.errors.notConfigured.description'),
+    fix: t('nip05Checker.errors.notConfigured.fix'),
   },
   json: {
-    title: "JSON Parsing Error",
-    description: "The nostr.json file is not valid JSON.",
-    fix: "Check the file syntax on your server.",
+    title: t('nip05Checker.errors.jsonError.title'),
+    description: t('nip05Checker.errors.jsonError.description'),
+    fix: t('nip05Checker.errors.jsonError.fix'),
   },
   network: {
-    title: "Network Error",
-    description: "Couldn't connect to check the identifier.",
-    fix: "Check your internet connection and try again.",
+    title: t('nip05Checker.errors.networkError.title'),
+    description: t('nip05Checker.errors.networkError.description'),
+    fix: t('nip05Checker.errors.networkError.fix'),
   },
-};
+});
 
 const NIP05_PROVIDERS = [
   {
@@ -91,12 +92,14 @@ const NIP05_PROVIDERS = [
 ];
 
 export function NIP05Checker({ className }: NIP05CheckerProps) {
+  const { t } = useTranslation();
   const [identifier, setIdentifier] = useState("");
   const [result, setResult] = useState<NIP05Result | null>(null);
   const [isChecking, setIsChecking] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   const [showProviders, setShowProviders] = useState(false);
   const [recentChecks, setRecentChecks] = useState<string[]>([]);
+  const errorMessages = getErrorMessages(t);
 
   // Validate NIP-05 format
   const isValidFormat = (id: string): boolean => {
@@ -272,11 +275,10 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
             <AtSign className="w-8 h-8 text-primary-500" />
           </motion.div>
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            NIP-05 Checker
+            {t('nip05Checker.title')}
           </h2>
           <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
-            Verify NIP-05 identifiers (like user@domain.com). These provide
-            human-readable names on Nostr.
+            {t('nip05Checker.description')}
           </p>
         </div>
 
@@ -287,7 +289,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
         >
           <div className="flex items-center gap-2 text-primary-500 hover:text-primary-400 transition-colors">
             <HelpCircle className="w-5 h-5" />
-            <span className="font-medium">What is NIP-05?</span>
+            <span className="font-medium">{t('nip05Checker.whatIsNip05')}</span>
           </div>
         </motion.button>
 
@@ -301,7 +303,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
             >
               <div className="bg-info-500/10 border border-info-500/30 rounded-xl p-4">
                 <h3 className="font-semibold text-info-500 mb-2">
-                  About NIP-05
+                  {t('nip05Checker.aboutNip05')}
                 </h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                   NIP-05 is a protocol for verifying Nostr identities using DNS.
@@ -311,15 +313,15 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                 <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
                   <li className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-success-500 flex-shrink-0 mt-0.5" />
-                    <span>Get a human-readable username</span>
+                    <span>{t('nip05Checker.benefits.humanReadable')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-success-500 flex-shrink-0 mt-0.5" />
-                    <span>Prove ownership of a domain</span>
+                    <span>{t('nip05Checker.benefits.domainOwnership')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-success-500 flex-shrink-0 mt-0.5" />
-                    <span>Appear with a checkmark on some clients</span>
+                    <span>{t('nip05Checker.benefits.checkmark')}</span>
                   </li>
                 </ul>
               </div>
@@ -338,7 +340,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
               onKeyDown={(e) =>
                 e.key === "Enter" && !isChecking && checkNIP05()
               }
-              placeholder="Enter identifier (e.g., jack@cash.app)"
+              placeholder={t('nip05Checker.form.placeholder')}
               className="w-full pl-12 pr-4 py-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:outline-none text-lg"
             />
           </div>
@@ -351,12 +353,12 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
             {isChecking ? (
               <>
                 <RefreshCw className="w-5 h-5 animate-spin" />
-                Checking...
+                {t('nip05Checker.form.checking')}
               </>
             ) : (
               <>
                 <Search className="w-5 h-5" />
-                Verify Identifier
+                {t('nip05Checker.form.verifyButton')}
               </>
             )}
           </button>
@@ -364,7 +366,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
           {/* Recent Checks */}
           {recentChecks.length > 0 && (
             <div className="flex flex-wrap gap-2 justify-center">
-              <span className="text-sm text-gray-500">Recent:</span>
+              <span className="text-sm text-gray-500">{t('nip05Checker.form.recent')}</span>
               {recentChecks.map((check) => (
                 <button
                   key={check}
@@ -398,10 +400,10 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-success-500">
-                        Valid NIP-05!
+                        {t('nip05Checker.results.valid.title')}
                       </h3>
                       <p className="text-gray-600 dark:text-gray-400">
-                        This identifier is correctly configured
+                        {t('nip05Checker.results.valid.description')}
                       </p>
                     </div>
                   </div>
@@ -447,7 +449,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                     {/* Public Key */}
                     <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
                       <p className="text-sm text-gray-500 mb-1">
-                        Public Key (npub)
+                        {t('nip05Checker.results.valid.publicKey')}
                       </p>
                       <div className="flex items-center gap-2">
                         <code className="flex-1 font-mono text-sm text-success-500 break-all">
@@ -466,7 +468,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                     {result.relays && result.relays.length > 0 && (
                       <div>
                         <p className="text-sm text-gray-500 mb-2">
-                          Recommended Relays
+                          {t('nip05Checker.results.valid.recommendedRelays')}
                         </p>
                         <div className="space-y-1">
                           {result.relays.slice(0, 3).map((relay) => (
@@ -491,26 +493,26 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-error-500">
-                        Invalid NIP-05
+                        {t('nip05Checker.results.invalid.title')}
                       </h3>
                       <p className="text-gray-600 dark:text-gray-400">
-                        This identifier could not be verified
+                        {t('nip05Checker.results.invalid.description')}
                       </p>
                     </div>
                   </div>
 
                   {/* Error Details */}
-                  {result.errorType && ERROR_MESSAGES[result.errorType] && (
+                  {result.errorType && errorMessages[result.errorType] && (
                     <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 mb-4">
                       <h4 className="font-semibold text-error-500 mb-1">
-                        {ERROR_MESSAGES[result.errorType].title}
+                        {errorMessages[result.errorType].title}
                       </h4>
                       <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
-                        {ERROR_MESSAGES[result.errorType].description}
+                        {errorMessages[result.errorType].description}
                       </p>
                       <p className="text-sm">
-                        <span className="text-primary-500">How to fix:</span>{" "}
-                        {ERROR_MESSAGES[result.errorType].fix}
+                        <span className="text-primary-500">Fix:</span>{" "}
+                        {errorMessages[result.errorType].fix}
                       </p>
                     </div>
                   )}
@@ -524,7 +526,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                       className="text-primary-500 hover:text-primary-400 font-medium inline-flex items-center gap-2"
                     >
                       <Shield className="w-4 h-4" />
-                      Get your own NIP-05 identifier
+                      {t('nip05Checker.results.getYourOwn')}
                     </button>
                   </div>
                 </div>
@@ -535,7 +537,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                 onClick={clearResult}
                 className="w-full mt-4 py-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
-                Check Another
+                {t('nip05Checker.results.checkAnother')}
               </button>
             </motion.div>
           )}
@@ -546,7 +548,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
           <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5 text-primary-500" />
-              Get Your Own NIP-05
+              {t('nip05Checker.providers.title')}
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {NIP05_PROVIDERS.map((provider) => (

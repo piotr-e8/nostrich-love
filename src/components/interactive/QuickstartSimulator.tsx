@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { DamusInteractiveSimulator } from "./damus";
+import { useTranslation } from "../../hooks/useTranslation";
 
 type Mode = "keygen" | "client-picker" | "first-day";
 type Client = "damus" | "amethyst" | "iris" | "primal" | "coracle";
@@ -47,6 +48,7 @@ export function QuickstartSimulator({ mode, className }: QuickstartSimulatorProp
 // ============================================
 
 function KeyGenSimulator({ className }: { className?: string }) {
+  const { t } = useTranslation();
   const [keys, setKeys] = useState<{ npub: string; nsec: string } | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
   const [showPrivate, setShowPrivate] = useState(false);
@@ -81,10 +83,9 @@ function KeyGenSimulator({ className }: { className?: string }) {
           <div className="w-20 h-20 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
             <Key className="w-10 h-10 text-purple-600" />
           </div>
-          <h3 className="text-xl font-bold mb-2">Generate Your Keys</h3>
+          <h3 className="text-xl font-bold mb-2">{t("quickstartSimulator.steps.createKeys")}</h3>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
-            Click the button below to create your Nostr identity.
-            This happens entirely in your browser.
+            {t("quickstartSimulator.keyGen.description")}
           </p>
           <button
             onClick={generateKeys}
@@ -94,12 +95,12 @@ function KeyGenSimulator({ className }: { className?: string }) {
             {isGenerating ? (
               <>
                 <RefreshCw className="w-5 h-5 animate-spin" />
-                Generating...
+                {t("quickstartSimulator.buttons.generating")}
               </>
             ) : (
               <>
                 <Key className="w-5 h-5" />
-                Generate My Keys
+                {t("quickstartSimulator.buttons.generateKeys")}
               </>
             )}
           </button>
@@ -113,8 +114,8 @@ function KeyGenSimulator({ className }: { className?: string }) {
                 <span className="text-white text-sm font-bold">P</span>
               </div>
               <div>
-                <h4 className="font-bold text-green-700 dark:text-green-400">Public Key (npub)</h4>
-                <p className="text-xs text-green-600 dark:text-green-500">Safe to share everywhere</p>
+                <h4 className="font-bold text-green-700 dark:text-green-400">{t("quickstartSimulator.keyGen.publicKeyTitle")}</h4>
+                <p className="text-xs text-green-600 dark:text-green-500">{t("quickstartSimulator.keyGen.publicKeyDesc")}</p>
               </div>
             </div>
             <div className="bg-white dark:bg-gray-800 rounded-lg p-3 mb-3">
@@ -127,7 +128,7 @@ function KeyGenSimulator({ className }: { className?: string }) {
               className="flex items-center gap-2 text-sm text-green-600 hover:text-green-700 dark:text-green-400"
             >
               {copied === "npub" ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-              {copied === "npub" ? "Copied!" : "Copy Public Key"}
+              {copied === "npub" ? t("quickstartSimulator.buttons.copied") : t("quickstartSimulator.buttons.copyPublic")}
             </button>
           </div>
 
@@ -139,15 +140,15 @@ function KeyGenSimulator({ className }: { className?: string }) {
                   <span className="text-white text-sm font-bold">S</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-red-700 dark:text-red-400">Private Key (nsec)</h4>
-                  <p className="text-xs text-red-600 dark:text-red-500">NEVER share this with anyone</p>
+                  <h4 className="font-bold text-red-700 dark:text-red-400">{t("quickstartSimulator.keyGen.privateKeyTitle")}</h4>
+                  <p className="text-xs text-red-600 dark:text-red-500">{t("quickstartSimulator.keyGen.privateKeyDesc")}</p>
                 </div>
               </div>
               <button
                 onClick={() => setShowPrivate(!showPrivate)}
                 className="text-xs text-red-600 hover:text-red-700 underline"
               >
-                {showPrivate ? "Hide" : "Show"}
+                {showPrivate ? t("quickstartSimulator.buttons.hide") : t("quickstartSimulator.buttons.show")}
               </button>
             </div>
             <div className="bg-white dark:bg-gray-800 rounded-lg p-3 mb-3">
@@ -161,7 +162,7 @@ function KeyGenSimulator({ className }: { className?: string }) {
                 className="flex items-center gap-2 text-sm text-red-600 hover:text-red-700 dark:text-red-400"
               >
                 {copied === "nsec" ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                {copied === "nsec" ? "Copied!" : "Copy Private Key"}
+                {copied === "nsec" ? t("quickstartSimulator.buttons.copied") : t("quickstartSimulator.buttons.copyPrivate")}
               </button>
             </div>
           </div>
@@ -169,8 +170,7 @@ function KeyGenSimulator({ className }: { className?: string }) {
           <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-500 rounded-lg p-4 flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
             <div className="text-sm text-yellow-800 dark:text-yellow-400">
-              <strong>Important:</strong> Save your private key in 3+ places (password manager, paper, encrypted file). 
-              If you lose it, your account is gone forever. No exceptions.
+              {t("quickstartSimulator.keyGen.important")}
             </div>
           </div>
 
@@ -178,7 +178,7 @@ function KeyGenSimulator({ className }: { className?: string }) {
             onClick={generateKeys}
             className="w-full py-3 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-xl text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
           >
-            Generate New Keys (Current ones will be lost)
+            {t("quickstartSimulator.buttons.generateNewKeys")}
           </button>
         </div>
       )}
@@ -199,6 +199,7 @@ const CLIENTS: { id: Client; name: string; icon: React.ReactNode; platform: stri
 ];
 
 function ClientPickerSimulator({ className }: { className?: string }) {
+  const { t } = useTranslation();
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
 
   return (
@@ -226,7 +227,7 @@ function ClientPickerSimulator({ className }: { className?: string }) {
                 {client.description}
               </p>
               <div className="mt-4 flex items-center gap-1 text-sm text-purple-600 opacity-0 group-hover:opacity-100 transition-opacity">
-                Try it <ArrowRight className="w-4 h-4" />
+                {t("quickstartSimulator.buttons.tryIt")} <ArrowRight className="w-4 h-4" />
               </div>
             </button>
           ))}
@@ -242,6 +243,7 @@ function ClientPickerSimulator({ className }: { className?: string }) {
 }
 
 function ClientSimulation({ client, onBack }: { client: Client; onBack: () => void }) {
+  const { t } = useTranslation();
   const clientData = CLIENTS.find(c => c.id === client)!;
   
   const simulations: Record<Client, React.ReactNode> = {
@@ -260,13 +262,13 @@ function ClientSimulation({ client, onBack }: { client: Client; onBack: () => vo
             onClick={onBack}
             className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white flex items-center gap-1"
           >
-            ← Back
+            ← {t("quickstartSimulator.buttons.back")}
           </button>
           <span className="text-gray-300 dark:text-gray-600">|</span>
-          <span className="font-semibold">{clientData.name} Simulator</span>
+          <span className="font-semibold">{clientData.name} {t("quickstartSimulator.simulator")}</span>
         </div>
         <span className="text-xs text-gray-500 bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded-full">
-          SIMULATION MODE
+          {t("quickstartSimulator.simulationMode")}
         </span>
       </div>
       
@@ -276,7 +278,7 @@ function ClientSimulation({ client, onBack }: { client: Client; onBack: () => vo
       
       <div className="bg-blue-50 dark:bg-blue-900/20 px-4 py-3 border-t border-blue-200 dark:border-blue-800">
         <p className="text-sm text-blue-800 dark:text-blue-400 text-center">
-          This is a simulation. Try the interface, then go back to try others or proceed to Step 3.
+          {t("quickstartSimulator.simulationNote")}
         </p>
       </div>
     </div>
@@ -473,6 +475,7 @@ function CoracleSimulation() {
 // ============================================
 
 function FirstDaySimulator({ className }: { className?: string }) {
+  const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState<Step>("relays");
   const [completedSteps, setCompletedSteps] = useState<Set<Step>>(new Set());
   const [connectedRelays, setConnectedRelays] = useState<string[]>(["relay.damus.io"]);
@@ -481,11 +484,11 @@ function FirstDaySimulator({ className }: { className?: string }) {
   const [hasZapped, setHasZapped] = useState(false);
 
   const steps: { id: Step; label: string; icon: React.ReactNode }[] = [
-    { id: "relays", label: "Connect Relays", icon: <Server className="w-4 h-4" /> },
-    { id: "post", label: "First Post", icon: <Send className="w-4 h-4" /> },
-    { id: "follow", label: "Follow People", icon: <UserPlus className="w-4 h-4" /> },
-    { id: "interact", label: "Interact", icon: <Heart className="w-4 h-4" /> },
-    { id: "zap", label: "Receive Zap", icon: <Zap className="w-4 h-4" /> },
+    { id: "relays", label: t("quickstartSimulator.steps.connectRelay"), icon: <Server className="w-4 h-4" /> },
+    { id: "post", label: t("quickstartSimulator.steps.makePost"), icon: <Send className="w-4 h-4" /> },
+    { id: "follow", label: t("quickstartSimulator.steps.followPeople"), icon: <UserPlus className="w-4 h-4" /> },
+    { id: "interact", label: t("quickstartSimulator.steps.interact"), icon: <Heart className="w-4 h-4" /> },
+    { id: "zap", label: t("quickstartSimulator.steps.receiveZap"), icon: <Zap className="w-4 h-4" /> },
   ];
 
   const completeStep = (step: Step) => {
@@ -537,11 +540,10 @@ function FirstDaySimulator({ className }: { className?: string }) {
             >
               <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                 <Server className="w-6 h-6 text-purple-600" />
-                Connect to Relays
+                {t("quickstartSimulator.steps.connectRelay")}
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Relays are servers that store and share posts. Most clients auto-connect to popular ones, 
-                but let's make sure you're connected.
+                {t("quickstartSimulator.relayStep.description")}
               </p>
 
               <div className="space-y-3">
@@ -570,7 +572,7 @@ function FirstDaySimulator({ className }: { className?: string }) {
                       <code className="text-sm">wss://{relay}</code>
                     </div>
                     {connectedRelays.includes(relay) && (
-                      <span className="text-sm text-green-600 font-semibold">Connected</span>
+                      <span className="text-sm text-green-600 font-semibold">{t("quickstartSimulator.relayStep.connected")}</span>
                     )}
                   </div>
                 ))}
@@ -581,7 +583,7 @@ function FirstDaySimulator({ className }: { className?: string }) {
                 disabled={connectedRelays.length === 0}
                 className="mt-6 w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-300 text-white py-3 rounded-xl font-semibold"
               >
-                {connectedRelays.length > 0 ? "Continue →" : "Connect at least one relay"}
+                {connectedRelays.length > 0 ? t("quickstartSimulator.buttons.continue") : t("quickstartSimulator.relayStep.connectOne")}
               </button>
             </motion.div>
           )}
@@ -595,10 +597,10 @@ function FirstDaySimulator({ className }: { className?: string }) {
             >
               <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                 <Send className="w-6 h-6 text-purple-600" />
-                Make Your First Post
+                {t("quickstartSimulator.postStep.title")}
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Time to say hello! Write your first post. Don't worry, this is just a simulation.
+                {t("quickstartSimulator.postStep.description")}
               </p>
 
               <div className="bg-gray-50 dark:bg-gray-900 rounded-xl p-4 mb-4">
@@ -606,7 +608,7 @@ function FirstDaySimulator({ className }: { className?: string }) {
                   <div className="w-10 h-10 bg-purple-500 rounded-full flex-shrink-0" />
                   <div className="flex-1">
                     <textarea
-                      placeholder="Hello Nostr! Excited to be here. 👋"
+                      placeholder={t("quickstartSimulator.postStep.placeholder")}
                       className="w-full bg-transparent border-none resize-none outline-none text-gray-800 dark:text-gray-200"
                       rows={3}
                       onChange={(e) => setHasPosted(e.target.value.length > 0)}
@@ -618,7 +620,7 @@ function FirstDaySimulator({ className }: { className?: string }) {
                         disabled={!hasPosted}
                         className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-300 text-white px-4 py-2 rounded-full text-sm font-semibold"
                       >
-                        Post
+                        {t("quickstartSimulator.buttons.post")}
                       </button>
                     </div>
                   </div>
@@ -627,8 +629,7 @@ function FirstDaySimulator({ className }: { className?: string }) {
 
               <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
                 <p className="text-sm text-blue-800 dark:text-blue-400">
-                  <strong>Tip:</strong> First posts are usually greetings, introductions, or questions. 
-                  Keep it simple and authentic!
+                  {t("quickstartSimulator.postStep.tip")}
                 </p>
               </div>
             </motion.div>
@@ -643,10 +644,10 @@ function FirstDaySimulator({ className }: { className?: string }) {
             >
               <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                 <UserPlus className="w-6 h-6 text-purple-600" />
-                Follow Some Accounts
+                {t("quickstartSimulator.followStep.title")}
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Your feed is empty because you're not following anyone yet. Follow at least 3 accounts to see posts.
+                {t("quickstartSimulator.followStep.description")}
               </p>
 
               <div className="space-y-3">
@@ -673,7 +674,7 @@ function FirstDaySimulator({ className }: { className?: string }) {
                       onClick={() => setFollowedCount(prev => prev + 1)}
                       className="px-4 py-2 bg-purple-600 text-white text-sm rounded-full hover:bg-purple-700"
                     >
-                      Follow
+                      {t("quickstartSimulator.buttons.follow")}
                     </button>
                   </div>
                 ))}
@@ -681,14 +682,14 @@ function FirstDaySimulator({ className }: { className?: string }) {
 
               <div className="mt-6 flex items-center justify-between">
                 <span className="text-sm text-gray-600 dark:text-gray-400">
-                  Following: {followedCount}/3
+                  {t("quickstartSimulator.followStep.following")}: {followedCount}/3
                 </span>
                 <button
                   onClick={() => completeStep("follow")}
                   disabled={followedCount < 3}
                   className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-300 text-white px-6 py-3 rounded-xl font-semibold"
                 >
-                  Continue →
+                  {t("quickstartSimulator.buttons.continue")}
                 </button>
               </div>
             </motion.div>
@@ -703,10 +704,10 @@ function FirstDaySimulator({ className }: { className?: string }) {
             >
               <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                 <Heart className="w-6 h-6 text-purple-600" />
-                Interact with Posts
+                {t("quickstartSimulator.steps.interact")}
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Now your feed has content! Try liking, replying, or reposting to join the conversation.
+                {t("quickstartSimulator.interactStep.description")}
               </p>
 
               <div className="space-y-4">
@@ -721,16 +722,16 @@ function FirstDaySimulator({ className }: { className?: string }) {
                       <p className="mt-1">Just published a guide to Nostr for beginners! Check it out 👇</p>
                       <div className="flex gap-6 mt-3 text-gray-500">
                         <button className="flex items-center gap-1 hover:text-purple-600">
-                          <MessageCircle className="w-4 h-4" /> Reply
+                          <MessageCircle className="w-4 h-4" /> {t("quickstartSimulator.buttons.reply")}
                         </button>
                         <button className="flex items-center gap-1 hover:text-green-600">
-                          <RefreshCw className="w-4 h-4" /> Repost
+                          <RefreshCw className="w-4 h-4" /> {t("quickstartSimulator.buttons.repost")}
                         </button>
                         <button 
                           className="flex items-center gap-1 hover:text-red-500"
                           onClick={() => completeStep("interact")}
                         >
-                          <Heart className="w-4 h-4" /> Like
+                          <Heart className="w-4 h-4" /> {t("quickstartSimulator.buttons.like")}
                         </button>
                       </div>
                     </div>
@@ -739,7 +740,7 @@ function FirstDaySimulator({ className }: { className?: string }) {
               </div>
 
               <p className="text-sm text-gray-500 mt-4 text-center">
-                Click "Like" to complete this step
+                {t("quickstartSimulator.interactStep.instruction")}
               </p>
             </motion.div>
           )}
@@ -753,10 +754,10 @@ function FirstDaySimulator({ className }: { className?: string }) {
             >
               <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                 <Zap className="w-6 h-6 text-yellow-500" />
-                Receive a Zap
+                {t("quickstartSimulator.zapStep.title")}
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Zaps are Bitcoin tips sent over Lightning Network. Let's simulate receiving one!
+                {t("quickstartSimulator.zapStep.description")}
               </p>
 
               {!hasZapped ? (
@@ -765,14 +766,14 @@ function FirstDaySimulator({ className }: { className?: string }) {
                     <Zap className="w-10 h-10 text-yellow-500" />
                   </div>
                   <p className="text-gray-600 dark:text-gray-400 mb-4">
-                    Someone wants to send you a tip!
+                    {t("quickstartSimulator.zapStep.invitation")}
                   </p>
                   <button
                     onClick={() => setHasZapped(true)}
                     className="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-xl font-semibold flex items-center gap-2 mx-auto"
                   >
                     <Zap className="w-5 h-5" />
-                    Receive 1,000 sats
+                    {t("quickstartSimulator.zapStep.receive")}
                   </button>
                 </div>
               ) : (
@@ -783,16 +784,16 @@ function FirstDaySimulator({ className }: { className?: string }) {
                 >
                   <div className="text-4xl mb-2">⚡</div>
                   <h4 className="text-xl font-bold text-yellow-800 dark:text-yellow-400 mb-2">
-                    You received 1,000 sats!
+                    {t("quickstartSimulator.zapStep.received")}
                   </h4>
                   <p className="text-yellow-700 dark:text-yellow-500 mb-4">
-                    That's about $0.30 in Bitcoin. This is how creators earn on Nostr.
+                    {t("quickstartSimulator.zapStep.earnInfo")}
                   </p>
                   <button
                     onClick={() => completeStep("zap")}
                     className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-full font-semibold"
                   >
-                    Awesome! →
+                    {t("quickstartSimulator.buttons.awesome")}
                   </button>
                 </motion.div>
               )}
@@ -809,10 +810,10 @@ function FirstDaySimulator({ className }: { className?: string }) {
             <div className="bg-green-50 dark:bg-green-900/20 border-2 border-green-500 rounded-xl p-6">
               <div className="text-4xl mb-2">🎉</div>
               <h4 className="text-xl font-bold text-green-800 dark:text-green-400">
-                You completed the first day simulation!
+                {t("quickstartSimulator.completion.title")}
               </h4>
               <p className="text-green-700 dark:text-green-500 mt-2">
-                You're ready for the real thing. Move on to Step 4 to pick your client.
+                {t("quickstartSimulator.completion.description")}
               </p>
             </div>
           </motion.div>

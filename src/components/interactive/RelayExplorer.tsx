@@ -34,6 +34,7 @@ import {
   loadFromLocalStorage,
 } from "../../lib/utils";
 import { recordActivity } from "../../utils/gamificationEngine";
+import { useTranslation } from "../../hooks/useTranslation";
 
 type Topic = "all" | "bitcoin" | "tech" | "general" | "art" | "music";
 type RelayType = "all" | "free" | "paid";
@@ -50,7 +51,7 @@ interface Relay {
   location: string;
   region: "na" | "eu" | "asia" | "other";
   userCount: string;
-  latency?: number;
+  latency?: number | null;
   status: "online" | "offline" | "checking";
   features: string[];
   owner?: string;
@@ -342,33 +343,6 @@ const STARTER_PACK_RELAYS = [
   "wss://relay.snort.social",
 ];
 
-const TOPIC_OPTIONS: { value: Topic; label: string; icon: React.ReactNode }[] =
-  [
-    { value: "all", label: "All Topics", icon: <Globe className="w-4 h-4" /> },
-    { value: "bitcoin", label: "Bitcoin", icon: <Zap className="w-4 h-4" /> },
-    {
-      value: "tech",
-      label: "Technology",
-      icon: <Server className="w-4 h-4" />,
-    },
-    { value: "general", label: "General", icon: <Users className="w-4 h-4" /> },
-    {
-      value: "art",
-      label: "Art & Design",
-      icon: <Shield className="w-4 h-4" />,
-    },
-  ];
-
-const TYPE_OPTIONS: {
-  value: RelayType;
-  label: string;
-  icon: React.ReactNode;
-}[] = [
-  { value: "all", label: "All Types", icon: <Filter className="w-4 h-4" /> },
-  { value: "free", label: "Free", icon: <Check className="w-4 h-4" /> },
-  { value: "paid", label: "Paid", icon: <DollarSign className="w-4 h-4" /> },
-];
-
 const REGION_COLORS: Record<string, string> = {
   na: "from-blue-500/20 to-blue-600/10",
   eu: "from-green-500/20 to-green-600/10",
@@ -376,17 +350,11 @@ const REGION_COLORS: Record<string, string> = {
   other: "from-purple-500/20 to-purple-600/10",
 };
 
-const REGION_LABELS: Record<string, string> = {
-  na: "North America",
-  eu: "Europe",
-  asia: "Asia",
-  other: "Other",
-};
-
 export function RelayExplorer({
   className,
   onSelectRelays,
 }: RelayExplorerProps) {
+  const { t } = useTranslation();
   const [relays, setRelays] = useState<Relay[]>(POPULAR_RELAYS);
   const [selectedRelays, setSelectedRelays] = useState<Set<string>>(new Set());
   const [searchQuery, setSearchQuery] = useState("");
@@ -475,12 +443,12 @@ export function RelayExplorer({
   const checkAllRelays = useCallback(async () => {
     setIsChecking(true);
 
-    const updateRelayStatus = async (relay: Relay) => {
+    const updateRelayStatus = async (relay: Relay): Promise<Relay> => {
       const latency = await checkRelayLatency(relay);
       return {
         ...relay,
         latency,
-        status: latency ? "online" : ("offline" as const),
+        status: latency ? "online" : "offline",
       };
     };
 
@@ -496,8 +464,8 @@ export function RelayExplorer({
     }
 
     setIsChecking(false);
-    showToast("Relay status check complete!", "success");
-  }, [relays, customRelays, checkRelayLatency, showToast]);
+    showToast(t('relayExplorer.toast.checkComplete'), "success");
+  }, [relays, customRelays, checkRelayLatency, showToast, t]);
 
   // Initial check on mount
   useEffect(() => {
@@ -540,7 +508,7 @@ export function RelayExplorer({
     STARTER_PACK_RELAYS.forEach((url) => newSelected.add(url));
     setSelectedRelays(newSelected);
     onSelectRelays?.(Array.from(newSelected));
-    showToast("Starter pack relays added!", "success");
+    showToast(t('relayExplorer.toast.starterPackAdded'), "success");
   };
 
   // Add custom relay
@@ -556,7 +524,7 @@ export function RelayExplorer({
       customRelays.some((r) => r.url === url) ||
       relays.some((r) => r.url === url)
     ) {
-      showToast("Relay already exists!", "error");
+      showToast(t('relayExplorer.toast.alreadyExists'), "error");
       return;
     }
 
@@ -577,7 +545,7 @@ export function RelayExplorer({
 
     setCustomRelays([...customRelays, newRelay]);
     setCustomRelayInput("");
-    showToast("Custom relay added!", "success");
+    showToast(t('relayExplorer.toast.added'), "success");
 
     // Check latency for the new relay
     checkRelayLatency(newRelay).then((latency) => {
@@ -597,7 +565,7 @@ export function RelayExplorer({
     const newSelected = new Set(selectedRelays);
     newSelected.delete(url);
     setSelectedRelays(newSelected);
-    showToast("Relay removed", "info");
+    showToast(t('relayExplorer.toast.removed'), "info");
   };
 
   // Copy selected relays
@@ -606,11 +574,11 @@ export function RelayExplorer({
     const success = await copyToClipboard(urls);
     if (success) {
       showToast(
-        `${selectedRelays.size} relay(s) copied to clipboard!`,
+        t('relayExplorer.toast.copied').replace('{count}', String(selectedRelays.size)),
         "success",
       );
     } else {
-      showToast("Failed to copy", "error");
+      showToast(t('relayExplorer.toast.copyFailed'), "error");
     }
   };
 
@@ -618,7 +586,7 @@ export function RelayExplorer({
   const downloadRelayList = () => {
     const urls = Array.from(selectedRelays).join("\n");
     downloadFile("nostr-relays.txt", urls);
-    showToast("Relay list downloaded!", "success");
+    showToast(t('relayExplorer.toast.downloaded'), "success");
   };
 
   // Get status color
@@ -634,7 +602,7 @@ export function RelayExplorer({
   };
 
   // Get latency color
-  const getLatencyColor = (latency?: number) => {
+  const getLatencyColor = (latency?: number | null) => {
     if (!latency) return "text-gray-500";
     if (latency < 100) return "text-success-500";
     if (latency < 300) return "text-warning-500";
@@ -653,41 +621,13 @@ export function RelayExplorer({
           >
             <Globe className="w-8 h-8 text-primary-500" />
           </motion.div>
-          <h2 className="text-2xl md:text-3xl font-bold 	ext-gray-900 dark:text-white mb-2">
-            Relay Explorer
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            {t('relayExplorer.title')}
           </h2>
-          <p className="	ext-gray-600 dark:text-gray-400 max-w-lg mx-auto">
-            Browse and connect to Nostr relays. Relays store and distribute your
-            posts. Connect to multiple relays for better reliability.
+          <p className="text-gray-600 dark:text-gray-400 max-w-lg mx-auto">
+            {t('relayExplorer.description')}
           </p>
         </div>
-
-        {/* Starter Pack Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-r from-primary-500/20 to-primary-600/10 border border-primary-500/30 rounded-xl p-4 mb-6"
-        >
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-primary-500 rounded-xl flex items-center justify-center">
-                <Zap className="w-6 h-6 	ext-gray-900 dark:text-white" />
-              </div>
-              <div>
-                <h3 className="font-semibold 	ext-gray-900 dark:text-white">New to Nostr?</h3>
-                <p className="text-sm 	ext-gray-600 dark:text-gray-400">
-                  Start with our recommended starter pack of 5 reliable relays
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={selectStarterPack}
-              className="px-6 py-3 bg-primary-600 hover:bg-primary-700 	ext-gray-900 dark:text-white rounded-xl font-medium transition-all whitespace-nowrap"
-            >
-              Add Starter Pack
-            </button>
-          </div>
-        </motion.div>
 
         {/* Controls */}
         <div className="space-y-4 mb-6">
@@ -699,8 +639,8 @@ export function RelayExplorer({
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search relays..."
-                className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border border-border-dark rounded-xl 	ext-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
+                placeholder={t('relayExplorer.search.placeholder')}
+                className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border border-border-dark rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
               />
             </div>
             <button
@@ -711,7 +651,7 @@ export function RelayExplorer({
               <RefreshCw
                 className={cn("w-5 h-5", isChecking && "animate-spin")}
               />
-              {isChecking ? "Checking..." : "Test All"}
+              {isChecking ? t('relayExplorer.checking') : t('relayExplorer.testAll')}
             </button>
           </div>
 
@@ -719,15 +659,21 @@ export function RelayExplorer({
           <div className="flex flex-wrap gap-3">
             {/* Topic Filter */}
             <div className="flex flex-wrap gap-2">
-              {TOPIC_OPTIONS.map((option) => (
+              {[
+                { value: "all" as Topic, label: t('relayExplorer.filters.topic.label'), icon: <Globe className="w-4 h-4" /> },
+                { value: "bitcoin" as Topic, label: t('relayExplorer.filters.topic.bitcoin'), icon: <Zap className="w-4 h-4" /> },
+                { value: "tech" as Topic, label: t('relayExplorer.filters.topic.technology'), icon: <Server className="w-4 h-4" /> },
+                { value: "general" as Topic, label: t('relayExplorer.filters.topic.general'), icon: <Users className="w-4 h-4" /> },
+                { value: "art" as Topic, label: t('relayExplorer.filters.topic.art'), icon: <Shield className="w-4 h-4" /> },
+              ].map((option) => (
                 <button
                   key={option.value}
                   onClick={() => setTopicFilter(option.value)}
                   className={cn(
                     "inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all",
                     topicFilter === option.value
-                      ? "bg-primary-500 	ext-gray-900 dark:text-white"
-                      : "bg-gray-100 dark:bg-gray-800 	ext-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:bg-gray-700",
+                      ? "bg-primary-500 text-gray-900 dark:text-white"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700",
                   )}
                 >
                   {option.icon}
@@ -738,15 +684,19 @@ export function RelayExplorer({
 
             {/* Type Filter */}
             <div className="flex flex-wrap gap-2">
-              {TYPE_OPTIONS.map((option) => (
+              {[
+                { value: "all" as RelayType, label: t('relayExplorer.filters.type.label'), icon: <Filter className="w-4 h-4" /> },
+                { value: "free" as RelayType, label: t('relayExplorer.filters.type.free'), icon: <Check className="w-4 h-4" /> },
+                { value: "paid" as RelayType, label: t('relayExplorer.filters.type.paid'), icon: <DollarSign className="w-4 h-4" /> },
+              ].map((option) => (
                 <button
                   key={option.value}
                   onClick={() => setTypeFilter(option.value)}
                   className={cn(
                     "inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all",
                     typeFilter === option.value
-                      ? "bg-primary-500 	ext-gray-900 dark:text-white"
-                      : "bg-gray-100 dark:bg-gray-800 	ext-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:bg-gray-700",
+                      ? "bg-primary-500 text-gray-900 dark:text-white"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700",
                   )}
                 >
                   {option.icon}
@@ -765,50 +715,47 @@ export function RelayExplorer({
                 value={customRelayInput}
                 onChange={(e) => setCustomRelayInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && addCustomRelay()}
-                placeholder="Add custom relay (e.g., wss://relay.example.com)"
-                className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border border-border-dark rounded-xl 	ext-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
+                placeholder={t('relayExplorer.customRelay.placeholder')}
+                className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border border-border-dark rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
               />
             </div>
             <button
               onClick={addCustomRelay}
               disabled={!customRelayInput.trim()}
-              className="px-4 py-3 bg-primary-600 disabled:bg-gray-200 dark:bg-gray-700 	ext-gray-900 dark:text-white rounded-xl font-medium transition-all inline-flex items-center gap-2"
+              className="px-4 py-3 bg-primary-600 disabled:bg-gray-200 dark:disabled:bg-gray-700 text-gray-900 dark:text-white rounded-xl font-medium transition-all inline-flex items-center gap-2"
             >
               <Plus className="w-5 h-5" />
-              Add
+              {t('relayExplorer.customRelay.add')}
             </button>
           </div>
 
           {/* Selected Count */}
           {selectedRelays.size > 0 && (
             <div className="flex items-center justify-between bg-gray-100 dark:bg-gray-800/50 rounded-xl p-3">
-              <span className="	ext-gray-600 dark:text-gray-400">
-                <span className="	ext-gray-900 dark:text-white font-medium">
-                  {selectedRelays.size}
-                </span>{" "}
-                relay(s) selected
+              <span className="text-gray-600 dark:text-gray-400">
+                {t('relayExplorer.selected.count').replace('{count}', String(selectedRelays.size))}
               </span>
               <div className="flex gap-2">
                 <button
                   onClick={copySelectedRelays}
-                  className="px-3 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 	ext-gray-900 dark:text-white rounded-lg text-sm transition-all inline-flex items-center gap-2"
+                  className="px-3 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white rounded-lg text-sm transition-all inline-flex items-center gap-2"
                 >
                   <Copy className="w-4 h-4" />
-                  Copy
+                  {t('relayExplorer.selected.copy')}
                 </button>
                 <button
                   onClick={downloadRelayList}
-                  className="px-3 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 	ext-gray-900 dark:text-white rounded-lg text-sm transition-all inline-flex items-center gap-2"
+                  className="px-3 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white rounded-lg text-sm transition-all inline-flex items-center gap-2"
                 >
                   <Download className="w-4 h-4" />
-                  Download
+                  {t('relayExplorer.selected.download')}
                 </button>
                 <button
                   onClick={() => {
                     setSelectedRelays(new Set());
                     onSelectRelays?.([]);
                   }}
-                  className="px-3 py-2 	ext-gray-600 dark:text-gray-400 hover:	ext-gray-900 dark:text-white rounded-lg text-sm transition-all"
+                  className="px-3 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-lg text-sm transition-all"
                 >
                   Clear
                 </button>
@@ -891,12 +838,12 @@ export function RelayExplorer({
                     )}
                   >
                     <Activity className="w-3 h-3" />
-                    {relay.latency ? `${relay.latency}ms` : "Unknown"}
+                    {relay.latency ? `${relay.latency}ms` : t('relayExplorer.card.latencyUnknown')}
                   </span>
                   {relay.type === "paid" && (
                     <span className="flex items-center gap-1 text-warning-500">
                       <DollarSign className="w-3 h-3" />
-                      Paid
+                      {t('relayExplorer.filters.type.paid')}
                     </span>
                   )}
                 </div>
@@ -910,7 +857,9 @@ export function RelayExplorer({
                     )}
                   />
                   <span className="text-xs text-gray-500 capitalize">
-                    {relay.status === "checking" ? "Checking..." : relay.status}
+                    {relay.status === "checking" ? t('relayExplorer.card.status.checking') : 
+                     relay.status === "online" ? t('relayExplorer.card.status.online') : 
+                     t('relayExplorer.card.status.offline')}
                   </span>
                 </div>
 
@@ -919,7 +868,7 @@ export function RelayExplorer({
                   {relay.features.slice(0, 2).map((feature) => (
                     <span
                       key={feature}
-                      className="text-xs bg-gray-100 dark:bg-gray-800 	ext-gray-600 dark:text-gray-400 px-2 py-1 rounded-full"
+                      className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 px-2 py-1 rounded-full"
                     >
                       {feature}
                     </span>
@@ -947,10 +896,10 @@ export function RelayExplorer({
         {filteredRelays.length === 0 && (
           <div className="text-center py-12">
             <Server className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold 	ext-gray-900 dark:text-white mb-2">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
               No relays found
             </h3>
-            <p className="	ext-gray-600 dark:text-gray-400">
+            <p className="text-gray-600 dark:text-gray-400">
               Try adjusting your filters or add a custom relay
             </p>
           </div>
@@ -961,25 +910,25 @@ export function RelayExplorer({
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
               <p className="text-2xl font-bold 	ext-gray-900 dark:text-white">{relays.length}</p>
-              <p className="text-sm 	ext-gray-600 dark:text-gray-400">Popular Relays</p>
+              <p className="text-sm 	ext-gray-600 dark:text-gray-400">{t('relayExplorer.stats.popularRelays')}</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-success-500">
                 {relays.filter((r) => r.status === "online").length}
               </p>
-              <p className="text-sm 	ext-gray-600 dark:text-gray-400">Online Now</p>
+              <p className="text-sm 	ext-gray-600 dark:text-gray-400">{t('relayExplorer.stats.onlineNow')}</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-primary-500">
                 {relays.filter((r) => r.type === "free").length}
               </p>
-              <p className="text-sm 	ext-gray-600 dark:text-gray-400">Free Relays</p>
+              <p className="text-sm 	ext-gray-600 dark:text-gray-400">{t('relayExplorer.stats.freeRelays')}</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-warning-500">
                 {selectedRelays.size}
               </p>
-              <p className="text-sm 	ext-gray-600 dark:text-gray-400">Selected</p>
+              <p className="text-sm 	ext-gray-600 dark:text-gray-400">{t('relayExplorer.stats.selected')}</p>
             </div>
           </div>
         </div>

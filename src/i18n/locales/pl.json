@@ -1031,5 +1031,1039 @@
         "incorrect": "Nie do końca"
       }
     }
+  },
+  "clientRecommender": {
+    "title": "Twój Idealny Klient",
+    "description": "Na podstawie Twoich preferencji, oto nasze najlepsze rekomendacje",
+    "retakeQuiz": "Powtórz Quiz",
+    "steps": {
+      "device": {
+        "title": "Z jakiego urządzenia korzystasz?",
+        "description": "Wybierz urządzenie, z którego będziesz głównie korzystać"
+      },
+      "priority": {
+        "title": "Jaki jest Twój priorytet?",
+        "description": "Wybierz, co jest dla Ciebie najważniejsze"
+      },
+      "features": {
+        "title": "Przydatne funkcje?",
+        "description": "Wybierz funkcje, które Cię interesują (opcjonalnie)",
+        "seeRecommendations": "Zobacz Rekomendacje"
+      }
+    },
+    "deviceOptions": {
+      "ios": {
+        "label": "iPhone / iPad"
+      },
+      "android": {
+        "label": "Android"
+      },
+      "desktop": {
+        "label": "Komputer (Mac/PC)"
+      },
+      "web": {
+        "label": "Przeglądarka"
+      }
+    },
+    "priorityOptions": {
+      "easy": {
+        "label": "Łatwy w obsłudze",
+        "description": "Prosty interfejs, minimalna konfiguracja"
+      },
+      "power": {
+        "label": "Zaawansowany",
+        "description": "Zaawansowane funkcje i personalizacja"
+      },
+      "privacy": {
+        "label": "Prywatność",
+        "description": "Maksymalna prywatność i bezpieczeństwo"
+      },
+      "webOnly": {
+        "label": "Tylko Web",
+        "description": "Bez pobierania aplikacji"
+      }
+    },
+    "featureOptions": {
+      "wallet": {
+        "label": "WBudowany Portfel"
+      },
+      "images": {
+        "label": "Udostępnianie Obrazów"
+      },
+      "longform": {
+        "label": "Długie Posty"
+      }
+    },
+    "results": {
+      "topRecommendation": "Najlepsza Rekomendacja",
+      "beginnerFriendly": "Przyjazny dla Początkujących",
+      "rating": "Ocena",
+      "users": "Użytkownicy",
+      "pros": "Zalety",
+      "cons": "Wady",
+      "getApp": "Pobierz {clientName}",
+      "tryWeb": "Wypróbuj Wersję Web",
+      "alternatives": "Inne Rekomendacje"
+    }
+  },
+  "keyGenerator": {
+    "title": "Wygeneruj Swoje Klucze Nostr",
+    "description": "Utwórz bezpieczną parę kluczy, aby uzyskać dostęp do Nostr. Twoje klucze są generowane lokalnie w przeglądarce i nigdy nie są wysyłane na żaden serwer.",
+    "buttons": {
+      "generate": "Wygeneruj Nową Parę Kluczy",
+      "generating": "Generowanie...",
+      "regenerate": "Wygeneruj nową parę kluczy"
+    },
+    "progress": {
+      "collectingEntropy": "Zbieranie entropii...",
+      "securityAcknowledgment": "Potwierdzenie Bezpieczeństwa"
+    },
+    "securityWarning": {
+      "title": "Krytyczne Ostrzeżenie Bezpieczeństwa",
+      "description": "Twój klucz prywatny (nsec) jest jak hasło. Każdy, kto ma do niego dostęp, może przejąć kontrolę nad Twoim kontem. Uzupełnij poniższą listę kontrolną bezpieczeństwa przed kopiowaniem lub pobieraniem kluczy."
+    },
+    "securityChecklist": {
+      "title": "Lista Kontrolna Bezpieczeństwa",
+      "items": {
+        "understand": {
+          "label": "Rozumiem, że to moje jedyne hasło - jeśli je zgubię, nie można go odzyskać"
+        },
+        "threePlaces": {
+          "label": "Zapiszę je w co najmniej 3 różnych bezpiecznych miejscach"
+        },
+        "neverShare": {
+          "label": "NIGDY nie podzielę się moim kluczem nsec (prywatnym) z nikim"
+        }
+      }
+    },
+    "keys": {
+      "public": {
+        "title": "Klucz Publiczny (npub)",
+        "badge": "Bezpieczny do udostępniania",
+        "description": "To Twój publiczny identyfikator. Udostępnij go innym, aby mogli Cię znaleźć i obserwować.",
+        "copy": "Kopiuj",
+        "qrCode": "Kod QR"
+      },
+      "private": {
+        "title": "Klucz Prywatny (nsec)",
+        "badge": "NIGDY NIE UDOSTĘPNIAJ",
+        "description": "To Twoje hasło. Każdy, kto je posiada, może przejąć kontrolę nad Twoim kontem. Zachowaj je w tajemnicy i bezpieczeństwie.",
+        "copy": "Kopiuj",
+        "download": "Pobierz Kopię Zapasową",
+        "qrCode": "Kod QR",
+        "show": "Pokaż klucz prywatny",
+        "hide": "Ukryj klucz prywatny"
+      }
+    },
+    "modal": {
+      "title": "Ostrzeżenie Bezpieczeństwa",
+      "description": "Nie uzupełniłeś wszystkich potwierdzeń bezpieczeństwa. Kopiowanie kluczy bez zrozumienia ryzyka może skutkować trwałą utratą dostępu.",
+      "goBack": "Wróć",
+      "copyAnyway": "Kopiuj Mimo To"
+    },
+    "toast": {
+      "success": "Klucze wygenerowane pomyślnie!",
+      "copied": "{label} skopiowano do schowka",
+      "copyFailed": "Nie udało się skopiować do schowka",
+      "downloaded": "Klucze pobrane pomyślnie"
+    },
+    "backupFile": {
+      "title": "KOPIA ZAPASOWA KLUCZY NOSTR",
+      "generated": "Wygenerowano",
+      "publicKey": "KLUCZ PUBLICZNY (npub) - Bezpieczny do udostępniania",
+      "privateKey": "KLUCZ PRYWATNY (nsec) - NIGDY NIE UDOSTĘPNIAJ",
+      "hexPrivate": "Klucz Prywatny Hex",
+      "hexPublic": "Klucz Publiczny Hex",
+      "warnings": {
+        "title": "WAŻNE OSTRZEŻENIA BEZPIECZEŃSTWA",
+        "keepSecret": "Zachowaj klucz prywatny (nsec) w tajemnicy",
+        "neverShare": "Nigdy go nie udostępniaj",
+        "storeBackups": "Przechowuj kopie zapasowe w wielu bezpiecznych miejscach",
+        "onlyPassword": "To Twoje jedyne hasło - jeśli je zgubisz, nie można go odzyskać"
+      }
+    }
+  },
+  "troubleshootingWizard": {
+    "title": "Kreator Rozwiązywania Problemów",
+    "description": "Zdiagnozujmy i naprawmy Twój problem z Nostr krok po kroku",
+    "step": "Krok",
+    "back": "Wstecz",
+    "startOver": "Zacznij od nowa",
+    "saveDiagnosticInfo": "Zapisz informacje diagnostyczne",
+    "stillNeedHelp": "Wciąż potrzebujesz pomocy?",
+    "askOnNostr": "Zapytaj na Nostr",
+    "documentation": "Dokumentacja",
+    "severity": {
+      "high": "Wysoki priorytet",
+      "medium": "Średni priorytet",
+      "low": "Niski priorytet"
+    },
+    "stepsToFix": "Kroki do naprawy",
+    "proTips": "Wskazówki eksperta",
+    "helpfulResources": "Przydatne zasoby",
+    "diagnosticInfo": {
+      "title": "Informacje diagnostyczne",
+      "description": "Skopiuj te informacje prosząc o pomoc. Pomagają one deweloperom zrozumieć Twoją konfigurację.",
+      "copy": "Kopiuj",
+      "close": "Zamknij"
+    },
+    "questions": {
+      "start": {
+        "text": "Jaki masz problem?",
+        "options": {
+          "emptyFeed": "Pusty feed / Brak postów",
+          "connection": "Problemy z połączeniem",
+          "lostKeys": "Zgubione lub zapomniane klucze",
+          "zaps": "Zapy nie działają",
+          "clientError": "Aplikacja się zawiesza lub błędy",
+          "profileIssue": "Nie mogę zobaczyć czyjegoś profilu"
+        }
+      },
+      "feedCheck": {
+        "text": "Kiedy Twój feed stał się pusty?",
+        "options": {
+          "newUser": "Dopiero zacząłem używać Nostr",
+          "wasWorking": "Działał wcześniej, teraz jest pusty",
+          "partial": "Brakuje tylko niektórych postów"
+        }
+      },
+      "relayCheck": {
+        "text": "Czy jesteś podłączony do jakichś relay?",
+        "options": {
+          "unknown": "Nie jestem pewien / Nie wiem",
+          "connectedEmpty": "Tak, ale feed wciąż jest pusty",
+          "offline": "Relay pokazują się jako offline"
+        }
+      },
+      "connectionCheck": {
+        "text": "Jaki typ problemu z połączeniem?",
+        "options": {
+          "connecting": "Klient pokazuje 'łączenie...'",
+          "notPublishing": "Posty się nie publikują",
+          "slow": "Bardzo wolne ładowanie",
+          "unstable": "Częste rozłączanie"
+        }
+      },
+      "zapCheck": {
+        "text": "Co się dzieje gdy próbujesz zapy?",
+        "options": {
+          "nothing": "Nic się nie dzieje",
+          "error": "Pojawia się komunikat o błędzie",
+          "notReceived": "Zap wysłany ale nie dotarł",
+          "noWallet": "Nie mam portfela"
+        }
+      },
+      "clientCheck": {
+        "text": "Jaki błąd widzisz?",
+        "options": {
+          "crash": "Aplikacja się zawiesza przy starcie",
+          "blank": "Biały/czarny ekran",
+          "import": "Import klucza się nie udaje",
+          "other": "Inny komunikat o błędzie"
+        }
+      },
+      "profileCheck": {
+        "text": "Co się dzieje gdy przeglądasz profil?",
+        "options": {
+          "notFound": "Nie znaleziono profilu",
+          "noPosts": "Profil się ładuje ale nie ma postów",
+          "oldData": "Pokazują się stare dane",
+          "cantFollow": "Nie mogę obserwować użytkownika"
+        }
+      }
+    },
+    "solutions": {
+      "lostKeys": {
+        "title": "Zgubione klucze - fokus na zapobieganiu",
+        "description": "Niestety, zgubionych kluczy nie można odzyskać. Możemy jednak pomóc Ci zapobiec temu w przyszłości.",
+        "steps": [
+          "Utwórz nową parę kluczy używając Generatora Kluczy",
+          "Natychmiast zapisz swój nsec w 3+ bezpiecznych miejscach",
+          "Rozważ użycie menedżera haseł (1Password, Bitwarden)",
+          "Zapisz go na papierze i przechowuj w bezpiecznym miejscu",
+          "Nigdy nie polegaj na pamięci podręcznej przeglądarki lub pamięci jednego urządzenia"
+        ],
+        "tips": [
+          "W Nostr nie ma opcji 'Zapomniałem hasła'",
+          "Twoje klucze to Twoja tożsamość - traktuj je jak gotówkę",
+          "Przetestuj kopię zapasową przywracając z niej klucze"
+        ]
+      },
+      "newUserFeed": {
+        "title": "Witaj! Twój feed jest pusty",
+        "description": "Jako nowy użytkownik, Twój feed jest pusty, ponieważ musisz najpierw obserwować ludzi.",
+        "steps": [
+          "Przejdź do narzędzia Napraw Pusty Feed poniżej",
+          "Wybierz pakiet startowy kont do obserwowania",
+          "Podłącz się do 3-5 rekomendowanych relay",
+          "Poczekaj kilka minut na załadowanie treści",
+          "Spróbuj ręcznie obserwować popularne konta"
+        ],
+        "tips": [
+          "Zacznij od pakietu startowego dla Twoich zainteresowań",
+          "Obserwuj przynajmniej 10-20 kont aby zobaczyć treści",
+          "Podłącz się do wielu relay dla lepszego zasięgu"
+        ]
+      },
+      "partialFeed": {
+        "title": "Brakuje niektórych postów",
+        "description": "Częściowa zawartość zazwyczaj oznacza problemy z połączeniem do relay.",
+        "steps": [
+          "Sprawdź do których relay jesteś podłączony",
+          "Dodaj więcej relay (celuj w 5-10 różnych relay)",
+          "Poczekaj kilka minut na zakończenie synchronizacji",
+          "Spróbuj odświeżyć feed",
+          "Sprawdź czy brakujący użytkownicy używają innych relay"
+        ],
+        "tips": [
+          "Różni użytkownicy publikują na różnych relay",
+          "Więcej relay = więcej treści ale wolniejsze ładowanie",
+          "Niektóre relay mogą filtrować określoną zawartość"
+        ]
+      },
+      "checkRelays": {
+        "title": "Sprawdź swoje połączenia relay",
+        "description": "Zweryfikujmy Twoją konfigurację relay.",
+        "steps": [
+          "Otwórz ustawienia swojego klienta",
+          "Poszukaj sekcji 'Relay' lub 'Sieć'",
+          "Sprawdź czy masz podłączone 3+ relay",
+          "Przetestuj połączenia relay",
+          "Dodaj rekomendowane relay jeśli potrzeba"
+        ]
+      },
+      "relayIssue": {
+        "title": "Problem z połączeniem relay",
+        "description": "Podłączony ale brak treści sugeruje problemy z relay.",
+        "steps": [
+          "Sprawdź czy relay pokazują status 'online'",
+          "Usuń i dodaj ponownie problematyczne relay",
+          "Spróbuj innych adresów URL relay",
+          "Sprawdź swoje połączenie internetowe",
+          "Poczekaj i spróbuj ponownie później"
+        ],
+        "tips": [
+          "Relay czasami są offline podczas konserwacji",
+          "Spróbuj relay geograficznie bliżej Ciebie",
+          "Darmowe relay mogą być przeciążone"
+        ]
+      },
+      "offlineRelays": {
+        "title": "Wszystkie relay offline",
+        "description": "To zazwyczaj wskazuje na problem z siecią lub konfiguracją.",
+        "steps": [
+          "Sprawdź swoje połączenie internetowe",
+          "Zweryfikuj czy adresy URL relay są poprawne (wss://...)",
+          "Spróbuj innych relay z Eksploratora Relay",
+          "Sprawdź czy klient nie jest blokowany przez firewall",
+          "Zrestartuj aplikację i spróbuj ponownie"
+        ],
+        "tips": [
+          "Upewnij się że adresy zaczynają się od wss:// a nie https://",
+          "Niektóre sieci blokują połączenia WebSocket",
+          "Spróbuj użyć VPN jeśli jesteś w sieci z ograniczeniami"
+        ]
+      },
+      "stuckConnecting": {
+        "title": "Zacięte na łączeniu",
+        "description": "Klient ma problem z dotarciem do relay.",
+        "steps": [
+          "Wymuś zamknięcie i otwórz ponownie aplikację",
+          "Sprawdź połączenie internetowe",
+          "Usuń wolne lub martwe relay",
+          "Spróbuj połączyć się z mniejszą liczbą relay (3-5)",
+          "Wyczyść pamięć podręczną/dane aplikacji jeśli na telefonie"
+        ]
+      },
+      "notPublishing": {
+        "title": "Posty się nie publikują",
+        "description": "Twoje posty nie udają się wysłać.",
+        "steps": [
+          "Sprawdź czy masz relay z włączonym zapisem",
+          "Zweryfikuj czy masz wystarczająco relay (przynajmniej 1)",
+          "Spróbuj opublikować ponownie - może to być tymczasowe",
+          "Sprawdź status relay - niektóre wymagają płatności",
+          "Skróć długość posta i spróbuj ponownie"
+        ]
+      },
+      "slowLoading": {
+        "title": "Wolne ładowanie",
+        "description": "Treść ładuje się bardzo wolno.",
+        "steps": [
+          "Zmniejsz liczbę podłączonych relay",
+          "Przełącz się na szybsze relay (niższe opóźnienie)",
+          "Użyj Eksploratora Relay aby znaleźć szybkie relay",
+          "Sprawdź prędkość swojego internetu",
+          "Zamknij inne aplikacje używające pasma"
+        ]
+      },
+      "unstableConnection": {
+        "title": "Niestabilne połączenie",
+        "description": "Połączenie ciągle się rozłącza.",
+        "steps": [
+          "Usuń nierzetelne relay",
+          "Zachowaj tylko 3-5 stabilnych relay",
+          "Używaj relay geograficznie bliżej Ciebie",
+          "Sprawdź czy nie jesteś na niestabilnym WiFi/danych mobilnych",
+          "Spróbuj użyć VPN"
+        ]
+      },
+      "zapNothing": {
+        "title": "Przycisk zap nie działa",
+        "description": "Funkcjonalność zap może nie być skonfigurowana.",
+        "steps": [
+          "Upewnij się że masz podłączony portfel lightning",
+          "Sprawdź czy klient obsługuje zapy",
+          "Zweryfikuj czy Twój portfel ma skonfigurowane NWC",
+          "Spróbuj innego klienta który obsługuje zapy",
+          "Sprawdź czy odbiorca akceptuje zapy"
+        ]
+      },
+      "zapError": {
+        "title": "Komunikat błędu zap",
+        "description": "Wystąpił konkretny błąd z Twoim zap.",
+        "steps": [
+          "Zanotuj dokładny komunikat błędu",
+          "Sprawdź czy portfel ma wystarczające saldo",
+          "Zweryfikuj czy połączenie NWC jest ważne",
+          "Spróbuj zapy mniejszą kwotę",
+          "Zrestartuj aplikacje portfela i klienta"
+        ]
+      },
+      "zapNotReceived": {
+        "title": "Zap wysłany ale nie dotarł",
+        "description": "Zap został wysłany ale odbiorca go nie otrzymał.",
+        "steps": [
+          "Poczekaj 5-10 minut (lightning może być wolny)",
+          "Sprawdź historię transakcji swojego portfela",
+          "Zweryfikuj adres lightning odbiorcy",
+          "Skontaktuj się z odbiorcą aby sprawdzić jego portfel",
+          "Zapy czasem zawodzą po cichu - spróbuj ponownie"
+        ]
+      },
+      "noWallet": {
+        "title": "Brak podłączonego portfela",
+        "description": "Potrzebujesz portfela Bitcoin Lightning aby wysyłać zapy.",
+        "steps": [
+          "Pobierz portfel lightning (Alby, Zeus, Phoenix)",
+          "Zasil portfel Bitcoinem",
+          "Połącz portfel ze swoim klientem Nostr przez NWC",
+          "Spróbuj wysłać mały testowy zap",
+          "Zacznij od 21 sats do testu"
+        ]
+      },
+      "appCrash": {
+        "title": "Aplikacja się zawiesza przy starcie",
+        "description": "Aplikacja zawiesza się natychmiast po otwarciu.",
+        "steps": [
+          "Wymuś całkowite zamknięcie aplikacji",
+          "Zrestartuj urządzenie",
+          "Zaktualizuj do najnowszej wersji aplikacji",
+          "Wyczyść pamięć podręczną aplikacji (Android) lub przeinstaluj",
+          "Sprawdź czy urządzenie spełnia minimalne wymagania"
+        ]
+      },
+      "blankScreen": {
+        "title": "Pusty lub biały ekran",
+        "description": "Aplikacja się otwiera ale nic nie pokazuje.",
+        "steps": [
+          "Poczekaj 30 sekund - może się ładować",
+          "Sprawdź połączenie internetowe",
+          "Wymuś zamknięcie i otwórz ponownie",
+          "Wyczyść dane/pamięć podręczną aplikacji",
+          "Spróbuj użyć wersji web zamiast tego"
+        ]
+      },
+      "importFail": {
+        "title": "Import klucza się nie udaje",
+        "description": "Nie można zaimportować Twoich kluczy.",
+        "steps": [
+          "Zweryfikuj format nsec (zaczyna się od nsec1)",
+          "Sprawdź czy nie ma dodatkowych spacji lub znaków",
+          "Spróbuj skopiować z innego źródła",
+          "Użyj skanowania kodu QR jeśli dostępne",
+          "Upewnij się że masz pełny klucz (63 znaki)"
+        ]
+      },
+      "genericError": {
+        "title": "Ogólny błąd",
+        "description": "Wystąpił nieoczekiwany błąd.",
+        "steps": [
+          "Zanotuj dokładny komunikat błędu",
+          "Zrestartuj aplikację",
+          "Sprawdź dostępność aktualizacji aplikacji",
+          "Spróbuj innego klienta",
+          "Zgłoś problem deweloperom"
+        ]
+      },
+      "profileNotFound": {
+        "title": "Nie znaleziono profilu",
+        "description": "Nie można zlokalizować profilu.",
+        "steps": [
+          "Zweryfikuj czy npub jest poprawny",
+          "Spróbuj wyszukać po NIP-05 zamiast tego",
+          "Sprawdź czy użytkownik używa konkretnego relay",
+          "Dodaj więcej relay aby znaleźć profil",
+          "Użytkownik mógł zmienić klucze"
+        ]
+      },
+      "profileNoPosts": {
+        "title": "Profil się ładuje ale nie ma postów",
+        "description": "Profil znaleziony ale brakuje treści.",
+        "steps": [
+          "Poczekaj chwilę na załadowanie postów",
+          "Podłącz się do relay na których użytkownik publikuje",
+          "Użytkownik może być nowy lub nieaktywny",
+          "Spróbuj odświeżyć profil",
+          "Sprawdź różne okresy czasu"
+        ]
+      },
+      "oldProfileData": {
+        "title": "Przestarzałe dane profilu",
+        "description": "Pokazują się stare informacje profilu.",
+        "steps": [
+          "Przeciągnij w dół aby odświeżyć",
+          "Wyczyść pamięć podręczną aplikacji",
+          "Połącz ponownie z relay profilu",
+          "Poczekaj na synchronizację relay",
+          "Aktualizacje profilu wymagają czasu na propagację"
+        ]
+      },
+      "cantFollow": {
+        "title": "Nie można obserwować użytkownika",
+        "description": "Akcja obserwowania nie działa.",
+        "steps": [
+          "Sprawdź połączenie internetowe",
+          "Zweryfikuj czy masz dostęp zapisu do relay",
+          "Spróbuj ponownie za kilka minut",
+          "Użyj innego klienta do obserwowania",
+          "Sprawdź czy relay funkcjonują"
+        ]
+      }
+    }
+  },
+  "nip05Checker": {
+    "title": "Weryfikator NIP-05",
+    "description": "Weryfikuj identyfikatory NIP-05 (jak użytkownik@domena.com). Zapewniają one czytelne nazwy w Nostr.",
+    "whatIsNip05": "Co to jest NIP-05?",
+    "aboutNip05": "O NIP-05",
+    "benefits": {
+      "humanReadable": "Uzyskaj czytelną nazwę użytkownika",
+      "domainOwnership": "Udowodnij własność domeny",
+      "checkmark": "Pokaż się z ptaszkiem w niektórych klientach"
+    },
+    "form": {
+      "placeholder": "Wprowadź identyfikator (np. użytkownik@domena.pl)",
+      "verifyButton": "Zweryfikuj identyfikator",
+      "checking": "Sprawdzanie...",
+      "recent": "Ostatnie:"
+    },
+    "results": {
+      "valid": {
+        "title": "Prawidłowy NIP-05!",
+        "description": "Ten identyfikator jest poprawnie skonfigurowany",
+        "publicKey": "Klucz publiczny (npub)",
+        "recommendedRelays": "Rekomendowane relay"
+      },
+      "invalid": {
+        "title": "Nieprawidłowy NIP-05",
+        "description": "Nie można zweryfikować tego identyfikatora"
+      },
+      "checkAnother": "Sprawdź inny",
+      "getYourOwn": "Uzyskaj własny identyfikator NIP-05"
+    },
+    "errors": {
+      "invalidFormat": {
+        "title": "Nieprawidłowy format",
+        "description": "Identyfikatory NIP-05 powinny mieć format użytkownik@domena.com",
+        "fix": "Sprawdź format i spróbuj ponownie"
+      },
+      "domainNotFound": {
+        "title": "Nie znaleziono domeny",
+        "description": "Nie można połączyć się z domeną w Twoim identyfikatorze",
+        "fix": "Sprawdź czy domena jest poprawna i dostępna"
+      },
+      "notConfigured": {
+        "title": "NIP-05 nie jest skonfigurowany",
+        "description": "Domena istnieje ale NIP-05 nie jest skonfigurowany",
+        "fix": "Skontaktuj się z właścicielem domeny lub użyj dostawcy NIP-05"
+      },
+      "jsonError": {
+        "title": "Błąd parsowania JSON",
+        "description": "Serwer zwrócił nieprawidłowe dane",
+        "fix": "To zazwyczaj problem serwera - spróbuj ponownie później"
+      },
+      "networkError": {
+        "title": "Błąd sieci",
+        "description": "Nie można połączyć się w celu weryfikacji identyfikatora",
+        "fix": "Sprawdź połączenie internetowe i spróbuj ponownie"
+      }
+    },
+    "providers": {
+      "title": "Uzyskaj własny NIP-05",
+      "getOne": "Uzyskaj własny identyfikator NIP-05 od tych dostawców:"
+    }
+  },
+  "emptyFeedFixer": {
+    "title": "Napraw Pusty Feed",
+    "description": "Nowy w Nostr? Zacznij od obserwowania kont i łączenia się z relay, aby zobaczyć treści w swoim feedzie.",
+    "setupProgress": "Postęp Konfiguracji",
+    "step1": {
+      "title": "Krok 1: Obserwuj Konta",
+      "description": "Wybierz pakiet startowy lub dodaj własne konta",
+      "following": "Obserwujesz {count} konto(-a)",
+      "followAll": "Obserwuj Wszystkich",
+      "follow": "Obserwuj",
+      "following": "Obserwujesz",
+      "addCustom": "Dodaj",
+      "continue": "Przejdź do Relay"
+    },
+    "step2": {
+      "title": "Krok 2: Połącz się z Relay",
+      "description": "Połącz się z relay, aby zobaczyć treści",
+      "connected": "Połączony z {count} relay",
+      "connect": "Połącz",
+      "connected": "Połączony",
+      "connectAll": "Połącz się ze Wszystkimi Rekomendowanymi Relay",
+      "continue": "Kontynuuj",
+      "info": "Relay to serwery przechowujące i dystrybuujące treści Nostr. Połączenie z wieloma relay zapewnia lepszą dostępność treści.",
+      "recommended": "Rekomendowane"
+    },
+    "step3": {
+      "title": "Krok 3: Zacznij Używać Nostr!",
+      "description": "Jesteś gotowy do eksploracji. Wybierz klienta, aby zacząć.",
+      "completed": "Wszystko Gotowe!",
+      "successMessage": "Obserwujesz {accounts} kont i połączyłeś się z {relays} relay. Twój feed Nostr powinien teraz mieć treści!",
+      "awesome": "Świetnie!"
+    },
+    "starterPacks": {
+      "technology": {
+        "name": "Technologia",
+        "description": "Deweloperzy, wiadomości technologiczne i innowacje"
+      },
+      "bitcoin": {
+        "name": "Bitcoin",
+        "description": "Entuzjaści Bitcoina i Lightning Network"
+      },
+      "art": {
+        "name": "Sztuka i Design",
+        "description": "Artyści, projektanci i twórcy"
+      },
+      "general": {
+        "name": "Ogólne",
+        "description": "Mieszanka ciekawych osób do obserwowania"
+      }
+    },
+    "relays": {
+      "wssRelayDamus": {
+        "name": "Relay Damus",
+        "description": "Najpopularniejszy relay"
+      },
+      "wssRelayNostr": {
+        "name": "Relay Nostr",
+        "description": "Relay ogólnego przeznaczenia"
+      },
+      "wssPurplePages": {
+        "name": "Purple Pages",
+        "description": "Relay metadanych"
+      }
+    }
+  },
+  "backupChecklist": {
+    "title": "Zrób Kopię Zapasową Swoich Kluczy",
+    "description": "Przed kontynuowaniem uzupełnij tę listę kontrolną, aby upewnić się, że Twoje klucze są bezpiecznie zapisane. To krytyczne - zgubionych kluczy nie można odzyskać.",
+    "progress": "Postęp Kopii Zapasowej",
+    "checklist": {
+      "copiedNpub": {
+        "label": "Skopiowano npub (klucz publiczny)",
+        "description": "Twój publiczny identyfikator, który możesz udostępniać innym"
+      },
+      "copiedNsec": {
+        "label": "Skopiowano nsec (klucz prywatny)",
+        "description": "Twoje tajne hasło - nigdy tego nie udostępniaj",
+        "warning": "Ważne: To Twoje jedyne hasło. Jeśli je zgubisz, nie można odzyskać konta."
+      },
+      "passwordManager": {
+        "label": "Zapisano w menedżerze haseł",
+        "description": "1Password, Bitwarden, KeePass lub podobne bezpieczne przechowywanie"
+      },
+      "paperBackup": {
+        "label": "Zapisano na papierze (kopia offline)",
+        "description": "Fizyczna kopia przechowywana w bezpiecznym miejscu",
+        "warning": "Przechowuj to w bezpiecznym miejscu z dala od komputera i telefonu."
+      },
+      "encryptedFile": {
+        "label": "Zapisano w zaszyfrowanym pliku",
+        "description": "Dysk USB, zaszyfrowana chmura lub portfel sprzętowy"
+      }
+    },
+    "buttons": {
+      "copyNpub": "Kopiuj npub",
+      "copyNsec": "Kopiuj nsec",
+      "completeAll": "Ukończyłem Wszystkie Kopie",
+      "completeRequired": "Najpierw Uzupełnij Wszystkie Pozycje",
+      "skip": "Pomiń na razie (niezalecane)"
+    },
+    "securityTips": {
+      "title": "Wskazówki Bezpieczeństwa",
+      "items": [
+        "Nigdy nie przechowuj swojego nsec w zwykłych plikach tekstowych ani zrzutach ekranu",
+        "Nie dziel się swoimi kluczami z nikim, w tym z obsługą",
+        "Przetestuj swoją kopię zapasową, przywracając z niej dane przed usunięciem oryginałów",
+        "Rozważ portfel sprzętowy dla maksymalnego bezpieczeństwa"
+      ]
+    },
+    "completion": {
+      "title": "Kopia Zapasowa Ukończona!",
+      "description": "Pomyślnie wykonałeś kopię zapasową swoich kluczy Nostr w wielu bezpiecznych miejscach. Twoje klucze są bezpieczne!",
+      "reset": "Zresetuj Listę Kontrolną"
+    },
+    "skipModal": {
+      "title": "Jesteś pewien?",
+      "description": "Pominięcie kopii zapasowej naraża Twoje konto na ryzyko. Jeśli zgubisz swój klucz prywatny:",
+      "risks": [
+        "Na zawsze stracisz dostęp do swojego konta",
+        "Wszystkie Twoje posty, obserwujący i dane znikną",
+        "Nie ma sposobu na odzyskanie lub zresetowanie kluczy"
+      ],
+      "goBack": "Wróć",
+      "skipAnyway": "Pomiń Mimo To"
+    },
+    "confirmModal": {
+      "title": "Potwierdź Kopię Zapasową",
+      "description": "Proszę potwierdzić, że ukończyłeś wszystkie kroki kopii zapasowej. Rozumiesz, że zgubionych kluczy nie można odzyskać.",
+      "review": "Przejrzyj",
+      "confirm": "Potwierdź"
+    }
+  },
+  "relayExplorer": {
+    "title": "Eksplorator Relay",
+    "description": "Przeglądaj i łącz się z relay Nostr. Relay przechowują i dystrybuują Twoje posty. Połącz się z wieloma relay dla lepszej niezawodności.",
+    "starterPack": {
+      "title": "Nowy w Nostr?",
+      "description": "Zacznij od naszego rekomendowanego pakietu startowego 4 niezawodnych relay",
+      "button": "Dodaj Pakiet Startowy"
+    },
+    "search": {
+      "placeholder": "Szukaj relay..."
+    },
+    "filters": {
+      "topic": {
+        "label": "Wszystkie Tematy",
+        "bitcoin": "Bitcoin",
+        "technology": "Technologia",
+        "general": "Ogólne",
+        "art": "Sztuka i Design"
+      },
+      "type": {
+        "label": "Wszystkie Typy",
+        "free": "Darmowe",
+        "paid": "Płatne"
+      }
+    },
+    "selected": {
+      "title": "Wybrane Relay",
+      "count": "Wybrano {count} relay",
+      "copy": "Kopiuj",
+      "download": "Pobierz"
+    },
+    "customRelay": {
+      "placeholder": "Dodaj własne relay (wss://...)",
+      "add": "Dodaj",
+      "remove": "Usuń"
+    },
+    "toast": {
+      "starterPackAdded": "Dodano relay z pakietu startowego!",
+      "alreadyExists": "Relay już istnieje!",
+      "added": "Dodano własne relay!",
+      "removed": "Usunięto relay",
+      "copied": "Skopiowano {count} relay do schowka!",
+      "copyFailed": "Nie udało się skopiować",
+      "downloaded": "Pobrano listę relay!",
+      "checkComplete": "Sprawdzanie statusu relay zakończone!"
+    },
+    "card": {
+      "latency": "Opóźnienie",
+      "users": "Użytkownicy",
+      "location": "Lokalizacja",
+      "features": "Funkcje",
+      "select": "Wybierz",
+      "deselect": "Odznacz",
+      "status": {
+        "online": "Online",
+        "offline": "Offline",
+        "checking": "Sprawdzanie"
+      }
+    },
+    "regionLabels": {
+      "na": "Ameryka Północna",
+      "eu": "Europa",
+      "asia": "Azja",
+      "other": "Inne"
+    },
+    "stats": {
+      "popularRelays": "Popularne Relay",
+      "onlineNow": "Online Teraz",
+      "freeRelays": "Darmowe Relay",
+      "selected": "Wybrane"
+    }
+  },
+  "relayPlayground": {
+    "title": "Plac Zabaw Relay",
+    "description": "Testuj i eksploruj relay Nostr w czasie rzeczywistym. Sprawdź łączność, zbadaj informacje o relay i analizuj zdarzenia.",
+    "tabs": {
+      "connection": "Połączenie",
+      "health": "Zdrowie",
+      "nips": "NIP-y",
+      "events": "Zdarzenia",
+      "query": "Zapytanie"
+    },
+    "search": {
+      "placeholder": "Szukaj relay..."
+    },
+    "buttons": {
+      "checkAll": "Sprawdź Wszystkie Relay",
+      "checking": "Sprawdzanie...",
+      "connect": "Połącz",
+      "disconnect": "Rozłącz",
+      "inspect": "Zbadaj",
+      "clear": "Wyczyść",
+      "copy": "Kopiuj",
+      "export": "Eksportuj"
+    },
+    "status": {
+      "online": "Online",
+      "offline": "Offline",
+      "checking": "Sprawdzanie",
+      "connected": "Połączony",
+      "disconnected": "Rozłączony",
+      "error": "Błąd"
+    },
+    "connectionTab": {
+      "selectRelay": "Wybierz relay do przetestowania połączenia",
+      "connectionState": "Stan Połączenia",
+      "latency": "Opóźnienie",
+      "latencyMs": "{{latency}}ms",
+      "unknown": "Nieznane",
+      "connected": "Połączono z relay",
+      "disconnected": "Rozłączono z relay",
+      "error": "Błąd połączenia"
+    },
+    "healthTab": {
+      "title": "Zdrowie Relay",
+      "uptime": "Czas Działania",
+      "responseTime": "Czas Odpowiedzi",
+      "reliability": "Niezawodność",
+      "lastChecked": "Ostatnio Sprawdzane",
+      "history": "Historia Sprawdzeń",
+      "noData": "Brak dostępnych danych o zdrowiu"
+    },
+    "nipsTab": {
+      "title": "Wspierane NIP-y",
+      "description": "Nostr Implementation Possibilities (NIP-y) to rozszerzenia protokołu wspierane przez ten relay",
+      "nip": "NIP-{{number}}",
+      "supported": "{{count}} NIP-ów wspieranych",
+      "software": "Oprogramowanie",
+      "version": "Wersja",
+      "contact": "Kontakt"
+    },
+    "eventsTab": {
+      "title": "Zdarzenia na Żywo",
+      "description": "Zdarzenia w czasie rzeczywistym z połączonych relay",
+      "noEvents": "Nie otrzymano jeszcze żadnych zdarzeń",
+      "eventId": "ID Zdarzenia",
+      "kind": "Typ",
+      "author": "Autor",
+      "timestamp": "Znacznik Czasu",
+      "content": "Treść",
+      "signature": "Podpis"
+    },
+    "queryTab": {
+      "title": "Kreator Zapytań",
+      "description": "Twórz niestandardowe zapytania Nostr, aby pobrać konkretne zdarzenia",
+      "filters": "Filtry",
+      "authors": "Autorzy",
+      "kinds": "Typy",
+      "since": "Od",
+      "until": "Do",
+      "limit": "Limit",
+      "execute": "Wykonaj Zapytanie",
+      "results": "Wyniki",
+      "noResults": "Nie znaleziono wyników"
+    },
+    "relayCard": {
+      "location": "Lokalizacja",
+      "software": "Oprogramowanie",
+      "version": "Wersja"
+    },
+    "toast": {
+      "copied": "Skopiowano do schowka!",
+      "copyFailed": "Nie udało się skopiować",
+      "exported": "Dane relay wyeksportowane!"
+    }
+  },
+  "nostrSimulator": {
+    "title": "Symulator Nostr",
+    "description": "Interaktywna symulacja działania Nostr. Zobacz jak posty przepływają przez zdecentralizowaną sieć.",
+    "controls": {
+      "play": "Odtwórz",
+      "pause": "Pauza",
+      "reset": "Resetuj",
+      "step": "Krok",
+      "speed": "Prędkość"
+    },
+    "nodes": {
+      "user": "Użytkownik",
+      "relay": "Relay",
+      "client": "Klient"
+    },
+    "messages": {
+      "sending": "Wysyłanie postu...",
+      "received": "Post odebrany!",
+      "broadcasting": "Rozgłaszanie do relay...",
+      "syncing": "Synchronizacja z siecią..."
+    }
+  },
+  "quickstartSimulator": {
+    "title": "Symulator Szybkiego Startu",
+    "description": "Symuluj swoje pierwsze kroki na Nostr. Naucz się podstaw przez interaktywne przykłady.",
+    "steps": {
+      "createKeys": "Stwórz Swoje Klucze",
+      "chooseClient": "Wybierz Klienta",
+      "connectRelay": "Połącz się z Relay",
+      "makePost": "Napisz Swój Pierwszy Post",
+      "followPeople": "Obserwuj Ludzi"
+    },
+    "buttons": {
+      "next": "Następny Krok",
+      "previous": "Poprzedni",
+      "restart": "Zacznij Od Nowa",
+      "tryIt": "Wypróbuj"
+    }
+  },
+  "protocolComparisonUI": {
+    "title": "Porównanie Protokołów",
+    "description": "Porównaj Nostr z innymi zdecentralizowanymi protokołami społecznościowymi jak ActivityPub (Mastodon) i AT Protocol (Bluesky).",
+    "centralizedLabel": "Tradycyjne Media Społecznościowe",
+    "nostrLabel": "Nostr",
+    "items": {
+      "identity": {
+        "title": "Tożsamość",
+        "centralized": "Twoje konto jest własnością platformy. Mogą Cię usunąć lub zawiesić w każdej chwili.",
+        "nostr": "Jesteś właścicielem swojej tożsamości dzięki kluczom kryptograficznym. Nikt nie może usunąć Twojego konta."
+      },
+      "data": {
+        "title": "Dane",
+        "centralized": "Twoje posty i dane są przechowywane na serwerach firmy. Mogą usuwać lub modyfikować Twoje treści.",
+        "nostr": "Twoje dane są rozproszone po wielu relay. Ty decydujesz gdzie żyje Twoja treść."
+      },
+      "clients": {
+        "title": "Klienci",
+        "centralized": "Jesteś uwięziony w aplikacji jednej platformy. Zmiana oznacza utratę obserwujących.",
+        "nostr": "Używaj dowolnego klienta. Twoja tożsamość i obserwujący podążają za Tobą wszędzie."
+      },
+      "censorship": {
+        "title": "Odporność na Cenzurę",
+        "centralized": "Platformy decydują co możesz powiedzieć. Mogą Cię cenzurować lub shadowbanować.",
+        "nostr": "Żadna centralna władza nie kontroluje wypowiedzi. Zawsze znajdziesz relay które przekażą Twoje treści."
+      }
+    },
+    "protocols": {
+      "nostr": "Nostr",
+      "activitypub": "ActivityPub",
+      "atProtocol": "AT Protocol"
+    },
+    "features": {
+      "decentralization": "Decentralizacja",
+      "censorshipResistance": "Odporność na Cenzurę",
+      "accountPortability": "Przenośność Konta",
+      "easeOfUse": "Łatność Użycia",
+      "scalability": "Skalowalność"
+    },
+    "details": {
+      "learnMore": "Dowiedz się Więcej"
+    }
+  },
+  "postFlowSimulator": {
+    "title": "Symulator Przepływu Postów",
+    "description": "Zobacz jak post podróżuje z Twojego urządzenia do innych użytkowników przez sieć Nostr.",
+    "stages": {
+      "create": "Utwórz Post",
+      "sign": "Podpisz Kluczem",
+      "send": "Wyślij do Relay",
+      "broadcast": "Relay Rozgłasza",
+      "receive": "Inni Otrzymują"
+    },
+    "labels": {
+      "yourDevice": "Twoje Urządzenie",
+      "relay": "Relay",
+      "followers": "Obserwujący"
+    },
+    "buttons": {
+      "play": "Odtwórz",
+      "pause": "Pauza",
+      "reset": "Resetuj"
+    },
+    "currentStepLabel": "Aktualny Krok",
+    "stepDescriptions": {
+      "0": "Tworzysz post na swoim urządzeniu i podpisujesz go swoim kluczem prywatnym.",
+      "1": "Twój post jest publikowany do Relay 1, który przechowuje i waliduje go.",
+      "2": "Twój post jest również publikowany do Relay 2 (i innych relay których używasz).",
+      "3": "Twoi obserwujący otrzymują post z relay do których są podłączeni."
+    }
+  },
+  "zapSimulator": {
+    "title": "Symulator Zapów",
+    "description": "Symuluj wysyłanie i otrzymywanie płatności Bitcoin (zapów) na Nostr za pomocą Lightning Network.",
+    "steps": {
+      "createInvoice": "Utwórz Fakturę",
+      "scan": "Zeskanuj Kod QR",
+      "pay": "Zapłać Portfelem",
+      "confirm": "Potwierdź Otrzymanie"
+    },
+    "labels": {
+      "amount": "Kwota (sats)",
+      "memo": "Notatka",
+      "sender": "Nadawca",
+      "receiver": "Odbiorca",
+      "invoice": "Faktura Lightning"
+    },
+    "buttons": {
+      "create": "Utwórz Fakturę",
+      "pay": "Zapłać Zapa",
+      "simulate": "Symuluj Zapa"
+    }
+  },
+  "relayVisualizer": {
+    "title": "Wizualizator Relay",
+    "description": "Wizualizuj jak relay łączą się i tworzą sieć Nostr.",
+    "controls": {
+      "addRelay": "Dodaj Relay",
+      "removeRelay": "Usuń Relay",
+      "connect": "Połącz",
+      "disconnect": "Rozłącz"
+    },
+    "labels": {
+      "connections": "Połączenia",
+      "networkSize": "Rozmiar Sieci",
+      "relayCount": "{{count}} relay"
+    }
+  },
+  "relayWorldMap": {
+    "title": "Mapa Świata Relay",
+    "description": "Zobacz gdzie na świecie znajdują się relay Nostr.",
+    "regions": {
+      "northAmerica": "Ameryka Północna",
+      "southAmerica": "Ameryka Południowa",
+      "europe": "Europa",
+      "asia": "Azja",
+      "africa": "Afryka",
+      "oceania": "Oceania"
+    },
+    "stats": {
+      "totalRelays": "Wszystkich Relay",
+      "topRegion": "Najlepszy Region",
+      "avgLatency": "Śr. Opóźnienie"
+    }
   }
 }

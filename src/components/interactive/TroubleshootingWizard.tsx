@@ -20,6 +20,7 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { cn, copyToClipboard } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 interface Question {
   id: string;
@@ -47,23 +48,22 @@ interface TroubleshootingWizardProps {
 }
 
 // Solutions definitions
-const createSolutions = (): Record<string, Solution> => ({
+const createSolutions = (t: (key: string) => string): Record<string, Solution> => ({
   lostKeys: {
-    title: "Lost Keys - Prevention Focus",
-    description:
-      "Unfortunately, lost keys cannot be recovered. However, we can help you prevent this in the future.",
+    title: t('troubleshootingWizard.solutions.lostKeys.title'),
+    description: t('troubleshootingWizard.solutions.lostKeys.description'),
     severity: "high",
     steps: [
-      "Create a new key pair using the Key Generator",
-      "Immediately save your nsec in 3+ secure locations",
-      "Consider using a password manager (1Password, Bitwarden)",
-      "Write it down on paper and store in a safe place",
-      "Never rely on browser cache or single device storage",
+      t('troubleshootingWizard.solutions.lostKeys.steps.0'),
+      t('troubleshootingWizard.solutions.lostKeys.steps.1'),
+      t('troubleshootingWizard.solutions.lostKeys.steps.2'),
+      t('troubleshootingWizard.solutions.lostKeys.steps.3'),
+      t('troubleshootingWizard.solutions.lostKeys.steps.4'),
     ],
     tips: [
-      'There is no "Forgot Password" in Nostr',
-      "Your keys are your identity - treat them like cash",
-      "Test your backup by restoring from it",
+      t('troubleshootingWizard.solutions.lostKeys.tips.0'),
+      t('troubleshootingWizard.solutions.lostKeys.tips.1'),
+      t('troubleshootingWizard.solutions.lostKeys.tips.2'),
     ],
     resources: [
       { label: "Key Generator", url: "#key-generator" },
@@ -71,21 +71,20 @@ const createSolutions = (): Record<string, Solution> => ({
     ],
   },
   newUserFeed: {
-    title: "Welcome! Your Feed is Empty",
-    description:
-      "As a new user, your feed is empty because you need to follow people first.",
+    title: t('troubleshootingWizard.solutions.newUserFeed.title'),
+    description: t('troubleshootingWizard.solutions.newUserFeed.description'),
     severity: "low",
     steps: [
-      "Go to the Empty Feed Fixer tool below",
-      "Select a starter pack of accounts to follow",
-      "Connect to 3-5 recommended relays",
-      "Wait a few minutes for content to load",
-      "Try following popular accounts manually",
+      t('troubleshootingWizard.solutions.newUserFeed.steps.0'),
+      t('troubleshootingWizard.solutions.newUserFeed.steps.1'),
+      t('troubleshootingWizard.solutions.newUserFeed.steps.2'),
+      t('troubleshootingWizard.solutions.newUserFeed.steps.3'),
+      t('troubleshootingWizard.solutions.newUserFeed.steps.4'),
     ],
     tips: [
-      "Start with a starter pack for your interests",
-      "Follow at least 10-20 accounts to see content",
-      "Connect to multiple relays for better coverage",
+      t('troubleshootingWizard.solutions.newUserFeed.tips.0'),
+      t('troubleshootingWizard.solutions.newUserFeed.tips.1'),
+      t('troubleshootingWizard.solutions.newUserFeed.tips.2'),
     ],
     resources: [
       { label: "Empty Feed Fixer", url: "/guides/quickstart" },
@@ -93,163 +92,163 @@ const createSolutions = (): Record<string, Solution> => ({
     ],
   },
   partialFeed: {
-    title: "Missing Some Posts",
-    description: "Partial content usually means relay connectivity issues.",
+    title: t('troubleshootingWizard.solutions.partialFeed.title'),
+    description: t('troubleshootingWizard.solutions.partialFeed.description'),
     severity: "medium",
     steps: [
-      "Check which relays you are connected to",
-      "Add more relays (aim for 5-10 diverse relays)",
-      "Wait a few minutes for sync to complete",
-      "Try refreshing the feed",
-      "Check if the missing users use different relays",
+      t('troubleshootingWizard.solutions.partialFeed.steps.0'),
+      t('troubleshootingWizard.solutions.partialFeed.steps.1'),
+      t('troubleshootingWizard.solutions.partialFeed.steps.2'),
+      t('troubleshootingWizard.solutions.partialFeed.steps.3'),
+      t('troubleshootingWizard.solutions.partialFeed.steps.4'),
     ],
     tips: [
-      "Different users post to different relays",
-      "More relays = more content but slower loading",
-      "Some relays may filter certain content",
+      t('troubleshootingWizard.solutions.partialFeed.tips.0'),
+      t('troubleshootingWizard.solutions.partialFeed.tips.1'),
+      t('troubleshootingWizard.solutions.partialFeed.tips.2'),
     ],
   },
   checkRelays: {
-    title: "Check Your Relay Connections",
-    description: "Let's verify your relay setup.",
+    title: t('troubleshootingWizard.solutions.checkRelays.title'),
+    description: t('troubleshootingWizard.solutions.checkRelays.description'),
     severity: "medium",
     steps: [
-      "Open your client settings",
-      'Look for "Relays" or "Network" section',
-      "Check if you have 3+ relays connected",
-      "Test relay connections",
-      "Add recommended relays if needed",
+      t('troubleshootingWizard.solutions.checkRelays.steps.0'),
+      t('troubleshootingWizard.solutions.checkRelays.steps.1'),
+      t('troubleshootingWizard.solutions.checkRelays.steps.2'),
+      t('troubleshootingWizard.solutions.checkRelays.steps.3'),
+      t('troubleshootingWizard.solutions.checkRelays.steps.4'),
     ],
     resources: [{ label: "Relay Explorer", url: "#relays" }],
   },
   relayIssue: {
-    title: "Relay Connection Issue",
-    description: "Connected but no content suggests relay problems.",
+    title: t('troubleshootingWizard.solutions.relayIssue.title'),
+    description: t('troubleshootingWizard.solutions.relayIssue.description'),
     severity: "medium",
     steps: [
-      'Check if relays show "online" status',
-      "Remove and re-add problematic relays",
-      "Try different relay URLs",
-      "Check your internet connection",
-      "Wait and try again later",
+      t('troubleshootingWizard.solutions.relayIssue.steps.0'),
+      t('troubleshootingWizard.solutions.relayIssue.steps.1'),
+      t('troubleshootingWizard.solutions.relayIssue.steps.2'),
+      t('troubleshootingWizard.solutions.relayIssue.steps.3'),
+      t('troubleshootingWizard.solutions.relayIssue.steps.4'),
     ],
     tips: [
-      "Relays sometimes go offline for maintenance",
-      "Try geographically closer relays",
-      "Free relays can be overloaded",
+      t('troubleshootingWizard.solutions.relayIssue.tips.0'),
+      t('troubleshootingWizard.solutions.relayIssue.tips.1'),
+      t('troubleshootingWizard.solutions.relayIssue.tips.2'),
     ],
   },
   offlineRelays: {
-    title: "All Relays Offline",
-    description: "This usually indicates a network or configuration issue.",
+    title: t('troubleshootingWizard.solutions.offlineRelays.title'),
+    description: t('troubleshootingWizard.solutions.offlineRelays.description'),
     severity: "high",
     steps: [
-      "Check your internet connection",
-      "Verify relay URLs are correct (wss://...)",
-      "Try different relays from the Relay Explorer",
-      "Check if client is blocked by firewall",
-      "Restart the app and try again",
+      t('troubleshootingWizard.solutions.offlineRelays.steps.0'),
+      t('troubleshootingWizard.solutions.offlineRelays.steps.1'),
+      t('troubleshootingWizard.solutions.offlineRelays.steps.2'),
+      t('troubleshootingWizard.solutions.offlineRelays.steps.3'),
+      t('troubleshootingWizard.solutions.offlineRelays.steps.4'),
     ],
     tips: [
-      "Make sure URLs start with wss:// not https://",
-      "Some networks block WebSocket connections",
-      "Try using a VPN if on restricted network",
+      t('troubleshootingWizard.solutions.offlineRelays.tips.0'),
+      t('troubleshootingWizard.solutions.offlineRelays.tips.1'),
+      t('troubleshootingWizard.solutions.offlineRelays.tips.2'),
     ],
   },
   stuckConnecting: {
-    title: "Stuck on Connecting",
-    description: "The client is having trouble reaching relays.",
+    title: t('troubleshootingWizard.solutions.stuckConnecting.title'),
+    description: t('troubleshootingWizard.solutions.stuckConnecting.description'),
     severity: "medium",
     steps: [
-      "Force close and reopen the app",
-      "Check internet connection",
-      "Remove slow or dead relays",
-      "Try connecting to fewer relays (3-5)",
-      "Clear app cache/data if on mobile",
+      t('troubleshootingWizard.solutions.stuckConnecting.steps.0'),
+      t('troubleshootingWizard.solutions.stuckConnecting.steps.1'),
+      t('troubleshootingWizard.solutions.stuckConnecting.steps.2'),
+      t('troubleshootingWizard.solutions.stuckConnecting.steps.3'),
+      t('troubleshootingWizard.solutions.stuckConnecting.steps.4'),
     ],
   },
   notPublishing: {
-    title: "Posts Not Publishing",
-    description: "Your posts are failing to send.",
+    title: t('troubleshootingWizard.solutions.notPublishing.title'),
+    description: t('troubleshootingWizard.solutions.notPublishing.description'),
     severity: "medium",
     steps: [
-      "Check if you have write-enabled relays",
-      "Verify you have enough relays (at least 1)",
-      "Try posting again - it might be temporary",
-      "Check relay status - some require payment",
-      "Reduce post length and try again",
+      t('troubleshootingWizard.solutions.notPublishing.steps.0'),
+      t('troubleshootingWizard.solutions.notPublishing.steps.1'),
+      t('troubleshootingWizard.solutions.notPublishing.steps.2'),
+      t('troubleshootingWizard.solutions.notPublishing.steps.3'),
+      t('troubleshootingWizard.solutions.notPublishing.steps.4'),
     ],
   },
   slowLoading: {
-    title: "Slow Loading",
-    description: "Content is loading very slowly.",
+    title: t('troubleshootingWizard.solutions.slowLoading.title'),
+    description: t('troubleshootingWizard.solutions.slowLoading.description'),
     severity: "low",
     steps: [
-      "Reduce number of connected relays",
-      "Switch to faster relays (lower latency)",
-      "Use the Relay Explorer to find fast relays",
-      "Check your internet speed",
-      "Close other apps using bandwidth",
+      t('troubleshootingWizard.solutions.slowLoading.steps.0'),
+      t('troubleshootingWizard.solutions.slowLoading.steps.1'),
+      t('troubleshootingWizard.solutions.slowLoading.steps.2'),
+      t('troubleshootingWizard.solutions.slowLoading.steps.3'),
+      t('troubleshootingWizard.solutions.slowLoading.steps.4'),
     ],
   },
   unstableConnection: {
-    title: "Unstable Connection",
-    description: "Connection keeps dropping.",
+    title: t('troubleshootingWizard.solutions.unstableConnection.title'),
+    description: t('troubleshootingWizard.solutions.unstableConnection.description'),
     severity: "medium",
     steps: [
-      "Remove unreliable relays",
-      "Keep only 3-5 stable relays",
-      "Use relays geographically closer to you",
-      "Check if on unstable WiFi/mobile data",
-      "Try using a VPN",
+      t('troubleshootingWizard.solutions.unstableConnection.steps.0'),
+      t('troubleshootingWizard.solutions.unstableConnection.steps.1'),
+      t('troubleshootingWizard.solutions.unstableConnection.steps.2'),
+      t('troubleshootingWizard.solutions.unstableConnection.steps.3'),
+      t('troubleshootingWizard.solutions.unstableConnection.steps.4'),
     ],
   },
   zapNothing: {
-    title: "Zap Button Does Nothing",
-    description: "Zap functionality may not be configured.",
+    title: t('troubleshootingWizard.solutions.zapNothing.title'),
+    description: t('troubleshootingWizard.solutions.zapNothing.description'),
     severity: "medium",
     steps: [
-      "Ensure you have a lightning wallet connected",
-      "Check if client supports zaps",
-      "Verify your wallet has NWC configured",
-      "Try a different client that supports zaps",
-      "Check if the recipient accepts zaps",
+      t('troubleshootingWizard.solutions.zapNothing.steps.0'),
+      t('troubleshootingWizard.solutions.zapNothing.steps.1'),
+      t('troubleshootingWizard.solutions.zapNothing.steps.2'),
+      t('troubleshootingWizard.solutions.zapNothing.steps.3'),
+      t('troubleshootingWizard.solutions.zapNothing.steps.4'),
     ],
   },
   zapError: {
-    title: "Zap Error Message",
-    description: "There is a specific error with your zap.",
+    title: t('troubleshootingWizard.solutions.zapError.title'),
+    description: t('troubleshootingWizard.solutions.zapError.description'),
     severity: "medium",
     steps: [
-      "Note the exact error message",
-      "Check wallet has sufficient balance",
-      "Verify NWC connection is valid",
-      "Try zapping a smaller amount",
-      "Restart wallet and client apps",
+      t('troubleshootingWizard.solutions.zapError.steps.0'),
+      t('troubleshootingWizard.solutions.zapError.steps.1'),
+      t('troubleshootingWizard.solutions.zapError.steps.2'),
+      t('troubleshootingWizard.solutions.zapError.steps.3'),
+      t('troubleshootingWizard.solutions.zapError.steps.4'),
     ],
   },
   zapNotReceived: {
-    title: "Zap Sent But Not Received",
-    description: "The zap was sent but recipient did not get it.",
+    title: t('troubleshootingWizard.solutions.zapNotReceived.title'),
+    description: t('troubleshootingWizard.solutions.zapNotReceived.description'),
     severity: "low",
     steps: [
-      "Wait 5-10 minutes (lightning can be slow)",
-      "Check your wallet transaction history",
-      "Verify the recipient's lightning address",
-      "Contact recipient to check their wallet",
-      "Zaps sometimes fail silently - try again",
+      t('troubleshootingWizard.solutions.zapNotReceived.steps.0'),
+      t('troubleshootingWizard.solutions.zapNotReceived.steps.1'),
+      t('troubleshootingWizard.solutions.zapNotReceived.steps.2'),
+      t('troubleshootingWizard.solutions.zapNotReceived.steps.3'),
+      t('troubleshootingWizard.solutions.zapNotReceived.steps.4'),
     ],
   },
   noWallet: {
-    title: "No Wallet Connected",
-    description: "You need a Bitcoin Lightning wallet to send zaps.",
+    title: t('troubleshootingWizard.solutions.noWallet.title'),
+    description: t('troubleshootingWizard.solutions.noWallet.description'),
     severity: "low",
     steps: [
-      "Download a lightning wallet (Alby, Zeus, Phoenix)",
-      "Fund the wallet with Bitcoin",
-      "Connect wallet to your Nostr client via NWC",
-      "Try sending a small test zap",
-      "Start with 21 sats to test",
+      t('troubleshootingWizard.solutions.noWallet.steps.0'),
+      t('troubleshootingWizard.solutions.noWallet.steps.1'),
+      t('troubleshootingWizard.solutions.noWallet.steps.2'),
+      t('troubleshootingWizard.solutions.noWallet.steps.3'),
+      t('troubleshootingWizard.solutions.noWallet.steps.4'),
     ],
     resources: [
       { label: "Get Alby Wallet", url: "https://getalby.com" },
@@ -257,99 +256,99 @@ const createSolutions = (): Record<string, Solution> => ({
     ],
   },
   appCrash: {
-    title: "App Crashes on Start",
-    description: "The app crashes immediately when opened.",
+    title: t('troubleshootingWizard.solutions.appCrash.title'),
+    description: t('troubleshootingWizard.solutions.appCrash.description'),
     severity: "high",
     steps: [
-      "Force close the app completely",
-      "Restart your device",
-      "Update to latest app version",
-      "Clear app cache (Android) or reinstall",
-      "Check if device meets minimum requirements",
+      t('troubleshootingWizard.solutions.appCrash.steps.0'),
+      t('troubleshootingWizard.solutions.appCrash.steps.1'),
+      t('troubleshootingWizard.solutions.appCrash.steps.2'),
+      t('troubleshootingWizard.solutions.appCrash.steps.3'),
+      t('troubleshootingWizard.solutions.appCrash.steps.4'),
     ],
   },
   blankScreen: {
-    title: "Blank or White Screen",
-    description: "The app opens but shows nothing.",
+    title: t('troubleshootingWizard.solutions.blankScreen.title'),
+    description: t('troubleshootingWizard.solutions.blankScreen.description'),
     severity: "medium",
     steps: [
-      "Wait 30 seconds - might be loading",
-      "Check internet connection",
-      "Force close and reopen",
-      "Clear app data/cache",
-      "Try using web version instead",
+      t('troubleshootingWizard.solutions.blankScreen.steps.0'),
+      t('troubleshootingWizard.solutions.blankScreen.steps.1'),
+      t('troubleshootingWizard.solutions.blankScreen.steps.2'),
+      t('troubleshootingWizard.solutions.blankScreen.steps.3'),
+      t('troubleshootingWizard.solutions.blankScreen.steps.4'),
     ],
   },
   importFail: {
-    title: "Key Import Failed",
-    description: "Unable to import your keys.",
+    title: t('troubleshootingWizard.solutions.importFail.title'),
+    description: t('troubleshootingWizard.solutions.importFail.description'),
     severity: "high",
     steps: [
-      "Verify nsec format (starts with nsec1)",
-      "Check for extra spaces or characters",
-      "Try copying from a different source",
-      "Use QR code scan if available",
-      "Ensure you have the full key (63 chars)",
+      t('troubleshootingWizard.solutions.importFail.steps.0'),
+      t('troubleshootingWizard.solutions.importFail.steps.1'),
+      t('troubleshootingWizard.solutions.importFail.steps.2'),
+      t('troubleshootingWizard.solutions.importFail.steps.3'),
+      t('troubleshootingWizard.solutions.importFail.steps.4'),
     ],
   },
   genericError: {
-    title: "General Error",
-    description: "An unexpected error occurred.",
+    title: t('troubleshootingWizard.solutions.genericError.title'),
+    description: t('troubleshootingWizard.solutions.genericError.description'),
     severity: "medium",
     steps: [
-      "Note the exact error message",
-      "Restart the application",
-      "Check for app updates",
-      "Try a different client",
-      "Report the issue to developers",
+      t('troubleshootingWizard.solutions.genericError.steps.0'),
+      t('troubleshootingWizard.solutions.genericError.steps.1'),
+      t('troubleshootingWizard.solutions.genericError.steps.2'),
+      t('troubleshootingWizard.solutions.genericError.steps.3'),
+      t('troubleshootingWizard.solutions.genericError.steps.4'),
     ],
   },
   profileNotFound: {
-    title: "Profile Not Found",
-    description: "The profile cannot be located.",
+    title: t('troubleshootingWizard.solutions.profileNotFound.title'),
+    description: t('troubleshootingWizard.solutions.profileNotFound.description'),
     severity: "medium",
     steps: [
-      "Verify the npub is correct",
-      "Try searching by NIP-05 instead",
-      "Check if user uses a specific relay",
-      "Add more relays to find the profile",
-      "The user may have changed keys",
+      t('troubleshootingWizard.solutions.profileNotFound.steps.0'),
+      t('troubleshootingWizard.solutions.profileNotFound.steps.1'),
+      t('troubleshootingWizard.solutions.profileNotFound.steps.2'),
+      t('troubleshootingWizard.solutions.profileNotFound.steps.3'),
+      t('troubleshootingWizard.solutions.profileNotFound.steps.4'),
     ],
   },
   profileNoPosts: {
-    title: "Profile Loads But No Posts",
-    description: "Profile found but content is missing.",
+    title: t('troubleshootingWizard.solutions.profileNoPosts.title'),
+    description: t('troubleshootingWizard.solutions.profileNoPosts.description'),
     severity: "low",
     steps: [
-      "Wait a moment for posts to load",
-      "Connect to relays the user posts to",
-      "The user may be new or inactive",
-      "Try refreshing the profile",
-      "Check different time periods",
+      t('troubleshootingWizard.solutions.profileNoPosts.steps.0'),
+      t('troubleshootingWizard.solutions.profileNoPosts.steps.1'),
+      t('troubleshootingWizard.solutions.profileNoPosts.steps.2'),
+      t('troubleshootingWizard.solutions.profileNoPosts.steps.3'),
+      t('troubleshootingWizard.solutions.profileNoPosts.steps.4'),
     ],
   },
   oldProfileData: {
-    title: "Outdated Profile Data",
-    description: "Old profile information is showing.",
+    title: t('troubleshootingWizard.solutions.oldProfileData.title'),
+    description: t('troubleshootingWizard.solutions.oldProfileData.description'),
     severity: "low",
     steps: [
-      "Pull down to refresh",
-      "Clear app cache",
-      "Reconnect to profile relay",
-      "Wait for relays to sync",
-      "Profile updates take time to propagate",
+      t('troubleshootingWizard.solutions.oldProfileData.steps.0'),
+      t('troubleshootingWizard.solutions.oldProfileData.steps.1'),
+      t('troubleshootingWizard.solutions.oldProfileData.steps.2'),
+      t('troubleshootingWizard.solutions.oldProfileData.steps.3'),
+      t('troubleshootingWizard.solutions.oldProfileData.steps.4'),
     ],
   },
   cantFollow: {
-    title: "Cannot Follow User",
-    description: "Follow action is not working.",
+    title: t('troubleshootingWizard.solutions.cantFollow.title'),
+    description: t('troubleshootingWizard.solutions.cantFollow.description'),
     severity: "medium",
     steps: [
-      "Check internet connection",
-      "Verify you have write-access to relays",
-      "Try again in a few minutes",
-      "Use a different client to follow",
-      "Check if relays are functioning",
+      t('troubleshootingWizard.solutions.cantFollow.steps.0'),
+      t('troubleshootingWizard.solutions.cantFollow.steps.1'),
+      t('troubleshootingWizard.solutions.cantFollow.steps.2'),
+      t('troubleshootingWizard.solutions.cantFollow.steps.3'),
+      t('troubleshootingWizard.solutions.cantFollow.steps.4'),
     ],
   },
 });
@@ -357,6 +356,7 @@ const createSolutions = (): Record<string, Solution> => ({
 export function TroubleshootingWizard({
   className,
 }: TroubleshootingWizardProps) {
+  const { t } = useTranslation();
   const [currentQuestionId, setCurrentQuestionId] = useState<string>("start");
   const [history, setHistory] = useState<string[]>([]);
   const [solution, setSolution] = useState<Solution | null>(null);
@@ -367,7 +367,9 @@ export function TroubleshootingWizard({
     timestamp: "",
   });
 
-  const currentQuestion = QUESTIONS[currentQuestionId];
+  const solutions = getSolutions(t);
+  const questions = getQuestions(solutions, t);
+  const currentQuestion = questions[currentQuestionId];
 
   useEffect(() => {
     setDiagnosticInfo({
@@ -413,7 +415,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
     `.trim();
 
     await copyToClipboard(info);
-    alert("Diagnostic info copied to clipboard!");
+    alert(t('troubleshootingWizard.diagnosticInfo.copy') + "!");
   };
 
   const getSeverityColor = (severity: string) => {
@@ -440,10 +442,10 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
             <Wrench className="w-8 h-8 text-primary-500" />
           </motion.div>
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Troubleshooting Wizard
+            {t('troubleshootingWizard.title')}
           </h2>
           <p className="text-gray-600 dark:text-gray-400">
-            Let's diagnose and fix your Nostr issue step by step
+            {t('troubleshootingWizard.description')}
           </p>
         </div>
 
@@ -462,7 +464,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
             />
           </div>
           <span className="text-sm text-gray-600 dark:text-gray-400">
-            Step {history.length + (solution ? 1 : 0)}
+            {t('troubleshootingWizard.step')} {history.length + (solution ? 1 : 0)}
           </span>
         </div>
 
@@ -473,7 +475,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
             className="mb-4 inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />
-            Back
+            {t('troubleshootingWizard.back')}
           </button>
         )}
 
@@ -495,10 +497,10 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               >
                 <AlertCircle className="w-4 h-4" />
                 {solution.severity === "high"
-                  ? "High Priority"
+                  ? t('troubleshootingWizard.severity.high')
                   : solution.severity === "medium"
-                    ? "Medium Priority"
-                    : "Low Priority"}
+                    ? t('troubleshootingWizard.severity.medium')
+                    : t('troubleshootingWizard.severity.low')}
               </div>
 
               {/* Title */}
@@ -511,7 +513,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               <div className="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 mb-6">
                 <h4 className="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
                   <Check className="w-5 h-5 text-primary-500" />
-                  Steps to Fix
+                  {t('troubleshootingWizard.stepsToFix')}
                 </h4>
                 <ol className="space-y-3">
                   {solution.steps.map((step, i) => (
@@ -530,7 +532,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
                 <div className="bg-info-500/10 border border-info-500/30 rounded-xl p-4 mb-6">
                   <h4 className="font-medium text-info-500 mb-2 flex items-center gap-2">
                     <Info className="w-5 h-5" />
-                    Pro Tips
+                    {t('troubleshootingWizard.proTips')}
                   </h4>
                   <ul className="space-y-1">
                     {solution.tips.map((tip, i) => (
@@ -550,7 +552,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               {solution.resources && solution.resources.length > 0 && (
                 <div className="mb-6">
                   <h4 className="font-medium text-gray-900 dark:text-white mb-3">
-                    Helpful Resources
+                    {t('troubleshootingWizard.helpfulResources')}
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {solution.resources.map((resource) => (
@@ -574,14 +576,14 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
                   className="flex-1 py-3 bg-primary-600 hover:bg-primary-700 text-gray-900 dark:text-white rounded-xl font-medium transition-all inline-flex items-center justify-center gap-2"
                 >
                   <RotateCcw className="w-5 h-5" />
-                  Start Over
+                  {t('troubleshootingWizard.startOver')}
                 </button>
                 <button
                   onClick={() => setShowDiagnosticInfo(true)}
                   className="py-3 px-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 text-gray-900 dark:text-white rounded-xl font-medium transition-all inline-flex items-center justify-center gap-2"
                 >
                   <FileText className="w-5 h-5" />
-                  Save Diagnostic Info
+                  {t('troubleshootingWizard.saveDiagnosticInfo')}
                 </button>
               </div>
             </motion.div>
@@ -630,13 +632,13 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
             className="mt-6 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white text-sm transition-colors inline-flex items-center gap-2"
           >
             <RotateCcw className="w-4 h-4" />
-            Start Over
+            {t('troubleshootingWizard.startOver')}
           </button>
         )}
 
         {/* Footer - Still Need Help */}
         <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-          <p className="text-center text-gray-600 dark:text-gray-400 mb-4">Still need help?</p>
+          <p className="text-center text-gray-600 dark:text-gray-400 mb-4">{t('troubleshootingWizard.stillNeedHelp')}</p>
           <div className="flex flex-wrap justify-center gap-3">
             <a
               href="https://snort.social"
@@ -645,7 +647,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg transition-colors"
             >
               <MessageCircle className="w-4 h-4" />
-              Ask on Nostr
+              {t('troubleshootingWizard.askOnNostr')}
             </a>
             <a
               href="https://github.com/nostr-protocol/nostr"
@@ -654,7 +656,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg transition-colors"
             >
               <ExternalLink className="w-4 h-4" />
-              Documentation
+              {t('troubleshootingWizard.documentation')}
             </a>
           </div>
         </div>
@@ -678,11 +680,10 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               onClick={(e) => e.stopPropagation()}
             >
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-                Diagnostic Information
+                {t('troubleshootingWizard.diagnosticInfo.title')}
               </h3>
               <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                Copy this information when asking for help. It helps developers
-                understand your setup.
+                {t('troubleshootingWizard.diagnosticInfo.description')}
               </p>
               <div className="bg-white dark:bg-gray-900 rounded-xl p-4 mb-4 font-mono text-xs text-gray-600 dark:text-gray-400 space-y-2">
                 <p>
@@ -708,13 +709,13 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
                   className="flex-1 px-4 py-3 bg-primary-600 hover:bg-primary-700 text-gray-900 dark:text-white rounded-xl font-medium transition-all inline-flex items-center justify-center gap-2"
                 >
                   <Copy className="w-4 h-4" />
-                  Copy
+                  {t('troubleshootingWizard.diagnosticInfo.copy')}
                 </button>
                 <button
                   onClick={() => setShowDiagnosticInfo(false)}
                   className="px-4 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 text-gray-900 dark:text-white rounded-xl font-medium transition-all"
                 >
-                  Close
+                  {t('troubleshootingWizard.diagnosticInfo.close')}
                 </button>
               </div>
             </motion.div>
@@ -725,47 +726,48 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
   );
 }
 
-// Create SOLUTIONS at module level so QUESTIONS can reference it
-const SOLUTIONS = createSolutions();
+// We need to call createSolutions inside the component to access translations
+// So we'll define a function to get solutions
+const getSolutions = (t: (key: string) => string) => createSolutions(t);
 
-// Define QUESTIONS after SOLUTIONS since we need to reference it
-const QUESTIONS: Record<string, Question> = {
+// Define QUESTIONS as a function that accepts solutions
+const getQuestions = (solutions: Record<string, Solution>, t: (key: string) => string): Record<string, Question> => ({
   start: {
     id: "start",
-    text: "What's your problem?",
+    text: t('troubleshootingWizard.questions.start.text'),
     options: [
       {
-        label: "Empty feed / No posts",
+        label: t('troubleshootingWizard.questions.start.options.emptyFeed'),
         value: "empty-feed",
         icon: <Eye className="w-5 h-5" />,
         next: "feed-check",
       },
       {
-        label: "Connection issues",
+        label: t('troubleshootingWizard.questions.start.options.connection'),
         value: "connection",
         icon: <Wifi className="w-5 h-5" />,
         next: "connection-check",
       },
       {
-        label: "Lost or forgot keys",
+        label: t('troubleshootingWizard.questions.start.options.lostKeys'),
         value: "lost-keys",
         icon: <Key className="w-5 h-5" />,
-        solution: SOLUTIONS.lostKeys,
+        solution: solutions.lostKeys,
       },
       {
-        label: "Zaps not working",
+        label: t('troubleshootingWizard.questions.start.options.zaps'),
         value: "zaps",
         icon: <Zap className="w-5 h-5" />,
         next: "zap-check",
       },
       {
-        label: "Client crashes or errors",
+        label: t('troubleshootingWizard.questions.start.options.clientError'),
         value: "client-error",
         icon: <Smartphone className="w-5 h-5" />,
         next: "client-check",
       },
       {
-        label: "Can't see someone's profile",
+        label: t('troubleshootingWizard.questions.start.options.profileIssue'),
         value: "profile-issue",
         icon: <Eye className="w-5 h-5" />,
         next: "profile-check",
@@ -774,144 +776,148 @@ const QUESTIONS: Record<string, Question> = {
   },
   "feed-check": {
     id: "feed-check",
-    text: "When did your feed become empty?",
+    text: t('troubleshootingWizard.questions.feedCheck.text'),
     options: [
       {
-        label: "Just started using Nostr",
+        label: t('troubleshootingWizard.questions.feedCheck.options.newUser'),
         value: "new-user",
-        solution: SOLUTIONS.newUserFeed,
+        solution: solutions.newUserFeed,
       },
       {
-        label: "Was working before, now empty",
+        label: t('troubleshootingWizard.questions.feedCheck.options.wasWorking'),
         value: "was-working",
         next: "relay-check",
       },
       {
-        label: "Only some posts missing",
+        label: t('troubleshootingWizard.questions.feedCheck.options.partial'),
         value: "partial",
-        solution: SOLUTIONS.partialFeed,
+        solution: solutions.partialFeed,
       },
     ],
   },
   "relay-check": {
     id: "relay-check",
-    text: "Are you connected to any relays?",
+    text: t('troubleshootingWizard.questions.relayCheck.text'),
     options: [
-      { label: "Not sure / Don't know", value: "unknown", next: "checkRelays" },
-      {
-        label: "Yes, but feed is still empty",
-        value: "connected-empty",
-        solution: SOLUTIONS.relayIssue,
+      { 
+        label: t('troubleshootingWizard.questions.relayCheck.options.unknown'), 
+        value: "unknown", 
+        next: "checkRelays" 
       },
       {
-        label: "Relays show as offline",
+        label: t('troubleshootingWizard.questions.relayCheck.options.connectedEmpty'),
+        value: "connected-empty",
+        solution: solutions.relayIssue,
+      },
+      {
+        label: t('troubleshootingWizard.questions.relayCheck.options.offline'),
         value: "offline",
-        solution: SOLUTIONS.offlineRelays,
+        solution: solutions.offlineRelays,
       },
     ],
   },
   "connection-check": {
     id: "connection-check",
-    text: "What type of connection issue?",
+    text: t('troubleshootingWizard.questions.connectionCheck.text'),
     options: [
       {
-        label: 'Client says "connecting..."',
+        label: t('troubleshootingWizard.questions.connectionCheck.options.connecting'),
         value: "connecting",
-        solution: SOLUTIONS.stuckConnecting,
+        solution: solutions.stuckConnecting,
       },
       {
-        label: "Posts not publishing",
+        label: t('troubleshootingWizard.questions.connectionCheck.options.notPublishing'),
         value: "not-publishing",
-        solution: SOLUTIONS.notPublishing,
+        solution: solutions.notPublishing,
       },
       {
-        label: "Very slow loading",
+        label: t('troubleshootingWizard.questions.connectionCheck.options.slow'),
         value: "slow",
-        solution: SOLUTIONS.slowLoading,
+        solution: solutions.slowLoading,
       },
       {
-        label: "Disconnects frequently",
+        label: t('troubleshootingWizard.questions.connectionCheck.options.unstable'),
         value: "unstable",
-        solution: SOLUTIONS.unstableConnection,
+        solution: solutions.unstableConnection,
       },
     ],
   },
   "zap-check": {
     id: "zap-check",
-    text: "What happens when you try to zap?",
+    text: t('troubleshootingWizard.questions.zapCheck.text'),
     options: [
       {
-        label: "Nothing happens",
+        label: t('troubleshootingWizard.questions.zapCheck.options.nothing'),
         value: "nothing",
-        solution: SOLUTIONS.zapNothing,
+        solution: solutions.zapNothing,
       },
       {
-        label: "Error message appears",
+        label: t('troubleshootingWizard.questions.zapCheck.options.error'),
         value: "error",
-        solution: SOLUTIONS.zapError,
+        solution: solutions.zapError,
       },
       {
-        label: "Zap sent but not received",
+        label: t('troubleshootingWizard.questions.zapCheck.options.notReceived'),
         value: "not-received",
-        solution: SOLUTIONS.zapNotReceived,
+        solution: solutions.zapNotReceived,
       },
       {
-        label: "Don't have a wallet",
+        label: t('troubleshootingWizard.questions.zapCheck.options.noWallet'),
         value: "no-wallet",
-        solution: SOLUTIONS.noWallet,
+        solution: solutions.noWallet,
       },
     ],
   },
   "client-check": {
     id: "client-check",
-    text: "What error are you seeing?",
+    text: t('troubleshootingWizard.questions.clientCheck.text'),
     options: [
       {
-        label: "App crashes on start",
+        label: t('troubleshootingWizard.questions.clientCheck.options.crash'),
         value: "crash",
-        solution: SOLUTIONS.appCrash,
+        solution: solutions.appCrash,
       },
       {
-        label: "White/black screen",
+        label: t('troubleshootingWizard.questions.clientCheck.options.blank'),
         value: "blank",
-        solution: SOLUTIONS.blankScreen,
+        solution: solutions.blankScreen,
       },
       {
-        label: "Key import fails",
+        label: t('troubleshootingWizard.questions.clientCheck.options.import'),
         value: "import",
-        solution: SOLUTIONS.importFail,
+        solution: solutions.importFail,
       },
       {
-        label: "Other error message",
+        label: t('troubleshootingWizard.questions.clientCheck.options.other'),
         value: "other",
-        solution: SOLUTIONS.genericError,
+        solution: solutions.genericError,
       },
     ],
   },
   "profile-check": {
     id: "profile-check",
-    text: "What happens when you view the profile?",
+    text: t('troubleshootingWizard.questions.profileCheck.text'),
     options: [
       {
-        label: "Profile not found",
+        label: t('troubleshootingWizard.questions.profileCheck.options.notFound'),
         value: "not-found",
-        solution: SOLUTIONS.profileNotFound,
+        solution: solutions.profileNotFound,
       },
       {
-        label: "Profile loads but no posts",
+        label: t('troubleshootingWizard.questions.profileCheck.options.noPosts'),
         value: "no-posts",
-        solution: SOLUTIONS.profileNoPosts,
+        solution: solutions.profileNoPosts,
       },
       {
-        label: "Old data shown",
+        label: t('troubleshootingWizard.questions.profileCheck.options.oldData'),
         value: "old-data",
-        solution: SOLUTIONS.oldProfileData,
+        solution: solutions.oldProfileData,
       },
       {
-        label: "Can't follow user",
+        label: t('troubleshootingWizard.questions.profileCheck.options.cantFollow'),
         value: "cant-follow",
-        solution: SOLUTIONS.cantFollow,
+        solution: solutions.cantFollow,
       },
     ],
   },
-};
+});

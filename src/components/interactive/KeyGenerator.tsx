@@ -24,6 +24,7 @@ import {
   loadFromLocalStorage,
 } from "../../lib/utils";
 import { recordActivity } from "../../utils/gamificationEngine";
+import { useTranslation } from "../../hooks/useTranslation";
 
 // Helper function to convert Uint8Array to hex string (browser-compatible)
 function bytesToHex(bytes: Uint8Array): string {
@@ -50,21 +51,20 @@ interface KeyGeneratorProps {
   onKeysGenerated?: (keys: KeyPair) => void;
 }
 
-const SECURITY_CHECKS: SecurityCheck[] = [
+const getSecurityChecks = (t: (key: string) => string): SecurityCheck[] => [
   {
     id: "understand",
-    label:
-      "I understand this is my only password - if lost, it cannot be recovered",
+    label: t("keyGenerator.securityChecklist.items.understand.label"),
     checked: false,
   },
   {
     id: "three-places",
-    label: "I will save it in at least 3 different secure locations",
+    label: t("keyGenerator.securityChecklist.items.threePlaces.label"),
     checked: false,
   },
   {
     id: "never-share",
-    label: "I will NEVER share my nsec (private key) with anyone",
+    label: t("keyGenerator.securityChecklist.items.neverShare.label"),
     checked: false,
   },
 ];
@@ -73,11 +73,11 @@ export function KeyGenerator({
   className,
   onKeysGenerated,
 }: KeyGeneratorProps) {
+  const { t } = useTranslation();
   const [keys, setKeys] = useState<KeyPair | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showPrivateKey, setShowPrivateKey] = useState(false);
-  const [securityChecks, setSecurityChecks] =
-    useState<SecurityCheck[]>(SECURITY_CHECKS);
+  const [securityChecks, setSecurityChecks] = useState<SecurityCheck[]>(getSecurityChecks(t));
   const [qrCodeData, setQrCodeData] = useState<{
     npub: string;
     nsec: string;
@@ -95,10 +95,10 @@ export function KeyGenerator({
   useEffect(() => {
     const savedChecks = loadFromLocalStorage<SecurityCheck[]>(
       "nostr-key-security-checks",
-      SECURITY_CHECKS,
+      getSecurityChecks(t),
     );
     setSecurityChecks(savedChecks);
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     saveToLocalStorage("nostr-key-security-checks", securityChecks);
@@ -161,8 +161,8 @@ export function KeyGenerator({
 
     setIsGenerating(false);
     onKeysGenerated?.(keyPair);
-    showToast("Keys generated successfully!", "success");
-  }, [onKeysGenerated, showToast]);
+    showToast(t('keyGenerator.toast.success'), "success");
+  }, [onKeysGenerated, showToast, t]);
 
   const handleCopy = async (text: string, label: string) => {
     if (!allChecksPassed) {
@@ -176,41 +176,41 @@ export function KeyGenerator({
   const performCopy = async (text: string, label: string) => {
     const success = await copyToClipboard(text);
     if (success) {
-      showToast(`${label} copied to clipboard`, "success");
+      showToast(t('keyGenerator.toast.copied').replace('{label}', label), "success");
     } else {
-      showToast("Failed to copy to clipboard", "error");
+      showToast(t('keyGenerator.toast.copyFailed'), "error");
     }
   };
 
   const handleDownload = () => {
     if (!keys) return;
 
-    const content = `NOSTR KEY BACKUP
+    const content = `${t('keyGenerator.backupFile.title')}
 ================
-Generated: ${new Date().toISOString()}
+${t('keyGenerator.backupFile.generated')}: ${new Date().toISOString()}
 
-PUBLIC KEY (npub) - Safe to share:
+${t('keyGenerator.backupFile.publicKey')}:
 ${keys.npub}
 
-PRIVATE KEY (nsec) - NEVER SHARE:
+${t('keyGenerator.backupFile.privateKey')}:
 ${keys.nsec}
 
-Hex Private Key:
+${t('keyGenerator.backupFile.hexPrivate')}:
 ${keys.hexPrivate}
 
-Hex Public Key:
+${t('keyGenerator.backupFile.hexPublic')}:
 ${keys.hexPublic}
 
 ================
-IMPORTANT SECURITY WARNINGS:
-- Keep your private key (nsec) secret
-- Never share it with anyone
-- Store backups in multiple secure locations
-- This is your only password - it cannot be recovered if lost
+${t('keyGenerator.backupFile.warnings.title')}:
+- ${t('keyGenerator.backupFile.warnings.keepSecret')}
+- ${t('keyGenerator.backupFile.warnings.neverShare')}
+- ${t('keyGenerator.backupFile.warnings.storeBackups')}
+- ${t('keyGenerator.backupFile.warnings.onlyPassword')}
 `;
 
     downloadFile(`nostr-keys-${Date.now()}.txt`, content);
-    showToast("Keys downloaded successfully", "success");
+    showToast(t('keyGenerator.toast.downloaded'), "success");
     
     // Record key backup (triggers security-conscious badge and streak)
     recordActivity('backupKeys');
@@ -237,11 +237,10 @@ IMPORTANT SECURITY WARNINGS:
             <Shield className="w-8 h-8 text-primary-500" />
           </motion.div>
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Generate Your Nostr Keys
+            {t('keyGenerator.title')}
           </h2>
           <p className="text-gray-600 dark:text-gray-400 max-w-lg mx-auto">
-            Create a secure key pair to access Nostr. Your keys are generated
-            locally in your browser and never sent to any server.
+            {t('keyGenerator.description')}
           </p>
         </div>
 
@@ -262,7 +261,7 @@ IMPORTANT SECURITY WARNINGS:
               ) : (
                 <Dice5 className="w-5 h-5" />
               )}
-              {isGenerating ? "Generating..." : "Generate New Key Pair"}
+              {isGenerating ? t('keyGenerator.buttons.generating') : t('keyGenerator.buttons.generate')}
             </button>
 
             {isGenerating && (
@@ -270,7 +269,7 @@ IMPORTANT SECURITY WARNINGS:
                 <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
                   <span className="flex items-center gap-2">
                     <Lock className="w-4 h-4" />
-                    Collecting entropy...
+                    {t('keyGenerator.progress.collectingEntropy')}
                   </span>
                   <span>{Math.min(100, Math.round(entropyProgress))}%</span>
                 </div>
@@ -302,13 +301,10 @@ IMPORTANT SECURITY WARNINGS:
                   <AlertTriangle className="w-5 h-5 text-yellow-700 dark:text-yellow-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <h3 className="font-semibold text-yellow-700 dark:text-yellow-400 mb-1">
-                      Critical Security Notice
+                      {t('keyGenerator.securityWarning.title')}
                     </h3>
                     <p className="text-sm text-gray-600 dark:text-gray-300">
-                      Your private key (nsec) is like a password. Anyone with
-                      access to it can control your account. Complete the
-                      security checklist below before copying or downloading
-                      your keys.
+                      {t('keyGenerator.securityWarning.description')}
                     </p>
                   </div>
                 </div>
@@ -318,7 +314,7 @@ IMPORTANT SECURITY WARNINGS:
               <div className="bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl p-4 border border-border-dark">
                 <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
                   <Shield className="w-4 h-4 text-primary-500" />
-                  Security Checklist
+                  {t('keyGenerator.securityChecklist.title')}
                 </h3>
                 <div className="space-y-2">
                   {securityChecks.map((check) => (
@@ -365,7 +361,7 @@ IMPORTANT SECURITY WARNINGS:
                 <div className="mt-4">
                   <div className="flex justify-between text-sm mb-1">
                     <span className="text-gray-600 dark:text-gray-400">
-                      Security Acknowledgment
+                      {t('keyGenerator.progress.securityAcknowledgment')}
                     </span>
                     <span
                       className={cn(
@@ -396,27 +392,26 @@ IMPORTANT SECURITY WARNINGS:
                   <div className="flex items-center gap-2">
                     <Unlock className="w-5 h-5 text-success-500" />
                     <h3 className="font-semibold text-success-500">
-                      Public Key (npub)
+                      {t('keyGenerator.keys.public.title')}
                     </h3>
                   </div>
                   <span className="text-xs bg-green-100 dark:green-900/30 text-success-500 px-2 py-1 rounded-full">
-                    Safe to share
+                    {t('keyGenerator.keys.public.badge')}
                   </span>
                 </div>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                  This is your public identifier. Share it with others so they
-                  can find and follow you.
+                  {t('keyGenerator.keys.public.description')}
                 </p>
                 <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-3 font-mono text-sm text-success-500 break-all mb-3">
                   {keys.npub}
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <button
-                    onClick={() => handleCopy(keys.npub, "Public key")}
+                    onClick={() => handleCopy(keys.npub, t('keyGenerator.keys.public.title'))}
                     className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 dark:green-900/30 hover:bg-success-500/30 text-success-500 rounded-lg transition-all"
                   >
                     <Copy className="w-4 h-4" />
-                    Copy
+                    {t('keyGenerator.keys.public.copy')}
                   </button>
                   {qrCodeData?.npub && (
                     <a
@@ -425,7 +420,7 @@ IMPORTANT SECURITY WARNINGS:
                       className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg transition-all"
                     >
                       <QrCode className="w-4 h-4" />
-                      QR Code
+                      {t('keyGenerator.keys.public.qrCode')}
                     </a>
                   )}
                 </div>
@@ -437,16 +432,15 @@ IMPORTANT SECURITY WARNINGS:
                   <div className="flex items-center gap-2">
                     <Lock className="w-5 h-5 text-error-500" />
                     <h3 className="font-semibold text-error-500">
-                      Private Key (nsec)
+                      {t('keyGenerator.keys.private.title')}
                     </h3>
                   </div>
                   <span className="text-xs bg-red-100 dark:red-900/30 text-error-500 px-2 py-1 rounded-full">
-                    NEVER SHARE
+                    {t('keyGenerator.keys.private.badge')}
                   </span>
                 </div>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                  This is your password. Anyone with this can control your
-                  account. Keep it secret and secure.
+                  {t('keyGenerator.keys.private.description')}
                 </p>
                 <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-3 font-mono text-sm text-error-500 break-all mb-3 flex items-center justify-between gap-3">
                   <span className={showPrivateKey ? "" : "blur-sm select-none"}>
@@ -456,7 +450,7 @@ IMPORTANT SECURITY WARNINGS:
                     onClick={() => setShowPrivateKey(!showPrivateKey)}
                     className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all flex-shrink-0"
                     aria-label={
-                      showPrivateKey ? "Hide private key" : "Show private key"
+                      showPrivateKey ? t('keyGenerator.keys.private.hide') : t('keyGenerator.keys.private.show')
                     }
                   >
                     {showPrivateKey ? (
@@ -468,18 +462,18 @@ IMPORTANT SECURITY WARNINGS:
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <button
-                    onClick={() => handleCopy(keys.nsec, "Private key")}
+                    onClick={() => handleCopy(keys.nsec, t('keyGenerator.keys.private.title'))}
                     className="inline-flex items-center gap-2 px-4 py-2 bg-red-100 dark:red-900/30 hover:bg-error-500/30 text-error-500 rounded-lg transition-all"
                   >
                     <Copy className="w-4 h-4" />
-                    Copy
+                    {t('keyGenerator.keys.private.copy')}
                   </button>
                   <button
                     onClick={handleDownload}
                     className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg transition-all"
                   >
                     <Download className="w-4 h-4" />
-                    Download Backup
+                    {t('keyGenerator.keys.private.download')}
                   </button>
                   {qrCodeData?.nsec && (
                     <a
@@ -488,7 +482,7 @@ IMPORTANT SECURITY WARNINGS:
                       className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg transition-all"
                     >
                       <QrCode className="w-4 h-4" />
-                      QR Code
+                      {t('keyGenerator.keys.private.qrCode')}
                     </a>
                   )}
                 </div>
@@ -499,13 +493,13 @@ IMPORTANT SECURITY WARNINGS:
                 <button
                   onClick={() => {
                     setKeys(null);
-                    setSecurityChecks(SECURITY_CHECKS);
+                    setSecurityChecks(getSecurityChecks(t));
                     setQrCodeData(null);
                   }}
                   className="text-sm text-gray-600 dark:text-gray-400 hover:text-white transition-all inline-flex items-center gap-2"
                 >
                   <RefreshCw className="w-4 h-4" />
-                  Generate new key pair
+                  {t('keyGenerator.buttons.regenerate')}
                 </button>
               </div>
             </motion.div>
@@ -535,20 +529,18 @@ IMPORTANT SECURITY WARNINGS:
                   <AlertTriangle className="w-6 h-6 text-yellow-700 dark:text-yellow-400" />
                 </div>
                 <h3 className="text-xl font-bold text-white">
-                  Security Warning
+                  {t('keyGenerator.modal.title')}
                 </h3>
               </div>
               <p className="text-gray-600 dark:text-gray-300 mb-6">
-                You haven't completed all security acknowledgments. Copying your
-                keys without understanding the risks could result in permanent
-                loss of access.
+                {t('keyGenerator.modal.description')}
               </p>
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowWarningModal(false)}
                   className="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg transition-all"
                 >
-                  Go Back
+                  {t('keyGenerator.modal.goBack')}
                 </button>
                 <button
                   onClick={() => {
@@ -558,7 +550,7 @@ IMPORTANT SECURITY WARNINGS:
                   }}
                   className="flex-1 px-4 py-2 bg-warning-500/20 hover:bg-yellow-200 dark:yellow-800 text-yellow-700 dark:text-yellow-400 rounded-lg transition-all"
                 >
-                  Copy Anyway
+                  {t('keyGenerator.modal.copyAnyway')}
                 </button>
               </div>
             </motion.div>

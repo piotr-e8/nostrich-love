@@ -11,11 +11,13 @@ import {
   User,
 } from "lucide-react";
 import { cn } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 type Person = "alice" | "bob" | "carol";
 type Relay = "relay1" | "relay2";
 
 export function NostrSimulator({ className }: { className?: string }) {
+  const { t } = useTranslation();
   const [connections, setConnections] = useState<Record<Person, Relay[]>>({
     alice: ["relay1"],
     bob: ["relay1"],
@@ -43,18 +45,18 @@ export function NostrSimulator({ className }: { className?: string }) {
     if (animationPhase !== "idle") return;
 
     setAnimationPhase("sending");
-    setCurrentMessage("✉️ Alice writes a letter...");
+    setCurrentMessage(t("nostrSimulator.messages.sending"));
 
     setTimeout(() => {
       const relayNames = connections.alice
-        .map((r) => (r === "relay1" ? "Post Office 1" : "Post Office 2"))
+        .map((r) => (r === "relay1" ? t("nostrSimulator.nodes.relay") + " 1" : t("nostrSimulator.nodes.relay") + " 2"))
         .join(" & ");
-      setCurrentMessage(`📮 Dropping letter at ${relayNames}...`);
+      setCurrentMessage(t("nostrSimulator.messages.broadcasting").replace("{{relays}}", relayNames));
       setAnimationPhase("processing");
     }, 1000);
 
     setTimeout(() => {
-      setCurrentMessage("🏤 Post office sorting mail...");
+      setCurrentMessage(t("nostrSimulator.messages.syncing"));
     }, 1800);
 
     setTimeout(() => {
@@ -63,9 +65,9 @@ export function NostrSimulator({ className }: { className?: string }) {
         const names = recipients
           .map((r) => r.charAt(0).toUpperCase() + r.slice(1))
           .join(" & ");
-        setCurrentMessage(`📬 Delivering to ${names}...`);
+        setCurrentMessage(t("nostrSimulator.messages.delivering").replace("{{recipients}}", names));
       } else {
-        setCurrentMessage("📭 No one else shares this post office");
+        setCurrentMessage(t("nostrSimulator.messages.noDelivery"));
       }
       setAnimationPhase("delivering");
     }, 2600);
@@ -75,17 +77,13 @@ export function NostrSimulator({ className }: { className?: string }) {
       const carolReceives = receives("carol");
 
       if (bobReceives && carolReceives) {
-        setCurrentMessage("✅ Bob & Carol received the letter!");
+        setCurrentMessage(t("nostrSimulator.messages.received").replace("{{recipients}}", "Bob & Carol"));
       } else if (bobReceives) {
-        setCurrentMessage(
-          "✅ Bob received it! Carol uses a different post office"
-        );
+        setCurrentMessage(t("nostrSimulator.messages.receivedOne").replace("{{recipient}}", "Bob").replace("{{other}}", "Carol"));
       } else if (carolReceives) {
-        setCurrentMessage(
-          "✅ Carol received it! Bob uses a different post office"
-        );
+        setCurrentMessage(t("nostrSimulator.messages.receivedOne").replace("{{recipient}}", "Carol").replace("{{other}}", "Bob"));
       } else {
-        setCurrentMessage("📭 No delivery - no one shares Alice's post office");
+        setCurrentMessage(t("nostrSimulator.messages.noOneShares"));
       }
       setAnimationPhase("complete");
     }, 3800);
@@ -111,13 +109,10 @@ export function NostrSimulator({ className }: { className?: string }) {
             <Mailbox className="w-7 h-7 text-purple-400" />
           </div>
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
-            How Nostr Works
+            {t("nostrSimulator.title")}
           </h2>
           <p className="text-gray-400 max-w-lg mx-auto">
-            Think of relays as{" "}
-            <span className="text-purple-400 font-semibold">post offices</span>.
-            You choose which ones to use, and letters only reach people who use
-            the same post offices.
+            {t("nostrSimulator.description")}
           </p>
         </div>
 
@@ -309,7 +304,7 @@ export function NostrSimulator({ className }: { className?: string }) {
                 )}
               </div>
               <span className="absolute -bottom-7 text-white text-xs font-medium whitespace-nowrap bg-gray-900/90 px-2 py-0.5 rounded">
-                Alice
+                {t("nostrSimulator.nodes.alice")}
               </span>
             </motion.div>
 
@@ -341,7 +336,7 @@ export function NostrSimulator({ className }: { className?: string }) {
                 )}
               </div>
               <span className="absolute -bottom-7 text-white text-xs font-medium whitespace-nowrap bg-gray-900/90 px-2 py-0.5 rounded">
-                Bob
+                {t("nostrSimulator.nodes.bob")}
               </span>
             </motion.div>
 
@@ -373,7 +368,7 @@ export function NostrSimulator({ className }: { className?: string }) {
                 )}
               </div>
               <span className="absolute -bottom-7 text-white text-xs font-medium whitespace-nowrap bg-gray-900/90 px-2 py-0.5 rounded">
-                Carol
+                {t("nostrSimulator.nodes.carol")}
               </span>
             </motion.div>
 
@@ -407,7 +402,7 @@ export function NostrSimulator({ className }: { className?: string }) {
                     </motion.div>
                   )}
               </div>
-              <span className="text-xs text-emerald-300 mt-1 font-medium">Office 1</span>
+              <span className="text-xs text-emerald-300 mt-1 font-medium">{t("nostrSimulator.nodes.office")} 1</span>
             </motion.div>
 
             {/* Post Office 2 */}
@@ -440,7 +435,7 @@ export function NostrSimulator({ className }: { className?: string }) {
                     </motion.div>
                   )}
               </div>
-              <span className="text-xs text-emerald-300 mt-1 font-medium">Office 2</span>
+              <span className="text-xs text-emerald-300 mt-1 font-medium">{t("nostrSimulator.nodes.office")} 2</span>
             </motion.div>
           </div>
         </div>
@@ -453,10 +448,9 @@ export function NostrSimulator({ className }: { className?: string }) {
               <div className="w-8 h-8 rounded-lg bg-rose-500/20 flex items-center justify-center">
                 <User className="w-4 h-4 text-rose-400" />
               </div>
-              <span className="font-semibold text-white capitalize">Alice</span>
+              <span className="font-semibold text-white capitalize">{t("nostrSimulator.nodes.alice")}</span>
               <span className="text-xs text-gray-500 ml-auto">
-                {connections.alice.length} connection
-                {connections.alice.length !== 1 ? "s" : ""}
+                {connections.alice.length} {connections.alice.length !== 1 ? t("nostrSimulator.connections") : t("nostrSimulator.connection")}
               </span>
             </div>
 
@@ -491,7 +485,7 @@ export function NostrSimulator({ className }: { className?: string }) {
                       )}
                     />
                     <span className="flex-1 text-left">
-                      {relay === "relay1" ? "Post Office 1" : "Post Office 2"}
+                      {relay === "relay1" ? `${t("nostrSimulator.nodes.office")} 1` : `${t("nostrSimulator.nodes.office")} 2`}
                     </span>
                   </button>
                 );
@@ -505,10 +499,9 @@ export function NostrSimulator({ className }: { className?: string }) {
               <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
                 <User className="w-4 h-4 text-blue-400" />
               </div>
-              <span className="font-semibold text-white capitalize">Bob</span>
+              <span className="font-semibold text-white capitalize">{t("nostrSimulator.nodes.bob")}</span>
               <span className="text-xs text-gray-500 ml-auto">
-                {connections.bob.length} connection
-                {connections.bob.length !== 1 ? "s" : ""}
+                {connections.bob.length} {connections.bob.length !== 1 ? t("nostrSimulator.connections") : t("nostrSimulator.connection")}
               </span>
             </div>
 
@@ -543,7 +536,7 @@ export function NostrSimulator({ className }: { className?: string }) {
                       )}
                     />
                     <span className="flex-1 text-left">
-                      {relay === "relay1" ? "Post Office 1" : "Post Office 2"}
+                      {relay === "relay1" ? `${t("nostrSimulator.nodes.office")} 1` : `${t("nostrSimulator.nodes.office")} 2`}
                     </span>
                   </button>
                 );
@@ -557,10 +550,9 @@ export function NostrSimulator({ className }: { className?: string }) {
               <div className="w-8 h-8 rounded-lg bg-violet-500/20 flex items-center justify-center">
                 <User className="w-4 h-4 text-violet-400" />
               </div>
-              <span className="font-semibold text-white capitalize">Carol</span>
+              <span className="font-semibold text-white capitalize">{t("nostrSimulator.nodes.carol")}</span>
               <span className="text-xs text-gray-500 ml-auto">
-                {connections.carol.length} connection
-                {connections.carol.length !== 1 ? "s" : ""}
+                {connections.carol.length} {connections.carol.length !== 1 ? t("nostrSimulator.connections") : t("nostrSimulator.connection")}
               </span>
             </div>
 
@@ -595,7 +587,7 @@ export function NostrSimulator({ className }: { className?: string }) {
                       )}
                     />
                     <span className="flex-1 text-left">
-                      {relay === "relay1" ? "Post Office 1" : "Post Office 2"}
+                      {relay === "relay1" ? `${t("nostrSimulator.nodes.office")} 1` : `${t("nostrSimulator.nodes.office")} 2`}
                     </span>
                   </button>
                 );
@@ -609,7 +601,7 @@ export function NostrSimulator({ className }: { className?: string }) {
               <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center">
                 <Send className="w-4 h-4 text-purple-400" />
               </div>
-              <span className="font-semibold text-white">Send Letter</span>
+              <span className="font-semibold text-white">{t("nostrSimulator.buttons.send")}</span>
             </div>
 
             <button
@@ -629,27 +621,27 @@ export function NostrSimulator({ className }: { className?: string }) {
               <span>
                 {isAnimating
                   ? animationPhase === "sending"
-                    ? "Sending..."
+                    ? t("nostrSimulator.controls.sending")
                     : animationPhase === "processing"
-                      ? "Processing..."
+                      ? t("nostrSimulator.controls.processing")
                       : animationPhase === "delivering"
-                        ? "Delivering..."
-                        : "Complete!"
-                  : "Send from Alice"}
+                        ? t("nostrSimulator.controls.delivering")
+                        : t("nostrSimulator.controls.complete")
+                  : t("nostrSimulator.buttons.sendFromAlice")}
               </span>
             </button>
 
             {connections.alice.length === 0 && !isAnimating && (
               <div className="mt-3 flex items-start gap-2 text-xs text-amber-400 bg-amber-500/10 rounded-lg p-2 border border-amber-500/20">
                 <Info className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                <span>Connect Alice to a post office first</span>
+                <span>{t("nostrSimulator.messages.connectFirst")}</span>
               </div>
             )}
 
             {connections.alice.length > 0 && !isAnimating && (
               <div className="mt-3 flex items-center gap-2 text-xs text-emerald-400">
                 <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Ready to send</span>
+                <span>{t("nostrSimulator.messages.ready")}</span>
               </div>
             )}
           </div>
@@ -663,15 +655,12 @@ export function NostrSimulator({ className }: { className?: string }) {
             </div>
             <div className="text-sm text-gray-300 space-y-2">
               <p>
-                <strong className="text-white">How delivery works:</strong> A
-                letter only reaches someone if they use at least one of the
-                same post offices as the sender.
+                {t("nostrSimulator.explanation.deliveryTitle")}
+                {t("nostrSimulator.explanation.deliveryDesc")}
               </p>
               <p>
-                <strong className="text-white">Key insight:</strong> Post
-                offices don&apos;t talk to each other. If Alice uses Post Office
-                1 and Carol only uses Post Office 2, Carol will never receive
-                Alice&apos;s letters.
+                {t("nostrSimulator.explanation.insightTitle")}
+                {t("nostrSimulator.explanation.insightDesc")}
               </p>
             </div>
           </div>

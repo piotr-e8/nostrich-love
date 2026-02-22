@@ -20,6 +20,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { cn, saveToLocalStorage, loadFromLocalStorage } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 type Device = "ios" | "android" | "desktop" | "web";
 type Priority = "easy" | "power" | "privacy" | "web-only";
@@ -183,84 +184,76 @@ const CLIENTS: NostrClient[] = [
   },
 ];
 
-const DEVICE_OPTIONS: {
-  value: Device;
-  label: string;
-  icon: React.ReactNode;
-}[] = [
+const getDeviceOptions = (t: (key: string) => string) => [
   {
-    value: "ios",
-    label: "iPhone / iPad",
+    value: "ios" as Device,
+    label: t("clientRecommender.deviceOptions.ios.label"),
     icon: <Smartphone className="w-6 h-6" />,
   },
   {
-    value: "android",
-    label: "Android",
+    value: "android" as Device,
+    label: t("clientRecommender.deviceOptions.android.label"),
     icon: <Smartphone className="w-6 h-6" />,
   },
   {
-    value: "desktop",
-    label: "Desktop (Mac/PC)",
+    value: "desktop" as Device,
+    label: t("clientRecommender.deviceOptions.desktop.label"),
     icon: <Monitor className="w-6 h-6" />,
   },
-  { value: "web", label: "Web Browser", icon: <Globe className="w-6 h-6" /> },
+  {
+    value: "web" as Device,
+    label: t("clientRecommender.deviceOptions.web.label"),
+    icon: <Globe className="w-6 h-6" />,
+  },
 ];
 
-const PRIORITY_OPTIONS: {
-  value: Priority;
-  label: string;
-  description: string;
-  icon: React.ReactNode;
-}[] = [
+const getPriorityOptions = (t: (key: string) => string) => [
   {
-    value: "easy",
-    label: "Easy to Use",
-    description: "Simple interface, minimal setup",
+    value: "easy" as Priority,
+    label: t("clientRecommender.priorityOptions.easy.label"),
+    description: t("clientRecommender.priorityOptions.easy.description"),
     icon: <Star className="w-5 h-5" />,
   },
   {
-    value: "power",
-    label: "Power User",
-    description: "Advanced features and customization",
+    value: "power" as Priority,
+    label: t("clientRecommender.priorityOptions.power.label"),
+    description: t("clientRecommender.priorityOptions.power.description"),
     icon: <Zap className="w-5 h-5" />,
   },
   {
-    value: "privacy",
-    label: "Privacy First",
-    description: "Maximum privacy and security",
+    value: "privacy" as Priority,
+    label: t("clientRecommender.priorityOptions.privacy.label"),
+    description: t("clientRecommender.priorityOptions.privacy.description"),
     icon: <Shield className="w-5 h-5" />,
   },
   {
-    value: "web-only",
-    label: "Web Only",
-    description: "No app download needed",
+    value: "web-only" as Priority,
+    label: t("clientRecommender.priorityOptions.webOnly.label"),
+    description: t("clientRecommender.priorityOptions.webOnly.description"),
     icon: <Globe className="w-5 h-5" />,
   },
 ];
 
-const FEATURE_OPTIONS: {
-  value: Feature;
-  label: string;
-  icon: React.ReactNode;
-}[] = [
+const getFeatureOptions = (t: (key: string) => string) => [
   {
-    value: "wallet",
-    label: "Built-in Wallet",
+    value: "wallet" as Feature,
+    label: t("clientRecommender.featureOptions.wallet.label"),
     icon: <Wallet className="w-5 h-5" />,
   },
   {
-    value: "images",
-    label: "Image Sharing",
+    value: "images" as Feature,
+    label: t("clientRecommender.featureOptions.images.label"),
     icon: <ImageIcon className="w-5 h-5" />,
   },
   {
-    value: "longform",
-    label: "Long-form Posts",
+    value: "longform" as Feature,
+    label: t("clientRecommender.featureOptions.longform.label"),
     icon: <FileText className="w-5 h-5" />,
   },
 ];
 
 export function ClientRecommender({ className }: ClientRecommenderProps) {
+  const { t } = useTranslation();
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState<QuizAnswer>({ features: [] });
   const [showResults, setShowResults] = useState(false);
@@ -371,10 +364,10 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
               <Award className="w-8 h-8 text-success-500" />
             </motion.div>
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-              Your Perfect Client
+              {t('clientRecommender.title')}
             </h2>
             <p className="text-gray-400">
-              Based on your preferences, here are our top recommendations
+              {t('clientRecommender.description')}
             </p>
           </div>
 
@@ -398,7 +391,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                   {recommendations[0].beginnerFriendly && (
                     <span className="inline-flex items-center gap-1 px-2 py-1 bg-success-500/20 text-success-500 text-xs rounded-full">
                       <Sparkles className="w-3 h-3" />
-                      Beginner Friendly
+                      {t('clientRecommender.results.beginnerFriendly')}
                     </span>
                   )}
                 </div>
@@ -422,7 +415,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
                 <h4 className="text-sm font-medium text-success-500 mb-2">
-                  Pros
+                  {t('clientRecommender.results.pros')}
                 </h4>
                 <ul className="space-y-1">
                   {recommendations[0].pros.map((pro, i) => (
@@ -438,7 +431,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
               </div>
               <div>
                 <h4 className="text-sm font-medium text-error-500 mb-2">
-                  Cons
+                  {t('clientRecommender.results.cons')}
                 </h4>
                 <ul className="space-y-1">
                   {recommendations[0].cons.map((con, i) => (
@@ -464,7 +457,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all"
                 >
-                  Get {recommendations[0].name}
+                  {t('clientRecommender.results.getApp').replace('{clientName}', recommendations[0].name)}
                   <ExternalLink className="w-4 h-4" />
                 </a>
               )}
@@ -475,7 +468,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-medium transition-all"
                 >
-                  Try Web Version
+                  {t('clientRecommender.results.tryWeb')}
                   <Globe className="w-4 h-4" />
                 </a>
               )}
@@ -508,7 +501,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                         {client.rating}
                         {client.beginnerFriendly && (
                           <span className="text-success-500">
-                            • Beginner Friendly
+                            • {t('clientRecommender.results.beginnerFriendly')}
                           </span>
                         )}
                       </div>
@@ -551,7 +544,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
               className="inline-flex items-center gap-2 px-4 py-2 text-gray-400 hover:text-white transition-all"
             >
               <RefreshCw className="w-4 h-4" />
-              Retake Quiz
+              {t('clientRecommender.retakeQuiz')}
             </button>
           </div>
         </div>
@@ -583,14 +576,14 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
             exit={{ opacity: 0, x: -20 }}
           >
             <h2 className="text-2xl font-bold text-white mb-2">
-              What device do you use?
+              {t('clientRecommender.steps.device.title')}
             </h2>
             <p className="text-gray-400 mb-6">
-              Select the device you'll primarily use Nostr on
+              {t('clientRecommender.steps.device.description')}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {DEVICE_OPTIONS.map((option) => (
+              {getDeviceOptions(t).map((option: { value: Device; label: string; icon: React.ReactNode }) => (
                 <button
                   key={option.value}
                   onClick={() => handleDeviceSelect(option.value)}
@@ -626,15 +619,15 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                 <ChevronLeft className="w-5 h-5 text-gray-400" />
               </button>
               <h2 className="text-2xl font-bold text-white">
-                What's your priority?
+                {t('clientRecommender.steps.priority.title')}
               </h2>
             </div>
             <p className="text-gray-400 mb-6">
-              Choose what matters most to you
+              {t('clientRecommender.steps.priority.description')}
             </p>
 
             <div className="space-y-3">
-              {PRIORITY_OPTIONS.map((option) => (
+              {getPriorityOptions(t).map((option: { value: Priority; label: string; description: string; icon: React.ReactNode }) => (
                 <button
                   key={option.value}
                   onClick={() => handlePrioritySelect(option.value)}
@@ -675,15 +668,15 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                 <ChevronLeft className="w-5 h-5 text-gray-400" />
               </button>
               <h2 className="text-2xl font-bold text-white">
-                Nice-to-have features?
+                {t('clientRecommender.steps.features.title')}
               </h2>
             </div>
             <p className="text-gray-400 mb-6">
-              Select any features you'd like (optional)
+              {t('clientRecommender.steps.features.description')}
             </p>
 
             <div className="space-y-3 mb-6">
-              {FEATURE_OPTIONS.map((option) => (
+              {getFeatureOptions(t).map((option: { value: Feature; label: string; icon: React.ReactNode }) => (
                 <button
                   key={option.value}
                   onClick={() => toggleFeature(option.value)}
@@ -722,7 +715,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
               onClick={handleFinish}
               className="w-full py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all flex items-center justify-center gap-2"
             >
-              See Recommendations
+              {t('clientRecommender.steps.features.seeRecommendations')}
               <ChevronRight className="w-5 h-5" />
             </button>
           </motion.div>

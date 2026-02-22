@@ -18,6 +18,7 @@ import {
   loadFromLocalStorage,
   copyToClipboard,
 } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 interface BackupChecklistProps {
   className?: string;
@@ -37,42 +38,41 @@ interface ChecklistItem {
   warning?: string;
 }
 
-const DEFAULT_CHECKLIST: ChecklistItem[] = [
+const getDefaultChecklist = (t: (key: string) => string): ChecklistItem[] => [
   {
     id: "copy-npub",
-    label: "Copied npub (public key)",
-    description: "Your public identifier that you can share with others",
+    label: t('backupChecklist.checklist.copiedNpub.label'),
+    description: t('backupChecklist.checklist.copiedNpub.description'),
     icon: <Key className="w-5 h-5" />,
     checked: false,
   },
   {
     id: "copy-nsec",
-    label: "Copied nsec (private key)",
-    description: "Your secret password - never share this with anyone",
+    label: t('backupChecklist.checklist.copiedNsec.label'),
+    description: t('backupChecklist.checklist.copiedNsec.description'),
     icon: <Lock className="w-5 h-5" />,
     checked: false,
-    warning:
-      "Critical: This is your only password. If lost, your account cannot be recovered.",
+    warning: t('backupChecklist.checklist.copiedNsec.warning'),
   },
   {
     id: "password-manager",
-    label: "Saved to password manager",
-    description: "1Password, Bitwarden, KeePass, or similar secure storage",
+    label: t('backupChecklist.checklist.passwordManager.label'),
+    description: t('backupChecklist.checklist.passwordManager.description'),
     icon: <Shield className="w-5 h-5" />,
     checked: false,
   },
   {
     id: "paper-backup",
-    label: "Written on paper (offline backup)",
-    description: "Physical copy stored in a safe, secure location",
+    label: t('backupChecklist.checklist.paperBackup.label'),
+    description: t('backupChecklist.checklist.paperBackup.description'),
     icon: <FileText className="w-5 h-5" />,
     checked: false,
-    warning: "Store this in a safe place away from your computer and phone.",
+    warning: t('backupChecklist.checklist.paperBackup.warning'),
   },
   {
     id: "encrypted-file",
-    label: "Saved to encrypted file",
-    description: "USB drive, encrypted cloud storage, or hardware wallet",
+    label: t('backupChecklist.checklist.encryptedFile.label'),
+    description: t('backupChecklist.checklist.encryptedFile.description'),
     icon: <Save className="w-5 h-5" />,
     checked: false,
   },
@@ -83,8 +83,8 @@ export function BackupChecklist({
   onComplete,
   requiredKeys,
 }: BackupChecklistProps) {
-  const [checklist, setChecklist] =
-    useState<ChecklistItem[]>(DEFAULT_CHECKLIST);
+  const { t, getValue } = useTranslation();
+  const [checklist, setChecklist] = useState<ChecklistItem[]>(getDefaultChecklist(t));
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showSkipWarning, setShowSkipWarning] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
@@ -98,7 +98,7 @@ export function BackupChecklist({
       checklist: ChecklistItem[];
       isComplete: boolean;
     }>("nostr-backup-checklist", {
-      checklist: DEFAULT_CHECKLIST,
+      checklist: getDefaultChecklist(t),
       isComplete: false,
     });
     setChecklist(saved.checklist);
@@ -166,7 +166,7 @@ export function BackupChecklist({
   };
 
   const reset = () => {
-    setChecklist(DEFAULT_CHECKLIST);
+    setChecklist(getDefaultChecklist(t));
     setIsComplete(false);
     setShowConfirmation(false);
     setShowSkipWarning(false);
@@ -185,18 +185,17 @@ export function BackupChecklist({
             <CheckCircle2 className="w-10 h-10 text-white" />
           </motion.div>
           <h2 className="text-2xl font-bold text-white mb-2">
-            Backup Complete!
+            {t('backupChecklist.completion.title')}
           </h2>
           <p className="text-gray-400 mb-6">
-            You've successfully backed up your Nostr keys in multiple secure
-            locations. Your keys are safe!
+            {t('backupChecklist.completion.description')}
           </p>
           <button
             onClick={reset}
             className="inline-flex items-center gap-2 px-4 py-2 text-gray-400 hover:text-white transition-all"
           >
             <RefreshCw className="w-4 h-4" />
-            Reset Checklist
+            {t('backupChecklist.completion.reset')}
           </button>
         </div>
       </div>
@@ -216,22 +215,17 @@ export function BackupChecklist({
             <Shield className="w-8 h-8 text-warning-500" />
           </motion.div>
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-            Backup Your Keys
+            {t('backupChecklist.title')}
           </h2>
           <p className="text-gray-400 max-w-lg mx-auto">
-            Before proceeding, complete this checklist to ensure your keys are
-            safely backed up.
-            <span className="text-warning-500 font-medium">
-              {" "}
-              This is critical - lost keys cannot be recovered.
-            </span>
+            {t('backupChecklist.description')}
           </p>
         </div>
 
         {/* Progress */}
         <div className="mb-8">
           <div className="flex justify-between text-sm mb-2">
-            <span className="text-gray-400">Backup Progress</span>
+            <span className="text-gray-400">{t('backupChecklist.progress')}</span>
             <span
               className={cn(
                 "font-medium",
@@ -265,7 +259,7 @@ export function BackupChecklist({
                 className="flex items-center justify-center gap-2 p-3 bg-success-500/10 border border-success-500/30 hover:bg-success-500/20 rounded-xl transition-all"
               >
                 <Key className="w-5 h-5 text-success-500" />
-                <span className="text-success-500 font-medium">Copy npub</span>
+                <span className="text-success-500 font-medium">{t('backupChecklist.buttons.copyNpub')}</span>
               </button>
             )}
             {requiredKeys.nsec && (
@@ -274,7 +268,7 @@ export function BackupChecklist({
                 className="flex items-center justify-center gap-2 p-3 bg-error-500/10 border border-error-500/30 hover:bg-error-500/20 rounded-xl transition-all"
               >
                 <Lock className="w-5 h-5 text-error-500" />
-                <span className="text-error-500 font-medium">Copy nsec</span>
+                <span className="text-error-500 font-medium">{t('backupChecklist.buttons.copyNsec')}</span>
               </button>
             )}
           </div>
@@ -358,12 +352,12 @@ export function BackupChecklist({
             {allChecked ? (
               <>
                 <CheckCircle2 className="w-5 h-5" />
-                I've Completed All Backups
+                {t('backupChecklist.buttons.completeAll')}
               </>
             ) : (
               <>
                 <AlertTriangle className="w-5 h-5" />
-                Complete All Items First
+                {t('backupChecklist.buttons.completeRequired')}
               </>
             )}
           </button>
@@ -373,7 +367,7 @@ export function BackupChecklist({
               onClick={() => setShowSkipWarning(true)}
               className="w-full py-3 text-gray-400 hover:text-white text-sm transition-all"
             >
-              Skip for now (not recommended)
+              {t('backupChecklist.buttons.skip')}
             </button>
           )}
         </div>
@@ -382,15 +376,15 @@ export function BackupChecklist({
         <div className="mt-8 p-4 bg-info-500/10 border border-info-500/30 rounded-xl">
           <h4 className="font-medium text-info-500 mb-2 flex items-center gap-2">
             <Shield className="w-4 h-4" />
-            Security Tips
+{t('backupChecklist.securityTips')}
           </h4>
           <ul className="text-sm text-gray-400 space-y-1">
-            <li>• Never store your nsec in plain text files or screenshots</li>
-            <li>• Don't share your keys with anyone, including "support"</li>
+            <li>• {t('backupChecklist.securityTips.items.0')}</li>
+            <li>• {t('backupChecklist.securityTips.items.1')}</li>
             <li>
-              • Test your backup by restoring from it before deleting originals
+              • {t('backupChecklist.securityTips.items.2')}
             </li>
-            <li>• Consider a hardware wallet for maximum security</li>
+            <li>• {t('backupChecklist.securityTips.items.3')}</li>
           </ul>
         </div>
       </div>
@@ -416,23 +410,22 @@ export function BackupChecklist({
                 <div className="w-12 h-12 bg-error-500/20 rounded-full flex items-center justify-center">
                   <AlertTriangle className="w-6 h-6 text-error-500" />
                 </div>
-                <h3 className="text-xl font-bold text-white">Are you sure?</h3>
+                <h3 className="text-xl font-bold text-white">{t('backupChecklist.skipModal.title')}</h3>
               </div>
               <p className="text-gray-300 mb-4">
-                Skipping backup puts your account at risk. If you lose your
-                private key:
+                {t('backupChecklist.skipModal.description')}
               </p>
               <ul className="text-sm text-error-500 space-y-1 mb-6">
-                <li>• Your account cannot be recovered</li>
-                <li>• Your identity and followers are lost forever</li>
-                <li>• Any funds in your wallet are irretrievable</li>
+                {(getValue('backupChecklist.skipModal.risks') as string[]).map((risk: string, index: number) => (
+                  <li key={index}>• {risk}</li>
+                ))}
               </ul>
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowSkipWarning(false)}
                   className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all"
                 >
-                  Go Back
+                  {t('backupChecklist.skipModal.goBack')}
                 </button>
                 <button
                   onClick={() => {
@@ -441,7 +434,7 @@ export function BackupChecklist({
                   }}
                   className="flex-1 px-4 py-2 bg-error-500/20 hover:bg-error-500/30 text-error-500 rounded-lg transition-all"
                 >
-                  Skip Anyway
+                  {t('backupChecklist.skipModal.skipAnyway')}
                 </button>
               </div>
             </motion.div>
@@ -470,24 +463,23 @@ export function BackupChecklist({
                 <div className="w-12 h-12 bg-success-500/20 rounded-full flex items-center justify-center">
                   <CheckCircle2 className="w-6 h-6 text-success-500" />
                 </div>
-                <h3 className="text-xl font-bold text-white">Confirm Backup</h3>
+                <h3 className="text-xl font-bold text-white">{t('backupChecklist.confirmModal.title')}</h3>
               </div>
               <p className="text-gray-300 mb-6">
-                Please confirm that you have completed all backup steps. You
-                understand that lost keys cannot be recovered.
+                {t('backupChecklist.confirmModal.description')}
               </p>
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowConfirmation(false)}
                   className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all"
                 >
-                  Review
+                  {t('backupChecklist.confirmModal.review')}
                 </button>
                 <button
                   onClick={confirmComplete}
                   className="flex-1 px-4 py-2 bg-success-600 hover:bg-success-700 text-white rounded-lg transition-all"
                 >
-                  Confirm
+                  {t('backupChecklist.confirmModal.confirm')}
                 </button>
               </div>
             </motion.div>

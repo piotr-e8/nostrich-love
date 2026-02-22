@@ -1,6 +1,7 @@
 import React from "react";
 import { Globe, Signal, Server } from "lucide-react";
 import { cn } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 interface Relay {
   url: string;
@@ -26,6 +27,7 @@ export function RelayWorldMap({
   relays = DEFAULT_RELAYS,
   className,
 }: RelayWorldMapProps) {
+  const { t } = useTranslation();
   const getStatusColor = (status?: string) => {
     switch (status) {
       case "online":
@@ -51,10 +53,9 @@ export function RelayWorldMap({
           <Globe className="w-6 h-6 text-primary-500" />
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-white">Relay Network</h3>
+          <h3 className="text-lg font-semibold text-white">{t('relayWorldMap.title')}</h3>
           <p className="text-sm text-gray-400">
-            {relays.filter((r) => r.status === "online").length} of{" "}
-            {relays.length} relays online
+            {relays.filter((r) => r.status === "online").length} {t('relayExplorer.selected.count').replace('{count}', '')} {t('relayWorldMap.stats.totalRelays')}
           </p>
         </div>
       </div>
@@ -117,22 +118,22 @@ export function RelayWorldMap({
         {/* Relay nodes */}
         <div className="absolute top-[35%] left-[20%] flex flex-col items-center">
           <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50" />
-          <span className="mt-2 text-xs text-gray-400">US East</span>
+          <span className="mt-2 text-xs text-gray-400">{t('relayWorldMap.regions.northAmerica')}</span>
         </div>
 
         <div className="absolute top-[30%] left-[50%] flex flex-col items-center">
           <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50" />
-          <span className="mt-2 text-xs text-gray-400">Europe</span>
+          <span className="mt-2 text-xs text-gray-400">{t('relayWorldMap.regions.europe')}</span>
         </div>
 
         <div className="absolute top-[45%] left-[80%] flex flex-col items-center">
           <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50" />
-          <span className="mt-2 text-xs text-gray-400">Asia</span>
+          <span className="mt-2 text-xs text-gray-400">{t('relayWorldMap.regions.asia')}</span>
         </div>
 
         <div className="absolute top-[60%] left-[15%] flex flex-col items-center">
           <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50" />
-          <span className="mt-2 text-xs text-gray-400">US West</span>
+          <span className="mt-2 text-xs text-gray-400">{t('relayWorldMap.regions.northAmerica')}</span>
         </div>
       </div>
 

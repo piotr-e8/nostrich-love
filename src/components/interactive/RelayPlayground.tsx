@@ -35,6 +35,7 @@ import {
   Terminal,
 } from "lucide-react";
 import { cn, copyToClipboard } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 // Relay interface
 interface Relay {
@@ -200,6 +201,7 @@ const NIP_DESCRIPTIONS: Record<number, string> = {
 };
 
 export function RelayPlayground({ className }: { className?: string }) {
+  const { t } = useTranslation();
   const [relays, setRelays] = useState<Relay[]>(
     CURATED_RELAYS.map(r => ({ ...r, status: "checking", supportedNIPs: [] }))
   );
@@ -461,10 +463,10 @@ export function RelayPlayground({ className }: { className?: string }) {
             <Globe className="w-8 h-8 text-primary-500" />
           </motion.div>
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Relay Playground
+            {t('relayPlayground.title')}
           </h2>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Explore, test, and learn about Nostr relays. Only online relays are shown. No keys required - just open WebSocket connections and see what happens.
+            {t('relayPlayground.description')}
           </p>
         </div>
 
@@ -472,30 +474,30 @@ export function RelayPlayground({ className }: { className?: string }) {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
             <div className="text-3xl font-bold text-success-500">{onlineCount}</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Online Relays</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">{t('relayPlayground.status.online')}</div>
           </div>
           <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
             <div className="text-3xl font-bold text-error-500">{offlineCount}</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Currently Offline</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">{t('relayPlayground.status.offline')}</div>
           </div>
           <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
             <div className="text-3xl font-bold text-white">{relays.length}</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Total Monitored</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Total Relays</div>
           </div>
           <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
             <div className="text-3xl font-bold text-primary-500">{avgLatency}ms</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Avg Latency</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">{t('relayPlayground.healthTab.responseTime')}</div>
           </div>
         </div>
 
         {/* Tab Navigation */}
         <div className="flex flex-wrap gap-2 mb-6 border-b border-gray-700 pb-4">
           {[
-            { id: "connection" as Tab, label: "Connection Lab", icon: Wifi },
-            { id: "health" as Tab, label: "Health Dashboard", icon: Activity },
-            { id: "nips" as Tab, label: "NIP Support", icon: Shield },
-            { id: "events" as Tab, label: "Event Stream", icon: Eye },
-            { id: "query" as Tab, label: "Query Tester", icon: Filter },
+            { id: "connection" as Tab, label: t('relayPlayground.tabs.connection'), icon: Wifi },
+            { id: "health" as Tab, label: t('relayPlayground.tabs.health'), icon: Activity },
+            { id: "nips" as Tab, label: t('relayPlayground.tabs.nips'), icon: Shield },
+            { id: "events" as Tab, label: t('relayPlayground.tabs.events'), icon: Eye },
+            { id: "query" as Tab, label: t('relayPlayground.tabs.query'), icon: Filter },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -517,7 +519,7 @@ export function RelayPlayground({ className }: { className?: string }) {
             className="ml-auto flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 disabled:bg-gray-800 text-white rounded-lg font-medium transition-all"
           >
             <RefreshCw className={cn("w-4 h-4", isCheckingAll && "animate-spin")} />
-            {isCheckingAll ? "Checking..." : "Refresh All"}
+            {isCheckingAll ? t('relayPlayground.buttons.checking') : t('relayPlayground.buttons.checkAll')}
           </button>
         </div>
 
@@ -528,7 +530,7 @@ export function RelayPlayground({ className }: { className?: string }) {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search relays by name, URL, or location..."
+            placeholder={t('relayPlayground.search.placeholder')}
             className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:outline-none"
           />
         </div>
@@ -591,6 +593,7 @@ function ConnectionLab({
   onConnect: (relay: Relay) => void;
   onDisconnect: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -602,8 +605,7 @@ function ConnectionLab({
       <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 flex items-start gap-3">
         <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
         <div className="text-sm text-gray-700 dark:text-gray-300">
-          <strong className="text-blue-600 dark:text-blue-400">How it works:</strong> Click any relay to open a live WebSocket connection. 
-          You will see the connection process in real-time without needing any keys. This is exactly how Nostr clients connect to relays behind the scenes.
+          <strong className="text-blue-600 dark:text-blue-400">{t('relayPlayground.connectionTab.selectRelay')}</strong>
         </div>
       </div>
 
@@ -612,7 +614,7 @@ function ConnectionLab({
         {relays.length === 0 ? (
           <div className="col-span-3 text-center py-12 text-gray-600 dark:text-gray-400">
             <Server className="w-12 h-12 mx-auto mb-4 opacity-50" />
-            <p>No online relays found. Click &quot;Refresh All&quot; to check relay status.</p>
+            <p>{t('relayPlayground.healthTab.noData')}</p>
           </div>
         ) : (
           relays.map((relay) => (
@@ -632,19 +634,19 @@ function ConnectionLab({
                 {relay.connectionState === "connected" && (
                   <div className="flex items-center gap-1 text-success-500 text-xs">
                     <Wifi className="w-3 h-3" />
-                    Connected
+                    {t('relayPlayground.status.connected')}
                   </div>
                 )}
                 {relay.connectionState === "connecting" && (
                   <div className="flex items-center gap-1 text-yellow-500 text-xs">
                     <Loader2 className="w-3 h-3 animate-spin" />
-                    Connecting...
+                    {t('relayPlayground.status.checking')}
                   </div>
                 )}
                 {relay.connectionState === "error" && (
                   <div className="flex items-center gap-1 text-error-500 text-xs">
                     <WifiOff className="w-3 h-3" />
-                    Error
+                    {t('relayPlayground.status.error')}
                   </div>
                 )}
               </div>
@@ -672,7 +674,7 @@ function ConnectionLab({
                   relay.status === "offline" ? "bg-red-500/20 text-red-400" :
                   "bg-gray-500/20 text-gray-600 dark:text-gray-400"
                 )}>
-                  {relay.status}
+                  {t(`relayPlayground.status.${relay.status}`)}
                 </span>
               </div>
             </motion.div>
@@ -710,7 +712,7 @@ function ConnectionLab({
                   className="flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all"
                 >
                   <Play className="w-5 h-5" />
-                  Connect
+                  {t('relayPlayground.buttons.connect')}
                 </button>
               ) : (
                 <button
@@ -718,7 +720,7 @@ function ConnectionLab({
                   className="flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-medium transition-all"
                 >
                   <Pause className="w-5 h-5" />
-                  Disconnect
+                  {t('relayPlayground.buttons.disconnect')}
                 </button>
               )}
               <button
@@ -726,18 +728,18 @@ function ConnectionLab({
                 className="flex items-center gap-2 px-4 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-xl font-medium transition-all"
               >
                 <Copy className="w-5 h-5" />
-                Copy URL
+                {t('relayPlayground.buttons.copy')}
               </button>
             </div>
 
             {/* Connection State Display */}
             <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 p-4 font-mono text-sm">
-              <div className="text-gray-500 mb-2">// Connection Status</div>
+              <div className="text-gray-500 mb-2">// {t('relayPlayground.connectionTab.connectionState')}</div>
               <div className="text-green-400">
-                {selectedRelay.connectionState === "idle" && "awaiting connection..."}
-                {selectedRelay.connectionState === "connecting" && "const ws = new WebSocket('" + selectedRelay.url + "');\nws.onopen = () => console.log('Connected!');"}
-                {selectedRelay.connectionState === "connected" && "WebSocket connection established\nReady to send/receive events\nNo authentication required"}
-                {selectedRelay.connectionState === "error" && "Connection failed: " + (selectedRelay.connectionError || "Unknown error")}
+                {selectedRelay.connectionState === "idle" && t('relayPlayground.connectionTab.unknown')}
+                {selectedRelay.connectionState === "connecting" && `const ws = new WebSocket('${selectedRelay.url}');\nws.onopen = () => console.log('${t('relayPlayground.status.connected')}');`}
+                {selectedRelay.connectionState === "connected" && t('relayPlayground.connectionTab.connected')}
+                {selectedRelay.connectionState === "error" && `${t('relayPlayground.connectionTab.error')}: ${selectedRelay.connectionError || t('relayPlayground.connectionTab.unknown')}`}
               </div>
             </div>
 
@@ -745,12 +747,10 @@ function ConnectionLab({
             <div className="mt-4 p-4 bg-blue-500/10 border border-blue-500/30 rounded-xl">
               <h4 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
                 <Info className="w-4 h-4" />
-                What just happened?
+                {t('relayPlayground.connectionTab.selectRelay')}
               </h4>
               <p className="text-sm text-gray-300">
-                When you clicked &quot;Connect&quot;, your browser opened a WebSocket connection to {selectedRelay.name}. 
-                This is the same technology Nostr clients use to communicate with relays. The connection is persistent 
-                (stays open) and bidirectional (both sides can send messages).
+                {t('relayPlayground.nipsTab.description')}
               </p>
             </div>
           </motion.div>
@@ -767,6 +767,7 @@ function HealthDashboard({
   relays: Relay[];
   healthHistory: HealthCheck[];
 }) {
+  const { t } = useTranslation();
   const [sortBy, setSortBy] = useState<"latency" | "location">("latency");
 
   const sortedRelays = [...relays].sort((a, b) => {
@@ -797,8 +798,8 @@ function HealthDashboard({
         <span className="text-gray-600 dark:text-gray-400 text-sm">Sort by:</span>
         <div className="flex gap-2">
           {[
-            { key: "latency" as const, label: "Latency" },
-            { key: "location" as const, label: "Location" },
+            { key: "latency" as const, label: t('relayPlayground.healthTab.responseTime') },
+            { key: "location" as const, label: t('relayPlayground.relayCard.location') },
           ].map((option) => (
             <button
               key={option.key}
@@ -822,9 +823,9 @@ function HealthDashboard({
           <thead className="bg-gray-100/50 dark:bg-gray-800/50">
             <tr>
               <th className="text-left px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Relay</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Location</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Latency</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Last Checked</th>
+              <th className="text-left px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.relayCard.location')}</th>
+              <th className="text-left px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.connectionTab.latency')}</th>
+              <th className="text-left px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.healthTab.lastChecked')}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-700">
@@ -851,7 +852,7 @@ function HealthDashboard({
                 <td className="px-4 py-3 text-gray-600 dark:text-gray-400 text-sm">
                   {relay.lastChecked ? 
                     new Date(relay.lastChecked).toLocaleTimeString() : 
-                    "Never"
+                    t('relayPlayground.connectionTab.unknown')
                   }
                 </td>
               </tr>
@@ -865,31 +866,28 @@ function HealthDashboard({
         <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
           <div className="flex items-center gap-2 text-green-400 font-semibold mb-2">
             <CheckCircle2 className="w-5 h-5" />
-            Excellent (&lt; 100ms)
+            {t('relayPlayground.status.online')} (&lt; 100ms)
           </div>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            These relays are very close to you geographically or have excellent infrastructure. 
-            You will have the best experience with these.
+            {t('relayPlayground.nipsTab.description')}
           </p>
         </div>
         <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4">
           <div className="flex items-center gap-2 text-yellow-400 font-semibold mb-2">
             <Activity className="w-5 h-5" />
-            Good (100-300ms)
+            {t('relayPlayground.healthTab.responseTime')} (100-300ms)
           </div>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            These relays are usable but may be farther away. You will still have a good experience, 
-            but posts might take slightly longer to load.
+            {t('relayPlayground.nipsTab.description')}
           </p>
         </div>
         <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
           <div className="flex items-center gap-2 text-red-400 font-semibold mb-2">
             <AlertCircle className="w-5 h-5" />
-            Slow (&gt; 300ms)
+            {t('relayPlayground.status.error')} (&gt; 300ms)
           </div>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            These relays are either very far away or experiencing issues. Consider using closer 
-            relays for better performance.
+            {t('relayPlayground.nipsTab.description')}
           </p>
         </div>
       </div>
@@ -905,6 +903,7 @@ function NIPDetector({
   relays: Relay[];
   allSupportedNIPs: number[];
 }) {
+  const { t } = useTranslation();
   const [selectedNIP, setSelectedNIP] = useState<number | null>(null);
 
   const getNIPSupportCount = (nip: number) => {
@@ -926,10 +925,7 @@ function NIPDetector({
       <div className="bg-purple-500/10 border border-purple-500/30 rounded-xl p-4 flex items-start gap-3">
         <Info className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
         <div className="text-sm text-gray-300">
-          <strong className="text-purple-400">What are NIPs?</strong> NIPs (Nostr Implementation Possibilities) 
-          are specifications that extend the core Nostr protocol. Think of them like browser features - not all 
-          relays support all features. This tool shows which NIPs each relay supports so you can choose relays 
-          that have the features you need.
+          {t('relayPlayground.nipsTab.description')}
         </div>
       </div>
 
@@ -967,7 +963,7 @@ function NIPDetector({
                 {NIP_DESCRIPTIONS[nip] || "Unknown NIP"}
               </div>
               <div className="mt-2 text-xs text-gray-500">
-                {supportCount} of {relays.length} relays
+                {supportCount} / {relays.length} {t('relayPlayground.nipsTab.supported')}
               </div>
             </motion.button>
           );
@@ -997,7 +993,7 @@ function NIPDetector({
             </div>
 
             <div className="mb-4">
-              <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Supported by:</h4>
+              <h4 className="font-semibold text-gray-900 dark:text-white mb-2">{t('relayPlayground.nipsTab.supported')}:</h4>
               <div className="flex flex-wrap gap-2">
                 {relays
                   .filter(r => r.supportedNIPs.includes(selectedNIP))
@@ -1039,7 +1035,7 @@ function NIPDetector({
 
       {/* Common NIPs */}
       <div className="bg-gray-100/30 dark:bg-gray-800/30 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Most Common NIPs</h3>
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('relayPlayground.nipsTab.title')}</h3>
         <div className="space-y-3">
           {[1, 2, 4, 9, 11, 40, 42].map((nip) => (
             <div key={nip} className="flex items-center justify-between">
@@ -1072,6 +1068,7 @@ function EventStreamViewer({
 }: {
   relays: Relay[];
 }) {
+  const { t } = useTranslation();
   const [selectedRelay, setSelectedRelay] = useState<Relay | null>(null);
   const [events, setEvents] = useState<StreamEvent[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
@@ -1180,9 +1177,7 @@ function EventStreamViewer({
         <div className="flex items-start gap-3">
           <Info className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
           <div className="text-sm text-gray-300">
-            <strong className="text-green-400">Watch events in real-time!</strong> Select a relay and start 
-            streaming to see actual Nostr events flowing through the network. This shows public posts and 
-            interactions as they happen.
+            {t('relayPlayground.eventsTab.description')}
           </div>
         </div>
       </div>
@@ -1191,7 +1186,7 @@ function EventStreamViewer({
       <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-6 border border-gray-700 space-y-4">
         {/* Relay Selection */}
         <div>
-          <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Select Relay</label>
+          <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.connectionTab.selectRelay')}</label>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {relays.slice(0, 8).map((relay) => (
               <button
@@ -1216,7 +1211,7 @@ function EventStreamViewer({
 
         {/* Event Kinds */}
         <div>
-          <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Event Types</label>
+          <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.queryTab.kinds')}</label>
           <div className="flex flex-wrap gap-2">
             {EVENT_KINDS.map((kind) => (
               <button
@@ -1241,7 +1236,7 @@ function EventStreamViewer({
         {/* Max Events */}
         <div>
           <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">
-            Max Events: {maxEvents}
+            {t('relayPlayground.queryTab.limit')}: {maxEvents}
           </label>
           <input
             type="range"
@@ -1263,7 +1258,7 @@ function EventStreamViewer({
               className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 dark:disabled:bg-gray-700 text-white rounded-xl font-medium"
             >
               <Play className="w-5 h-5" />
-              Start Streaming
+              {t('relayPlayground.buttons.connect')}
             </button>
           ) : (
             <button
@@ -1271,7 +1266,7 @@ function EventStreamViewer({
               className="flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-medium"
             >
               <Pause className="w-5 h-5" />
-              Stop
+              {t('relayPlayground.buttons.disconnect')}
             </button>
           )}
           <button
@@ -1279,7 +1274,7 @@ function EventStreamViewer({
             className="flex items-center gap-2 px-4 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-xl font-medium"
           >
             <Trash2 className="w-5 h-5" />
-            Clear
+            {t('relayPlayground.buttons.clear')}
           </button>
         </div>
       </div>
@@ -1289,19 +1284,19 @@ function EventStreamViewer({
         <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
           <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
             <Eye className="w-5 h-5" />
-            Events Stream ({events.length})
+            {t('relayPlayground.eventsTab.title')} ({events.length})
           </h3>
           {isStreaming && (
             <div className="flex items-center gap-2 text-green-400">
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              Live
+              {t('relayPlayground.status.online')}
             </div>
           )}
         </div>
         <div className="max-h-[400px] overflow-y-auto">
           {events.length === 0 ? (
             <div className="text-center py-12 text-gray-500">
-              <p>No events yet. Start streaming to see events.</p>
+              <p>{t('relayPlayground.eventsTab.noEvents')}</p>
             </div>
           ) : (
             <div className="divide-y divide-gray-700">
@@ -1309,14 +1304,14 @@ function EventStreamViewer({
                 <div key={idx} className="p-4 hover:bg-gray-100/50 dark:bg-gray-800/50">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="px-2 py-0.5 bg-primary-500/20 text-primary-400 rounded text-xs">
-                      Kind {evt.event.kind}
+                      {t('relayPlayground.eventsTab.kind')} {evt.event.kind}
                     </span>
                     <span className="text-xs text-gray-500">
                       {new Date(evt.event.created_at * 1000).toLocaleTimeString()}
                     </span>
                   </div>
                   <p className="text-sm text-gray-300 line-clamp-2">{evt.event.content}</p>
-                  <p className="text-xs text-gray-500 mt-1">From: {evt.event.pubkey.slice(0, 16)}...</p>
+                  <p className="text-xs text-gray-500 mt-1">{t('relayPlayground.eventsTab.author')}: {evt.event.pubkey.slice(0, 16)}...</p>
                 </div>
               ))}
             </div>
@@ -1333,6 +1328,7 @@ function QueryTester({
 }: {
   relays: Relay[];
 }) {
+  const { t } = useTranslation();
   const [selectedRelay, setSelectedRelay] = useState<Relay | null>(null);
   const [queryKinds, setQueryKinds] = useState<number[]>([1]);
   const [limit, setLimit] = useState(10);
@@ -1421,8 +1417,7 @@ function QueryTester({
         <div className="flex items-start gap-3">
           <Info className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
           <div className="text-sm text-gray-300">
-            <strong className="text-purple-400">Test your queries!</strong> Build custom filters to fetch 
-            specific events from relays. This demonstrates how Nostr clients request data using filters.
+            {t('relayPlayground.queryTab.description')}
           </div>
         </div>
       </div>
@@ -1430,17 +1425,17 @@ function QueryTester({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Query Builder */}
         <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Query Builder</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('relayPlayground.queryTab.title')}</h3>
 
           {/* Relay */}
           <div className="mb-4">
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-2">Target Relay</label>
+            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.connectionTab.selectRelay')}</label>
             <select
               value={selectedRelay?.id || ""}
               onChange={(e) => setSelectedRelay(relays.find(r => r.id === e.target.value) || null)}
               className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-lg text-gray-900 dark:text-white"
             >
-              <option value="">Select relay...</option>
+              <option value="">{t('relayPlayground.search.placeholder')}</option>
               {relays.map(r => (
                 <option key={r.id} value={r.id}>{r.name} ({r.latency}ms)</option>
               ))}
@@ -1449,7 +1444,7 @@ function QueryTester({
 
           {/* Kinds */}
           <div className="mb-4">
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-2">Event Kinds</label>
+            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.queryTab.kinds')}</label>
             <div className="flex flex-wrap gap-2">
               {EVENT_KINDS.map(kind => (
                 <button
@@ -1470,7 +1465,7 @@ function QueryTester({
 
           {/* Limit */}
           <div className="mb-4">
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-2">Limit: {limit}</label>
+            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.queryTab.limit')}: {limit}</label>
             <input
               type="range"
               min="1"
@@ -1489,11 +1484,11 @@ function QueryTester({
           >
             {isQuerying ? (
               <span className="flex items-center justify-center gap-2">
-                <Loader2 className="w-5 h-5 animate-spin" /> Querying...
+                <Loader2 className="w-5 h-5 animate-spin" /> {t('relayPlayground.buttons.checking')}
               </span>
             ) : (
               <span className="flex items-center justify-center gap-2">
-                <Play className="w-5 h-5" /> Run Query
+                <Play className="w-5 h-5" /> {t('relayPlayground.queryTab.execute')}
               </span>
             )}
           </button>
@@ -1502,7 +1497,7 @@ function QueryTester({
         {/* Results */}
         <div>
           <div className="flex items-center justify-between mb-4">
-            <span className="text-gray-600 dark:text-gray-400">Results: <strong className="text-white">{results.length}</strong></span>
+            <span className="text-gray-600 dark:text-gray-400">{t('relayPlayground.queryTab.results')}: <strong className="text-white">{results.length}</strong></span>
             <button
               onClick={() => setShowRaw(!showRaw)}
               className={cn(
@@ -1510,7 +1505,7 @@ function QueryTester({
                 showRaw ? "bg-primary-500 text-white" : "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-600 dark:text-gray-400"
               )}
             >
-              {showRaw ? "Hide" : "Show"} Raw JSON
+              {showRaw ? t('relayPlayground.buttons.disconnect') : t('relayPlayground.buttons.inspect')} JSON
             </button>
           </div>
 
@@ -1527,7 +1522,7 @@ function QueryTester({
           <div className="bg-gray-100/30 dark:bg-gray-800/30 rounded-xl border border-gray-700 max-h-[500px] overflow-y-auto">
             {results.length === 0 ? (
               <div className="text-center py-12 text-gray-500">
-                <p>No results yet. Run a query to fetch events.</p>
+                <p>{t('relayPlayground.queryTab.noResults')}</p>
               </div>
             ) : (
               <div className="divide-y divide-gray-700">
@@ -1535,7 +1530,7 @@ function QueryTester({
                   <div key={idx} className="p-4 hover:bg-gray-100/50 dark:bg-gray-800/50">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="px-2 py-0.5 bg-primary-500/20 text-primary-400 rounded text-xs">
-                        Kind {evt.kind}
+                        {t('relayPlayground.eventsTab.kind')} {evt.kind}
                       </span>
                       <span className="text-xs text-gray-500">
                         {new Date(evt.created_at * 1000).toLocaleString()}

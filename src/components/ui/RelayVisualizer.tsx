@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { cn } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 interface Relay {
   id: string;
@@ -51,6 +52,7 @@ export function RelayVisualizer({
   className,
   onRelayToggle,
 }: RelayVisualizerProps) {
+  const { t } = useTranslation();
   // Use provided relays or demo data
   const [relays, setRelays] = useState<Relay[]>(propRelays || DEMO_RELAYS);
 
@@ -116,7 +118,7 @@ export function RelayVisualizer({
       )}
     >
       <h3 className="mb-6 text-lg font-semibold text-gray-900 dark:text-white">
-        Relay Network
+        {t('relayVisualizer.title')}
       </h3>
 
       {/* Visual Diagram */}
@@ -131,7 +133,7 @@ export function RelayVisualizer({
                 : "border-gray-300 bg-gray-100 text-gray-500 dark:border-gray-600 dark:bg-gray-800",
             )}
           >
-            <span className="text-xs font-bold">YOU</span>
+            <span className="text-xs font-bold">{t('nostrSimulator.nodes.user')}</span>
           </div>
           {activeConnections.length > 0 && (
             <div className="absolute inset-0 animate-ping-slow rounded-full border-2 border-green-500 opacity-30" />
@@ -219,7 +221,7 @@ export function RelayVisualizer({
                 </p>
                 {relay.users && (
                   <p className="text-xs text-gray-500">
-                    {relay.users.toLocaleString()} users connected
+                    {relay.users.toLocaleString()} {t('relayVisualizer.labels.connections')}
                   </p>
                 )}
               </div>
@@ -233,7 +235,7 @@ export function RelayVisualizer({
                   : "bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900 dark:text-green-300",
               )}
             >
-              {relay.status === "connected" ? "Disconnect" : "Connect"}
+              {relay.status === "connected" ? t('relayVisualizer.controls.disconnect') : t('relayVisualizer.controls.connect')}
             </button>
           </div>
         ))}
@@ -241,11 +243,10 @@ export function RelayVisualizer({
 
       <div className="mt-4 text-center text-sm text-gray-500">
         {activeConnections.length === 0 ? (
-          <span className="text-red-500">Not connected to any relays</span>
+          <span className="text-red-500">{t('relayExplorer.card.status.offline')}</span>
         ) : (
           <span className="text-green-600">
-            Connected to {activeConnections.length} relay
-            {activeConnections.length !== 1 ? "s" : ""}
+            {t('relayVisualizer.labels.relayCount').replace('{count}', String(activeConnections.length))}
           </span>
         )}
       </div>

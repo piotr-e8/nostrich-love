@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Zap, Bitcoin, ArrowRight, Check, Copy } from "lucide-react";
 import { cn, copyToClipboard } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 interface ZapSimulatorProps {
   className?: string;
@@ -10,6 +11,7 @@ interface ZapSimulatorProps {
 const PRESET_AMOUNTS = [10, 100, 1000, 5000, 10000];
 
 export function ZapSimulator({ className }: ZapSimulatorProps) {
+  const { t } = useTranslation();
   const [amount, setAmount] = useState(100);
   const [customAmount, setCustomAmount] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
@@ -40,16 +42,16 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
         <div className="w-16 h-16 mx-auto bg-amber-500/20 rounded-2xl flex items-center justify-center mb-4">
           <Zap className="w-8 h-8 text-amber-500" />
         </div>
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Zap Simulator</h3>
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t('zapSimulator.title')}</h3>
         <p className="text-gray-600 dark:text-gray-400 text-sm">
-          Practice sending zaps without spending real sats
+          {t('zapSimulator.description')}
         </p>
       </div>
 
       <div className="space-y-4">
         <div>
           <label className="text-sm text-gray-600 dark:text-gray-400 mb-2 block">
-            Amount (sats)
+            {t('zapSimulator.labels.amount')}
           </label>
           <div className="flex flex-wrap gap-2 mb-3">
             {PRESET_AMOUNTS.map((preset) => (
@@ -72,7 +74,7 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
           </div>
           <input
             type="number"
-            placeholder="Custom amount..."
+            placeholder={t('zapSimulator.labels.amount')}
             value={customAmount}
             onChange={(e) => {
               setCustomAmount(e.target.value);
@@ -84,7 +86,7 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
 
         <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-gray-600 dark:text-gray-400">Lightning Invoice</span>
+            <span className="text-sm text-gray-600 dark:text-gray-400">{t('zapSimulator.labels.invoice')}</span>
             <button
               onClick={handleCopy}
               className="text-sm text-amber-600 dark:text-amber-500 hover:text-amber-700 dark:hover:text-amber-400 flex items-center gap-1"
@@ -94,7 +96,7 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
               ) : (
                 <Copy className="w-4 h-4" />
               )}
-              {copied ? "Copied!" : "Copy"}
+              {copied ? t('zapSimulator.buttons.pay') : t('zapSimulator.buttons.copy')}
             </button>
           </div>
           <div className="font-mono text-xs text-gray-500 dark:text-gray-500 break-all">
@@ -108,7 +110,7 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
           className="w-full py-4 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-semibold flex items-center justify-center gap-2 transition-all"
         >
           <Bitcoin className="w-5 h-5" />
-          Send {amount.toLocaleString()} sats
+          {t('zapSimulator.buttons.pay')} {amount.toLocaleString()} sats
           <ArrowRight className="w-5 h-5" />
         </motion.button>
 
@@ -119,9 +121,9 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
             className="bg-green-100 dark:bg-green-500/20 border border-green-300 dark:border-green-500/30 rounded-lg p-4 text-center"
           >
             <Zap className="w-6 h-6 text-green-600 dark:text-green-500 mx-auto mb-2" />
-            <p className="text-green-700 dark:text-green-400 font-medium">Zap sent successfully!</p>
+            <p className="text-green-700 dark:text-green-400 font-medium">{t('zapSimulator.steps.confirm')}</p>
             <p className="text-green-600 dark:text-green-400/70 text-sm">
-              (This was a simulation - no real sats were sent)
+              {t('zapSimulator.description')}
             </p>
           </motion.div>
         )}

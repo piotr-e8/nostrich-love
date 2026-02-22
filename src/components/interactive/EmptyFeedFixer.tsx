@@ -17,6 +17,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { cn, saveToLocalStorage, loadFromLocalStorage } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 interface StarterPack {
   id: string;
@@ -46,11 +47,11 @@ interface EmptyFeedFixerProps {
   onComplete?: () => void;
 }
 
-const STARTER_PACKS: StarterPack[] = [
+const getStarterPacks = (t: (key: string) => string): StarterPack[] => [
   {
     id: "technology",
-    name: "Technology",
-    description: "Developers, tech news, and innovation",
+    name: t('emptyFeedFixer.starterPacks.technology.name'),
+    description: t('emptyFeedFixer.starterPacks.technology.description'),
     icon: <Cpu className="w-6 h-6" />,
     color: "from-blue-500 to-cyan-500",
     accounts: [
@@ -76,8 +77,8 @@ const STARTER_PACKS: StarterPack[] = [
   },
   {
     id: "bitcoin",
-    name: "Bitcoin",
-    description: "Bitcoiners and Lightning Network enthusiasts",
+    name: t('emptyFeedFixer.starterPacks.bitcoin.name'),
+    description: t('emptyFeedFixer.starterPacks.bitcoin.description'),
     icon: <Zap className="w-6 h-6" />,
     color: "from-orange-500 to-yellow-500",
     accounts: [
@@ -103,8 +104,8 @@ const STARTER_PACKS: StarterPack[] = [
   },
   {
     id: "art",
-    name: "Art & Design",
-    description: "Artists, designers, and creative souls",
+    name: t('emptyFeedFixer.starterPacks.art.name'),
+    description: t('emptyFeedFixer.starterPacks.art.description'),
     icon: <Palette className="w-6 h-6" />,
     color: "from-pink-500 to-rose-500",
     accounts: [
@@ -130,8 +131,8 @@ const STARTER_PACKS: StarterPack[] = [
   },
   {
     id: "general",
-    name: "General",
-    description: "Interesting people from all walks of life",
+    name: t('emptyFeedFixer.starterPacks.general.name'),
+    description: t('emptyFeedFixer.starterPacks.general.description'),
     icon: <Globe className="w-6 h-6" />,
     color: "from-purple-500 to-indigo-500",
     accounts: [
@@ -157,23 +158,23 @@ const STARTER_PACKS: StarterPack[] = [
   },
 ];
 
-const DEFAULT_RELAYS: Relay[] = [
+const getDefaultRelays = (t: (key: string) => string): Relay[] => [
   {
     url: "wss://relay.damus.io",
-    name: "Damus",
-    description: "Most popular relay",
+    name: t('emptyFeedFixer.relays.wssRelayDamus.name'),
+    description: t('emptyFeedFixer.relays.wssRelayDamus.description'),
     isDefault: true,
   },
   {
     url: "wss://nos.lol",
-    name: "nos.lol",
-    description: "General purpose",
+    name: t('emptyFeedFixer.relays.wssRelayNostr.name'),
+    description: t('emptyFeedFixer.relays.wssRelayNostr.description'),
     isDefault: true,
   },
   {
     url: "wss://purplepag.es",
-    name: "Purple Pages",
-    description: "Metadata relay",
+    name: t('emptyFeedFixer.relays.wssPurplePages.name'),
+    description: t('emptyFeedFixer.relays.wssPurplePages.description'),
     isDefault: true,
   },
   {
@@ -196,6 +197,9 @@ const RECOMMENDED_CLIENTS = [
 ];
 
 export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
+  const { t } = useTranslation();
+  const STARTER_PACKS = getStarterPacks(t);
+  const DEFAULT_RELAYS = getDefaultRelays(t);
   const [selectedPack, setSelectedPack] = useState<string | null>(null);
   const [followedAccounts, setFollowedAccounts] = useState<Set<string>>(
     new Set(),
@@ -291,18 +295,17 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
             <TrendingUp className="w-8 h-8 text-primary-500" />
           </motion.div>
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-            Fix Your Empty Feed
+            {t('emptyFeedFixer.title')}
           </h2>
           <p className="text-gray-400 max-w-lg mx-auto">
-            New to Nostr? Start by following some accounts and connecting to
-            relays to see content in your feed.
+            {t('emptyFeedFixer.description')}
           </p>
         </div>
 
         {/* Progress */}
         <div className="mb-8">
           <div className="flex justify-between text-sm mb-2">
-            <span className="text-gray-400">Setup Progress</span>
+            <span className="text-gray-400">{t('emptyFeedFixer.setupProgress')}</span>
             <span className="text-primary-500 font-medium">{progress}%</span>
           </div>
           <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
@@ -343,12 +346,12 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
               </div>
               <div>
                 <h3 className="font-semibold text-white">
-                  Step 1: Follow Accounts
+                  {t('emptyFeedFixer.step1.title')}
                 </h3>
                 <p className="text-sm text-gray-400">
                   {followedAccounts.size > 0
-                    ? `Following ${followedAccounts.size} account(s)`
-                    : "Choose a starter pack or add custom accounts"}
+                    ? t('emptyFeedFixer.step1.following').replace('{count}', String(followedAccounts.size))
+                    : t('emptyFeedFixer.step1.description')}
                 </p>
               </div>
             </div>
@@ -409,7 +412,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                       onClick={() => handleFollowAll(selectedPack)}
                       className="text-sm text-primary-500 hover:text-primary-400 font-medium"
                     >
-                      Follow All
+                      {t('emptyFeedFixer.step1.followAll')}
                     </button>
                   </div>
                   <div className="space-y-2">
@@ -446,8 +449,8 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                             )}
                           >
                             {followedAccounts.has(account.npub)
-                              ? "Following"
-                              : "Follow"}
+                              ? t('emptyFeedFixer.step1.following')
+                              : t('emptyFeedFixer.step1.follow')}
                           </button>
                         </div>
                       </div>
@@ -479,7 +482,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                 disabled={!customNpub.startsWith("npub1")}
                 className="px-4 py-2 bg-primary-600 disabled:bg-gray-700 text-white rounded-lg font-medium transition-all"
               >
-                Add
+                {t('emptyFeedFixer.step1.addCustom')}
               </button>
             </div>
 
@@ -488,7 +491,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                 onClick={() => setActiveStep(2)}
                 className="mt-4 w-full py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all flex items-center justify-center gap-2"
               >
-                Continue to Relays
+                {t('emptyFeedFixer.step1.continue')}
                 <ChevronRight className="w-5 h-5" />
               </button>
             )}
@@ -521,12 +524,12 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
               </div>
               <div>
                 <h3 className="font-semibold text-white">
-                  Step 2: Connect to Relays
+                  {t('emptyFeedFixer.step2.title')}
                 </h3>
                 <p className="text-sm text-gray-400">
                   {connectedRelays.size > 0
-                    ? `Connected to ${connectedRelays.size} relay(s)`
-                    : "Connect to relays to see content"}
+                    ? t('emptyFeedFixer.step2.connected').replace('{count}', String(connectedRelays.size))
+                    : t('emptyFeedFixer.step2.description')}
                 </p>
               </div>
             </div>
@@ -535,9 +538,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
               <div className="flex items-start gap-2">
                 <AlertCircle className="w-4 h-4 text-info-500 flex-shrink-0 mt-0.5" />
                 <p className="text-sm text-gray-300">
-                  Relays are servers that store and distribute Nostr content.
-                  Connecting to multiple relays ensures better content
-                  availability.
+                  {t('emptyFeedFixer.step2.info')}
                 </p>
               </div>
             </div>
@@ -558,7 +559,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                       <p className="font-medium text-white">{relay.name}</p>
                       {relay.isDefault && (
                         <span className="text-xs bg-primary-500/20 text-primary-500 px-2 py-0.5 rounded-full">
-                          Recommended
+                          {t('emptyFeedFixer.step2.recommended')}
                         </span>
                       )}
                     </div>
@@ -576,7 +577,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                         : "bg-gray-700 text-white hover:bg-gray-600",
                     )}
                   >
-                    {connectedRelays.has(relay.url) ? "Connected" : "Connect"}
+                    {connectedRelays.has(relay.url) ? t('emptyFeedFixer.step2.connected') : t('emptyFeedFixer.step2.connect')}
                   </button>
                 </div>
               ))}
@@ -586,7 +587,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
               onClick={handleConnectAllRelays}
               className="w-full py-2 border border-primary-500 text-primary-500 hover:bg-primary-500/10 rounded-lg font-medium transition-all"
             >
-              Connect to All Recommended Relays
+              {t('emptyFeedFixer.step2.connectAll')}
             </button>
 
             {connectedRelays.size > 0 && (
@@ -594,7 +595,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                 onClick={() => setActiveStep(3)}
                 className="mt-4 w-full py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all flex items-center justify-center gap-2"
               >
-                Continue
+                {t('emptyFeedFixer.step2.continue')}
                 <ChevronRight className="w-5 h-5" />
               </button>
             )}
@@ -617,10 +618,10 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
               </div>
               <div>
                 <h3 className="font-semibold text-white">
-                  Step 3: Start Using Nostr!
+                  {t('emptyFeedFixer.step3.title')}
                 </h3>
                 <p className="text-sm text-gray-400">
-                  You're ready to explore. Choose a client to get started.
+                  {t('emptyFeedFixer.step3.description')}
                 </p>
               </div>
             </div>
@@ -667,18 +668,18 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                   <Check className="w-10 h-10 text-white" />
                 </motion.div>
                 <h3 className="text-2xl font-bold text-white mb-2">
-                  You're All Set!
+                  {t('emptyFeedFixer.step3.completed')}
                 </h3>
                 <p className="text-gray-400 mb-6">
-                  You've followed {followedAccounts.size} accounts and connected
-                  to {connectedRelays.size} relays. Your Nostr feed should now
-                  have content!
+                  {t('emptyFeedFixer.step3.successMessage')
+                    .replace('{accounts}', String(followedAccounts.size))
+                    .replace('{relays}', String(connectedRelays.size))}
                 </p>
                 <button
                   onClick={() => setShowSuccess(false)}
                   className="px-6 py-3 bg-success-500 hover:bg-success-600 text-white rounded-xl font-medium transition-all"
                 >
-                  Awesome!
+                  {t('emptyFeedFixer.step3.awesome')}
                 </button>
               </div>
             </motion.div>

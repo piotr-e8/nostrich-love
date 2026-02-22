@@ -1,5 +1,6 @@
 import React from "react";
 import { cn } from "../../lib/utils";
+import { useTranslation } from "../../hooks/useTranslation";
 
 interface ComparisonItem {
   title: string;
@@ -7,48 +8,52 @@ interface ComparisonItem {
   nostr: string;
 }
 
-const defaultItems: ComparisonItem[] = [
-  {
-    title: "Identity",
-    centralized: "Owned by company, can be revoked anytime",
-    nostr: "Owned by you. Keys work across all apps",
-  },
-  {
-    title: "Data",
-    centralized: "Stored on one server, subject to moderation",
-    nostr: "Distributed across relays. You pick where data lives",
-  },
-  {
-    title: "Clients",
-    centralized: "Single app, no portability",
-    nostr: "Many clients. Switch anytime without losing followers",
-  },
-  {
-    title: "Censorship",
-    centralized: "Company decides what stays up",
-    nostr: "You can always post; others can choose what to read",
-  },
-];
-
 export interface ProtocolComparisonProps {
   items?: ComparisonItem[];
   className?: string;
 }
 
 export function ProtocolComparison({
-  items = defaultItems,
+  items,
   className,
 }: ProtocolComparisonProps) {
+  const { t } = useTranslation();
+
+  const defaultItems: ComparisonItem[] = [
+    {
+      title: t("protocolComparisonUI.items.identity.title"),
+      centralized: t("protocolComparisonUI.items.identity.centralized"),
+      nostr: t("protocolComparisonUI.items.identity.nostr"),
+    },
+    {
+      title: t("protocolComparisonUI.items.data.title"),
+      centralized: t("protocolComparisonUI.items.data.centralized"),
+      nostr: t("protocolComparisonUI.items.data.nostr"),
+    },
+    {
+      title: t("protocolComparisonUI.items.clients.title"),
+      centralized: t("protocolComparisonUI.items.clients.centralized"),
+      nostr: t("protocolComparisonUI.items.clients.nostr"),
+    },
+    {
+      title: t("protocolComparisonUI.items.censorship.title"),
+      centralized: t("protocolComparisonUI.items.censorship.centralized"),
+      nostr: t("protocolComparisonUI.items.censorship.nostr"),
+    },
+  ];
+
+  const displayItems = items || defaultItems;
+
   return (
     <div className={cn("grid gap-4", className)}>
-      {items.map((item) => (
+      {displayItems.map((item) => (
         <div
           key={item.title}
           className="grid gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900 md:grid-cols-2"
         >
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-              Centralized Platforms
+              {t("protocolComparisonUI.centralizedLabel")}
             </p>
             <h4 className="mt-1 text-lg font-semibold text-gray-900 dark:text-white">
               {item.title}
@@ -59,7 +64,7 @@ export function ProtocolComparison({
           </div>
           <div className="rounded-xl bg-gradient-to-br from-primary/10 to-secondary/10 p-4">
             <p className="text-xs font-semibold uppercase tracking-wide text-primary">
-              Nostr
+              {t("protocolComparisonUI.nostrLabel")}
             </p>
             <p className="mt-2 text-sm text-gray-900 dark:text-white">
               {item.nostr}

@@ -22,6 +22,8 @@ import {
   ChevronUp,
 } from 'lucide-react';
 import { cn, downloadFile } from '../../lib/utils';
+import { useTranslation } from '../../hooks/useTranslation';
+import { getValue } from '../../i18n';
 
 type Platform = 'ios' | 'android' | 'web' | 'desktop';
 type Difficulty = 'beginner' | 'intermediate' | 'advanced';
@@ -54,193 +56,6 @@ interface ClientComparisonTableProps {
   className?: string;
 }
 
-const CLIENTS: NostrClient[] = [
-  {
-    id: 'damus',
-    name: 'Damus',
-    icon: 'D',
-    platforms: ['ios'],
-    rating: 4.8,
-    difficulty: 'beginner',
-    wallet: true,
-    media: true,
-    longform: false,
-    privacy: true,
-    userCount: '100K+',
-    description: 'The most popular iOS client with a polished UI and smooth experience.',
-    pros: ['Beautiful UI', 'Easy to use', 'Active development', 'Great onboarding', 'Zaps support'],
-    cons: ['iOS only', 'Limited desktop sync', 'No long-form content'],
-    urls: { ios: 'https://apps.apple.com/app/damus/id1628663131' },
-    tags: ['Beginner Friendly', 'Popular'],
-  },
-  {
-    id: 'amethyst',
-    name: 'Amethyst',
-    icon: 'A',
-    platforms: ['android'],
-    rating: 4.7,
-    difficulty: 'intermediate',
-    wallet: true,
-    media: true,
-    longform: true,
-    privacy: true,
-    userCount: '50K+',
-    description: 'A feature-rich Android client with excellent support for all Nostr features.',
-    pros: ['Full-featured', 'Zaps support', 'Active community', 'Regular updates', 'Highly customizable'],
-    cons: ['Can be overwhelming for beginners', 'Android only', 'Complex settings'],
-    urls: { android: 'https://play.google.com/store/apps/details?id=com.vitorpamplona.amethyst' },
-    tags: ['Power User', 'Feature Rich'],
-  },
-  {
-    id: 'primal',
-    name: 'Primal',
-    icon: 'P',
-    platforms: ['web', 'ios', 'android'],
-    rating: 4.6,
-    difficulty: 'beginner',
-    wallet: true,
-    media: true,
-    longform: true,
-    privacy: false,
-    userCount: '30K+',
-    description: 'A fast, modern client available on all platforms with excellent performance.',
-    pros: ['All platforms', 'Fast loading', 'Great search', 'Beautiful design', 'Regular updates'],
-    cons: ['Privacy concerns for some', 'Newer app', 'Some features still in development'],
-    urls: { 
-      web: 'https://primal.net',
-      ios: 'https://apps.apple.com/app/primal/id1673134518',
-      android: 'https://play.google.com/store/apps/details?id=net.primal.android'
-    },
-    tags: ['Beginner Friendly', 'Cross Platform'],
-  },
-  {
-    id: 'iris',
-    name: 'Iris',
-    icon: 'I',
-    platforms: ['web'],
-    rating: 4.4,
-    difficulty: 'beginner',
-    wallet: false,
-    media: true,
-    longform: false,
-    privacy: true,
-    userCount: '20K+',
-    description: 'A simple, no-signup web client perfect for getting started quickly.',
-    pros: ['No download needed', 'Works instantly', 'Clean interface', 'Open source', 'Private'],
-    cons: ['Web only', 'Limited advanced features', 'No wallet integration'],
-    urls: { web: 'https://iris.to' },
-    tags: ['Beginner Friendly', 'Web Only'],
-  },
-  {
-    id: 'snort',
-    name: 'Snort',
-    icon: 'S',
-    platforms: ['web'],
-    rating: 4.3,
-    difficulty: 'beginner',
-    wallet: false,
-    media: true,
-    longform: true,
-    privacy: true,
-    userCount: '15K+',
-    description: 'A web client focused on simplicity and performance.',
-    pros: ['Lightning fast', 'Minimal UI', 'No bloat', 'Great for reading', 'Privacy focused'],
-    cons: ['Web only', 'Fewer social features', 'No wallet'],
-    urls: { web: 'https://snort.social' },
-    tags: ['Minimal', 'Privacy'],
-  },
-  {
-    id: 'coracle',
-    name: 'Coracle',
-    icon: 'C',
-    platforms: ['desktop'],
-    rating: 4.5,
-    difficulty: 'advanced',
-    wallet: true,
-    media: true,
-    longform: true,
-    privacy: true,
-    userCount: '10K+',
-    description: 'A desktop client for power users with advanced features.',
-    pros: ['Powerful features', 'Desktop optimized', 'Great for creators', 'Advanced filtering', 'Keyboard shortcuts'],
-    cons: ['Desktop only', 'Steeper learning curve', 'Not mobile friendly'],
-    urls: { desktop: 'https://coracle.social' },
-    tags: ['Power User', 'Desktop'],
-  },
-  {
-    id: 'current',
-    name: 'Current',
-    icon: 'Cu',
-    platforms: ['ios'],
-    rating: 4.4,
-    difficulty: 'intermediate',
-    wallet: true,
-    media: true,
-    longform: true,
-    privacy: true,
-    userCount: '8K+',
-    description: 'iOS client with excellent Nostr Wallet Connect integration.',
-    pros: ['Best wallet support', 'NWC integration', 'Power user features', 'Clean UI'],
-    cons: ['More complex', 'iOS only', 'Learning curve'],
-    urls: { ios: 'https://apps.apple.com/app/current-nostr-client/id1668517032' },
-    tags: ['Power User', 'Wallet Focused'],
-  },
-  {
-    id: 'habla',
-    name: 'Habla',
-    icon: 'H',
-    platforms: ['web'],
-    rating: 4.2,
-    difficulty: 'beginner',
-    wallet: true,
-    media: true,
-    longform: true,
-    privacy: false,
-    userCount: '5K+',
-    description: 'Long-form content focused client with newsletter support.',
-    pros: ['Great for articles', 'Newsletter support', 'Clean writing interface', 'Monetization'],
-    cons: ['Web only', 'Smaller user base', 'Limited social features'],
-    urls: { web: 'https://habla.news' },
-    tags: ['Long Form', 'Writers'],
-  },
-  {
-    id: 'nostur',
-    name: 'Nostur',
-    icon: 'N',
-    platforms: ['ios'],
-    rating: 4.3,
-    difficulty: 'intermediate',
-    wallet: true,
-    media: true,
-    longform: false,
-    privacy: true,
-    userCount: '12K+',
-    description: 'A feature-rich iOS client with a focus on usability.',
-    pros: ['Great UI', 'Fast', 'Good relay management', 'Active dev'],
-    cons: ['iOS only', 'Some learning required'],
-    urls: { ios: 'https://apps.apple.com/app/nostur/id1672780508' },
-    tags: ['iOS', 'Feature Rich'],
-  },
-  {
-    id: 'plebstr',
-    name: 'Plebstr',
-    icon: 'Pl',
-    platforms: ['android'],
-    rating: 4.1,
-    difficulty: 'beginner',
-    wallet: false,
-    media: true,
-    longform: false,
-    privacy: true,
-    userCount: '8K+',
-    description: 'A simple Android client for beginners.',
-    pros: ['Easy to use', 'Clean design', 'Good performance'],
-    cons: ['Fewer features', 'Android only', 'No wallet'],
-    urls: { android: 'https://play.google.com/store/apps/details?id=com.plebstr.client' },
-    tags: ['Beginner Friendly', 'Android'],
-  },
-];
-
 const PLATFORM_ICONS: Record<Platform, React.ReactNode> = {
   ios: <Smartphone className="w-4 h-4" />,
   android: <Smartphone className="w-4 h-4" />,
@@ -248,20 +63,26 @@ const PLATFORM_ICONS: Record<Platform, React.ReactNode> = {
   desktop: <Monitor className="w-4 h-4" />,
 };
 
-const PLATFORM_LABELS: Record<Platform, string> = {
-  ios: 'iOS',
-  android: 'Android',
-  web: 'Web',
-  desktop: 'Desktop',
-};
-
-const DIFFICULTY_LABELS: Record<Difficulty, { label: string; color: string }> = {
-  beginner: { label: 'Beginner', color: 'text-success-500 bg-success-500/10' },
-  intermediate: { label: 'Intermediate', color: 'text-warning-500 bg-warning-500/10' },
-  advanced: { label: 'Advanced', color: 'text-error-500 bg-error-500/10' },
+// Client URLs are static
+const CLIENT_URLS: Record<string, { web?: string; ios?: string; android?: string; desktop?: string }> = {
+  damus: { ios: 'https://apps.apple.com/app/damus/id1628663131' },
+  amethyst: { android: 'https://play.google.com/store/apps/details?id=com.vitorpamplona.amethyst' },
+  primal: { 
+    web: 'https://primal.net',
+    ios: 'https://apps.apple.com/app/primal/id1673134518',
+    android: 'https://play.google.com/store/apps/details?id=net.primal.android'
+  },
+  iris: { web: 'https://iris.to' },
+  snort: { web: 'https://snort.social' },
+  coracle: { desktop: 'https://coracle.social' },
+  current: { ios: 'https://apps.apple.com/app/current-nostr-client/id1668517032' },
+  habla: { web: 'https://habla.news' },
+  nostur: { ios: 'https://apps.apple.com/app/nostur/id1672780508' },
+  plebstr: { android: 'https://play.google.com/store/apps/details?id=com.plebstr.client' },
 };
 
 export function ClientComparisonTable({ className }: ClientComparisonTableProps) {
+  const { t, locale } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPlatforms, setSelectedPlatforms] = useState<Set<Platform>>(new Set());
   const [selectedFeatures, setSelectedFeatures] = useState<Set<string>>(new Set());
@@ -269,9 +90,196 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
   const [expandedClient, setExpandedClient] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
 
+  // Helper to get array from translations
+  const getArray = (key: string): string[] => getValue(key, locale) || [];
+
+  // Get clients data with translations
+  const clients = useMemo((): NostrClient[] => [
+    {
+      id: 'damus',
+      name: t('clientComparisonTable.clients.damus.name'),
+      icon: 'D',
+      platforms: ['ios'],
+      rating: 4.8,
+      difficulty: 'beginner',
+      wallet: true,
+      media: true,
+      longform: false,
+      privacy: true,
+      userCount: '100K+',
+      description: t('clientComparisonTable.clients.damus.description'),
+      pros: getArray('clientComparisonTable.clients.damus.pros'),
+      cons: getArray('clientComparisonTable.clients.damus.cons'),
+      urls: CLIENT_URLS.damus,
+      tags: [t('clientComparisonTable.tags.beginnerFriendly'), t('clientComparisonTable.tags.popular')],
+    },
+    {
+      id: 'amethyst',
+      name: t('clientComparisonTable.clients.amethyst.name'),
+      icon: 'A',
+      platforms: ['android'],
+      rating: 4.7,
+      difficulty: 'intermediate',
+      wallet: true,
+      media: true,
+      longform: true,
+      privacy: true,
+      userCount: '50K+',
+      description: t('clientComparisonTable.clients.amethyst.description'),
+      pros: getArray('clientComparisonTable.clients.amethyst.pros'),
+      cons: getArray('clientComparisonTable.clients.amethyst.cons'),
+      urls: CLIENT_URLS.amethyst,
+      tags: [t('clientComparisonTable.tags.powerUser'), t('clientComparisonTable.tags.featureRich')],
+    },
+    {
+      id: 'primal',
+      name: t('clientComparisonTable.clients.primal.name'),
+      icon: 'P',
+      platforms: ['web', 'ios', 'android'],
+      rating: 4.6,
+      difficulty: 'beginner',
+      wallet: true,
+      media: true,
+      longform: true,
+      privacy: false,
+      userCount: '30K+',
+      description: t('clientComparisonTable.clients.primal.description'),
+      pros: getArray('clientComparisonTable.clients.primal.pros'),
+      cons: getArray('clientComparisonTable.clients.primal.cons'),
+      urls: CLIENT_URLS.primal,
+      tags: [t('clientComparisonTable.tags.beginnerFriendly'), t('clientComparisonTable.tags.crossPlatform')],
+    },
+    {
+      id: 'iris',
+      name: t('clientComparisonTable.clients.iris.name'),
+      icon: 'I',
+      platforms: ['web'],
+      rating: 4.4,
+      difficulty: 'beginner',
+      wallet: false,
+      media: true,
+      longform: false,
+      privacy: true,
+      userCount: '20K+',
+      description: t('clientComparisonTable.clients.iris.description'),
+      pros: getArray('clientComparisonTable.clients.iris.pros'),
+      cons: getArray('clientComparisonTable.clients.iris.cons'),
+      urls: CLIENT_URLS.iris,
+      tags: [t('clientComparisonTable.tags.beginnerFriendly'), t('clientComparisonTable.tags.webOnly')],
+    },
+    {
+      id: 'snort',
+      name: t('clientComparisonTable.clients.snort.name'),
+      icon: 'S',
+      platforms: ['web'],
+      rating: 4.3,
+      difficulty: 'beginner',
+      wallet: false,
+      media: true,
+      longform: true,
+      privacy: true,
+      userCount: '15K+',
+      description: t('clientComparisonTable.clients.snort.description'),
+      pros: getArray('clientComparisonTable.clients.snort.pros'),
+      cons: getArray('clientComparisonTable.clients.snort.cons'),
+      urls: CLIENT_URLS.snort,
+      tags: [t('clientComparisonTable.tags.minimal'), t('clientComparisonTable.tags.privacy')],
+    },
+    {
+      id: 'coracle',
+      name: t('clientComparisonTable.clients.coracle.name'),
+      icon: 'C',
+      platforms: ['desktop'],
+      rating: 4.5,
+      difficulty: 'advanced',
+      wallet: true,
+      media: true,
+      longform: true,
+      privacy: true,
+      userCount: '10K+',
+      description: t('clientComparisonTable.clients.coracle.description'),
+      pros: getArray('clientComparisonTable.clients.coracle.pros'),
+      cons: getArray('clientComparisonTable.clients.coracle.cons'),
+      urls: CLIENT_URLS.coracle,
+      tags: [t('clientComparisonTable.tags.powerUser'), t('clientComparisonTable.tags.desktop')],
+    },
+    {
+      id: 'current',
+      name: t('clientComparisonTable.clients.current.name'),
+      icon: 'Cu',
+      platforms: ['ios'],
+      rating: 4.4,
+      difficulty: 'intermediate',
+      wallet: true,
+      media: true,
+      longform: true,
+      privacy: true,
+      userCount: '8K+',
+      description: t('clientComparisonTable.clients.current.description'),
+      pros: getArray('clientComparisonTable.clients.current.pros'),
+      cons: getArray('clientComparisonTable.clients.current.cons'),
+      urls: CLIENT_URLS.current,
+      tags: [t('clientComparisonTable.tags.powerUser'), t('clientComparisonTable.tags.walletFocused')],
+    },
+    {
+      id: 'habla',
+      name: t('clientComparisonTable.clients.habla.name'),
+      icon: 'H',
+      platforms: ['web'],
+      rating: 4.2,
+      difficulty: 'beginner',
+      wallet: true,
+      media: true,
+      longform: true,
+      privacy: false,
+      userCount: '5K+',
+      description: t('clientComparisonTable.clients.habla.description'),
+      pros: getArray('clientComparisonTable.clients.habla.pros'),
+      cons: getArray('clientComparisonTable.clients.habla.cons'),
+      urls: CLIENT_URLS.habla,
+      tags: [t('clientComparisonTable.tags.longForm'), t('clientComparisonTable.tags.writers')],
+    },
+    {
+      id: 'nostur',
+      name: t('clientComparisonTable.clients.nostur.name'),
+      icon: 'N',
+      platforms: ['ios'],
+      rating: 4.3,
+      difficulty: 'intermediate',
+      wallet: true,
+      media: true,
+      longform: false,
+      privacy: true,
+      userCount: '12K+',
+      description: t('clientComparisonTable.clients.nostur.description'),
+      pros: getArray('clientComparisonTable.clients.nostur.pros'),
+      cons: getArray('clientComparisonTable.clients.nostur.cons'),
+      urls: CLIENT_URLS.nostur,
+      tags: [t('clientComparisonTable.tags.ios'), t('clientComparisonTable.tags.featureRich')],
+    },
+    {
+      id: 'plebstr',
+      name: t('clientComparisonTable.clients.plebstr.name'),
+      icon: 'Pl',
+      platforms: ['android'],
+      rating: 4.1,
+      difficulty: 'beginner',
+      wallet: false,
+      media: true,
+      longform: false,
+      privacy: true,
+      userCount: '8K+',
+      description: t('clientComparisonTable.clients.plebstr.description'),
+      pros: getArray('clientComparisonTable.clients.plebstr.pros'),
+      cons: getArray('clientComparisonTable.clients.plebstr.cons'),
+      urls: CLIENT_URLS.plebstr,
+      tags: [t('clientComparisonTable.tags.beginnerFriendly'), t('clientComparisonTable.tags.android')],
+    },
+  ], [t]);
+
   // Filter clients
   const filteredClients = useMemo(() => {
-    return CLIENTS.filter((client) => {
+    return clients.filter((client) => {
       const matchesSearch =
         client.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         client.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -296,7 +304,7 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
 
       return matchesSearch && matchesPlatform && matchesFeatures && matchesDifficulty;
     }).sort((a, b) => b.rating - a.rating);
-  }, [searchQuery, selectedPlatforms, selectedFeatures, difficultyFilter]);
+  }, [clients, searchQuery, selectedPlatforms, selectedFeatures, difficultyFilter]);
 
   const togglePlatform = (platform: Platform) => {
     const newSet = new Set(selectedPlatforms);
@@ -336,6 +344,16 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
     downloadFile('nostr-clients.csv', csv);
   };
 
+  const getPlatformLabel = (platform: Platform) => t(`clientComparisonTable.platformLabels.${platform}`);
+  const getDifficultyLabel = (diff: Difficulty) => t(`clientComparisonTable.difficultyLabels.${diff}`);
+  const getFeatureLabel = (feature: string) => t(`clientComparisonTable.featureLabels.${feature}`);
+
+  const difficultyColors: Record<Difficulty, string> = {
+    beginner: 'text-success-500 bg-success-500/10',
+    intermediate: 'text-warning-500 bg-warning-500/10',
+    advanced: 'text-error-500 bg-error-500/10',
+  };
+
   return (
     <div className={cn("max-w-6xl mx-auto", className)}>
       {/* Search & Filters */}
@@ -347,7 +365,7 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search clients..."
+              placeholder={t('clientComparisonTable.searchPlaceholder')}
               className="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none"
             />
           </div>
@@ -362,7 +380,7 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
               )}
             >
               <Filter className="w-4 h-4" />
-              Filters
+              {t('clientComparisonTable.filters.button')}
               {(selectedPlatforms.size > 0 || selectedFeatures.size > 0 || difficultyFilter) && (
                 <span className="w-5 h-5 bg-white text-purple-500 rounded-full text-xs flex items-center justify-center font-bold">
                   {selectedPlatforms.size + selectedFeatures.size + (difficultyFilter ? 1 : 0)}
@@ -374,7 +392,7 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
               className="px-4 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-xl font-medium transition-all inline-flex items-center gap-2 text-sm"
             >
               <Download className="w-4 h-4" />
-              Export
+              {t('clientComparisonTable.export')}
             </button>
           </div>
         </div>
@@ -390,9 +408,9 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
             >
               {/* Platform Filters */}
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium">Platform</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium">{t('clientComparisonTable.filters.platform')}</p>
                 <div className="flex flex-wrap gap-2">
-                  {(Object.keys(PLATFORM_LABELS) as Platform[]).map((platform) => (
+                  {(['ios', 'android', 'web', 'desktop'] as Platform[]).map((platform) => (
                     <button
                       key={platform}
                       onClick={() => togglePlatform(platform)}
@@ -404,7 +422,7 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                       )}
                     >
                       {PLATFORM_ICONS[platform]}
-                      {PLATFORM_LABELS[platform]}
+                      {getPlatformLabel(platform)}
                     </button>
                   ))}
                 </div>
@@ -412,13 +430,13 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
 
               {/* Feature Filters */}
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium">Key Features</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium">{t('clientComparisonTable.filters.features')}</p>
                 <div className="flex flex-wrap gap-2">
                   {[
-                    { id: 'wallet', label: 'Wallet', icon: <Wallet className="w-3.5 h-3.5" /> },
-                    { id: 'media', label: 'Media', icon: <ImageIcon className="w-3.5 h-3.5" /> },
-                    { id: 'longform', label: 'Long-form', icon: <FileText className="w-3.5 h-3.5" /> },
-                    { id: 'privacy', label: 'Privacy', icon: <Shield className="w-3.5 h-3.5" /> },
+                    { id: 'wallet', icon: <Wallet className="w-3.5 h-3.5" /> },
+                    { id: 'media', icon: <ImageIcon className="w-3.5 h-3.5" /> },
+                    { id: 'longform', icon: <FileText className="w-3.5 h-3.5" /> },
+                    { id: 'privacy', icon: <Shield className="w-3.5 h-3.5" /> },
                   ].map((feature) => (
                     <button
                       key={feature.id}
@@ -431,7 +449,7 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                       )}
                     >
                       {feature.icon}
-                      {feature.label}
+                      {getFeatureLabel(feature.id)}
                     </button>
                   ))}
                 </div>
@@ -439,9 +457,9 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
 
               {/* Difficulty Filter */}
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium">Difficulty</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium">{t('clientComparisonTable.filters.difficulty')}</p>
                 <div className="flex flex-wrap gap-2">
-                  {(Object.keys(DIFFICULTY_LABELS) as Difficulty[]).map((diff) => (
+                  {(['beginner', 'intermediate', 'advanced'] as Difficulty[]).map((diff) => (
                     <button
                       key={diff}
                       onClick={() => setDifficultyFilter(difficultyFilter === diff ? null : diff)}
@@ -452,7 +470,7 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                           : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
                       )}
                     >
-                      {DIFFICULTY_LABELS[diff].label}
+                      {getDifficultyLabel(diff)}
                     </button>
                   ))}
                 </div>
@@ -468,7 +486,7 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                   }}
                   className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
                 >
-                  Clear all filters
+                  {t('clientComparisonTable.clearFilters')}
                 </button>
               )}
             </motion.div>
@@ -519,11 +537,11 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                     className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-lg text-xs"
                   >
                     {PLATFORM_ICONS[platform]}
-                    {PLATFORM_LABELS[platform]}
+                    {getPlatformLabel(platform)}
                   </span>
                 ))}
-                <span className={cn("px-2 py-1 rounded-full text-xs font-medium", DIFFICULTY_LABELS[client.difficulty].color)}>
-                  {DIFFICULTY_LABELS[client.difficulty].label}
+                <span className={cn("px-2 py-1 rounded-full text-xs font-medium", difficultyColors[client.difficulty])}>
+                  {getDifficultyLabel(client.difficulty)}
                 </span>
               </div>
 
@@ -534,22 +552,22 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
               <div className="flex flex-wrap gap-1.5 mb-3">
                 {client.wallet && (
                   <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded text-xs">
-                    <Wallet className="w-3 h-3" /> Wallet
+                    <Wallet className="w-3 h-3" /> {getFeatureLabel('wallet')}
                   </span>
                 )}
                 {client.media && (
                   <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded text-xs">
-                    <ImageIcon className="w-3 h-3" /> Media
+                    <ImageIcon className="w-3 h-3" /> {getFeatureLabel('media')}
                   </span>
                 )}
                 {client.longform && (
                   <span className="inline-flex items-center gap-1 px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 rounded text-xs">
-                    <FileText className="w-3 h-3" /> Long-form
+                    <FileText className="w-3 h-3" /> {getFeatureLabel('longform')}
                   </span>
                 )}
                 {client.privacy && (
                   <span className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-400 rounded text-xs">
-                    <Shield className="w-3 h-3" /> Privacy
+                    <Shield className="w-3 h-3" /> {getFeatureLabel('privacy')}
                   </span>
                 )}
               </div>
@@ -597,7 +615,7 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                           className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg text-sm transition-colors"
                         >
                           <Globe className="w-4 h-4" />
-                          Web
+                          {t('clientComparisonTable.card.links.web')}
                           <ExternalLink className="w-3 h-3" />
                         </a>
                       )}
@@ -610,7 +628,7 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                           className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg text-sm transition-colors"
                         >
                           <Smartphone className="w-4 h-4" />
-                          iOS
+                          {t('clientComparisonTable.card.links.ios')}
                           <ExternalLink className="w-3 h-3" />
                         </a>
                       )}
@@ -623,7 +641,7 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                           className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg text-sm transition-colors"
                         >
                           <Smartphone className="w-4 h-4" />
-                          Android
+                          {t('clientComparisonTable.card.links.android')}
                           <ExternalLink className="w-3 h-3" />
                         </a>
                       )}
@@ -636,7 +654,7 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                           className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg text-sm transition-colors"
                         >
                           <Monitor className="w-4 h-4" />
-                          Desktop
+                          {t('clientComparisonTable.card.links.desktop')}
                           <ExternalLink className="w-3 h-3" />
                         </a>
                       )}
@@ -645,7 +663,7 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                     {/* Pros/Cons */}
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <p className="text-sm font-medium text-green-600 dark:text-green-400 mb-2">Pros</p>
+                        <p className="text-sm font-medium text-green-600 dark:text-green-400 mb-2">{t('clientComparisonTable.card.pros')}</p>
                         <ul className="space-y-1">
                           {client.pros.slice(0, 3).map((pro, i) => (
                             <li key={i} className="text-xs text-gray-600 dark:text-gray-400 flex items-start gap-1.5">
@@ -656,7 +674,7 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                         </ul>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-red-600 dark:text-red-400 mb-2">Cons</p>
+                        <p className="text-sm font-medium text-red-600 dark:text-red-400 mb-2">{t('clientComparisonTable.card.cons')}</p>
                         <ul className="space-y-1">
                           {client.cons.slice(0, 3).map((con, i) => (
                             <li key={i} className="text-xs text-gray-600 dark:text-gray-400 flex items-start gap-1.5">
@@ -679,9 +697,9 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
       {filteredClients.length === 0 && (
         <div className="text-center py-12">
           <Smartphone className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No clients found</h3>
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{t('clientComparisonTable.noResults.title')}</h3>
           <p className="text-gray-500 dark:text-gray-400">
-            Try adjusting your filters to see more results
+            {t('clientComparisonTable.noResults.description')}
           </p>
         </div>
       )}
