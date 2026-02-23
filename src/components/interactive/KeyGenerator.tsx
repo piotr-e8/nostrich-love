@@ -73,11 +73,11 @@ export function KeyGenerator({
   className,
   onKeysGenerated,
 }: KeyGeneratorProps) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const [keys, setKeys] = useState<KeyPair | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showPrivateKey, setShowPrivateKey] = useState(false);
-  const [securityChecks, setSecurityChecks] = useState<SecurityCheck[]>(getSecurityChecks(t));
+  const [securityChecks, setSecurityChecks] = useState<SecurityCheck[]>([]);
   const [qrCodeData, setQrCodeData] = useState<{
     npub: string;
     nsec: string;
@@ -92,13 +92,25 @@ export function KeyGenerator({
 
   const allChecksPassed = securityChecks.every((check) => check.checked);
 
+  // Load security checks from localStorage only once on mount, or when locale changes
   useEffect(() => {
-    const savedChecks = loadFromLocalStorage<SecurityCheck[]>(
+    const defaultChecks = getSecurityChecks(t);
+    const savedChecks = loadFromLocalStorage<SecurityCheck[] | null>(
       "nostr-key-security-checks",
-      getSecurityChecks(t),
+      null,
     );
-    setSecurityChecks(savedChecks);
-  }, [t]);
+    
+    if (savedChecks && Array.isArray(savedChecks) && savedChecks.length > 0) {
+      // Merge saved checked state with current translations
+      const mergedChecks = defaultChecks.map((defaultCheck, index) => ({
+        ...defaultCheck,
+        checked: savedChecks[index]?.checked ?? false,
+      }));
+      setSecurityChecks(mergedChecks);
+    } else {
+      setSecurityChecks(defaultChecks);
+    }
+  }, [locale]); // Only re-run when locale changes, not on every t change
 
   useEffect(() => {
     saveToLocalStorage("nostr-key-security-checks", securityChecks);
@@ -296,7 +308,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
               className="space-y-6"
             >
               {/* Security Warning */}
-              <div className="bg-yellow-50 dark:yellow-900/20 border border-yellow-200 dark:yellow-800 rounded-xl p-4">
+              <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl p-4">
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-yellow-700 dark:text-yellow-400 flex-shrink-0 mt-0.5" />
                   <div>
@@ -312,7 +324,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
 
               {/* Security Checklist */}
               <div className="bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl p-4 border border-border-dark">
-                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
                   <Shield className="w-4 h-4 text-primary-500" />
                   {t('keyGenerator.securityChecklist.title')}
                 </h3>
@@ -387,7 +399,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
               </div>
 
               {/* Public Key */}
-              <div className="bg-green-50 dark:green-900/10 border border-success-500/30 rounded-xl p-4">
+              <div className="bg-green-50 dark:bg-green-900/10 border border-success-500/30 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <Unlock className="w-5 h-5 text-success-500" />
@@ -395,7 +407,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                       {t('keyGenerator.keys.public.title')}
                     </h3>
                   </div>
-                  <span className="text-xs bg-green-100 dark:green-900/30 text-success-500 px-2 py-1 rounded-full">
+                  <span className="text-xs bg-green-100 dark:bg-green-900/30 text-success-500 px-2 py-1 rounded-full">
                     {t('keyGenerator.keys.public.badge')}
                   </span>
                 </div>
@@ -417,7 +429,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                     <a
                       href={qrCodeData.npub}
                       download="npub-qr.png"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg transition-all"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-white rounded-lg transition-all"
                     >
                       <QrCode className="w-4 h-4" />
                       {t('keyGenerator.keys.public.qrCode')}
@@ -427,7 +439,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
               </div>
 
               {/* Private Key */}
-              <div className="bg-red-50 dark:red-900/10 border border-error-500/30 rounded-xl p-4">
+              <div className="bg-red-50 dark:bg-red-900/10 border border-error-500/30 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <Lock className="w-5 h-5 text-error-500" />
@@ -435,7 +447,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                       {t('keyGenerator.keys.private.title')}
                     </h3>
                   </div>
-                  <span className="text-xs bg-red-100 dark:red-900/30 text-error-500 px-2 py-1 rounded-full">
+                  <span className="text-xs bg-red-100 dark:bg-red-900/30 text-error-500 px-2 py-1 rounded-full">
                     {t('keyGenerator.keys.private.badge')}
                   </span>
                 </div>
@@ -470,7 +482,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                   </button>
                   <button
                     onClick={handleDownload}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg transition-all"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-white rounded-lg transition-all"
                   >
                     <Download className="w-4 h-4" />
                     {t('keyGenerator.keys.private.download')}
@@ -479,7 +491,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                     <a
                       href={qrCodeData.nsec}
                       download="nsec-qr.png"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg transition-all"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-white rounded-lg transition-all"
                     >
                       <QrCode className="w-4 h-4" />
                       {t('keyGenerator.keys.private.qrCode')}
@@ -496,7 +508,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                     setSecurityChecks(getSecurityChecks(t));
                     setQrCodeData(null);
                   }}
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-white transition-all inline-flex items-center gap-2"
+                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-white transition-all inline-flex items-center gap-2"
                 >
                   <RefreshCw className="w-4 h-4" />
                   {t('keyGenerator.buttons.regenerate')}
@@ -528,7 +540,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                 <div className="w-12 h-12 bg-warning-500/20 rounded-full flex items-center justify-center">
                   <AlertTriangle className="w-6 h-6 text-yellow-700 dark:text-yellow-400" />
                 </div>
-                <h3 className="text-xl font-bold text-white">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                   {t('keyGenerator.modal.title')}
                 </h3>
               </div>
@@ -538,7 +550,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowWarningModal(false)}
-                  className="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg transition-all"
+                  className="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-white rounded-lg transition-all"
                 >
                   {t('keyGenerator.modal.goBack')}
                 </button>
@@ -548,7 +560,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                     pendingAction?.();
                     setPendingAction(null);
                   }}
-                  className="flex-1 px-4 py-2 bg-warning-500/20 hover:bg-yellow-200 dark:yellow-800 text-yellow-700 dark:text-yellow-400 rounded-lg transition-all"
+                  className="flex-1 px-4 py-2 bg-warning-500/20 hover:bg-yellow-200 dark:hover:bg-yellow-800 text-yellow-700 dark:text-yellow-400 rounded-lg transition-all"
                 >
                   {t('keyGenerator.modal.copyAnyway')}
                 </button>

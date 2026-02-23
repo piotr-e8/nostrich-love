@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Check, Sparkles, Bitcoin, Lock, Palette, Code, Video } from 'lucide-react';
+import { useTranslation } from '../../hooks/useTranslation';
 
 export type InterestFilterValue = string | null;
 
@@ -16,14 +17,15 @@ export interface InterestFilterProps {
   className?: string;
 }
 
-const defaultOptions: InterestFilterOption[] = [
-  { value: null, label: 'All Guides', icon: <Sparkles className="w-4 h-4" /> },
-  { value: 'bitcoin', label: 'Bitcoin', icon: <Bitcoin className="w-4 h-4" /> },
-  { value: 'privacy', label: 'Privacy', icon: <Lock className="w-4 h-4" /> },
-  { value: 'security', label: 'Security', icon: <Lock className="w-4 h-4" /> },
-  { value: 'relays', label: 'Relays', icon: <Code className="w-4 h-4" /> },
-  { value: 'tools', label: 'Tools', icon: <Palette className="w-4 h-4" /> },
-  { value: 'community', label: 'Community', icon: <Video className="w-4 h-4" /> },
+// Helper to get translated filter options
+const getFilterOptions = (t: (key: string) => string): InterestFilterOption[] => [
+  { value: null, label: t('interestFilter.allGuides'), icon: <Sparkles className="w-4 h-4" /> },
+  { value: 'bitcoin', label: t('interestFilter.bitcoin'), icon: <Bitcoin className="w-4 h-4" /> },
+  { value: 'privacy', label: t('interestFilter.privacy'), icon: <Lock className="w-4 h-4" /> },
+  { value: 'security', label: t('interestFilter.security'), icon: <Lock className="w-4 h-4" /> },
+  { value: 'relays', label: t('interestFilter.relays'), icon: <Code className="w-4 h-4" /> },
+  { value: 'tools', label: t('interestFilter.tools'), icon: <Palette className="w-4 h-4" /> },
+  { value: 'community', label: t('interestFilter.community'), icon: <Video className="w-4 h-4" /> },
 ];
 
 /**
@@ -34,9 +36,11 @@ const defaultOptions: InterestFilterOption[] = [
 export const InterestFilter: React.FC<InterestFilterProps> = ({
   activeFilter,
   onFilterChange,
-  options = defaultOptions,
+  options: optionsProp,
   className = '',
 }) => {
+  const { t } = useTranslation();
+  const options = optionsProp || getFilterOptions(t);
   const [isMobile, setIsMobile] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 

@@ -2065,5 +2065,99 @@
       "topRegion": "Najlepszy Region",
       "avgLatency": "Śr. Opóźnienie"
     }
+  },
+  "guideNavigation": {
+    "previous": "Poprzedni",
+    "next": "Następny",
+    "backToAllGuides": "Wróć do Wszystkich Przewodników",
+    "exploreAllGuides": "Przeglądaj Wszystkie Przewodniki",
+    "startOfLevel": "Początek poziomu {level}",
+    "levelComplete": "{level} Ukończony!",
+    "levelCompleteDescription": "Ukończyłeś wszystkie przewodniki z poziomu {level}",
+    "continueToLevel": "Kontynuuj do {level}",
+    "unlockRequirements": "Ukończ więcej przewodników z {currentLevel}, aby odblokować {nextLevel}",
+    "offLevelMessage": "Ten przewodnik nie jest częścią Twojego obecnego poziomu {level}"
+  },
+  "continueLearning": {
+    "allLevelsComplete": "Wszystkie Poziomy Ukończone!",
+    "allLevelsCompleteDescription": "Gratulacje! Ukończyłeś wszystkie przewodniki z poziomu {level} i opanowałeś Nostr!",
+    "levelComplete": "Poziom Ukończony!",
+    "levelCompleteDescription": "Ukończyłeś wszystkie przewodniki z poziomu {level}!",
+    "continueToLevel": "Kontynuuj do {level}",
+    "locked": "{level} jest Zablokowany",
+    "unlockRequirements": "Ukończ jeszcze {count} przewodnik{plural} z {currentLevel}, aby odblokować {nextLevel}",
+    "browseAllGuides": "Przeglądaj Wszystkie Przewodniki",
+    "guideComplete": "Przewodnik Ukończony!",
+    "testKnowledge": "Sprawdź swoją wiedzę?",
+    "nextGuide": "Gotowy na następny przewodnik?",
+    "quizDescription": "Rozwiąż quiz, aby utrwalić to, czego się nauczyłeś.",
+    "continueDescription": "Kontynuuj swoją podróż z Nostr z przewodnikiem {title}",
+    "takeQuiz": "Rozwiąż Quiz",
+    "continueLearning": "Kontynuuj Naukę"
+  },
+  "guidesPage": {
+    "hero": {
+      "title": "Ucz się Nostr Krok po Kroku",
+      "description": "Stopniowe poziomy umiejętności od początkującego do zaawansowanego. Odblokuj nowe poziomy, ukończ przewodniki i opanuj protokół.",
+      "yourProgress": "Twój Postęp",
+      "startFirstGuide": "Rozpocznij pierwszy przewodnik, aby zobaczyć postęp"
+    },
+    "cta": {
+      "notSure": "Nie wiesz, od czego zacząć?",
+      "beginnerDescription": "Zacznij od naszych przewodników dla początkujących – zostały zaprojektowane, aby przeprowadzić Cię od zera do pierwszego posta.",
+      "startLearning": "Rozpocznij Naukę"
+    },
+    "filter": {
+      "filterByInterest": "Filtruj według zainteresowań"
+    }
+  },
+  "skillLevels": {
+    "beginner": {
+      "label": "Początkujący",
+      "title": "Pierwsze Kroki",
+      "subtitle": "Zacznij swoją przygodę z Nostr tutaj",
+      "description": "Rozpocznij swoją przygodę z Nostr od podstaw. Nie wymaga wcześniejszej wiedzy."
+    },
+    "intermediate": {
+      "label": "Średniozaawansowany",
+      "title": "Średniozaawansowany",
+      "subtitle": "Podnieś swoje umiejętności Nostr",
+      "description": "Podnieś poziom dzięki głębszym tematom, takim jak NIP-05, Zapy i niezbędne narzędzia."
+    },
+    "advanced": {
+      "label": "Zaawansowany",
+      "title": "Zaawansowany",
+      "subtitle": "Opanuj protokół",
+      "description": "Opanuj protokół dzięki tematom związanym z prywatnością, bezpieczeństwem i głębokim wglądem technicznym."
+    }
+  },
+  "interestFilter": {
+    "allGuides": "Wszystkie Przewodniki",
+    "bitcoin": "Bitcoin",
+    "privacy": "Prywatność",
+    "security": "Bezpieczeństwo",
+    "relays": "Relaye",
+    "tools": "Narzędzia",
+    "community": "Społeczność"
+  },
+  "guideCard": {
+    "difficulty": {
+      "beginner": "Początkujący",
+      "intermediate": "Średniozaawansowany",
+      "advanced": "Zaawansowany"
+    },
+    "status": {
+      "locked": "Zablokowany",
+      "completed": "Ukończony",
+      "continueReading": "Kontynuuj Czytanie",
+      "startLearning": "Rozpocznij Naukę"
+    },
+    "moreLocked": "+{count} więcej zablokowanych"
+  },
+  "guideSection": {
+    "startHere": "Zacznij Tutaj",
+    "complete": "Ukończony",
+    "locked": "Zablokowany",
+    "unlockRequirement": "Ukończ {count} więcej przewodników na poziomie {level}, aby odblokować"
   }
 }

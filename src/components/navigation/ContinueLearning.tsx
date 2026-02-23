@@ -7,6 +7,7 @@ import {
   getLevelProgressLocal as getLevelProgress,
   isLevelUnlockedLocal as isLevelUnlocked
 } from '../../lib/progress';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface ContinueLearningProps {
   nextGuide?: {
@@ -31,6 +32,7 @@ export function ContinueLearning({
   quizSelector = '[data-quiz], [id*="quiz"], [class*="quiz"]',
   locale = 'en',
 }: ContinueLearningProps) {
+  const { t } = useTranslation();
   const guidesPrefix = locale === 'en' ? '/en/guides' : `/${locale}/guides`;
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
@@ -221,17 +223,17 @@ export function ContinueLearning({
             <div className="text-center">
               <div className="text-4xl mb-2">🎉</div>
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
-                All Levels Complete!
+                {t('continueLearning.allLevelsComplete')}
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                Congratulations! You've completed all {currentLevelConfig.label} guides and mastered Nostr!
+                {t('continueLearning.allLevelsCompleteDescription').replace('{level}', currentLevelConfig.label)}
               </p>
               <a
                 href={guidesPrefix}
                 className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
               >
                 <CheckCircle className="w-4 h-4" />
-                Explore All Guides
+                {t('guideNavigation.exploreAllGuides')}
               </a>
             </div>
           </div>
@@ -253,10 +255,10 @@ export function ContinueLearning({
           <div className="text-center">
             <div className="text-4xl mb-2">🎉</div>
             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
-              Level Complete!
+              {t('continueLearning.levelComplete')}
             </h3>
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              You've completed all {currentLevelConfig.label} guides!
+              {t('continueLearning.levelCompleteDescription').replace('{level}', currentLevelConfig.label)}
             </p>
             
             {nextLevelInfo?.unlocked ? (
@@ -264,7 +266,7 @@ export function ContinueLearning({
                 onClick={navigateToNextLevel}
                 className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
               >
-                Continue to {nextLevelLabel}
+                {t('continueLearning.continueToLevel').replace('{level}', nextLevelLabel)}
                 <ArrowRight className="w-4 h-4" />
               </button>
             ) : (
@@ -272,12 +274,12 @@ export function ContinueLearning({
                 <div className="flex items-center justify-center gap-2 text-amber-600 dark:text-amber-400">
                   <Lock className="w-4 h-4" />
                   <span className="text-sm font-medium">
-                    {nextLevelLabel} is Locked
+                    {t('continueLearning.locked').replace('{level}', nextLevelLabel)}
                   </span>
                 </div>
                 {nextLevelInfo && nextLevelInfo.guidesNeeded > 0 && (
                   <p className="text-xs text-gray-500 dark:text-gray-400">
-                    Complete {nextLevelInfo.guidesNeeded} more {currentLevelConfig.label} guide{nextLevelInfo.guidesNeeded !== 1 ? 's' : ''} to unlock {nextLevelLabel}
+                    {t('continueLearning.unlockRequirements').replace('{count}', String(nextLevelInfo.guidesNeeded)).replace('{currentLevel}', currentLevelConfig.label).replace('{nextLevel}', nextLevelLabel).replace('{plural}', nextLevelInfo.guidesNeeded !== 1 ? 's' : '')}
                   </p>
                 )}
                 <a
@@ -285,7 +287,7 @@ export function ContinueLearning({
                   className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                 >
                   <BookOpen className="w-4 h-4" />
-                  Browse All Guides
+                  {t('continueLearning.browseAllGuides')}
                 </a>
               </div>
             )}
@@ -319,18 +321,18 @@ export function ContinueLearning({
             <div className="flex items-center gap-2 mb-1">
               <CheckCircle className="w-4 h-4 text-green-500" />
               <span className="text-xs font-medium text-green-600 dark:text-green-400 uppercase tracking-wide">
-                Guide Complete!
+                {t('continueLearning.guideComplete')}
               </span>
             </div>
 
             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
-              {hasQuiz && !quizCompleted ? 'Test your knowledge?' : 'Ready for the next guide?'}
+              {hasQuiz && !quizCompleted ? t('continueLearning.testKnowledge') : t('continueLearning.nextGuide')}
             </h3>
 
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
               {hasQuiz && !quizCompleted
-                ? 'Take the quiz to reinforce what you\'ve learned.'
-                : `Continue your Nostr journey with ${nextGuide.title}`}
+                ?                 t('continueLearning.quizDescription')
+                :                 t('continueLearning.continueDescription').replace('{title}', nextGuide.title)}
             </p>
 
             <div className="flex flex-col gap-3">
@@ -340,7 +342,7 @@ export function ContinueLearning({
                   className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
                 >
                   <GraduationCap className="w-4 h-4" />
-                  Take the Quiz
+                  {t('continueLearning.takeQuiz')}
                 </button>
               )}
 
@@ -353,7 +355,7 @@ export function ContinueLearning({
                     : 'bg-primary text-white hover:bg-primary/90'
                 )}
               >
-                Continue Learning
+                {t('continueLearning.continueLearning')}
                 <ArrowRight className="w-4 h-4" />
               </a>
 

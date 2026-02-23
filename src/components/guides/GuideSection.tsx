@@ -24,37 +24,30 @@ export interface GuideSectionProps {
   activeFilter?: string | null;
 }
 
-const levelConfig = {
+const levelConfigBase = {
   beginner: {
     icon: '🌱',
-    title: 'Getting Started',
-    subtitle: 'Start your Nostr journey here',
     bgColor: 'bg-green-100 dark:bg-green-900/30',
     textColor: 'text-green-700 dark:text-green-400',
     borderColor: 'border-green-200 dark:border-green-800',
   },
   intermediate: {
     icon: '🚀',
-    title: 'Intermediate',
-    subtitle: 'Level up your Nostr skills',
     bgColor: 'bg-yellow-100 dark:bg-yellow-900/30',
     textColor: 'text-yellow-700 dark:text-yellow-400',
     borderColor: 'border-yellow-200 dark:border-yellow-800',
   },
   advanced: {
     icon: '⚡',
-    title: 'Advanced',
-    subtitle: 'Master the protocol',
     bgColor: 'bg-red-100 dark:bg-red-900/30',
     textColor: 'text-red-700 dark:text-red-400',
     borderColor: 'border-red-200 dark:border-red-800',
   },
 };
 
-const levelNames: Record<SkillLevel, string> = {
-  beginner: 'Beginner',
-  intermediate: 'Intermediate',
-  advanced: 'Advanced',
+// Helper to get translated level label
+const getLevelLabel = (levelId: SkillLevel, t: (key: string) => string) => {
+  return t(`skillLevels.${levelId}.label`);
 };
 
 const previousLevel: Record<SkillLevel, SkillLevel | null> = {
@@ -81,7 +74,15 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
   activeFilter = null,
 }) => {
   const { t } = useTranslation();
-  const config = levelConfig[level];
+  
+  // Get translated level config
+  const getLevelConfig = (levelId: SkillLevel) => ({
+    ...levelConfigBase[levelId],
+    title: t(`skillLevels.${levelId}.title`),
+    subtitle: t(`skillLevels.${levelId}.subtitle`),
+  });
+  
+  const config = getLevelConfig(level);
   const prevLevel = previousLevel[level];
 
   // Read actual state from localStorage (client-side only)
@@ -187,11 +188,17 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
                 {config.title}
               </h2>
               <span className="px-2 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs font-medium rounded">
-                Locked
+                {t('guideSection.locked')}
               </span>
             </div>
             <p className="text-gray-600 dark:text-gray-400">
-              Complete {unlockThreshold} {prevLevel ? levelNames[prevLevel].toLowerCase() : 'beginner'} guides to unlock
+              {prevLevel 
+                ? t('guideSection.unlockRequirement')
+                    .replace('{count}', String(unlockThreshold))
+                    .replace('{level}', getLevelLabel(prevLevel, t).toLowerCase())
+                : t('guideSection.unlockRequirement')
+                    .replace('{count}', String(unlockThreshold))
+                    .replace('{level}', t('skillLevels.beginner.label').toLowerCase())}
             </p>
           </div>
           <UnlockButton
@@ -222,14 +229,16 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
               key={`locked-${level}-${index}`}
               isLocked={true}
               level={level}
-              unlockRequirement={`Complete ${unlockThreshold - completedCount} more ${prevLevel ? levelNames[prevLevel].toLowerCase() : ''} guides to unlock`}
+              unlockRequirement={t('guideSection.unlockRequirement')
+                .replace('{count}', String(unlockThreshold - completedCount))
+                .replace('{level}', prevLevel ? getLevelLabel(prevLevel, t).toLowerCase() : '')}
               index={index}
             />
           ))}
           {totalCount > 3 && (
             <div className="flex items-center justify-center h-[200px] bg-gray-100 dark:bg-gray-800 rounded-2xl border-2 border-dashed border-gray-300 dark:border-gray-600">
               <span className="text-gray-500 dark:text-gray-400 text-sm">
-                +{totalCount - 3} more locked
+                {t('guideCard.moreLocked').replace('{count}', String(totalCount - 3))}
               </span>
             </div>
           )}
@@ -258,12 +267,12 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
             </h2>
             {level === 'beginner' && (
               <span className="px-3 py-1 bg-friendly-purple-100 text-friendly-purple-700 dark:bg-friendly-purple-900 dark:text-friendly-purple-200 text-sm font-medium rounded-full">
-                Start Here
+                {t('guideSection.startHere')}
               </span>
             )}
             {completedCount === totalCount && (
               <span className="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200 text-sm font-medium rounded-full">
-                ✓ Complete
+                ✓ {t('guideSection.complete')}
               </span>
             )}
           </div>

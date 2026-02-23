@@ -150,7 +150,7 @@ export const GuidesContainer: React.FC<GuidesContainerProps> = ({
       {/* Interest Filter */}
       <div className="mb-8 text-center">
         <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
-          Filter by interest
+          {t('guidesPage.filter.filterByInterest')}
         </p>
         <div className="flex justify-center">
           <InterestFilter 

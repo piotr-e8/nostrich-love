@@ -1,5 +1,6 @@
 import React from 'react';
 import { Lock, CheckCircle2, Clock, ArrowRight, BookOpen } from 'lucide-react';
+import { useTranslation } from '../../hooks/useTranslation';
 
 export type SkillLevel = 'beginner' | 'intermediate' | 'advanced';
 
@@ -29,16 +30,15 @@ const difficultyColors = {
   advanced: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
 };
 
-const difficultyLabels = {
-  beginner: 'Beginner',
-  intermediate: 'Intermediate',
-  advanced: 'Advanced',
-};
-
 const levelColors = {
   beginner: 'bg-green-500',
   intermediate: 'bg-yellow-500',
   advanced: 'bg-red-500',
+};
+
+// Helper to get translated difficulty label
+const getDifficultyLabel = (difficulty: SkillLevel, t: (key: string) => string) => {
+  return t(`guideCard.difficulty.${difficulty}`);
 };
 
 /**
@@ -51,6 +51,7 @@ const LockedCard: React.FC<{ level: SkillLevel; unlockRequirement: string; index
   index = 0,
 }) => {
   const [isHovered, setIsHovered] = React.useState(false);
+  const { t } = useTranslation();
 
   return (
     <div
@@ -58,7 +59,7 @@ const LockedCard: React.FC<{ level: SkillLevel; unlockRequirement: string; index
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{ animationDelay: `${index * 50}ms` }}
-      aria-label="Locked guide"
+      aria-label={t('guideCard.status.locked')}
     >
       {/* Lock Icon Centered */}
       <div className="absolute inset-0 flex items-center justify-center">
@@ -83,7 +84,7 @@ const LockedCard: React.FC<{ level: SkillLevel; unlockRequirement: string; index
       <div className="absolute bottom-4 left-6 right-6 flex items-center justify-between">
         <span className={`w-2 h-2 rounded-full ${levelColors[level]}`} />
         <span className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-          Locked
+          {t('guideCard.status.locked')}
         </span>
       </div>
     </div>
@@ -99,7 +100,13 @@ const UnlockedCard: React.FC<{ guide: Guide; isCompleted?: boolean; isInProgress
   isCompleted = false,
   isInProgress = false,
 }) => {
-  const statusText = isCompleted ? 'Completed' : isInProgress ? 'Continue Reading' : 'Start Learning';
+  const { t } = useTranslation();
+  const statusText = isCompleted 
+    ? t('guideCard.status.completed') 
+    : isInProgress 
+      ? t('guideCard.status.continueReading') 
+      : t('guideCard.status.startLearning');
+  const difficultyLabel = getDifficultyLabel(guide.difficulty, t);
 
   return (
     <a
@@ -109,17 +116,17 @@ const UnlockedCard: React.FC<{ guide: Guide; isCompleted?: boolean; isInProgress
           ? 'border-l-4 border-l-green-500 border-gray-200 dark:border-gray-700'
           : 'border-gray-200 dark:border-gray-700 hover:border-friendly-purple-400 dark:hover:border-friendly-purple-500'
       }`}
-      aria-label={`${guide.title} - ${difficultyLabels[guide.difficulty]} - ${statusText}`}
+      aria-label={`${guide.title} - ${difficultyLabel} - ${statusText}`}
     >
       {/* Header: Difficulty Badge + Status + Time */}
       <div className="flex items-start justify-between mb-4">
         <span className={`px-3 py-1 text-xs font-medium rounded-full ${difficultyColors[guide.difficulty]}`}>
-          {difficultyLabels[guide.difficulty]}
+          {difficultyLabel}
         </span>
 
         <div className="flex items-center gap-2">
           {isCompleted && (
-            <CheckCircle2 className="w-5 h-5 text-green-500" aria-label="Completed" />
+            <CheckCircle2 className="w-5 h-5 text-green-500" aria-label={t('guideCard.status.completed')} />
           )}
           <div className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
             <Clock className="w-4 h-4" />

@@ -95,4 +95,69 @@ export interface Translations {
       };
     };
   };
+  guidesPage?: {
+    hero: {
+      title: string;
+      description: string;
+      yourProgress: string;
+      startFirstGuide: string;
+    };
+    cta: {
+      notSure: string;
+      beginnerDescription: string;
+      startLearning: string;
+    };
+    filter: {
+      filterByInterest: string;
+    };
+  };
+  skillLevels?: {
+    beginner: {
+      label: string;
+      title: string;
+      subtitle: string;
+      description: string;
+    };
+    intermediate: {
+      label: string;
+      title: string;
+      subtitle: string;
+      description: string;
+    };
+    advanced: {
+      label: string;
+      title: string;
+      subtitle: string;
+      description: string;
+    };
+  };
+  interestFilter?: {
+    allGuides: string;
+    bitcoin: string;
+    privacy: string;
+    security: string;
+    relays: string;
+    tools: string;
+    community: string;
+  };
+  guideCard?: {
+    difficulty: {
+      beginner: string;
+      intermediate: string;
+      advanced: string;
+    };
+    status: {
+      locked: string;
+      completed: string;
+      continueReading: string;
+      startLearning: string;
+    };
+    moreLocked: string;
+  };
+  guideSection?: {
+    startHere: string;
+    complete: string;
+    locked: string;
+    unlockRequirement: string;
+  };
 }

@@ -2452,5 +2452,99 @@
       "topRegion": "Top Region",
       "avgLatency": "Avg Latency"
     }
+  },
+  "guideNavigation": {
+    "previous": "Previous",
+    "next": "Next",
+    "backToAllGuides": "Back to All Guides",
+    "exploreAllGuides": "Explore All Guides",
+    "startOfLevel": "Start of {level} Level",
+    "levelComplete": "{level} Complete!",
+    "levelCompleteDescription": "You've completed all {level} guides",
+    "continueToLevel": "Continue to {level}",
+    "unlockRequirements": "Complete more {currentLevel} guides to unlock {nextLevel}",
+    "offLevelMessage": "This guide isn't part of your current {level} level"
+  },
+  "continueLearning": {
+    "allLevelsComplete": "All Levels Complete!",
+    "allLevelsCompleteDescription": "Congratulations! You've completed all {level} guides and mastered Nostr!",
+    "levelComplete": "Level Complete!",
+    "levelCompleteDescription": "You've completed all {level} guides!",
+    "continueToLevel": "Continue to {level}",
+    "locked": "{level} is Locked",
+    "unlockRequirements": "Complete {count} more {currentLevel} guide{plural} to unlock {nextLevel}",
+    "browseAllGuides": "Browse All Guides",
+    "guideComplete": "Guide Complete!",
+    "testKnowledge": "Test your knowledge?",
+    "nextGuide": "Ready for the next guide?",
+    "quizDescription": "Take the quiz to reinforce what you've learned.",
+    "continueDescription": "Continue your Nostr journey with {title}",
+    "takeQuiz": "Take the Quiz",
+    "continueLearning": "Continue Learning"
+  },
+  "guidesPage": {
+    "hero": {
+      "title": "Learn Nostr Step by Step",
+      "description": "Progressive skill levels from beginner to advanced. Unlock new levels as you complete guides and master the protocol.",
+      "yourProgress": "Your Progress",
+      "startFirstGuide": "Start your first guide to see progress"
+    },
+    "cta": {
+      "notSure": "Not sure where to start?",
+      "beginnerDescription": "Begin with our beginner guides—they're designed to take you from zero to your first post.",
+      "startLearning": "Start Learning"
+    },
+    "filter": {
+      "filterByInterest": "Filter by interest"
+    }
+  },
+  "skillLevels": {
+    "beginner": {
+      "label": "Beginner",
+      "title": "Getting Started",
+      "subtitle": "Start your Nostr journey here",
+      "description": "Start your Nostr journey with the fundamentals. No prior knowledge required."
+    },
+    "intermediate": {
+      "label": "Intermediate",
+      "title": "Intermediate",
+      "subtitle": "Level up your Nostr skills",
+      "description": "Level up with deeper topics like NIP-05, Zaps, and essential tools."
+    },
+    "advanced": {
+      "label": "Advanced",
+      "title": "Advanced",
+      "subtitle": "Master the protocol",
+      "description": "Master the protocol with privacy, security, and technical deep dives."
+    }
+  },
+  "interestFilter": {
+    "allGuides": "All Guides",
+    "bitcoin": "Bitcoin",
+    "privacy": "Privacy",
+    "security": "Security",
+    "relays": "Relays",
+    "tools": "Tools",
+    "community": "Community"
+  },
+  "guideCard": {
+    "difficulty": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "status": {
+      "locked": "Locked",
+      "completed": "Completed",
+      "continueReading": "Continue Reading",
+      "startLearning": "Start Learning"
+    },
+    "moreLocked": "+{count} more locked"
+  },
+  "guideSection": {
+    "startHere": "Start Here",
+    "complete": "Complete",
+    "locked": "Locked",
+    "unlockRequirement": "Complete {count} more {level} guides to unlock"
   }
 }

@@ -2189,5 +2189,99 @@
       "topRegion": "Región Principal",
       "avgLatency": "Latencia Promedio"
     }
+  },
+  "guideNavigation": {
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "backToAllGuides": "Volver a Todas las Guías",
+    "exploreAllGuides": "Explorar Todas las Guías",
+    "startOfLevel": "Inicio del nivel {level}",
+    "levelComplete": "¡{level} Completado!",
+    "levelCompleteDescription": "Has completado todas las guías de {level}",
+    "continueToLevel": "Continuar a {level}",
+    "unlockRequirements": "Completa más guías de {currentLevel} para desbloquear {nextLevel}",
+    "offLevelMessage": "Esta guía no es parte de tu nivel actual {level}"
+  },
+  "continueLearning": {
+    "allLevelsComplete": "¡Todos los Niveles Completados!",
+    "allLevelsCompleteDescription": "¡Felicidades! Has completado todas las guías de {level} y dominaste Nostr.",
+    "levelComplete": "¡Nivel Completado!",
+    "levelCompleteDescription": "¡Has completado todas las guías de {level}!",
+    "continueToLevel": "Continuar a {level}",
+    "locked": "{level} está Bloqueado",
+    "unlockRequirements": "Completa {count} guía{plural} más de {currentLevel} para desbloquear {nextLevel}",
+    "browseAllGuides": "Explorar Todas las Guías",
+    "guideComplete": "¡Guía Completada!",
+    "testKnowledge": "¿Pon a prueba tus conocimientos?",
+    "nextGuide": "¿Listo para la siguiente guía?",
+    "quizDescription": "Responde el cuestionario para reforzar lo que has aprendido.",
+    "continueDescription": "Continúa tu viaje con Nostr con la guía {title}",
+    "takeQuiz": "Responder Cuestionario",
+    "continueLearning": "Continuar Aprendiendo"
+  },
+  "guidesPage": {
+    "hero": {
+      "title": "Aprende Nostr Paso a Paso",
+      "description": "Niveles de habilidad progresivos desde principiante hasta avanzado. Desbloquea nuevos niveles a medida que completas guías y dominas el protocolo.",
+      "yourProgress": "Tu Progreso",
+      "startFirstGuide": "Comienza tu primera guía para ver el progreso"
+    },
+    "cta": {
+      "notSure": "¿No sabes por dónde empezar?",
+      "beginnerDescription": "Comienza con nuestras guías para principiantes – están diseñadas para llevarte de cero a tu primera publicación.",
+      "startLearning": "Comenzar a Aprender"
+    },
+    "filter": {
+      "filterByInterest": "Filtrar por interés"
+    }
+  },
+  "skillLevels": {
+    "beginner": {
+      "label": "Principiante",
+      "title": "Primeros Pasos",
+      "subtitle": "Comienza tu viaje con Nostr aquí",
+      "description": "Comienza tu viaje con Nostr desde los fundamentos. No se requiere conocimiento previo."
+    },
+    "intermediate": {
+      "label": "Intermedio",
+      "title": "Intermedio",
+      "subtitle": "Mejora tus habilidades de Nostr",
+      "description": "Sube de nivel con temas más profundos como NIP-05, Zaps y herramientas esenciales."
+    },
+    "advanced": {
+      "label": "Avanzado",
+      "title": "Avanzado",
+      "subtitle": "Domina el protocolo",
+      "description": "Domina el protocolo con temas de privacidad, seguridad y análisis técnico profundo."
+    }
+  },
+  "interestFilter": {
+    "allGuides": "Todas las Guías",
+    "bitcoin": "Bitcoin",
+    "privacy": "Privacidad",
+    "security": "Seguridad",
+    "relays": "Relays",
+    "tools": "Herramientas",
+    "community": "Comunidad"
+  },
+  "guideCard": {
+    "difficulty": {
+      "beginner": "Principiante",
+      "intermediate": "Intermedio",
+      "advanced": "Avanzado"
+    },
+    "status": {
+      "locked": "Bloqueado",
+      "completed": "Completado",
+      "continueReading": "Continuar Leyendo",
+      "startLearning": "Comenzar a Aprender"
+    },
+    "moreLocked": "+{count} más bloqueados"
+  },
+  "guideSection": {
+    "startHere": "Comienza Aquí",
+    "complete": "Completado",
+    "locked": "Bloqueado",
+    "unlockRequirement": "Completa {count} guías más de nivel {level} para desbloquear"
   }
 }
