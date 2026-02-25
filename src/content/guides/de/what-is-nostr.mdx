@@ -1,0 +1,180 @@
+---
+title: "Nostr Einfach Erklärt"
+description: "Verstehe Nostr in 5 Minuten. Lerne, wie dezentrale soziale Medien funktionieren, warum sie wichtig sind und wie sie sich von traditionellen Plattformen unterscheiden."
+estimatedTime: "5 Minuten"
+priority: 2
+category: "getting-started"
+---
+
+import { HoverCard } from "@components/HoverCard";
+import { ProtocolComparison } from "@components/ProtocolComparison";
+import { NostrSimulator } from "@components/NostrSimulator";
+import { WhatIsNostrQuiz } from "@components/interactive/WhatIsNostrQuiz";
+
+{ /* <ProgressIndicator current={1} total={4} estimatedTime="5 minutes" /> */ }
+
+{ /* <div className="simulator-section my-12"> */ }
+  { /* <NostrSimulator client:load /> */ }
+{ /* </div> */ }
+
+### Das Problem (1 Minute Lesezeit)
+
+**Du besitzt deine Social-Media-Präsenz nicht.**
+
+Wenn du auf Twitter, Instagram oder Facebook eine Anhängerschaft aufbaust, baust du auf gemietetem Land. Das bedeutet:
+
+### Plattform-Risiko ist Real
+
+- **Sperrungen passieren.** Ein Fehler, eine kontroverse Meinung oder eine falsche Meldung können dich von Jahren voller Inhalte und Verbindungen aussperren
+- **Algorithmen ändern sich.** Deine Beiträge erreichen vielleicht an einem Tag 10.000 Menschen und am nächsten 200—ohne Vorwarnung oder Erklärung
+- **Deine Follower gehören nicht dir.** Wenn die Plattform dich sperrt, verlierst du den Zugang zu dem Publikum, das du jahrelang aufgebaut hast
+- **Daten-Lock-in.** Deine Beiträge, Fotos und Nachrichten sind in der Datenbank eines einzigen Unternehmens gefangen
+
+### Das Kernproblem
+
+Große Tech-Konzerne kontrollieren:
+
+- Wer sprechen darf
+- Wer dich hören kann
+- Welche Inhalte gefördert werden
+- Ob du deine Daten exportieren kannst
+
+**Das ist nicht nur unbequem—es gefährdet deine digitale Identität.**
+
+---
+
+### Die Lösung: Protokoll vs. Plattform (2 Minuten Lesezeit)
+
+Nostr löst dies, indem es eine fundamentale Sache ändert: **Es ist ein Protokoll, keine Plattform.**
+
+### Denk an E-Mail
+
+Du benutzt wahrscheinlich jeden Tag E-Mail, ohne über diese Magie nachzudenken:
+
+- Jemand bei Gmail kann jemandem bei Outlook eine E-Mail schicken
+- Du kannst von Yahoo zu ProtonMail wechseln und dein Adressbuch behalten
+- Kein einzelnes Unternehmen kontrolliert alle E-Mails
+
+**E-Mail ist ein Protokoll.** Jeder kann eine E-Mail-App erstellen. Jeder kann kommunizieren. Niemand besitzt das Netzwerk.
+
+**Nostr funktioniert genauso.**
+
+### Der Unterschied Erklärt
+
+<ProtocolComparison client:load />
+
+**Zentralisiert (Twitter, Facebook):** Ein Unternehmen besitzt alles. Sie können dich sperren, die Regeln ändern oder komplett abschalten.
+
+**Föderiert (Mastodon):** Viele Server, die miteinander kommunizieren können, aber jeder Server-Besitzer hat Macht über seine Nutzer.
+
+**Nostr:** Kein Server besitzt deine Identität. Du hältst die Schlüssel. Du wählst, wo du postest. Du kannst jederzeit die App wechseln.
+
+### Was Das für Dich Bedeutet
+
+- **Eine Identität, überall.** Deine Schlüssel funktionieren in jeder Nostr-App
+- **Deine Daten folgen dir.** Client wechseln? Deine Beiträge und Follower kommen mit
+- **Niemand kann dich sperren.** Sie können dich ignorieren, aber sie können dich nicht am Posten hindern
+- **Viele Auswahlmöglichkeiten.** Nutze die App mit dem Interface, das du liebst
+
+---
+
+### Kernkonzepte (2 Minuten Lesezeit)
+
+Mach dir keine Sorgen, alles auswendig zu lernen. Du lernst durchs Tun. Aber hier ist das mentale Modell:
+
+### Public Key (npub) = Dein Benutzername
+
+<HoverCard
+  term="Public Key"
+  definition="Eine lange Zeichenfolge, die mit 'npub1' beginnt und dich öffentlich identifiziert. Sicher überall zu teilen."
+>
+  Deine öffentliche Identität auf Nostr sieht so aus: `npub1q...9x`
+</HoverCard>
+
+- Sieht so aus: <code className="break-all text-sm">npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
+- Teile dies frei—so finden und folgen dir die Leute
+- Denk daran wie an deine E-Mail-Adresse oder Telefonnummer
+- **Grünes Licht: Sicher überall zu teilen**
+
+### Private Key (nsec) = Dein Passwort
+
+<HoverCard
+  term="Private Key"
+  definition="Eine geheime Zeichenfolge, die mit 'nsec1' beginnt und beweist, dass du du bist. Teile dies NIEMALS. Verloren = Account verloren."
+>
+  Dein geheimer Schlüssel sieht so aus: `nsec1q...9x`
+</HoverCard>
+
+- Sieht so aus: <code className="break-all text-sm">nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
+- Dies beweist, dass du deinen Public Key besitzt
+- **ALARM: Teile dies niemals mit jemandem**
+- Verloren = permanenter Verlust. Keine "Passwort vergessen"-Option
+
+### Relays = Postämter
+
+<HoverCard
+  term="Relays"
+  definition="Server, die Nostr-Nachrichten speichern und weiterleiten. Du wählst, zu welchen du dich verbindest, und kannst jederzeit wechseln."
+>
+  Relays sind wie Postämter für deine Beiträge
+</HoverCard>
+
+- Server, die Nostr-Nachrichten speichern und teilen
+- Du wählst, welche du nutzt (und kannst viele nutzen)
+- Einige sind kostenlos, einige erfordern Bezahlung
+- [FORTGESCHRITTEN] Du kannst sogar deinen eigenen betreiben
+
+### Clients = Apps
+
+<HoverCard
+  term="Clients"
+  definition="Die Apps, die du verwendest, um mit Nostr zu interagieren—wie Damus, Amethyst oder Iris. Du kannst jederzeit den Client wechseln, ohne deine Identität zu verlieren."
+>
+  Clients sind wie Gmail vs. Apple Mail—verschiedene Interfaces, gleiches Protokoll
+</HoverCard>
+
+- Die App, die du zum Posten, Browsen und Nachrichtenschreiben nutzt
+- Beispiele: Damus (iOS), Amethyst (Android), Iris (Web)
+- Jederzeit wechselbar—du bist nie eingesperrt
+
+---
+
+### Warum Das Wichtig Ist (1 Minute Lesezeit)
+
+### Das Gute
+
+✅ **Niemand kann dich sperren.** Sie können deine Beiträge ignorieren, aber sie können dich nicht am Veröffentlichen hindern
+
+✅ **Deine Daten sind portabel.** Jeder Beitrag, jeder Follower, jedes Like—alles gehört dir zum Mitnehmen
+
+✅ **Keine Werbung oder Algorithmen.** Die meisten Clients zeigen chronologische Feeds. Deine Aufmerksamkeit ist nicht das Produkt
+
+✅ **Widerstandsfähig.** Wenn ein Relay ausfällt, überlebt deine Identität. Wenn ein Client schließt, wechselst du zu einem anderen
+
+### Die Verantwortung
+
+⚠️ **Du bist verantwortlich für deine Schlüssel.** nsec verloren = Identität für immer verloren. Kein Helpdesk zum Anrufen
+
+⚠️ **Kein "Rückgängig"-Button.** Gelöschte Beiträge können auf Relays bestehen bleiben. Denk nach, bevor du postest
+
+⚠️ **Lernkurve.** Es ist neu, es ist anders, und einige Teile sind noch rau an den Kanten
+
+### Lohnt Es Sich?
+
+Das hängt davon ab, was du schätzt:
+
+- **Wenn du Einfachheit willst:** Traditionelle Plattformen sind einfacher (vorerst)
+- **Wenn du Freiheit willst:** Nostr gibt dir Kontrolle, die keine Plattform erreichen kann
+- **Wenn du neugierig bist:** Der beste Weg zu lernen ist auszuprobieren
+
+---
+
+## Teste Dein Wissen
+
+Bereit zu prüfen, was du gelernt hast? Mach dieses kurze Quiz:
+
+<WhatIsNostrQuiz client:load />
+
+---
+
+_Willst du tiefer eintauchen? Schau dir unsere [FAQ](/de/guides/faq) für weitere Themen an._

@@ -13,6 +13,7 @@ export async function getStaticPaths() {
     { params: { lang: 'en' } },      // English
     { params: { lang: 'pl' } },      // Polish
     { params: { lang: 'es' } },      // Spanish
+    { params: { lang: 'de' } },      // German
   ];
 }
 
@@ -23,6 +24,8 @@ if (lang === 'pl') {
   currentLocale = 'pl';
 } else if (lang === 'es') {
   currentLocale = 'es';
+} else if (lang === 'de') {
+  currentLocale = 'de';
 }
 
 const translations = getTranslations(currentLocale);
@@ -198,12 +201,16 @@ const pageTitle = currentLocale === 'pl'
   ? 'Przewodniki Nauki - Nostr'
   : currentLocale === 'es'
   ? 'Guías de Aprendizaje - Nostr'
+  : currentLocale === 'de'
+  ? 'Lern-Guides - Nostr Anfänger-Guide'
   : 'Learning Guides - Nostr Beginner Guide';
 
 const pageDescription = currentLocale === 'pl'
   ? 'Przewodniki krok po kroku, aby nauczyć się Nostr od podstaw do zaawansowanego. Śledź swoje postępy i opanuj protokół.'
   : currentLocale === 'es'
   ? 'Guías paso a paso para aprender Nostr desde principiante hasta avanzado. Sigue tu progreso y domina el protocolo.'
+  : currentLocale === 'de'
+  ? 'Schritt-für-Schritt-Guides, um Nostr von Anfänger bis Fortgeschritten zu lernen. Verfolge deinen Fortschritt und meistere das dezentralisierte Social-Protokoll.'
   : 'Step-by-step guides to learn Nostr from beginner to advanced. Track your progress and master the decentralized social protocol.';
 ---
 

@@ -1,0 +1,326 @@
+---
+title: "Essentielle Nostr-Tools"
+description: "Ein kuratiertes Verzeichnis der nützlichsten Nostr-Tools und -Services. Finde Tools für Schlüsselverwaltung, Media-Hosting, Analytics und mehr."
+estimatedTime: "10 Minuten"
+priority: 3
+category: "intermediate"
+prerequisites: ["keys-and-security", "quickstart"]
+---
+
+import { Callout } from "@components/ui/Callout";
+import { CTAButton } from "@components/CTAButton";
+
+Nostr hat ein reiches Ökosystem von Tools und Services, die die Nutzung des Protokolls einfacher machen. Hier ist eine kuratierte Liste essentieller Tools, organisiert nach Kategorie.
+
+<Callout type="info">
+  **Schneller Tipp:** Setze ein Lesezeichen auf diese Seite! Du wirst wahrscheinlich hierher zurückkehren, wenn du verschiedene Nostr-Features erkundest.
+</Callout>
+
+---
+
+## Schlüsselverwaltungs-Tools
+
+### Schlüssel-Konverter & Generatoren
+
+**Nostr Tools (Schlüssel-Konverter)**
+- **URL:** [nostr-tools.com](https://nostr-tools.com)
+- **Was es tut:** Konvertiert zwischen npub/hex/nsec Formaten
+- **Warum nutzen:** Nützlich für Entwickler oder wenn du verschiedene Schlüsselformate brauchst
+
+**NAK (Nostr Army Knife)**
+- **URL:** [nak.nostr.com](https://nak.nostr.com)
+- **Was es tut:** Kommandozeilen-Tool und Web-Interface für Nostr-Operationen
+- **Features:** Schlüsselgenerierung, Event-Signierung, Relay-Interaktion, Debugging
+- **Am besten für:** Entwickler und Power-User, die CLI-Tools brauchen
+
+**Nostr Key Generator**
+- **Was es tut:** Generiert neue Schlüsselpaare offline
+- **Warum nutzen:** Erstelle Schlüssel in sicherer, air-gapped Umgebung
+
+### Backup & Wiederherstellung
+
+**Schlüsselspeicher Best Practices**
+- Passwort-Manager (Bitwarden, 1Password)
+- Hardware-Sicherheitsschlüssel (YubiKey)
+- Papier-Backups (aufgeschrieben und sicher aufbewahrt)
+- Verschlüsselte USB-Laufwerke
+
+<Callout type="warning">
+  **Sicherheitshinweis:** Speichere niemals deinen nsec (privaten Schlüssel) in Klartext-Dateien, E-Mails oder Cloud-Speicher ohne Verschlüsselung.
+</Callout>
+
+---
+
+## Media-Hosting
+
+### Bild- & Video-Hosting
+
+**nostr.build**
+- **URL:** [nostr.build](https://nostr.build)
+- **Was es tut:** Kostenloses Bild- und Video-Hosting für Nostr
+- **Features:** Drag-and-Drop Upload, sofortige URLs, CDN-Auslieferung
+- **Am besten für:** Bilder in Posts teilen
+
+**NostrImg**
+- **URL:** [nostrimg.com](https://nostrimg.com)
+- **Was es tut:** Einfacher Bild-Hosting-Service
+- **Features:** Schnelle Uploads, permanenter Speicher
+
+### Dateifreigabe
+
+**Nostr Files**
+- **URL:** [nostrfiles.com](https://nostrfiles.com)
+- **Was es tut:** Allgemeines Datei-Hosting für Nostr-Nutzer
+- **Am besten für:** PDFs, Dokumente und andere Dateien
+
+---
+
+## Identität & Verifizierung
+
+### NIP-05 Anbieter
+
+**NostrPlebs**
+- **URL:** [nostrplebs.com](https://nostrplebs.com)
+- **Was es tut:** NIP-05 Identifikatoren (du@nostrplebs.com)
+- **Kosten:** Nur bezahlt - 12.500-65.000 Sats/Jahr (Preisgestaltung basiert auf Nutzernamen-Länge)
+- **Hinweis:** Keine kostenlose Option verfügbar
+- **Am besten für:** Schnell eine menschenlesbare Identifikation bekommen
+
+**NostrCheck**
+- **URL:** [nostrcheck.me](https://nostrcheck.me)
+- **Was es tut:** NIP-05 + zusätzliche Verifizierungs-Tools
+- **Features:** Kostenlose Option, Extra-Utilities
+
+**GetAlby**
+- **URL:** [getalby.com](https://getalby.com)
+- **Was es tut:** Lightning Wallet + NIP-05
+- **Am besten für:** Zahlungen und Identität kombinieren
+
+---
+
+## Analytics & Entdeckung
+
+### Zap Analytics
+
+**Zaplife**
+- **URL:** [zaplife.lol](https://zaplife.lol)
+- **Was es tut:** Verfolgt Zap-Aktivität und Einnahmen
+- **Features:** Am meisten gezappter Content, historische Daten, Bestenlisten
+- **Am besten für:** Creators, die ihre Einnahmen verfolgen
+
+### Netzwerk-Entdeckung & Stats
+
+**Stats.OtherStuff**
+- **URL:** [stats.otherstuff.org](https://stats.otherstuff.org)
+- **Was es tut:** Nostr-Netzwerk-Statistiken und Analytics
+- **Features:** Globale Metriken, Relay-Statistiken, Netzwerk-Wachstumsdaten
+- **Am besten für:** Das gesamte Nostr-Ökosystem verstehen
+
+**Primal Explore**
+- **URL:** [primal.net/explore](https://primal.net/explore)
+- **Was es tut:** Entdecke trendenden Content und Nutzer
+- **Features:** Themen-Feeds, Trending Posts, Nutzer-Empfehlungen
+
+---
+
+## Relay-Tools
+
+### Relay-Listen & Monitoring
+
+**Nostr.watch**
+- **URL:** [nostr.watch](https://nostr.watch)
+- **Was es tut:** Überwacht Relay-Verfügbarkeit und Performance
+- **Features:** Echtzeit-Status, Latenz-Monitoring, globale Karte
+- **Am besten für:** Zuverlässige Relays finden
+
+**Relay Tools**
+- Verschiedene community-gepflegte Relay-Listen
+- Prüfe nostr.watch für aktuelle Empfehlungen
+
+### Relay-Software
+
+**strfry**
+- **Was es tut:** Hochperformante Relay-Software
+- **Am besten für:** Deinen eigenen Relay betreiben
+
+**nostr-rs-relay**
+- **Was es tut:** Rust-basierte Relay-Implementierung
+- **Am besten für:** Technische Nutzer, die selbst hosten wollen
+
+---
+
+## Lightning & Zaps
+
+### Wallets
+
+**Alby** (Browser Extension)
+- **URL:** [getalby.com](https://getalby.com)
+- **Am besten für:** Desktop/Web-Nutzer
+- **Features:** Browser-Integration, Nostr Wallet Connect
+
+**Phoenix** (Mobile)
+- **URL:** [phoenix.acinq.co](https://phoenix.acinq.co)
+- **Am besten für:** Mobile Nutzer, die Self-Custody wollen
+- **Features:** Non-custodial, automatisches Channel-Management
+
+**Wallet of Satoshi** (Mobile)
+- **Am besten für:** Komplette Anfänger
+- **Features:** Einfachste Einrichtung, Lightning Address inklusive
+
+**Zeus** (Mobile)
+- **URL:** [zeusln.app](https://zeusln.app)
+- **Am besten für:** Power-User, Node-Betreiber
+- **Features:** Mit eigener Node verbinden, erweiterte Features
+
+**Mutiny** (Web/Mobile)
+- **URL:** [app.mutinywallet.com](https://app.mutinywallet.com)
+- **Am besten für:** Browser-basierte Self-Custody
+- **Features:** Kein App Store nötig, federated Custody
+
+### Zap-Tools
+
+**ZapSplits**
+- **Was es tut:** Teilt automatisch Zap-Einnahmen
+- **Am besten für:** Kollaborativer Content (Podcasts, Team-Projekte)
+
+**Zap Stream**
+- **Was es tut:** Echtzeit-Zap-Benachrichtigungen
+- **Am besten für:** Live-Events, Streams
+
+---
+
+## Suche & Indexierung
+
+**Primal Search**
+- In Primal Client integriert
+- Schnelle, umfassende Ergebnisse
+
+**Iris Search**
+- Client-integrierte Suche
+
+<Callout type="tip">
+  **Such-Tipp:** Die Nostr-Suche verbessert sich schnell. Wenn du etwas nicht finden kannst, probiere verschiedene Suchbegriffe oder prüfe mehrere Clients.
+</Callout>
+
+---
+
+## Entwickler-Tools
+
+### Libraries & SDKs
+
+**nostr-tools (JavaScript)**
+- **GitHub:** [github.com/nbd-wtf/nostr-tools](https://github.com/nbd-wtf/nostr-tools)
+- **Was es tut:** Kern-JavaScript-Library für Nostr
+- **Am besten für:** Web-Apps bauen
+
+**NDK (Nostr Development Kit)**
+- **GitHub:** [github.com/nostr-dev-kit/ndk](https://github.com/nostr-dev-kit/ndk)
+- **Was es tut:** Umfassendes TypeScript SDK für Nostr
+- **Features:** React Hooks, Cache-Management, Relay-Pool-Optimierung
+- **Am besten für:** Moderne TypeScript/React-Anwendungen
+
+**Khatru**
+- **GitHub:** [github.com/fiatjaf/khatru](https://github.com/fiatjaf/khatru)
+- **Was es tut:** Go-Framework zum Bauen von Nostr-Relays
+- **Features:** Modulares Design, einfach erweiterbar, produktionsreif
+- **Am besten für:** Entwickler, die Custom-Relay-Implementierungen bauen
+
+**Nostr Python**
+- Verschiedene Python-Libraries für Nostr-Entwicklung
+
+**Nostr Rust**
+- Rust-Implementierungen für Hochperformance-Apps
+
+### Testing & Debugging
+
+**Nostr Debug**
+- Verschiedene Tools zum Testen von Nostr-Implementierungen
+- Prüfe GitHub für neueste Tools
+
+**Relay Test Tools**
+- Teste deine Relay-Implementierung
+- Verifiziere NIP-Konformität
+
+---
+
+## Privatsphäre & Sicherheit
+
+### Signer-Apps
+
+**Primal Signer (iOS)**
+- **In Primal App integriert**
+- **Was es tut:** Sichere Schlüsselspeicherung mit biometrischer Authentifizierung
+- **Features:** FaceID/TouchID-Schutz, keine separate App nötig
+- **Am besten für:** iOS-Nutzer, die eingebaute Sicherheit wollen
+
+**Amber (Android)**
+- **Dedizierte Signer-App für Android**
+- **Was es tut:** Sichere Schlüssel-Signierung mit Bestätigungs-Prompts
+- **Features:** Mehrfache Schlüssel-Unterstützung, detaillierte Signierungsanfragen
+- **Am besten für:** Android-Nutzer, die maximale Sicherheit wollen
+
+**Andere Signer-Apps**
+- Verschiedene dedizierte Apps für sichere Schlüssel-Signierung
+- Halte deinen nsec von deinem Hauptgerät fern
+- Suche in deinem App Store nach "Nostr signer"
+
+### VPN & Tor
+
+**Tor-Unterstützung**
+- Viele Clients unterstützen Tor für verbesserte Privatsphäre
+- Prüfe Client-Dokumentation für Setup
+
+---
+
+## Mobile Apps
+
+Siehe unseren [Quickstart Guide](/de/guides/quickstart) für umfassende Mobile-App-Empfehlungen und Simulationen.
+
+Schnellreferenz:
+- **iOS:** Damus, Primal, Amethyst
+- **Android:** Amethyst, Primal
+- **Cross-platform:** Primal, Iris, Snort
+
+---
+
+## Community-Ressourcen
+
+### Listen & Verzeichnisse
+
+**Awesome Nostr**
+- GitHub-Repository mit kuratierten Nostr-Ressourcen
+- Umfassende Liste von Clients, Relays und Tools
+
+**Nostr Directory**
+- Verschiedene community-gepflegte Verzeichnisse
+- Prüfe nostr.social oder ähnliche Aggregatoren
+
+### Support
+
+**Nostr Subreddit**
+- r/nostr auf Reddit
+- Community-Diskussionen und Hilfe
+
+**Telegram/Discord-Gruppen**
+- Verschiedene Nostr-Communities
+- Suche nach "Nostr" auf deiner bevorzugten Plattform
+
+---
+
+## Schnellreferenz-Tabelle
+
+| Kategorie | Tool | Am Besten Für | Kosten |
+|-----------|------|---------------|--------|
+| **Media** | nostr.build | Bild-Hosting | Kostenlos |
+| **Identität** | NostrPlebs | NIP-05 Identifikator | Kostenlos/Bezahlt |
+| **Analytics** | Zaplife | Zap-Tracking | Kostenlos |
+| **Relays** | nostr.watch | Relay-Monitoring | Kostenlos |
+| **Wallet** | Alby | Web-Nutzer | Kostenlos |
+| **Wallet** | Phoenix | Mobile Self-Custody | Kostenlos |
+| **Suche** | Primal | Entdeckung | Kostenlos |
+
+---
+
+<Callout type="info">
+  **Haftungsausschluss:** Tool-Verfügbarkeit und Features ändern sich häufig. Wenn ein Link nicht funktioniert, suche nach dem Tool-Namen auf Nostr oder deiner bevorzugten Suchmaschine für die neuesten Informationen.
+</Callout>

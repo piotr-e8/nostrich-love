@@ -1,0 +1,446 @@
+---
+title: "Häufige Probleme & Lösungen"
+description: "Schnelle Lösungen für die häufigsten Nostr-Probleme und Fragen"
+estimatedTime: "Referenz-Guide"
+priority: 2
+category: "reference"
+prerequisites: ["keys-and-security", "quickstart"]
+---
+
+## Ein schneller Referenz-Guide für die häufigsten Probleme, auf die Nostr-Nutzer stoßen.
+
+import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz";
+
+## Problem: "Mein Feed ist leer" 📭
+
+### Symptome
+
+- Keine Posts werden angezeigt
+- "Keine Events gefunden"-Nachricht
+- Leere Timeline
+
+### Ursachen & Lösungen
+
+**1. Niemandem gefolgt**
+
+- **Ursache**: Neuer Account ohne Follows
+- **Lösung**: Suche nach Nutzern oder Interessen, folge 10-20 Accounts
+- **Schnell-Fix**: Folge beliebten Accounts aus dem [Finding Community](/de/guides/finding-community)-Guide
+
+**2. Relay-Verbindungsprobleme**
+
+- **Ursache**: Mit keinen Relays verbunden
+- **Lösung**: Prüfe Einstellungen → Relays, stelle sicher, dass du mit 3-5 Relays verbunden bist
+- **Schnell-Fix**: Füge beliebte Relays hinzu: `wss://relay.damus.io`, `wss://nostr.wine`
+
+**3. Client-Cache ist leer**
+
+- **Ursache**: Neue Installation oder gelöschte Daten
+- **Lösung**: Warte 30-60 Sekunden, bis Content lädt
+- **Schnell-Fix**: Ziehe nach unten zum Aktualisieren (Mobile) oder drücke Aktualisieren-Button
+
+### Prävention
+
+- Verbinde dich während des Setups mit mehreren Relays
+- Folge sofort aktiven Nutzern
+- Halte Client aktuell
+
+---
+
+## Problem: "Ich kann meine alten Posts nicht sehen" 🕐
+
+### Symptome
+
+- Posts von gestern/letzter Woche fehlen
+- "Keine Notizen" auf deinem Profil
+- Unvollständige Post-Historie
+
+### Ursachen & Lösungen
+
+**1. Relay-Speicherlimits**
+
+- **Ursache**: Kostenlose Relays löschen alten Content, um Speicher zu sparen
+- **Lösung**: Verbinde dich mit mehr Relays (erhöht Redundanz)
+- **Langfristig**: Nutze Bezahl-Relays oder persönliches Relay für wichtigen Content
+
+**2. Verschiedene Relay-Konfiguration**
+
+- **Ursache**: Von Client A gepostet (Relays X,Y), jetzt Client B nutzend (Relays Z)
+- **Lösung**: Stelle sicher, dass beide Clients dieselben Relays nutzen
+- **Schnell-Fix**: Importiere deine Relay-Liste (NIP-65)
+
+**3. Content nicht gesendet**
+
+- **Ursache**: Client hat nicht an alle Relays gepostet
+- **Lösung**: Prüfe, welche Relays deinen Post erhalten haben
+- **Hinweis**: Einmal gepostet, kann nicht nachträglich an neue Relays gesendet werden
+
+### Was synchronisiert vs. was nicht
+
+| Daten            | Synchronisiert über Clients | Hinweise                    |
+| ---------------- | --------------------------- | --------------------------- |
+| Deine Posts      | ✅ Ja                       | Falls an gemeinsame Relays  |
+| Deine Follows    | ✅ Ja                       | Öffentliche Daten           |
+| Deine Follower   | ✅ Ja                       | Öffentliche Daten           |
+| Dein Profil      | ✅ Ja                       | Öffentliche Daten           |
+| Entwürfe         | ❌ Nein                     | Lokal pro Client gespeichert|
+| App-Einstellungen| ❌ Nein                     | Client-spezifisch           |
+| Gemutete Accounts| ⚠️ Manchmal                 | Variiert je Client          |
+
+---
+
+## Problem: "Meine Posts werden nicht angezeigt" 📤
+
+### Symptome
+
+- Gepostet, aber niemand sieht es
+- Keine Likes/Antworten/Zaps
+- Post erscheint lokal, aber nicht auf anderen Clients
+
+### Ursachen & Lösungen
+
+**1. Relay akzeptiert Posts nicht**
+
+- **Ursache**: Rate-limitiert, gebannt oder Relay down
+- **Lösung**: Prüfe Relay-Status, versuche andere Relays
+- **Test**: Kannst du deinen Post in einem Web-Client wie Primal sehen?
+
+**2. Nur mit Read-Only-Relays verbunden**
+
+- **Ursache**: Einige Relays erlauben nur Lesen, nicht Schreiben
+- **Lösung**: Prüfe Relay-Einstellungen, stelle sicher, dass du "Schreib"-Relays hast
+- **Schnell-Fix**: Füge `wss://relay.damus.io` hinzu (erlaubt Schreiben)
+
+**3. Zu schnell posten**
+
+- **Ursache**: Rate-Limits erreicht
+- **Lösung**: Verlangsame, warte ein paar Minuten
+- **Hinweis**: Die meisten Relays limitieren auf 1-5 Posts pro Sekunde
+
+---
+
+## Problem: "Jemand gibt sich als ich aus" 🎭
+
+### Symptome
+
+- Fake-Account mit deinem Namen/Bild
+- Jemand behauptet, du zu sein
+- Verwirrte Follower fragen, welcher Account echt ist
+
+### Ursachen & Lösungen
+
+**1. NIP-05-Verifizierung holen**
+
+- **Lösung**: Richte NIP-05-Identität ein (siehe [Guide](/de/guides/nip05-identity))
+- **Warum**: Verifiziertes Badge unterscheidet echt von fake
+
+**2. Teile deinen npub weit**
+
+- **Lösung**: Poste deinen echten npub auf anderen Plattformen
+- **Warum**: Leute können deine Identität kryptografisch verifizieren
+
+**3. Melde den Betrüger**
+
+- **Lösung**: Nutze Client-Report-Feature oder Community-Moderation
+- **Hinweis**: Kann ihren Account nicht löschen (dezentralisiert), aber blocken/muten
+
+### Prävention
+
+- Verifiziere dich mit NIP-05 so schnell wie möglich
+- Poste deinen npub auf Twitter/Website
+- Baue schnell Reputation auf, sodass dein echter Account offensichtlich ist
+
+---
+
+## Problem: "Spam in meinem Feed" 🗑️
+
+### Symptome
+
+- Ungewollter Werbe-Content
+- Bot-Accounts posten ständig
+- Off-Topic oder unangemessener Content
+
+### Ursachen & Lösungen
+
+**1. Spam-Accounts gefolgt**
+
+- **Lösung**: Entfolge Spam-Quellen
+- **Besser**: Nicht Massen-Folgen; sorgfältig kuratieren
+
+**2. Relay mit schlechter Moderation**
+
+- **Lösung**: Trenne von Low-Quality-Relays
+- **Besser**: Nutze Bezahl- oder Invite-Only-Relays
+
+**3. Keine Mute-Liste**
+
+- **Lösung**: Erstelle Mute-Liste in deinem Client
+- **Wie**: Profil → Gemutete Accounts → Spammer hinzufügen
+
+### Best Practices
+
+- Mute früh, mute oft
+- Nutze interessenspezifische Relays
+- Aktiviere Wort-Filter, falls Client unterstützt
+- Folge Accounts nicht ohne deren Content zu prüfen
+
+---
+
+## Problem: "Client stürzt ab" 💥
+
+### Symptome
+
+- App schließt unerwartet
+- Friert ein oder reagiert nicht
+- Fehler beim Laden von Content
+
+### Ursachen & Lösungen
+
+**1. Veraltete App**
+
+- **Lösung**: Aktualisiere auf neueste Version aus App Store
+- **iOS**: App Store → Updates
+- **Android**: Play Store → Apps verwalten
+
+**2. Zu viele Relays**
+
+- **Ursache**: Verbindung zu 20+ Relays überfordert den Client
+- **Lösung**: Reduziere auf 4-8 aktive Relays
+- **Optimiere**: Nutze NIP-65 Outbox-Modell
+
+**3. Korrupter Cache**
+
+- **Lösung**: Lösche App-Daten (du verlierst keine Posts/Follows)
+- **Nukleare Option**: Installiere App neu, importiere Keys erneut
+
+### Probiere einen anderen Client
+
+Falls ein Client durchgehend Probleme hat, probiere einen anderen:
+
+| Plattform          | Alternative          |
+| ------------------ | -------------------- |
+| iOS (Damus)        | Nos, Nostur          |
+| Android (Amethyst) | Primal web, Nostros  |
+| Web (Primal)       | Iris, Snort, Coracle |
+
+---
+
+## Problem: "Keys verloren" 🔑
+
+### Symptome
+
+- Kann nicht in Client einloggen
+- Kein Backup von nsec/npub
+- Keys nur auf einem Gerät, das kaputt ging
+
+### Die harte Wahrheit
+
+> ⚠️ **Wenn du kein Backup deiner Keys hast, ist dein Account nicht wiederherstellbar.**
+
+Das ist absichtlich so – Nostr hat kein "Passwort vergessen", weil es keinen zentralen Server gibt, der deine Keys hält.
+
+### Was du tun KANNST
+
+**1. Suche nach Backups**
+
+- Prüfe Passwort-Manager
+- Suche nach Screenshots
+- Prüfe E-Mails auf Willkommensnachrichten
+- Prüfe andere Geräte mit installiertem Client
+
+**2. Prüfe, ob Client Keys gespeichert hat**
+
+- Einige Clients cachen Keys
+- Versuche einzuloggen ohne Key einzufügen
+- Prüfe Browser-Extensions (Alby, Nos2x)
+
+**3. Erstelle neuen Account**
+
+- Generiere neue Keys
+- Kündige auf anderen Plattformen an, dass alter Account verloren ist
+- Fang an, deine Follows neu aufzubauen
+
+### Prävention (Tu dies JETZT)
+
+1. **Schreibe deinen nsec auf** auf Papier
+2. **Speichere in Passwort-Manager** (1Password, Bitwarden)
+3. **Nutze eine Signer-App** (Amber, Nos2x), um nsec-Eingabe zu vermeiden
+4. **Erstelle mehrere Backups** an verschiedenen Orten
+
+---
+
+## Problem: "Kann nicht mit Relay verbinden" 🔌
+
+### Symptome
+
+- "Verbindung fehlgeschlagen"-Fehler
+- Relay zeigt als offline
+- Posts synchronisieren nicht
+
+### Ursachen & Lösungen
+
+**1. Relay ist down**
+
+- **Test**: Öffne Relay-URL im Browser (sollte Fehler oder ws-Seite zeigen)
+- **Lösung**: Prüfe Relay-Statusseite oder Social Media
+- **Fix**: Entferne temporär, füge hinzu, wenn zurück
+
+**2. Netzwerkprobleme**
+
+- **Test**: Kannst du auf andere Websites zugreifen?
+- **Lösung**: Prüfe Internetverbindung, versuche anderes Netzwerk
+- **Hinweis**: Einige Netzwerke blocken WebSocket-Verbindungen
+
+**3. Falsche Relay-URL**
+
+- **Prüfe**: Muss mit `wss://` (sicher) oder `ws://` (unsicher) beginnen
+- **Häufiger Fehler**: `https://relay.com` statt `wss://relay.com`
+- **Fix**: Bearbeite Relay-URL in Einstellungen
+
+**4. Relay ist voll**
+
+- **Ursache**: Einige kostenlose Relays erreichen Kapazitätsgrenzen
+- **Lösung**: Versuche später erneut oder nutze anderes Relay
+- **Langfristig**: Erwäge Bezahl-Relay
+
+---
+
+## Problem: "Zaps funktionieren nicht" ⚡
+
+### Symptome
+
+- Zap-Button reagiert nicht
+- "Zahlung fehlgeschlagen"-Fehler
+- Kann Zaps nicht senden oder empfangen
+
+### Ursachen & Lösungen
+
+**1. Keine Wallet verbunden**
+
+- **Lösung**: Verbinde Lightning-Wallet in Client-Einstellungen
+- **Siehe**: [Zaps-Guide](/de/guides/zaps-and-lightning)
+
+**2. Unzureichendes Guthaben**
+
+- **Prüfe**: Wallet-Guthaben
+- **Lösung**: Füge Guthaben zu deiner Wallet hinzu
+- **Minimum**: Normalerweise 100+ Sats für Gebühren nötig
+
+**3. Wallet offline**
+
+- **Ursache**: Non-Custodial-Wallets müssen online sein
+- **Lösung**: Öffne deine Wallet-App, stelle sicher, dass sie läuft
+- **Alternative**: Nutze Custodial-Wallet wie Alby
+
+**4. Falsche Lightning-Adresse**
+
+- **Prüfe**: Ist deine Lightning-Adresse im Profil korrekt?
+- **Test**: Versuche dir selbst 10 Sats zu senden
+- **Fix**: Aktualisiere Adresse in Profil-Einstellungen
+
+---
+
+## Problem: "Bilder laden nicht" 🖼️
+
+### Symptome
+
+- Kaputte Bild-Icons
+- Drehende Ladeanimationen
+- Keine Medien in Posts
+
+### Ursachen & Lösungen
+
+**1. Relay-Medien-Limits**
+
+- **Ursache**: Einige Relays speichern keine Bilder, nur Text
+- **Lösung**: Bilder auf separaten Servern gehostet (Blossom, etc.)
+- **Fix**: Prüfe, ob Bilder auf Web-Client laden
+
+**2. Bild-Host down**
+
+- **Ursache**: Der Server, der das Bild hostet, ist offline
+- **Test**: Versuche Bild-URL direkt zu öffnen
+- **Hinweis**: Nichts, was du tun kannst, wenn Host down ist
+
+**3. Client-Einstellungen**
+
+- **Prüfe**: Einstellungen → Medien → "Bilder laden"
+- **Einige Clients**: Haben Datenspar-Modi, die Bilder blocken
+- **Fix**: Aktiviere Medien-Laden in Einstellungen
+
+**4. Langsame Verbindung**
+
+- **Ursache**: Große Bilder bei langsamem Internet
+- **Lösung**: Warte auf Laden oder wechsle zu schnellerem Netzwerk
+
+---
+
+## Schneller Entscheidungsbaum 🌳
+
+<TroubleshootingWizard />
+
+**Probleme? Folge diesem:**
+
+1. **Kannst nichts sehen?** → Prüfe Relays, füge mehr hinzu
+2. **Kannst nicht posten?** → Prüfe Schreib-Relays, Rate-Limits
+3. **Account-Probleme?** → Verifiziere, dass Keys korrekt sind
+4. **App stürzt ab?** → Aktualisiere, lösche Cache oder probiere anderen Client
+5. **Immer noch fest?** → Siehe unten
+
+---
+
+## Immer noch fest? 🆘
+
+### Community-Hilfe
+
+**Telegram:**
+
+- [Nostr Protocol](https://t.me/nostr_protocol) - Allgemeine Hilfe
+- [Damus](https://t.me/damusios) - iOS-spezifisch
+- [Amethyst](https://t.me/AmethystNostr) - Android-spezifisch
+
+**Andere Plattformen:**
+
+- [r/nostr](https://reddit.com/r/nostr) - Reddit-Community
+- [Stacker News](https://stacker.news) - Bitcoin/Nostr-Forum
+- Nostr selbst - Poste mit #help-Tag
+
+### Ressourcen
+
+- [Nostr Wiki](https://wiki.nostr.com)
+- [Client-spezifische Docs](https://github.com/damus-io/damus#documentation)
+- [NIP-Spezifikationen](https://github.com/nostr-protocol/nips)
+
+### Bugs melden
+
+Falls du einen Bug in einem Client gefunden hast:
+
+1. Prüfe, ob er bereits gemeldet wurde (GitHub Issues)
+2. Erstelle detaillierten Bug-Report:
+   - Was du erwartet hast
+   - Was tatsächlich passiert ist
+   - Schritte zum Reproduzieren
+   - Client-Version und Plattform
+
+---
+
+## Setze ein Lesezeichen auf diese Seite 📑
+
+Behalte diesen Guide griffbereit für schnelle Referenz. Die meisten Probleme haben einfache Lösungen, wenn du weißt, wo du schauen musst!
+
+---
+
+## Teste deine Troubleshooting-Fähigkeiten
+
+Denkst du, du weißt, wie man häufige Nostr-Probleme löst?
+
+<TroubleshootingQuiz client:load />
+
+---
+
+## Verwandte Guides
+
+- [Relays erklärt](/de/guides/relays-demystified) - Verbindungsprobleme beheben
+- [Quickstart-Guide](/de/guides/quickstart) - Clients wechseln
+- [Zaps-Guide](/de/guides/zaps-and-lightning) - Zahlungsprobleme beheben
+- [Keys & Security](/de/guides/keys-and-security) - Lockouts verhindern

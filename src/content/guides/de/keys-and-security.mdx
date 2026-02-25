@@ -1,0 +1,320 @@
+---
+title: "Deine Schlüssel, Deine Identität"
+description: "Lerne, wie du deine Nostr-Schlüssel generierst, speicherst und schützt. Der vollständige Sicherheitsleitfaden für Anfänger. Folge der 3-2-1-Backup-Regel."
+estimatedTime: "8 Minuten"
+priority: 3
+category: "getting-started"
+---
+
+import { AlertBanner } from "@components/AlertBanner";
+import { KeyVisualizer } from "@components/KeyVisualizer";
+import { KeyGenerator } from "@components/KeyGenerator";
+import { BackupChecklist } from "@components/BackupChecklist";
+import { SecurityQuiz } from "@components/interactive/SecurityQuiz";
+
+{/* ProgressIndicator temporarily disabled - will be implemented with actual tracking later */}
+{/* <ProgressIndicator current={2} total={4} estimatedTime="8 Minuten" /> */}
+
+
+## Warum Das Wichtig Ist
+
+Im Gegensatz zu Twitter oder Instagram gibt Nostr **dir** die Kontrolle über deine Identität. Es gibt keine Firmen, die dich sperren können, keine Algorithmen, die deine Inhalte unterdrücken, und keinen Kundendienst, der deine Daten verliert. Diese Freiheit bringt Verantwortung mit sich—du besitzt deine Schlüssel, du kontrollierst dein Konto.
+
+Die gute Nachricht? Das Sichern deiner Schlüssel ist unkompliziert. Folge diesem Leitfaden und du bist sicherer als 99% der Nutzer.
+
+---
+
+## Schlüssel Verstehen (2 Minuten)
+
+Nostr nutzt Kryptografie, um deine Identität zu sichern. Keine Sorge—du musst die Mathematik nicht verstehen. Denk einfach daran wie an ein Schloss-und-Schlüssel-System.
+
+### Was Ist ein Schlüsselpaar?
+
+Jeder Nostr-Nutzer hat zwei Schlüssel, die zusammenarbeiten:
+
+<KeyVisualizer />
+
+### Dein Public Key (npub1...)
+
+<div className="key-display bg-green-50 dark:bg-green-900/20 border-2 border-green-500 p-4 rounded-lg my-4">
+  <div className="flex items-center gap-2 mb-2">
+    <span className="text-2xl">🟢</span>
+    <span className="font-bold text-green-700 dark:text-green-400">
+      SICHER ZUM TEILEN
+    </span>
+  </div>
+  <code className="text-sm break-all bg-white dark:bg-gray-800 p-2 rounded block text-gray-900 dark:text-gray-100">
+    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+  </code>
+  <p className="mt-2 text-sm text-green-700 dark:text-green-400">
+    Das ist dein Benutzername. Teile ihn überall. Poste ihn öffentlich. So
+    finden dich die Leute.
+  </p>
+</div>
+
+**Was du mit deinem npub machst:**
+
+- Teile ihn auf deiner Website oder anderen sozialen Profilen
+- Gib ihn Freunden, damit sie dir folgen können
+- Poste ihn öffentlich
+- Füge ihn zu deiner E-Mail-Signatur hinzu
+
+### Dein Private Key (nsec1...)
+
+<div className="key-display bg-red-50 dark:bg-red-900/20 border-2 border-red-500 p-4 rounded-lg my-4">
+  <div className="flex items-center gap-2 mb-2">
+    <span className="text-2xl">🔴</span>
+    <span className="font-bold text-red-700 dark:text-red-400">
+      NIEMALS TEILEN - STRENG GEHEIM
+    </span>
+  </div>
+  <code className="text-sm break-all bg-white dark:bg-gray-800 p-2 rounded block text-gray-900 dark:text-gray-100">
+    nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+  </code>
+  <p className="mt-2 text-sm text-red-700 dark:text-red-400">
+    Das ist dein Passwort. Jeder, der dies hat, kann als du posten. Verloren = Konto
+    für immer verloren.
+  </p>
+</div>
+
+**Regeln für deinen nsec:**
+
+- Teile ihn NIEMALS mit jemandem
+- Mache NIEMALS einen Screenshot (geht in die Cloud)
+- Speichere ihn NIEMALS in unverschlüsselten Notizen
+- Füge ihn NIEMALS in zufällige Websites ein
+- Sichere ihn IMMER sicher (siehe unten)
+
+### Warum So Lang?
+
+Diese Zeichenfolgen sehen wie Kauderwelsch aus, weil es kryptografische Schlüssel sind. Deshalb:
+
+- **256-Bit-Sicherheit:** Macht es unmöglich zu erraten oder zu knacken
+- **Zufallsgenerierung:** Selbst Computer können es nicht vorhersagen
+- **Einweg-Mathematik:** Du kannst den Private Key nicht aus dem Public Key herausfinden
+
+Stell dir das so vor: Es gibt mehr mögliche Private Keys als Sandkörner auf der Erde. Niemand errät deinen.
+
+---
+
+## Generiere Deine Schlüssel (3 Minuten)
+
+> 💡 **Tipp:** Während dieser Schlüsselgenerator Schlüssel sicher in deinem Browser erstellt, kannst du auch Schlüssel direkt in den meisten Nostr-Clients generieren (wie Damus, Amethyst oder Iris). Betrachte dieses Tool als "Simulator" zum Üben, bevor du einen echten Client verwendest.
+
+<KeyGenerator client:load />
+
+### Schritt-für-Schritt-Anleitung
+
+1. **Klicke auf "Generate New Keys"**
+   - Dies erstellt ein zufälliges Schlüsselpaar
+   - Beobachte die Animation, um zu verstehen, was passiert
+
+2. **Speichere Beide Schlüssel Sofort**
+   - Kopiere deinen **npub** (grün) an einen sicheren Ort
+   - Kopiere deinen **nsec** (rot) an einen SICHEREN Ort
+   - Mach das JETZT, bevor du etwas anderes tust
+
+3. **Überprüfe, Dass Du Sie Gespeichert Hast**
+   - Schließe den Generator
+   - Öffne ihn erneut
+   - Kannst du noch auf deine Schlüssel zugreifen?
+
+### Beispielformat (Keine Echten Schlüssel)
+
+So sehen Nostr-Schlüssel aus. Dies sind nur Beispiele—keine gültigen Schlüssel:
+
+<div className="test-keys bg-gray-100 dark:bg-gray-800 p-4 rounded-lg my-4">
+  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Beispiel Public Key (npub) Format:</p>
+  <code className="text-xs break-all block mb-4 text-gray-900 dark:text-gray-100">
+    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+  </code>
+
+<p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+  Beispiel Private Key (nsec) Format:
+</p>
+<code className="text-xs break-all block text-red-600 dark:text-red-400">
+  nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+</code>
+
+  <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 italic">
+    Dies sind nur Beispielformate—keine gültigen Schlüssel. Verwende den Key Generator oben für echte Testschlüssel.
+  </p>
+</div>
+
+---
+
+## Die 3-2-1-Backup-Regel (2 Minuten)
+
+Diese Regel stammt aus professionellem Datenmanagement. Befolge sie strikt.
+
+<BackupChecklist client:load />
+
+### Die Regel Erklärt
+
+**3 Kopien deines nsec**
+
+- Eine ist nicht genug. Zwei ist besser. Drei ist sicher.
+- Wenn eine ausfällt, hast du zwei Backups
+
+**2 verschiedene Medientypen**
+
+- Digital: Passwort-Manager, verschlüsselte Datei
+- Physisch: Handgeschriebenes Papier, Metallplatte
+- Warum verschiedene Typen? Digital versagt anders als physisch
+
+**1 externes Lager**
+
+- Mindestens eine Kopie sollte woanders sein
+- Cloud-Speicher zählt als extern (wenn verschlüsselt)
+- Bankschließfach, vertrauenswürdige Freunde/Familie
+
+### Backup-Methoden Bewertet
+
+**AM BESTEN (Mach das):**
+
+1. ✅ Passwort-Manager (1Password, Bitwarden)
+2. ✅ Auf Papier geschrieben, im Safe aufbewahrt
+3. ✅ Verschlüsselter USB-Stick an anderem Ort
+
+**GUT:**
+
+4. ✅ Verschlüsselter Cloud-Speicher (iCloud/Google Drive mit Verschlüsselung)
+5. ✅ Metall-Seed-Platte (feuer-/wasserfest)
+
+**MACH DAS NIEMALS:**
+
+- ❌ Screenshot auf dem Handy (synchronisiert in Cloud)
+- ❌ Unverschlüsselte Notizen-App
+- ❌ E-Mail an dich selbst
+- ❌ Textnachricht
+- ❌ Im Browser-Autocomplete speichern
+
+### Was Passiert, Wenn Du Deine Schlüssel Verlierst?
+
+**Deshalb ist die 3-2-1-Backup-Regel wichtig.**
+
+Im Gegensatz zu zentralisierten Plattformen hat Nostr keinen "Passwort vergessen"-Button oder Kundensupport, um dein Konto wiederherzustellen. Aber keine Sorge—wenn du die einfachen Backup-Schritte unten befolgst, bleibst du sicher.
+
+**Stell dir das so vor:** Du würdest nicht deine Lebensersparnisse als Bargeld in der Tasche tragen. Du würdest das meiste auf einer Bank aufbewahren (mehrere Backups) und nur mitnehmen, was du brauchst. Dein nsec ist ähnlich—speichere ihn sicher, nicht nur auf deinem Handy.
+
+---
+
+## Sicherheits-Best-Practices (2 Minuten)
+
+### Die DON'Ts (Lerne aus den Fehlern Anderer)
+
+**Mache KEINE Screenshots Deiner Schlüssel**
+
+- Screenshots synchronisieren in die Cloud (iCloud, Google Fotos)
+- Cloud-Konten werden gehackt
+- Das Foto zu löschen entfernt es nicht aus Backups
+
+**Speichere NICHT in Unverschlüsselten Notizen**
+
+- Apple Notizen, Google Keep, etc. sind nicht verschlüsselt
+- Jeder mit deinem Handy/Computer kann sie lesen
+- Synchronisiert standardmäßig in die Cloud
+
+**Teile Mit NIEMANDEM**
+
+- Nicht mit deinem Ehepartner
+- Nicht mit deinem besten Freund
+- Nicht mit "Nostr Support" (es gibt keinen Support)
+- Nicht mit irgendjemandem, niemals
+
+### Die DOs (Best Practices)
+
+**Nutze EINEN Passwort-Manager**
+
+- 1Password, Bitwarden, KeePass
+- Verschlüsselt, gesichert, zugänglich
+- Generiere auch starke Passwörter für Clients
+
+**Schreibe AUF Papier**
+
+- Low-Tech, hochzuverlässig
+- Keine Batterien benötigt
+- Lagere in einem Safe, Schließfach oder versteckten Ort
+
+**Nutze Nostr-Signer-Apps [FORTGESCHRITTEN]**
+
+- Apps wie Amber (Android) speichern deine Schlüssel sicher
+- Clients fordern Signaturen an, anstatt Schlüssel zu speichern
+- Fügt zusätzliche Sicherheitsebene hinzu
+- Empfohlen für ernsthafte Nutzer
+
+---
+
+## Häufige Fehler (1 Minute)
+
+<SecurityQuiz client:load />
+
+### Horror-Geschichten (Optionales Lesen)
+
+Dies sind echt. Lerne daraus:
+
+**"Ich dachte, ich hätte es gesichert"**
+
+> "Ich habe meinen nsec in meinem Passwort-Manager gespeichert, aber vergessen zu synchronisieren. Handy kaputt. 2.000 Follower weg. Musste von vorne anfangen." — @nostruser123
+
+**"Der Screenshot, der nicht gelöscht wurde"**
+
+> "Ich habe meine Schlüssel gescreenshottet, dann das Foto gelöscht. Habe den 'Zuletzt gelöscht'-Ordner vergessen. Jemand hat es aus meiner iCloud wiederhergestellt. Alles verloren." — Anonymous
+
+**"Der 'hilfsbereite' Fremde"**
+
+> "Jemand hat mir eine DM geschickt und angeboten, mein Konto zu 'verifizieren'. Fragte nach meinem nsec, um es 'richtig zu verknüpfen'. Ich gab es ihm. Sie stahlen mein Konto und begannen Scams zu posten." — @learnedthehardway
+
+---
+
+<div className="confirmation-section my-12 p-6 bg-green-50 dark:bg-green-900/20 border-2 border-green-500 rounded-lg">
+  <h3 className="text-xl font-bold mb-4 text-green-700 dark:text-green-400">
+    ✓ Schlüssel-Backup-Checkliste
+  </h3>
+
+<div className="space-y-2 mb-6">
+  <label className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+    <input type="checkbox" className="w-5 h-5" />
+    <span>Ich habe meinen npub (Public Key) gespeichert</span>
+  </label>
+  <label className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+    <input type="checkbox" className="w-5 h-5" />
+    <span>Ich habe meinen nsec (Private Key) an 3+ Orten gespeichert</span>
+  </label>
+  <label className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+    <input type="checkbox" className="w-5 h-5" />
+    <span>Ich verstehe, dass nsec verlieren = Konto verlieren bedeutet</span>
+  </label>
+  <label className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+    <input type="checkbox" className="w-5 h-5" />
+    <span>Ich werde meinen nsec NIEMALS mit jemandem teilen</span>
+  </label>
+</div>
+
+</div>
+
+---
+
+## Fortgeschritten: Warnende Geschichten aus der Praxis
+
+<details>
+<summary>⚠️ Klicken zum Lesen: Was ohne richtige Backups passiert (optional)</summary>
+
+Während die 3-2-1-Backup-Regel dich sicher hält, hier sind echte Beispiele, was passierte, als Leute sie nicht befolgten:
+
+**Fallstudie 1: Die Bitcoin-Trinkgelder**  
+Ein Content-Creator erhielt Bitcoin-Trinkgelder (Zaps) im Wert von $50.000 über 6 Monate. Ihr Handy wurde gestohlen—sie hatten kein Backup. Die Trinkgelder waren für immer weg, weil der nsec nur auf diesem Gerät war.
+
+**Fallstudie 2: Der Influencer**  
+Eine Nostr-Persönlichkeit mit 10.000 Followern ließ ihr Handy in einen Pool fallen. Kein Backup = von vorne anfangen. Jahre des Community-Aufbaus, verloren.
+
+**Fallstudie 3: Der Entwickler**  
+Ein Nostr-App-Entwickler mit Jahren an Code-Beiträgen und technischen Diskussionen verlor alles, als sein Laptop abstürzte. Kein Cloud-Backup, kein zweites Gerät, keine Wiederherstellung.
+
+**Der gemeinsame Nenner:** All diese waren vermeidbar mit einem einfachen Backup in einem Passwort-Manager oder auf einem verschlüsselten USB-Stick.
+
+</details>
+
+---
+
+**Fragen?** Schau dir unsere [FAQ](/de/guides/faq) für häufige Bedenken zu Schlüsseln und Sicherheit an.
