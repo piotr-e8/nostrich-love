@@ -14,7 +14,9 @@ export function GuidesLink({ className, children }: GuidesLinkProps) {
     
     // Check URL first
     const path = window.location.pathname;
-    if (path.startsWith("/pl/")) {
+    if (path.startsWith("/de/")) {
+      setGuidesHref("/de/guides");
+    } else if (path.startsWith("/pl/")) {
       setGuidesHref("/pl/guides");
     } else if (path.startsWith("/es/")) {
       setGuidesHref("/es/guides");
@@ -23,7 +25,9 @@ export function GuidesLink({ className, children }: GuidesLinkProps) {
     } else {
       // Check localStorage for saved preference
       const savedLang = localStorage.getItem('preferredLanguage');
-      if (savedLang === 'pl') {
+      if (savedLang === 'de') {
+        setGuidesHref("/de/guides");
+      } else if (savedLang === 'pl') {
         setGuidesHref("/pl/guides");
       } else if (savedLang === 'es') {
         setGuidesHref("/es/guides");
