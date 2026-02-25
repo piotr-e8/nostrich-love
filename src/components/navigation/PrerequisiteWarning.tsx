@@ -12,6 +12,7 @@ export interface PrerequisiteWarningProps {
     title: string;
     estimatedTime?: string;
   }>;
+  lang?: string;
   className?: string;
   onDismiss?: () => void;
   dismissible?: boolean;
@@ -23,6 +24,7 @@ export function PrerequisiteWarning({
   currentGuideId,
   currentGuideTitle,
   prerequisites,
+  lang = 'en',
   className,
   onDismiss,
   dismissible = true,
@@ -127,7 +129,7 @@ export function PrerequisiteWarning({
         {incompletePrereqs.slice(0, isExpanded ? undefined : 3).map((prereq, index) => (
           <a
             key={prereq.slug}
-            href={`/guides/${prereq.slug}`}
+            href={`/${lang}/guides/${prereq.slug}`}
             className={cn(
               'group flex items-center gap-3 p-3 rounded-xl',
               'bg-white/60 dark:bg-gray-900/60',
@@ -192,7 +194,7 @@ export function PrerequisiteWarning({
             size="sm"
             leftIcon={<BookOpen className="h-4 w-4" />}
             onClick={() => {
-              window.location.href = `/guides/${incompletePrereqs[0].slug}`;
+              window.location.href = `/${lang}/guides/${incompletePrereqs[0].slug}`;
             }}
           >
             Start with first prerequisite
