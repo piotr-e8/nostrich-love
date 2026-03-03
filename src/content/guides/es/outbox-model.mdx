@@ -1,0 +1,247 @@
+---
+title: "Understanding the Outbox Model"
+description: "Learn how Nostr's smart relay system ensures your posts reach everyone who follows you"
+estimatedTime: "10-15 minutes"
+priority: 2
+category: "intermediate"
+prerequisites: ["relays-demystified", "keys-and-security"]
+---
+
+import { OutboxModelQuiz } from "@components/interactive/OutboxModelQuiz";
+
+## The Problem: Missing Posts 📬
+
+Have you ever posted something on Nostr, but your friends couldn't see it? Or followed someone but never saw their posts? This is the **discovery problem**.
+
+### The Old Way (Before Outbox Model)
+
+```
+You Post → Relay A → ❌ Your friend only uses Relay B
+
+Your Friend's View:
+❌ "Where did @alice's post go?"
+```
+
+You'd post to your favorite relay, but your followers might be using different relays entirely. They'd never see your content!
+
+### The Solution: Outbox Model
+
+The outbox model solves this by **advertising where you post**. Think of it like leaving a forwarding address.
+
+```
+You: "I post to Relay A, Relay B, and Relay C"
+(Stored in your kind:10002 event)
+
+Follower: "Got it! I'll check those relays for @alice's posts"
+```
+
+---
+
+## What Is the Outbox Model? 📮
+
+The outbox model (NIP-65) is like having a **public address book** that tells everyone where to find your posts.
+
+### The Post Office Analogy Extended
+
+Remember relays are like post offices? The outbox model adds a **forwarding address system**:
+
+**Traditional Post Office:**
+- You have one mailbox at one post office
+- If you move, people send mail to the wrong place
+
+**Nostr Outbox Model:**
+- You have a **public list** of post offices where you receive mail
+- If you "move" (switch relays), you update your public list
+- Everyone knows where to find you
+
+### Your Relay List (kind:10002)
+
+Your Nostr client automatically creates a **relay list** that tells others:
+
+```jsonc
+{
+  "kind": 10002,
+  "tags": [
+    // Relays where you generally post (your "outbox")
+    ["r", "wss://relay.nostr.info", "write"],
+    ["r", "wss://relay.damus.io", "write"],
+    
+    // Relays where you read mentions (your "inbox")
+    ["r", "wss://nos.lol", "read"],
+    ["r", "wss://relay.snort.social", "read"]
+  ]
+}
+```
+
+**Markers explained:**
+- **write** → Where you post your content (outbox)
+- **read** → Where you check for mentions/replies (inbox)
+- **no marker** → Both read and write
+
+---
+
+## How It Works in Practice
+
+### Scenario 1: Alice Posts, Bob Follows
+
+```
+Alice's Relay List (kind:10002):
+  - wss://relay.a.com [write]
+  - wss://relay.b.com [write]
+
+Bob follows Alice. Bob's client sees:
+  "Check wss://relay.a.com and wss://relay.b.com for Alice's posts"
+
+Result: Bob connects to both relays and sees Alice's content! ✅
+```
+
+### Scenario 2: Charlie Mentions Alice
+
+```
+Charlie mentions @alice in a post
+
+Charlie's client checks Alice's relay list:
+  - wss://relay.a.com [read]
+  - wss://relay.b.com [read]
+
+Charlie's client sends the mention to Alice's READ relays
+
+Result: Alice sees the mention even if she's offline! ✅
+```
+
+### Scenario 3: Alice Switches Relays
+
+```
+Alice stops using relay.a.com, starts using relay.c.com
+
+1. Alice updates her kind:10002 relay list
+2. Propagates to all connected relays
+3. Followers automatically start checking relay.c.com
+
+Result: No lost posts, no manual reconnection needed! ✅
+```
+
+---
+
+## Why This Matters
+
+### 1. Discovery Without Centralization
+
+Traditional social media has a central server that knows everyone. Nostr is decentralized, so it needs another way to find people.
+
+**Outbox model = distributed discovery**
+
+### 2. Censorship Resistance
+
+If one relay blocks you, your followers can still find you through your relay list on other relays.
+
+### 3. Flexibility
+
+Switch relays anytime without losing your audience. Just update your relay list.
+
+### 4. Efficiency
+
+Clients only connect to the relays you use, not every relay in existence.
+
+---
+
+## Best Practices
+
+### Keep Your List Small
+
+**Recommended:** 2-4 relays total
+
+Why?
+- More relays = more connections = more battery drain
+- Diminishing returns after 4 relays
+- Most content propagates to popular relays anyway
+
+### Mix Read and Write
+
+**Good setup:**
+- 2-3 "write" relays (where you post)
+- 1-2 "read" relays (for mentions)
+
+**Example:**
+```
+Write to: Popular relay A, Your personal relay
+Read from: Popular relay B (for mentions)
+```
+
+### Choose Reliable Relays
+
+Use well-known, reliable relays that:
+- Have good uptime
+- Store content permanently (not ephemeral)
+- Are geographically close (lower latency)
+
+---
+
+## Common Misconceptions
+
+### "I need to be on every relay"
+
+**Wrong:** Being on 20+ relays doesn't help. Your posts propagate through the network. Stick to 2-4 quality relays.
+
+### "If I leave a relay, I lose my followers"
+
+**Wrong:** Just update your relay list (kind:10002). Followers will automatically check your new relays.
+
+### "Private DMs go through the outbox too"
+
+**Partially true:** NIP-17 (private messages) uses the outbox model for delivery, but with extra encryption.
+
+### "I need to manually tell people my relays"
+
+**Wrong:** Your client publishes your relay list automatically. Followers discover it when they follow you.
+
+---
+
+## Technical Deep Dive (Optional)
+
+### How Clients Discover Your Relays
+
+1. **Initial follow:** When someone follows you, their client requests your kind:10002 event
+2. **Your relays are revealed:** The event contains your relay preferences
+3. **Ongoing updates:** If you change relays, you publish a new kind:10002
+4. **Propagation:** Clients spread relay lists to help discovery
+
+### Replaceable Events
+
+kind:10002 is **replaceable** - only the latest version is kept. This means:
+- No historical bloat
+- Easy to update
+- Simple for clients to manage
+
+### Privacy Consideration
+
+Your relay list is **public**. Anyone can see which relays you use. This is necessary for the system to work, but be aware it's visible.
+
+---
+
+## Take Action
+
+### Check Your Current Relays
+
+Look in your Nostr client settings:
+- Which relays are you connected to?
+- Are they marked as "read" or "write"?
+- Do you have 2-4 total?
+
+### Optimize Your Setup
+
+**If you have 5+ relays:**
+- Remove the ones with poor uptime
+- Keep your 3-4 favorites
+- Make sure at least one is "read" for mentions
+
+### Spread the Word
+
+Help others understand:
+- Share this guide
+- Explain why you can't see someone's posts
+- Help troubleshoot discovery issues
+
+---
+
+<OutboxModelQuiz client:load />

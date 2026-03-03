@@ -12,9 +12,18 @@
             "title": "Protocol Name",
             "prompt": "What does NOSTR stand for?",
             "options": [
-              {"id": "a", "label": "Notes and Other Stuff Transmitted by Relays"},
-              {"id": "b", "label": "Network of Secure Transmission Resources"},
-              {"id": "c", "label": "New Online Social Technology Resource"}
+              {
+                "id": "a",
+                "label": "Notes and Other Stuff Transmitted by Relays"
+              },
+              {
+                "id": "b",
+                "label": "Network of Secure Transmission Resources"
+              },
+              {
+                "id": "c",
+                "label": "New Online Social Technology Resource"
+              }
             ],
             "correctId": "a",
             "explanation": "NOSTR stands for 'Notes and Other Stuff Transmitted by Relays' - a simple, open protocol for decentralized social media.",
@@ -25,9 +34,18 @@
             "title": "Decentralization",
             "prompt": "What makes Nostr decentralized?",
             "options": [
-              {"id": "a", "label": "It uses blockchain technology"},
-              {"id": "b", "label": "Anyone can run a relay, and users control their own keys"},
-              {"id": "c", "label": "It's owned by a non-profit foundation"}
+              {
+                "id": "a",
+                "label": "It uses blockchain technology"
+              },
+              {
+                "id": "b",
+                "label": "Anyone can run a relay, and users control their own keys"
+              },
+              {
+                "id": "c",
+                "label": "It's owned by a non-profit foundation"
+              }
             ],
             "correctId": "b",
             "explanation": "Nostr is decentralized because anyone can run a relay server, and users own their cryptographic keys. There's no central authority or company controlling the network.",
@@ -38,9 +56,18 @@
             "title": "Censorship Resistance",
             "prompt": "How does Nostr resist censorship?",
             "options": [
-              {"id": "a", "label": "By using AI to detect banned content"},
-              {"id": "b", "label": "By spreading data across many relays that anyone can run"},
-              {"id": "c", "label": "By requiring government approval for relays"}
+              {
+                "id": "a",
+                "label": "By using AI to detect banned content"
+              },
+              {
+                "id": "b",
+                "label": "By spreading data across many relays that anyone can run"
+              },
+              {
+                "id": "c",
+                "label": "By requiring government approval for relays"
+              }
             ],
             "correctId": "b",
             "explanation": "Censorship resistance comes from distributing content across many independently-run relays. If one relay blocks you, others can still carry your content.",
@@ -51,9 +78,18 @@
             "title": "Identity System",
             "prompt": "What's the main difference between Nostr and Twitter/Facebook accounts?",
             "options": [
-              {"id": "a", "label": "Nostr uses cryptographic keys instead of email/password"},
-              {"id": "b", "label": "Nostr is faster"},
-              {"id": "c", "label": "Nostr has better profile pictures"}
+              {
+                "id": "a",
+                "label": "Nostr uses cryptographic keys instead of email/password"
+              },
+              {
+                "id": "b",
+                "label": "Nostr is faster"
+              },
+              {
+                "id": "c",
+                "label": "Nostr has better profile pictures"
+              }
             ],
             "correctId": "a",
             "explanation": "Nostr uses public/private key pairs for identity. Your public key (npub) is your identity, and your private key (nsec) proves you own it. No email, phone number, or central database required.",
@@ -64,9 +100,18 @@
             "title": "Relay Function",
             "prompt": "What do relays do in the Nostr network?",
             "options": [
-              {"id": "a", "label": "They mine cryptocurrency"},
-              {"id": "b", "label": "They store and forward messages between users"},
-              {"id": "c", "label": "They verify your government ID"}
+              {
+                "id": "a",
+                "label": "They mine cryptocurrency"
+              },
+              {
+                "id": "b",
+                "label": "They store and forward messages between users"
+              },
+              {
+                "id": "c",
+                "label": "They verify your government ID"
+              }
             ],
             "correctId": "b",
             "explanation": "Relays are servers that store your posts and make them available to other users. They forward messages but don't control who can post or what content is allowed.",
@@ -77,9 +122,18 @@
             "title": "Nostr vs Fediverse",
             "prompt": "How does Nostr differ from Mastodon and the Fediverse?",
             "options": [
-              {"id": "a", "label": "Nostr has better emojis"},
-              {"id": "b", "label": "Nostr doesn't require choosing a server/instance to join"},
-              {"id": "c", "label": "Nostr is owned by Elon Musk"}
+              {
+                "id": "a",
+                "label": "Nostr has better emojis"
+              },
+              {
+                "id": "b",
+                "label": "Nostr doesn't require choosing a server/instance to join"
+              },
+              {
+                "id": "c",
+                "label": "Nostr is owned by Elon Musk"
+              }
             ],
             "correctId": "b",
             "explanation": "Unlike Mastodon where you must join a specific server/instance, Nostr users can use any relay without creating an account there. Your identity works everywhere instantly.",
@@ -100,9 +154,21 @@
             "title": "Key Safety",
             "prompt": "Which item can you safely share with anyone?",
             "options": [
-              {"id": "npub", "label": "Your npub (public key)", "description": "Lets others follow or message you"},
-              {"id": "nsec", "label": "Your nsec (private key)", "description": "Used to sign posts"},
-              {"id": "seed", "label": "Your 12/24 word seed phrase", "description": "Backups for lightning wallets"}
+              {
+                "id": "npub",
+                "label": "Your npub (public key)",
+                "description": "Lets others follow or message you"
+              },
+              {
+                "id": "nsec",
+                "label": "Your nsec (private key)",
+                "description": "Used to sign posts"
+              },
+              {
+                "id": "seed",
+                "label": "Your 12/24 word seed phrase",
+                "description": "Backups for lightning wallets"
+              }
             ],
             "correctId": "npub",
             "explanation": "npub keys are public identity. Anything that starts with nsec or a seed phrase must stay offline.",
@@ -113,9 +179,18 @@
             "title": "Backups",
             "prompt": "What's the safest long-term backup strategy for your keys?",
             "options": [
-              {"id": "photo", "label": "Screenshot the keys and store in iCloud/Google Photos"},
-              {"id": "note", "label": "Paste keys in a notes app protected by FaceID"},
-              {"id": "321", "label": "Follow the 3-2-1 rule (3 copies / 2 media / 1 offline)"}
+              {
+                "id": "photo",
+                "label": "Screenshot the keys and store in iCloud/Google Photos"
+              },
+              {
+                "id": "note",
+                "label": "Paste keys in a notes app protected by FaceID"
+              },
+              {
+                "id": "321",
+                "label": "Follow the 3-2-1 rule (3 copies / 2 media / 1 offline)"
+              }
             ],
             "correctId": "321",
             "explanation": "Use at least three copies across two media types with one offline (paper, metal). Cloud screenshots are single points of failure.",
@@ -126,9 +201,18 @@
             "title": "New Client Test",
             "prompt": "A brand-new Nostr app asks you to paste your private key to log in. What's the best move?",
             "options": [
-              {"id": "paste", "label": "Paste the key if the app has more than 100 users"},
-              {"id": "signer", "label": "Use a signer / hardware key or wait until the client supports delegated signing"},
-              {"id": "temp", "label": "Generate a throwaway key and migrate later"}
+              {
+                "id": "paste",
+                "label": "Paste the key if the app has more than 100 users"
+              },
+              {
+                "id": "signer",
+                "label": "Use a signer / hardware key or wait until the client supports delegated signing"
+              },
+              {
+                "id": "temp",
+                "label": "Generate a throwaway key and migrate later"
+              }
             ],
             "correctId": "signer",
             "explanation": "Never paste your main private key into new clients. Use a signer (NIP-46) or hardware solution and wait until delegated signing is supported.",
@@ -139,9 +223,18 @@
             "title": "Metadata Hygiene",
             "prompt": "How do you minimize metadata leaks on Nostr?",
             "options": [
-              {"id": "gps", "label": "Leave location tags enabled—it helps discovery"},
-              {"id": "personas", "label": "Separate personas, strip EXIF data, avoid linking Lightning invoices between identities"},
-              {"id": "follow", "label": "Follow as many relays as possible with one profile"}
+              {
+                "id": "gps",
+                "label": "Leave location tags enabled\u2014it helps discovery"
+              },
+              {
+                "id": "personas",
+                "label": "Separate personas, strip EXIF data, avoid linking Lightning invoices between identities"
+              },
+              {
+                "id": "follow",
+                "label": "Follow as many relays as possible with one profile"
+              }
             ],
             "correctId": "personas",
             "explanation": "Use separate profiles, disable location metadata, and keep Lightning/Zap info isolated when anonymity matters.",
@@ -152,9 +245,18 @@
             "title": "Relay Strategy",
             "prompt": "Which relay approach offers the best mix of reliability and privacy?",
             "options": [
-              {"id": "single", "label": "Use one mega-relay so everything is centralized"},
-              {"id": "mix", "label": "Use a small set of trusted paid relays + a rotating set for discovery"},
-              {"id": "public", "label": "Only use free open relays and never curate"}
+              {
+                "id": "single",
+                "label": "Use one mega-relay so everything is centralized"
+              },
+              {
+                "id": "mix",
+                "label": "Use a small set of trusted paid relays + a rotating set for discovery"
+              },
+              {
+                "id": "public",
+                "label": "Only use free open relays and never curate"
+              }
             ],
             "correctId": "mix",
             "explanation": "Combining reputable paid relays with a few rotating public ones balances redundancy, spam resistance, and privacy.",
@@ -165,9 +267,18 @@
             "title": "Zap Safety",
             "prompt": "You're setting up zaps for the first time. Which step keeps your funds safest?",
             "options": [
-              {"id": "custodial", "label": "Reuse the same custodial wallet for every identity"},
-              {"id": "link", "label": "Link a Lightning wallet you control and confirm zap requests before signing"},
-              {"id": "email", "label": "Send your seed phrase to a relay so it can auto-withdraw"}
+              {
+                "id": "custodial",
+                "label": "Reuse the same custodial wallet for every identity"
+              },
+              {
+                "id": "link",
+                "label": "Link a Lightning wallet you control and confirm zap requests before signing"
+              },
+              {
+                "id": "email",
+                "label": "Send your seed phrase to a relay so it can auto-withdraw"
+              }
             ],
             "correctId": "link",
             "explanation": "Connect a wallet you control, confirm each request, and avoid sharing custodial accounts between identities.",
@@ -188,9 +299,18 @@
             "title": "Getting Started",
             "prompt": "What's the very first thing you need to use Nostr?",
             "options": [
-              {"id": "a", "label": "A credit card to pay for an account"},
-              {"id": "b", "label": "A client app and a key pair"},
-              {"id": "c", "label": "Approval from a moderator"}
+              {
+                "id": "a",
+                "label": "A credit card to pay for an account"
+              },
+              {
+                "id": "b",
+                "label": "A client app and a key pair"
+              },
+              {
+                "id": "c",
+                "label": "Approval from a moderator"
+              }
             ],
             "correctId": "b",
             "explanation": "To use Nostr, you need a client app (like Amethyst, Damus, or Iris) and a key pair (npub/nsec). No registration, payment, or approval required.",
@@ -201,9 +321,18 @@
             "title": "Key Creation",
             "prompt": "When you first open a Nostr client, what should you do with your keys?",
             "options": [
-              {"id": "a", "label": "Share them on Twitter for backup"},
-              {"id": "b", "label": "Save them securely offline before doing anything else"},
-              {"id": "c", "label": "Email them to yourself"}
+              {
+                "id": "a",
+                "label": "Share them on Twitter for backup"
+              },
+              {
+                "id": "b",
+                "label": "Save them securely offline before doing anything else"
+              },
+              {
+                "id": "c",
+                "label": "Email them to yourself"
+              }
             ],
             "correctId": "b",
             "explanation": "Immediately backup your keys offline (written down, encrypted file, or secure password manager) before you start posting. Losing your keys means losing your identity.",
@@ -214,9 +343,18 @@
             "title": "Building Your Network",
             "prompt": "How can you find people to follow when you're new to Nostr?",
             "options": [
-              {"id": "a", "label": "Search by phone number"},
-              {"id": "b", "label": "Import Twitter follows, use hashtags, or browse popular relays"},
-              {"id": "c", "label": "Wait for the algorithm to suggest friends"}
+              {
+                "id": "a",
+                "label": "Search by phone number"
+              },
+              {
+                "id": "b",
+                "label": "Import Twitter follows, use hashtags, or browse popular relays"
+              },
+              {
+                "id": "c",
+                "label": "Wait for the algorithm to suggest friends"
+              }
             ],
             "correctId": "b",
             "explanation": "Many clients let you import Twitter followers who've also joined Nostr. You can also search hashtags, browse public feeds, or ask for recommendations.",
@@ -227,9 +365,18 @@
             "title": "Client Selection",
             "prompt": "Which Nostr client should you use?",
             "options": [
-              {"id": "a", "label": "The official Nostr app"},
-              {"id": "b", "label": "Any client that works on your device and feels comfortable"},
-              {"id": "c", "label": "The one with the most downloads"}
+              {
+                "id": "a",
+                "label": "The official Nostr app"
+              },
+              {
+                "id": "b",
+                "label": "Any client that works on your device and feels comfortable"
+              },
+              {
+                "id": "c",
+                "label": "The one with the most downloads"
+              }
             ],
             "correctId": "b",
             "explanation": "There's no 'official' client. Choose one that works on your platform (iOS: Damus, Android: Amethyst, Web: Iris/Snort). Your identity works across all of them.",
@@ -240,9 +387,18 @@
             "title": "Post Visibility",
             "prompt": "Who can see your posts on Nostr?",
             "options": [
-              {"id": "a", "label": "Only people who follow you"},
-              {"id": "b", "label": "Anyone using a relay that stores your posts"},
-              {"id": "c", "label": "Only people in your country"}
+              {
+                "id": "a",
+                "label": "Only people who follow you"
+              },
+              {
+                "id": "b",
+                "label": "Anyone using a relay that stores your posts"
+              },
+              {
+                "id": "c",
+                "label": "Only people in your country"
+              }
             ],
             "correctId": "b",
             "explanation": "Posts are public by default and visible to anyone using relays that store them. Think of it like a public bulletin board - anyone passing by can read it.",
@@ -253,9 +409,18 @@
             "title": "Initial Relay Setup",
             "prompt": "When starting out, how many relays should you connect to?",
             "options": [
-              {"id": "a", "label": "Just one is enough"},
-              {"id": "b", "label": "3-5 reliable relays for good coverage"},
-              {"id": "c", "label": "All available relays (50+)"}
+              {
+                "id": "a",
+                "label": "Just one is enough"
+              },
+              {
+                "id": "b",
+                "label": "3-5 reliable relays for good coverage"
+              },
+              {
+                "id": "c",
+                "label": "All available relays (50+)"
+              }
             ],
             "correctId": "b",
             "explanation": "Start with 3-5 well-known, reliable relays. This gives you good coverage without overwhelming your client. You can always add more later as you learn.",
@@ -276,9 +441,18 @@
             "title": "Sharing Identity",
             "prompt": "How do you share your Nostr profile with someone?",
             "options": [
-              {"id": "a", "label": "Give them your email address"},
-              {"id": "b", "label": "Share your npub (public key)"},
-              {"id": "c", "label": "They need to search your real name"}
+              {
+                "id": "a",
+                "label": "Give them your email address"
+              },
+              {
+                "id": "b",
+                "label": "Share your npub (public key)"
+              },
+              {
+                "id": "c",
+                "label": "They need to search your real name"
+              }
             ],
             "correctId": "b",
             "explanation": "Your npub (public key starting with 'npub1...') is how people find and follow you. Share it like you would a username.",
@@ -289,9 +463,18 @@
             "title": "Finding Groups",
             "prompt": "What's the best way to find communities on Nostr?",
             "options": [
-              {"id": "a", "label": "Search for hashtags like #bitcoin, #nostr, #photography"},
-              {"id": "b", "label": "Email the Nostr support team"},
-              {"id": "c", "label": "Wait for invitations"}
+              {
+                "id": "a",
+                "label": "Search for hashtags like #bitcoin, #nostr, #photography"
+              },
+              {
+                "id": "b",
+                "label": "Email the Nostr support team"
+              },
+              {
+                "id": "c",
+                "label": "Wait for invitations"
+              }
             ],
             "correctId": "a",
             "explanation": "Communities form around hashtags and topics. Search for hashtags that interest you, follow active posters, and engage in conversations to discover your tribe.",
@@ -302,9 +485,18 @@
             "title": "Twitter Migration",
             "prompt": "Can you find your Twitter friends on Nostr?",
             "options": [
-              {"id": "a", "label": "No, Nostr is completely separate"},
-              {"id": "b", "label": "Yes, many clients let you import Twitter followers who have Nostr accounts"},
-              {"id": "c", "label": "Only if you pay for a premium feature"}
+              {
+                "id": "a",
+                "label": "No, Nostr is completely separate"
+              },
+              {
+                "id": "b",
+                "label": "Yes, many clients let you import Twitter followers who have Nostr accounts"
+              },
+              {
+                "id": "c",
+                "label": "Only if you pay for a premium feature"
+              }
             ],
             "correctId": "b",
             "explanation": "Many Nostr clients offer Twitter import features. They check which of your Twitter follows have linked their Nostr npubs and let you follow them instantly.",
@@ -315,9 +507,18 @@
             "title": "Direct Messaging",
             "prompt": "What's proper etiquette when DMing someone new on Nostr?",
             "options": [
-              {"id": "a", "label": "Send promotional messages to everyone"},
-              {"id": "b", "label": "Introduce yourself briefly and have a reason for reaching out"},
-              {"id": "c", "label": "Only DM verified accounts"}
+              {
+                "id": "a",
+                "label": "Send promotional messages to everyone"
+              },
+              {
+                "id": "b",
+                "label": "Introduce yourself briefly and have a reason for reaching out"
+              },
+              {
+                "id": "c",
+                "label": "Only DM verified accounts"
+              }
             ],
             "correctId": "b",
             "explanation": "Like any social platform, be respectful. Introduce yourself, explain why you're reaching out, and avoid unsolicited spam or promotions.",
@@ -328,9 +529,18 @@
             "title": "Content Control",
             "prompt": "How do you deal with unwanted content or users on Nostr?",
             "options": [
-              {"id": "a", "label": "Report them to Nostr headquarters"},
-              {"id": "b", "label": "Mute or block them - the choice is yours"},
-              {"id": "c", "label": "You can't do anything"}
+              {
+                "id": "a",
+                "label": "Report them to Nostr headquarters"
+              },
+              {
+                "id": "b",
+                "label": "Mute or block them - the choice is yours"
+              },
+              {
+                "id": "c",
+                "label": "You can't do anything"
+              }
             ],
             "correctId": "b",
             "explanation": "Nostr clients provide mute and block features. Since there's no central authority, YOU control what you see. Block spammers, mute topics, curate your experience.",
@@ -341,9 +551,18 @@
             "title": "Creating Community",
             "prompt": "How can you start your own community on Nostr?",
             "options": [
-              {"id": "a", "label": "Apply for a community license"},
-              {"id": "b", "label": "Create a hashtag, share good content, and engage consistently"},
-              {"id": "c", "label": "Pay for community hosting"}
+              {
+                "id": "a",
+                "label": "Apply for a community license"
+              },
+              {
+                "id": "b",
+                "label": "Create a hashtag, share good content, and engage consistently"
+              },
+              {
+                "id": "c",
+                "label": "Pay for community hosting"
+              }
             ],
             "correctId": "b",
             "explanation": "Communities emerge organically around topics. Create a unique hashtag, post quality content regularly, reply to others, and be patient. Communities grow through engagement.",
@@ -364,9 +583,18 @@
             "title": "Company Ownership",
             "prompt": "Who owns Nostr?",
             "options": [
-              {"id": "a", "label": "A corporation in Delaware"},
-              {"id": "b", "label": "Jack Dorsey"},
-              {"id": "c", "label": "No one - it's an open protocol"}
+              {
+                "id": "a",
+                "label": "A corporation in Delaware"
+              },
+              {
+                "id": "b",
+                "label": "Jack Dorsey"
+              },
+              {
+                "id": "c",
+                "label": "No one - it's an open protocol"
+              }
             ],
             "correctId": "c",
             "explanation": "Nostr is an open protocol, not a company. Anyone can build on it. Jack Dorsey donated to its development but doesn't control it.",
@@ -377,9 +605,18 @@
             "title": "Account Management",
             "prompt": "Can you delete your Nostr account?",
             "options": [
-              {"id": "a", "label": "Yes, by clicking 'Delete Account' in settings"},
-              {"id": "b", "label": "No, posts are distributed across relays and can't be fully erased"},
-              {"id": "c", "label": "Only within 24 hours of posting"}
+              {
+                "id": "a",
+                "label": "Yes, by clicking 'Delete Account' in settings"
+              },
+              {
+                "id": "b",
+                "label": "No, posts are distributed across relays and can't be fully erased"
+              },
+              {
+                "id": "c",
+                "label": "Only within 24 hours of posting"
+              }
             ],
             "correctId": "b",
             "explanation": "Nostr posts are distributed to multiple relays. Once posted, you can't guarantee deletion because relays you don't control may keep copies. Post carefully.",
@@ -390,9 +627,18 @@
             "title": "Mobile Access",
             "prompt": "Can you use Nostr on mobile?",
             "options": [
-              {"id": "a", "label": "Only on Android"},
-              {"id": "b", "label": "Only through the web browser"},
-              {"id": "c", "label": "Yes, there are apps for both iOS and Android"}
+              {
+                "id": "a",
+                "label": "Only on Android"
+              },
+              {
+                "id": "b",
+                "label": "Only through the web browser"
+              },
+              {
+                "id": "c",
+                "label": "Yes, there are apps for both iOS and Android"
+              }
             ],
             "correctId": "c",
             "explanation": "Nostr has native apps for both platforms: Damus (iOS), Amethyst (Android), and web clients work on mobile browsers too.",
@@ -403,9 +649,18 @@
             "title": "Usage Cost",
             "prompt": "Does it cost money to use Nostr?",
             "options": [
-              {"id": "a", "label": "Yes, $10/month subscription"},
-              {"id": "b", "label": "No, the protocol is free (though some paid relays exist)"},
-              {"id": "c", "label": "Only if you post more than 100 times"}
+              {
+                "id": "a",
+                "label": "Yes, $10/month subscription"
+              },
+              {
+                "id": "b",
+                "label": "No, the protocol is free (though some paid relays exist)"
+              },
+              {
+                "id": "c",
+                "label": "Only if you post more than 100 times"
+              }
             ],
             "correctId": "b",
             "explanation": "Nostr is free to use. Many public relays are free. Some paid relays offer better performance or features, but they're optional.",
@@ -416,9 +671,18 @@
             "title": "Moderation",
             "prompt": "Who moderates content on Nostr?",
             "options": [
-              {"id": "a", "label": "The Nostr Foundation"},
-              {"id": "b", "label": "Each relay operator sets their own rules, and users control their own experience"},
-              {"id": "c", "label": "AI bots scan all content"}
+              {
+                "id": "a",
+                "label": "The Nostr Foundation"
+              },
+              {
+                "id": "b",
+                "label": "Each relay operator sets their own rules, and users control their own experience"
+              },
+              {
+                "id": "c",
+                "label": "AI bots scan all content"
+              }
             ],
             "correctId": "b",
             "explanation": "There's no central moderation. Relay operators decide what to host on their servers. Users choose which relays to use and can mute/block content they don't want to see.",
@@ -429,9 +693,18 @@
             "title": "Key Recovery",
             "prompt": "What happens if you lose your private key?",
             "options": [
-              {"id": "a", "label": "Contact Nostr support to reset it"},
-              {"id": "b", "label": "Your identity is lost forever - create a new key pair"},
-              {"id": "c", "label": "Use your email to recover it"}
+              {
+                "id": "a",
+                "label": "Contact Nostr support to reset it"
+              },
+              {
+                "id": "b",
+                "label": "Your identity is lost forever - create a new key pair"
+              },
+              {
+                "id": "c",
+                "label": "Use your email to recover it"
+              }
             ],
             "correctId": "b",
             "explanation": "There's no 'forgot password' option. If you lose your private key, you lose access to that identity permanently. This is why secure backups are critical.",
@@ -452,9 +725,18 @@
             "title": "What is a Relay?",
             "prompt": "What is a Nostr relay?",
             "options": [
-              {"id": "a", "label": "A device that boosts your WiFi signal"},
-              {"id": "b", "label": "A server that stores and forwards Nostr messages"},
-              {"id": "c", "label": "A cryptocurrency mining rig"}
+              {
+                "id": "a",
+                "label": "A device that boosts your WiFi signal"
+              },
+              {
+                "id": "b",
+                "label": "A server that stores and forwards Nostr messages"
+              },
+              {
+                "id": "c",
+                "label": "A cryptocurrency mining rig"
+              }
             ],
             "correctId": "b",
             "explanation": "Relays are servers that receive, store, and broadcast Nostr events (posts, likes, follows). They act as the infrastructure layer of the network.",
@@ -465,9 +747,18 @@
             "title": "User Control",
             "prompt": "Who decides which relays to use?",
             "options": [
-              {"id": "a", "label": "The Nostr development team"},
-              {"id": "b", "label": "You choose which relays to connect to"},
-              {"id": "c", "label": "It's randomly assigned"}
+              {
+                "id": "a",
+                "label": "The Nostr development team"
+              },
+              {
+                "id": "b",
+                "label": "You choose which relays to connect to"
+              },
+              {
+                "id": "c",
+                "label": "It's randomly assigned"
+              }
             ],
             "correctId": "b",
             "explanation": "You have complete control over which relays you use. You can add, remove, or switch relays anytime in your client settings.",
@@ -478,9 +769,18 @@
             "title": "Relay Types",
             "prompt": "What's the difference between paid and free relays?",
             "options": [
-              {"id": "a", "label": "Paid relays have better performance and less spam"},
-              {"id": "b", "label": "Free relays are faster"},
-              {"id": "c", "label": "There's no difference"}
+              {
+                "id": "a",
+                "label": "Paid relays have better performance and less spam"
+              },
+              {
+                "id": "b",
+                "label": "Free relays are faster"
+              },
+              {
+                "id": "c",
+                "label": "There's no difference"
+              }
             ],
             "correctId": "a",
             "explanation": "Paid relays often offer better uptime, faster syncing, and less spam because they have resources to maintain quality and can ban abusive users.",
@@ -491,9 +791,18 @@
             "title": "Data Storage",
             "prompt": "How long do relays keep your posts?",
             "options": [
-              {"id": "a", "label": "Forever, guaranteed"},
-              {"id": "b", "label": "It varies by relay - some keep forever, some delete old posts"},
-              {"id": "c", "label": "Only 30 days"}
+              {
+                "id": "a",
+                "label": "Forever, guaranteed"
+              },
+              {
+                "id": "b",
+                "label": "It varies by relay - some keep forever, some delete old posts"
+              },
+              {
+                "id": "c",
+                "label": "Only 30 days"
+              }
             ],
             "correctId": "b",
             "explanation": "Each relay sets its own storage policies. Some archive everything indefinitely, others delete posts after a certain time or size limit. Use multiple relays for redundancy.",
@@ -504,9 +813,18 @@
             "title": "Optimal Setup",
             "prompt": "How many relays should you typically connect to?",
             "options": [
-              {"id": "a", "label": "Exactly 1"},
-              {"id": "b", "label": "3-10 depending on your needs"},
-              {"id": "c", "label": "All available relays (100+)"}
+              {
+                "id": "a",
+                "label": "Exactly 1"
+              },
+              {
+                "id": "b",
+                "label": "3-10 depending on your needs"
+              },
+              {
+                "id": "c",
+                "label": "All available relays (100+)"
+              }
             ],
             "correctId": "b",
             "explanation": "Most users find 3-10 relays provides good coverage without overwhelming their client. Too few = single points of failure. Too many = slower performance.",
@@ -517,9 +835,18 @@
             "title": "Censorship",
             "prompt": "Can a relay ban you?",
             "options": [
-              {"id": "a", "label": "No, Nostr is uncensorable"},
-              {"id": "b", "label": "Yes, a relay operator can refuse to store your posts, but you can use other relays"},
-              {"id": "c", "label": "Only if you break federal law"}
+              {
+                "id": "a",
+                "label": "No, Nostr is uncensorable"
+              },
+              {
+                "id": "b",
+                "label": "Yes, a relay operator can refuse to store your posts, but you can use other relays"
+              },
+              {
+                "id": "c",
+                "label": "Only if you break federal law"
+              }
             ],
             "correctId": "b",
             "explanation": "Individual relays can ban users or content. However, Nostr's decentralization means you can simply use different relays. Your identity isn't tied to any specific relay.",
@@ -540,9 +867,18 @@
             "title": "NIP-05 Purpose",
             "prompt": "What does NIP-05 provide?",
             "options": [
-              {"id": "a", "label": "Encrypted messaging"},
-              {"id": "b", "label": "A human-readable identifier (like you@domain.com) linked to your npub"},
-              {"id": "c", "label": "Faster relay connections"}
+              {
+                "id": "a",
+                "label": "Encrypted messaging"
+              },
+              {
+                "id": "b",
+                "label": "A human-readable identifier (like you@domain.com) linked to your npub"
+              },
+              {
+                "id": "c",
+                "label": "Faster relay connections"
+              }
             ],
             "correctId": "b",
             "explanation": "NIP-05 maps an email-style identifier (you@domain.com) to your npub, making it easier for people to find and verify you.",
@@ -553,9 +889,18 @@
             "title": "Verification",
             "prompt": "How is NIP-05 verified?",
             "options": [
-              {"id": "a", "label": "By uploading your ID to a central server"},
-              {"id": "b", "label": "By placing a JSON file on a web server you control"},
-              {"id": "c", "label": "By paying a verification fee"}
+              {
+                "id": "a",
+                "label": "By uploading your ID to a central server"
+              },
+              {
+                "id": "b",
+                "label": "By placing a JSON file on a web server you control"
+              },
+              {
+                "id": "c",
+                "label": "By paying a verification fee"
+              }
             ],
             "correctId": "b",
             "explanation": "NIP-05 works by hosting a .well-known/nostr.json file on your domain that maps your identifier to your public key, proving you control that domain.",
@@ -566,9 +911,18 @@
             "title": "Benefits",
             "prompt": "What's a key benefit of having a NIP-05 identifier?",
             "options": [
-              {"id": "a", "label": "It hides your npub from everyone"},
-              {"id": "b", "label": "It makes you easier to find and adds credibility"},
-              {"id": "c", "label": "It gives you free Bitcoin"}
+              {
+                "id": "a",
+                "label": "It hides your npub from everyone"
+              },
+              {
+                "id": "b",
+                "label": "It makes you easier to find and adds credibility"
+              },
+              {
+                "id": "c",
+                "label": "It gives you free Bitcoin"
+              }
             ],
             "correctId": "b",
             "explanation": "NIP-05 makes your profile discoverable via an easy-to-remember name. It also provides verification (checkmark) showing you control that domain.",
@@ -579,9 +933,18 @@
             "title": "Getting NIP-05",
             "prompt": "How can you get a NIP-05 identifier?",
             "options": [
-              {"id": "a", "label": "Only by owning a domain"},
-              {"id": "b", "label": "Use a NIP-05 provider service or host it on your own domain"},
-              {"id": "c", "label": "Mine it like Bitcoin"}
+              {
+                "id": "a",
+                "label": "Only by owning a domain"
+              },
+              {
+                "id": "b",
+                "label": "Use a NIP-05 provider service or host it on your own domain"
+              },
+              {
+                "id": "c",
+                "label": "Mine it like Bitcoin"
+              }
             ],
             "correctId": "b",
             "explanation": "You can either host NIP-05 on your own domain (requires a website) or use services like nostrplebs.com, nostr-check.com that provide identifiers.",
@@ -592,9 +955,18 @@
             "title": "Security Consideration",
             "prompt": "What should you know about NIP-05 and privacy?",
             "options": [
-              {"id": "a", "label": "It links your identity to a domain you control, which could deanonymize you"},
-              {"id": "b", "label": "It makes your account completely anonymous"},
-              {"id": "c", "label": "It encrypts all your messages"}
+              {
+                "id": "a",
+                "label": "It links your identity to a domain you control, which could deanonymize you"
+              },
+              {
+                "id": "b",
+                "label": "It makes your account completely anonymous"
+              },
+              {
+                "id": "c",
+                "label": "It encrypts all your messages"
+              }
             ],
             "correctId": "a",
             "explanation": "NIP-05 ties your npub to a real domain, which may reveal your identity. If anonymity matters, consider whether linking to a personal domain is appropriate.",
@@ -615,9 +987,18 @@
             "title": "Zap Definition",
             "prompt": "What are 'zaps' on Nostr?",
             "options": [
-              {"id": "a", "label": "Lightning emoji reactions"},
-              {"id": "b", "label": "Bitcoin payments sent over the Lightning Network"},
-              {"id": "c", "label": "A type of relay"}
+              {
+                "id": "a",
+                "label": "Lightning emoji reactions"
+              },
+              {
+                "id": "b",
+                "label": "Bitcoin payments sent over the Lightning Network"
+              },
+              {
+                "id": "c",
+                "label": "A type of relay"
+              }
             ],
             "correctId": "b",
             "explanation": "Zaps are Bitcoin micropayments sent via the Lightning Network. They allow you to tip or support content creators instantly with real money.",
@@ -628,9 +1009,18 @@
             "title": "Lightning Network",
             "prompt": "How does the Lightning Network differ from regular Bitcoin?",
             "options": [
-              {"id": "a", "label": "It's faster and cheaper for small payments"},
-              {"id": "b", "label": "It's a completely different cryptocurrency"},
-              {"id": "c", "label": "It's only for large transactions"}
+              {
+                "id": "a",
+                "label": "It's faster and cheaper for small payments"
+              },
+              {
+                "id": "b",
+                "label": "It's a completely different cryptocurrency"
+              },
+              {
+                "id": "c",
+                "label": "It's only for large transactions"
+              }
             ],
             "correctId": "a",
             "explanation": "Lightning is a layer-2 payment protocol on top of Bitcoin. It enables instant, low-cost transactions perfect for micropayments like zaps.",
@@ -641,9 +1031,18 @@
             "title": "Wallet Setup",
             "prompt": "What do you need to receive zaps?",
             "options": [
-              {"id": "a", "label": "A Lightning wallet connected to your Nostr profile"},
-              {"id": "b", "label": "A bank account"},
-              {"id": "c", "label": "A PayPal account"}
+              {
+                "id": "a",
+                "label": "A Lightning wallet connected to your Nostr profile"
+              },
+              {
+                "id": "b",
+                "label": "A bank account"
+              },
+              {
+                "id": "c",
+                "label": "A PayPal account"
+              }
             ],
             "correctId": "a",
             "explanation": "To receive zaps, you need a Lightning wallet (custodial like Wallet of Satoshi, or self-custodial like Phoenix/BlueWallet) linked to your Nostr profile via a Lightning Address.",
@@ -654,9 +1053,18 @@
             "title": "Zap Privacy",
             "prompt": "Are zaps private?",
             "options": [
-              {"id": "a", "label": "Yes, completely anonymous"},
-              {"id": "b", "label": "The amount and sender are visible on Lightning, but you can use different wallets for different identities"},
-              {"id": "c", "label": "No, they require KYC verification"}
+              {
+                "id": "a",
+                "label": "Yes, completely anonymous"
+              },
+              {
+                "id": "b",
+                "label": "The amount and sender are visible on Lightning, but you can use different wallets for different identities"
+              },
+              {
+                "id": "c",
+                "label": "No, they require KYC verification"
+              }
             ],
             "correctId": "b",
             "explanation": "Lightning payments are pseudonymous like Bitcoin. The transaction is visible but not tied to your identity unless you link wallets across personas. Use separate wallets for privacy.",
@@ -667,9 +1075,18 @@
             "title": "Wallet Types",
             "prompt": "What's the difference between custodial and self-custodial Lightning wallets?",
             "options": [
-              {"id": "a", "label": "Custodial wallets hold your funds (easier), self-custodial means you control the keys (more secure)"},
-              {"id": "b", "label": "There's no difference"},
-              {"id": "c", "label": "Custodial wallets are only for Bitcoin, Lightning wallets are separate"}
+              {
+                "id": "a",
+                "label": "Custodial wallets hold your funds (easier), self-custodial means you control the keys (more secure)"
+              },
+              {
+                "id": "b",
+                "label": "There's no difference"
+              },
+              {
+                "id": "c",
+                "label": "Custodial wallets are only for Bitcoin, Lightning wallets are separate"
+              }
             ],
             "correctId": "a",
             "explanation": "Custodial wallets (like Wallet of Satoshi) are user-friendly but the provider controls your funds. Self-custodial wallets (like Phoenix) give you full control but require more responsibility.",
@@ -690,9 +1107,18 @@
             "title": "Key Tools",
             "prompt": "What can Nostr key converter tools do?",
             "options": [
-              {"id": "a", "label": "Convert between hex and bech32 (npub/nsec) formats"},
-              {"id": "b", "label": "Hack other people's accounts"},
-              {"id": "c", "label": "Create free Bitcoin"}
+              {
+                "id": "a",
+                "label": "Convert between hex and bech32 (npub/nsec) formats"
+              },
+              {
+                "id": "b",
+                "label": "Hack other people's accounts"
+              },
+              {
+                "id": "c",
+                "label": "Create free Bitcoin"
+              }
             ],
             "correctId": "a",
             "explanation": "Key converters translate between different key formats. For example, converting a hex public key to an npub format that starts with 'npub1...'.",
@@ -703,9 +1129,18 @@
             "title": "Media Storage",
             "prompt": "How do you share images on Nostr?",
             "options": [
-              {"id": "a", "label": "Upload to Nostr's central image server"},
-              {"id": "b", "label": "Use media hosting services (nostr.build, imgur) and paste the URL"},
-              {"id": "c", "label": "Images aren't supported"}
+              {
+                "id": "a",
+                "label": "Upload to Nostr's central image server"
+              },
+              {
+                "id": "b",
+                "label": "Use media hosting services (nostr.build, imgur) and paste the URL"
+              },
+              {
+                "id": "c",
+                "label": "Images aren't supported"
+              }
             ],
             "correctId": "b",
             "explanation": "Nostr is text-based, so images are shared via URLs. Upload to media hosting services (nostr.build, void.cat) or IPFS, then include the link in your post.",
@@ -716,9 +1151,18 @@
             "title": "Analytics",
             "prompt": "What can Nostr analytics tools show you?",
             "options": [
-              {"id": "a", "label": "Your follower growth, engagement stats, and reach"},
-              {"id": "b", "label": "Other users' private keys"},
-              {"id": "c", "label": "Your bank balance"}
+              {
+                "id": "a",
+                "label": "Your follower growth, engagement stats, and reach"
+              },
+              {
+                "id": "b",
+                "label": "Other users' private keys"
+              },
+              {
+                "id": "c",
+                "label": "Your bank balance"
+              }
             ],
             "correctId": "a",
             "explanation": "Analytics tools analyze public Nostr data to show follower counts, engagement metrics, trending topics, and help you understand your reach on the network.",
@@ -729,9 +1173,18 @@
             "title": "Signer Apps",
             "prompt": "What is a Nostr signer app?",
             "options": [
-              {"id": "a", "label": "An app that signs documents"},
-              {"id": "b", "label": "An app that securely stores your private key and signs events for other apps"},
-              {"id": "c", "label": "An astrology app"}
+              {
+                "id": "a",
+                "label": "An app that signs documents"
+              },
+              {
+                "id": "b",
+                "label": "An app that securely stores your private key and signs events for other apps"
+              },
+              {
+                "id": "c",
+                "label": "An astrology app"
+              }
             ],
             "correctId": "b",
             "explanation": "Signers (like Amber, Nostrudel) securely hold your private key and sign events on behalf of other apps. This lets you use new clients without pasting your nsec everywhere.",
@@ -742,9 +1195,18 @@
             "title": "Backup Solutions",
             "prompt": "What should you use for backing up your Nostr data?",
             "options": [
-              {"id": "a", "label": "Specialized backup tools that export your events to multiple relays"},
-              {"id": "b", "label": "Delete everything after posting"},
-              {"id": "c", "label": "Trust that relays will keep everything forever"}
+              {
+                "id": "a",
+                "label": "Specialized backup tools that export your events to multiple relays"
+              },
+              {
+                "id": "b",
+                "label": "Delete everything after posting"
+              },
+              {
+                "id": "c",
+                "label": "Trust that relays will keep everything forever"
+              }
             ],
             "correctId": "a",
             "explanation": "Backup tools help export your posts and metadata, allowing you to restore your history or migrate to new relays. Don't rely on any single relay to keep your data forever.",
@@ -765,9 +1227,18 @@
             "title": "Empty Feed",
             "prompt": "Your feed is empty - what's the most likely cause?",
             "options": [
-              {"id": "a", "label": "Nostr is down"},
-              {"id": "b", "label": "You're not connected to any relays, or the relays have no content"},
-              {"id": "c", "label": "Your phone is broken"}
+              {
+                "id": "a",
+                "label": "Nostr is down"
+              },
+              {
+                "id": "b",
+                "label": "You're not connected to any relays, or the relays have no content"
+              },
+              {
+                "id": "c",
+                "label": "Your phone is broken"
+              }
             ],
             "correctId": "b",
             "explanation": "Empty feeds usually mean relay issues. Check that you're connected to active relays in your client settings. Try adding popular public relays.",
@@ -778,9 +1249,18 @@
             "title": "Post Visibility",
             "prompt": "You posted something but your friends can't see it. Why?",
             "options": [
-              {"id": "a", "label": "You need to pay for premium posting"},
-              {"id": "b", "label": "You and your friends are using different relays"},
-              {"id": "c", "label": "Posts take 24 hours to appear"}
+              {
+                "id": "a",
+                "label": "You need to pay for premium posting"
+              },
+              {
+                "id": "b",
+                "label": "You and your friends are using different relays"
+              },
+              {
+                "id": "c",
+                "label": "Posts take 24 hours to appear"
+              }
             ],
             "correctId": "b",
             "explanation": "If you're using different relays than your friends, they won't see your posts. Share which relays you're using, or add relays in common.",
@@ -791,9 +1271,18 @@
             "title": "Connection Problems",
             "prompt": "Your client keeps disconnecting from relays. What should you check?",
             "options": [
-              {"id": "a", "label": "Your internet connection and if the relay URLs are correct"},
-              {"id": "b", "label": "Your zodiac sign"},
-              {"id": "c", "label": "Nothing - this is normal"}
+              {
+                "id": "a",
+                "label": "Your internet connection and if the relay URLs are correct"
+              },
+              {
+                "id": "b",
+                "label": "Your zodiac sign"
+              },
+              {
+                "id": "c",
+                "label": "Nothing - this is normal"
+              }
             ],
             "correctId": "a",
             "explanation": "Check your internet connection first. Then verify relay URLs are correct (wss:// format). Some relays may be down temporarily - try different ones.",
@@ -804,9 +1293,18 @@
             "title": "Lost History",
             "prompt": "Your old posts are missing. What happened?",
             "options": [
-              {"id": "a", "label": "The relay you posted to deleted old content"},
-              {"id": "b", "label": "Nostr auto-deletes posts after 30 days"},
-              {"id": "c", "label": "You need to upgrade to premium"}
+              {
+                "id": "a",
+                "label": "The relay you posted to deleted old content"
+              },
+              {
+                "id": "b",
+                "label": "Nostr auto-deletes posts after 30 days"
+              },
+              {
+                "id": "c",
+                "label": "You need to upgrade to premium"
+              }
             ],
             "correctId": "a",
             "explanation": "Relays have different storage policies. Some delete old posts to save space. Use multiple relays and backup tools to preserve your history.",
@@ -817,9 +1315,18 @@
             "title": "DM Issues",
             "prompt": "Your direct messages aren't going through. What could be wrong?",
             "options": [
-              {"id": "a", "label": "You and the recipient don't share any common relays"},
-              {"id": "b", "label": "DMs only work on Tuesdays"},
-              {"id": "c", "label": "You need to verify your phone number"}
+              {
+                "id": "a",
+                "label": "You and the recipient don't share any common relays"
+              },
+              {
+                "id": "b",
+                "label": "DMs only work on Tuesdays"
+              },
+              {
+                "id": "c",
+                "label": "You need to verify your phone number"
+              }
             ],
             "correctId": "a",
             "explanation": "DMs require both users to be connected to relays that will store and forward the encrypted message. Make sure you share at least one relay with the recipient.",
@@ -830,9 +1337,18 @@
             "title": "Performance",
             "prompt": "Your Nostr client is very slow. How can you improve it?",
             "options": [
-              {"id": "a", "label": "Connect to fewer, high-quality relays instead of many slow ones"},
-              {"id": "b", "label": "Buy a faster computer"},
-              {"id": "c", "label": "Post less frequently"}
+              {
+                "id": "a",
+                "label": "Connect to fewer, high-quality relays instead of many slow ones"
+              },
+              {
+                "id": "b",
+                "label": "Buy a faster computer"
+              },
+              {
+                "id": "c",
+                "label": "Post less frequently"
+              }
             ],
             "correctId": "a",
             "explanation": "Too many relays or slow relays can bog down your client. Keep your relay list lean (3-10 fast, reliable relays) for best performance.",
@@ -853,9 +1369,18 @@
             "title": "Identity Portability",
             "prompt": "Can you use the same Nostr identity on multiple clients?",
             "options": [
-              {"id": "a", "label": "No, each client needs a different account"},
-              {"id": "b", "label": "Yes, your keys work everywhere - import your nsec into any client"},
-              {"id": "c", "label": "Only if you pay extra"}
+              {
+                "id": "a",
+                "label": "No, each client needs a different account"
+              },
+              {
+                "id": "b",
+                "label": "Yes, your keys work everywhere - import your nsec into any client"
+              },
+              {
+                "id": "c",
+                "label": "Only if you pay extra"
+              }
             ],
             "correctId": "b",
             "explanation": "Your identity is portable. Import your nsec into any Nostr client (Damus, Amethyst, Iris, etc.) and your profile, followers, and posts follow you.",
@@ -866,9 +1391,18 @@
             "title": "Data Synchronization",
             "prompt": "How does data stay in sync across clients?",
             "options": [
-              {"id": "a", "label": "Through a central sync server"},
-              {"id": "b", "label": "Via relays - all clients read from and write to the same relay network"},
-              {"id": "c", "label": "You need to manually copy data between devices"}
+              {
+                "id": "a",
+                "label": "Through a central sync server"
+              },
+              {
+                "id": "b",
+                "label": "Via relays - all clients read from and write to the same relay network"
+              },
+              {
+                "id": "c",
+                "label": "You need to manually copy data between devices"
+              }
             ],
             "correctId": "b",
             "explanation": "Relays act as the sync layer. When you post from one client, it goes to relays. Other clients read from those same relays to show your content.",
@@ -879,9 +1413,18 @@
             "title": "Client Features",
             "prompt": "Why might you want to use different clients?",
             "options": [
-              {"id": "a", "label": "Different clients have different features, UIs, and device support"},
-              {"id": "b", "label": "You're required to use at least 3 clients"},
-              {"id": "c", "label": "Each client has different rules"}
+              {
+                "id": "a",
+                "label": "Different clients have different features, UIs, and device support"
+              },
+              {
+                "id": "b",
+                "label": "You're required to use at least 3 clients"
+              },
+              {
+                "id": "c",
+                "label": "Each client has different rules"
+              }
             ],
             "correctId": "a",
             "explanation": "Clients are interfaces to the same network. Some excel on mobile, others have better desktop features. Use what works best for your current device or task.",
@@ -892,9 +1435,18 @@
             "title": "Security Across Clients",
             "prompt": "How should you handle security when using multiple clients?",
             "options": [
-              {"id": "a", "label": "Use a signer app so you don't paste your nsec into every client"},
-              {"id": "b", "label": "Email your nsec to yourself for easy access"},
-              {"id": "c", "label": "Use the same password everywhere"}
+              {
+                "id": "a",
+                "label": "Use a signer app so you don't paste your nsec into every client"
+              },
+              {
+                "id": "b",
+                "label": "Email your nsec to yourself for easy access"
+              },
+              {
+                "id": "c",
+                "label": "Use the same password everywhere"
+              }
             ],
             "correctId": "a",
             "explanation": "Use NIP-46 signers (like Amber) or browser extensions to avoid pasting your private key into multiple apps. This limits exposure if one client is compromised.",
@@ -905,9 +1457,18 @@
             "title": "Relay Configuration",
             "prompt": "Should you use the same relays across all clients?",
             "options": [
-              {"id": "a", "label": "It's recommended for consistency, but not required"},
-              {"id": "b", "label": "No, you must use different relays for each client"},
-              {"id": "c", "label": "Yes, it's mandatory"}
+              {
+                "id": "a",
+                "label": "It's recommended for consistency, but not required"
+              },
+              {
+                "id": "b",
+                "label": "No, you must use different relays for each client"
+              },
+              {
+                "id": "c",
+                "label": "Yes, it's mandatory"
+              }
             ],
             "correctId": "a",
             "explanation": "Using similar relay configs across clients ensures consistent experience, but you can customize per client based on your needs for that device.",
@@ -928,9 +1489,18 @@
             "title": "Selection Criteria",
             "prompt": "What should you consider when choosing relays?",
             "options": [
-              {"id": "a", "label": "Only the relay's color scheme"},
-              {"id": "b", "label": "Reliability, speed, cost, and community overlap"},
-              {"id": "c", "label": "How many celebrities use it"}
+              {
+                "id": "a",
+                "label": "Only the relay's color scheme"
+              },
+              {
+                "id": "b",
+                "label": "Reliability, speed, cost, and community overlap"
+              },
+              {
+                "id": "c",
+                "label": "How many celebrities use it"
+              }
             ],
             "correctId": "b",
             "explanation": "Good relay selection considers uptime (reliability), response speed, whether it's free or paid, and if people you want to interact with use it.",
@@ -941,9 +1511,18 @@
             "title": "Finding Relays",
             "prompt": "How can you discover good relays?",
             "options": [
-              {"id": "a", "label": "Check relay lists shared by trusted community members"},
-              {"id": "b", "label": "Randomly guess URLs"},
-              {"id": "c", "label": "Only use the first relay you find"}
+              {
+                "id": "a",
+                "label": "Check relay lists shared by trusted community members"
+              },
+              {
+                "id": "b",
+                "label": "Randomly guess URLs"
+              },
+              {
+                "id": "c",
+                "label": "Only use the first relay you find"
+              }
             ],
             "correctId": "a",
             "explanation": "Find relay recommendations from community members, relay directory sites, or see which relays your friends use. Quality matters more than quantity.",
@@ -954,9 +1533,18 @@
             "title": "Paid Relays",
             "prompt": "Why might you pay for a relay?",
             "options": [
-              {"id": "a", "label": "To get special colors"},
-              {"id": "b", "label": "Better uptime, support, and reduced spam"},
-              {"id": "c", "label": "Required by law"}
+              {
+                "id": "a",
+                "label": "To get special colors"
+              },
+              {
+                "id": "b",
+                "label": "Better uptime, support, and reduced spam"
+              },
+              {
+                "id": "c",
+                "label": "Required by law"
+              }
             ],
             "correctId": "b",
             "explanation": "Paid relays often offer better performance, support, spam filtering, and longevity because they have resources to maintain quality infrastructure.",
@@ -967,9 +1555,18 @@
             "title": "Switching Relays",
             "prompt": "What happens when you switch to a new relay?",
             "options": [
-              {"id": "a", "label": "You lose all your followers and posts"},
-              {"id": "b", "label": "Your future posts go to the new relay, but old posts stay where they were"},
-              {"id": "c", "label": "Your account is deleted"}
+              {
+                "id": "a",
+                "label": "You lose all your followers and posts"
+              },
+              {
+                "id": "b",
+                "label": "Your future posts go to the new relay, but old posts stay where they were"
+              },
+              {
+                "id": "c",
+                "label": "Your account is deleted"
+              }
             ],
             "correctId": "b",
             "explanation": "New posts go to your current relays. Historical posts remain on relays where they were originally posted. Your identity and followers stay with you.",
@@ -980,9 +1577,18 @@
             "title": "Monitoring",
             "prompt": "How can you tell if a relay is working well?",
             "options": [
-              {"id": "a", "label": "Check connection status in your client and monitor for timeouts"},
-              {"id": "b", "label": "Call the relay operator daily"},
-              {"id": "c", "label": "You can't tell"}
+              {
+                "id": "a",
+                "label": "Check connection status in your client and monitor for timeouts"
+              },
+              {
+                "id": "b",
+                "label": "Call the relay operator daily"
+              },
+              {
+                "id": "c",
+                "label": "You can't tell"
+              }
             ],
             "correctId": "a",
             "explanation": "Most clients show relay connection status. If a relay shows errors, timeouts, or your feed stops updating, consider switching to a more reliable one.",
@@ -1003,9 +1609,18 @@
             "title": "Identity Separation",
             "prompt": "Why use separate Nostr identities (personas)?",
             "options": [
-              {"id": "a", "label": "To get more followers"},
-              {"id": "b", "label": "To compartmentalize different aspects of your life and reduce correlation"},
-              {"id": "c", "label": "Required by Nostr protocol"}
+              {
+                "id": "a",
+                "label": "To get more followers"
+              },
+              {
+                "id": "b",
+                "label": "To compartmentalize different aspects of your life and reduce correlation"
+              },
+              {
+                "id": "c",
+                "label": "Required by Nostr protocol"
+              }
             ],
             "correctId": "b",
             "explanation": "Separate personas prevent linking your activities. Keep professional, personal, and anonymous identities isolated to maintain privacy boundaries.",
@@ -1016,9 +1631,18 @@
             "title": "Image Metadata",
             "prompt": "Why should you strip EXIF data from images before posting?",
             "options": [
-              {"id": "a", "label": "EXIF makes images load slower"},
-              {"id": "b", "label": "EXIF can contain GPS coordinates and device info that deanonymizes you"},
-              {"id": "c", "label": "It's required for NIP-05"}
+              {
+                "id": "a",
+                "label": "EXIF makes images load slower"
+              },
+              {
+                "id": "b",
+                "label": "EXIF can contain GPS coordinates and device info that deanonymizes you"
+              },
+              {
+                "id": "c",
+                "label": "It's required for NIP-05"
+              }
             ],
             "correctId": "b",
             "explanation": "Photos often contain EXIF metadata including GPS location, camera model, and timestamps. Strip this data to protect your physical location and identity.",
@@ -1029,9 +1653,18 @@
             "title": "Hardware Security",
             "prompt": "What's the benefit of hardware signing devices?",
             "options": [
-              {"id": "a", "label": "They look cool"},
-              {"id": "b", "label": "Private keys never leave the secure hardware, protecting against malware"},
-              {"id": "c", "label": "They make posting faster"}
+              {
+                "id": "a",
+                "label": "They look cool"
+              },
+              {
+                "id": "b",
+                "label": "Private keys never leave the secure hardware, protecting against malware"
+              },
+              {
+                "id": "c",
+                "label": "They make posting faster"
+              }
             ],
             "correctId": "b",
             "explanation": "Hardware signers keep your private keys in a secure, isolated chip. Even if your computer is compromised, the keys can't be extracted.",
@@ -1042,9 +1675,18 @@
             "title": "Correlation Risks",
             "prompt": "How can someone link your Nostr identity to your real identity?",
             "options": [
-              {"id": "a", "label": "By analyzing patterns, metadata, linked accounts, and shared information"},
-              {"id": "b", "label": "They can't - Nostr is fully anonymous"},
-              {"id": "c", "label": "Only by hacking the relays"}
+              {
+                "id": "a",
+                "label": "By analyzing patterns, metadata, linked accounts, and shared information"
+              },
+              {
+                "id": "b",
+                "label": "They can't - Nostr is fully anonymous"
+              },
+              {
+                "id": "c",
+                "label": "Only by hacking the relays"
+              }
             ],
             "correctId": "a",
             "explanation": "Privacy requires operational security. Avoid sharing identifying details, reuse of usernames, linking to identifiable social accounts, or posting location data.",
@@ -1055,9 +1697,18 @@
             "title": "Secure Backups",
             "prompt": "What's the safest way to backup your Nostr keys?",
             "options": [
-              {"id": "a", "label": "Encrypted file stored offline, or written on paper/metal in a secure location"},
-              {"id": "b", "label": "Send to a friend via WhatsApp"},
-              {"id": "c", "label": "Store in Google Drive with public sharing"}
+              {
+                "id": "a",
+                "label": "Encrypted file stored offline, or written on paper/metal in a secure location"
+              },
+              {
+                "id": "b",
+                "label": "Send to a friend via WhatsApp"
+              },
+              {
+                "id": "c",
+                "label": "Store in Google Drive with public sharing"
+              }
             ],
             "correctId": "a",
             "explanation": "Encrypt your keys with a strong password and store offline. Physical media (paper, steel plates) in secure locations provide excellent long-term storage.",
@@ -1068,9 +1719,18 @@
             "title": "Client Verification",
             "prompt": "How can you verify a Nostr client is safe to use?",
             "options": [
-              {"id": "a", "label": "Check if it's open source, has been audited, and has community trust"},
-              {"id": "b", "label": "If it has more than 1000 downloads it's safe"},
-              {"id": "c", "label": "All clients are equally safe"}
+              {
+                "id": "a",
+                "label": "Check if it's open source, has been audited, and has community trust"
+              },
+              {
+                "id": "b",
+                "label": "If it has more than 1000 downloads it's safe"
+              },
+              {
+                "id": "c",
+                "label": "All clients are equally safe"
+              }
             ],
             "correctId": "a",
             "explanation": "Prefer open-source clients that can be audited by security researchers. Check community feedback, development activity, and use signer apps when possible.",
@@ -1091,9 +1751,18 @@
             "title": "NIP-17 Purpose",
             "prompt": "What is NIP-17?",
             "options": [
-              {"id": "a", "label": "A new type of relay"},
-              {"id": "b", "label": "An improved encryption standard for private messages replacing NIP-04"},
-              {"id": "c", "label": "A Bitcoin wallet integration"}
+              {
+                "id": "a",
+                "label": "A new type of relay"
+              },
+              {
+                "id": "b",
+                "label": "An improved encryption standard for private messages replacing NIP-04"
+              },
+              {
+                "id": "c",
+                "label": "A Bitcoin wallet integration"
+              }
             ],
             "correctId": "b",
             "explanation": "NIP-17 is the updated standard for end-to-end encrypted direct messages on Nostr, replacing the older NIP-04 with better security.",
@@ -1104,9 +1773,18 @@
             "title": "Security Improvements",
             "prompt": "Why is NIP-17 better than NIP-04?",
             "options": [
-              {"id": "a", "label": "It's faster"},
-              {"id": "b", "label": "Uses sealed sender (hides sender from relays) and improved encryption"},
-              {"id": "c", "label": "It has prettier colors"}
+              {
+                "id": "a",
+                "label": "It's faster"
+              },
+              {
+                "id": "b",
+                "label": "Uses sealed sender (hides sender from relays) and improved encryption"
+              },
+              {
+                "id": "c",
+                "label": "It has prettier colors"
+              }
             ],
             "correctId": "b",
             "explanation": "NIP-17 uses sealed sender technology so relays can't see who sent the message, and implements improved cryptographic protocols for better security.",
@@ -1117,9 +1795,18 @@
             "title": "Migration",
             "prompt": "Do you need to migrate from NIP-04 to NIP-17?",
             "options": [
-              {"id": "a", "label": "No, messages are automatically converted"},
-              {"id": "b", "label": "Yes, use a client that supports NIP-17 for new messages"},
-              {"id": "c", "label": "NIP-04 is still recommended"}
+              {
+                "id": "a",
+                "label": "No, messages are automatically converted"
+              },
+              {
+                "id": "b",
+                "label": "Yes, use a client that supports NIP-17 for new messages"
+              },
+              {
+                "id": "c",
+                "label": "NIP-04 is still recommended"
+              }
             ],
             "correctId": "b",
             "explanation": "Use NIP-17 capable clients for new private messages. Old NIP-04 messages remain as-is. Most modern clients now use NIP-17 by default.",
@@ -1130,9 +1817,18 @@
             "title": "Sealed Sender",
             "prompt": "What does 'sealed sender' mean in NIP-17?",
             "options": [
-              {"id": "a", "label": "Messages are stored in envelopes"},
-              {"id": "b", "label": "Relays can't see who sent the message, only who can decrypt it"},
-              {"id": "c", "label": "Messages self-destruct after reading"}
+              {
+                "id": "a",
+                "label": "Messages are stored in envelopes"
+              },
+              {
+                "id": "b",
+                "label": "Relays can't see who sent the message, only who can decrypt it"
+              },
+              {
+                "id": "c",
+                "label": "Messages self-destruct after reading"
+              }
             ],
             "correctId": "b",
             "explanation": "Sealed sender hides the sender's identity from relays. The relay sees the encrypted message and knows who should receive it, but not who sent it.",
@@ -1143,9 +1839,18 @@
             "title": "Compatibility",
             "prompt": "How do you know if your client supports NIP-17?",
             "options": [
-              {"id": "a", "label": "Check the client's documentation or settings for NIP-17 support"},
-              {"id": "b", "label": "All clients support it automatically"},
-              {"id": "c", "label": "It's indicated by a blue checkmark"}
+              {
+                "id": "a",
+                "label": "Check the client's documentation or settings for NIP-17 support"
+              },
+              {
+                "id": "b",
+                "label": "All clients support it automatically"
+              },
+              {
+                "id": "c",
+                "label": "It's indicated by a blue checkmark"
+              }
             ],
             "correctId": "a",
             "explanation": "Check your client's feature list or documentation. Modern clients like Damus, Amethyst, and others have adopted NIP-17 for private messaging.",
@@ -1166,9 +1871,18 @@
             "title": "Nostr Design",
             "prompt": "What's Nostr's core architectural philosophy?",
             "options": [
-              {"id": "a", "label": "Blockchain-based consensus"},
-              {"id": "b", "label": "Simple, dumb relays with smart clients - no central authority"},
-              {"id": "c", "label": "Federated servers with admins"}
+              {
+                "id": "a",
+                "label": "Blockchain-based consensus"
+              },
+              {
+                "id": "b",
+                "label": "Simple, dumb relays with smart clients - no central authority"
+              },
+              {
+                "id": "c",
+                "label": "Federated servers with admins"
+              }
             ],
             "correctId": "b",
             "explanation": "Nostr uses simple relays that just store and forward. Clients do the heavy lifting. No blockchain, no central servers, no admin hierarchy.",
@@ -1179,9 +1893,18 @@
             "title": "ActivityPub (Mastodon)",
             "prompt": "How does ActivityPub (Mastodon) differ from Nostr?",
             "options": [
-              {"id": "a", "label": "ActivityPub uses federated servers with admins; Nostr uses relays without accounts"},
-              {"id": "b", "label": "They're identical"},
-              {"id": "c", "label": "ActivityPub is faster"}
+              {
+                "id": "a",
+                "label": "ActivityPub uses federated servers with admins; Nostr uses relays without accounts"
+              },
+              {
+                "id": "b",
+                "label": "They're identical"
+              },
+              {
+                "id": "c",
+                "label": "ActivityPub is faster"
+              }
             ],
             "correctId": "a",
             "explanation": "ActivityPub is federated - you join a specific server with admins. Nostr uses relays - no accounts on servers, your keys work everywhere instantly.",
@@ -1192,9 +1915,18 @@
             "title": "Bluesky/AT Protocol",
             "prompt": "How does Bluesky (AT Protocol) compare to Nostr?",
             "options": [
-              {"id": "a", "label": "Bluesky uses a more complex architecture with Personal Data Servers; Nostr is simpler"},
-              {"id": "b", "label": "They're the same protocol"},
-              {"id": "c", "label": "Bluesky doesn't exist"}
+              {
+                "id": "a",
+                "label": "Bluesky uses a more complex architecture with Personal Data Servers; Nostr is simpler"
+              },
+              {
+                "id": "b",
+                "label": "They're the same protocol"
+              },
+              {
+                "id": "c",
+                "label": "Bluesky doesn't exist"
+              }
             ],
             "correctId": "a",
             "explanation": "Bluesky's AT Protocol uses Personal Data Servers and a more complex architecture. Nostr is intentionally simpler with just relays and keys.",
@@ -1205,9 +1937,18 @@
             "title": "Censorship Resistance",
             "prompt": "Which protocol offers the strongest censorship resistance?",
             "options": [
-              {"id": "a", "label": "All are equal"},
-              {"id": "b", "label": "Nostr - no server accounts, easy relay switching, no central authority"},
-              {"id": "c", "label": "Centralized platforms"}
+              {
+                "id": "a",
+                "label": "All are equal"
+              },
+              {
+                "id": "b",
+                "label": "Nostr - no server accounts, easy relay switching, no central authority"
+              },
+              {
+                "id": "c",
+                "label": "Centralized platforms"
+              }
             ],
             "correctId": "b",
             "explanation": "Nostr's design makes it most resistant to censorship: no server accounts to ban, easy to switch relays, no company or foundation controlling it.",
@@ -1218,13 +1959,150 @@
             "title": "UX Trade-offs",
             "prompt": "What trade-off does Nostr make for its decentralization?",
             "options": [
-              {"id": "a", "label": "Simpler user experience"},
-              {"id": "b", "label": "Users must manage their own keys and relay selection (more responsibility)"},
-              {"id": "c", "label": "It's slower than other protocols"}
+              {
+                "id": "a",
+                "label": "Simpler user experience"
+              },
+              {
+                "id": "b",
+                "label": "Users must manage their own keys and relay selection (more responsibility)"
+              },
+              {
+                "id": "c",
+                "label": "It's slower than other protocols"
+              }
             ],
             "correctId": "b",
             "explanation": "Nostr's decentralization puts more responsibility on users: key management, relay selection, and understanding the architecture. This is the trade-off for freedom.",
             "severity": "info"
+          }
+        ]
+      }
+    },
+    "outboxModel": {
+      "title": "Understanding the Outbox Model",
+      "description": "Learn how Nostr ensures your posts reach everyone who follows you through smart relay discovery",
+      "content": {
+        "problemHook": "Missing Posts",
+        "solutionIntro": "The Outbox Model",
+        "howItWorks": "How Relay Discovery Works",
+        "whyItMatters": "Why This Matters",
+        "bestPractices": "Best Practices",
+        "commonMisconceptions": "Common Misconceptions",
+        "technicalDeepDive": "Technical Deep Dive"
+      },
+      "quiz": {
+        "title": "Outbox Model Quiz",
+        "questions": [
+          {
+            "id": "outbox-purpose",
+            "title": "Outbox Purpose",
+            "prompt": "What problem does the outbox model solve?",
+            "options": [
+              {
+                "id": "a",
+                "label": "It tells followers which relays to check for your posts"
+              },
+              {
+                "id": "b",
+                "label": "It encrypts your posts for privacy"
+              },
+              {
+                "id": "c",
+                "label": "It stores all your posts in one place"
+              }
+            ],
+            "correctId": "a",
+            "explanation": "The outbox model publishes your relay preferences (kind:10002) so followers know where to find your content.",
+            "severity": "critical"
+          },
+          {
+            "id": "relay-list-kind",
+            "title": "Event Kind",
+            "prompt": "What event kind is used for the relay list metadata?",
+            "options": [
+              {
+                "id": "a",
+                "label": "kind:10002"
+              },
+              {
+                "id": "b",
+                "label": "kind:1"
+              },
+              {
+                "id": "c",
+                "label": "kind:0"
+              }
+            ],
+            "correctId": "a",
+            "explanation": "kind:10002 is the replaceable event that stores your relay list with read/write markers.",
+            "severity": "info"
+          },
+          {
+            "id": "read-write-markers",
+            "title": "Relay Markers",
+            "prompt": "What does the 'write' marker in your relay list indicate?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Relays where you publish your posts"
+              },
+              {
+                "id": "b",
+                "label": "Relays where you read mentions"
+              },
+              {
+                "id": "c",
+                "label": "Relays you have blocked"
+              }
+            ],
+            "correctId": "a",
+            "explanation": "The 'write' marker indicates your outbox - relays where you typically publish. 'Read' indicates where you check for mentions.",
+            "severity": "warning"
+          },
+          {
+            "id": "optimal-relay-count",
+            "title": "Best Practice",
+            "prompt": "How many relays should you have in your list?",
+            "options": [
+              {
+                "id": "a",
+                "label": "2-4 relays"
+              },
+              {
+                "id": "b",
+                "label": "10-15 relays"
+              },
+              {
+                "id": "c",
+                "label": "As many as possible"
+              }
+            ],
+            "correctId": "a",
+            "explanation": "2-4 relays is optimal. More relays drain battery and provide diminishing returns as content propagates naturally.",
+            "severity": "warning"
+          },
+          {
+            "id": "switching-relays",
+            "title": "Relay Migration",
+            "prompt": "If you stop using a relay and switch to a new one, what happens to your followers?",
+            "options": [
+              {
+                "id": "a",
+                "label": "They automatically find you on the new relay"
+              },
+              {
+                "id": "b",
+                "label": "They lose you forever"
+              },
+              {
+                "id": "c",
+                "label": "You need to message each follower individually"
+              }
+            ],
+            "correctId": "a",
+            "explanation": "When you update your relay list (kind:10002), followers automatically start checking your new relays. No manual reconnection needed!",
+            "severity": "critical"
           }
         ]
       }
@@ -1272,7 +2150,7 @@
       "scoreDisplay": "{{score}} / {{total}} correct answers",
       "conceptsMastered": "Critical concepts mastered",
       "nextSteps": "Next steps",
-      "perfectScore": "Share your knowledge—help onboard someone new.",
+      "perfectScore": "Share your knowledge\u2014help onboard someone new.",
       "reviewSections": "Review the sections you missed below.",
       "retakeQuiz": "Retake quiz",
       "questionCounter": "Question {{current}} of {{total}}",
@@ -1280,7 +2158,6 @@
       "backButton": "Back",
       "nextButton": "Next question",
       "seeResults": "See results",
-      "answered": "answered",
       "severity": {
         "critical": "P0 Critical",
         "warning": "Best Practice",
@@ -1871,19 +2748,17 @@
     "step1": {
       "title": "Step 1: Follow Accounts",
       "description": "Choose a starter pack or add custom accounts",
-      "following": "Following {count} account(s)",
+      "following": "Following",
       "followAll": "Follow All",
       "follow": "Follow",
-      "following": "Following",
       "addCustom": "Add",
       "continue": "Continue to Relays"
     },
     "step2": {
       "title": "Step 2: Connect to Relays",
       "description": "Connect to relays to see content",
-      "connected": "Connected to {count} relay(s)",
-      "connect": "Connect",
       "connected": "Connected",
+      "connect": "Connect",
       "connectAll": "Connect to All Recommended Relays",
       "continue": "Continue",
       "info": "Relays are servers that store and distribute Nostr content. Connecting to multiple relays ensures better content availability.",
@@ -2045,62 +2920,156 @@
       "damus": {
         "name": "Damus",
         "description": "The most popular iOS client with a polished UI and smooth experience.",
-        "pros": ["Beautiful UI", "Easy to use", "Active development", "Great onboarding", "Zaps support"],
-        "cons": ["iOS only", "Limited desktop sync", "No long-form content"]
+        "pros": [
+          "Beautiful UI",
+          "Easy to use",
+          "Active development",
+          "Great onboarding",
+          "Zaps support"
+        ],
+        "cons": [
+          "iOS only",
+          "Limited desktop sync",
+          "No long-form content"
+        ]
       },
       "amethyst": {
         "name": "Amethyst",
         "description": "A feature-rich Android client with excellent support for all Nostr features.",
-        "pros": ["Full-featured", "Zaps support", "Active community", "Regular updates", "Highly customizable"],
-        "cons": ["Can be overwhelming for beginners", "Android only", "Complex settings"]
+        "pros": [
+          "Full-featured",
+          "Zaps support",
+          "Active community",
+          "Regular updates",
+          "Highly customizable"
+        ],
+        "cons": [
+          "Can be overwhelming for beginners",
+          "Android only",
+          "Complex settings"
+        ]
       },
       "primal": {
         "name": "Primal",
         "description": "A fast, modern client available on all platforms with excellent performance.",
-        "pros": ["All platforms", "Fast loading", "Great search", "Beautiful design", "Regular updates"],
-        "cons": ["Privacy concerns for some", "Newer app", "Some features still in development"]
+        "pros": [
+          "All platforms",
+          "Fast loading",
+          "Great search",
+          "Beautiful design",
+          "Regular updates"
+        ],
+        "cons": [
+          "Privacy concerns for some",
+          "Newer app",
+          "Some features still in development"
+        ]
       },
       "iris": {
         "name": "Iris",
         "description": "A simple, no-signup web client perfect for getting started quickly.",
-        "pros": ["No download needed", "Works instantly", "Clean interface", "Open source", "Private"],
-        "cons": ["Web only", "Limited advanced features", "No wallet integration"]
+        "pros": [
+          "No download needed",
+          "Works instantly",
+          "Clean interface",
+          "Open source",
+          "Private"
+        ],
+        "cons": [
+          "Web only",
+          "Limited advanced features",
+          "No wallet integration"
+        ]
       },
       "snort": {
         "name": "Snort",
         "description": "A web client focused on simplicity and performance.",
-        "pros": ["Lightning fast", "Minimal UI", "No bloat", "Great for reading", "Privacy focused"],
-        "cons": ["Web only", "Fewer social features", "No wallet"]
+        "pros": [
+          "Lightning fast",
+          "Minimal UI",
+          "No bloat",
+          "Great for reading",
+          "Privacy focused"
+        ],
+        "cons": [
+          "Web only",
+          "Fewer social features",
+          "No wallet"
+        ]
       },
       "coracle": {
         "name": "Coracle",
         "description": "A desktop client for power users with advanced features.",
-        "pros": ["Powerful features", "Desktop optimized", "Great for creators", "Advanced filtering", "Keyboard shortcuts"],
-        "cons": ["Desktop only", "Steeper learning curve", "Not mobile friendly"]
+        "pros": [
+          "Powerful features",
+          "Desktop optimized",
+          "Great for creators",
+          "Advanced filtering",
+          "Keyboard shortcuts"
+        ],
+        "cons": [
+          "Desktop only",
+          "Steeper learning curve",
+          "Not mobile friendly"
+        ]
       },
       "current": {
         "name": "Current",
         "description": "iOS client with excellent Nostr Wallet Connect integration.",
-        "pros": ["Best wallet support", "NWC integration", "Power user features", "Clean UI"],
-        "cons": ["More complex", "iOS only", "Learning curve"]
+        "pros": [
+          "Best wallet support",
+          "NWC integration",
+          "Power user features",
+          "Clean UI"
+        ],
+        "cons": [
+          "More complex",
+          "iOS only",
+          "Learning curve"
+        ]
       },
       "habla": {
         "name": "Habla",
         "description": "Long-form content focused client with newsletter support.",
-        "pros": ["Great for articles", "Newsletter support", "Clean writing interface", "Monetization"],
-        "cons": ["Web only", "Smaller user base", "Limited social features"]
+        "pros": [
+          "Great for articles",
+          "Newsletter support",
+          "Clean writing interface",
+          "Monetization"
+        ],
+        "cons": [
+          "Web only",
+          "Smaller user base",
+          "Limited social features"
+        ]
       },
       "nostur": {
         "name": "Nostur",
         "description": "A feature-rich iOS client with a focus on usability.",
-        "pros": ["Great UI", "Fast", "Good relay management", "Active dev"],
-        "cons": ["iOS only", "Some learning required"]
+        "pros": [
+          "Great UI",
+          "Fast",
+          "Good relay management",
+          "Active dev"
+        ],
+        "cons": [
+          "iOS only",
+          "Some learning required"
+        ]
       },
       "plebstr": {
         "name": "Plebstr",
         "description": "A simple Android client for beginners.",
-        "pros": ["Easy to use", "Clean design", "Good performance"],
-        "cons": ["Fewer features", "Android only", "No wallet"]
+        "pros": [
+          "Easy to use",
+          "Clean design",
+          "Good performance"
+        ],
+        "cons": [
+          "Fewer features",
+          "Android only",
+          "No wallet"
+        ]
       }
     },
     "tags": {
@@ -2491,7 +3460,7 @@
     },
     "cta": {
       "notSure": "Not sure where to start?",
-      "beginnerDescription": "Begin with our beginner guides—they're designed to take you from zero to your first post.",
+      "beginnerDescription": "Begin with our beginner guides\u2014they're designed to take you from zero to your first post.",
       "startLearning": "Start Learning"
     },
     "filter": {
