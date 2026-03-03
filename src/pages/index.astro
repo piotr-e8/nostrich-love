@@ -7,8 +7,8 @@ import { ProgressTracker } from '../components/gamification/ProgressTracker';
 import { CyberpunkHeroAnimation } from '../components/CyberpunkAnimation';
 import { ResumeBanner } from '../components/navigation/ResumeBanner';
 
-const title = 'Nostrich.love - Learn Nostr step by step';
-const description = 'Try decentralized social media without the complexity. Join thousands leaving Twitter for a platform that puts you in control—not algorithms or corporations.';
+const title = 'Nostrich.love - Take Control of Your Social Media';
+const description = 'Your content, your followers, your control. Join the decentralized social media protocol that puts you in charge—not algorithms or corporations.';
 
 const valueProps = [
   { 
@@ -30,63 +30,38 @@ const valueProps = [
 
 const comparisonPoints = [
   {
-    twitter: {
-      icon: '🤖',
-      title: 'Algorithm decides',
-      subtitle: 'what you see',
-      description: 'Sponsored content and engagement bait prioritized over your friends'
-    },
     nostr: {
-      icon: '✅',
-      title: 'You decide',
-      subtitle: 'what you see',
-      description: 'Chronological feed showing posts from people you follow—no manipulation'
-    }
+      icon: '📅',
+      title: 'Chronological Feed',
+      description: 'See posts from people you follow in order. You decide what matters.'
+    },
+    oldWay: 'Algorithm-controlled feed'
   },
   {
-    twitter: {
-      icon: '🆔',
-      title: 'ID verification',
-      subtitle: 'required',
-      description: 'Upload government ID + selfie. Your identity sold to data brokers.'
-    },
     nostr: {
       icon: '🔒',
-      title: 'Stay anonymous',
-      subtitle: 'or use any name',
-      description: 'No phone number, no email, no ID required. Truly private.'
-    }
+      title: 'Anonymous by Design',
+      description: 'No phone, no email, no ID. Use any name you choose.'
+    },
+    oldWay: 'Mandatory ID verification'
   },
   {
-    twitter: {
-      icon: '❌',
-      title: 'Account deleted',
-      subtitle: 'without warning',
-      description: 'Years of content gone instantly. No appeal. No recourse.'
-    },
     nostr: {
       icon: '💾',
-      title: 'Your content',
-      subtitle: 'stored forever',
-      description: 'Distributed across 50+ servers. You own your digital footprint.'
-    }
+      title: 'Permanent Ownership',
+      description: 'Your content lives on distributed servers. You control it forever.'
+    },
+    oldWay: 'Account deletion risk'
   },
   {
-    twitter: {
-      icon: '💰',
-      title: 'Your data sold',
-      subtitle: 'for profit',
-      description: 'Twitter makes money from your attention. You get nothing.'
-    },
     nostr: {
       icon: '⚡',
-      title: 'You get paid',
-      subtitle: 'directly',
-      description: 'Supporters send instant tips. Keep 100%—no platform cut.'
-    }
+      title: 'Direct Payments',
+      description: 'Receive tips instantly. No middlemen taking a cut.'
+    },
+    oldWay: 'Platform monetizes your data'
   }
 ];
-
 
 ---
 
@@ -96,7 +71,7 @@ const comparisonPoints = [
   <ResumeBanner client:load />
 
   <main id="main-content" class="theme-bg-primary transition-colors duration-500">
-    <!-- Hero Section - Friendly Theme -->
+    <!-- Hero Section - Storybrand Approach -->
     <section class="relative min-h-[700px] flex items-center bg-gradient-to-br from-friendly-purple-100 via-friendly-warm-50 to-white dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
       <!-- Subtle animated background for friendly theme -->
       <div class="absolute inset-0 overflow-hidden">
@@ -107,40 +82,49 @@ const comparisonPoints = [
       <div class="relative z-10 w-full">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
           <div class="max-w-5xl mx-auto">
-            <!-- Badge -->
+            <!-- Problem Statement -->
+            <div class="text-center mb-8">
+              <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-400 mb-2">
+                You spend countless hours creating content, making memories, and building a network on social media.
+              </p>
+              <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-400">
+                But what if your account gets deactivated? What if you're shadow banned? What if the platform changes the rules?
+              </p>
+            </div>
+            
+            <!-- Solution Badge -->
             <div class="flex justify-center mb-6">
               <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-friendly-purple-200 dark:border-friendly-purple-700 shadow-sm">
                 <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">No accounts • No passwords • No corporations</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">There is a better way</span>
               </div>
             </div>
             
             <!-- Main Headline -->
             <div class="text-center mb-8">
               <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-white">
-                <span class="block">Social Media That</span>
+                <span class="block">Take Control of</span>
                 <span class="bg-gradient-to-r from-friendly-purple-600 to-friendly-purple-400 bg-clip-text text-transparent">
-                  Respects You
+                  Your Social Media
                 </span>
               </h1>
               
               <p class="text-xl sm:text-2xl text-gray-600 dark:text-gray-400 mb-4 max-w-3xl mx-auto leading-relaxed">
-                No algorithms. No data selling. No ID verification required. 
-                Just you, your content, and your community.
+                Welcome to Nostr—a protocol that puts you in charge. Your content, your followers, your rules. No gatekeepers, no algorithms, no account deletions.
               </p>
               
               <p class="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
-                Join thousands leaving Twitter for a <span class="font-semibold text-friendly-purple-600 dark:text-friendly-purple-400">protocol</span> that puts you in control.
+                Join thousands discovering a <span class="font-semibold text-friendly-purple-600 dark:text-friendly-purple-400">decentralized</span> way to connect.
               </p>
             </div>
             
             <!-- CTA Button -->
             <div class="mt-12 flex justify-center">
               <a
-                href="/guides"
+                href="/en/guides/what-is-nostr"
                 class="inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-white bg-friendly-purple-600 rounded-2xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 hover:bg-friendly-purple-700"
               >
-                Start Learning
+                Start Your Journey
                 <svg class="ml-3 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
@@ -155,43 +139,33 @@ const comparisonPoints = [
       </div>
     </section>
 
-    <!-- Why Switch Section -->
+    <!-- A Better Way to Connect Section -->
     <section class="py-20 bg-gray-50 dark:bg-gray-900/50">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
           <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Why People Are Making the Switch
+            A Better Way to Connect
           </h2>
           <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            See how Nostr fixes the biggest problems with traditional social media
+            See what changes when you are in control
           </p>
         </div>
         
-        <div class="max-w-4xl mx-auto space-y-8">
+        <div class="max-w-4xl mx-auto space-y-6">
           {comparisonPoints.map((point, index) => (
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Twitter side */}
-              <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-red-200 dark:border-red-800">
-                <div class="flex items-center gap-3 mb-4">
-                  <span class="text-2xl">{point.twitter.icon}</span>
-                  <div>
-                    <h3 class="font-semibold text-gray-900 dark:text-white">{point.twitter.title}</h3>
-                    <p class="text-sm text-red-600 dark:text-red-400">{point.twitter.subtitle}</p>
-                  </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+              {/* Nostr benefit - emphasized */}
+              <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border-2 border-green-200 dark:border-green-800 shadow-lg">
+                <div class="flex items-center gap-3 mb-3">
+                  <span class="text-2xl">{point.nostr.icon}</span>
+                  <h3 class="font-semibold text-lg text-gray-900 dark:text-white">{point.nostr.title}</h3>
                 </div>
-                <p class="text-sm text-gray-600 dark:text-gray-400">{point.twitter.description}</p>
+                <p class="text-gray-600 dark:text-gray-400">{point.nostr.description}</p>
               </div>
               
-              {/* Nostr side */}
-              <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-green-200 dark:border-green-800">
-                <div class="flex items-center gap-3 mb-4">
-                  <span class="text-2xl">{point.nostr.icon}</span>
-                  <div>
-                    <h3 class="font-semibold text-gray-900 dark:text-white">{point.nostr.title}</h3>
-                    <p class="text-sm text-green-600 dark:text-green-400">{point.nostr.subtitle}</p>
-                  </div>
-                </div>
-                <p class="text-sm text-gray-600 dark:text-gray-400">{point.nostr.description}</p>
+              {/* Old way - de-emphasized */}
+              <div class="p-4 bg-gray-100 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700">
+                <p class="text-sm text-gray-500 dark:text-gray-500 italic">vs. {point.oldWay} on traditional platforms</p>
               </div>
             </div>
           ))}
@@ -277,7 +251,7 @@ const comparisonPoints = [
     <section class="py-20 bg-gradient-to-br from-friendly-purple-600 to-friendly-purple-400">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">
-          Ready to start your Nostr journey?
+          Ready to take control?
         </h2>
         <p class="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
           Begin with our progressive skill levels—start as a beginner and work your way up to advanced topics.
