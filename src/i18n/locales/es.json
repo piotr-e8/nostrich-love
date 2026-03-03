@@ -1739,8 +1739,8 @@
       }
     },
     "outboxModel": {
-      "title": "Understanding the Outbox Model",
-      "description": "Learn how Nostr ensures your posts reach everyone who follows you through smart relay discovery",
+      "title": "Entendiendo el Modelo de Bandeja de Salida",
+      "description": "Aprende c\u00f3mo Nostr asegura que tus posts lleguen a todos quienes te siguen",
       "content": {
         "problemHook": "Missing Posts",
         "solutionIntro": "The Outbox Model",

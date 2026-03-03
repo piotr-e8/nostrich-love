@@ -1,7 +1,7 @@
 ---
-title: "Understanding the Outbox Model"
-description: "Learn how Nostr's smart relay system ensures your posts reach everyone who follows you"
-estimatedTime: "10-15 minutes"
+title: "Entendiendo el Modelo de Bandeja de Salida"
+description: "Aprende cómo el sistema inteligente de relays de Nostr asegura que tus publicaciones lleguen a todos tus seguidores"
+estimatedTime: "10-15 minutos"
 priority: 2
 category: "intermediate"
 prerequisites: ["relays-demystified", "keys-and-security"]
@@ -9,238 +9,238 @@ prerequisites: ["relays-demystified", "keys-and-security"]
 
 import { OutboxModelQuiz } from "@components/interactive/OutboxModelQuiz";
 
-## The Problem: Missing Posts 📬
+## El Problema: Publicaciones Perdidas 📬
 
-Have you ever posted something on Nostr, but your friends couldn't see it? Or followed someone but never saw their posts? This is the **discovery problem**.
+¿Alguna vez publicaste algo en Nostr pero tus amigos no pudieron verlo? ¿O seguiste a alguien pero nunca viste sus publicaciones? Este es el **problema de descubrimiento**.
 
-### The Old Way (Before Outbox Model)
-
-```
-You Post → Relay A → ❌ Your friend only uses Relay B
-
-Your Friend's View:
-❌ "Where did @alice's post go?"
-```
-
-You'd post to your favorite relay, but your followers might be using different relays entirely. They'd never see your content!
-
-### The Solution: Outbox Model
-
-The outbox model solves this by **advertising where you post**. Think of it like leaving a forwarding address.
+### La Vieja Forma (Antes del Modelo de Bandeja de Salida)
 
 ```
-You: "I post to Relay A, Relay B, and Relay C"
-(Stored in your kind:10002 event)
+Tú Publicas → Relay A → ❌ Tu amigo solo usa Relay B
 
-Follower: "Got it! I'll check those relays for @alice's posts"
+La Perspectiva de Tu Amigo:
+❌ "¿Adónde se fue la publicación de @alice?"
+```
+
+Publicabas en tu relay favorito, pero tus seguidores podrían estar usando relays completamente diferentes. ¡Nunca verían tu contenido!
+
+### La Solución: Modelo de Bandeja de Salida
+
+El modelo de bandeja de salida resuelve esto **anunciando dónde publicas**. Piénsalo como dejar una dirección de reenvío.
+
+```
+Tú: "Publico en Relay A, Relay B y Relay C"
+(Almacenado en tu evento kind:10002)
+
+Seguidor: "¡Entendido! Revisaré esos relays para ver las publicaciones de @alice"
 ```
 
 ---
 
-## What Is the Outbox Model? 📮
+## ¿Qué es el Modelo de Bandeja de Salida? 📮
 
-The outbox model (NIP-65) is like having a **public address book** that tells everyone where to find your posts.
+El modelo de bandeja de salida (NIP-65) es como tener una **agenda de direcciones pública** que le dice a todos dónde encontrar tus publicaciones.
 
-### The Post Office Analogy Extended
+### La Analogía del Correo Extendida
 
-Remember relays are like post offices? The outbox model adds a **forwarding address system**:
+¿Recuerdas que los relays son como correos? El modelo de bandeja de salida agrega un **sistema de direcciones de reenvío**:
 
-**Traditional Post Office:**
-- You have one mailbox at one post office
-- If you move, people send mail to the wrong place
+**Correo Tradicional:**
+- Tienes un buzón en un solo correo
+- Si te mudas, la gente envía correo al lugar equivocado
 
-**Nostr Outbox Model:**
-- You have a **public list** of post offices where you receive mail
-- If you "move" (switch relays), you update your public list
-- Everyone knows where to find you
+**Modelo de Bandeja de Salida de Nostr:**
+- Tienes una **lista pública** de correos donde recibes correspondencia
+- Si te "mudas" (cambias de relays), actualizas tu lista pública
+- Todos saben dónde encontrarte
 
-### Your Relay List (kind:10002)
+### Tu Lista de Relays (kind:10002)
 
-Your Nostr client automatically creates a **relay list** that tells others:
+Tu cliente de Nostr crea automáticamente una **lista de relays** que le dice a otros:
 
 ```jsonc
 {
   "kind": 10002,
   "tags": [
-    // Relays where you generally post (your "outbox")
+    // Relays donde generalmente publicas (tu "bandeja de salida")
     ["r", "wss://relay.nostr.info", "write"],
     ["r", "wss://relay.damus.io", "write"],
     
-    // Relays where you read mentions (your "inbox")
+    // Relays donde lees menciones (tu "buzón")
     ["r", "wss://nos.lol", "read"],
     ["r", "wss://relay.snort.social", "read"]
   ]
 }
 ```
 
-**Markers explained:**
-- **write** → Where you post your content (outbox)
-- **read** → Where you check for mentions/replies (inbox)
-- **no marker** → Both read and write
+**Marcadores explicados:**
+- **write** → Donde publicas tu contenido (bandeja de salida)
+- **read** → Donde revisas menciones/respuestas (buzón)
+- **sin marcador** → Ambos: leer y escribir
 
 ---
 
-## How It Works in Practice
+## Cómo Funciona en la Práctica
 
-### Scenario 1: Alice Posts, Bob Follows
+### Escenario 1: Alicia Publica, Beto la Sigue
 
 ```
-Alice's Relay List (kind:10002):
+Lista de Relays de Alicia (kind:10002):
   - wss://relay.a.com [write]
   - wss://relay.b.com [write]
 
-Bob follows Alice. Bob's client sees:
-  "Check wss://relay.a.com and wss://relay.b.com for Alice's posts"
+Beto sigue a Alicia. El cliente de Beto ve:
+  "Revisa wss://relay.a.com y wss://relay.b.com para ver las publicaciones de Alicia"
 
-Result: Bob connects to both relays and sees Alice's content! ✅
+Resultado: ¡Beto se conecta a ambos relays y ve el contenido de Alicia! ✅
 ```
 
-### Scenario 2: Charlie Mentions Alice
+### Escenario 2: Carlos Menciona a Alicia
 
 ```
-Charlie mentions @alice in a post
+Carlos menciona a @alice en una publicación
 
-Charlie's client checks Alice's relay list:
+El cliente de Carlos revisa la lista de relays de Alicia:
   - wss://relay.a.com [read]
   - wss://relay.b.com [read]
 
-Charlie's client sends the mention to Alice's READ relays
+El cliente de Carlos envía la mención a los relays de LECTURA de Alicia
 
-Result: Alice sees the mention even if she's offline! ✅
+Resultado: ¡Alicia ve la mención incluso si está desconectada! ✅
 ```
 
-### Scenario 3: Alice Switches Relays
+### Escenario 3: Alicia Cambia de Relays
 
 ```
-Alice stops using relay.a.com, starts using relay.c.com
+Alicia deja de usar relay.a.com, empieza a usar relay.c.com
 
-1. Alice updates her kind:10002 relay list
-2. Propagates to all connected relays
-3. Followers automatically start checking relay.c.com
+1. Alicia actualiza su lista de relays kind:10002
+2. Se propaga a todos los relays conectados
+3. Los seguidores automáticamente empiezan a revisar relay.c.com
 
-Result: No lost posts, no manual reconnection needed! ✅
+Resultado: ¡No hay publicaciones perdidas, no se necesita reconexión manual! ✅
 ```
 
 ---
 
-## Why This Matters
+## Por Qué Esto Importa
 
-### 1. Discovery Without Centralization
+### 1. Descubrimiento Sin Centralización
 
-Traditional social media has a central server that knows everyone. Nostr is decentralized, so it needs another way to find people.
+Las redes sociales tradicionales tienen un servidor central que conoce a todos. Nostr es descentralizado, por lo que necesita otra forma de encontrar a la gente.
 
-**Outbox model = distributed discovery**
+**Modelo de bandeja de salida = descubrimiento distribuido**
 
-### 2. Censorship Resistance
+### 2. Resistencia a la Censura
 
-If one relay blocks you, your followers can still find you through your relay list on other relays.
+Si un relay te bloquea, tus seguidores aún pueden encontrarte a través de tu lista de relays en otros relays.
 
-### 3. Flexibility
+### 3. Flexibilidad
 
-Switch relays anytime without losing your audience. Just update your relay list.
+Cambia de relays en cualquier momento sin perder a tu audiencia. Solo actualiza tu lista de relays.
 
-### 4. Efficiency
+### 4. Eficiencia
 
-Clients only connect to the relays you use, not every relay in existence.
+Los clientes solo se conectan a los relays que tú usas, no a todos los relays existentes.
 
 ---
 
-## Best Practices
+## Mejores Prácticas
 
-### Keep Your List Small
+### Mantén Tu Lista Pequeña
 
-**Recommended:** 2-4 relays total
+**Recomendado:** 2-4 relays en total
 
-Why?
-- More relays = more connections = more battery drain
-- Diminishing returns after 4 relays
-- Most content propagates to popular relays anyway
+¿Por qué?
+- Más relays = más conexiones = más consumo de batería
+- Rendimientos decrecientes después de 4 relays
+- La mayoría del contenido se propaga a los relays populares de todos modos
 
-### Mix Read and Write
+### Mezcla Lectura y Escritura
 
-**Good setup:**
-- 2-3 "write" relays (where you post)
-- 1-2 "read" relays (for mentions)
+**Buena configuración:**
+- 2-3 relays de "escritura" (donde publicas)
+- 1-2 relays de "lectura" (para menciones)
 
-**Example:**
+**Ejemplo:**
 ```
-Write to: Popular relay A, Your personal relay
-Read from: Popular relay B (for mentions)
+Escribir en: Relay popular A, Tu relay personal
+Leer de: Relay popular B (para menciones)
 ```
 
-### Choose Reliable Relays
+### Elige Relays Confiables
 
-Use well-known, reliable relays that:
-- Have good uptime
-- Store content permanently (not ephemeral)
-- Are geographically close (lower latency)
-
----
-
-## Common Misconceptions
-
-### "I need to be on every relay"
-
-**Wrong:** Being on 20+ relays doesn't help. Your posts propagate through the network. Stick to 2-4 quality relays.
-
-### "If I leave a relay, I lose my followers"
-
-**Wrong:** Just update your relay list (kind:10002). Followers will automatically check your new relays.
-
-### "Private DMs go through the outbox too"
-
-**Partially true:** NIP-17 (private messages) uses the outbox model for delivery, but with extra encryption.
-
-### "I need to manually tell people my relays"
-
-**Wrong:** Your client publishes your relay list automatically. Followers discover it when they follow you.
+Usa relays conocidos y confiables que:
+- Tengan buen tiempo de actividad
+- Almacenen contenido permanentemente (no efímero)
+- Estén geográficamente cerca (menor latencia)
 
 ---
 
-## Technical Deep Dive (Optional)
+## Conceptos Erróneos Comunes
 
-### How Clients Discover Your Relays
+### "Necesito estar en cada relay"
 
-1. **Initial follow:** When someone follows you, their client requests your kind:10002 event
-2. **Your relays are revealed:** The event contains your relay preferences
-3. **Ongoing updates:** If you change relays, you publish a new kind:10002
-4. **Propagation:** Clients spread relay lists to help discovery
+**Incorrecto:** Estar en 20+ relays no ayuda. Tus publicaciones se propagan a través de la red. Quédate con 2-4 relays de calidad.
 
-### Replaceable Events
+### "Si dejo un relay, pierdo a mis seguidores"
 
-kind:10002 is **replaceable** - only the latest version is kept. This means:
-- No historical bloat
-- Easy to update
-- Simple for clients to manage
+**Incorrecto:** Solo actualiza tu lista de relays (kind:10002). Los seguidores automáticamente revisarán tus nuevos relays.
 
-### Privacy Consideration
+### "Los mensajes privados también pasan por la bandeja de salida"
 
-Your relay list is **public**. Anyone can see which relays you use. This is necessary for the system to work, but be aware it's visible.
+**Parcialmente cierto:** NIP-17 (mensajes privados) usa el modelo de bandeja de salida para entrega, pero con encriptación extra.
+
+### "Necesito decirle manualmente a la gente mis relays"
+
+**Incorrecto:** Tu cliente publica tu lista de relays automáticamente. Los seguidores la descubren cuando te siguen.
 
 ---
 
-## Take Action
+## Inmersión Técnica (Opcional)
 
-### Check Your Current Relays
+### Cómo los Clientes Descubren Tus Relays
 
-Look in your Nostr client settings:
-- Which relays are you connected to?
-- Are they marked as "read" or "write"?
-- Do you have 2-4 total?
+1. **Seguimiento inicial:** Cuando alguien te sigue, su cliente solicita tu evento kind:10002
+2. **Tus relays se revelan:** El evento contiene tus preferencias de relay
+3. **Actualizaciones continuas:** Si cambias de relays, publicas un nuevo kind:10002
+4. **Propagación:** Los clientes difunden listas de relays para ayudar al descubrimiento
 
-### Optimize Your Setup
+### Eventos Reemplazables
 
-**If you have 5+ relays:**
-- Remove the ones with poor uptime
-- Keep your 3-4 favorites
-- Make sure at least one is "read" for mentions
+kind:10002 es **reemplazable** - solo se mantiene la última versión. Esto significa:
+- Sin acumulación histórica
+- Fácil de actualizar
+- Simple para los clientes de manejar
 
-### Spread the Word
+### Consideración de Privacidad
 
-Help others understand:
-- Share this guide
-- Explain why you can't see someone's posts
-- Help troubleshoot discovery issues
+Tu lista de relays es **pública**. Cualquiera puede ver qué relays usas. Esto es necesario para que el sistema funcione, pero ten en cuenta que es visible.
+
+---
+
+## Toma Acción
+
+### Revisa Tus Relays Actuales
+
+Mira en la configuración de tu cliente de Nostr:
+- ¿A qué relays estás conectado?
+- ¿Están marcados como "read" o "write"?
+- ¿Tienes 2-4 en total?
+
+### Optimiza Tu Configuración
+
+**Si tienes 5+ relays:**
+- Elimina los que tienen mal tiempo de actividad
+- Mantén tus 3-4 favoritos
+- Asegúrate de que al menos uno sea "read" para menciones
+
+### Comparte el Conocimiento
+
+Ayuda a otros a entender:
+- Comparte esta guía
+- Explica por qué no puedes ver las publicaciones de alguien
+- Ayuda a solucionar problemas de descubrimiento
 
 ---
 

@@ -1,246 +1,246 @@
 ---
-title: "Understanding the Outbox Model"
-description: "Learn how Nostr's smart relay system ensures your posts reach everyone who follows you"
-estimatedTime: "10-15 minutes"
+title: "Das Outbox-Modell verstehen"
+description: "Erfahre, wie Nostr sicherstellt, dass deine Posts alle erreichen, die dir folgen"
+estimatedTime: "15 min"
 priority: 2
-category: "intermediate"
+category: "beginner"
 prerequisites: ["relays-demystified", "keys-and-security"]
 ---
 
 import { OutboxModelQuiz } from "@components/interactive/OutboxModelQuiz";
 
-## The Problem: Missing Posts 📬
+## Das Problem: Fehlende Posts 📬
 
-Have you ever posted something on Nostr, but your friends couldn't see it? Or followed someone but never saw their posts? This is the **discovery problem**.
+Hast du schon mal etwas auf Nostr gepostet, aber deine Freunde konnten es nicht sehen? Oder jemandem gefolgt, aber nie seine Posts gesehen? Das ist das **Discovery-Problem**.
 
-### The Old Way (Before Outbox Model)
-
-```
-You Post → Relay A → ❌ Your friend only uses Relay B
-
-Your Friend's View:
-❌ "Where did @alice's post go?"
-```
-
-You'd post to your favorite relay, but your followers might be using different relays entirely. They'd never see your content!
-
-### The Solution: Outbox Model
-
-The outbox model solves this by **advertising where you post**. Think of it like leaving a forwarding address.
+### Die alte Art (vor dem Outbox-Modell)
 
 ```
-You: "I post to Relay A, Relay B, and Relay C"
-(Stored in your kind:10002 event)
+Du postest → Relay A → ❌ Dein Freund nutzt nur Relay B
 
-Follower: "Got it! I'll check those relays for @alice's posts"
+Sicht deines Freundes:
+❌ "Wo ist @alice's Post hin?"
+```
+
+Du hast zu deinem Lieblings-Relay gepostet, aber deine Follower nutzen vielleicht ganz andere Relays. Sie würden deinen Content nie sehen!
+
+### Die Lösung: Das Outbox-Modell
+
+Das Outbox-Modell löst das, indem es **bekannt gibt, wo du postest**. Stell dir das vor wie eine Nachsendeadresse.
+
+```
+Du: "Ich poste zu Relay A, Relay B und Relay C"
+(Gespeichert in deinem kind:10002 Event)
+
+Follower: "Verstanden! Ich prüfe diese Relays für @alice's Posts"
 ```
 
 ---
 
-## What Is the Outbox Model? 📮
+## Was ist das Outbox-Modell? 📮
 
-The outbox model (NIP-65) is like having a **public address book** that tells everyone where to find your posts.
+Das Outbox-Modell (NIP-65) ist wie ein **öffentliches Adressbuch**, das allen sagt, wo sie deine Posts finden können.
 
-### The Post Office Analogy Extended
+### Die Post-Analogie erweitert
 
-Remember relays are like post offices? The outbox model adds a **forwarding address system**:
+Erinnerst du dich, dass Relays wie Postämter sind? Das Outbox-Modell fügt ein **Nachsendeadressen-System** hinzu:
 
-**Traditional Post Office:**
-- You have one mailbox at one post office
-- If you move, people send mail to the wrong place
+**Traditionelles Postamt:**
+- Du hast einen Briefkasten bei einem Postamt
+- Wenn du umziehst, schicken Leute Post an die falsche Adresse
 
-**Nostr Outbox Model:**
-- You have a **public list** of post offices where you receive mail
-- If you "move" (switch relays), you update your public list
-- Everyone knows where to find you
+**Nostr Outbox-Modell:**
+- Du hast eine **öffentliche Liste** von Postämtern, an die du Post erhältst
+- Wenn du "umziehst" (Relays wechselst), aktualisierst du deine öffentliche Liste
+- Jeder weiß, wo er dich finden kann
 
-### Your Relay List (kind:10002)
+### Deine Relay-Liste (kind:10002)
 
-Your Nostr client automatically creates a **relay list** that tells others:
+Dein Nostr-Client erstellt automatisch eine **Relay-Liste**, die anderen sagt:
 
 ```jsonc
 {
   "kind": 10002,
   "tags": [
-    // Relays where you generally post (your "outbox")
+    // Relays, auf denen du postest (dein "Postausgang")
     ["r", "wss://relay.nostr.info", "write"],
     ["r", "wss://relay.damus.io", "write"],
     
-    // Relays where you read mentions (your "inbox")
+    // Relays, auf denen du Erwähnungen liest (dein "Posteingang")
     ["r", "wss://nos.lol", "read"],
     ["r", "wss://relay.snort.social", "read"]
   ]
 }
 ```
 
-**Markers explained:**
-- **write** → Where you post your content (outbox)
-- **read** → Where you check for mentions/replies (inbox)
-- **no marker** → Both read and write
+**Marker erklärt:**
+- **write** → Wo du deinen Content postest (Postausgang)
+- **read** → Wo du nach Erwähnungen/Antworten schaust (Posteingang)
+- **kein Marker** → Sowohl lesen als auch schreiben
 
 ---
 
-## How It Works in Practice
+## Wie es in der Praxis funktioniert
 
-### Scenario 1: Alice Posts, Bob Follows
+### Szenario 1: Alice postet, Bob folgt
 
 ```
-Alice's Relay List (kind:10002):
+Alice's Relay-Liste (kind:10002):
   - wss://relay.a.com [write]
   - wss://relay.b.com [write]
 
-Bob follows Alice. Bob's client sees:
-  "Check wss://relay.a.com and wss://relay.b.com for Alice's posts"
+Bob folgt Alice. Bobs Client sieht:
+  "Prüfe wss://relay.a.com und wss://relay.b.com für Alice's Posts"
 
-Result: Bob connects to both relays and sees Alice's content! ✅
+Ergebnis: Bob verbindet sich mit beiden Relays und sieht Alice's Content! ✅
 ```
 
-### Scenario 2: Charlie Mentions Alice
+### Szenario 2: Charlie erwähnt Alice
 
 ```
-Charlie mentions @alice in a post
+Charlie erwähnt @alice in einem Post
 
-Charlie's client checks Alice's relay list:
+Charlies Client prüft Alice's Relay-Liste:
   - wss://relay.a.com [read]
   - wss://relay.b.com [read]
 
-Charlie's client sends the mention to Alice's READ relays
+Charlies Client sendet die Erwähnung zu Alice's READ-Relays
 
-Result: Alice sees the mention even if she's offline! ✅
+Ergebnis: Alice sieht die Erwähnung, auch wenn sie offline ist! ✅
 ```
 
-### Scenario 3: Alice Switches Relays
+### Szenario 3: Alice wechselt Relays
 
 ```
-Alice stops using relay.a.com, starts using relay.c.com
+Alice nutzt relay.a.com nicht mehr, beginnt mit relay.c.com
 
-1. Alice updates her kind:10002 relay list
-2. Propagates to all connected relays
-3. Followers automatically start checking relay.c.com
+1. Alice aktualisiert ihre kind:10002 Relay-Liste
+2. Wird an alle verbundenen Relays weitergegeben
+3. Follower prüfen automatisch relay.c.com
 
-Result: No lost posts, no manual reconnection needed! ✅
+Ergebnis: Keine verlorenen Posts, keine manuelle Neuanbindung nötig! ✅
 ```
 
 ---
 
-## Why This Matters
+## Warum das wichtig ist
 
-### 1. Discovery Without Centralization
+### 1. Discovery ohne Zentralisierung
 
-Traditional social media has a central server that knows everyone. Nostr is decentralized, so it needs another way to find people.
+Traditionelle Social Media hat einen zentralen Server, der alle kennt. Nostr ist dezentralisiert, also braucht es einen anderen Weg, Leute zu finden.
 
-**Outbox model = distributed discovery**
+**Outbox-Modell = verteilte Discovery**
 
-### 2. Censorship Resistance
+### 2. Zensurresistenz
 
-If one relay blocks you, your followers can still find you through your relay list on other relays.
+Wenn ein Relay dich blockiert, können deine Follower dich trotzdem über deine Relay-Liste auf anderen Relays finden.
 
-### 3. Flexibility
+### 3. Flexibilität
 
-Switch relays anytime without losing your audience. Just update your relay list.
+Wechsel jederzeit Relays, ohne dein Publikum zu verlieren. Aktualisiere einfach deine Relay-Liste.
 
-### 4. Efficiency
+### 4. Effizienz
 
-Clients only connect to the relays you use, not every relay in existence.
+Clients verbinden sich nur mit den Relays, die du nutzt, nicht mit jedem Relay, das es gibt.
 
 ---
 
 ## Best Practices
 
-### Keep Your List Small
+### Halte deine Liste klein
 
-**Recommended:** 2-4 relays total
+**Empfohlen:** 2-4 Relays insgesamt
 
-Why?
-- More relays = more connections = more battery drain
-- Diminishing returns after 4 relays
-- Most content propagates to popular relays anyway
+Warum?
+- Mehr Relays = mehr Verbindungen = mehr Akkuverbrauch
+- Abnehmende Erträge nach 4 Relays
+- Die meisten Inhalte werden sowieso zu populären Relays weitergegeben
 
-### Mix Read and Write
+### Mische Lesen und Schreiben
 
-**Good setup:**
-- 2-3 "write" relays (where you post)
-- 1-2 "read" relays (for mentions)
+**Gutes Setup:**
+- 2-3 "write" Relays (wo du postest)
+- 1-2 "read" Relays (für Erwähnungen)
 
-**Example:**
+**Beispiel:**
 ```
-Write to: Popular relay A, Your personal relay
-Read from: Popular relay B (for mentions)
+Schreiben zu: Populäres Relay A, Dein persönliches Relay
+Lesen von: Populäres Relay B (für Erwähnungen)
 ```
 
-### Choose Reliable Relays
+### Wähle zuverlässige Relays
 
-Use well-known, reliable relays that:
-- Have good uptime
-- Store content permanently (not ephemeral)
-- Are geographically close (lower latency)
-
----
-
-## Common Misconceptions
-
-### "I need to be on every relay"
-
-**Wrong:** Being on 20+ relays doesn't help. Your posts propagate through the network. Stick to 2-4 quality relays.
-
-### "If I leave a relay, I lose my followers"
-
-**Wrong:** Just update your relay list (kind:10002). Followers will automatically check your new relays.
-
-### "Private DMs go through the outbox too"
-
-**Partially true:** NIP-17 (private messages) uses the outbox model for delivery, but with extra encryption.
-
-### "I need to manually tell people my relays"
-
-**Wrong:** Your client publishes your relay list automatically. Followers discover it when they follow you.
+Nutze bekannte, zuverlässige Relays, die:
+- Gute Verfügbarkeit haben
+- Content dauerhaft speichern (nicht flüchtig)
+- Geografisch nah sind (geringere Latenz)
 
 ---
 
-## Technical Deep Dive (Optional)
+## Häufige Missverständnisse
 
-### How Clients Discover Your Relays
+### "Ich muss auf jedem Relay sein"
 
-1. **Initial follow:** When someone follows you, their client requests your kind:10002 event
-2. **Your relays are revealed:** The event contains your relay preferences
-3. **Ongoing updates:** If you change relays, you publish a new kind:10002
-4. **Propagation:** Clients spread relay lists to help discovery
+**Falsch:** Auf 20+ Relays zu sein hilft nicht. Deine Posts werden durch das Netzwerk weitergegeben. Bleib bei 2-4 Qualitäts-Relays.
 
-### Replaceable Events
+### "Wenn ich ein Relay verlasse, verliere ich meine Follower"
 
-kind:10002 is **replaceable** - only the latest version is kept. This means:
-- No historical bloat
-- Easy to update
-- Simple for clients to manage
+**Falsch:** Aktualisiere einfach deine Relay-Liste (kind:10002). Follower prüfen automatisch deine neuen Relays.
 
-### Privacy Consideration
+### "Private DMs gehen auch durch das Outbox-Modell"
 
-Your relay list is **public**. Anyone can see which relays you use. This is necessary for the system to work, but be aware it's visible.
+**Teilweise wahr:** NIP-17 (private Nachrichten) nutzt das Outbox-Modell für die Zustellung, aber mit zusätzlicher Verschlüsselung.
+
+### "Ich muss Leuten manuell meine Relays sagen"
+
+**Falsch:** Dein Client veröffentlicht deine Relay-Liste automatisch. Follower entdecken sie, wenn sie dir folgen.
 
 ---
 
-## Take Action
+## Technischer Deep Dive (Optional)
 
-### Check Your Current Relays
+### Wie Clients deine Relays entdecken
 
-Look in your Nostr client settings:
-- Which relays are you connected to?
-- Are they marked as "read" or "write"?
-- Do you have 2-4 total?
+1. **Erstes Folgen:** Wenn jemand dir folgt, fordert sein Client dein kind:10002 Event an
+2. **Deine Relays werden offenbart:** Das Event enthält deine Relay-Präferenzen
+3. **Laufende Updates:** Wenn du Relays wechselst, veröffentlichst du ein neues kind:10002
+4. **Verbreitung:** Clients verbreiten Relay-Listen, um Discovery zu unterstützen
 
-### Optimize Your Setup
+### Ersetzbare Events
 
-**If you have 5+ relays:**
-- Remove the ones with poor uptime
-- Keep your 3-4 favorites
-- Make sure at least one is "read" for mentions
+kind:10002 ist **ersetzbar** - nur die neueste Version wird gespeichert. Das bedeutet:
+- Kein historischer Ballast
+- Einfach zu aktualisieren
+- Einfach für Clients zu verwalten
 
-### Spread the Word
+### Datenschutz-Überlegung
 
-Help others understand:
-- Share this guide
-- Explain why you can't see someone's posts
-- Help troubleshoot discovery issues
+Deine Relay-Liste ist **öffentlich**. Jeder kann sehen, welche Relays du nutzt. Das ist nötig, damit das System funktioniert, aber sei dir bewusst, dass es sichtbar ist.
+
+---
+
+## Werde aktiv
+
+### Prüfe deine aktuellen Relays
+
+Schau in deinen Nostr-Client-Einstellungen:
+- Mit welchen Relays bist du verbunden?
+- Sind sie als "read" oder "write" markiert?
+- Hast du 2-4 insgesamt?
+
+### Optimiere dein Setup
+
+**Wenn du 5+ Relays hast:**
+- Entferne die mit schlechter Verfügbarkeit
+- Behalt deine 3-4 Favoriten
+- Stelle sicher, dass mindestens eines "read" für Erwähnungen ist
+
+### Verbreite das Wort
+
+Hilf anderen zu verstehen:
+- Teile diese Anleitung
+- Erkläre, warum du jemandes Posts nicht sehen kannst
+- Hilf bei der Fehlerbehebung bei Discovery-Problemen
 
 ---
 

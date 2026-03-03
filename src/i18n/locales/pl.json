@@ -1739,8 +1739,8 @@
       }
     },
     "outboxModel": {
-      "title": "Understanding the Outbox Model",
-      "description": "Learn how Nostr ensures your posts reach everyone who follows you through smart relay discovery",
+      "title": "Rozumienie modelu skrzynki nadawczej",
+      "description": "Dowiedz si\u0119, jak Nostr zapewnia, \u017ce Twoje posty docieraj\u0105 do wszystkich, kt\u00f3rzy Ci\u0119 obserwuj\u0105",
       "content": {
         "problemHook": "Missing Posts",
         "solutionIntro": "The Outbox Model",

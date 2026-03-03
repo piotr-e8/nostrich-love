@@ -1980,8 +1980,8 @@
       }
     },
     "outboxModel": {
-      "title": "Understanding the Outbox Model",
-      "description": "Learn how Nostr ensures your posts reach everyone who follows you through smart relay discovery",
+      "title": "Das Outbox-Modell verstehen",
+      "description": "Erfahre, wie Nostr sicherstellt, dass deine Posts alle erreichen, die dir folgen",
       "content": {
         "problemHook": "Missing Posts",
         "solutionIntro": "The Outbox Model",
