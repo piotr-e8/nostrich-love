@@ -39,7 +39,7 @@ interface WhatIsNostrQuizProps {
 }
 
 export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
-  const { t, getValue } = useTranslation();
+  const { t, getValue, locale } = useTranslation();
   
   // Get questions from translations using getValue to retrieve arrays/objects
   const rawQuestions = getValue("guides.whatIsNostr.quiz.questions");
@@ -210,13 +210,13 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
           >
             <a
               className="inline-flex items-center justify-center rounded-xl border border-primary/40 px-4 py-3 font-semibold text-primary transition hover:bg-primary/10"
-              href="/guides/keys-and-security"
+              href={`/${locale}/guides/keys-and-security`}
             >
               {t("ui.quiz.reviewKeys")}
             </a>
             <a
               className="inline-flex items-center justify-center rounded-xl border border-gray-300 px-4 py-3 font-semibold text-gray-800 transition hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
-              href="/guides/quickstart"
+              href={`/${locale}/guides/quickstart`}
             >
               {t("ui.quiz.tryQuickstart")}
             </a>
