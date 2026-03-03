@@ -7,6 +7,10 @@ import {
   ChevronLeft,
   Server,
   Database,
+  Globe,
+  Zap,
+  Share2,
+  Users,
   CheckCircle2,
   XCircle,
 } from "lucide-react";
@@ -39,6 +43,7 @@ interface OutboxModelQuizProps {
 export function OutboxModelQuiz({ className }: OutboxModelQuizProps) {
   const { t, getValue, locale } = useTranslation();
   
+  // Get questions from translations using getValue to retrieve arrays/objects
   const rawQuestions = getValue("guides.outboxModel.quiz.questions");
   const questions: Question[] = Array.isArray(rawQuestions) ? rawQuestions : [];
   const quizTitle = t("guides.outboxModel.quiz.title") || "Outbox Model Quiz";
@@ -48,6 +53,7 @@ export function OutboxModelQuiz({ className }: OutboxModelQuizProps) {
   const [showResults, setShowResults] = useState(false);
   const [direction, setDirection] = useState(0);
 
+  // Handle case where translations haven't loaded yet
   if (!questions || questions.length === 0) {
     return (
       <div className={cn(
@@ -75,288 +81,438 @@ export function OutboxModelQuiz({ className }: OutboxModelQuizProps) {
     }, 0);
   }, [answers, questions]);
 
-  const successRate = Math.round((score / total) * 100);
-
   const handleSelect = (optionId: string) => {
-    if (answers[currentQuestion.id]) return;
-    
-    setAnswers((prev) => ({ ...prev, [currentQuestion.id]: optionId }));
+    setAnswers((prev) => ({
+      ...prev,
+      [currentQuestion.id]: optionId,
+    }));
   };
 
   const handleNext = () => {
-    if (currentIndex < total - 1) {
+    if (currentIndex === total - 1) {
       setDirection(1);
-      setCurrentIndex((prev) => prev + 1);
-    } else {
       setShowResults(true);
+      return;
     }
+    setDirection(1);
+    setCurrentIndex((prev) => Math.min(prev + 1, total - 1));
   };
 
-  const handlePrevious = () => {
-    if (currentIndex > 0) {
-      setDirection(-1);
-      setCurrentIndex((prev) => prev - 1);
-    }
+  const handlePrev = () => {
+    setDirection(-1);
+    setCurrentIndex((prev) => Math.max(prev - 1, 0));
   };
 
   const handleRestart = () => {
-    setAnswers({});
-    setCurrentIndex(0);
-    setShowResults(false);
     setDirection(0);
+    setCurrentIndex(0);
+    setAnswers({});
+    setShowResults(false);
   };
 
-  const getSeverityColor = (severity: Severity) => {
-    switch (severity) {
-      case "critical":
-        return "text-red-600 dark:text-red-400";
-      case "warning":
-        return "text-yellow-600 dark:text-yellow-400";
-      case "info":
-        return "text-blue-600 dark:text-blue-400";
-    }
+  const slideVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 50 : -50,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      x: direction > 0 ? -50 : 50,
+      opacity: 0,
+    }),
   };
 
-  const getSeverityBg = (severity: Severity) => {
-    switch (severity) {
-      case "critical":
-        return "bg-red-50 dark:bg-red-900/20";
-      case "warning":
-        return "bg-yellow-50 dark:bg-yellow-900/20";
-      case "info":
-        return "bg-blue-50 dark:bg-blue-900/20";
-    }
+  const optionVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.08,
+        duration: 0.3,
+        ease: [0.22, 1, 0.36, 1] as const,
+      },
+    }),
   };
 
   if (showResults) {
+    const successRate = Math.round((score / total) * 100);
+
     return (
-      <div className={cn(
-        "rounded-3xl border border-gray-200 bg-white p-8 shadow-xl dark:border-gray-800 dark:bg-gray-900",
-        className
-      )}>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        data-quiz
+        className={cn(
+          "rounded-3xl border border-gray-200 bg-white p-8 shadow-xl dark:border-gray-800 dark:bg-gray-900",
+          className,
+        )}
+      >
         <div className="flex flex-col items-center text-center">
-          <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary">
-            <span className="text-4xl font-bold text-white">
-              {successRate >= 80 ? "A" : successRate >= 60 ? "B" : successRate >= 40 ? "C" : "D"}
-            </span>
-          </div>
+          <motion.div
+            initial={{ scale: 0, rotate: -180 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ 
+              type: "spring",
+              stiffness: 260,
+              damping: 20,
+              delay: 0.1 
+            }}
+          >
+            <BookOpen className="h-12 w-12 text-primary" />
+          </motion.div>
           
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <motion.h3 
+            className="mt-4 text-3xl font-bold text-gray-900 dark:text-white"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
             {t("ui.quiz.gradeTitle").replace("{{title}}", quizTitle).replace("{{rate}}", successRate.toString())}
-          </h3>
+          </motion.h3>
           
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
+          <motion.p 
+            className="mt-2 text-gray-600 dark:text-gray-300"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
             {t("ui.quiz.scoreDisplay").replace("{{score}}", score.toString()).replace("{{total}}", total.toString())}
-          </p>
+          </motion.p>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            <div className="flex items-center gap-3 rounded-xl bg-gray-50 p-4 dark:bg-gray-800">
-              <CheckCircle2 className="h-5 w-5 text-green-500" />
-              <span className="text-sm text-gray-700 dark:text-gray-300">
-                {t("ui.quiz.conceptsMastered")}
-              </span>
-            </div>
-            <div className="flex items-center gap-3 rounded-xl bg-gray-50 p-4 dark:bg-gray-800">
-              <Database className="h-5 w-5 text-primary" />
-              <span className="text-sm text-gray-700 dark:text-gray-300">
-                {t("ui.quiz.nextSteps")}
-              </span>
-            </div>
-          </div>
+          <motion.div 
+            className="mt-6 grid w-full gap-4 rounded-2xl bg-gray-50 p-4 dark:bg-gray-800/60"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            <ResultRow
+              label={t("ui.quiz.conceptsMastered")}
+              value={`${score} of ${total}`}
+            />
+            <ResultRow
+              label={t("ui.quiz.nextSteps")}
+              value={
+                score === total
+                  ? t("ui.quiz.perfectScore")
+                  : t("ui.quiz.reviewSections")
+              }
+            />
+          </motion.div>
 
-          <div className="mt-8 rounded-xl bg-gray-50 p-6 dark:bg-gray-800">
-            <h4 className="font-semibold text-gray-900 dark:text-white">
-              {successRate === 100 ? t("ui.quiz.perfectScore") : t("ui.quiz.reviewSections")}
-            </h4>
-            <ul className="mt-3 space-y-2 text-sm text-gray-600 dark:text-gray-400">
-              {questions.map((q) => {
-                const isCorrect = answers[q.id] === q.correctId;
-                return (
-                  <li key={q.id} className="flex items-center gap-2">
-                    {isCorrect ? (
-                      <CheckCircle2 className="h-4 w-4 text-green-500" />
-                    ) : (
-                      <XCircle className="h-4 w-4 text-red-500" />
-                    )}
-                    <span className={isCorrect ? "" : "text-red-600 dark:text-red-400"}>
-                      {q.title}
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+          <motion.div 
+            className="mt-6 grid w-full gap-3 sm:grid-cols-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <a
+              className="inline-flex items-center justify-center rounded-xl border border-primary/40 px-4 py-3 font-semibold text-primary transition hover:bg-primary/10"
+              href={`/${locale}/guides/outbox-model`}
+            >
+              {t("ui.quiz.reviewOutboxModel")}
+            </a>
+            <a
+              className="inline-flex items-center justify-center rounded-xl border border-gray-300 px-4 py-3 font-semibold text-gray-800 transition hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
+              href={`/${locale}/guides/relays`}
+            >
+              {t("ui.quiz.learnMoreRelays")}
+            </a>
+          </motion.div>
 
-          <button
+          <motion.button
+            type="button"
             onClick={handleRestart}
-            className="mt-8 flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-medium text-white transition-all hover:bg-primary/90"
+            className="mt-8 inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 font-semibold text-white shadow-lg hover:bg-primary-600 hover:shadow-xl transition-all"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.6 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             <RotateCcw className="h-4 w-4" />
             {t("ui.quiz.retakeQuiz")}
-          </button>
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
+  const selectedOption = answers[currentQuestion.id];
+  const isCorrect = selectedOption === currentQuestion.correctId;
+
   return (
-    <div className={cn(
-      "rounded-3xl border border-gray-200 bg-white p-8 shadow-xl dark:border-gray-800 dark:bg-gray-900",
-      className
-    )}>
-      <div className="mb-8">
-        <div className="flex items-center justify-between">
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white">{quizTitle}</h3>
-          <span className="text-sm text-gray-500 dark:text-gray-400">
+    <div
+      data-quiz
+      className={cn(
+        "rounded-3xl border border-gray-200 bg-white p-6 shadow-xl dark:border-gray-800 dark:bg-gray-900 overflow-hidden",
+        className,
+      )}
+    >
+      <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <motion.p 
+            key={`title-${currentIndex}`}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="text-xs font-semibold uppercase tracking-wider text-primary"
+          >
+            {quizTitle}
+          </motion.p>
+          <motion.h3 
+            key={`heading-${currentIndex}`}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.05 }}
+            className="text-2xl font-bold text-gray-900 dark:text-white"
+          >
+            {currentQuestion.title}
+          </motion.h3>
+          <motion.p 
+            key={`counter-${currentIndex}`}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-sm text-gray-500 dark:text-gray-400"
+          >
             {t("ui.quiz.questionCounter").replace("{{current}}", (currentIndex + 1).toString()).replace("{{total}}", total.toString())}
-          </span>
+          </motion.p>
         </div>
-        <div className="mt-3 h-2 w-full rounded-full bg-gray-100 dark:bg-gray-800">
-          <div
-            className="h-full rounded-full bg-gradient-to-r from-primary to-secondary transition-all"
-            style={{ width: `${((answeredCount) / total) * 100}%` }}
-          />
+        <div className="w-full rounded-full bg-gray-100 p-1 dark:bg-gray-800 sm:w-56">
+          <motion.div
+            className="rounded-full bg-gradient-to-r from-primary to-secondary py-1 px-2 text-center text-xs font-semibold text-white min-w-[60px]"
+            initial={{ width: `${Math.max(15, ((answeredCount - 1) / total) * 100)}%` }}
+            animate={{ width: `${Math.max(15, (answeredCount / total) * 100)}%` }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {answeredCount}/{total} {t("ui.quiz.answered")}
+          </motion.div>
         </div>
-      </div>
+      </header>
 
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
           key={currentIndex}
           custom={direction}
-          initial={{ opacity: 0, x: direction * 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: direction * -50 }}
-          transition={{ duration: 0.3 }}
+          variants={slideVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="mb-8">
-            <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
-              {currentQuestion.title}
-            </h4>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">
-              {currentQuestion.prompt}
-            </p>
-            
-            <div className={cn("mt-4 inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-medium", getSeverityBg(currentQuestion.severity))}>
-              <AlertTriangle className="h-4 w-4" />
-              {currentQuestion.severity === "critical" && t("ui.quiz.severity.critical")}
-              {currentQuestion.severity === "warning" && t("ui.quiz.severity.warning")}
-              {currentQuestion.severity === "info" && t("ui.quiz.severity.info")}
-            </div>
-          </div>
+          <motion.div 
+            className="rounded-2xl border border-gray-100 bg-gray-50 p-4 text-sm text-gray-700 dark:border-gray-800 dark:bg-gray-800/60 dark:text-gray-200"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            {currentQuestion.prompt}
+          </motion.div>
 
-          <div className="space-y-3">
-            {currentQuestion.options.map((option) => {
-              const isSelected = answers[currentQuestion.id] === option.id;
-              const isCorrect = option.id === currentQuestion.correctId;
-              const showState = answers[currentQuestion.id] !== undefined;
-              
+          <div className="mt-6 space-y-3">
+            {currentQuestion.options.map((option, i) => {
+              const isSelected = option.id === selectedOption;
+              const isAnswer = option.id === currentQuestion.correctId;
+              const showState = Boolean(selectedOption);
+
               return (
-                <button
+                <motion.button
                   key={option.id}
+                  custom={i}
+                  variants={optionVariants}
+                  initial="hidden"
+                  animate="visible"
+                  whileHover={!showState ? { scale: 1.01, x: 4 } : {}}
+                  whileTap={!showState ? { scale: 0.99 } : {}}
+                  type="button"
                   onClick={() => !showState && handleSelect(option.id)}
                   disabled={showState}
                   className={cn(
-                    "w-full rounded-xl border-2 p-4 text-left transition-all",
-                    showState
-                      ? isCorrect
-                        ? "border-green-500 bg-green-50 dark:bg-green-900/20"
-                        : isSelected
-                        ? "border-red-500 bg-red-50 dark:bg-red-900/20"
-                        : "border-gray-200 dark:border-gray-800"
-                      : isSelected
-                      ? "border-primary bg-primary/5"
-                      : "border-gray-200 hover:border-primary/50 dark:border-gray-800 dark:hover:border-primary/50"
+                    "w-full rounded-2xl border px-4 py-3 text-left transition-all duration-300",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                    isSelected && "border-primary bg-primary/10 shadow-md",
+                    showState && isAnswer && "border-success-500 bg-success-500/10 shadow-md",
+                    showState &&
+                      isSelected &&
+                      !isAnswer &&
+                      "border-error-500 bg-error-500/10 shadow-md",
+                    !isSelected &&
+                      !showState &&
+                      "border-gray-200 bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800/50 dark:hover:bg-gray-800 hover:shadow-sm",
                   )}
                 >
-                  <div className="flex items-start gap-3">
-                    <span className={cn(
-                      "flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 text-sm font-medium",
-                      showState
-                        ? isCorrect
-                          ? "border-green-500 bg-green-500 text-white"
-                          : isSelected
-                          ? "border-red-500 bg-red-500 text-white"
-                          : "border-gray-300 dark:border-gray-600"
-                        : isSelected
-                        ? "border-primary bg-primary text-white"
-                        : "border-gray-300 dark:border-gray-600"
-                    )}>
-                      {option.id.toUpperCase()}
-                    </span>
-                    <span className={cn(
-                      "text-gray-900 dark:text-white",
-                      showState && isCorrect && "font-medium text-green-700 dark:text-green-300"
-                    )}>
-                      {option.label}
-                    </span>
+                  <div className="flex items-center gap-3">
+                    {renderOptionIcon(option.id)}
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <p className="font-semibold text-gray-900 dark:text-white">
+                          {option.label}
+                        </p>
+                        {showState && isAnswer && (
+                          <motion.div
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ delay: 0.2, type: "spring", stiffness: 400 }}
+                          >
+                            <CheckCircle2 className="h-4 w-4 text-success-500" />
+                          </motion.div>
+                        )}
+                        {showState && isSelected && !isAnswer && (
+                          <motion.div
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ delay: 0.2, type: "spring", stiffness: 400 }}
+                          >
+                            <XCircle className="h-4 w-4 text-error-500" />
+                          </motion.div>
+                        )}
+                      </div>
+                      {option.description && (
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {option.description}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                </button>
+                </motion.button>
               );
             })}
           </div>
 
-          {answers[currentQuestion.id] && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-6 rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-800/50"
-            >
-              <div className="flex items-start gap-3">
-                {answers[currentQuestion.id] === currentQuestion.correctId ? (
-                  <CheckCircle2 className="h-5 w-5 shrink-0 text-green-500" />
-                ) : (
-                  <XCircle className="h-5 w-5 shrink-0 text-red-500" />
+          <AnimatePresence>
+            {selectedOption && (
+              <motion.div
+                initial={{ opacity: 0, height: 0, y: -10 }}
+                animate={{ opacity: 1, height: "auto", y: 0 }}
+                exit={{ opacity: 0, height: 0, y: -10 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className={cn(
+                  "mt-4 rounded-2xl border px-4 py-3 text-sm overflow-hidden",
+                  isCorrect
+                    ? "border-success-500 bg-success-500/10 text-success-900 dark:text-success-100"
+                    : "border-error-500 bg-error-500/10 text-error-900 dark:text-error-100",
                 )}
-                <div>
-                  <p className={cn(
-                    "font-medium",
-                    answers[currentQuestion.id] === currentQuestion.correctId
-                      ? "text-green-700 dark:text-green-300"
-                      : "text-red-700 dark:text-red-300"
-                  )}>
-                    {answers[currentQuestion.id] === currentQuestion.correctId
-                      ? t("ui.quiz.feedback.correct")
-                      : t("ui.quiz.feedback.incorrect")}
-                  </p>
-                  <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    {currentQuestion.explanation}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          )}
+              >
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.15 }}
+                >
+                  {isCorrect ? (
+                    <span className="flex items-center gap-2">
+                      <motion.span
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: "spring", stiffness: 400, delay: 0.2 }}
+                      >
+                        <CheckCircle2 className="h-4 w-4 text-success-500" />
+                      </motion.span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.correct")}</span>
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      <motion.span
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: "spring", stiffness: 400, delay: 0.2 }}
+                      >
+                        <XCircle className="h-4 w-4 text-error-500" />
+                      </motion.span>
+                      <span className="font-semibold">{t("ui.quiz.feedback.incorrect")}</span>
+                    </span>
+                  )}
+                  {" "}{currentQuestion.explanation}
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </AnimatePresence>
 
-      <div className="mt-8 flex items-center justify-between">
-        <button
-          onClick={handlePrevious}
-          disabled={currentIndex === 0}
-          className={cn(
-            "flex items-center gap-2 rounded-full px-4 py-2 font-medium transition-all",
-            currentIndex === 0
-              ? "cursor-not-allowed text-gray-400"
-              : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
-          )}
+      <footer className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <motion.div 
+          className="text-xs uppercase tracking-wider text-gray-400"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
         >
-          <ChevronLeft className="h-4 w-4" />
-          {t("ui.quiz.backButton")}
-        </button>
-        
-        <button
-          onClick={handleNext}
-          disabled={!answers[currentQuestion.id]}
-          className={cn(
-            "flex items-center gap-2 rounded-full px-6 py-3 font-medium transition-all",
-            !answers[currentQuestion.id]
-              ? "cursor-not-allowed bg-gray-100 text-gray-400 dark:bg-gray-800"
-              : "bg-primary text-white hover:bg-primary/90"
-          )}
-        >
-          {currentIndex === total - 1 ? t("ui.quiz.seeResults") : t("ui.quiz.nextButton")}
-          <ChevronRight className="h-4 w-4" />
-        </button>
-      </div>
+          {currentQuestion.severity === "critical" && t("ui.quiz.severity.critical")}
+          {currentQuestion.severity === "warning" && t("ui.quiz.severity.warning")}
+          {currentQuestion.severity === "info" && t("ui.quiz.severity.info")}
+        </motion.div>
+
+        <div className="flex gap-3">
+          <motion.button
+            type="button"
+            onClick={handlePrev}
+            disabled={currentIndex === 0}
+            whileHover={currentIndex > 0 ? { x: -2 } : {}}
+            whileTap={currentIndex > 0 ? { scale: 0.98 } : {}}
+            className="inline-flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition disabled:opacity-50 dark:border-gray-700 dark:text-gray-300"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            {t("ui.quiz.backButton")}
+          </motion.button>
+          <motion.button
+            type="button"
+            onClick={handleNext}
+            disabled={!selectedOption}
+            whileHover={selectedOption ? { x: 2 } : {}}
+            whileTap={selectedOption ? { scale: 0.98 } : {}}
+            className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2 text-sm font-semibold text-white shadow-md transition disabled:opacity-50 hover:shadow-lg"
+          >
+            {currentIndex === total - 1 ? t("ui.quiz.seeResults") : t("ui.quiz.nextButton")}
+            <ChevronRight className="h-4 w-4" />
+          </motion.button>
+        </div>
+      </footer>
     </div>
   );
 }
+
+interface ResultRowProps {
+  label: string;
+  value: React.ReactNode;
+}
+
+function ResultRow({ label, value }: ResultRowProps) {
+  return (
+    <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-300">
+      <span>{label}</span>
+      <span className="font-semibold text-gray-900 dark:text-white">
+        {value}
+      </span>
+    </div>
+  );
+}
+
+function renderOptionIcon(optionId: string) {
+  switch (optionId) {
+    case "relays":
+    case "store":
+      return <Server className="h-5 w-5 text-primary" />;
+    case "followers":
+    case "contacts":
+      return <Users className="h-5 w-5 text-success-500" />;
+    case "keys":
+      return <Database className="h-5 w-5 text-primary" />;
+    case "email":
+    case "everyone":
+      return <Globe className="h-5 w-5 text-blue-500" />;
+    case "single":
+      return <Zap className="h-5 w-5 text-purple-500" />;
+    case "global":
+    case "broadcast":
+      return <Share2 className="h-5 w-5 text-orange-500" />;
+    case "none":
+      return <AlertTriangle className="h-5 w-5 text-error-500" />;
+    default:
+      return <BookOpen className="h-5 w-5 text-gray-400" />;
+  }
+}
+
+export default OutboxModelQuiz;

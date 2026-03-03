@@ -31,10 +31,11 @@ export const SKILL_LEVELS: Record<SkillLevel, SkillLevelConfig> = {
       'quickstart',
       'finding-community',
       'faq',
-      'relays-demystified'
+      'relays-demystified',
+      'outbox-model'
     ],
     unlockThreshold: 0, // Always unlocked
-    estimatedTotalTime: '60 min'
+    estimatedTotalTime: '75 min'
   },
   
   intermediate: {
