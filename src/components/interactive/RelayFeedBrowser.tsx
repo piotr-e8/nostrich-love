@@ -15,6 +15,10 @@ import {
   Clock,
   Hash,
   MessageSquare,
+  Eye,
+  X,
+  RefreshCw,
+  AlertCircle,
 } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
@@ -145,7 +149,9 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
                   key={relay.id}
                   relay={relay}
                   isSelected={selectedRelay?.id === relay.id}
+                  isViewing={viewingRelay?.id === relay.id}
                   onClick={() => setSelectedRelay(relay)}
+                  onViewFeed={() => handleViewFeed(relay)}
                 />
               ))
             ) : (
@@ -217,19 +223,22 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
 function RelayCard({
   relay,
   isSelected,
+  isViewing,
   onClick,
+  onViewFeed,
 }: {
   relay: TopicalRelay;
   isSelected: boolean;
+  isViewing: boolean;
   onClick: () => void;
+  onViewFeed: () => void;
 }) {
   const category = RELAY_CATEGORIES.find((c) => c.id === relay.category);
 
   return (
-    <motion.button
-      onClick={onClick}
+    <motion.div
       className={cn(
-        "w-full text-left p-4 rounded-xl border transition-all",
+        "w-full p-4 rounded-xl border transition-all",
         isSelected
           ? "border-orange-500 bg-orange-50 dark:bg-gray-800"
           : "border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-gray-600 bg-white dark:bg-gray-900"
@@ -237,8 +246,11 @@ function RelayCard({
       whileHover={{ scale: 1.01 }}
       whileTap={{ scale: 0.99 }}
     >
-      <div className="flex items-start justify-between">
-        <div className="flex-1">
+      <div className="flex items-start justify-between gap-4">
+        <div 
+          className="flex-1 cursor-pointer"
+          onClick={onClick}
+        >
           <div className="flex items-center gap-2 mb-1">
             <h5 className="font-semibold text-gray-900 dark:text-gray-100">
               {relay.name}
@@ -264,9 +276,33 @@ function RelayCard({
             ))}
           </div>
         </div>
-        <ExternalLink className="h-4 w-4 text-gray-400 flex-shrink-0 ml-2" />
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onViewFeed();
+          }}
+          disabled={isViewing}
+          className={cn(
+            "flex-shrink-0 flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all",
+            isViewing
+              ? "bg-orange-500 text-white cursor-default"
+              : "bg-orange-100 text-orange-700 hover:bg-orange-200 dark:bg-orange-900 dark:text-orange-300 dark:hover:bg-orange-800"
+          )}
+        >
+          {isViewing ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              Loading...
+            </>
+          ) : (
+            <>
+              <Play className="h-4 w-4" />
+              View Feed
+            </>
+          )}
+        </button>
       </div>
-    </motion.button>
+    </motion.div>
   );
 }
 
