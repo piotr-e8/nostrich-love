@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Globe,
@@ -9,6 +9,12 @@ import {
   CheckCircle2,
   Users,
   Sparkles,
+  Play,
+  Pause,
+  Loader2,
+  Clock,
+  Hash,
+  MessageSquare,
 } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
@@ -22,6 +28,24 @@ import {
   RELAY_BROWSING_CLIENTS,
   type ClientWithRelaySupport,
 } from "../../data/relay-browsing-clients";
+
+// Nostr Event interface
+interface NostrEvent {
+  id: string;
+  pubkey: string;
+  created_at: number;
+  kind: number;
+  tags: string[][];
+  content: string;
+  sig: string;
+}
+
+interface RelayFeedEvent {
+  event: NostrEvent;
+  relayName: string;
+  relayUrl: string;
+  receivedAt: Date;
+}
 
 interface RelayFeedBrowserProps {
   className?: string;
