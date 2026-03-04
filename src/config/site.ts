@@ -24,8 +24,8 @@ export const siteConfig = {
   // Analytics - Cloudflare Web Analytics (privacy-friendly, no cookies)
   // To enable: Set enabled to true and add your Cloudflare token
   analytics: {
-    cloudflareToken: "", // Add your Cloudflare Web Analytics token here
-    enabled: false, // Set to true when you have a token
+    cloudflareToken: "3cc27bbcb8844ca0999a2cd0afa50935", // Cloudflare Web Analytics token
+    enabled: true, // Privacy-friendly analytics enabled
   },
 
   // Social Links
