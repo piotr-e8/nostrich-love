@@ -3515,5 +3515,26 @@
     "complete": "Complete",
     "locked": "Locked",
     "unlockRequirement": "Complete {count} more {level} guides to unlock"
+  },
+  "relayFeedBrowser": {
+    "title": "Browse Relay Feeds",
+    "subtitle": "Discover Nostr communities by browsing relay feeds",
+    "filterByCategory": "Filter by Category",
+    "categories": {
+      "all": "All",
+      "general": "General",
+      "bitcoin": "Bitcoin",
+      "art": "Art & Creative",
+      "music": "Music",
+      "tech": "Technology",
+      "dev": "Development",
+      "gaming": "Gaming",
+      "regional": "Regional"
+    },
+    "allRelays": "All Relays",
+    "noRelays": "No relays found in this category",
+    "howToAdd": "How to add this relay to your client",
+    "recommendedClients": "Clients with Relay Browsing",
+    "moreClients": "And more..."
   }
 }
