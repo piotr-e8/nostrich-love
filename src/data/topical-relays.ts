@@ -34,6 +34,61 @@ export const TOPICAL_RELAYS: TopicalRelay[] = [
     addedDate: "2026-03-04",
     verified: true,
     featured: true
+  },
+  {
+    id: "christpill",
+    url: "wss://christpill.nostr1.com",
+    name: "Christpill",
+    description: "Christian community relay for faith-based discussions and fellowship",
+    category: "general",
+    tags: ["christianity", "faith", "community", "religion"],
+    addedDate: "2026-03-05",
+    verified: true,
+    featured: false
+  },
+  {
+    id: "chillstr",
+    url: "wss://chillstr.nostr1.com",
+    name: "Chill Str",
+    description: "Laid-back general chat relay for casual conversations and friendly discussions",
+    category: "general",
+    tags: ["casual", "chat", "community", "social"],
+    addedDate: "2026-03-05",
+    verified: true,
+    featured: false
+  },
+  {
+    id: "140-fz7",
+    url: "wss://140.fz7.io",
+    name: "140",
+    description: "Twitter-style short-form posting relay with 140-character focus",
+    category: "general",
+    tags: ["short-form", "microblogging", "social"],
+    addedDate: "2026-03-05",
+    verified: true,
+    featured: false
+  },
+  {
+    id: "utxo-news",
+    url: "wss://news.utxo.one",
+    name: "UTXO News",
+    description: "Bitcoin and cryptocurrency news aggregation relay with focus on UTXO-based discussions",
+    category: "bitcoin",
+    tags: ["bitcoin", "news", "utxo", "crypto", "finance"],
+    addedDate: "2026-03-05",
+    verified: true,
+    featured: false
+  },
+  {
+    id: "holoboard",
+    url: "wss://relay.holoboard.space",
+    name: "Holoboard",
+    description: "Tech and innovation focused relay for forward-thinking discussions",
+    category: "tech",
+    tags: ["technology", "innovation", "future", "science"],
+    addedDate: "2026-03-05",
+    verified: true,
+    featured: false
   }
 ];
 
