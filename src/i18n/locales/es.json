@@ -1742,43 +1742,43 @@
       "title": "Entendiendo el Modelo de Bandeja de Salida",
       "description": "Aprende c\u00f3mo Nostr asegura que tus posts lleguen a todos quienes te siguen",
       "content": {
-        "problemHook": "Missing Posts",
-        "solutionIntro": "The Outbox Model",
-        "howItWorks": "How Relay Discovery Works",
-        "whyItMatters": "Why This Matters",
-        "bestPractices": "Best Practices",
-        "commonMisconceptions": "Common Misconceptions",
-        "technicalDeepDive": "Technical Deep Dive"
+        "problemHook": "Publicaciones Faltantes",
+        "solutionIntro": "El Modelo de Bandeja de Salida",
+        "howItWorks": "Cómo Funciona el Descubrimiento de Relay",
+        "whyItMatters": "Por Qué Esto Importa",
+        "bestPractices": "Mejores Prácticas",
+        "commonMisconceptions": "Ideas Erróneas Comunes",
+        "technicalDeepDive": "Inmersión Técnica Profunda"
       },
       "quiz": {
-        "title": "Outbox Model Quiz",
+        "title": "Quiz sobre el Modelo de Bandeja de Salida",
         "questions": [
           {
             "id": "outbox-purpose",
-            "title": "Outbox Purpose",
-            "prompt": "What problem does the outbox model solve?",
+            "title": "Propósito de la Bandeja de Salida",
+            "prompt": "¿Qué problema resuelve el modelo de bandeja de salida?",
             "options": [
               {
                 "id": "a",
-                "label": "It tells followers which relays to check for your posts"
+                "label": "Indica a los seguidores qué relays revisar para tus publicaciones"
               },
               {
                 "id": "b",
-                "label": "It encrypts your posts for privacy"
+                "label": "Encripta tus publicaciones para privacidad"
               },
               {
                 "id": "c",
-                "label": "It stores all your posts in one place"
+                "label": "Almacena todas tus publicaciones en un solo lugar"
               }
             ],
             "correctId": "a",
-            "explanation": "The outbox model publishes your relay preferences (kind:10002) so followers know where to find your content.",
+            "explanation": "El modelo de bandeja de salida publica tus preferencias de relay (kind:10002) para que los seguidores sepan dónde encontrar tu contenido.",
             "severity": "critical"
           },
           {
             "id": "relay-list-kind",
-            "title": "Event Kind",
-            "prompt": "What event kind is used for the relay list metadata?",
+            "title": "Tipo de Evento",
+            "prompt": "¿Qué tipo de evento se usa para los metadatos de la lista de relay?",
             "options": [
               {
                 "id": "a",
@@ -1794,35 +1794,35 @@
               }
             ],
             "correctId": "a",
-            "explanation": "kind:10002 is the replaceable event that stores your relay list with read/write markers.",
+            "explanation": "kind:10002 es el evento reemplazable que almacena tu lista de relay con marcadores de lectura/escritura.",
             "severity": "info"
           },
           {
             "id": "read-write-markers",
-            "title": "Relay Markers",
-            "prompt": "What does the 'write' marker in your relay list indicate?",
+            "title": "Marcadores de Relay",
+            "prompt": "¿Qué indica el marcador 'write' (escritura) en tu lista de relay?",
             "options": [
               {
                 "id": "a",
-                "label": "Relays where you publish your posts"
+                "label": "Relays donde publicas tus posts"
               },
               {
                 "id": "b",
-                "label": "Relays where you read mentions"
+                "label": "Relays donde lees menciones"
               },
               {
                 "id": "c",
-                "label": "Relays you have blocked"
+                "label": "Relays que has bloqueado"
               }
             ],
             "correctId": "a",
-            "explanation": "The 'write' marker indicates your outbox - relays where you typically publish. 'Read' indicates where you check for mentions.",
+            "explanation": "El marcador 'write' indica tu bandeja de salida - relays donde normalmente publicas. 'Read' indica dónde revisas las menciones.",
             "severity": "warning"
           },
           {
             "id": "optimal-relay-count",
-            "title": "Best Practice",
-            "prompt": "How many relays should you have in your list?",
+            "title": "Mejor Práctica",
+            "prompt": "¿Cuántos relays deberías tener en tu lista?",
             "options": [
               {
                 "id": "a",
@@ -1834,29 +1834,29 @@
               },
               {
                 "id": "c",
-                "label": "As many as possible"
+                "label": "Tantos como sea posible"
               }
             ],
             "correctId": "a",
-            "explanation": "2-4 relays is optimal. More relays drain battery and provide diminishing returns as content propagates naturally.",
+            "explanation": "2-4 relays es óptimo. Más relays drenan la batería y proporcionan rendimientos decrecientes a medida que el contenido se propaga naturalmente.",
             "severity": "warning"
           },
           {
             "id": "switching-relays",
-            "title": "Relay Migration",
-            "prompt": "If you stop using a relay and switch to a new one, what happens to your followers?",
+            "title": "Migración de Relay",
+            "prompt": "Si dejas de usar un relay y cambias a uno nuevo, ¿qué les pasa a tus seguidores?",
             "options": [
               {
                 "id": "a",
-                "label": "They automatically find you on the new relay"
+                "label": "Te encuentran automáticamente en el nuevo relay"
               },
               {
                 "id": "b",
-                "label": "They lose you forever"
+                "label": "Te pierden para siempre"
               },
               {
                 "id": "c",
-                "label": "You need to message each follower individually"
+                "label": "Necesitas enviar un mensaje a cada seguidor individualmente"
               }
             ],
             "correctId": "a",

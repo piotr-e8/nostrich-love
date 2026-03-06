@@ -1983,43 +1983,43 @@
       "title": "Das Outbox-Modell verstehen",
       "description": "Erfahre, wie Nostr sicherstellt, dass deine Posts alle erreichen, die dir folgen",
       "content": {
-        "problemHook": "Missing Posts",
-        "solutionIntro": "The Outbox Model",
-        "howItWorks": "How Relay Discovery Works",
-        "whyItMatters": "Why This Matters",
+        "problemHook": "Fehlende Posts",
+        "solutionIntro": "Das Outbox-Modell",
+        "howItWorks": "Wie die Relay-Erkennung funktioniert",
+        "whyItMatters": "Warum das wichtig ist",
         "bestPractices": "Best Practices",
-        "commonMisconceptions": "Common Misconceptions",
-        "technicalDeepDive": "Technical Deep Dive"
+        "commonMisconceptions": "Häufige Missverständnisse",
+        "technicalDeepDive": "Technische Vertiefung"
       },
       "quiz": {
-        "title": "Outbox Model Quiz",
+        "title": "Outbox-Modell Quiz",
         "questions": [
           {
             "id": "outbox-purpose",
-            "title": "Outbox Purpose",
-            "prompt": "What problem does the outbox model solve?",
+            "title": "Outbox-Zweck",
+            "prompt": "Welches Problem löst das Outbox-Modell?",
             "options": [
               {
                 "id": "a",
-                "label": "It tells followers which relays to check for your posts"
+                "label": "Es teilt Followern mit, welche Relays sie für deine Posts überprüfen sollen"
               },
               {
                 "id": "b",
-                "label": "It encrypts your posts for privacy"
+                "label": "Es verschlüsselt deine Posts für Privatsphäre"
               },
               {
                 "id": "c",
-                "label": "It stores all your posts in one place"
+                "label": "Es speichert alle deine Posts an einem Ort"
               }
             ],
             "correctId": "a",
-            "explanation": "The outbox model publishes your relay preferences (kind:10002) so followers know where to find your content.",
+            "explanation": "Das Outbox-Modell veröffentlicht deine Relay-Präferenzen (kind:10002), damit Follower wissen, wo sie deinen Inhalt finden können.",
             "severity": "critical"
           },
           {
             "id": "relay-list-kind",
-            "title": "Event Kind",
-            "prompt": "What event kind is used for the relay list metadata?",
+            "title": "Event-Art",
+            "prompt": "Welche Event-Art wird für die Relay-Listen-Metadaten verwendet?",
             "options": [
               {
                 "id": "a",
@@ -2035,35 +2035,35 @@
               }
             ],
             "correctId": "a",
-            "explanation": "kind:10002 is the replaceable event that stores your relay list with read/write markers.",
+            "explanation": "kind:10002 ist das ersetzbare Event, das deine Relay-Liste mit Lese-/Schreib-Markern speichert.",
             "severity": "info"
           },
           {
             "id": "read-write-markers",
-            "title": "Relay Markers",
-            "prompt": "What does the 'write' marker in your relay list indicate?",
+            "title": "Relay-Marker",
+            "prompt": "Was zeigt der 'write'-Marker in deiner Relay-Liste an?",
             "options": [
               {
                 "id": "a",
-                "label": "Relays where you publish your posts"
+                "label": "Relays, auf denen du deine Posts veröffentlichst"
               },
               {
                 "id": "b",
-                "label": "Relays where you read mentions"
+                "label": "Relays, auf denen du Erwähnungen liest"
               },
               {
                 "id": "c",
-                "label": "Relays you have blocked"
+                "label": "Relays, die du blockiert hast"
               }
             ],
             "correctId": "a",
-            "explanation": "The 'write' marker indicates your outbox - relays where you typically publish. 'Read' indicates where you check for mentions.",
+            "explanation": "Der 'write'-Marker zeigt deine Outbox an - Relays, auf denen du normalerweise veröffentlichst. 'Read' zeigt an, wo du Erwähnungen überprüfst.",
             "severity": "warning"
           },
           {
             "id": "optimal-relay-count",
             "title": "Best Practice",
-            "prompt": "How many relays should you have in your list?",
+            "prompt": "Wie viele Relays solltest du in deiner Liste haben?",
             "options": [
               {
                 "id": "a",
@@ -2075,29 +2075,29 @@
               },
               {
                 "id": "c",
-                "label": "As many as possible"
+                "label": "So viele wie möglich"
               }
             ],
             "correctId": "a",
-            "explanation": "2-4 relays is optimal. More relays drain battery and provide diminishing returns as content propagates naturally.",
+            "explanation": "2-4 Relays sind optimal. Mehr Relays entleeren den Akku und bieten abnehmende Renditen, da sich Inhalte natürlich ausbreiten.",
             "severity": "warning"
           },
           {
             "id": "switching-relays",
-            "title": "Relay Migration",
-            "prompt": "If you stop using a relay and switch to a new one, what happens to your followers?",
+            "title": "Relay-Migration",
+            "prompt": "Wenn du ein Relay nicht mehr nutzt und zu einem neuen wechselst, was passiert mit deinen Followern?",
             "options": [
               {
                 "id": "a",
-                "label": "They automatically find you on the new relay"
+                "label": "Sie finden dich automatisch auf dem neuen Relay"
               },
               {
                 "id": "b",
-                "label": "They lose you forever"
+                "label": "Sie verlieren dich für immer"
               },
               {
                 "id": "c",
-                "label": "You need to message each follower individually"
+                "label": "Du musst jedem Follower einzeln schreiben"
               }
             ],
             "correctId": "a",
