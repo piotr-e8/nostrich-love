@@ -4,20 +4,25 @@ import SEO from "../components/SEO.astro";
 import { siteConfig } from "../config/site";
 import type { SEOProps } from "../config/seo-types";
 import { StreakBannerWrapper } from "../components/gamification/StreakBannerWrapper";
+import { type Locale, getLocaleConfig } from "../config/locales";
 
-interface Props extends SEOProps {}
+interface Props extends SEOProps {
+  locale?: Locale;
+}
 
-const props = Astro.props;
+const { locale = 'en', ...props } = Astro.props;
+const localeConfig = getLocaleConfig(locale);
+const htmlLang = localeConfig.htmlLang;
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang={htmlLang} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     
     <!-- SEO Component -->
-    <SEO {...props} />
+    <SEO {...props} locale={locale} />
     
     <!-- Critical CSS to prevent FOUC -->
     <style is:inline>
