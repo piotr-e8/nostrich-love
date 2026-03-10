@@ -1,14 +1,18 @@
 ---
 import { siteConfig } from '../config/site';
 import type { SEOProps } from '../config/seo-types';
+import { type Locale, locales, getLocaleConfig } from '../config/locales';
 
-interface Props extends SEOProps {}
+interface Props extends SEOProps {
+  locale?: Locale;
+}
 
 const {
   title,
   description,
   image,
   type = 'website',
+  locale = 'en',
   publishedTime,
   modifiedTime,
   author,
@@ -26,6 +30,23 @@ const formattedTitle = title
 const metaDescription = description || siteConfig.seo.defaultDescription;
 const ogImage = new URL(image || siteConfig.seo.defaultImage, siteConfig.url).toString();
 const canonicalURL = canonical || new URL(Astro.url.pathname, siteConfig.url).toString();
+
+// Get locale configuration
+const localeConfig = getLocaleConfig(locale);
+
+// Build alternate URLs for hreflang
+const currentPath = Astro.url.pathname;
+const alternateUrls = locales.map(l => {
+  // Replace current locale in path with alternate locale
+  const pathWithoutLocale = currentPath.replace(/^\/(en|pl|es|de)/, '');
+  return {
+    locale: l,
+    url: `${siteConfig.url}/${l}${pathWithoutLocale}`,
+  };
+});
+
+// Build x-default URL (points to English version)
+const xDefaultUrl = `${siteConfig.url}/en${currentPath.replace(/^\/(en|pl|es|de)/, '')}`;
 ---
 
 <!-- Primary Meta Tags -->
@@ -38,8 +59,14 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, siteConfig.url).to
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
 
+<!-- Hreflang tags for international SEO -->
+{alternateUrls.map(({ locale: l, url }) => (
+  <link rel="alternate" hreflang={l} href={url} />
+))}
+<link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
+
 <!-- Language -->
-<meta name="language" content={siteConfig.seo.language} />
+<meta name="language" content={localeConfig.htmlLang} />
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={type} />
@@ -48,7 +75,7 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, siteConfig.url).to
 <meta property="og:description" content={metaDescription} />
 <meta property="og:image" content={ogImage} />
 <meta property="og:site_name" content={siteConfig.name} />
-<meta property="og:locale" content="en_US" />
+<meta property="og:locale" content={localeConfig.ogLocale} />
 
 <!-- Open Graph Article (if applicable) -->
 {type === 'article' && publishedTime && (
