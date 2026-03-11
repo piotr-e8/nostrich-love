@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import { OfficialAccountWidget } from '../components/interactive/OfficialAccountWidget';
 
 const title = 'About';
 const description = 'Learn about nostrich.love - an open-source project dedicated to helping newcomers understand and use the Nostr decentralized social protocol.';
@@ -113,6 +114,19 @@ const description = 'Learn about nostrich.love - an open-source project dedicate
               <li><strong>shadcn/ui</strong> - Beautiful UI components</li>
             </ul>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Official Account Section -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6 text-center">Follow Us on Nostr</h2>
+          <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 text-center">
+            Get the latest updates, tips, and community news from our official Nostr account.
+          </p>
+          <OfficialAccountWidget client:load expanded={true} />
         </div>
       </div>
     </section>

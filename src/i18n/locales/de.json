@@ -3514,6 +3514,23 @@
     "startHere": "Hier Starten",
     "complete": "Abgeschlossen",
     "locked": "Gesperrt",
-    "unlockRequirement": "Schlie\u00dfe {count} weitere {level} Anleitungen ab, um freizuschalten"
+    "unlockRequirement": "Schließe {count} weitere {level} Anleitungen ab, um freizuschalten"
+  },
+  "officialAccount": {
+    "title": "Offizielles Konto",
+    "followUs": "Folge uns auf Nostr",
+    "viewProfile": "Profil auf Njump ansehen",
+    "recentPosts": "Neueste Beiträge",
+    "showMore": "Mehr Anzeigen",
+    "showLess": "Weniger Anzeigen",
+    "noPosts": "Keine aktuellen Beiträge",
+    "tryAgain": "Erneut Versuchen",
+    "errors": {
+      "nip05Failed": "NIP-05 konnte nicht aufgelöst werden",
+      "loadFailed": "Kontodaten konnten nicht geladen werden"
+    }
+  },
+  "time": {
+    "justNow": "gerade eben"
   }
 }

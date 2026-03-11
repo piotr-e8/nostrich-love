@@ -3050,8 +3050,25 @@
   },
   "guideSection": {
     "startHere": "Zacznij Tutaj",
-    "complete": "Uko\u0144czony",
+    "complete": "Ukończony",
     "locked": "Zablokowany",
-    "unlockRequirement": "Uko\u0144cz {count} wi\u0119cej przewodnik\u00f3w na poziomie {level}, aby odblokowa\u0107"
+    "unlockRequirement": "Ukończ {count} więcej przewodników na poziomie {level}, aby odblokować"
+  },
+  "officialAccount": {
+    "title": "Oficjalne Konto",
+    "followUs": "Śledź nas na Nostr",
+    "viewProfile": "Zobacz profil na Njump",
+    "recentPosts": "Ostatnie Posty",
+    "showMore": "Pokaż Więcej",
+    "showLess": "Pokaż Mniej",
+    "noPosts": "Brak ostatnich postów",
+    "tryAgain": "Spróbuj Ponownie",
+    "errors": {
+      "nip05Failed": "Nie udało się rozwiązać NIP-05",
+      "loadFailed": "Nie udało się załadować danych konta"
+    }
+  },
+  "time": {
+    "justNow": "przed chwilą"
   }
 }

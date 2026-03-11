@@ -3536,5 +3536,22 @@
     "howToAdd": "How to add this relay to your client",
     "recommendedClients": "Clients with Relay Browsing",
     "moreClients": "And more..."
+  },
+  "officialAccount": {
+    "title": "Official Account",
+    "followUs": "Follow us on Nostr",
+    "viewProfile": "View profile on Njump",
+    "recentPosts": "Recent Posts",
+    "showMore": "Show More",
+    "showLess": "Show Less",
+    "noPosts": "No recent posts",
+    "tryAgain": "Try Again",
+    "errors": {
+      "nip05Failed": "Failed to resolve NIP-05",
+      "loadFailed": "Failed to load account data"
+    }
+  },
+  "time": {
+    "justNow": "just now"
   }
 }

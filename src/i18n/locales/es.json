@@ -3267,9 +3267,26 @@
     "moreLocked": "+{count} m\u00e1s bloqueados"
   },
   "guideSection": {
-    "startHere": "Comienza Aqu\u00ed",
+    "startHere": "Comienza Aquí",
     "complete": "Completado",
     "locked": "Bloqueado",
-    "unlockRequirement": "Completa {count} gu\u00edas m\u00e1s de nivel {level} para desbloquear"
+    "unlockRequirement": "Completa {count} guías más de nivel {level} para desbloquear"
+  },
+  "officialAccount": {
+    "title": "Cuenta Oficial",
+    "followUs": "Síguenos en Nostr",
+    "viewProfile": "Ver perfil en Njump",
+    "recentPosts": "Publicaciones Recientes",
+    "showMore": "Mostrar Más",
+    "showLess": "Mostrar Menos",
+    "noPosts": "No hay publicaciones recientes",
+    "tryAgain": "Intentar de Nuevo",
+    "errors": {
+      "nip05Failed": "No se pudo resolver NIP-05",
+      "loadFailed": "No se pudieron cargar los datos de la cuenta"
+    }
+  },
+  "time": {
+    "justNow": "ahora mismo"
   }
 }
