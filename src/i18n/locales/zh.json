@@ -1,0 +1,2764 @@
+{
+  "guides": {
+    "whatIsNostr": {
+      "title": "Nostr 简易解读",
+      "description": "5分钟了解 Nostr。了解去中心化社交媒体的工作原理、为什么重要，以及它与传统平台有何不同。",
+      "content": {},
+      "quiz": {
+        "title": "Nostr 基础知识测验",
+        "questions": [
+          {
+            "id": "nostr-acronym",
+            "title": "协议名称",
+            "prompt": "NOSTR 代表什么？",
+            "options": [
+              { "id": "a", "label": "通过中继传输的笔记和其他内容" },
+              { "id": "b", "label": "安全传输资源网络" },
+              { "id": "c", "label": "新型在线社交技术资源" }
+            ],
+            "correctId": "a",
+            "explanation": "NOSTR 代表'通过中继传输的笔记和其他内容'（Notes and Other Stuff Transmitted by Relays）——一个简单、开放的去中心化社交媒体协议。",
+            "severity": "info"
+          },
+          {
+            "id": "decentralized-nature",
+            "title": "去中心化",
+            "prompt": "什么让 Nostr 具有去中心化特性？",
+            "options": [
+              { "id": "a", "label": "它使用区块链技术" },
+              { "id": "b", "label": "任何人都可以运行中继，用户控制自己的密钥" },
+              { "id": "c", "label": "它由非营利基金会拥有" }
+            ],
+            "correctId": "b",
+            "explanation": "Nostr 是去中心化的，因为任何人都可以运行中继服务器，用户拥有自己的加密密钥。没有中央机构或公司控制网络。",
+            "severity": "critical"
+          },
+          {
+            "id": "censorship-resistance",
+            "title": "抗审查性",
+            "prompt": "Nostr 如何抵抗审查？",
+            "options": [
+              { "id": "a", "label": "通过使用 AI 检测违禁内容" },
+              { "id": "b", "label": "通过将数据分散到任何人都可以运行的多个中继上" },
+              { "id": "c", "label": "通过要求中继获得政府批准" }
+            ],
+            "correctId": "b",
+            "explanation": "抗审查性来自将内容分散到多个独立运行的中继上。如果一个中继屏蔽了你，其他中继仍然可以传播你的内容。",
+            "severity": "critical"
+          },
+          {
+            "id": "keys-vs-accounts",
+            "title": "身份系统",
+            "prompt": "Nostr 与 Twitter/Facebook 账户的主要区别是什么？",
+            "options": [
+              { "id": "a", "label": "Nostr 使用加密密钥而非邮箱/密码" },
+              { "id": "b", "label": "Nostr 速度更快" },
+              { "id": "c", "label": "Nostr 的头像更好看" }
+            ],
+            "correctId": "a",
+            "explanation": "Nostr 使用公钥/私钥对进行身份验证。你的公钥（npub）就是你的身份，你的私钥（nsec）证明你拥有它。无需邮箱、电话号码或中央数据库。",
+            "severity": "critical"
+          },
+          {
+            "id": "relay-function",
+            "title": "中继功能",
+            "prompt": "中继在 Nostr 网络中做什么？",
+            "options": [
+              { "id": "a", "label": "它们挖加密货币" },
+              { "id": "b", "label": "它们存储和转发用户之间的消息" },
+              { "id": "c", "label": "它们验证你的政府身份证件" }
+            ],
+            "correctId": "b",
+            "explanation": "中继是存储你的帖子并使其可供其他用户查看的服务器。它们转发消息，但不控制谁可以发帖或允许什么内容。",
+            "severity": "warning"
+          },
+          {
+            "id": "nostr-vs-mastodon",
+            "title": "Nostr 与联邦宇宙",
+            "prompt": "Nostr 与 Mastodon 和联邦宇宙有何不同？",
+            "options": [
+              { "id": "a", "label": "Nostr 的表情符号更好" },
+              { "id": "b", "label": "Nostr 不需要选择服务器/实例来加入" },
+              { "id": "c", "label": "Nostr 由 Elon Musk 拥有" }
+            ],
+            "correctId": "b",
+            "explanation": "与 Mastodon 必须加入特定服务器/实例不同，Nostr 用户可以使用任何中继而无需在那里创建账户。你的身份在任何地方都能立即使用。",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "keysAndSecurity": {
+      "title": "密钥与安全",
+      "description": "学习如何生成、保存和保护你的 Nostr 密钥。完整的新手安全指南。",
+      "content": {},
+      "quiz": {
+        "title": "安全测验",
+        "questions": [
+          {
+            "id": "sharing-keys",
+            "title": "密钥安全",
+            "prompt": "哪一项可以安全地分享给任何人？",
+            "options": [
+              { "id": "npub", "label": "你的 npub（公钥）", "description": "让别人可以关注或私信你" },
+              { "id": "nsec", "label": "你的 nsec（私钥）", "description": "用于签名帖子" },
+              { "id": "seed", "label": "你的 12/24 个助记词", "description": "闪电钱包的备份" }
+            ],
+            "correctId": "npub",
+            "explanation": "npub 密钥是公开身份。任何以 nsec 开头或助记词的内容都必须保持离线状态。",
+            "severity": "critical"
+          },
+          {
+            "id": "backup-rule",
+            "title": "备份",
+            "prompt": "最安全的长期密钥备份策略是什么？",
+            "options": [
+              { "id": "photo", "label": "截图并存储在 iCloud/Google 相册" },
+              { "id": "note", "label": "将密钥粘贴到受 FaceID 保护的笔记应用" },
+              { "id": "321", "label": "遵循 3-2-1 规则（3 份副本 / 2 种介质 / 1 份离线）" }
+            ],
+            "correctId": "321",
+            "explanation": "使用至少三种副本，分布在两种介质类型上，其中一份离线（纸质、金属）。云截图是单点故障。",
+            "severity": "critical"
+          },
+          {
+            "id": "suspicious-client",
+            "title": "新客户端测试",
+            "prompt": "一个全新的 Nostr 应用要求你粘贴私钥才能登录。最佳做法是什么？",
+            "options": [
+              { "id": "paste", "label": "如果该应用有 100 多个用户就粘贴密钥" },
+              { "id": "signer", "label": "使用签名器 / 硬件密钥，或等待客户端支持委托签名" },
+              { "id": "temp", "label": "生成一个一次性密钥，稍后迁移" }
+            ],
+            "correctId": "signer",
+            "explanation": "切勿将主私钥粘贴到新客户端中。使用签名器（NIP-46）或硬件解决方案，并等待支持委托签名。",
+            "severity": "warning"
+          },
+          {
+            "id": "metadata",
+            "title": "元数据卫生",
+            "prompt": "如何最小化 Nostr 上的元数据泄露？",
+            "options": [
+              { "id": "gps", "label": "保持位置标签启用——有助于发现" },
+              { "id": "personas", "label": "分离不同身份，删除 EXIF 数据，避免在不同身份之间链接闪电发票" },
+              { "id": "follow", "label": "用一个个人资料关注尽可能多的中继" }
+            ],
+            "correctId": "personas",
+            "explanation": "使用不同的个人资料，禁用位置元数据，并在需要匿名时将闪电/Zap 信息隔离。",
+            "severity": "info"
+          },
+          {
+            "id": "relay-strategy",
+            "title": "中继策略",
+            "prompt": "哪种中继方法提供最佳的可靠性和隐私性平衡？",
+            "options": [
+              { "id": "single", "label": "使用一个大型中继，让一切都集中化" },
+              { "id": "mix", "label": "使用少量受信任的付费中继 + 轮换的公共中继用于发现" },
+              { "id": "public", "label": "只使用免费公共中继，从不策划" }
+            ],
+            "correctId": "mix",
+            "explanation": "结合信誉良好的付费中继和一些轮换的公共中继，在冗余、垃圾邮件抵抗和隐私之间取得平衡。",
+            "severity": "warning"
+          },
+          {
+            "id": "zaps",
+            "title": "Zap 安全",
+            "prompt": "你第一次设置 zaps。哪一步能让你的资金最安全？",
+            "options": [
+              { "id": "custodial", "label": "为每个身份重复使用相同的托管钱包" },
+              { "id": "link", "label": "链接你控制的闪电钱包并在签名前确认 zap 请求" },
+              { "id": "email", "label": "将助记词发送给中继以便自动提款" }
+            ],
+            "correctId": "link",
+            "explanation": "连接你控制的钱包，确认每个请求，并避免在不同身份之间共享托管账户。",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "quickstart": {
+      "title": "快速入门",
+      "description": "通过实践指南，几分钟内即可开始使用 Nostr。",
+      "content": {},
+      "quiz": {
+        "title": "快速入门检查",
+        "questions": [
+          {
+            "id": "first-step",
+            "title": "开始使用",
+            "prompt": "使用 Nostr 首先需要做什么？",
+            "options": [
+              { "id": "a", "label": "信用卡支付账户费用" },
+              { "id": "b", "label": "一个客户端应用和一对密钥" },
+              { "id": "c", "label": "版主的批准" }
+            ],
+            "correctId": "b",
+            "explanation": "要使用 Nostr，你需要一个客户端应用（如 Amethyst、Damus 或 Iris）和一对密钥（npub/nsec）。无需注册、付款或批准。",
+            "severity": "critical"
+          },
+          {
+            "id": "key-generation",
+            "title": "密钥创建",
+            "prompt": "第一次打开 Nostr 客户端时，你应该如何处理你的密钥？",
+            "options": [
+              { "id": "a", "label": "在 Twitter 上分享以作备份" },
+              { "id": "b", "label": "在做其他事情之前先安全离线保存" },
+              { "id": "c", "label": "通过邮件发送给自己" }
+            ],
+            "correctId": "b",
+            "explanation": "立即离线备份你的密钥（写下来、加密文件或安全密码管理器），然后才开始发帖。丢失密钥意味着丢失身份。",
+            "severity": "critical"
+          },
+          {
+            "id": "finding-people",
+            "title": "建立你的网络",
+            "prompt": "作为 Nostr 新手，你如何找到要关注的人？",
+            "options": [
+              { "id": "a", "label": "通过电话号码搜索" },
+              { "id": "b", "label": "导入 Twitter 关注、使用标签或浏览热门中继" },
+              { "id": "c", "label": "等待算法推荐好友" }
+            ],
+            "correctId": "b",
+            "explanation": "许多客户端允许你导入已加入 Nostr 的 Twitter 关注者。你也可以搜索标签、浏览公共动态或寻求推荐。",
+            "severity": "warning"
+          },
+          {
+            "id": "client-choice",
+            "title": "客户端选择",
+            "prompt": "你应该使用哪个 Nostr 客户端？",
+            "options": [
+              { "id": "a", "label": "官方 Nostr 应用" },
+              { "id": "b", "label": "任何在你的设备上运行且感觉舒适的客户端" },
+              { "id": "c", "label": "下载量最多的那个" }
+            ],
+            "correctId": "b",
+            "explanation": "没有'官方'客户端。选择适合你平台的客户端（iOS：Damus，Android：Amethyst，网页：Iris/Snort）。你的身份在所有客户端上都能使用。",
+            "severity": "info"
+          },
+          {
+            "id": "post-visibility",
+            "title": "帖子可见性",
+            "prompt": "谁可以看到你在 Nostr 上的帖子？",
+            "options": [
+              { "id": "a", "label": "只有关注你的人" },
+              { "id": "b", "label": "任何使用存储你帖子的中继的人" },
+              { "id": "c", "label": "只有你国家的人" }
+            ],
+            "correctId": "b",
+            "explanation": "帖子默认是公开的，对任何使用存储它们的中继的人都可见。把它想象成公共公告板——任何路过的人都可以阅读。",
+            "severity": "warning"
+          },
+          {
+            "id": "relay-setup",
+            "title": "初始中继设置",
+            "prompt": "刚开始时，你应该连接到多少个中继？",
+            "options": [
+              { "id": "a", "label": "一个就够了" },
+              { "id": "b", "label": "3-5 个可靠的中继以获得良好覆盖" },
+              { "id": "c", "label": "所有可用的中继（50+）" }
+            ],
+            "correctId": "b",
+            "explanation": "从 3-5 个知名、可靠的中继开始。这能提供良好的覆盖而不会让你的客户端不堪重负。随着学习深入，你随时可以添加更多。",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "findingCommunity": {
+      "title": "寻找社区",
+      "description": "了解如何在 Nostr 上找到并加入社区。",
+      "content": {},
+      "quiz": {
+        "title": "社区发现测验",
+        "questions": [
+          {
+            "id": "finding-npubs",
+            "title": "分享身份",
+            "prompt": "你如何与他人分享你的 Nostr 个人资料？",
+            "options": [
+              { "id": "a", "label": "给他们你的邮箱地址" },
+              { "id": "b", "label": "分享你的 npub（公钥）" },
+              { "id": "c", "label": "他们需要搜索你的真实姓名" }
+            ],
+            "correctId": "b",
+            "explanation": "你的 npub（以'npub1...'开头的公钥）是人们找到和关注你的方式。像分享用户名一样分享它。",
+            "severity": "critical"
+          },
+          {
+            "id": "community-search",
+            "title": "寻找群组",
+            "prompt": "在 Nostr 上寻找社区的最佳方式是什么？",
+            "options": [
+              { "id": "a", "label": "搜索 #bitcoin、#nostr、#photography 等标签" },
+              { "id": "b", "label": "发送邮件给 Nostr 支持团队" },
+              { "id": "c", "label": "等待邀请" }
+            ],
+            "correctId": "a",
+            "explanation": "社区围绕标签和话题形成。搜索你感兴趣的标签，关注活跃的发布者，参与对话以发现你的圈子。",
+            "severity": "warning"
+          },
+          {
+            "id": "twitter-import",
+            "title": "Twitter 迁移",
+            "prompt": "你能在 Nostr 上找到 Twitter 朋友吗？",
+            "options": [
+              { "id": "a", "label": "不能，Nostr 是完全独立的" },
+              { "id": "b", "label": "可以，许多客户端允许你导入拥有 Nostr 账户的 Twitter 关注者" },
+              { "id": "c", "label": "只有当你付费购买高级功能时才可以" }
+            ],
+            "correctId": "b",
+            "explanation": "许多 Nostr 客户端提供 Twitter 导入功能。它们检查你的 Twitter 关注者中哪些人已关联了 Nostr npub，让你可以立即关注他们。",
+            "severity": "info"
+          },
+          {
+            "id": "dm-etiquette",
+            "title": "私信礼仪",
+            "prompt": "在 Nostr 上私信新朋友时，什么是恰当的礼仪？",
+            "options": [
+              { "id": "a", "label": "向每个人发送促销信息" },
+              { "id": "b", "label": "简要介绍自己并有联系的理由" },
+              { "id": "c", "label": "只给已验证账户发私信" }
+            ],
+            "correctId": "b",
+            "explanation": "像任何社交平台一样，保持尊重。介绍自己，解释为什么联系，避免未经请求的垃圾邮件或促销。",
+            "severity": "warning"
+          },
+          {
+            "id": "blocking",
+            "title": "内容控制",
+            "prompt": "如何处理 Nostr 上不需要的内容或用户？",
+            "options": [
+              { "id": "a", "label": "向 Nostr 总部举报他们" },
+              { "id": "b", "label": "静音或屏蔽他们——选择权在你" },
+              { "id": "c", "label": "你什么都做不了" }
+            ],
+            "correctId": "b",
+            "explanation": "Nostr 客户端提供静音和屏蔽功能。由于没有中央机构，你可以控制看到什么。屏蔽垃圾邮件发送者，静音话题，策划你的体验。",
+            "severity": "info"
+          },
+          {
+            "id": "community-building",
+            "title": "创建社区",
+            "prompt": "如何在 Nostr 上开始你自己的社区？",
+            "options": [
+              { "id": "a", "label": "申请社区许可证" },
+              { "id": "b", "label": "创建一个标签，分享优质内容，持续互动" },
+              { "id": "c", "label": "付费购买社区托管" }
+            ],
+            "correctId": "b",
+            "explanation": "社区围绕话题有机形成。创建一个独特的标签，定期发布优质内容，回复他人，保持耐心。社区通过参与成长。",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "faq": {
+      "title": "常见问题",
+      "description": "关于 Nostr 的常见问题，用简单易懂的语言回答。",
+      "content": {},
+      "quiz": {
+        "title": "常见问题知识检查",
+        "questions": [
+          {
+            "id": "nostr-company",
+            "title": "公司所有权",
+            "prompt": "谁拥有 Nostr？",
+            "options": [
+              { "id": "a", "label": "特拉华州的一家公司" },
+              { "id": "b", "label": "Jack Dorsey" },
+              { "id": "c", "label": "没有人——它是一个开放协议" }
+            ],
+            "correctId": "c",
+            "explanation": "Nostr 是一个开放协议，不是一家公司。任何人都可以在其上构建。Jack Dorsey 捐赠支持了其开发，但并不控制它。",
+            "severity": "info"
+          },
+          {
+            "id": "account-deletion",
+            "title": "账户管理",
+            "prompt": "你能删除你的 Nostr 账户吗？",
+            "options": [
+              { "id": "a", "label": "可以，通过点击设置中的'删除账户'" },
+              { "id": "b", "label": "不行，帖子分布在中继上，无法完全删除" },
+              { "id": "c", "label": "只在发布后 24 小时内可以" }
+            ],
+            "correctId": "b",
+            "explanation": "Nostr 帖子分布到多个中继。一旦发布，你无法保证删除，因为你无法控制的中继可能会保留副本。谨慎发帖。",
+            "severity": "critical"
+          },
+          {
+            "id": "mobile-apps",
+            "title": "移动访问",
+            "prompt": "你能在移动设备上使用 Nostr 吗？",
+            "options": [
+              { "id": "a", "label": "只能在 Android 上" },
+              { "id": "b", "label": "只能通过网页浏览器" },
+              { "id": "c", "label": "可以，iOS 和 Android 都有应用" }
+            ],
+            "correctId": "c",
+            "explanation": "Nostr 在两个平台都有原生应用：Damus（iOS）、Amethyst（Android），网页客户端也可以在移动浏览器上使用。",
+            "severity": "info"
+          },
+          {
+            "id": "cost",
+            "title": "使用成本",
+            "prompt": "使用 Nostr 需要花钱吗？",
+            "options": [
+              { "id": "a", "label": "是的，每月 10 美元订阅费" },
+              { "id": "b", "label": "不，协议是免费的（尽管有些付费中继存在）" },
+              { "id": "c", "label": "只有发帖超过 100 次才需要" }
+            ],
+            "correctId": "b",
+            "explanation": "Nostr 免费使用。许多公共中继是免费的。一些付费中继提供更好的性能或功能，但它们是可选的。",
+            "severity": "info"
+          },
+          {
+            "id": "content-moderation",
+            "title": "内容审核",
+            "prompt": "谁审核 Nostr 上的内容？",
+            "options": [
+              { "id": "a", "label": "Nostr 基金会" },
+              { "id": "b", "label": "每个中继运营商制定自己的规则，用户控制自己的体验" },
+              { "id": "c", "label": "AI 机器人扫描所有内容" }
+            ],
+            "correctId": "b",
+            "explanation": "没有中央审核。中继运营商决定在他们的服务器上托管什么内容。用户选择使用哪些中继，可以静音/屏蔽不想看到的内容。",
+            "severity": "warning"
+          },
+          {
+            "id": "lost-keys",
+            "title": "密钥恢复",
+            "prompt": "如果你丢失了私钥会发生什么？",
+            "options": [
+              { "id": "a", "label": "联系 Nostr 支持重置" },
+              { "id": "b", "label": "你的身份将永远丢失——创建新的密钥对" },
+              { "id": "c", "label": "使用你的邮箱恢复" }
+            ],
+            "correctId": "b",
+            "explanation": "没有'忘记密码'选项。如果你丢失了私钥，你将永久失去对该身份的访问权限。这就是为什么安全备份至关重要。",
+            "severity": "critical"
+          }
+        ]
+      }
+    },
+    "relaysDemystified": {
+      "title": "中继解密",
+      "description": "通过简单的类比和交互工具深入了解中继的工作原理。",
+      "content": {},
+      "quiz": {
+        "title": "中继深度解析测验",
+        "questions": [
+          {
+            "id": "relay-definition",
+            "title": "什么是中继？",
+            "prompt": "Nostr 中继是什么？",
+            "options": [
+              { "id": "a", "label": "增强 WiFi 信号的设备" },
+              { "id": "b", "label": "存储和转发 Nostr 消息的服务器" },
+              { "id": "c", "label": "加密货币挖矿设备" }
+            ],
+            "correctId": "b",
+            "explanation": "中继是接收、存储和广播 Nostr 事件（帖子、点赞、关注）的服务器。它们充当网络的基础设施层。",
+            "severity": "critical"
+          },
+          {
+            "id": "relay-choice",
+            "title": "用户控制",
+            "prompt": "谁决定使用哪些中继？",
+            "options": [
+              { "id": "a", "label": "Nostr 开发团队" },
+              { "id": "b", "label": "你选择要连接的中继" },
+              { "id": "c", "label": "随机分配的" }
+            ],
+            "correctId": "b",
+            "explanation": "你完全控制使用哪些中继。你可以在客户端设置中随时添加、删除或切换中继。",
+            "severity": "critical"
+          },
+          {
+            "id": "paid-vs-free",
+            "title": "中继类型",
+            "prompt": "付费和免费中继有什么区别？",
+            "options": [
+              { "id": "a", "label": "付费中继性能更好，垃圾更少" },
+              { "id": "b", "label": "免费中继更快" },
+              { "id": "c", "label": "没有区别" }
+            ],
+            "correctId": "a",
+            "explanation": "付费中继通常提供更好的正常运行时间、更快的同步和更少的垃圾邮件，因为它们有资源来维持质量并可以禁止滥用用户。",
+            "severity": "warning"
+          },
+          {
+            "id": "relay-data",
+            "title": "数据存储",
+            "prompt": "中继保留你的帖子多长时间？",
+            "options": [
+              { "id": "a", "label": "永久，保证的" },
+              { "id": "b", "label": "因中继而异——有些永久保留，有些删除旧帖子" },
+              { "id": "c", "label": "只有 30 天" }
+            ],
+            "correctId": "b",
+            "explanation": "每个中继都有自己的存储政策。有些无限期存档所有内容，其他在特定时间或大小限制后删除帖子。使用多个中继进行冗余备份。",
+            "severity": "warning"
+          },
+          {
+            "id": "relay-count",
+            "title": "最佳设置",
+            "prompt": "通常应该连接多少个中继？",
+            "options": [
+              { "id": "a", "label": "恰好 1 个" },
+              { "id": "b", "label": "根据需求 3-10 个" },
+              { "id": "c", "label": "所有可用的中继（100+）" }
+            ],
+            "correctId": "b",
+            "explanation": "大多数用户发现 3-10 个中继能提供良好的覆盖而不会让客户端不堪重负。太少 = 单点故障。太多 = 性能变慢。",
+            "severity": "info"
+          },
+          {
+            "id": "relay-ban",
+            "title": "审查",
+            "prompt": "中继可以封禁你吗？",
+            "options": [
+              { "id": "a", "label": "不能，Nostr 是不可审查的" },
+              { "id": "b", "label": "可以，中继运营商可以拒绝存储你的帖子，但你可以使用其他中继" },
+              { "id": "c", "label": "只有当你违反联邦法律时才可以" }
+            ],
+            "correctId": "b",
+            "explanation": "单个中继可以封禁用户或内容。然而，Nostr 的去中心化意味着你可以简单地使用不同的中继。你的身份不绑定到任何特定中继。",
+            "severity": "critical"
+          }
+        ]
+      }
+    },
+    "nip05Identity": {
+      "title": "NIP-05 身份",
+      "description": "设置你的 NIP-05 标识符，获得类似 you@domain.com 的人类可读名称。",
+      "content": {},
+      "quiz": {
+        "title": "NIP-05 身份测验",
+        "questions": [
+          {
+            "id": "nip05-purpose",
+            "title": "NIP-05 用途",
+            "prompt": "NIP-05 提供什么功能？",
+            "options": [
+              { "id": "a", "label": "加密消息" },
+              { "id": "b", "label": "人类可读的标识符（如 you@domain.com）链接到你的 npub" },
+              { "id": "c", "label": "更快的中继连接" }
+            ],
+            "correctId": "b",
+            "explanation": "NIP-05 将邮箱格式的标识符（you@domain.com）映射到你的 npub，让人们更容易找到和验证你。",
+            "severity": "critical"
+          },
+          {
+            "id": "nip05-verification",
+            "title": "验证",
+            "prompt": "NIP-05 如何验证？",
+            "options": [
+              { "id": "a", "label": "通过上传身份证到中央服务器" },
+              { "id": "b", "label": "通过在你控制的网络服务器上放置 JSON 文件" },
+              { "id": "c", "label": "通过支付验证费用" }
+            ],
+            "correctId": "b",
+            "explanation": "NIP-05 通过在你的域名上托管 .well-known/nostr.json 文件来工作，该文件将你的标识符映射到你的公钥，证明你控制该域名。",
+            "severity": "critical"
+          },
+          {
+            "id": "nip05-benefits",
+            "title": "好处",
+            "prompt": "拥有 NIP-05 标识符的关键好处是什么？",
+            "options": [
+              { "id": "a", "label": "向所有人隐藏你的 npub" },
+              { "id": "b", "label": "让你更容易被发现并增加可信度" },
+              { "id": "c", "label": "给你免费比特币" }
+            ],
+            "correctId": "b",
+            "explanation": "NIP-05 让你的个人资料可以通过易于记忆的名称被发现。它还提供验证（勾选标记），显示你控制该域名。",
+            "severity": "warning"
+          },
+          {
+            "id": "nip05-providers",
+            "title": "获取 NIP-05",
+            "prompt": "你如何获得 NIP-05 标识符？",
+            "options": [
+              { "id": "a", "label": "只能通过拥有域名" },
+              { "id": "b", "label": "使用 NIP-05 提供商服务或在你自己的域名上托管" },
+              { "id": "c", "label": "像挖比特币一样挖掘它" }
+            ],
+            "correctId": "b",
+            "explanation": "你可以在自己的域名上托管 NIP-05（需要网站），或使用 nostrplebs.com、nostr-check.com 等提供标识符的服务。",
+            "severity": "info"
+          },
+          {
+            "id": "nip05-security",
+            "title": "安全考虑",
+            "prompt": "关于 NIP-05 和隐私，你应该知道什么？",
+            "options": [
+              { "id": "a", "label": "它将你的身份链接到你控制的域名，这可能暴露你的身份" },
+              { "id": "b", "label": "它让你的账户完全匿名" },
+              { "id": "c", "label": "它加密你的所有消息" }
+            ],
+            "correctId": "a",
+            "explanation": "NIP-05 将你的 npub 链接到真实域名，可能暴露你的身份。如果匿名很重要，考虑链接到个人域名是否合适。",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    "zapsAndLightning": {
+      "title": "Zaps 与闪电网络",
+      "description": "掌握通过闪电网络在 Nostr 上发送和接收比特币支付（zaps）的艺术。",
+      "content": {},
+      "quiz": {
+        "title": "闪电网络与 Zaps 测验",
+        "questions": [
+          {
+            "id": "what-are-zaps",
+            "title": "Zap 定义",
+            "prompt": "Nostr 上的'zaps'是什么？",
+            "options": [
+              { "id": "a", "label": "闪电表情符号反应" },
+              { "id": "b", "label": "通过闪电网络发送的比特币支付" },
+              { "id": "c", "label": "一种中继类型" }
+            ],
+            "correctId": "b",
+            "explanation": "Zaps 是通过闪电网络发送的比特币小额支付。它们允许你立即用真金白银打赏或支持内容创作者。",
+            "severity": "critical"
+          },
+          {
+            "id": "lightning-vs-bitcoin",
+            "title": "闪电网络",
+            "prompt": "闪电网络与普通比特币有何不同？",
+            "options": [
+              { "id": "a", "label": "小额支付更快更便宜" },
+              { "id": "b", "label": "它是一种完全不同的加密货币" },
+              { "id": "c", "label": "只用于大额交易" }
+            ],
+            "correctId": "a",
+            "explanation": "闪电是构建在比特币之上的第二层支付协议。它支持即时、低成本的交易，非常适合 zaps 这样的小额支付。",
+            "severity": "critical"
+          },
+          {
+            "id": "wallet-setup",
+            "title": "钱包设置",
+            "prompt": "接收 zaps 需要什么？",
+            "options": [
+              { "id": "a", "label": "连接到你的 Nostr 个人资料的闪电钱包" },
+              { "id": "b", "label": "银行账户" },
+              { "id": "c", "label": "PayPal 账户" }
+            ],
+            "correctId": "a",
+            "explanation": "要接收 zaps，你需要一个闪电钱包（托管型如 Wallet of Satoshi，或自托管型如 Phoenix/BlueWallet），通过闪电地址链接到你的 Nostr 个人资料。",
+            "severity": "critical"
+          },
+          {
+            "id": "zap-privacy",
+            "title": "Zap 隐私",
+            "prompt": "Zaps 是私密的吗？",
+            "options": [
+              { "id": "a", "label": "是的，完全匿名" },
+              { "id": "b", "label": "金额和发送者在闪电网络上可见，但你可以为不同身份使用不同钱包" },
+              { "id": "c", "label": "不，它们需要 KYC 验证" }
+            ],
+            "correctId": "b",
+            "explanation": "闪电支付像比特币一样是伪匿名的。交易可见，但不会与你的身份关联，除非你跨个人资料链接钱包。为隐私使用单独的钱包。",
+            "severity": "warning"
+          },
+          {
+            "id": "custodial-vs-self",
+            "title": "钱包类型",
+            "prompt": "托管型和自托管型闪电钱包有什么区别？",
+            "options": [
+              { "id": "a", "label": "托管型钱包持有你的资金（更简单），自托管意味着你控制密钥（更安全）" },
+              { "id": "b", "label": "没有区别" },
+              { "id": "c", "label": "托管型钱包只用于比特币，闪电钱包是分开的" }
+            ],
+            "correctId": "a",
+            "explanation": "托管型钱包（如 Wallet of Satoshi）用户友好，但提供商控制你的资金。自托管型钱包（如 Phoenix）给你完全控制，但需要更多责任。",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    "nostrTools": {
+      "title": "必备 Nostr 工具",
+      "description": "精心策划的 Nostr 实用工具和服务目录，涵盖密钥管理、媒体托管、数据分析等。",
+      "content": {},
+      "quiz": {
+        "title": "工具与实用程序测验",
+        "questions": [
+          {
+            "id": "key-converter",
+            "title": "密钥工具",
+            "prompt": "Nostr 密钥转换工具可以做什么？",
+            "options": [
+              { "id": "a", "label": "在十六进制和 bech32（npub/nsec）格式之间转换" },
+              { "id": "b", "label": "破解他人账户" },
+              { "id": "c", "label": "免费创建比特币" }
+            ],
+            "correctId": "a",
+            "explanation": "密钥转换工具可以翻译不同的密钥格式。例如，将十六进制公钥转换为以'npub1...'开头的 npub 格式。",
+            "severity": "info"
+          },
+          {
+            "id": "media-hosting",
+            "title": "媒体存储",
+            "prompt": "如何在 Nostr 上分享图片？",
+            "options": [
+              { "id": "a", "label": "上传到 Nostr 的中央图片服务器" },
+              { "id": "b", "label": "使用媒体托管服务（nostr.build、imgur）并粘贴 URL" },
+              { "id": "c", "label": "不支持图片" }
+            ],
+            "correctId": "b",
+            "explanation": "Nostr 是基于文本的，因此图片通过 URL 分享。上传到媒体托管服务（nostr.build、void.cat）或 IPFS，然后在帖子中包含链接。",
+            "severity": "warning"
+          },
+          {
+            "id": "analytics-tools",
+            "title": "数据分析",
+            "prompt": "Nostr 分析工具可以显示什么？",
+            "options": [
+              { "id": "a", "label": "你的粉丝增长、互动数据覆盖范围" },
+              { "id": "b", "label": "其他用户的私钥" },
+              { "id": "c", "label": "中继服务器的密码" }
+            ],
+            "correctId": "a",
+            "explanation": "Nostr 分析工具显示公开指标，如粉丝增长、帖子互动和覆盖范围。它们只显示公开可见的信息，从不显示私钥。",
+            "severity": "info"
+          },
+          {
+            "id": "tool-safety",
+            "title": "工具安全",
+            "prompt": "使用 Nostr 工具时如何保持安全？",
+            "options": [
+              { "id": "a", "label": "永远不要在任何工具中输入私钥，除非完全信任它" },
+              { "id": "b", "label": "所有工具都是安全的，不用担心" },
+              { "id": "c", "label": "只使用付费工具" }
+            ],
+            "correctId": "a",
+            "correctId": "a",
+            "explanation": "只在你创建或完全信任的客户端中输入私钥。第三方工具应避免使用私钥，或使用权限受限的只读密钥。",
+            "severity": "critical"
+          },
+          {
+            "id": "backup-tools",
+            "title": "备份工具",
+            "prompt": "Nostr 备份工具的目的是什么？",
+            "options": [
+              { "id": "a", "label": "保存你帖子的副本，以防中继离线" },
+              { "id": "b", "label": "删除旧帖子" },
+              { "id": "c", "label": "破解加密消息" }
+            ],
+            "correctId": "a",
+            "explanation": "备份工具导出你的帖子、关注和元数据。如果中继停止运行，你的内容仍被保存。定期备份是个好主意。",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    "troubleshooting": {
+      "title": "故障排除",
+      "description": "解决 Nostr 上常见问题。找不到帖子？关注被重置？本指南帮你解决。",
+      "content": {},
+      "quiz": {
+        "title": "问题解决测验",
+        "questions": [
+          {
+            "id": "missing-posts",
+            "title": "帖子消失",
+            "prompt": "你的一些帖子丢失了。最可能的原因是什么？",
+            "options": [
+              { "id": "a", "label": "你连接的中继没有存储它们" },
+              { "id": "b", "label": "Nostr 删除了你的账户" },
+              { "id": "c", "label": "你的互联网连接太慢" }
+            ],
+            "correctId": "a",
+            "explanation": "Nostr 使用多个中继，它们可能有不同的内容。如果某个中继没有你的帖子，尝试添加更多中继或检查你发帖时使用了哪些中继。",
+            "severity": "warning"
+          },
+          {
+            "id": "follows-gone",
+            "title": "关注丢失",
+            "prompt": "你的关注列表突然为空。该怎么办？",
+            "options": [
+              { "id": "a", "label": "在新客户端中导入你的私钥来恢复关注列表" },
+              { "id": "b", "label": "重新关注所有人" },
+              { "id": "c", "label": "创建一个全新账户" }
+            ],
+            "correctId": "a",
+            "explanation": "关注列表存储在 Nostr 上，与你的密钥关联。在新客户端登录后应该自动恢复。如果看不到，尝试添加更多中继或等待客户端同步。",
+            "severity": "info"
+          },
+          {
+            "id": "cant-post",
+            "title": "发帖失败",
+            "prompt": "你无法发帖。可能是什么问题？",
+            "options": [
+              { "id": "a", "label": "你没有连接到可写的中继" },
+              { "id": "b", "label": "你的账户被禁止了" },
+              { "id": "c", "label": "Nostr 已关闭" }
+            ],
+            "correctId": "a",
+            "explanation": "确保你连接的中继支持写入（不仅仅是只读）。检查中继状态并尝试添加不同的中继。",
+            "severity": "warning"
+          },
+          {
+            "id": "zaps-not-working",
+            "title": "Zap 问题",
+            "prompt": "你的 zaps 没有被发送。应该检查什么？",
+            "options": [
+              { "id": "a", "label": "闪电钱包余额、LNURL 配置、钱包连接" },
+              { "id": "b", "label": "你的 Nostr 声誉分数" },
+              { "id": "c", "label": "接收者的粉丝数量" }
+            ],
+            "correctId": "a",
+            "explanation": "Zaps 依赖闪电网络。检查：1）你的钱包有余额，2）你的 LNURL 配置正确，3）钱包已连接到客户端。",
+            "severity": "warning"
+          },
+          {
+            "id": "slow-loading",
+            "title": "加载缓慢",
+            "prompt": "客户端加载非常慢。可能是什么原因？",
+            "options": [
+              { "id": "a", "label": "连接到太多慢速中继" },
+              { "id": "b", "label": "你的电脑太旧" },
+              { "id": "c", "label": "Nostr 正在维护" }
+            ],
+            "correctId": "a",
+            "explanation": "太多中继（尤其是慢速或离线的）会导致客户端变慢。移除不响应的中继，保留 5-10 个快速、可靠的。",
+            "severity": "info"
+          },
+          {
+            "id": "dm-fail",
+            "title": "私信失败",
+            "prompt": "某人收不到你的私信。可能是什么原因？",
+            "options": [
+              { "id": "a", "label": "你们没有共享任何中继" },
+              { "id": "b", "label": "私信已禁用" },
+              { "id": "c", "label": "你需要支付费用" }
+            ],
+            "correctId": "a",
+            "explanation": "双方需要连接到共享中继才能收发私信。尝试添加对方使用的中继。",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    "multiClient": {
+      "title": "使用多个客户端",
+      "description": "了解如何跨不同 Nostr 客户端无缝使用你的身份。你的工作是你自己的——任何客户端都可以访问。",
+      "content": {},
+      "quiz": {
+        "title": "多客户端测验",
+        "questions": [
+          {
+            "id": "same-identity",
+            "title": "身份便携性",
+            "prompt": "当你在不同客户端使用相同的私钥时会发生什么？",
+            "options": [
+              { "id": "a", "label": "你在所有客户端都有相同的身份、关注和帖子" },
+              { "id": "b", "label": "每个客户端都创建独立的账户" },
+              { "id": "c", "label": "之前的客户端停止工作" }
+            ],
+            "correctId": "a",
+            "explanation": "你的身份存在于你的密钥中，而不是任何特定客户端。在任何客户端使用相同的 nsec，你都能访问相同的帖子、关注和消息。",
+            "severity": "critical"
+          },
+          {
+            "id": "client-features",
+            "title": "客户端差异",
+            "prompt": "为什么使用多个客户端有益？",
+            "options": [
+              { "id": "a", "label": "每个客户端有不同的功能和界面" },
+              { "id": "b", "label": "一个客户端用于发布，其他用于阅读" },
+              { "id": "c", "label": "需要多个账户" }
+            ],
+            "correctId": "a",
+            "explanation": "客户端有独特的功能（如长文写作、媒体支持、UI 设计）。使用多个客户端就像在不同的浏览器中使用相同的电子邮件。",
+            "severity": "info"
+          },
+          {
+            "id": "switch-clients",
+            "title": "切换客户端",
+            "prompt": "如何在不丢失任何内容的情况下切换到新客户端？",
+            "options": [
+              { "id": "a", "label": "在新客户端中使用你的私钥登录" },
+              { "id": "b", "label": "导出帖子并导入到新客户端" },
+              { "id": "c", "label": "手动重新创建你的账户" }
+            ],
+            "correctId": "a",
+            "explanation": "只需使用你的私钥（nsec）登录新客户端。所有你的数据（帖子、关注、消息）都会自动从 Nostr 中继加载。",
+            "severity": "critical"
+          },
+          {
+            "id": "relay-sync",
+            "title": "中继同步",
+            "prompt": "为什么一个客户端显示的内容比另一个多？",
+            "options": [
+              { "id": "a", "label": "每个客户端可能连接不同的中继" },
+              { "id": "b", "label": "一个客户端已过期" },
+              { "id": "c", "label": "Nostr 限制了可见性" }
+            ],
+            "correctId": "a",
+            "explanation": "客户端从不同中继获取内容。使用相同的中继列表可以看到相同的内容。添加更多中继可以看到更广泛的网络。",
+            "severity": "warning"
+          },
+          {
+            "id": "client-security",
+            "title": "客户端安全",
+            "prompt": "尝试新客户端时的最佳安全做法是什么？",
+            "options": [
+              { "id": "a", "label": "先使用浏览器扩展（如 nos2x）登录，不直接输入私钥" },
+              { "id": "b", "label": "每次都创建新账户" },
+              { "id": "c", "label": "只使用最古老的客户端" }
+            ],
+            "correctId": "a",
+            "explanation": "浏览器扩展可以将密钥保存在客户端之外。对于完全陌生或测试的客户端，使用扩展登录更安全。",
+            "severity": "critical"
+          }
+        ]
+      }
+    },
+    "relayGuide": {
+      "title": "中继指南",
+      "description": "掌握 Nostr 中继——如何选择、连接和管理它们，以优化你的体验。",
+      "content": {},
+      "quiz": {
+        "title": "中继管理测验",
+        "questions": [
+          {
+            "id": "relay-purpose",
+            "title": "中继功能",
+            "prompt": "Nostr 中继的主要功能是什么？",
+            "options": [
+              { "id": "a", "label": "存储和转发帖子、关注和消息" },
+              { "id": "b", "label": "验证用户身份" },
+              { "id": "c", "label": "创建比特币钱包" }
+            ],
+            "correctId": "a",
+            "explanation": "中继是存储和转发 Nostr 事件（帖子、关注、反应）的服务器。它们不知道或验证用户——只是存储和转发数据。",
+            "severity": "critical"
+          },
+          {
+            "id": "relay-selection",
+            "title": "选择中继",
+            "prompt": "如何选择要连接的中继？",
+            "options": [
+              { "id": "a", "label": "寻找可靠的、与你的兴趣匹配或你朋友使用的中继" },
+              { "id": "b", "label": "只连接中继数量最多的那个" },
+              { "id": "c", "label": "随机选择" }
+            ],
+            "correctId": "a",
+            "explanation": "选择快速、可靠、与你的兴趣匹配的中继。公共中继列表可以帮你入门。目标是 5-10 个覆盖不同社区的中继。",
+            "severity": "warning"
+          },
+          {
+            "id": "relay-payment",
+            "title": "付费中继",
+            "prompt": "付费中继有什么优势？",
+            "options": [
+              { "id": "a", "label": "通常更快、更可靠，垃圾信息更少" },
+              { "id": "b", "label": "免费比特币" },
+              { "id": "c", "label": "它们将你的帖子优先显示给所有人" }
+            ],
+            "correctId": "a",
+            "explanation": "付费中继通常提供更好的正常运行时间、更低的垃圾信息和更好的性能。付费创造了质量门槛，同时保持网络开放。",
+            "severity": "info"
+          },
+          {
+            "id": "relay-moderation",
+            "title": "内容审核",
+            "prompt": "中继如何处理内容审核？",
+            "options": [
+              { "id": "a", "label": "每个中继自行决定存储和转发什么" },
+              { "id": "b", "label": "没有审核——一切都被允许" },
+              { "id": "c", "label": "中央委员会决定" }
+            ],
+            "correctId": "a",
+            "explanation": "每个中继独立决定存储什么内容。如果一个中继屏蔽了内容，其他中继可能仍然有。用户通过选择中继来管理自己的体验。",
+            "severity": "warning"
+          },
+          {
+            "id": "relay-count",
+            "title": "中继数量",
+            "prompt": "你应该连接多少个中继？",
+            "options": [
+              { "id": "a", "label": "5-10 个是大多数用户的最佳平衡点" },
+              { "id": "b", "label": "连接得越多越好" },
+              { "id": "c", "label": "只连接一个" }
+            ],
+            "correctId": "a",
+            "explanation": "通常 5-10 个中继是理想的。太少会错过内容，太多会减慢你的客户端。根据性能和质量选择可靠的混合中继。",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "privacySecurity": {
+      "title": "隐私与安全",
+      "description": "保护你的 Nostr 身份和通信。理解权衡并安全使用平台。",
+      "content": {},
+      "quiz": {
+        "title": "隐私与安全测验",
+        "questions": [
+          {
+            "id": "key-backup",
+            "title": "密钥备份",
+            "prompt": "你应该如何备份私钥？",
+            "options": [
+              { "id": "a", "label": "写在纸上，存放在多个安全位置，或使用密码管理器" },
+              { "id": "b", "label": "保存在手机备忘录中" },
+              { "id": "c", "label": "通过电子邮件发送给自己" }
+            ],
+            "correctId": "a",
+            "explanation": "私钥是唯一的恢复方法。将它们写在纸上并存放在安全的地方，或使用安全的密码管理器。切勿通过电子邮件发送或存储在不安全的地方。",
+            "severity": "critical"
+          },
+          {
+            "id": "public-nature",
+            "title": "公开性",
+            "prompt": "关于你在 Nostr 上的帖子，以下哪项是正确的？",
+            "options": [
+              { "id": "a", "label": "帖子是公开可见的，会存储在中继上" },
+              { "id": "b", "label": "只有你关注的人可以看到" },
+              { "id": "c", "label": "30 天后自动删除" }
+            ],
+            "correctId": "a",
+            "explanation": "默认情况下，Nostr 帖子是公开存储在中继上的。任何人都可以看到你的帖子。不要把任何你不希望永久公开的内容发布上去。",
+            "severity": "critical"
+          },
+          {
+            "id": "separate-identities",
+            "title": "身份分离",
+            "prompt": "为什么要为不同目的使用单独的密钥？",
+            "options": [
+              { "id": "a", "label": "保持个人和专业身份的隔离" },
+              { "id": "b", "label": "Nostr 要求这样" },
+              { "id": "c", "label": "获得更多粉丝" }
+            ],
+            "correctId": "a",
+            "explanation": "单独的密钥允许你将生活的不同部分分开。可以为个人话题使用一个身份，为专业内容使用另一个身份。两者完全独立。",
+            "severity": "warning"
+          },
+          {
+            "id": "nip04-limitations",
+            "title": "加密限制",
+            "prompt": "旧版 NIP-04 加密私信有什么限制？",
+            "options": [
+              { "id": "a", "label": "元数据（谁发给谁）是可见的，加密也比现代标准弱" },
+              { "id": "b", "label": "完全私密和匿名" },
+              { "id": "c", "label": "只能发送文本" }
+            ],
+            "correctId": "a",
+            "explanation": "旧的 NIP-04 加密显示谁与谁通信（元数据）。现代 NIP-17 加密更好地保护内容和元数据。",
+            "severity": "warning"
+          },
+          {
+            "id": "browser-security",
+            "title": "浏览器扩展",
+            "prompt": "为什么使用浏览器扩展（如 nos2x）登录是安全的？",
+            "options": [
+              { "id": "a", "label": "密钥保存在扩展中，不会暴露给客户端" },
+              { "id": "b", "label": "扩展可以查看你的私信" },
+              { "id": "c", "label": "它们免费提供比特币" }
+            ],
+            "correctId": "a",
+            "explanation": "扩展将密钥保存在外部客户端，代表你签署事件。你不必在不熟悉的网站输入私钥，降低暴露风险。",
+            "severity": "warning"
+          },
+          {
+            "id": "relay-privacy",
+            "title": "中继隐私",
+            "prompt": "中继知道关于你的什么信息？",
+            "options": [
+              { "id": "a", "label": "你的公钥、IP 地址和你发布的内容" },
+              { "id": "b", "label": "你的真实姓名和地址" },
+              { "id": "c", "label": "什么都没有——完全匿名" }
+            ],
+            "correctId": "a",
+            "explanation": "中继看到你的公钥（你的身份）、你的 IP 地址和你发布的内容。如果你希望隐藏 IP，使用 VPN 或 Tor。",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "nip17PrivateMessages": {
+      "title": "NIP-17：私密私信",
+      "description": "了解现代 Nostr 加密私信。NIP-17 相比旧标准提供更好的隐私和安全性。",
+      "content": {},
+      "quiz": {
+        "title": "NIP-17 私密通信测验",
+        "questions": [
+          {
+            "id": "nip17-improvement",
+            "title": "NIP-17 改进",
+            "prompt": "相比 NIP-04，NIP-17 的主要改进是什么？",
+            "options": [
+              { "id": "a", "label": "更好的隐私——隐藏谁与谁通信的元数据" },
+              { "id": "b", "label": "消息可以更长" },
+              { "id": "c", "label": "免费发送" }
+            ],
+            "correctId": "a",
+            "explanation": "NIP-17 使用密封事件和礼品包装更好地保护隐私。它隐藏对话的社交图谱（谁与谁交谈），而不仅仅是内容。",
+            "severity": "critical"
+          },
+          {
+            "id": "sealed-events",
+            "title": "密封事件",
+            "prompt": "什么是 NIP-17 中的'密封事件'？",
+            "options": [
+              { "id": "a", "label": "只有预期接收者可以解密的消息" },
+              { "id": "b", "label": "永久锁定的帖子" },
+              { "id": "c", "label": "付费消息" }
+            ],
+            "correctId": "a",
+            "explanation": "密封事件是使用接收者的公钥加密的消息，因此只有他们可以解密。即使看到加密数据，也没有其他人可以阅读。",
+            "severity": "critical"
+          },
+          {
+            "id": "gift-wrap",
+            "title": "礼品包装",
+            "prompt": "礼品包装事件在 NIP-17 中有什么作用？",
+            "options": [
+              { "id": "a", "label": "隐藏发送者身份和对话事实" },
+              { "id": "b", "label": "使消息看起来漂亮" },
+              { "id": "c", "label": "添加比特币支付" }
+            ],
+            "correctId": "a",
+            "explanation": "礼品包装将密封事件包装在另一层加密中。这使中继和旁观者无法判断谁在发送消息或发送给谁。",
+            "severity": "critical"
+          },
+          {
+            "id": "nip17-visibility",
+            "title": "可见性",
+            "prompt": "谁能看到 NIP-17 私信被发送了？",
+            "options": [
+              { "id": "a", "label": "只有发送者和接收者——中继只看到匿名礼品包装" },
+              { "id": "b", "label": "所有连接到中继的人" },
+              { "id": "c", "label": "任何知道发送者公钥的人" }
+            ],
+            "correctId": "a",
+            "explanation": "NIP-17 设计使中继甚至不知道消息是私信。它们看起来像匿名事件。只有预期的接收者可以解包和阅读内容。",
+            "severity": "warning"
+          },
+          {
+            "id": "migration",
+            "title": "客户端支持",
+            "prompt": "为什么不是所有客户端都支持 NIP-17？",
+            "options": [
+              { "id": "a", "label": "它是较新的标准——客户端正在逐步添加支持" },
+              { "id": "b", "label": "NIP-17 不安全" },
+              { "id": "c", "label": "它需要付费" }
+            ],
+            "correctId": "a",
+            "explanation": "NIP-17 是相对较新的标准（2024+）。客户端正在添加支持，但采用需要时间。检查你的客户端是否支持 NIP-17 以获得最佳隐私。",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "protocolComparison": {
+      "title": "完整协议对比",
+      "description": "了解 Nostr 与其他社交媒体协议的不同，以及它的独特优势。",
+      "content": {},
+      "quiz": {
+        "title": "协议对比测验",
+        "questions": [
+          {
+            "id": "nostr-vs-mastodon",
+            "title": "Nostr vs Mastodon",
+            "prompt": "Nostr 与 Mastodon（ActivityPub）的主要区别是什么？",
+            "options": [
+              { "id": "a", "label": "Nostr 没有中央服务器实例——用户控制自己的密钥和数据" },
+              { "id": "b", "label": "没有区别——它们是相同的" },
+              { "id": "c", "label": "Mastodon 允许更长的帖子" }
+            ],
+            "correctId": "a",
+            "explanation": "Mastodon 使用联邦服务器（实例），每个都有管理员。Nostr 是无服务器的——只有中继存储数据，用户用密钥控制身份。",
+            "severity": "critical"
+          },
+          {
+            "id": "nostr-vs-bluesky",
+            "title": "Nostr vs Bluesky",
+            "prompt": "Nostr 与 Bluesky（AT Protocol）有何不同？",
+            "options": [
+              { "id": "a", "label": "Nostr 更简单，没有中央身份验证——只有密钥和 relays" },
+              { "id": "b", "label": "Bluesky 完全是去中心化的" },
+              { "id": "c", "label": "它们使用相同的技术" }
+            ],
+            "correctId": "a",
+            "explanation": "Bluesky 使用带有委托和服务的更复杂协议。Nostr 故意简单：只有密钥对和中继。没有中央身份系统。",
+            "severity": "critical"
+          },
+          {
+            "id": "nostr-vs-twitter",
+            "title": "Nostr vs Twitter",
+            "prompt": "相比 Twitter/X，Nostr 的主要优势是什么？",
+            "options": [
+              { "id": "a", "label": "抗审查、拥有你的受众、没有算法操纵" },
+              { "id": "b", "label": "更多的字符限制" },
+              { "id": "c", "label": "由大公司运营" }
+            ],
+            "correctId": "a",
+            "explanation": "Nostr 提供抗审查性（没人可以删除你的账户）、拥有关系（你的粉丝随处跟随）和没有算法偏见。它是去中心化 Twitter 的尝试。",
+            "severity": "warning"
+          },
+          {
+            "id": "nostr-unique",
+            "title": "独特功能",
+            "prompt": "什么是 Nostr 独特的功能？",
+            "options": [
+              { "id": "a", "label": "闪电网络集成用于比特币打赏（zaps）" },
+              { "id": "b", "label": "直接消息加密" },
+              { "id": "c", "label": "发布图片的能力" }
+            ],
+            "correctId": "a",
+            "explanation": "Zaps（闪电网络支付）是 Nostr 原生的。虽然其他平台有打赏，但 Nostr 直接集成比特币支付，允许全球即时小额支付。",
+            "severity": "warning"
+          },
+          {
+            "id": "trade-offs",
+            "title": "权衡",
+            "prompt": "使用 Nostr 需要接受什么权衡？",
+            "options": [
+              { "id": "a", "label": "自己管理密钥、寻找好中继、帖子可能分散在不同地方" },
+              { "id": "b", "label": "没有权衡——一切都更好" },
+              { "id": "c", "label": "必须付费" }
+            ],
+            "correctId": "a",
+            "explanation": "自由带来责任。你需要保护自己的密钥、选择中继，有时内容会分散。但这些权衡换取了不可审查、用户控制的社交媒体。",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "outboxModel": {
+      "title": "理解发件箱模型",
+      "description": "理解 Nostr 发件箱模型的工作原理——它如何影响内容发现、隐私和去中心化。",
+      "content": {
+        "problemHook": "缺失的帖子",
+        "solutionIntro": "发件箱模型",
+        "howItWorks": "中继发现的工作原理",
+        "whyItMatters": "为什么这很重要",
+        "bestPractices": "最佳实践",
+        "commonMisconceptions": "常见误解",
+        "technicalDeepDive": "技术深入解析"
+      },
+      "quiz": {
+        "title": "发件箱模型测验",
+        "questions": [
+          {
+            "id": "outbox-basics",
+            "title": "发件箱概念",
+            "prompt": "Nostr 发件箱模型的核心思想是什么？",
+            "options": [
+              { "id": "a", "label": "用户通过选择写入的中继来控制自己的内容" },
+              { "id": "b", "label": "所有内容存储在一个中央数据库" },
+              { "id": "c", "label": "中继验证用户身份" }
+            ],
+            "correctId": "a",
+            "explanation": "发件箱模型意味着用户选择他们发布的中继。这创建了一个用户控制内容位置的分布式网络，而不是中央控制。",
+            "severity": "critical"
+          },
+          {
+            "id": "relay-list",
+            "title": "中继列表",
+            "prompt": "你的中继列表（kind 10002）做什么？",
+            "options": [
+              { "id": "a", "label": "告诉其他人你发布到哪些中继，这样他们可以找到你的内容" },
+              { "id": "b", "label": "为你所有朋友选择中继" },
+              { "id": "c", "label": "阻止某些中继" }
+            ],
+            "correctId": "a",
+            "explanation": "中继列表（kind 10002）是一个特殊事件，列出你发布到的中继。它帮助客户端知道在哪里查找你的帖子。",
+            "severity": "critical"
+          },
+          {
+            "id": "content-discovery",
+            "title": "内容发现",
+            "prompt": "在发件箱模型中，你如何找到某人的帖子？",
+            "options": [
+              { "id": "a", "label": "检查他们的中继列表，然后查询那些特定中继" },
+              { "id": "b", "label": "询问中央服务器" },
+              { "id": "c", "label": "所有中继自动共享所有内容" }
+            ],
+            "correctId": "a",
+            "explanation": "要查找某人的内容，客户端首先获取他们的中继列表（kind 10002），然后查询那些特定中继。这就是你的'发件箱'。",
+            "severity": "critical"
+          },
+          {
+            "id": "outbox-privacy",
+            "title": "隐私影响",
+            "prompt": "发件箱模型如何影响隐私？",
+            "options": [
+              { "id": "a", "label": "你可以选择使用更少人知道的私人中继" },
+              { "id": "b", "label": "自动使所有内容私密" },
+              { "id": "c", "label": "没有隐私影响" }
+            ],
+            "correctId": "a",
+            "explanation": "你可以选择只使用你知道的私人中继。虽然内容仍然是公开的，但限制在你选择的中继上可以降低可见性。",
+            "severity": "warning"
+          },
+          {
+            "id": "censorship-resistance",
+            "title": "抗审查性",
+            "prompt": "发件箱模型如何帮助抗审查？",
+            "options": [
+              { "id": "a", "label": "如果一个中继屏蔽你，你可以切换到另一个，而你的身份和关注保持不变" },
+              { "id": "b", "label": "中继无法删除内容" },
+              { "id": "c", "label": "内容被加密" }
+            ],
+            "correctId": "a",
+            "explanation": "因为你控制发布的位置，没有单一实体可以屏蔽你。如果一个中继不行，用另一个。你的密钥和关注随处跟随。",
+            "severity": "critical"
+          }
+        ]
+      }
+    }
+  },
+  "ui": {
+    "buttons": {
+      "submit": "提交",
+      "next": "下一步",
+      "previous": "上一步",
+      "checkAnswer": "检查答案",
+      "startLearning": "开始学习",
+      "learnMore": "了解更多"
+    },
+    "search": {
+      "placeholder": "搜索指南...",
+      "noResults": "没有找到匹配的指南。",
+      "searching": "搜索中..."
+    },
+    "common": {
+      "loading": "加载中...",
+      "error": "出了点问题",
+      "success": "成功！",
+      "minutes": "分钟"
+    },
+    "navigation": {
+      "nextGuide": "下一指南",
+      "previousGuide": "上一指南",
+      "backToGuides": "返回指南列表"
+    },
+    "badges": {
+      "earned": "已获得",
+      "locked": "已锁定",
+      "viewAll": "查看所有徽章"
+    },
+    "progress": {
+      "completed": "已完成",
+      "of": "的",
+      "guidesCompleted": "指南已完成",
+      "currentStreak": "当前连续"
+    },
+    "quiz": {
+      "loading": "加载测验中...",
+      "gradeTitle": "{{title}}：{{rate}}%",
+      "scoreDisplay": "{{score}} / {{total}} 正确答案",
+      "conceptsMastered": "关键概念已掌握",
+      "nextSteps": "下一步",
+      "perfectScore": "分享你的知识——帮助新人入门。",
+      "reviewSections": "复习下面错过的部分。",
+      "retakeQuiz": "重新测验",
+      "questionCounter": "问题 {{current}} / {{total}}",
+      "answered": "已回答",
+      "backButton": "返回",
+      "nextButton": "下一题",
+      "seeResults": "查看结果",
+      "severity": {
+        "critical": "关键",
+        "warning": "最佳实践",
+        "info": "了解即可"
+      },
+      "feedback": {
+        "correct": "答对了！",
+        "incorrect": "不太对"
+      }
+    }
+  },
+  "keyGenerator": {
+    "title": "生成你的 Nostr 密钥",
+    "description": "创建安全的密钥对以访问 Nostr。你的密钥在浏览器本地生成，绝不会发送到任何服务器。",
+    "buttons": {
+      "generate": "生成新密钥对",
+      "generating": "生成中...",
+      "regenerate": "生成新密钥对"
+    },
+    "progress": {
+      "collectingEntropy": "收集熵值...",
+      "securityAcknowledgment": "安全确认"
+    },
+    "securityWarning": {
+      "title": "重要安全提示",
+      "description": "你的私钥（nsec）就像密码。任何有权访问它的人都可以控制你的账户。在复制或下载密钥之前，请完成下面的安全检查清单。"
+    },
+    "securityChecklist": {
+      "title": "安全检查清单",
+      "items": {
+        "understand": {
+          "label": "我理解这是我唯一的密码——如果丢失，无法恢复"
+        },
+        "threePlaces": {
+          "label": "我将把它保存在至少 3 个不同的安全位置"
+        },
+        "neverShare": {
+          "label": "我永远不会与任何人分享我的 nsec（私钥）"
+        }
+      }
+    },
+    "keys": {
+      "public": {
+        "title": "公钥（npub）",
+        "badge": "可安全分享",
+        "description": "这是你的公开标识符。分享给他人以便他们找到并关注你。",
+        "copy": "复制",
+        "qrCode": "二维码"
+      },
+      "private": {
+        "title": "私钥（nsec）",
+        "badge": "切勿分享",
+        "description": "这是你的密码。任何拥有它的人都可以控制你的账户。保密并妥善保管。",
+        "copy": "复制",
+        "download": "下载备份",
+        "qrCode": "二维码",
+        "show": "显示私钥",
+        "hide": "隐藏私钥"
+      }
+    },
+    "modal": {
+      "title": "安全警告",
+      "description": "你尚未完成所有安全确认。在不理解风险的情况下复制密钥可能导致永久失去访问权限。",
+      "goBack": "返回",
+      "copyAnyway": "仍然复制"
+    },
+    "toast": {
+      "success": "密钥生成成功！",
+      "copied": "{{label}} 已复制到剪贴板",
+      "copyFailed": "复制到剪贴板失败",
+      "downloaded": "密钥下载成功"
+    },
+    "backupFile": {
+      "title": "NOSTR 密钥备份",
+      "generated": "生成时间",
+      "publicKey": "公钥（npub）- 可安全分享",
+      "privateKey": "私钥（nsec）- 切勿分享",
+      "hexPrivate": "十六进制私钥",
+      "hexPublic": "十六进制公钥",
+      "warnings": {
+        "title": "重要安全警告",
+        "keepSecret": "保密你的私钥（nsec）",
+        "neverShare": "切勿与任何人分享",
+        "storeBackups": "将备份存储在多个安全位置",
+        "onlyPassword": "这是你唯一的密码——如果丢失无法恢复"
+      }
+    }
+  },
+  "guidesPage": {
+    "hero": {
+      "title": "循序渐进学习 Nostr",
+      "description": "从新手到高级的渐进式技能等级。完成指南并掌握协议后解锁新等级。",
+      "yourProgress": "你的进度",
+      "startFirstGuide": "开始你的第一个指南以查看进度"
+    },
+    "cta": {
+      "notSure": "不知道从哪里开始？",
+      "beginnerDescription": "从我们的新手指南开始——它们旨在带你从零基础到发布第一条帖子。",
+      "startLearning": "开始学习"
+    },
+    "filter": {
+      "filterByInterest": "按兴趣筛选"
+    }
+  },
+  "skillLevels": {
+    "beginner": {
+      "label": "新手",
+      "title": "入门指南",
+      "subtitle": "从这里开始你的 Nostr 之旅",
+      "description": "从基础知识开始你的 Nostr 之旅。无需先前知识。"
+    },
+    "intermediate": {
+      "label": "中级",
+      "title": "中级",
+      "subtitle": "提升你的 Nostr 技能",
+      "description": "通过 NIP-05、Zaps 和必备工具等更深入的主题提升水平。"
+    },
+    "advanced": {
+      "label": "高级",
+      "title": "高级",
+      "subtitle": "掌握协议",
+      "description": "通过隐私、安全和技术深度解析掌握协议。"
+    }
+  },
+  "guideCard": {
+    "difficulty": {
+      "beginner": "新手",
+      "intermediate": "中级",
+      "advanced": "高级"
+    },
+    "status": {
+      "locked": "已锁定",
+      "completed": "已完成",
+      "continueReading": "继续阅读",
+      "startLearning": "开始学习"
+    },
+    "moreLocked": "还有 {{count}} 个已锁定"
+  },
+  "guideNavigation": {
+    "previous": "上一篇",
+    "next": "下一篇",
+    "backToAllGuides": "返回所有指南",
+    "exploreAllGuides": "探索所有指南",
+    "startOfLevel": "{level} 等级开始",
+    "levelComplete": "{level} 完成！",
+    "levelCompleteDescription": "你已完成所有 {level} 指南",
+    "continueToLevel": "继续到 {level}",
+    "unlockRequirements": "完成更多 {currentLevel} 指南以解锁 {nextLevel}",
+    "offLevelMessage": "本指南不属于你当前的 {level} 等级"
+  },
+  "continueLearning": {
+    "allLevelsComplete": "所有等级已完成！",
+    "allLevelsCompleteDescription": "恭喜！你已完成所有 {level} 指南并掌握了 Nostr！",
+    "levelComplete": "等级完成！",
+    "levelCompleteDescription": "你已完成所有 {level} 指南！",
+    "continueToLevel": "继续到 {level}",
+    "locked": "{level} 已锁定",
+    "unlockRequirements": "再完成 {{count}} 个 {currentLevel} 指南以解锁 {nextLevel}",
+    "browseAllGuides": "浏览所有指南",
+    "guideComplete": "指南完成！",
+    "testKnowledge": "测试你的知识？",
+    "nextGuide": "准备好阅读下一篇指南了吗？",
+    "quizDescription": "参加测验以巩固所学知识。",
+    "continueDescription": "继续你的 Nostr 之旅，阅读 {{title}}",
+    "takeQuiz": "参加测验",
+    "continueLearning": "继续学习"
+  },
+  "clientRecommender": {
+    "title": "寻找最适合的客户端",
+    "description": "根据你的偏好，以下是我们的推荐",
+    "retakeQuiz": "重新测试",
+    "steps": {
+      "device": {
+        "title": "你使用什么设备？",
+        "description": "选择你主要使用 Nostr 的设备"
+      },
+      "priority": {
+        "title": "你的首要需求是什么？",
+        "description": "选择对你最重要的功能"
+      },
+      "features": {
+        "title": "需要哪些附加功能？",
+        "description": "选择你需要的功能（可选）",
+        "seeRecommendations": "查看推荐"
+      }
+    },
+    "deviceOptions": {
+      "ios": {
+        "label": "iPhone / iPad"
+      },
+      "android": {
+        "label": "Android"
+      },
+      "desktop": {
+        "label": "桌面端 (Mac/PC)"
+      },
+      "web": {
+        "label": "网页浏览器"
+      }
+    },
+    "priorityOptions": {
+      "easy": {
+        "label": "简单易用",
+        "description": "简洁界面，极简设置"
+      },
+      "power": {
+        "label": "高级用户",
+        "description": "高级功能和自定义选项"
+      },
+      "privacy": {
+        "label": "隐私优先",
+        "description": "最大化隐私和安全性"
+      },
+      "webOnly": {
+        "label": "仅网页版",
+        "description": "无需下载应用"
+      }
+    },
+    "featureOptions": {
+      "wallet": {
+        "label": "内置钱包"
+      },
+      "images": {
+        "label": "图片分享"
+      },
+      "longform": {
+        "label": "长文章"
+      }
+    },
+    "results": {
+      "topRecommendation": "最佳推荐",
+      "beginnerFriendly": "新手友好",
+      "rating": "评分",
+      "users": "用户",
+      "pros": "优点",
+      "cons": "缺点",
+      "getApp": "获取 {clientName}",
+      "tryWeb": "试用网页版",
+      "alternatives": "其他推荐"
+    }
+  },
+  "troubleshootingWizard": {
+    "title": "故障排除向导",
+    "description": "让我们逐步诊断和解决你的 Nostr 问题",
+    "step": "步骤",
+    "back": "返回",
+    "startOver": "重新开始",
+    "saveDiagnosticInfo": "保存诊断信息",
+    "stillNeedHelp": "还需要帮助？",
+    "askOnNostr": "在 Nostr 上提问",
+    "documentation": "文档",
+    "severity": {
+      "high": "高优先级",
+      "medium": "中优先级",
+      "low": "低优先级"
+    },
+    "stepsToFix": "解决步骤",
+    "proTips": "专业提示",
+    "helpfulResources": "有用资源",
+    "diagnosticInfo": {
+      "title": "诊断信息",
+      "description": "向他人求助时复制此信息，有助于开发者了解你的设置。",
+      "copy": "复制",
+      "close": "关闭"
+    },
+    "questions": {
+      "start": {
+        "text": "你遇到了什么问题？",
+        "options": {
+          "emptyFeed": "动态为空 / 没有帖子",
+          "connection": "连接问题",
+          "lostKeys": "丢失或忘记密钥",
+          "zaps": "Zap 无法使用",
+          "clientError": "客户端崩溃或报错",
+          "profileIssue": "无法查看某人的个人资料"
+        }
+      },
+      "feedCheck": {
+        "text": "你的动态何时变为空？",
+        "options": {
+          "newUser": "刚开始使用 Nostr",
+          "wasWorking": "之前正常，现在为空",
+          "partial": "只有部分帖子缺失"
+        }
+      },
+      "relayCheck": {
+        "text": "你是否连接到了中继？",
+        "options": {
+          "unknown": "不确定 / 不知道",
+          "connectedEmpty": "是，但动态仍为空",
+          "offline": "中继显示离线"
+        }
+      },
+      "connectionCheck": {
+        "text": "是什么类型的连接问题？",
+        "options": {
+          "connecting": "客户端显示'连接中...'",
+          "notPublishing": "帖子无法发布",
+          "slow": "加载非常慢",
+          "unstable": "频繁断开连接"
+        }
+      },
+      "zapCheck": {
+        "text": "尝试 zap 时发生了什么？",
+        "options": {
+          "nothing": "没有任何反应",
+          "error": "出现错误信息",
+          "notReceived": "Zap 已发送但未收到",
+          "noWallet": "没有钱包"
+        }
+      },
+      "clientCheck": {
+        "text": "你看到了什么错误？",
+        "options": {
+          "crash": "应用启动时崩溃",
+          "blank": "白屏/黑屏",
+          "import": "密钥导入失败",
+          "other": "其他错误信息"
+        }
+      },
+      "profileCheck": {
+        "text": "查看个人资料时发生了什么？",
+        "options": {
+          "notFound": "找不到个人资料",
+          "noPosts": "个人资料加载但没有帖子",
+          "oldData": "显示旧数据",
+          "cantFollow": "无法关注用户"
+        }
+      }
+    },
+    "solutions": {
+      "lostKeys": {
+        "title": "丢失密钥 - 以预防为主",
+        "description": "很遗憾，丢失的密钥无法恢复。但我们可以帮助你预防未来再次发生。",
+        "steps": [
+          "使用密钥生成器创建新的密钥对",
+          "立即将 nsec 保存在 3 个以上的安全位置",
+          "考虑使用密码管理器（1Password、Bitwarden）",
+          "写在纸上并存放在安全的地方",
+          "切勿仅依赖浏览器缓存或单设备存储"
+        ],
+        "tips": [
+          "Nostr 没有'忘记密码'功能",
+          "你的密钥就是你的身份 - 像对待现金一样对待它们",
+          "通过从备份恢复来测试备份是否有效"
+        ]
+      },
+      "newUserFeed": {
+        "title": "欢迎！你的动态为空",
+        "description": "作为新用户，你的动态为空是因为你需要先关注一些人。",
+        "steps": [
+          "使用下方的空动态修复工具",
+          "选择一组入门账号进行关注",
+          "连接 3-5 个推荐的中继",
+          "等待几分钟让内容加载",
+          "尝试手动关注热门账号"
+        ],
+        "tips": [
+          "从你感兴趣的入门包开始",
+          "至少关注 10-20 个账号才能看到内容",
+          "连接多个中继以获得更好的覆盖"
+        ]
+      },
+      "partialFeed": {
+        "title": "缺少部分帖子",
+        "description": "部分内容缺失通常意味着中继连接问题。",
+        "steps": [
+          "检查你连接了哪些中继",
+          "添加更多中继（目标 5-10 个多样化中继）",
+          "等待几分钟让同步完成",
+          "尝试刷新动态",
+          "检查缺失的用户是否使用不同的中继"
+        ],
+        "tips": [
+          "不同用户发布到不同的中继",
+          "更多中继 = 更多内容，但加载更慢",
+          "某些中继可能会过滤特定内容"
+        ]
+      },
+      "checkRelays": {
+        "title": "检查你的中继连接",
+        "description": "让我们验证你的中继设置。",
+        "steps": [
+          "打开客户端设置",
+          "查找'中继'或'网络'部分",
+          "检查是否连接了 3 个以上中继",
+          "测试中继连接",
+          "如有需要，添加推荐中继"
+        ]
+      },
+      "relayIssue": {
+        "title": "中继连接问题",
+        "description": "已连接但没有内容表明中继存在问题。",
+        "steps": [
+          "检查中继是否显示'在线'状态",
+          "移除并重新添加有问题的中继",
+          "尝试不同的中继 URL",
+          "检查你的互联网连接",
+          "稍等片刻后重试"
+        ],
+        "tips": [
+          "中继有时会因维护而离线",
+          "尝试地理位置更接近的中继",
+          "免费中继可能会过载"
+        ]
+      },
+      "offlineRelays": {
+        "title": "所有中继离线",
+        "description": "这通常表示网络或配置问题。",
+        "steps": [
+          "检查你的互联网连接",
+          "验证中继 URL 是否正确（wss://...）",
+          "从中继浏览器尝试不同的中继",
+          "检查客户端是否被防火墙阻止",
+          "重启应用后重试"
+        ],
+        "tips": [
+          "确保 URL 以 wss:// 开头，而不是 https://",
+          "某些网络会阻止 WebSocket 连接",
+          "如果在受限网络上，尝试使用 VPN"
+        ]
+      },
+      "stuckConnecting": {
+        "title": "卡在连接中",
+        "description": "客户端无法连接到中继。",
+        "steps": [
+          "强制关闭并重新打开应用",
+          "检查互联网连接",
+          "移除慢速或失效的中继",
+          "尝试连接更少的中继（3-5 个）",
+          "如果在移动设备上，清除应用缓存/数据"
+        ]
+      },
+      "notPublishing": {
+        "title": "帖子无法发布",
+        "description": "你的帖子发送失败。",
+        "steps": [
+          "检查是否有启用写入的中继",
+          "验证你至少有 1 个中继",
+          "重试发布 - 可能是暂时问题",
+          "检查中继状态 - 某些需要付费",
+          "缩短帖子长度后重试"
+        ]
+      },
+      "slowLoading": {
+        "title": "加载缓慢",
+        "description": "内容加载非常慢。",
+        "steps": [
+          "减少连接的中继数量",
+          "切换到更快的中继（更低延迟）",
+          "使用中继浏览器查找快速中继",
+          "检查你的网速",
+          "关闭其他占用带宽的应用"
+        ]
+      },
+      "unstableConnection": {
+        "title": "连接不稳定",
+        "description": "连接不断断开。",
+        "steps": [
+          "移除不可靠的中继",
+          "只保留 3-5 个稳定的中继",
+          "使用地理位置更接近你的中继",
+          "检查是否使用不稳定的 WiFi/移动数据",
+          "尝试使用 VPN"
+        ]
+      },
+      "zapNothing": {
+        "title": "Zap 按钮无反应",
+        "description": "Zap 功能可能未配置。",
+        "steps": [
+          "确保你已连接闪电钱包",
+          "检查客户端是否支持 zap",
+          "验证你的钱包是否配置了 NWC",
+          "尝试使用支持 zap 的不同客户端",
+          "检查接收者是否接受 zap"
+        ]
+      },
+      "zapError": {
+        "title": "Zap 错误信息",
+        "description": "你的 zap 出现了特定错误。",
+        "steps": [
+          "记录确切的错误信息",
+          "检查钱包是否有足够余额",
+          "验证 NWC 连接是否有效",
+          "尝试发送更小的金额",
+          "重启钱包和客户端应用"
+        ]
+      },
+      "zapNotReceived": {
+        "title": "Zap 已发送但未收到",
+        "description": "Zap 已发送但接收者未收到。",
+        "steps": [
+          "等待 5-10 分钟（闪电网络有时较慢）",
+          "检查你的钱包交易记录",
+          "验证接收者的闪电地址",
+          "联系接收者检查他们的钱包",
+          "Zap 有时会静默失败 - 请重试"
+        ]
+      },
+      "noWallet": {
+        "title": "未连接钱包",
+        "description": "你需要比特币闪电钱包才能发送 zap。",
+        "steps": [
+          "下载闪电钱包（Alby、Zeus、Phoenix）",
+          "用比特币为钱包充值",
+          "通过 NWC 将钱包连接到 Nostr 客户端",
+          "尝试发送小额测试 zap",
+          "从 21 sats 开始测试"
+        ]
+      },
+      "appCrash": {
+        "title": "应用启动时崩溃",
+        "description": "应用打开时立即崩溃。",
+        "steps": [
+          "完全强制关闭应用",
+          "重启你的设备",
+          "更新到最新应用版本",
+          "清除应用缓存（Android）或重新安装",
+          "检查设备是否满足最低要求"
+        ]
+      },
+      "blankScreen": {
+        "title": "空白或白屏",
+        "description": "应用打开但不显示任何内容。",
+        "steps": [
+          "等待 30 秒 - 可能正在加载",
+          "检查互联网连接",
+          "强制关闭并重新打开",
+          "清除应用数据/缓存",
+          "尝试改用网页版"
+        ]
+      },
+      "importFail": {
+        "title": "密钥导入失败",
+        "description": "无法导入你的密钥。",
+        "steps": [
+          "验证 nsec 格式（以 nsec1 开头）",
+          "检查是否有额外空格或字符",
+          "尝试从其他来源复制",
+          "如果可用，使用二维码扫描",
+          "确保你有完整的密钥（63 个字符）"
+        ]
+      },
+      "genericError": {
+        "title": "一般错误",
+        "description": "发生了意外错误。",
+        "steps": [
+          "记录确切的错误信息",
+          "重启应用",
+          "检查应用更新",
+          "尝试不同的客户端",
+          "向开发者报告问题"
+        ]
+      },
+      "profileNotFound": {
+        "title": "找不到个人资料",
+        "description": "无法找到该个人资料。",
+        "steps": [
+          "验证 npub 是否正确",
+          "尝试改用 NIP-05 搜索",
+          "检查用户是否使用特定中继",
+          "添加更多中继以找到该个人资料",
+          "用户可能已更换密钥"
+        ]
+      },
+      "profileNoPosts": {
+        "title": "个人资料加载但没有帖子",
+        "description": "找到了个人资料但缺少内容。",
+        "steps": [
+          "稍等片刻让帖子加载",
+          "连接用户发布到的中继",
+          "用户可能是新人或不活跃",
+          "尝试刷新个人资料",
+          "检查不同的时间段"
+        ]
+      },
+      "oldProfileData": {
+        "title": "个人资料数据过时",
+        "description": "显示旧的个人资料信息。",
+        "steps": [
+          "下拉刷新",
+          "清除应用缓存",
+          "重新连接到个人资料中继",
+          "等待中继同步",
+          "个人资料更新需要时间传播"
+        ]
+      },
+      "cantFollow": {
+        "title": "无法关注用户",
+        "description": "关注功能无法使用。",
+        "steps": [
+          "检查互联网连接",
+          "验证你对中继有写入权限",
+          "几分钟后重试",
+          "使用不同的客户端关注",
+          "检查中继是否正常运行"
+        ]
+      }
+    }
+  },
+  "nip05Checker": {
+    "title": "NIP-05 检查器",
+    "description": "验证 NIP-05 标识符（如 user@domain.com）。这些标识符提供了 Nostr 上的人类可读名称。",
+    "whatIsNip05": "什么是 NIP-05？",
+    "aboutNip05": "关于 NIP-05",
+    "benefits": {
+      "humanReadable": "获得人类可读的用户名",
+      "domainOwnership": "证明域名所有权",
+      "checkmark": "在某些客户端上显示勾选标记"
+    },
+    "form": {
+      "placeholder": "输入标识符（例如：jack@cash.app）",
+      "verifyButton": "验证标识符",
+      "checking": "检查中...",
+      "recent": "最近："
+    },
+    "results": {
+      "valid": {
+        "title": "有效的 NIP-05！",
+        "description": "此标识符配置正确",
+        "publicKey": "公钥（npub）",
+        "recommendedRelays": "推荐中继"
+      },
+      "invalid": {
+        "title": "无效的 NIP-05",
+        "description": "无法验证此标识符"
+      },
+      "checkAnother": "检查另一个",
+      "getYourOwn": "获取你自己的 NIP-05 标识符"
+    },
+    "errors": {
+      "invalidFormat": {
+        "title": "格式无效",
+        "description": "NIP-05 标识符应采用 user@domain.com 格式",
+        "fix": "检查格式后重试"
+      },
+      "domainNotFound": {
+        "title": "找不到域名",
+        "description": "无法访问你标识符中的域名",
+        "fix": "检查域名是否正确且可访问"
+      },
+      "notConfigured": {
+        "title": "未配置 NIP-05",
+        "description": "域名存在但未设置 NIP-05",
+        "fix": "联系域名所有者或使用 NIP-05 提供商"
+      },
+      "jsonError": {
+        "title": "JSON 解析错误",
+        "description": "服务器返回了无效数据",
+        "fix": "这通常是服务器问题 - 请稍后重试"
+      },
+      "networkError": {
+        "title": "网络错误",
+        "description": "无法连接以验证标识符",
+        "fix": "检查你的互联网连接后重试"
+      }
+    },
+    "providers": {
+      "title": "获取你自己的 NIP-05",
+      "getOne": "从这些提供商获取你自己的 NIP-05 标识符："
+    }
+  },
+  "emptyFeedFixer": {
+    "title": "修复你的空动态",
+    "description": "刚接触 Nostr？先关注一些账号并连接到中继，以在你的动态中看到内容。",
+    "setupProgress": "设置进度",
+    "step1": {
+      "title": "步骤 1：关注账号",
+      "description": "选择入门包或添加自定义账号",
+      "following": "正在关注",
+      "followAll": "全部关注",
+      "follow": "关注",
+      "addCustom": "添加",
+      "continue": "继续到中继"
+    },
+    "step2": {
+      "title": "步骤 2：连接到中继",
+      "description": "连接到中继以查看内容",
+      "connected": "已连接",
+      "connect": "连接",
+      "connectAll": "连接到所有推荐中继",
+      "continue": "继续",
+      "info": "中继是存储和分发 Nostr 内容的服务器。连接多个中继可确保更好的内容可用性。",
+      "recommended": "推荐"
+    },
+    "step3": {
+      "title": "步骤 3：开始使用 Nostr！",
+      "description": "你已准备好探索。选择一个客户端开始。",
+      "completed": "一切就绪！",
+      "successMessage": "你已关注 {accounts} 个账号并连接到 {relays} 个中继。你的 Nostr 动态现在应该有内容了！",
+      "awesome": "太棒了！"
+    },
+    "starterPacks": {
+      "technology": {
+        "name": "技术",
+        "description": "开发者、科技新闻和创新"
+      },
+      "bitcoin": {
+        "name": "比特币",
+        "description": "比特币爱好者和闪电网络支持者"
+      },
+      "art": {
+        "name": "艺术与设计",
+        "description": "艺术家、设计师和创意人士"
+      },
+      "general": {
+        "name": "综合",
+        "description": "一批有趣的值得关注的人"
+      }
+    },
+    "relays": {
+      "wssRelayDamus": {
+        "name": "Damus 中继",
+        "description": "最受欢迎的中继"
+      },
+      "wssRelayNostr": {
+        "name": "Nostr 中继",
+        "description": "通用中继"
+      },
+      "wssPurplePages": {
+        "name": "Purple Pages",
+        "description": "元数据中继"
+      }
+    }
+  },
+  "backupChecklist": {
+    "title": "备份你的密钥",
+    "description": "在继续之前，完成此清单以确保你的密钥已安全备份。这很关键 - 丢失的密钥无法恢复。",
+    "progress": "备份进度",
+    "checklist": {
+      "copiedNpub": {
+        "label": "复制 npub（公钥）",
+        "description": "你可以与他人分享的公开标识符"
+      },
+      "copiedNsec": {
+        "label": "复制 nsec（私钥）",
+        "description": "你的秘密密码 - 切勿与任何人分享",
+        "warning": "重要提示：这是你唯一的密码。如果丢失，你的账户将无法恢复。"
+      },
+      "passwordManager": {
+        "label": "保存到密码管理器",
+        "description": "1Password、Bitwarden、KeePass 或类似的安全存储"
+      },
+      "paperBackup": {
+        "label": "写在纸上（离线备份）",
+        "description": "存储在安全位置的物理副本",
+        "warning": "将其存放在远离电脑和手机的安全地方。"
+      },
+      "encryptedFile": {
+        "label": "保存到加密文件",
+        "description": "U 盘、加密云存储或硬件钱包"
+      }
+    },
+    "buttons": {
+      "copyNpub": "复制 npub",
+      "copyNsec": "复制 nsec",
+      "completeAll": "我已完成所有备份",
+      "completeRequired": "请先完成所有项目",
+      "skip": "暂时跳过（不推荐）"
+    },
+    "securityTips": {
+      "title": "安全提示",
+      "items": [
+        "切勿将 nsec 存储在纯文本文件或截图中",
+        "不要与任何人分享你的密钥，包括\"客服\"",
+        "在删除原始密钥之前，通过从备份恢复来测试备份",
+        "考虑使用硬件钱包以获得最大安全性"
+      ]
+    },
+    "completion": {
+      "title": "备份完成！",
+      "description": "你已成功在多个安全位置备份了你的 Nostr 密钥。你的密钥是安全的！",
+      "reset": "重置清单"
+    },
+    "skipModal": {
+      "title": "你确定吗？",
+      "description": "跳过备份会让你的账户面临风险。如果你丢失了私钥：",
+      "risks": [
+        "你将永久失去对账户的访问权限",
+        "你的所有帖子、关注者和数据都将丢失",
+        "没有办法恢复或重置你的密钥"
+      ],
+      "goBack": "返回",
+      "skipAnyway": "仍然跳过"
+    },
+    "confirmModal": {
+      "title": "确认备份",
+      "description": "请确认你已完成所有备份步骤。你明白丢失的密钥无法恢复。",
+      "review": "检查",
+      "confirm": "确认"
+    }
+  },
+  "clientComparisonTable": {
+    "title": "客户端对比",
+    "description": "并排对比 Nostr 客户端。找到适合你设备和需求的完美应用。",
+    "searchPlaceholder": "搜索客户端...",
+    "filters": {
+      "button": "筛选",
+      "platform": "平台",
+      "features": "主要功能",
+      "difficulty": "难度"
+    },
+    "platformLabels": {
+      "ios": "iOS",
+      "android": "Android",
+      "web": "网页",
+      "desktop": "桌面端"
+    },
+    "difficultyLabels": {
+      "beginner": "新手",
+      "intermediate": "中级",
+      "advanced": "高级"
+    },
+    "featureLabels": {
+      "wallet": "钱包",
+      "media": "媒体",
+      "longform": "长文章",
+      "privacy": "隐私"
+    },
+    "clearFilters": "清除所有筛选",
+    "export": "导出",
+    "noResults": {
+      "title": "未找到客户端",
+      "description": "尝试调整筛选条件以查看更多结果"
+    },
+    "card": {
+      "users": "用户",
+      "rating": "评分",
+      "pros": "优点",
+      "cons": "缺点",
+      "links": {
+        "web": "网页",
+        "ios": "iOS",
+        "android": "Android",
+        "desktop": "桌面端"
+      }
+    },
+    "clients": {
+      "damus": {
+        "name": "Damus",
+        "description": "最受欢迎的 iOS 客户端，拥有精致的 UI 和流畅的体验。",
+        "pros": [
+          "精美界面",
+          "易于使用",
+          "积极开发",
+          "优秀的入门引导",
+          "支持 Zap"
+        ],
+        "cons": [
+          "仅 iOS",
+          "有限的桌面同步",
+          "不支持长文章"
+        ]
+      },
+      "amethyst": {
+        "name": "Amethyst",
+        "description": "功能丰富的 Android 客户端，对所有 Nostr 功能的支持非常出色。",
+        "pros": [
+          "功能齐全",
+          "支持 Zap",
+          "活跃的社区",
+          "定期更新",
+          "高度可定制"
+        ],
+        "cons": [
+          "对新手可能过于复杂",
+          "仅 Android",
+          "设置复杂"
+        ]
+      },
+      "primal": {
+        "name": "Primal",
+        "description": "快速、现代的客户端，支持所有平台，性能出色。",
+        "pros": [
+          "全平台支持",
+          "加载快速",
+          "优秀的搜索",
+          "精美设计",
+          "定期更新"
+        ],
+        "cons": [
+          "部分人担心隐私问题",
+          "较新的应用",
+          "某些功能仍在开发中"
+        ]
+      },
+      "iris": {
+        "name": "Iris",
+        "description": "简单、无需注册的网页客户端，非常适合快速入门。",
+        "pros": [
+          "无需下载",
+          "即时可用",
+          "简洁界面",
+          "开源",
+          "私密"
+        ],
+        "cons": [
+          "仅网页版",
+          "高级功能有限",
+          "无钱包集成"
+        ]
+      },
+      "snort": {
+        "name": "Snort",
+        "description": "专注于简洁和性能的网页客户端。",
+        "pros": [
+          "闪电般快速",
+          "极简界面",
+          "无臃肿",
+          "适合阅读",
+          "注重隐私"
+        ],
+        "cons": [
+          "仅网页版",
+          "社交功能较少",
+          "无钱包"
+        ]
+      },
+      "coracle": {
+        "name": "Coracle",
+        "description": "为高级用户提供功能强大的桌面客户端。",
+        "pros": [
+          "功能强大",
+          "桌面优化",
+          "适合创作者",
+          "高级筛选",
+          "键盘快捷键"
+        ],
+        "cons": [
+          "仅桌面端",
+          "学习曲线较陡",
+          "不适合移动设备"
+        ]
+      },
+      "current": {
+        "name": "Current",
+        "description": "iOS 客户端，拥有出色的 Nostr Wallet Connect 集成。",
+        "pros": [
+          "最佳钱包支持",
+          "NWC 集成",
+          "高级用户功能",
+          "简洁界面"
+        ],
+        "cons": [
+          "更复杂",
+          "仅 iOS",
+          "学习曲线"
+        ]
+      },
+      "habla": {
+        "name": "Habla",
+        "description": "专注于长文章和通讯支持的客户端。",
+        "pros": [
+          "适合文章",
+          "通讯支持",
+          "简洁的写作界面",
+          "货币化"
+        ],
+        "cons": [
+          "仅网页版",
+          "用户群较小",
+          "社交功能有限"
+        ]
+      },
+      "nostur": {
+        "name": "Nostur",
+        "description": "注重易用性的功能丰富 iOS 客户端。",
+        "pros": [
+          "出色的界面",
+          "快速",
+          "优秀的中继管理",
+          "积极开发"
+        ],
+        "cons": [
+          "仅 iOS",
+          "需要一定学习"
+        ]
+      },
+      "plebstr": {
+        "name": "Plebstr",
+        "description": "适合新手的简单 Android 客户端。",
+        "pros": [
+          "易于使用",
+          "简洁设计",
+          "良好的性能"
+        ],
+        "cons": [
+          "功能较少",
+          "仅 Android",
+          "无钱包"
+        ]
+      }
+    },
+    "tags": {
+      "beginnerFriendly": "新手友好",
+      "popular": "热门",
+      "powerUser": "高级用户",
+      "featureRich": "功能丰富",
+      "crossPlatform": "跨平台",
+      "webOnly": "仅网页",
+      "minimal": "极简",
+      "privacy": "隐私",
+      "walletFocused": "钱包导向",
+      "longForm": "长文章",
+      "writers": "写作",
+      "ios": "iOS",
+      "android": "Android",
+      "desktop": "桌面端"
+    }
+  },
+  "relayExplorer": {
+    "title": "中继浏览器",
+    "description": "浏览并连接 Nostr 中继。中继存储和分发你的帖子。连接多个中继以获得更好的可靠性。",
+    "starterPack": {
+      "title": "刚接触 Nostr？",
+      "description": "从我们推荐的 4 个可靠中继入门包开始",
+      "button": "添加入门包"
+    },
+    "testAll": "测试全部",
+    "checking": "检查中...",
+    "search": {
+      "placeholder": "搜索中继..."
+    },
+    "filters": {
+      "topic": {
+        "label": "所有主题",
+        "bitcoin": "比特币",
+        "technology": "技术",
+        "general": "综合",
+        "art": "艺术与设计"
+      },
+      "type": {
+        "label": "所有类型",
+        "free": "免费",
+        "paid": "付费"
+      }
+    },
+    "selected": {
+      "title": "已选中继",
+      "count": "已选择 {count} 个中继",
+      "copy": "复制",
+      "download": "下载"
+    },
+    "customRelay": {
+      "placeholder": "添加自定义中继（wss://...）",
+      "add": "添加",
+      "remove": "移除"
+    },
+    "toast": {
+      "starterPackAdded": "已添加入门包中继！",
+      "alreadyExists": "中继已存在！",
+      "added": "已添加自定义中继！",
+      "removed": "已移除中继",
+      "copied": "已复制 {count} 个中继到剪贴板！",
+      "copyFailed": "复制失败",
+      "downloaded": "已下载中继列表！",
+      "checkComplete": "中继状态检查完成！"
+    },
+    "card": {
+      "latency": "延迟",
+      "latencyUnknown": "未知",
+      "users": "用户",
+      "location": "位置",
+      "features": "功能",
+      "select": "选择",
+      "deselect": "取消选择",
+      "status": {
+        "online": "在线",
+        "offline": "离线",
+        "checking": "检查中"
+      }
+    },
+    "regionLabels": {
+      "na": "北美",
+      "eu": "欧洲",
+      "asia": "亚洲",
+      "other": "其他"
+    },
+    "stats": {
+      "popularRelays": "热门中继",
+      "onlineNow": "当前在线",
+      "freeRelays": "免费中继",
+      "selected": "已选择"
+    }
+  },
+  "relayPlayground": {
+    "title": "中继游乐场",
+    "description": "实时测试和探索 Nostr 中继。检查连接、检查中继信息并分析事件。",
+    "tabs": {
+      "connection": "连接",
+      "health": "健康",
+      "nips": "NIPs",
+      "events": "事件",
+      "query": "查询"
+    },
+    "search": {
+      "placeholder": "搜索中继..."
+    },
+    "buttons": {
+      "checkAll": "检查所有中继",
+      "checking": "检查中...",
+      "connect": "连接",
+      "disconnect": "断开",
+      "inspect": "检查",
+      "clear": "清除",
+      "copy": "复制",
+      "export": "导出"
+    },
+    "status": {
+      "online": "在线",
+      "offline": "离线",
+      "checking": "检查中",
+      "connected": "已连接",
+      "disconnected": "已断开",
+      "error": "错误"
+    },
+    "connectionTab": {
+      "selectRelay": "选择要测试的中继",
+      "connectionState": "连接状态",
+      "latency": "延迟",
+      "latencyMs": "{{latency}}毫秒",
+      "unknown": "未知",
+      "connected": "已连接到中继",
+      "disconnected": "已断开中继",
+      "error": "连接错误"
+    },
+    "healthTab": {
+      "title": "中继健康",
+      "uptime": "正常运行时间",
+      "responseTime": "响应时间",
+      "reliability": "可靠性",
+      "lastChecked": "最后检查",
+      "history": "检查历史",
+      "noData": "无健康数据"
+    },
+    "nipsTab": {
+      "title": "支持的 NIPs",
+      "description": "Nostr Implementation Possibilities（NIPs）是此中继支持的协议扩展",
+      "nip": "NIP-{{number}}",
+      "supported": "支持 {{count}} 个 NIPs",
+      "software": "软件",
+      "version": "版本",
+      "contact": "联系方式"
+    },
+    "eventsTab": {
+      "title": "实时事件",
+      "description": "来自已连接中继的实时事件",
+      "noEvents": "尚未收到事件",
+      "eventId": "事件 ID",
+      "kind": "类型",
+      "author": "作者",
+      "timestamp": "时间戳",
+      "content": "内容",
+      "signature": "签名"
+    },
+    "queryTab": {
+      "title": "查询构建器",
+      "description": "构建自定义 Nostr 查询以获取特定事件",
+      "filters": "筛选",
+      "authors": "作者",
+      "kinds": "类型",
+      "since": "起始时间",
+      "until": "截止时间",
+      "limit": "限制",
+      "execute": "执行查询",
+      "results": "结果",
+      "noResults": "未找到结果"
+    },
+    "relayCard": {
+      "location": "位置",
+      "software": "软件",
+      "version": "版本"
+    },
+    "toast": {
+      "copied": "已复制到剪贴板！",
+      "copyFailed": "复制失败",
+      "exported": "已导出中继数据！"
+    }
+  },
+  "nostrSimulator": {
+    "title": "Nostr 模拟器",
+    "description": "Nostr 工作原理的交互式模拟。查看帖子如何通过去中心化网络流动。",
+    "controls": {
+      "play": "播放",
+      "pause": "暂停",
+      "reset": "重置",
+      "step": "步骤",
+      "speed": "速度"
+    },
+    "nodes": {
+      "user": "用户",
+      "relay": "中继",
+      "client": "客户端"
+    },
+    "messages": {
+      "sending": "发送帖子...",
+      "received": "帖子已接收！",
+      "broadcasting": "广播到中继...",
+      "syncing": "与网络同步..."
+    }
+  },
+  "quickstartSimulator": {
+    "title": "快速入门模拟器",
+    "description": "模拟你在 Nostr 上的第一步。通过交互式示例学习基础知识。",
+    "steps": {
+      "createKeys": "创建你的密钥",
+      "chooseClient": "选择客户端",
+      "connectRelay": "连接到中继",
+      "makePost": "发布第一条帖子",
+      "followPeople": "关注他人"
+    },
+    "buttons": {
+      "next": "下一步",
+      "previous": "上一步",
+      "restart": "重新开始",
+      "tryIt": "试一试"
+    }
+  },
+  "protocolComparisonUI": {
+    "title": "协议对比",
+    "description": "将 Nostr 与其他去中心化社交协议如 ActivityPub（Mastodon）和 AT 协议（Bluesky）进行比较。",
+    "centralizedLabel": "传统社交媒体",
+    "nostrLabel": "Nostr",
+    "items": {
+      "identity": {
+        "title": "身份",
+        "centralized": "你的账户归平台所有。他们可以随时删除或暂停你的账户。",
+        "nostr": "你通过加密密钥拥有自己的身份。没有人能删除你的账户。"
+      },
+      "data": {
+        "title": "数据",
+        "centralized": "你的帖子和数据存储在公司服务器上。他们可以删除或修改你的内容。",
+        "nostr": "你的数据分布在许多中继上。你控制你的内容存储在哪里。"
+      },
+      "clients": {
+        "title": "客户端",
+        "centralized": "你被锁定在一个平台的应用中。切换意味着失去你的关注者。",
+        "nostr": "使用你想要的任何客户端。你的身份和关注者随处跟随你。"
+      },
+      "censorship": {
+        "title": "抗审查性",
+        "centralized": "平台决定你能说什么。他们可以审查或隐形封禁你。",
+        "nostr": "没有中央机构控制言论。你总能找到愿意传播你内容的中继。"
+      }
+    },
+    "protocols": {
+      "nostr": "Nostr",
+      "activitypub": "ActivityPub",
+      "atProtocol": "AT 协议"
+    },
+    "features": {
+      "decentralization": "去中心化",
+      "censorshipResistance": "抗审查性",
+      "accountPortability": "账户可移植性",
+      "easeOfUse": "易用性",
+      "scalability": "可扩展性"
+    },
+    "details": {
+      "learnMore": "了解更多"
+    }
+  },
+  "postFlowSimulator": {
+    "title": "帖子流模拟器",
+    "description": "查看帖子如何从你的设备通过 Nostr 网络传输到其他用户。",
+    "stages": {
+      "create": "创建帖子",
+      "sign": "用密钥签名",
+      "send": "发送到中继",
+      "broadcast": "中继广播",
+      "receive": "他人接收"
+    },
+    "labels": {
+      "yourDevice": "你的设备",
+      "relay": "中继",
+      "followers": "关注者"
+    },
+    "buttons": {
+      "play": "播放",
+      "pause": "暂停",
+      "reset": "重置"
+    },
+    "currentStepLabel": "当前步骤",
+    "stepDescriptions": {
+      "0": "你在设备上创建帖子并用私钥签名。",
+      "1": "你的帖子发布到中继 1，它存储并验证帖子。",
+      "2": "你的帖子也发布到中继 2（以及你使用的任何其他中继）。",
+      "3": "你的关注者从他们连接的中继接收帖子。"
+    }
+  },
+  "zapSimulator": {
+    "title": "Zap 模拟器",
+    "description": "模拟在 Nostr 上使用闪电网络发送和接收比特币支付（zaps）。",
+    "steps": {
+      "createInvoice": "创建发票",
+      "scan": "扫描二维码",
+      "pay": "用钱包支付",
+      "confirm": "确认收款"
+    },
+    "labels": {
+      "amount": "金额（sats）",
+      "memo": "备注",
+      "sender": "发送者",
+      "receiver": "接收者",
+      "invoice": "闪电发票"
+    },
+    "buttons": {
+      "create": "创建发票",
+      "pay": "支付 Zap",
+      "simulate": "模拟 Zap",
+      "copy": "复制"
+    }
+  },
+  "relayVisualizer": {
+    "title": "中继可视化",
+    "description": "可视化中继如何连接并形成 Nostr 网络网格。",
+    "controls": {
+      "addRelay": "添加中继",
+      "removeRelay": "移除中继",
+      "connect": "连接",
+      "disconnect": "断开"
+    },
+    "labels": {
+      "connections": "连接",
+      "networkSize": "网络规模",
+      "relayCount": "{{count}} 个中继"
+    }
+  },
+  "relayWorldMap": {
+    "title": "中继世界地图",
+    "description": "查看 Nostr 中继在世界各地的位置。",
+    "regions": {
+      "northAmerica": "北美",
+      "southAmerica": "南美",
+      "europe": "欧洲",
+      "asia": "亚洲",
+      "africa": "非洲",
+      "oceania": "大洋洲"
+    },
+    "stats": {
+      "totalRelays": "中继总数",
+      "topRegion": "主要区域",
+      "avgLatency": "平均延迟"
+    }
+  },
+  "interestFilter": {
+    "allGuides": "所有指南",
+    "bitcoin": "比特币",
+    "privacy": "隐私",
+    "security": "安全",
+    "relays": "中继",
+    "tools": "工具",
+    "community": "社区"
+  },
+  "guideSection": {
+    "startHere": "从这里开始",
+    "complete": "完成",
+    "locked": "锁定",
+    "unlockRequirement": "再完成 {count} 个 {level} 指南以解锁"
+  },
+  "relayFeedBrowser": {
+    "title": "浏览中继动态",
+    "subtitle": "通过浏览中继动态发现 Nostr 社区",
+    "filterByCategory": "按类别筛选",
+    "categories": {
+      "all": "全部",
+      "general": "综合",
+      "bitcoin": "比特币",
+      "art": "艺术与创意",
+      "music": "音乐",
+      "tech": "技术",
+      "dev": "开发",
+      "gaming": "游戏",
+      "regional": "地区"
+    },
+    "allRelays": "所有中继",
+    "noRelays": "此类别中没有中继",
+    "howToAdd": "如何将此中继添加到你的客户端",
+    "recommendedClients": "支持中继浏览的客户端",
+    "moreClients": "还有更多..."
+  },
+  "officialAccount": {
+    "title": "官方账号",
+    "followUs": "在 Nostr 上关注我们",
+    "viewProfile": "在 Njump 上查看个人资料",
+    "recentPosts": "最近帖子",
+    "showMore": "显示更多",
+    "showLess": "显示更少",
+    "noPosts": "没有最近帖子",
+    "tryAgain": "重试",
+    "errors": {
+      "nip05Failed": "无法解析 NIP-05",
+      "loadFailed": "无法加载账号数据"
+    }
+  },
+  "time": {
+    "justNow": "刚刚"
+  }
+}

@@ -1,0 +1,180 @@
+---
+title: "简单理解 Nostr"
+description: "5 分钟了解 Nostr。学习去中心化社交媒体的工作原理、为什么它很重要，以及它与传统平台的不同之处。"
+estimatedTime: "5 分钟"
+priority: 2
+category: "getting-started"
+---
+
+import { HoverCard } from "@components/HoverCard";
+import { ProtocolComparison } from "@components/ProtocolComparison";
+import { NostrSimulator } from "@components/NostrSimulator";
+import { WhatIsNostrQuiz } from "@components/interactive/WhatIsNostrQuiz";
+
+{ /* <ProgressIndicator current={1} total={4} estimatedTime="5 分钟" /> */ }
+
+{ /* <div className="simulator-section my-12"> */ }
+  { /* <NostrSimulator client:load /> */ }
+{ /* </div> */ }
+
+### 问题所在（1 分钟阅读）
+
+**你并不拥有你的社交媒体账号。**
+
+当你在 Twitter、Instagram 或 Facebook 上建立粉丝群体时，你是在租借的土地上建房。这意味着：
+
+### 平台风险是真实的
+
+- **封号会发生。** 一个错误、一个有争议的观点，或一个虚假举报，都可能让你被锁在积累了多年的内容和人际关系之外
+- **算法会变。** 你的帖子今天可能触达 10,000 人，明天可能只有 200 人——没有任何警告或解释
+- **你的粉丝不属于你。** 如果平台封了你，你就失去了花了多年时间建立的受众
+- **数据被锁定。** 你的帖子、照片和消息都被困在一家公司的数据库中
+
+### 核心问题
+
+大型科技公司控制着：
+
+- 谁可以发言
+- 谁可以听到你的声音
+- 什么内容会被推广
+- 你是否可以导出数据
+
+**这不仅仅是麻烦——它让你的数字身份面临风险。**
+
+---
+
+### 解决方案：协议 vs 平台（2 分钟阅读）
+
+Nostr 通过改变一个根本性的东西来解决这个问题：**它是一个协议，而不是平台。**
+
+### 想想电子邮件
+
+你可能每天都在使用电子邮件，却从未想过这个神奇之处：
+
+- Gmail 用户可以发邮件给 Outlook 用户
+- 你可以从 Yahoo 换到 ProtonMail，保留你的通讯录
+- 没有单一公司控制所有电子邮件
+
+**电子邮件是一个协议。** 任何人都可以构建电子邮件应用。每个人都可以通信。没有人拥有这个网络。
+
+**Nostr 的工作方式相同。**
+
+### 区别解释
+
+<ProtocolComparison client:load />
+
+**中心化（Twitter、Facebook）：** 一家公司拥有一切。他们可以封你、改变规则，或完全关闭。
+
+**联邦制（Mastodon）：** 许多可以相互通信的服务器，但每个服务器所有者对其用户拥有权力。
+
+**Nostr：** 没有服务器拥有你的身份。你持有密钥。你选择在哪里发布。你可以随时切换应用。
+
+### 这对你意味着什么
+
+- **一个身份，无处不在。** 你的密钥在每个 Nostr 应用上都有效
+- **你的数据跟随你。** 切换客户端？你的帖子和粉丝也随之而来
+- **没人能封你。** 他们可以忽略你，但无法阻止你发帖
+- **多种选择。** 使用你喜欢的界面的应用
+
+---
+
+### 核心概念（2 分钟阅读）
+
+不必担心记住所有内容。你会通过实践学习。但这里有一个心理模型：
+
+### 公钥（npub）= 你的用户名
+
+<HoverCard
+  term="公钥"
+  definition="一个以 'npub1' 开头的长字符串，公开标识你的身份。可以安全地在任何地方分享。"
+>
+  你在 Nostr 上的公开身份看起来像这样：`npub1q...9x`
+</HoverCard>
+
+- 看起来像这样：<code className="break-all text-sm">npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
+- 自由分享——这是人们找到和关注你的方式
+- 把它想象成你的电子邮件地址或电话号码
+- **绿灯：可以安全地在任何地方分享**
+
+### 私钥（nsec）= 你的密码
+
+<HoverCard
+  term="私钥"
+  definition="一个以 'nsec1' 开头的秘密字符串，证明你是你。永远不要分享。丢失它 = 丢失你的账号。"
+>
+  你的秘密密钥看起来像这样：`nsec1q...9x`
+</HoverCard>
+
+- 看起来像这样：<code className="break-all text-sm">nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
+- 这证明你拥有你的公钥
+- **红色警报：永远不要与任何人分享**
+- 丢失它 = 永久丢失。没有"忘记密码"选项
+
+### 中继 = 邮局
+
+<HoverCard
+  term="中继"
+  definition="存储和转发 Nostr 消息的服务器。你选择要连接哪些，并且可以随时切换。"
+>
+  中继就像你帖子的邮局
+</HoverCard>
+
+- 存储和分享 Nostr 消息的服务器
+- 你选择使用哪些（可以使用很多）
+- 有些是免费的，有些需要付费
+- [高级] 你甚至可以运行自己的
+
+### 客户端 = 应用
+
+<HoverCard
+  term="客户端"
+  definition="你用来与 Nostr 交互的应用——比如 Damus、Amethyst 或 Iris。你可以随时切换客户端而不会丢失身份。"
+>
+  客户端就像 Gmail 和 Apple Mail——不同的界面，相同的协议
+</HoverCard>
+
+- 你用来发布、浏览和发消息的应用
+- 示例：Damus（iOS）、Amethyst（Android）、Iris（网页版）
+- 随时切换——你永远不会被锁定
+
+---
+
+### 为什么这很重要（1 分钟阅读）
+
+### 好处
+
+✅ **没人能封你。** 他们可以忽略你的帖子，但无法阻止你发布
+
+✅ **你的数据是可移植的。** 每个帖子、每个粉丝、每个点赞——都是你的，可以移动
+
+✅ **没有广告或算法。** 大多数客户端按时间顺序显示内容。你的注意力不是产品
+
+✅ **有弹性。** 如果一个中继宕机，你的身份仍然存在。如果一个客户端关闭，你切换到另一个
+
+### 责任
+
+⚠️ **你要对你的密钥负责。** 丢失你的 nsec = 永远丢失你的身份。没有客服可以求助
+
+⚠️ **没有"撤销"按钮。** 删除的帖子可能仍然存在于中继上。发帖前要三思
+
+⚠️ **学习曲线。** 它是新的、不同的，有些部分仍然粗糙
+
+### 值得吗？
+
+这取决于你看重什么：
+
+- **如果你想要简单：** 传统平台更容易（目前）
+- **如果你想要自由：** Nostr 提供的控制是任何平台无法比拟的
+- **如果你好奇：** 最好的学习方式是尝试
+
+---
+
+## 测试你的知识
+
+准备好检查你学到了什么了吗？参加这个快速测验：
+
+<WhatIsNostrQuiz client:load />
+
+---
+
+_想深入了解？查看我们的 [常见问题](/zh/guides/faq) 获取更多主题。_

@@ -1,0 +1,318 @@
+---
+title: "你的密钥，你的身份"
+description: "学习如何生成、保存和保护你的 Nostr 密钥。面向新手的完整安全指南。遵循 3-2-1 备份规则。"
+estimatedTime: "8 分钟"
+priority: 3
+category: "getting-started"
+---
+
+import { AlertBanner } from "@components/AlertBanner";
+import { KeyVisualizer } from "@components/KeyVisualizer";
+import { KeyGenerator } from "@components/KeyGenerator";
+import { BackupChecklist } from "@components/BackupChecklist";
+import { SecurityQuiz } from "@components/interactive/SecurityQuiz";
+
+{/* ProgressIndicator 暂时禁用 - 稍后将用实际追踪功能实现 */}
+{/* <ProgressIndicator current={2} total={4} estimatedTime="8 分钟" /> */}
+
+
+## 为什么这很重要
+
+与 Twitter 或 Instagram 不同，Nostr 让你**自己**掌控你的身份。没有公司可以封你，没有算法可以压制你的内容，也没有客服会丢失你的数据。这种自由伴随着责任——你拥有你的密钥，你控制你的账号。
+
+好消息？保护你的密钥很简单。按照本指南操作，你会比 99% 的用户更安全。
+
+---
+
+## 理解密钥（2 分钟）
+
+Nostr 使用加密技术来保护你的身份。别担心——你不需要理解数学。只需把它想象成锁和钥匙系统。
+
+### 什么是密钥对？
+
+每个 Nostr 用户都有两个协同工作的密钥：
+
+<KeyVisualizer />
+
+### 你的公钥（npub1...）
+
+<div className="key-display bg-green-50 dark:bg-green-900/20 border-2 border-green-500 p-4 rounded-lg my-4">
+  <div className="flex items-center gap-2 mb-2">
+    <span className="text-2xl">🟢</span>
+    <span className="font-bold text-green-700 dark:text-green-400">
+      可以安全分享
+    </span>
+  </div>
+  <code className="text-sm break-all bg-white dark:bg-gray-800 p-2 rounded block text-gray-900 dark:text-gray-100">
+    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+  </code>
+  <p className="mt-2 text-sm text-green-700 dark:text-green-400">
+    这是你的用户名。在任何地方分享。公开发布。这是人们找到你的方式。
+  </p>
+</div>
+
+**你可以用你的 npub 做什么：**
+
+- 在你的网站或其他社交资料上分享
+- 给朋友，让他们可以关注你
+- 公开发布
+- 包含在你的电子邮件签名中
+
+### 你的私钥（nsec1...）
+
+<div className="key-display bg-red-50 dark:bg-red-900/20 border-2 border-red-500 p-4 rounded-lg my-4">
+  <div className="flex items-center gap-2 mb-2">
+    <span className="text-2xl">🔴</span>
+    <span className="font-bold text-red-700 dark:text-red-400">
+      永远不要分享 - 绝密
+    </span>
+  </div>
+  <code className="text-sm break-all bg-white dark:bg-gray-800 p-2 rounded block text-gray-900 dark:text-gray-100">
+    nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+  </code>
+  <p className="mt-2 text-sm text-red-700 dark:text-red-400">
+    这是你的密码。任何拥有它的人都可以以你的身份发帖。丢失它 = 永远丢失你的账号。
+  </p>
+</div>
+
+**你的 nsec 的规则：**
+
+- 永远不要与任何人分享
+- 永远不要截图（会同步到云端）
+- 永远不要保存在未加密的笔记中
+- 永远不要粘贴到随机网站
+- 始终安全备份（见下文）
+
+### 为什么这么长？
+
+这些字符串看起来像乱码，因为它们是加密密钥。原因如下：
+
+- **256 位安全：** 让它不可能被猜测或破解
+- **随机生成：** 即使计算机也无法预测
+- **单向数学：** 你无法从公钥推算出私钥
+
+这样想：可能的私钥数量比地球上的沙粒还多。没人能猜到你的。
+
+---
+
+## 生成你的密钥（3 分钟）
+
+> 💡 **提示：** 虽然这个密钥生成器在浏览器中安全地创建密钥，但你也可以直接在大多数 Nostr 客户端（如 Damus、Amethyst 或 Iris）中生成密钥。把这个工具看作是在使用真实客户端之前练习的"模拟器"。
+
+<KeyGenerator client:load />
+
+### 分步说明
+
+1. **点击"生成新密钥"**
+   - 这会创建一个随机的密钥对
+   - 观看动画以了解发生了什么
+
+2. **立即保存两个密钥**
+   - 将你的 **npub**（绿色）复制到安全的地方
+   - 将你的 **nsec**（红色）复制到**安全**的地方
+   - 在做其他事情之前现在就做
+
+3. **验证你已保存它们**
+   - 关闭生成器
+   - 重新打开它
+   - 你还能访问你的密钥吗？
+
+### 示例格式（不是真实密钥）
+
+下面是你 Nostr 密钥的样子。这些只是示例——不是有效密钥：
+
+<div className="test-keys bg-gray-100 dark:bg-gray-800 p-4 rounded-lg my-4">
+  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">公钥（npub）格式示例：</p>
+  <code className="text-xs break-all block mb-4 text-gray-900 dark:text-gray-100">
+    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+  </code>
+
+<p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+  私钥（nsec）格式示例：
+</p>
+<code className="text-xs break-all block text-red-600 dark:text-red-400">
+  nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+</code>
+
+  <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 italic">
+    这些只是格式示例——不是有效密钥。使用上面的密钥生成器获取真实测试密钥。
+  </p>
+</div>
+
+---
+
+## 3-2-1 备份规则（2 分钟）
+
+这个规则来自专业数据管理。虔诚地遵循它。
+
+<BackupChecklist client:load />
+
+### 规则解释
+
+**你的 nsec 的 3 份副本**
+
+- 一份不够。两份更好。三份才安全。
+- 如果一份失败，你有两份备份
+
+**2 种不同的媒介类型**
+
+- 数字：密码管理器、加密文件
+- 物理：手写纸张、金属板
+- 为什么不同类型？数字失败的原理与物理不同
+
+**1 个异地位置**
+
+- 至少一份副本应该在别的地方
+- 云存储算作异地（如果加密）
+- 保险箱、信任的朋友/家人
+
+### 备份方法排名
+
+**最好（这样做）：**
+
+1. ✅ 密码管理器（1Password、Bitwarden）
+2. ✅ 写在纸上，存放在保险箱中
+3. ✅ 加密 USB 驱动器放在不同位置
+
+**好：**
+
+4. ✅ 加密云存储（iCloud/Google Drive 加密）
+5. ✅ 金属种子板（防火/防水）
+
+**永远不要做：**
+
+- ❌ 手机截图（同步到云端）
+- ❌ 未加密的笔记应用
+- ❌ 发邮件给自己
+- ❌ 发短信
+- ❌ 保存在浏览器自动完成中
+
+### 如果你丢失密钥会发生什么？
+
+**这就是 3-2-1 备份规则重要的原因。**
+
+与中心化平台不同，Nostr 没有"忘记密码"按钮或客服可以帮你恢复账号。但别担心——遵循下面简单的备份步骤会让你安全。
+
+**这样想：** 你不会把毕生积蓄作为现金放在口袋里。你会把大部分存在银行（多个备份），只带需要的。你的 nsec 也是如此——安全存储，不要只放在手机上。
+
+---
+
+## 安全最佳实践（2 分钟）
+
+### 不要做的事（从别人的错误中学习）
+
+**不要截图你的密钥**
+
+- 截图会同步到云端（iCloud、Google Photos）
+- 云账户会被黑客入侵
+- 删除照片并不会从备份中移除
+
+**不要保存在未加密的笔记中**
+
+- Apple Notes、Google Keep 等没有加密
+- 任何拥有你手机/电脑的人都可以读取
+- 默认同步到云端
+
+**不要与任何人分享**
+
+- 不是你的配偶
+- 不是你最好的朋友
+- 不是"Nostr 客服"（没有客服）
+- 不是任何人，永远
+
+### 要做的事（最佳实践）
+
+**使用密码管理器**
+
+- 1Password、Bitwarden、KeePass
+- 加密、备份、可访问
+- 也为客户端生成强密码
+
+**写在纸上**
+
+- 低技术，高可靠性
+- 不需要电池
+- 存放在保险箱、锁盒或隐藏处
+
+**使用 Nostr 签名应用 [高级]**
+
+- 像 Amber（Android）这样的应用安全存储你的密钥
+- 客户端请求签名而不是存储密钥
+- 增加额外的安全层
+- 推荐给认真使用的用户
+
+---
+
+## 常见错误（1 分钟）
+
+<SecurityQuiz client:load />
+
+### 恐怖故事（可选阅读）
+
+这些是真实的。从中学习：
+
+**"我以为我备份了"**
+
+> "我把 nsec 保存在密码管理器中，但忘了同步。手机坏了。2,000 个粉丝没了。不得不重新开始。" — @nostruser123
+
+**"那个没被删除的截图"**
+
+> "我截图了我的密钥，然后删除了照片。忘了最近删除文件夹。有人从我的 iCloud 恢复了它。失去了一切。" — 匿名
+
+**"那个'乐于助人'的陌生人"**
+
+> "有人私信我提出要'验证我的账号'。要求我提供 nsec 来'正确链接'。我给了他们。他们窃取了我的账号并开始发布诈骗信息。" — @learnedthehardway
+
+---
+
+<div className="confirmation-section my-12 p-6 bg-green-50 dark:bg-green-900/20 border-2 border-green-500 rounded-lg">
+  <h3 className="text-xl font-bold mb-4 text-green-700 dark:text-green-400">
+    ✓ 密钥备份清单
+  </h3>
+
+<div className="space-y-2 mb-6">
+  <label className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+    <input type="checkbox" className="w-5 h-5" />
+    <span>我已保存我的 npub（公钥）</span>
+  </label>
+  <label className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+    <input type="checkbox" className="w-5 h-5" />
+    <span>我已将我的 nsec（私钥）保存在 3 个以上的地方</span>
+  </label>
+  <label className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+    <input type="checkbox" className="w-5 h-5" />
+    <span>我理解丢失我的 nsec = 丢失我的账号</span>
+  </label>
+  <label className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+    <input type="checkbox" className="w-5 h-5" />
+    <span>我永远不会与任何人分享我的 nsec</span>
+  </label>
+</div>
+
+</div>
+
+---
+
+## 高级：真实世界的警示故事
+
+<details>
+<summary>⚠️ 点击查看：没有适当备份会发生什么（可选）</summary>
+
+虽然 3-2-1 备份规则让你安全，但以下是人们没有遵循它时发生的真实例子：
+
+**案例研究 1：比特币打赏**  
+一位内容创作者在 6 个月内收到了价值 50,000 美元的比特币打赏（zaps）。他们的手机被偷了——没有备份。打赏永远丢失了，因为 nsec 只在那台设备上。
+
+**案例研究 2：网红**  
+一位拥有 10,000 粉丝的 Nostr 网红把手机掉进了泳池。没有备份 = 从零开始。多年的社区建设，付诸东流。
+
+**案例研究 3：开发者**  
+一位拥有多年代码贡献和技术讨论的 Nostr 应用开发者，在笔记本电脑崩溃时失去了一切。没有云备份，没有第二台设备，无法恢复。
+
+**共同线索：** 所有这些都是可以通过简单备份到密码管理器或加密 USB 驱动器来预防的。
+
+</details>
+
+---
+
+**有问题？** 查看我们的 [常见问题](/zh/guides/faq) 了解关于密钥和安全的常见疑虑。

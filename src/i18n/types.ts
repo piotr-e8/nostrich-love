@@ -1,5 +1,5 @@
 // Type definitions for translations
-export type Locale = 'en' | 'pl' | 'es' | 'de';
+export type Locale = 'en' | 'pl' | 'es' | 'de' | 'zh';
 
 export interface QuizOption {
   id: string;

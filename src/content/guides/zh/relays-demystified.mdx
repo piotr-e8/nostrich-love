@@ -1,0 +1,237 @@
+---
+title: "帖子如何传播：中继 explained"
+description: "用简单的类比和交互工具理解 Nostr 中继的工作原理"
+estimatedTime: "5-10 分钟"
+priority: 2
+category: "intermediate"
+prerequisites: ["keys-and-security", "quickstart"]
+---
+
+import { RelayWorldMap } from "@components/ui/RelayWorldMap";
+import { PostFlowSimulator } from "@components/ui/PostFlowSimulator";
+import { RelayExplorer } from "@components/interactive/RelayExplorer";
+import { TroubleshootingWizard } from "@components/interactive/TroubleshootingWizard";
+import { RelaysDemystifiedQuiz } from "@components/interactive/RelaysDemystifiedQuiz";
+
+中继是 Nostr 的邮局。它们是你的消息存在的地方，也是它们到达其他用户的方式。
+
+## 邮局类比 🏤
+
+想象 Nostr 是一个遍布全球的邮局网络。
+
+- **你**有一个邮箱（你的密钥）
+- **中继**是邮局
+- **帖子**是你发送的信件
+
+这是与传统社交媒体的关键区别：**你选择在哪里发送你的邮件。**
+
+```
+传统社交媒体：    Nostr：
+┌──────────────────┐        ┌──────────────────┐
+│ 一个大服务器   │        │ 许多邮局│
+│ (Twitter/X)      │        │ (中继)         │
+│                  │        │                  │
+│ 每个人都在      │        │ 你选择哪些   │
+│ 一个地方        │        │ 来使用      │
+└──────────────────┘        └──────────────────┘
+```
+
+### 选择的力量
+
+在 Nostr 中，你不会被锁定在一个服务提供商。你可以：
+
+- 发送帖子到任何中继
+- 连接到多个中继
+- 随时切换中继
+- 运行自己的中继
+
+<RelayWorldMap />
+
+## 为什么帖子不同步 🔄
+
+这是新用户面临的最常见困惑：
+
+> "我发布了东西，但我的朋友看不到！"
+
+### 视觉解释
+
+```
+你的连接                    朋友的连接
+     │                                  │
+     ▼                                  ▼
+┌──────────┐                     ┌──────────┐
+│ 中继 A  │         ❌          │ 中继 B  │
+│ (wss://...)│      没有链接      │(wss://...)│
+└──────────┘                     └──────────┘
+     │                                  │
+   你的帖子                         朋友的帖子
+```
+
+**如果你发布到中继 A，而你的朋友只使用中继 B，他们看不到你的帖子。**
+
+### 解决方案：连接到多个中继
+
+```
+你的连接
+     │
+┌────┴────┐
+│ 中继 A │
+│ 中继 B │  ← 连接到两者！
+│ 中继 C │
+└────┬────┘
+     │
+   你的帖子 → 触达更多人
+```
+
+大多数 Nostr 客户端将你连接到几个默认中继。但理解这一点有助于当你：
+
+- 看不到某人的内容
+- 想加入特定社区
+- 需要故障排除缺失的帖子
+
+<PostFlowSimulator client:load />
+
+## 选择中继 🔌
+
+### 默认推荐
+
+如果你刚开始，坚持使用这些热门、可靠的中继：
+
+| 中继                      | 描述      | 可靠性 |
+| -------------------------- | ---------------- | ----------- |
+| `wss://relay.damus.io`     | Damus 主中继 | ⭐⭐⭐⭐⭐  |
+| `wss://nostr.wine`         | 一般中继    | ⭐⭐⭐⭐    |
+| `wss://relay.snort.social` | Snort 社交     | ⭐⭐⭐⭐    |
+
+### 基于兴趣的发现
+
+社区经常为他们自己的讨论运行中继：
+
+- **比特币**: `wss://nostr.bitcoiner.social`
+- **开发**: `wss://relay.nostrdevs.com`
+- **艺术**: `wss://relay.nostrich.art`
+
+<RelayExplorer client:load />
+
+### 免费 vs 付费中继
+
+**免费中继**
+
+- 对所有人开放
+- 可能有速率限制
+- 可能充满垃圾邮件
+- 对初学者很好
+
+**付费中继**
+
+- 通常需要小额费用（通常每月 1000-5000 聪）
+- 更好的性能
+- 更少垃圾邮件
+- 支持中继运营者
+
+> 💡 **提示：** 从免费中继开始。你以后随时可以添加付费的。
+
+---
+
+## 高级：发件箱模型（NIP-65）[高级]
+
+<Note type="advanced">
+  本节是可选的。你不需要理解 NIP-65 就能很好地使用 Nostr。
+</Note>
+
+### 什么是 NIP-65？
+
+NIP-65 引入了一种更智能的处理中继的方式，称为"发件箱模型"。
+
+**代替**：你手动连接到 10+ 个中继
+**你做**：发布一次你的首选中继列表，让客户端弄清楚
+
+### 工作原理
+
+```
+1. 你发布一个中继列表：
+   {
+     "read": ["wss://relay-a.com"],
+     "write": ["wss://relay-b.com"]
+   }
+
+2. 其他客户端读取这个并知道：
+    - 在哪里找到你的帖子（读取中继）
+    - 在哪里向你发送消息（写入中继）
+```
+
+### 设置个人中继
+
+对于高级用户，运行你自己的中继给你：
+
+- **完全控制**你的数据
+- **完美的可靠性**（不依赖他人）
+- **隐私**（只有你的数据在中继上）
+
+热门个人中继软件：
+
+- [strfry](https://github.com/hoytech/strfry) - 快速 C++ 实现
+- [nostr-rs-relay](https://gitlab.com/soapbox-pub/nostr-rs-relay) - Rust 实现
+
+> 📚 查看我们的 [中继指南](/zh/guides/relay-guide) 以获取详细的设置说明。
+
+---
+
+## 快速参考
+
+### 常见中继命令
+
+在大多数客户端中，你可以：
+
+- **添加中继**：设置 → 中继 → 添加
+- **移除中继**：长按/点击中继 → 移除
+- **检查状态**：中继列表显示连接状态
+
+### 最佳实践
+
+1. **连接 4-8 个中继** 以获得良好的覆盖
+2. **包含一个"写入"中继** 你总是发布到那里
+3. **检查中继正常运行时间** 在依赖它之前
+4. **保持你的中继列表更新** 随着网络增长
+
+---
+
+## 故障排除
+
+### "我看不到任何帖子"
+
+- 检查你是否连接到任何中继（设置 → 中继）
+- 尝试添加上面的热门中继
+- 等待片刻让内容加载
+
+### "我的帖子消失"
+
+- 一些中继删除旧内容以节省空间
+- 连接到更多中继以获得冗余
+- 考虑为永久存储使用付费中继
+
+### "中继无法连接"
+
+- 检查你的互联网连接
+- 尝试在浏览器中测试中继 URL（应该显示错误/ws 页面）
+- 中继可能宕机 - 尝试另一个
+
+<TroubleshootingWizard client:load />
+
+---
+
+## 测试你的理解
+
+认为你已经理解中继了？测试你的知识：
+
+<RelaysDemystifiedQuiz client:load />
+
+---
+
+## 还有问题？
+
+加入 Nostr 社区：
+
+- [Nostr Reddit](https://reddit.com/r/nostr)
+- [Nostr Telegram](https://t.me/nostr_protocol)
+- [Stacker News](https://stacker.news)（比特币/Nostr 论坛）

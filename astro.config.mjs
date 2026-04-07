@@ -16,7 +16,7 @@ export default defineConfig({
   adapter: undefined,
   i18n: {
     defaultLocale: "en",
-    locales: ["en", "pl", "es", "de"],
+    locales: ["en", "pl", "es", "de", "zh"],
     routing: {
       prefixDefaultLocale: false,
     },
@@ -35,6 +35,7 @@ export default defineConfig({
           pl: 'pl-PL',
           es: 'es-ES',
           de: 'de-DE',
+          zh: 'zh-CN',
         },
       },
     }),

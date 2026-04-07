@@ -11,6 +11,7 @@ const languages = [
   { code: "pl", label: "Polski", flag: "🇵🇱" },
   { code: "es", label: "Español", flag: "🇪🇸" },
   { code: "de", label: "Deutsch", flag: "🇩🇪" },
+  { code: "zh", label: "中文", flag: "🇨🇳" },
 ];
 
 export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
@@ -45,12 +46,19 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
         window.location.href = path.replace(/^\/de/, '') || '/';
         return;
       }
+    } else if (path.startsWith("/zh/")) {
+      setCurrentLang("zh");
+      // If we're on a non-guides page with /zh/ prefix, redirect back to English
+      if (!isGuidesPage && path !== '/zh/') {
+        window.location.href = path.replace(/^\/zh/, '') || '/';
+        return;
+      }
     } else if (path.startsWith("/en/")) {
       setCurrentLang("en");
     } else {
       // Check if there's a saved preference in localStorage
       const savedLang = localStorage.getItem('preferredLanguage');
-      if (savedLang && ['en', 'pl', 'es', 'de'].includes(savedLang)) {
+      if (savedLang && ['en', 'pl', 'es', 'de', 'zh'].includes(savedLang)) {
         setCurrentLang(savedLang);
         // Only redirect to locale-prefixed URL if we're on a guides page
         if (savedLang !== 'en' && isGuidesPage) {
@@ -75,7 +83,7 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
     if (isGuidesPage) {
       // For guides, use locale-prefixed URLs
       // Remove any existing locale prefix
-      const pathWithoutLocale = currentPath.replace(/^\/(en|pl|es|de)(\/|$)/, '/') || '/';
+      const pathWithoutLocale = currentPath.replace(/^\/(en|pl|es|de|zh)(\/|$)/, '/') || '/';
 
       if (langCode === "en") {
         newPath = `/en${pathWithoutLocale}`;
@@ -85,7 +93,7 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
     } else {
       // For all other pages, stay on English version
       // Remove any locale prefix if present
-      newPath = currentPath.replace(/^\/(pl|es|de)\//, '/');
+      newPath = currentPath.replace(/^\/(pl|es|de|zh)\//, '/');
     }
 
     window.location.href = newPath;

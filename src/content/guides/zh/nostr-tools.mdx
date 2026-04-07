@@ -1,0 +1,326 @@
+---
+title: "必备 Nostr 工具"
+description: "最有用的 Nostr 工具和服务精选目录。找到密钥管理、媒体托管、分析等工具。"
+estimatedTime: "10 分钟"
+priority: 3
+category: "intermediate"
+prerequisites: ["keys-and-security", "quickstart"]
+---
+
+import { Callout } from "@components/ui/Callout";
+import { CTAButton } from "@components/CTAButton";
+
+Nostr 拥有丰富的工具和服务生态系统，使使用协议更容易。以下是按类别组织的必备工具精选列表。
+
+<Callout type="info">
+  **快速提示：** 收藏此页面！随着你探索不同的 Nostr 功能，你可能会回到这里。
+</Callout>
+
+---
+
+## 密钥管理工具
+
+### 密钥转换器和生成器
+
+**Nostr Tools（密钥转换器）**
+- **URL：** [nostr-tools.com](https://nostr-tools.com)
+- **作用：** 在 npub/hex/nsec 格式之间转换
+- **为什么使用：** 对开发者有用，或当你需要不同的密钥格式时
+
+**NAK（Nostr 瑞士军刀）**
+- **URL：** [nak.nostr.com](https://nak.nostr.com)
+- **作用：** 用于 Nostr 操作的命令行工具和网页界面
+- **功能：** 密钥生成、事件签名、中继交互、调试
+- **最适合：** 需要 CLI 工具的开发者和高级用户
+
+**Nostr 密钥生成器**
+- **作用：** 离线生成新密钥对
+- **为什么使用：** 在安全、隔离的环境中创建密钥
+
+### 备份与恢复
+
+**密钥存储最佳实践**
+- 密码管理器（Bitwarden、1Password）
+- 硬件安全密钥（YubiKey）
+- 纸质备份（手写并安全存储）
+- 加密 USB 驱动器
+
+<Callout type="warning">
+  **安全提示：** 永远不要以纯文本文件、电子邮件或没有加密的云存储保存你的 nsec（私钥）。
+</Callout>
+
+---
+
+## 媒体托管
+
+### 图片和视频托管
+
+**nostr.build**
+- **URL：** [nostr.build](https://nostr.build)
+- **作用：** Nostr 的免费图片和视频托管
+- **功能：** 拖放上传、即时 URL、CDN 交付
+- **最适合：** 在帖子中分享图片
+
+**NostrImg**
+- **URL：** [nostrimg.com](https://nostrimg.com)
+- **作用：** 简单的图片托管服务
+- **功能：** 快速上传、永久存储
+
+### 文件分享
+
+**Nostr Files**
+- **URL：** [nostrfiles.com](https://nostrfiles.com)
+- **作用：** Nostr 用户的通用文件托管
+- **最适合：** PDF、文档和其他文件
+
+---
+
+## 身份与验证
+
+### NIP-05 提供商
+
+**NostrPlebs**
+- **URL：** [nostrplebs.com](https://nostrplebs.com)
+- **作用：** NIP-05 标识符（you@nostrplebs.com）
+- **费用：** 仅付费 - 每年 12,500-65,000 聪（定价基于用户名长度）
+- **注意：** 没有免费层
+- **最适合：** 快速获取人类可读标识符
+
+**NostrCheck**
+- **URL：** [nostrcheck.me](https://nostrcheck.me)
+- **作用：** NIP-05 + 额外验证工具
+- **功能：** 免费层、额外实用工具
+
+**GetAlby**
+- **URL：** [getalby.com](https://getalby.com)
+- **作用：** 闪电钱包 + NIP-05
+- **最适合：** 结合支付和身份
+
+---
+
+## 分析与发现
+
+### 闪电打赏分析
+
+**Zaplife**
+- **URL：** [zaplife.lol](https://zaplife.lol)
+- **作用：** 追踪闪电打赏活动和收入
+- **功能：** 被打赏最多的内容、历史数据、排行榜
+- **最适合：** 追踪收入的创作者
+
+### 网络发现与统计
+
+**Stats.OtherStuff**
+- **URL：** [stats.otherstuff.org](https://stats.otherstuff.org)
+- **作用：** Nostr 网络统计和分析
+- **功能：** 全球指标、中继统计、网络增长数据
+- **最适合：** 了解整体 Nostr 生态系统
+
+**Primal Explore**
+- **URL：** [primal.net/explore](https://primal.net/explore)
+- **作用：** 发现热门内容和用户
+- **功能：** 主题动态、热门帖子、用户推荐
+
+---
+
+## 中继工具
+
+### 中继列表与监控
+
+**Nostr.watch**
+- **URL：** [nostr.watch](https://nostr.watch)
+- **作用：** 监控中继正常运行时间和性能
+- **功能：** 实时状态、延迟监控、全球地图
+- **最适合：** 找到可靠的中继
+
+**中继工具**
+- 各种社区维护的中继列表
+- 查看 nostr.watch 以获取当前推荐
+
+### 中继软件
+
+**strfry**
+- **作用：** 高性能中继软件
+- **最适合：** 运行你自己的中继
+
+**nostr-rs-relay**
+- **作用：** 基于 Rust 的中继实现
+- **最适合：** 想要自我托管的技术用户
+
+---
+
+## 闪电网络与闪电打赏
+
+### 钱包
+
+**Alby**（浏览器扩展）
+- **URL：** [getalby.com](https://getalby.com)
+- **最适合：** 桌面/网页用户
+- **功能：** 浏览器集成、Nostr 钱包连接
+
+**Phoenix**（移动版）
+- **URL：** [phoenix.acinq.co](https://phoenix.acinq.co)
+- **最适合：** 想要自我托管的移动用户
+- **功能：** 非托管、自动通道管理
+
+**Wallet of Satoshi**（移动版）
+- **最适合：** 完全初学者
+- **功能：** 最简单的设置、包含闪电地址
+
+**Zeus**（移动版）
+- **URL：** [zeusln.app](https://zeusln.app)
+- **最适合：** 高级用户、节点运营者
+- **功能：** 连接到你自己的节点、高级功能
+
+**Mutiny**（网页/移动版）
+- **URL：** [app.mutinywallet.com](https://app.mutinywallet.com)
+- **最适合：** 基于浏览器的自我托管
+- **功能：** 无需应用商店、联合托管
+
+### 闪电打赏工具
+
+**ZapSplits**
+- **作用：** 自动拆分闪电打赏收入
+- **最适合：** 协作内容（播客、团队项目）
+
+**Zap Stream**
+- **作用：** 实时闪电打赏通知
+- **最适合：** 直播活动、流媒体
+
+---
+
+## 搜索与索引
+
+**Primal Search**
+- 内置于 Primal 客户端
+- 快速、全面的结果
+
+**Iris Search**
+- 客户端集成搜索
+
+<Callout type="tip">
+  **搜索提示：** Nostr 搜索正在迅速改进。如果你找不到东西，尝试不同的关键词或在多个客户端中检查。
+</Callout>
+
+---
+
+## 开发者工具
+
+### 库与 SDK
+
+**nostr-tools（JavaScript）**
+- **GitHub：** [github.com/nbd-wtf/nostr-tools](https://github.com/nbd-wtf/nostr-tools)
+- **作用：** Nostr 的核心 JavaScript 库
+- **最适合：** 构建网页应用
+
+**NDK（Nostr 开发套件）**
+- **GitHub：** [github.com/nostr-dev-kit/ndk](https://github.com/nostr-dev-kit/ndk)
+- **作用：** Nostr 的综合 TypeScript SDK
+- **功能：** React hooks、缓存管理、中继池优化
+- **最适合：** 现代 TypeScript/React 应用
+
+**Khatru**
+- **GitHub：** [github.com/fiatjaf/khatru](https://github.com/fiatjaf/khatru)
+- **作用：** 用于构建 Nostr 中继的 Go 框架
+- **功能：** 模块化设计、易于扩展、生产就绪
+- **最适合：** 开发者构建自定义中继实现
+
+**Nostr Python**
+- 用于 Nostr 开发的各种 Python 库
+
+**Nostr Rust**
+- 用于高性能应用的 Rust 实现
+
+### 测试与调试
+
+**Nostr Debug**
+- 用于测试 Nostr 实现的各种工具
+- 查看 GitHub 获取最新工具
+
+**中继测试工具**
+- 测试中继实现
+- 验证 NIP 合规性
+
+---
+
+## 隐私与安全
+
+### 签名应用
+
+**Primal Signer（iOS）**
+- **内置于 Primal 应用**
+- **作用：** 使用生物识别认证的安全密钥存储
+- **功能：** FaceID/TouchID 保护、无需单独应用
+- **最适合：** 想要内置安全性的 iOS 用户
+
+**Amber（Android）**
+- **Android 专用签名应用**
+- **作用：** 带批准提示的安全密钥签名
+- **功能：** 多密钥支持、详细的签名请求
+- **最适合：** 想要最大安全性的 Android 用户
+
+**其他签名应用**
+- 用于安全密钥签名的各种专用应用
+- 将你的 nsec 远离主设备
+- 在应用商店搜索 "Nostr signer"
+
+### VPN 与 Tor
+
+**Tor 支持**
+- 许多客户端支持 Tor 以增强隐私
+- 查看客户端文档以获取设置
+
+---
+
+## 移动应用
+
+查看我们的 [快速开始指南](/zh/guides/quickstart) 以获取全面的移动应用推荐和模拟器。
+
+快速参考：
+- **iOS：** Damus、Primal、Amethyst
+- **Android：** Amethyst、Primal
+- **跨平台：** Primal、Iris、Snort
+
+---
+
+## 社区资源
+
+### 列表与目录
+
+**Awesome Nostr**
+- GitHub 仓库，包含精选的 Nostr 资源
+- 客户端、中继和工具的综合列表
+
+**Nostr Directory**
+- 各种社区维护的目录
+- 查看 nostr.social 或类似的聚合器
+
+### 支持
+
+**Nostr Subreddit**
+- Reddit 上的 r/nostr
+- 社区讨论和帮助
+
+**Telegram/Discord 群组**
+- 各种 Nostr 社区
+- 在你喜欢的平台上搜索 "Nostr"
+
+---
+
+## 快速参考表
+
+| 类别 | 工具 | 最适合 | 费用 |
+|----------|------|----------|------|
+| **媒体** | nostr.build | 图片托管 | 免费 |
+| **身份** | NostrPlebs | NIP-05 标识符 | 免费/付费 |
+| **分析** | Zaplife | 闪电打赏追踪 | 免费 |
+| **中继** | nostr.watch | 中继监控 | 免费 |
+| **钱包** | Alby | 网页用户 | 免费 |
+| **钱包** | Phoenix | 移动自我托管 | 免费 |
+| **搜索** | Primal | 发现 | 免费 |
+
+---
+
+<Callout type="info">
+  **免责声明：** 工具可用性和功能经常变化。如果链接不起作用，在 Nostr 或你喜欢的搜索引擎上搜索工具名称以获取最新信息。
+</Callout>

@@ -1,4 +1,5 @@
 import type { Locale, Translations } from './types';
+import { locales } from '../config/locales';
 
 export type { Locale } from './types';
 
@@ -7,8 +8,9 @@ import en from './locales/en.json';
 import pl from './locales/pl.json';
 import es from './locales/es.json';
 import de from './locales/de.json';
+import zh from './locales/zh.json';
 
-const translations: Record<Locale, Translations> = { en, pl, es, de };
+const translations: Record<Locale, Translations> = { en, pl, es, de, zh };
 
 /**
  * Get current locale from URL path
@@ -18,6 +20,7 @@ export function getCurrentLocale(path: string = typeof window !== 'undefined' ? 
   if (path.startsWith('/pl/')) return 'pl';
   if (path.startsWith('/es/')) return 'es';
   if (path.startsWith('/de/')) return 'de';
+  if (path.startsWith('/zh/')) return 'zh';
   return 'en';
 }
 
@@ -93,5 +96,5 @@ export function hasTranslation(key: string, locale: Locale): boolean {
  * Get available locales
  */
 export function getAvailableLocales(): Locale[] {
-  return ['en', 'pl', 'es', 'de'];
+  return [...locales] as Locale[];
 }

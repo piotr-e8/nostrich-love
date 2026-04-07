@@ -144,7 +144,7 @@ export function GuideNavigation({
       <div className={cn('border-t border-gray-200 dark:border-gray-800 pt-8 mt-12', className)}>
         <div className="text-center">
           <p className="text-gray-600 dark:text-gray-400 mb-4">
-            {t('guideNavigation.offLevelMessage').replace('{level}', SKILL_LEVELS[currentLevel]?.label || 'selected')}
+            {t('guideNavigation.offLevelMessage').replace('{level}', t(`skillLevels.${currentLevel}.label`) || 'selected')}
           </p>
           <div className="flex justify-center gap-4">
             <a 
@@ -167,10 +167,10 @@ export function GuideNavigation({
         <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-2xl p-8 text-center mb-8">
           <div className="text-4xl mb-4">🎉</div>
           <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            {t('guideNavigation.levelComplete').replace('{level}', SKILL_LEVELS[currentLevel]?.label || '')}
+            {t('guideNavigation.levelComplete').replace('{level}', t(`skillLevels.${currentLevel}.label`) || '')}
           </h3>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
-            {t('guideNavigation.levelCompleteDescription').replace('{level}', SKILL_LEVELS[currentLevel]?.label || '')}
+            {t('guideNavigation.levelCompleteDescription').replace('{level}', t(`skillLevels.${currentLevel}.label`) || '')}
           </p>
           
           {/* If next level is unlocked, show continue button */}
@@ -179,7 +179,7 @@ export function GuideNavigation({
               href={`${guidesPrefix}/${nextLevelFirstGuide}`}
               className="inline-flex items-center px-6 py-3 bg-primary text-white rounded-xl hover:bg-primary/90 transition-colors"
             >
-              {t('guideNavigation.continueToLevel').replace('{level}', SKILL_LEVELS[nextLevel]?.label || '')}
+              {t('guideNavigation.continueToLevel').replace('{level}', t(`skillLevels.${nextLevel}.label`) || '')}
               <ArrowRight className="w-4 h-4 ml-2" />
             </a>
           )}
@@ -187,7 +187,7 @@ export function GuideNavigation({
           {/* If next level is locked, show requirements */}
           {!isNextLevelUnlocked && nextLevel && (
             <div className="text-sm text-gray-500">
-              {t('guideNavigation.unlockRequirements').replace('{currentLevel}', SKILL_LEVELS[currentLevel]?.label || '').replace('{nextLevel}', SKILL_LEVELS[nextLevel]?.label || '')}
+              {t('guideNavigation.unlockRequirements').replace('{currentLevel}', t(`skillLevels.${currentLevel}.label`) || '').replace('{nextLevel}', t(`skillLevels.${nextLevel}.label`) || '')}
             </div>
           )}
         </div>
@@ -237,7 +237,7 @@ export function GuideNavigation({
           </a>
         ) : (
           <div className="flex-1 text-sm text-gray-500">
-            {t('guideNavigation.startOfLevel').replace('{level}', SKILL_LEVELS[currentLevel]?.label || '')}
+            {t('guideNavigation.startOfLevel').replace('{level}', t(`skillLevels.${currentLevel}.label`) || '')}
           </div>
         )}
 

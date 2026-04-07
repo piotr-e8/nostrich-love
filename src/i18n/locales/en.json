@@ -3387,7 +3387,8 @@
     "buttons": {
       "create": "Create Invoice",
       "pay": "Pay Zap",
-      "simulate": "Simulate Zap"
+      "simulate": "Simulate Zap",
+      "copy": "Copy"
     }
   },
   "relayVisualizer": {

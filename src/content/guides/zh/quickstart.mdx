@@ -1,0 +1,261 @@
+---
+title: "快速开始：5 分钟启动"
+description: "你的 Nostr 快速通道。检查你的密钥，选择客户端，然后启动。没有废话，只有行动。"
+estimatedTime: "5 分钟"
+priority: 4
+category: "getting-started"
+prerequisites: ["what-is-nostr", "keys-and-security"]
+---
+
+<div className="text-center mb-8">
+  <h1 className="text-4xl md:text-5xl font-bold mb-4">
+    准备启动？
+  </h1>
+  <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+    三个简单步骤，从零到第一条帖子。让我们带你进入 Nostr。
+  </p>
+</div>
+
+---
+
+## 步骤 1：先决条件检查
+
+在我们启动之前，你准备好你的 Nostr 密钥了吗？
+
+<div className="my-8 p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700">
+  <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
+    <a 
+      href="#step-2" 
+      className="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors"
+    >
+      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+      </svg>
+      是的，我有密钥
+    </a>
+    <span className="text-gray-500">或</span>
+    <a 
+      href="/zh/guides/keys-and-security" 
+      className="inline-flex items-center px-6 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-lg transition-colors"
+    >
+      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+      </svg>
+      先生成密钥（2 分钟）
+    </a>
+  </div>
+  
+  <p className="mt-4 text-sm text-gray-600 dark:text-gray-400 text-center">
+    你需要你的 <code>npub</code>（公钥）和 <code>nsec</code>（私钥）才能继续。
+  </p>
+</div>
+
+---
+
+## 步骤 2：选择你的客户端
+
+Nostr 有数十个客户端——把它们想象成电子邮件应用。选择一个开始。
+
+### 选项 A：先试用再决定 ⭐ 推荐
+
+在下载任何东西之前，先体验不同客户端的感觉。
+
+<div className="my-6 p-6 bg-friendly-purple-50 dark:bg-friendly-purple-900/20 rounded-xl border-2 border-friendly-purple-200 dark:border-friendly-purple-800">
+  <div className="flex items-center gap-4 mb-4">
+    <div className="text-4xl">🎮</div>
+    <div>
+      <h3 className="text-lg font-bold text-friendly-purple-700 dark:text-friendly-purple-300">
+        交互式客户端模拟器
+      </h3>
+      <p className="text-sm text-gray-600 dark:text-gray-400">
+        在浏览器中试用 Damus、Amethyst、Primal 等 4 个以上客户端——无需下载，无风险。
+      </p>
+    </div>
+  </div>
+  
+  <a 
+    href="/simulators" 
+    className="inline-flex items-center px-6 py-3 bg-friendly-purple-600 hover:bg-friendly-purple-700 text-white font-semibold rounded-lg transition-colors"
+  >
+    立即试用客户端
+    <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+    </svg>
+  </a>
+</div>
+
+### 选项 B：按设备快速选择
+
+知道你想要什么？选择你的平台：
+
+<div className="my-6 overflow-x-auto">
+  <table className="w-full">
+    <thead>
+      <tr className="border-b-2 border-gray-200 dark:border-gray-700">
+        <th className="text-left py-3 px-4 font-semibold text-gray-900 dark:text-white">平台</th>
+        <th className="text-left py-3 px-4 font-semibold text-gray-900 dark:text-white">最适合新手</th>
+        <th className="text-left py-3 px-4 font-semibold text-gray-900 dark:text-white">替代方案</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr className="border-b border-gray-200 dark:border-gray-700">
+        <td className="py-3 px-4">
+          <span className="flex items-center gap-2">
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.74s1.93-.74 3.2-.74c3.22.07 4.63 2.92 4.63 2.92s-2.66 1.33-2.66 4.09c0 3.24 3.92 4.09 3.92 4.09s-.48 2.21-2.17 4.61zm-5.85-15.1c.72-.87 1.2-2.07 1.07-3.28-1.05.05-2.32.7-3.07 1.57-.66.76-1.24 1.99-1.09 3.17 1.16.09 2.34-.75 3.09-1.46z"/></svg>
+            iPhone/iPad
+          </span>
+        </td>
+        <td className="py-3 px-4">
+          <a href="https://damus.io" target="_blank" rel="noopener noreferrer" className="text-friendly-purple-600 hover:text-friendly-purple-700 font-medium">
+            Damus →
+          </a>
+        </td>
+        <td className="py-3 px-4">
+          <a href="https://primal.net" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
+            Primal
+          </a>
+        </td>
+      </tr>
+      <tr className="border-b border-gray-200 dark:border-gray-700">
+        <td className="py-3 px-4">
+          <span className="flex items-center gap-2">
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993.0001.5511-.4482.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993 0 .5511-.4482.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0225 3.503C15.5902 8.479 13.8532 8 12 8c-1.8532 0-3.5902.479-5.1371 1.2905l-2.0225-3.503a.416.416 0 00-.5676-.1521.416.416 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.343 14.6589.343 18.6617h23.314c0-4.0028-2.3459-7.475-5.7785-9.3403"/></svg>
+            Android
+          </span>
+        </td>
+        <td className="py-3 px-4">
+          <a href="https://play.google.com/store/apps/details?id=com.vitorpamplona.amethyst" target="_blank" rel="noopener noreferrer" className="text-friendly-purple-600 hover:text-friendly-purple-700 font-medium">
+            Amethyst →
+          </a>
+        </td>
+        <td className="py-3 px-4">
+          <a href="https://primal.net" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
+            Primal
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td className="py-3 px-4">
+          <span className="flex items-center gap-2">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            网页/桌面
+          </span>
+        </td>
+        <td className="py-3 px-4">
+          <a href="https://primal.net" target="_blank" rel="noopener noreferrer" className="text-friendly-purple-600 hover:text-friendly-purple-700 font-medium">
+            Primal →
+          </a>
+        </td>
+        <td className="py-3 px-4">
+          <a href="https://iris.to" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
+            Iris
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+---
+
+## 步骤 3：启动清单
+
+在你上线之前，最后一次检查：
+
+<div className="my-8 p-6 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl border-2 border-yellow-400 dark:border-yellow-600">
+  <h3 className="text-lg font-bold text-yellow-800 dark:text-yellow-400 mb-4 flex items-center gap-2">
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+    </svg>
+    安全检查
+  </h3>
+  
+  <div className="space-y-3">
+    <label className="flex items-start gap-3 cursor-pointer">
+      <input type="checkbox" className="mt-1 w-5 h-5 text-friendly-purple-600 rounded" />
+      <span className="text-gray-800 dark:text-gray-200">
+        我已将密钥保存在 3 个以上的安全地方
+      </span>
+    </label>
+    <label className="flex items-start gap-3 cursor-pointer">
+      <input type="checkbox" className="mt-1 w-5 h-5 text-friendly-purple-600 rounded" />
+      <span className="text-gray-800 dark:text-gray-200">
+        我理解：丢失我的 nsec（私钥）= 永远丢失我的账号
+      </span>
+    </label>
+  </div>
+</div>
+
+### 你准备好了！🚀
+
+打开你选择的客户端并粘贴你的 nsec 登录。就这些——你已经在 Nostr 上了！
+
+<div className="my-8 text-center">
+  <p className="text-gray-600 dark:text-gray-400 mb-4">
+    如果你在上方选择了客户端，点击打开它：
+  </p>
+  <a 
+    href="https://primal.net" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className="inline-flex items-center px-8 py-4 bg-friendly-purple-600 hover:bg-friendly-purple-700 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl"
+  >
+    打开 Primal
+    <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+    </svg>
+  </a>
+  <p className="mt-2 text-sm text-gray-500">
+    或从步骤 2 打开你选择的客户端
+  </p>
+</div>
+
+---
+
+## 第一天的专业技巧
+
+一旦你进入，做这些来最大化你的体验：
+
+<div className="my-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div className="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
+    <div className="flex items-center gap-3 mb-3">
+      <div className="text-3xl">👥</div>
+      <h3 className="font-bold text-blue-800 dark:text-blue-400">先填满你的动态</h3>
+    </div>
+    <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
+      空动态是人们退出的第一大原因。立即关注 50+ 精选账号。
+    </p>
+    <a 
+      href="/follow-pack" 
+      className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold"
+    >
+      找到关注的人
+      <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
+  </div>
+  
+  <div className="p-6 bg-green-50 dark:bg-green-900/20 rounded-xl border border-green-200 dark:border-green-800">
+    <div className="flex items-center gap-3 mb-3">
+      <div className="text-3xl">📚</div>
+      <h3 className="font-bold text-green-800 dark:text-green-400">继续学习</h3>
+    </div>
+    <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
+      通过我们的分步指南掌握 Nostr。从闪电网络到隐私——我们都有涵盖。
+    </p>
+    <a 
+      href="/guides" 
+      className="inline-flex items-center text-green-600 hover:text-green-700 font-semibold"
+    >
+      探索所有指南
+      <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
+  </div>
+</div>
+
+---
+
+**欢迎来到 Nostr！** 去中心化社交革命从你开始。🎉

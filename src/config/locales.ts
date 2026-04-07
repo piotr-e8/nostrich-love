@@ -1,5 +1,5 @@
 // /src/config/locales.ts
-export const locales = ['en', 'pl', 'es', 'de'] as const;
+export const locales = ['en', 'pl', 'es', 'de', 'zh'] as const;
 
 export type Locale = typeof locales[number];
 
@@ -27,6 +27,11 @@ export const localeConfig: Record<Locale, {
     htmlLang: 'de',
     ogLocale: 'de_DE',
     name: 'Deutsch',
+  },
+  zh: {
+    htmlLang: 'zh',
+    ogLocale: 'zh_CN',
+    name: '中文',
   },
 };
 

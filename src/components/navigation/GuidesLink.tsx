@@ -20,6 +20,8 @@ export function GuidesLink({ className, children }: GuidesLinkProps) {
       setGuidesHref("/pl/guides");
     } else if (path.startsWith("/es/")) {
       setGuidesHref("/es/guides");
+    } else if (path.startsWith("/zh/")) {
+      setGuidesHref("/zh/guides");
     } else if (path.startsWith("/en/")) {
       setGuidesHref("/en/guides");
     } else {
@@ -31,6 +33,8 @@ export function GuidesLink({ className, children }: GuidesLinkProps) {
         setGuidesHref("/pl/guides");
       } else if (savedLang === 'es') {
         setGuidesHref("/es/guides");
+      } else if (savedLang === 'zh') {
+        setGuidesHref("/zh/guides");
       } else {
         setGuidesHref("/en/guides");
       }
