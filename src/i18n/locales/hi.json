@@ -1,0 +1,1388 @@
+{
+  "guides": {
+    "whatIsNostr": {
+      "title": "Nostr को सरल भाषा में समझें",
+      "description": "5 मिनट में Nostr समझें। जानें कि विकेन्द्रीकृत सोशल मीडिया कैसे काम करता है, यह क्यों महत्वपूर्ण है, और यह पारंपरिक प्लेटफॉर्म से कैसे अलग है।",
+      "content": {},
+      "quiz": {
+        "title": "Nostr मौलिक प्रश्नोत्तरी",
+        "questions": [
+          {
+            "id": "nostr-acronym",
+            "title": "प्रोटोकॉल का नाम",
+            "prompt": "NOSTR का पूरा रूप क्या है?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Notes and Other Stuff Transmitted by Relays"
+              },
+              {
+                "id": "b",
+                "label": "Network of Secure Transmission Resources"
+              },
+              {
+                "id": "c",
+                "label": "New Online Social Technology Resource"
+              }
+            ],
+            "correctId": "a",
+            "explanation": "NOSTR का अर्थ है 'Notes and Other Stuff Transmitted by Relays' - विकेन्द्रीकृत सोशल मीडिया के लिए एक सरल, खुला प्रोटोकॉल।",
+            "severity": "info"
+          },
+          {
+            "id": "decentralized-nature",
+            "title": "विकेन्द्रीकरण",
+            "prompt": "Nostr विकेन्द्रीकृत क्यों है?",
+            "options": [
+              {
+                "id": "a",
+                "label": "यह blockchain तकनीक का उपयोग करता है"
+              },
+              {
+                "id": "b",
+                "label": "कोई भी रिले चला सकता है, और उपयोगकर्ता अपनी कुंजियों को नियंत्रित करते हैं"
+              },
+              {
+                "id": "c",
+                "label": "यह एक गैर-लाभकारी फाउंडेशन के स्वामित्व में है"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "Nostr विकेन्द्रीकृत है क्योंकि कोई भी रिले सर्वर चला सकता है, और उपयोगकर्ता अपनी क्रिप्टोग्राफिक कुंजियों के मालिक हैं। नेटवर्क को नियंत्रित करने वाला कोई केंद्रीय प्राधिकरण या कंपनी नहीं है।",
+            "severity": "critical"
+          },
+          {
+            "id": "censorship-resistance",
+            "title": "सेंसरशिप प्रतिरोध",
+            "prompt": "Nostr सेंसरशिप का विरोध कैसे करता है?",
+            "options": [
+              {
+                "id": "a",
+                "label": "प्रतिबंधित सामग्री का पता लगाने के लिए AI का उपयोग करके"
+              },
+              {
+                "id": "b",
+                "label": "डेटा को कई रिलेज़ में फैलाकर जो कोई भी चला सकता है"
+              },
+              {
+                "id": "c",
+                "label": "रिलेज़ के लिए सरकारी अनुमोदन मांगकर"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "सेंसरशिप प्रतिरोध सामग्री को कई स्वतंत्र रूप से चलाए जाने वाले रिलेज़ में वितरित करने से आता है। यदि एक रिले आपको ब्लॉक करता है, तो अन्य अभी भी आपकी सामग्री ले सकते हैं।",
+            "severity": "critical"
+          },
+          {
+            "id": "keys-vs-accounts",
+            "title": "पहचान प्रणाली",
+            "prompt": "Nostr और Twitter/Facebook खातों के बीच मुख्य अंतर क्या है?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Nostr ईमेल/पासवर्ड के बजाय क्रिप्टोग्राफिक कुंजियों का उपयोग करता है"
+              },
+              {
+                "id": "b",
+                "label": "Nostr तेज़ है"
+              },
+              {
+                "id": "c",
+                "label": "Nostr में बेहतर प्रोफाइल चित्र हैं"
+              }
+            ],
+            "correctId": "a",
+            "explanation": "Nostr पहचान के लिए सार्वजनिक/निजी कुंजी जोड़े का उपयोग करता है। आपकी सार्वजनिक कुंजी (npub) आपकी पहचान है, और आपकी निजी कुंजी (nsec) साबित करती है कि आप इसके मालिक हैं। कोई ईमेल, फोन नंबर, या केंद्रीय डेटाबेस आवश्यक नहीं।",
+            "severity": "critical"
+          }
+        ]
+      }
+    },
+    "quickstart": {
+      "title": "दस मिनट में Nostr शुरू करें",
+      "description": "अपना पहला Nostr खाता बनाएं, एक क्लाइंट चुनें, और अपनी पहली पोस्ट करें। वह सब कुछ जो आपको अभी शुरू करने की जरूरत है।",
+      "content": {},
+      "quiz": {
+        "title": "Quickstart प्रश्नोत्तरी",
+        "questions": [
+          {
+            "id": "setup-tools",
+            "title": "Setup Tools",
+            "prompt": "What do you need before creating a Nostr account?",
+            "options": [
+              {
+                "id": "a",
+                "label": "A phone number for verification"
+              },
+              {
+                "id": "b",
+                "label": "An email address"
+              },
+              {
+                "id": "c",
+                "label": "Nothing - you can start right away"
+              }
+            ],
+            "correctId": "c",
+            "explanation": "Nostr doesn't require any personal information to create an account. You can start immediately - just download an app or visit a web client.",
+            "severity": "info"
+          },
+          {
+            "id": "key-storage",
+            "title": "Key Storage",
+            "prompt": "What's the most important thing to do with your nsec (private key)?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Share it with friends so they can post for you"
+              },
+              {
+                "id": "b",
+                "label": "Save it somewhere safe and never share it"
+              },
+              {
+                "id": "c",
+                "label": "Post it publicly so people can find you"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "Your nsec (private key) is like your password - it proves you own your account. Never share it! If someone gets your nsec, they can take over your account completely.",
+            "severity": "critical"
+          },
+          {
+            "id": "npub-sharing",
+            "title": "Public Identity",
+            "prompt": "Which key should you share with others?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Your nsec (private key)"
+              },
+              {
+                "id": "b",
+                "label": "Your npub (public key)"
+              },
+              {
+                "id": "c",
+                "label": "Both keys are safe to share"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "Your npub (public key) is like your username - it's safe to share publicly. Others use it to find and follow you. Your nsec stays private.",
+            "severity": "critical"
+          }
+        ]
+      }
+    },
+    "keys-and-security": {
+      "title": "कुंजियाँ और सुरक्षा",
+      "description": "Nostr कुंजियों कैसे काम करती हैं, उन्हें सुरक्षित रूप से कैसे रखें, और अपनी पहचान कभी न खोने के लिए सर्वोत्तम अभ्यास सीखें।",
+      "content": {},
+      "quiz": {
+        "title": "कुंजी सुरक्षा प्रश्नोत्तरी",
+        "questions": [
+          {
+            "id": "private-key-purpose",
+            "title": "निजी कुंजी का उद्देश्य",
+            "prompt": "आपकी निजी कुंजी (nsec) क्या करती है?",
+            "options": [
+              {
+                "id": "a",
+                "label": "यह आपको पोस्ट खोजने में मदद करती है"
+              },
+              {
+                "id": "b",
+                "label": "यह साबित करती है कि आप अपने खाते के मालिक हैं"
+              },
+              {
+                "id": "c",
+                "label": "यह आपकी प्रोफाइल तस्वीर सेट करती है"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "आपकी निजी कुंजी (nsec) गणितीय रूप से साबित करती है कि आप अपने खाते के मालिक हैं। यह आपकी पोस्ट पर हस्ताक्षर करती है, लेकिन कभी भी सार्वजनिक रूप से साझा नहीं की जाती।",
+            "severity": "critical"
+          },
+          {
+            "id": "key-backup",
+            "title": "कुंजी बैकअप",
+            "prompt": "आपको अपनी nsec का बैकअप कैसे लेना चाहिए?",
+            "options": [
+              {
+                "id": "a",
+                "label": "इसे केवल अपने फोन पर सेव करें"
+              },
+              {
+                "id": "b",
+                "label": "कागज पर लिखें और कई सुरक्षित जगहों पर रखें"
+              },
+{
+                "id": "c",
+                "label": "इसे अपने ईमेल में खुद को भेजें"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "कागज पर लिखना सबसे सुरक्षित बैकअप विधि है। कम से कम दो सुरक्षित जगहों पर रखें ताकि एक खो जाने पर भी आपके पास दूसरा हो।",
+            "severity": "critical"
+          }
+        ]
+      }
+    },
+    "finding-community": {
+      "title": "समुदाय खोजें",
+      "description": "अपनी रुचियों के अनुसार लोगों को खोजें - Bitcoin, गोपनीयता, कला, संगीत, और बहुत कुछ। Nostr पर अपना स्थान बनाएं।",
+      "content": {},
+      "quiz": {
+        "title": "समुदाय खोज प्रश्नोत्तरी",
+        "questions": [
+          {
+            "id": "search-methods",
+            "title": "खोज विधियाँ",
+            "prompt": "Nostr पर लोगों को खोजने का सबसे अच्छा तरीका क्या है?",
+            "options": [
+              {
+                "id": "a",
+                "label": "केवल उन npubs की प्रतीक्षा करें जो आपके पास हैं"
+              },
+              {
+                "id": "b",
+                "label": "खोज सुविधाओं, ट्रेंडिंग पोस्ट, और समुदाय निर्देशिकाओं का उपयोग करें"
+              },
+              {
+                "id": "c",
+                "label": "प्रत्येक रिले को मैन्युअली ब्राउज़ करें"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "अधिकांश Nostr क्लाइंट में खोज सुविधाएं, ट्रेंडिंग हैशटैग, और समुदाय निर्देशिकाएं होती हैं जो रुचियों के अनुसार लोगों को खोजना आसान बनाती हैं।",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "faq": {
+      "title": "बार-बार पूछे जाने वाले प्रश्न",
+      "description": "Nostr के बारे में सबसे आम सवालों के जवाब - बिना किसी तकनीकी ज्ञान की आवश्यकता के।",
+      "content": {}
+    },
+    "multi-client": {
+      "title": "एकाधिक क्लाइंट",
+      "description": "एक ही Nostr खाते को कई ऐप्स से कैसे एक्सेस करें, और क्यों यह विकेन्द्रीकरण की शक्ति है।",
+      "content": {},
+      "quiz": {
+        "title": "मल्टी-क्लाइंट प्रश्नोत्तरी",
+        "questions": [
+          {
+            "id": "why-multiple",
+            "title": "एकाधिक क्लाइंट क्यों?",
+            "prompt": "एक ही Nostr खाते को कई क्लाइंट से उपयोग करने का मुख्य लाभ क्या है?",
+            "options": [
+              {
+                "id": "a",
+                "label": "आपको अधिक फॉलोअर्स मिलते हैं"
+              },
+              {
+                "id": "b",
+                "label": "आप प्रत्येक क्लाइंट की अलग विशेषताओं का उपयोग कर सकते हैं"
+              },
+              {
+                "id": "c",
+                "label": "यह आपकी पोस्ट को अधिक लोगों तक पहुंचाता है"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "विभिन्न Nostr क्लाइंट अलग-अलग विशेषताएं प्रदान करते हैं - कुछ बेहतर इमेज शो हिंग, कुछ बेहतर ज़ैप इंटीग्रेशन, कुछ बेहतर लंबी फॉर्म कंटेंट। आपकी पहचान सभी में एक समान रहती है।",
+            "severity": "info"
+          },
+          {
+            "id": "how-access",
+            "title": "कैसे एक्सेस करें",
+            "prompt": "एक नए क्लाइंट में अपना खाता कैसे एक्सेस करें?",
+            "options": [
+              {
+                "id": "a",
+                "label": "हर क्लाइंट के लिए नया खाता बनाएं"
+              },
+              {
+                "id": "b",
+                "label": "अपना npub या nsec आयात करें"
+              },
+              {
+                "id": "c",
+                "label": "प्रत्येक क्लाइंट को अपना ईमेल दें"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "बस अपना npub (पहचान) या nsec (पूर्ण एक्सेस के लिए) किसी भी नए क्लाइंट में आयात करें। आपकी सभी पोस्ट, फॉलोअर्स, और इंटरैक्शन तुरंत दिखाई देंगे।",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "nip05-identity": {
+      "title": "NIP-05 पहचान सत्यापन",
+      "description": "अपने Nostr खाते को एक यादगार उपयोगकर्ता नाम से जोड़ें (जैसे alice@example.com) ताकि लोग आपको आसानी से खोज सकें और सत्यापित कर सकें।",
+      "content": {},
+      "quiz": {
+        "title": "NIP-05 प्रश्नोत्तरी",
+        "questions": [
+          {
+            "id": "nip05-purpose",
+            "title": "NIP-05 का उद्देश्य",
+            "prompt": "NIP-05 पहचान किसकी अनुमति देती है?",
+            "options": [
+              {
+                "id": "a",
+                "label": "आपको फोटो अपलोड करने की अनुमति देती है"
+              },
+              {
+                "id": "b",
+                "label": "आपको मानव-पठनीय पहचानकर्ता जैसे alice@example.com का उपयोग करने की अनुमति देती है"
+              },
+              {
+                "id": "c",
+                "label": "आपको अधिक रिले कनेक्शन की अनुमति देती है"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "NIP-05 आपको अपनी लंबी npub कुंजी को यादगार उपयोगकर्ता नाम से जोड़ने की अनुमति देता है, जिससे लोगों को आपको खोजना और सत्यापित करना आसान हो जाता है।",
+            "severity": "info"
+          },
+          {
+            "id": "nip05-verify",
+            "title": "सत्यापन",
+            "prompt": "NIP-05 आपकी पहचान कैसे सत्यापित करता है?",
+            "options": [
+              {
+                "id": "a",
+                "label": "आपको फोन नंबर दर्ज करना होगा"
+              },
+              {
+                "id": "b",
+                "label": "यह एक डोमेन से जुड़ी JSON फाइल की जांच करता है"
+              },
+              {
+                "id": "c",
+                "label": "आपको ईमेल सत्यापित करना होगा"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "NIP-05 एक URL से JSON फाइल डाउनलोड करके काम करता है जो डोमेन नाम से मेल खाती है, पुष्टि करती है कि डोमेन स्वामी उस npub को नियंत्रित करता है।",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "nostr-tools": {
+      "title": "Nostr टूल्स",
+      "description": "ज़ैप्स, कीज़, और अन्य उपयोगी टूल्स और संसाधन जो Nostr को और शक्तिशाली बनाते हैं।",
+      "content": {}
+    },
+    "outbox-model": {
+      "title": "आउटबॉक्स मॉडल",
+      "description": "Nostr का आउटबॉक्स मॉडल कैसे काम करता है - अपनी पोस्ट को सही रिले पर प्रकाशित करना ताकि आपके फॉलोअर्स आपको खोज सकें।",
+      "content": {},
+      "quiz": {
+        "title": "आउटबॉक्स मॉडल प्रश्नोत्तरी",
+        "questions": [
+          {
+            "id": "outbox-problem",
+            "title": "समस्या",
+            "prompt": "पारंपरिक सोशल मीडिया में आउटबॉक्स मॉडल किस समस्या को हल करता है?",
+            "options": [
+              {
+                "id": "a",
+                "label": "धीमी पोस्टिंग गति"
+              },
+              {
+                "id": "b",
+                "label": "विकेन्द्रीकृत नेटवर्क में दृश्यता की कमी"
+              },
+              {
+                "id": "c",
+                "label": "भंडारण सीमाएं"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "विकेन्द्रीकृत नेटवर्क में, कोई केंद्रीय सर्वर नहीं होता है जो सभी को सभी पोस्ट दिखाए। आउटबॉक्स मॉडल पोस्ट को वहां प्रकाशित करके हल करता है जहां फॉलोअर्स उन्हें खोज सकते हैं।",
+            "severity": "info"
+          },
+          {
+            "id": "outbox-solution",
+            "title": "समाधान",
+            "prompt": "आउटबॉक्स मॉडल में उपयोगकर्ताओं को कैसे पोस्ट मिलती हैं?",
+            "options": [
+              {
+                "id": "a",
+                "label": "उन्हें हर संदेश एक ईमेल भेजा जाता है"
+              },
+              {
+                "id": "b",
+                "label": "उनके क्लाइंट उनके रिले सूची (kind 10002) की जांच करते हैं और वहां से पोस्ट लाते हैं"
+              },
+              {
+                "id": "c",
+                "label": "सभी पोस्ट एक केंद्रीय सर्वर पर संग्रहीत होती हैं"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "क्लाइंट उपयोगकर्ता के kind 10002 रिले सूची इवेंट की जांच करते हैं, फिर उन रिले से पोस्ट लाते हैं जहां उपयोगकर्ता प्रकाशित करता है।",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "nip17-private-messages": {
+      "title": "NIP-17 निजी संदेश",
+      "description": "Nostr पर सुरक्षित, एंड-टू-एंड एन्क्रिप्टेड निजी संदेश भेजना और प्राप्त करना सीखें।",
+      "content": {},
+      "quiz": {
+        "title": "NIP-17 प्रश्नोत्तरी",
+        "questions": [
+          {
+            "id": "nip17-encryption",
+            "title": "एन्क्रिप्शन",
+            "prompt": "NIP-17 संदेश कैसे सुरक्षित होते हैं?",
+            "options": [
+              {
+                "id": "a",
+                "label": "वे केवल पासवर्ड से सुरक्षित हैं"
+              },
+              {
+                "id": "b",
+                "label": "वे एंड-टू-एंड एन्क्रिप्टेड हैं - केवल प्रेषक और प्राप्तकर्ता पढ़ सकते हैं"
+              },
+              {
+                "id": "c",
+                "label": "रिले ऑपरेटर्स उन्हें डिक्रिप्ट कर सकते हैं"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "NIP-17 एंड-टू-एंड एन्क्रिप्शन का उपयोग करता है। केवल प्रेषक (आपकी nsec के साथ) और प्राप्तकर्ता डिक्रिप्टेड संदेश देख सकते हैं। रिले केवल एन्क्रिप्टेड डेटा देखते हैं।",
+            "severity": "critical"
+          },
+          {
+            "id": "nip17-dm-limits",
+            "title": "DM सीमाएं",
+            "prompt": "विकेन्द्रीकृत DMs की एक सीमा क्या है?",
+            "options": [
+              {
+                "id": "a",
+                "label": "आप संदेशों को संपादित नहीं कर सकते"
+              },
+              {
+                "id": "b",
+                "label": "संदेश केवल 24 घंटे के लिए उपलब्ध हैं"
+              },
+              {
+                "id": "c",
+                "label": "आपको संदेश भेजने के लिए भुगतान करना होगा"
+              }
+            ],
+            "correctId": "a",
+            "explanation": "विकेन्द्रीकृत संदेश एक बार भेजे जाने के बाद संपादित नहीं किए जा सकते क्योंकि वे केंद्रीय सर्वर पर संग्रहीत नहीं होते हैं। आप एक नया संदेश भेज सकते हैं, लेकिन पुराने को संशोधित नहीं कर सकते।",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "privacy-security": {
+      "title": "गोपनीयता और सुरक्षा",
+      "description": "Nostr पर अपनी गोपनीयता की रक्षा कैसे करें - IP सुरक्षा, मेटाडाटा जागरूकता, और सुरक्षित अभ्यास।",
+      "content": {},
+      "quiz": {
+        "title": "गोपनीयता प्रश्नोत्तरी",
+        "questions": [
+          {
+            "id": "ip-exposure",
+            "title": "IP एक्सपोज़र",
+            "prompt": "Nostr रिले आपके बारे में क्या जानकारी देख सकते हैं?",
+            "options": [
+              {
+                "id": "a",
+                "label": "कुछ भी नहीं - सब कुछ एन्क्रिप्टेड है"
+              },
+              {
+                "id": "b",
+                "label": "आपकी IP पता और कनेक्शन टाइम स्टैंप"
+              },
+              {
+                "id": "c",
+                "label": "केवल आपका उपयोगकर्ता नाम"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "रिले आपकी IP पता देख सकते हैं जब आप कनेक्ट होते हैं। VPN या Tor का उपयोग करके, आप इस जानकारी को सीमित कर सकते हैं। संदेश सामग्री एन्क्रिप्टेड है, लेकिन मेटाडेटा नहीं।",
+            "severity": "critical"
+          },
+          {
+            "id": "privacy-practices",
+            "title": "गोपनीयता अभ्यास",
+            "prompt": "Nostr पर गोपनीयता बढ़ाने का सबसे अच्छा तरीका क्या है?",
+            "options": [
+              {
+                "id": "a",
+                "label": "केवल एक रिले का उपयोग करें"
+              },
+              {
+                "id": "b",
+                "label": "कई रिले का उपयोग करें, VPN/Tor पर विचार करें, और आवश्यकता से अधिक व्यक्तिगत जानकारी साझा न करें"
+              },
+              {
+                "id": "c",
+                "label": "कभी भी अपनी npub साझा न करें"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "एकाधिक रिले का उपयोग करने से किसी एक रिले पर आपकी गोपनीयता का केंद्रीकरण कम होता है। VPN/Tor आपके IP को छुपाता है। npub साझा करना सुरक्षित है - यह सार्वजनिक जानकारी है।",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "relay-guide": {
+      "title": "रिले गाइड",
+      "description": "Nostr रिले क्या हैं, वे कैसे काम करते हैं, और अपने लिए सही रिले कैसे चुनें।",
+      "content": {}
+    },
+    "protocol-comparison": {
+      "title": "प्रोटोकॉल तुलना",
+      "description": "Nostr की तुलना ActivityPub (Mastodon), AT Protocol (Bluesky), और अन्य विकेन्द्रीकृत प्रोटोकॉल से - अंतर क्या हैं?",
+      "content": {}
+    },
+    "relays-demystified": {
+      "title": "रिले समझें",
+      "description": "Nostr रिले डीप में समझें - वे कैसे काम करते हैं, उन्हें कैसे चुनें, और उनके साथ कैसे काम करें।",
+      "content": {}
+    },
+    "troubleshooting": {
+      "title": "समस्या निवारण",
+      "description": "आम Nostr समस्याएं और उनके समाधान - कनेक्शन समस्याएं, खो गए संदेश, और अधिक।",
+      "content": {}
+    },
+    "zaps-and-lightning": {
+      "title": "ज़ैप्स और Lightning",
+      "description": "ज़ैप्स (Bitcoin टिप्स) कैसे काम करते हैं, Lightning नेटवर्क कैसे सेट करें, और Nostr पर सामग्री का समर्थन कैसे करें।",
+      "content": {}
+    },
+    "community-hub": {
+      "title": "समुदाय हब",
+      "description": "Nostr समुदाय संसाधन, टूल्स, और सीखने के अवसर खोजें।",
+      "content": {}
+    }
+  },
+  "ui": {
+    "buttons": {
+      "submit": "जमा करें",
+      "next": "अगला",
+      "previous": "पिछला",
+      "checkAnswer": "उत्तर जांचें",
+      "startLearning": "सीखना शुरू करें",
+      "learnMore": "और जानें",
+      "copy": "कॉपी करें",
+      "copied": "कॉपी हो गया!",
+      "continue": "जारी रखें",
+      "back": "वापस",
+      "finish": "समाप्त",
+      "skip": "छोड़ें",
+      "retry": "पुनः प्रयास",
+      "save": "सहेजें",
+      "cancel": "रद्द करें",
+      "delete": "हटाएं",
+      "edit": "संपादित करें",
+      "create": "बनाएं",
+      "connect": "कनेक्ट करें",
+      "disconnect": "डिस्कनेक्ट करें",
+      "refresh": "रिफ्रेश करें",
+      "loading": "लोड हो रहा है...",
+      "payZap": "ज़ैप भेजें",
+      "viewDetails": "विवरण देखें"
+    },
+    "search": {
+      "placeholder": "गाइड में खोजें...",
+      "noResults": "कोई परिणाम नहीं मिला",
+      "searching": "खोज रहा है...",
+      "clear": "खोज साफ करें"
+    },
+    "common": {
+      "loading": "लोड हो रहा है...",
+      "error": "एक त्रुटि हुई",
+      "success": "सफल!",
+      "minutes": "मिनट",
+      "minute": "मिनट",
+      "readTime": "पढ़ने का समय",
+      "optional": "वैकल्पिक",
+      "required": "आवश्यक",
+      "close": "बंद करें",
+      "open": "खोलें",
+      "show": "दिखाएं",
+      "hide": "छिपाएं"
+    },
+    "navigation": {
+      "nextGuide": "अगला गाइड",
+      "previousGuide": "पिछला गाइड",
+      "backToGuides": "गाइड पर वापस जाएं",
+      "level": "स्तर {level}",
+      "guides": "गाइड",
+      "home": "होम",
+      "about": "परिचय",
+      "community": "समुदाय",
+      "tools": "टूल्स"
+    },
+    "badges": {
+      "earned": "अर्जित",
+      "locked": "बंद",
+      "viewAll": "सभी देखें"
+    },
+    "progress": {
+      "completed": "पूर्ण",
+      "of": "में से",
+      "guidesCompleted": "गाइड पूर्ण",
+      "currentStreak": "वर्तमान श्रृंखला"
+    },
+    "quiz": {
+      "loading": "प्रश्नोत्तरी लोड हो रही है...",
+      "gradeTitle": "आपका ग्रेड",
+      "scoreDisplay": "{{score}} में से {{total}}",
+      "conceptsMastered": "अवधारणाएं महारत हासिल",
+      "nextSteps": "अगले कदम",
+      "perfectScore": "बिल्कुल सही!",
+      "reviewSections": "समीक्षा खंड",
+      "retakeQuiz": "प्रश्नोत्तरी पुनः लें",
+      "questionCounter": "प्रश्न {{current}}/{{total}}",
+      "backButton": "वापस",
+      "nextButton": "अगला",
+      "seeResults": "परिणाम देखें",
+      "severity": {
+        "critical": "महत्वपूर्ण",
+        "warning": "चेतावनी",
+        "info": "जानकारी"
+      },
+      "feedback": {
+        "correct": "सही!",
+        "incorrect": "गलत"
+      }
+    }
+  },
+  "guidesPage": {
+    "hero": {
+      "title": "Nostr सीखें",
+      "description": "विकेन्द्रीकृत सोशल मीडिया को अंतरंगिक रूप से समझें। बिना तकनीकी ज्ञान के आसान पाठ।",
+      "yourProgress": "आपकी प्रगति",
+      "startFirstGuide": "पहला गाइड शुरू करें"
+    },
+    "cta": {
+      "notSure": "निश्चित नहीं?",
+      "beginnerDescription": "हमारे शुरुआती-अनुकूल गाइड से शुरू करें",
+      "startLearning": "सीखना शुरू करें"
+    },
+    "filter": {
+      "filterByInterest": "रुचि के अनुसार फ़िल्टर करें"
+    }
+  },
+  "skillLevels": {
+    "beginner": {
+      "label": "शुरुआती",
+      "title": "बिल्कुल नया?",
+      "subtitle": "Nostr पर पहली बार",
+      "description": "Nostr की मूल बातें सीखें - यह क्या है, यह कैसे काम करता है, और यह क्यों महत्वपूर्ण है।"
+    },
+    "intermediate": {
+      "label": "मध्यम",
+      "title": "मूल बातें समझें",
+      "subtitle": "बुनियादी समझ",
+      "description": "Nostr के तकनीकी पहलुओं में गहराई - रिले, कुंजी, और गोपनीयता।"
+    },
+    "advanced": {
+      "label": "उन्नत",
+      "title": "Nostr विशेषज्ञ",
+      "subtitle": "तकनीकी महारत",
+      "description": "उन्नत विषय - कस्टम रिले, प्रोटोकॉल विस्तार, और Nostr इकोसिस्टम में योगदान।"
+    }
+  },
+  "interestFilter": {
+    "allGuides": "सभी गाइड",
+    "bitcoin": "Bitcoin",
+    "privacy": "गोपनीयता",
+    "security": "सुरक्षा",
+    "relays": "रिले",
+    "tools": "टूल्स",
+    "community": "समुदाय"
+  },
+  "guideCard": {
+    "difficulty": {
+      "beginner": "शुरुआती",
+      "intermediate": "मध्यम",
+      "advanced": "उन्नत"
+    },
+    "status": {
+      "locked": "बंद",
+      "completed": "पूर्ण",
+      "continueReading": "पढ़ना जारी रखें",
+      "startLearning": "सीखना शुरू करें"
+    },
+    "moreLocked": "+{count} और बंद",
+    "estimatedTime": "{minutes} मिनट"
+  },
+  "guideSection": {
+    "startHere": "यहाँ से शुरू करें",
+    "complete": "पूर्ण",
+    "locked": "बंद",
+    "unlockRequirement": "अनलॉक करने के लिए {count} गाइड पूरे करें"
+  },
+  "zapSimulator": {
+    "title": "ज़ैप सिम्युलेटर",
+    "description": "ज़ैप्स को हाथ से अनुभव करें - Bitcoin Lightning भुगतान जो Nostr पोस्ट पर टिप्स की तरह काम करते हैं।",
+    "labels": {
+      "invoice": "Lightning इनवॉइस",
+      "amount": "राशि (सतोŞी)",
+      "note": "नोट (वैकल्पिक)",
+      "sender": "भेजने वाला",
+      "recipient": "प्राप्तकर्ता"
+    },
+    "buttons": {
+      "pay": "ज़ैप भेजें",
+      "copy": "कॉपी करें",
+      "cancel": "रद्द करें"
+    },
+    "messages": {
+      "success": "ज़ैप सफलतापूर्वक भेजा गया!",
+      "error": "ज़ैप भेजने में त्रुटि",
+      "cancelled": "ज़ैप रद्द किया गया"
+    }
+  },
+  "keyGenerator": {
+    "title": "की जनरेटर",
+    "description": "अपनी Nostr कुंजियाँ उत्पन्न करें - सार्वजनिक (npub) जो आपकी पहचान है और निजी (nsec) जो आपके खाते को नियंत्रित करती है।",
+    "labels": {
+      "publicKey": "सार्वजनिक कुंजी (npub)",
+      "privateKey": "निजी कुंजी (nsec)",
+      "warning": "चेतावनी"
+    },
+    "buttons": {
+      "generate": "नई कुंजी उत्पन्न करें",
+      "copy": "कॉपी करें",
+      "showKey": "कुंजी दिखाएं"
+    },
+    "messages": {
+      "copied": "कॉपी हो गया!",
+      "warning": "अपनी निजी कुंजी (nsec) कभी भी किसी के साथ साझा न करें! यह आपके खाते को नियंत्रित करने वाली सब कुछ है।"
+    }
+  },
+  "nip05Checker": {
+    "title": "NIP-05 पहचान सत्यापन",
+    "description": "NIP-05 पहचानकर्ता आपको यादगार नाम से खोजने योग्य बनाते हैं जैसे alice@example.com",
+    "benefits": {
+      "title": "NIP-05 के लाभ",
+      "verified": "सत्यापित",
+      "easyDiscovery": "आसान खोज",
+      "professional": "व्यावसायिक"
+    },
+    "form": {
+      "identifier": "पहचानकर्ता",
+      "domain": "डोमेन",
+      "check": "सत्यापित करें"
+    },
+    "results": {
+      "verified": "सत्यापित!",
+      "notFound": "NIP-05 रिकॉर्ड नहीं मिला",
+      "error": "सत्यापन में त्रुटि"
+    },
+    "errors": {
+      "invalidFormat": "अमान्य प्रारूप",
+      "domainRequired": "डोमेन आवश्यक है"
+    }
+  },
+  "relayWorldMap": {
+    "title": "वैश्विक रिले मानचित्र",
+    "description": "दुनिया भर में Nostr रिले का वितरण देखें",
+    "legend": {
+      "relays": "रिले",
+      "locations": "स्थान"
+    }
+  },
+  "relayVisualizer": {
+    "title": "रिले विज़ुअलाइज़र",
+    "description": "जीवंत रूप से देखें कि क्लाइंट रिले से कैसे जुड़ते हैं और संदेश कैसे प्रवाहित होते हैं",
+    "legend": {
+      "client": "क्लाइंट",
+      "relay": "रिले",
+      "connection": "कनेक्शन"
+    },
+    "stats": {
+      "connected": "कनेक्टेड",
+      "messages": "संदेश",
+      "active": "सक्रिय"
+    }
+  },
+  "protocolComparison": {
+    "title": "प्रोटोकॉल तुलना",
+    "subtitle": "Nostr की तुलना अन्य विकेन्द्रीकृत प्रोटोकॉल से",
+    "features": {
+      "decentralization": "विकेन्द्रीकरण",
+      "censorshipResistance": "सेंसरशिप प्रतिरोध",
+      "dataOwnership": "डेटा स्वामित्व",
+      "interoperability": "अंतरसंचालनीयता",
+      "scalability": "स्केलेबिलिटी",
+      "privacy": "गोपनीयता"
+    },
+    "protocols": {
+      "nostr": "Nostr",
+      "activityPub": "ActivityPub",
+      "atProtocol": "AT Protocol"
+    }
+  },
+  "officialAccount": {
+    "title": "आधिकारिक खाता",
+    "description": "Nostrich.love द्वारा संचालित",
+    "follow": "फॉलो करें",
+    "npub": "npub",
+    "stats": {
+      "following": "फॉलोइंग",
+      "followers": "फॉलोअर्स",
+      "notes": "पोस्ट"
+    }
+  },
+  "time": {
+    "minutes": "{count} मिनट",
+    "hours": "{count} घंटे",
+    "days": "{count} दिन",
+    "readingTime": "पढ़ने का समय: {minutes}",
+    "estimatedTime": "अनुमानित समय"
+  },
+  "prerequisiteWarning": {
+    "title": "आप आगे बढ़ रहे हैं",
+    "description": "इस गाइड में उन अवधारणाओं को शामिल किया गया है जो पिछले गाइड में शामिल हैं।",
+    "recommendation": "पहले पूरा करने की सिफारिश किया जाता है:",
+    "continue": "फिर भी जारी रखें"
+  },
+  "backupChecklist": {
+    "title": "अपनी कुंजियों का बैकअप लें",
+    "description": "आगे बढ़ने से पहले, यह चेकलिस्ट पूरी करें ताकि आपकी कुंजियाँ सुरक्षित रूप से बैकअप हो जाएं। यह महत्वपूर्ण है - खो गई कुंजियों को पुनर्प्राप्त नहीं किया जा सकता।",
+    "progress": "बैकअप प्रगति",
+    "checklist": {
+      "copiedNpub": {
+        "label": "npub कॉपी किया (सार्वजनिक कुंजी)",
+        "description": "आपका सार्वजनिक पहचानकर्ता जिसे आप दूसरों के साथ साझा कर सकते हैं"
+      },
+      "copiedNsec": {
+        "label": "nsec कॉपी किया (निजी कुंजी)",
+        "description": "आपका गुप्त पासवर्ड - इसे कभी भी किसी के साथ साझा न करें",
+        "warning": "महत्वपूर्ण: यह आपका एकमात्र पासवर्ड है। यदि खो गया, तो आपका खाता पुनर्प्राप्त नहीं किया जा सकता।"
+      },
+      "passwordManager": {
+        "label": "पासवर्ड मैनेजर में सहेजा",
+        "description": "1Password, Bitwarden, KeePass, या इसी तरहा सुरक्षित स्टोरेज"
+      },
+      "paperBackup": {
+        "label": "कागज पर लिखा (ऑफलाइन बैकअप)",
+        "description": "भौतिक प्रति एक सुरक्षित, सुरक्षित स्थान में संग्रहीत",
+        "warning": "इसे अपने कंप्यूटर और फोन से दूर एक सुरक्षित जगह में रखें।"
+      },
+      "encryptedFile": {
+        "label": "एन्क्रिप्टेड फाइल में सहेजा",
+        "description": "USB ड्राइव, एन्क्रिप्टेड क्लाउड स्टोरेज, या हार्डवेयर वॉलेट"
+      }
+    },
+    "buttons": {
+      "copyNpub": "npub कॉपी करें",
+      "copyNsec": "nsec कॉपी करें",
+      "completeAll": "मैंने सभी बैकअप पूरे किए",
+      "completeRequired": "पहले सभी आइटम पूरे करें",
+      "skip": "अभी के लिए छोड़ें (अनुशंसित नहीं)"
+    },
+    "securityTips": {
+      "title": "सुरक्षा युक्तियाँ",
+      "items": [
+        "अपनी nsec कभी भी प्लेन टेक्स्ट फाइलों या स्क्रीनशॉट में संग्रहीत न करें",
+        "अपनी कुंजियों को किसी के साथ साझा न करें, जिसमें \"सहायता\" भी शामिल है",
+        "मूल फाइलें हटाने से पहले अपने बैकअप से पुनर्स्थापित करके परीक्षण करें",
+        "अधिकतम सुरक्षा के लिए हार्डवेयर वॉलेट पर विचार करें"
+      ]
+    },
+    "completion": {
+      "title": "बैकअप पूर्ण!",
+      "description": "आपने अपनी Nostr कुंजियों को कई सुरक्षित स्थानों पर सफलतापूर्वक बैकअप कर लिया है। आपकी कुंजियाँ सुरक्षित हैं!",
+      "reset": "चेकलिस्ट रीसेट करें"
+    },
+    "skipModal": {
+      "title": "क्या आप सुनिश्चित हैं?",
+      "warning": "बिना बैकअप के आगे बढ़ना जोखिम भरा है।",
+      "consequences": "यदि आप अपनी निजी कुंजी (nsec) खो देते हैं:",
+      "consequenceList": [
+        "आप अपने खाते को फिर कभी एक्सेस नहीं कर पाएंगे",
+        "आपका सारा इतिहास, फॉलोअर्स, और सामग्री हमेशा के लिए खो जाएगी",
+        "कोई भी आपके लिए आपका खाता पुनर्प्राप्त नहीं कर सकता",
+        "आपको एक नया खाता बनाना होगा और शून्य से शुरू करना होगा"
+      ],
+      "understand": "मैं समझता हूँ, फिर भी छोड़ें",
+      "goBack": "वापस जाएं और बैकअप करें"
+    }
+  },
+  "clientComparisonTable": {
+    "title": "क्लाइंट तुलना",
+    "description": "विभिन्न Nostr क्लाइंट की तुलना अपनी आवश्यकताओं के अनुसार",
+    "features": {
+      "platform": "प्लेटफ़ॉर्म",
+      "price": "मूल्य",
+      "ease": "उपयोग में आसानी",
+      "zaps": "ज़ैप्स",
+      "longForm": "लंबी सामग्री",
+      "communities": "समुदाय",
+      "encryption": "एन्क्रिप्शन",
+      "customRelays": "कस्टम रिले"
+    },
+    "clients": {
+      "damus": {
+        "name": "Damus",
+        "platforms": "iOS",
+        "price": "मुफ्त",
+        "ease": "उत्कृष्ट",
+        "notes": "iOS के लिए सबसे लोकप्रिय क्लाइंट"
+      },
+      "amethyst": {
+        "name": "Amethyst",
+        "platforms": "Android",
+        "price": "मुफ्त",
+        "ease": "अच्छी",
+        "notes": "Android के लिए सुविधा संपन्न"
+      },
+      "primal": {
+        "name": "Primal",
+        "platforms": "वेब, iOS, Android",
+        "price": "मुफ्त",
+        "ease": "उत्कृष्ट",
+        "notes": "तेज़, आधुनिक, सभी प्लेटफॉर्म"
+      },
+      "snort": {
+        "name": "Snort",
+        "platforms": "वेब",
+        "price": "मुफ्त",
+        "ease": "अच्छी",
+        "notes": "वेब के लिए तेज़ और मिनिमल"
+      },
+      "nos": {
+        "name": "nos",
+        "platforms": "iOS",
+        "price": "मुफ्त",
+        "ease": "उत्कृष्ट",
+        "notes": "डिज़ाइन-फोकस्ड iOS क्लाइंट"
+      }
+    },
+    "recommendation": {
+      "newUser": "नए उपयोगकर्ताओं के लिए Damus या Primal से शुरू करें",
+      "android": "Android उपयोगकर्ताओं के लिए Amethyst",
+      "privacy": "गोपनीयता के लिए Snort या Iris (कोई साइनअप नहीं)"
+    }
+  },
+  "clientRecommender": {
+    "title": "क्लाइंट रिकमेंडर",
+    "description": "आपकी आवश्यकताओं के लिए सही Nostr क्लाइंट खोजें",
+    "questions": {
+      "platform": {
+        "question": "आप किस प्लेटफॉर्म पर Nostr का उपयोग करेंगे?",
+        "options": {
+          "ios": "iPhone/iPad",
+          "android": "Android फोन",
+          "desktop": "कंप्यूटर (Mac/Windows/Linux)",
+          "web": "वेब ब्राउज़र"
+        }
+      },
+      "experience": {
+        "question": "आपका Nostr अनुभव स्तर?",
+        "options": {
+          "beginner": "नया - पहली बार",
+          "intermediate": "कुछ अनुभव है",
+          "advanced": "नियमित उपयोगकर्ता"
+        }
+      },
+      "features": {
+        "question": "कौन सी विशेषताएं आपके लिए महत्वपूर्ण हैं?",
+        "options": {
+          "zaps": "ज़ैप्स (Bitcoin भुगतान)",
+          "longForm": "लंबी-फॉर्म सामग्री",
+          "privacy": "गोपनीयता फोकस",
+          "simplicity": "सरलता"
+        }
+      }
+    },
+    "buttons": {
+      "findClient": "मेरा क्लाइंट खोजें",
+      "clearFilters": "सभी फ़िल्टर साफ करें",
+      "export": "निर्यात करें"
+    },
+    "noResults": {
+      "title": "कोई क्लाइंट नहीं मिला",
+      "description": "अधिक परिणाम देखने के लिए अपने फ़िल्टर समायोजित करें"
+    },
+    "card": {
+      "users": "उपयोगकर्ता",
+      "rating": "रेटिंग",
+      "pros": "फायदे",
+      "cons": "नुकसान",
+      "links": {
+        "web": "वेब",
+        "ios": "iOS",
+        "android": "Android",
+        "desktop": "डेस्कटॉप"
+      }
+    },
+    "clients": {
+      "damus": {
+        "name": "Damus",
+        "description": "सबसे लोकप्रिय iOS क्लाइंट जिसमें पॉलिश्ड UI और स्मूथ अनुभव है।",
+        "pros": ["सुंदर UI", "उपयोग में आसान", "सक्रिय विकास", "बेहतरीन ऑनबोर्डिंग", "ज़ैप्स समर्थन"],
+        "cons": ["केवल iOS", "सीमित डेस्कटॉप सिंक", "कोई लंबी-फॉर्म सामग्री नहीं"]
+      },
+      "amethyst": {
+        "name": "Amethyst",
+        "description": "एक सुविधा-संपन्न Android क्लाइंट जिसमें सभी Nostr सुविधाओं के लिए उत्कृष्ट समर्थन है।",
+        "pros": ["पूर्ण-सुविधा", "ज़ैप्स समर्थन", "सक्रिय समुदाय", "नियमित अपडेट", "अत्यधिक अनुकूलन योग्य"],
+        "cons": ["शुरुआती लोगों के लिए ओवरव्हेल्मिंग हो सकता है", "केवल Android", "जटिल सेटिंग्स"]
+      },
+      "primal": {
+        "name": "Primal",
+        "description": "एक तेज़, आधुनिक क्लाइंट जो सभी प्लेटफॉर्म पर उपलब्ध है उत्कृष्ट प्रदर्शन के साथ।",
+        "pros": ["सभी प्लेटफॉर्म", "तेज़ लोडिंग", "बेहतरीन खोज", "सुंदर डिज़ाइन", "नियमित अपडेट"],
+        "cons": ["कुछ के लिए गोपनीयता चिंताएं", "नया ऐप", "कुछ सुविधाएं अभी भी विकास में"]
+      },
+      "iris": {
+        "name": "Iris",
+        "description": "एक सरल, कोई-साइनअप नहीं वेब क्लाइंट जो जल्दी शुरू करने के लिए एकदम सही है।",
+        "pros": ["कोई डाउनलोड नहीं", "तुरंत काम करता है", "साफ इंटरफेस", "ओपन सोर्स", "निजी"],
+        "cons": ["केवल वेब", "सीमित उन्नत सुविधाएं", "कोई वॉलेट एकीकरण नहीं"]
+      },
+      "snort": {
+        "name": "Snort",
+        "description": "एक वेब क्लाइंट जो सरलता और प्रदर्शन पर केंद्रित है।",
+        "pros": ["बिजली की तरह तेज़", "मिनिमल UI", "कोई ब्लोट नहीं", "पढ़ने के लिए बेहतरीन", "गोपनीयता फोकस्ड"],
+        "cons": ["केवल वेब", "कम सामाजिक सुविधाएं", "कोई वॉलेट नहीं"]
+      },
+      "nos": {
+        "name": "nos",
+        "description": "एक डिज़ाइन-फोकस्ड iOS क्लाइंट जिसमें सुंदर UI और सहज अनुभव है।",
+        "pros": ["सुंदर डिज़ाइन", "सहज अनुभव", "फ़ोकस्ड फीचर्स", "अच्छी ऑनबोर्डिंग"],
+        "cons": ["केवल iOS", "कुछ उन्नत सुविधाएं नहीं", "नया"]
+      }
+    }
+  },
+  "continueLearning": {
+    "title": "सीखना जारी रखें",
+    "description": "अपनी अगली सीखने की यात्रा जारी रखें",
+    "nextUp": "अगला",
+    "viewAll": "सभी गाइड देखें",
+    "recommended": "आपके लिए अनुशंसित",
+    "progress": "{completed} में से {total} पूर्ण"
+  },
+  "emptyFeedFixer": {
+    "title": "खाली फीड फिक्सर",
+    "description": "तुरंत Nostr फीड को आबाद करें। समस्या का पता लगाएं और समाधान प्राप्त करें।",
+    "diagnosis": {
+      "title": "निदान",
+      "checking": "जाँच हो रही है...",
+      "issues": "समस्याएं पाई गईं",
+      "noIssues": "कोई समस्या नहीं मिली"
+    },
+    "checks": {
+      "relays": {
+        "label": "रिले कनेक्शन",
+        "description": "सक्रिय रिले की जाँच करें",
+        "fix": "सक्रिय रिले जोड़ें"
+      },
+      "follows": {
+        "label": "फॉलोअर्स",
+        "description": "कम से कम कुछ लोगों को फॉलो किया गया है",
+        "fix": "लोगों को फॉलो करें"
+      },
+      "notes": {
+        "label": "नोट्स लोड हो रहे हैं",
+        "description": "फीड में नोट्स दिख रहे हैं",
+        "fix": "फीड रिफ्रेश करें"
+      }
+    },
+    "solutions": {
+      "addRelays": "लोकप्रिय रिले जोड़ें",
+      "followAccounts": "दिलचस्प खातों को फॉलो करें",
+      "refresh": "फीड रिफ्रेश करें",
+      "tryLater": "बाद में पुनः प्रयास करें"
+    },
+    "buttons": {
+      "runDiagnosis": "निदान चलाएं",
+      "applyFix": "फिक्स लागू करें",
+      "retry": "पुनः प्रयास"
+    }
+  },
+  "guideNavigation": {
+    "previous": "पिछला",
+    "next": "अगला",
+    "backToGuides": "गाइड पर वापस",
+    "tableOfContents": "विषय सूची",
+    "progress": "प्रगति",
+    "completed": "पूर्ण",
+    "locked": "बंद"
+  },
+  "nostrSimulator": {
+    "title": "Nostr सिम्युलेटर",
+    "description": "Nostr कैसे काम करता है यह इंटरैक्टिव रूप से देखें",
+    "tabs": {
+      "events": "इवेंट्स",
+      "relays": "रिले",
+      "network": "नेटवर्क"
+    },
+    "controls": {
+      "play": "चलाएं",
+      "pause": "रोकें",
+      "reset": "रीसेट",
+      "speed": "गति"
+    },
+    "legend": {
+      "event": "इवेंट",
+      "relay": "रिले",
+      "client": "क्लाइंट",
+      "connection": "कनेक्शन"
+    }
+  },
+  "postFlowSimulator": {
+    "title": "पोस्ट फ्लो सिम्युलेटर",
+    "description": "देखें कि आपकी पोस्ट Nostr पर कैसे फैलती है",
+    "steps": {
+      "create": "पोस्ट बनाएं",
+      "sign": "हस्ताक्षर करें",
+      "publish": "प्रकाशित करें",
+      "propagate": "प्रसारित करें"
+    },
+    "labels": {
+      "yourPost": "आपकी पोस्ट",
+      "relays": "रिले",
+      "followers": "फॉलोअर्स",
+      "network": "नेटवर्क"
+    }
+  },
+  "protocolComparisonUI": {
+    "title": "प्रोटोकॉल तुलना",
+    "subtitle": "विकेन्द्रीकृत प्रोटोकॉल की तुलना",
+    "features": {
+      "decentralization": {
+        "label": "विकेन्द्रीकरण",
+        "description": "केंद्रीय प्राधिकरण के बिना काम करने की क्षमता"
+      },
+      "censorshipResistance": {
+        "label": "सेंसरशिप प्रतिरोध",
+        "description": "सामग्री को ब्लॉक करने का प्रतिरोध"
+      },
+      "dataOwnership": {
+        "label": "डेटा स्वामित्व",
+        "description": "उपयोगकर्ता अपने डेटा को नियंत्रित करते हैं"
+      },
+      "interoperability": {
+        "label": "अंतरसंचालनीयता",
+        "description": "विभिन्न ऐप्स के साथ काम करता है"
+      },
+      "scalability": {
+        "label": "स्केलेबिलिटी",
+        "description": "बड़ी संख्या में उपयोगकर्ताओं को संभालता है"
+      },
+      "privacy": {
+        "label": "गोपनीयता",
+        "description": "उपयोगकर्ता गोपनीयता की रक्षा"
+      }
+    },
+    "protocols": {
+      "nostr": {
+        "name": "Nostr",
+        "description": "सरल, खुला प्रोटोकॉल",
+        "pros": ["सरल वास्तुकला", "कोई केंद्रीय सर्वर नहीं", "कुंजी आधारित पहचान"],
+        "cons": ["धीमी अपनाने की दर", "सीमित उन्नत सुविधाएं"]
+      },
+      "activityPub": {
+        "name": "ActivityPub (Mastodon)",
+        "description": "फेडरेटेड सोशल नेटवर्क",
+        "pros": ["स्थापित एकोसिस्टम", "समृद्ध सुविधाएं", "बड़ा उपयोगकर्ता आधार"],
+        "cons": ["सर्वर निर्भरता", "जटिल सेटअप", "इंस्टेंस द्वारा सेंसरशिप संभव"]
+      },
+      "atProtocol": {
+        "name": "AT Protocol (Bluesky)",
+        "description": "हाइब्रिड विकेन्द्रीकृत प्रोटोकॉल",
+        "pros": ["उपयोगकर्ता अनुकूल", "डेटा पोर्टेबिलिटी", "तेज़ प्रदर्शन"],
+        "cons": ["अभी भी कुछ केंद्रीकरण", "नया प्रोटोकॉल", "सीमित गोपनीयता"]
+      }
+    },
+    "buttons": {
+      "compare": "तुलना करें",
+      "learnMore": "और जानें",
+      "viewDetails": "विवरण देखें"
+    }
+  },
+  "quickstartSimulator": {
+    "title": "Quickstart सिम्युलेटर",
+    "description": "Nostr खाता बनाने और पहली पोस्ट करने का अभ्यास करें",
+    "steps": {
+      "keys": {
+        "title": "कुंजियाँ उत्पन्न करें",
+        "description": "अपनी Nostr पहचान बनाएं"
+      },
+      "profile": {
+        "title": "प्रोफाइल सेट करें",
+        "description": "अपना नाम और चित्र जोड़ें"
+      },
+      "relays": {
+        "title": "रिले चुनें",
+        "description": "कनेक्ट करने के लिए सर्वर चुनें"
+      },
+      "post": {
+        "title": "पहली पोस्ट",
+        "description": "अपना पहला नोट प्रकाशित करें"
+      }
+    },
+    "buttons": {
+      "start": "शुरू करें",
+      "next": "अगला",
+      "back": "वापस",
+      "finish": "समाप्त",
+      "reset": "रीसेट करें"
+    }
+  },
+  "relayExplorer": {
+    "title": "रिले एक्सप्लोरर",
+    "description": "सार्वजनिक Nostr रिले की खोज करें और उनकी स्थिति देखें",
+    "search": {
+      "placeholder": "रिले खोजें...",
+      "clear": "खोज साफ करें"
+    },
+    "filters": {
+      "all": "सभी",
+      "active": "सक्रिय",
+      "paid": "भुगतान",
+      "free": "मुफ्त"
+    },
+    "stats": {
+      "connected": "कनेक्टेड",
+      "users": "उपयोगकर्ता",
+      "uptime": "अपटाइम",
+      "latency": "विलंबता"
+    },
+    "actions": {
+      "connect": "कनेक्ट करें",
+      "disconnect": "डिस्कनेक्ट करें",
+      "details": "विवरण"
+    }
+  },
+  "relayFeedBrowser": {
+    "title": "रिले फीड ब्राउज़र",
+    "description": "रिले पर सामग्री देखें बिना किसी विशेष क्लाइंट की आवश्यकता के",
+    "tabs": {
+      "notes": "नोट्स",
+      "profiles": "प्रोफाइल",
+      "reactions": "प्रतिक्रियाएं"
+    },
+    "filters": {
+      "all": "सभी",
+      "today": "आज",
+      "week": "इस सप्ताह",
+      "month": "इस महीने"
+    },
+    "empty": {
+      "title": "कोई सामग्री नहीं",
+      "description": "इस रिले पर कोई सामग्री नहीं मिली"
+    }
+  },
+  "relayPlayground": {
+    "title": "रिले प्लेग्राउंड",
+    "description": "एक सुरक्षित वातावरण में Nostr रिले कमांड के साथ प्रयोग करें",
+    "commands": {
+      "connect": "रिले से कनेक्ट करें",
+      "subscribe": "इवेंट्स की सदस्यता लें",
+      "publish": "इवेंट प्रकाशित करें",
+      "disconnect": "रिले से डिस्कनेक्ट करें"
+    },
+    "labels": {
+      "command": "कमांड",
+      "response": "प्रतिक्रिया",
+      "console": "कंसोल"
+    },
+    "buttons": {
+      "run": "चलाएं",
+      "clear": "साफ करें",
+      "examples": "उदाहरण"
+    },
+    "examples": {
+      "simpleSubscribe": "सरल सदस्यता",
+      "authorFilter": "लेखक फ़िल्टर",
+      "publishNote": "नोट प्रकाशित करें",
+      "requestMetadata": "मेटाडेटा अनुरोध"
+    }
+  },
+  "troubleshootingWizard": {
+    "title": "समस्या निवारण विज़ार्ड",
+    "description": "आम Nostr समस्याओं का निदान और समाधान",
+    "categories": {
+      "connection": "कनेक्शन समस्याएं",
+      "keys": "कुंजी समस्याएं",
+      "posts": "पोस्टिंग समस्याएं",
+      "zaps": "ज़ैप्स समस्याएं",
+      "discovery": "खोज समस्याएं"
+    },
+    "questions": {
+      "cantSeePosts": {
+        "question": "क्या आप पोस्ट नहीं देख पा रहे?",
+        "options": {
+          "emptyFeed": "मेरा फीड खाली है",
+          "missingPosts": "कुछ पोस्ट गायब हैं",
+          "oldContent": "पुरानी सामग्री दिख रही है"
+        }
+      },
+      "cantPost": {
+        "question": "क्या आप पोस्ट नहीं कर पा रहे?",
+        "options": {
+          "error": "मुझे त्रुटि मिल रही है",
+          "stuck": "पोस्ट अटक गई है",
+          "noConfirmation": "कोई पुष्टिकरण नहीं"
+        }
+      },
+      "keyIssues": {
+        "question": "कुंजी समस्याएं?",
+        "options": {
+          "lost": "मैंने अपनी कुंजी खो दी",
+          "cantLogin": "मैं लॉगइन नहीं कर पा रहा",
+          "wrongKey": "गलत कुंजी प्रारूप"
+        }
+      }
+    },
+    "solutions": {
+      "emptyFeed": {
+        "title": "खाली फीड समाधान",
+        "steps": [
+          "अधिक रिले जोड़ें",
+          "लोगों को फॉलो करें",
+          "फीड रिफ्रेश करें",
+          "कुछ मिनट प्रतीक्षा करें"
+        ]
+      },
+      "lostKey": {
+        "title": "खोई हुई कुंजी समाधान",
+        "steps": [
+          "बैकअप की जाँच करें",
+          "पासवर्ड मैनेजर देखें",
+          "कागज के बैकअप खोजें",
+          "यदि सब विफल - नया खाता बनाएं"
+        ],
+        "warning": "दुर्भाग्य से, बिना बैकअप के कुंजियाँ पुनर्प्राप्त नहीं की जा सकतीं।"
+      },
+      "cantPost": {
+        "title": "पोस्टिंग समस्या समाधान",
+        "steps": [
+          "इंटरनेट कनेक्शन जाँचें",
+          "रिले स्थिति देखें",
+          "क्लाइंट रिस्टार्ट करें",
+          "निजी कुंजी सत्यापित करें"
+        ]
+      }
+    },
+    "buttons": {
+      "startOver": "फिर से शुरू करें",
+      "getHelp": "मदद प्राप्त करें",
+      "next": "अगला",
+      "back": "वापस"
+    }
+  }
+}

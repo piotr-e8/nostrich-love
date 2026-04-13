@@ -1,0 +1,1429 @@
+{
+  "_meta": {
+    "locale": "ar",
+    "name": "العربية",
+    "direction": "rtl"
+  },
+  "ui": {
+    "buttons": {
+      "submit": "إرسال",
+      "next": "التالي",
+      "previous": "السابق",
+      "checkAnswer": "تحقق من الإجابة",
+      "startLearning": "ابدأ التعلم",
+      "learnMore": "تعرف أكثر",
+      "copy": "نسخ",
+      "copied": "تم النسخ!",
+      "continue": "متابعة",
+      "back": "رجوع",
+      "finish": "إنهاء",
+      "skip": "تخطي",
+      "retry": "إعادة المحاولة",
+      "save": "حفظ",
+      "cancel": "إلغاء",
+      "delete": "حذف",
+      "edit": "تعديل",
+      "create": "إنشاء",
+      "connect": "اتصال",
+      "disconnect": "فصل",
+      "refresh": "تحديث",
+      "loading": "جاري التحميل..."
+    },
+    "search": {
+      "placeholder": "ابحث في الأدلة...",
+      "noResults": "لم يتم العثور على نتائج",
+      "searching": "جاري البحث...",
+      "clear": "مسح البحث"
+    },
+    "common": {
+      "loading": "جاري التحميل...",
+      "error": "حدث خطأ",
+      "success": "تم بنجاح!",
+      "minutes": "دقائق",
+      "minute": "دقيقة",
+      "readTime": "وقت القراءة",
+      "optional": "اختياري",
+      "required": "مطلوب",
+      "close": "إغلاق",
+      "open": "فتح",
+      "show": "عرض",
+      "hide": "إخفاء",
+      "expand": "توسيع",
+      "collapse": "طي",
+      "more": "المزيد",
+      "less": "أقل",
+      "all": "الكل",
+      "none": "لا شيء",
+      "or": "أو",
+      "and": "و"
+    },
+    "navigation": {
+      "nextGuide": "الدليل التالي",
+      "previousGuide": "الدليل السابق",
+      "backToGuides": "العودة إلى الأدلة",
+      "home": "الرئيسية",
+      "guides": "الأدلة",
+      "tools": "الأدوات",
+      "community": "المجتمع",
+      "settings": "الإعدادات"
+    },
+    "badges": {
+      "earned": "تم الحصول عليه",
+      "locked": "مقفل",
+      "viewAll": "عرض الكل",
+      "title": "الشارات",
+      "description": "اكسب الشارات من خلال إكمال الأدلة والاختبارات"
+    },
+    "progress": {
+      "completed": "تم",
+      "of": "من",
+      "guidesCompleted": "أدلة مكتملة",
+      "currentStreak": "السلسلة الحالية",
+      "keepGoing": "استمر!",
+      "progress": "التقدم",
+      "completedPercent": "{percent}% مكتمل"
+    },
+    "quiz": {
+      "loading": "جاري تحميل الاختبار...",
+      "gradeTitle": "نتيجتك",
+      "scoreDisplay": "{{score}} من {{total}}",
+      "conceptsMastered": "المفاهيم المتقنة",
+      "nextSteps": "الخطوات التالية",
+      "perfectScore": "نتيجة مثالية! 🎉",
+      "reviewSections": "راجع الأقسام التالية:",
+      "retakeQuiz": "إعادة الاختبار",
+      "questionCounter": "السؤال {{current}} من {{total}}",
+      "backButton": "السابق",
+      "nextButton": "التالي",
+      "seeResults": "عرض النتائج",
+      "severity": {
+        "critical": "حرج",
+        "warning": "تحذير",
+        "info": "معلومة"
+      },
+      "feedback": {
+        "correct": "صحيح!",
+        "incorrect": "غير صحيح"
+      }
+    }
+  },
+  "guidesPage": {
+    "hero": {
+      "title": "تعلم Nostr خطوة بخطوة",
+      "description": "مستويات مهارات متدرجة من المبتدئين إلى المتقدمين. افتح مستويات جديدة كلما أكملت الأدلة وأتقنت البروتوكول.",
+      "yourProgress": "تقدمك",
+      "startFirstGuide": "ابدأ أول دليل لتظهر التقدم"
+    },
+    "cta": {
+      "notSure": "لست متأكداً من أين تبدأ؟",
+      "beginnerDescription": "ابدأ بأدلة المبتدئين - مصممة لتأخذك من الصفر إلى أول منشور.",
+      "startLearning": "ابدأ التعلم"
+    },
+    "filter": {
+      "filterByInterest": "تصفية حسب الاهتمام"
+    }
+  },
+  "skillLevels": {
+    "beginner": {
+      "label": "مبتدئ",
+      "title": "نقطة البداية",
+      "subtitle": "ابدأ رحلتك مع Nostr هنا",
+      "description": "ابدأ رحلتك مع Nostr بأساسيات البروتوكول. لا يشترط معرفة مسبقة."
+    },
+    "intermediate": {
+      "label": "متوسط",
+      "title": "المستوى المتوسط",
+      "subtitle": "طور مهاراتك في Nostr",
+      "description": "تطور مع مواضيع أعمق مثل NIP-05، Zaps، والأدوات الأساسية."
+    },
+    "advanced": {
+      "label": "متقدم",
+      "title": "المستوى المتقدم",
+      "subtitle": "أتقن البروتوكول",
+      "description": "أتقن البروتوكول مع غوص عميق في الخصوصية، الأمان، والتفاصيل التقنية."
+    }
+  },
+  "interestFilter": {
+    "allGuides": "جميع الأدلة",
+    "bitcoin": "Bitcoin",
+    "privacy": "الخصوصية",
+    "security": "الأمان",
+    "relays": "Relays",
+    "tools": "الأدوات",
+    "community": "المجتمع"
+  },
+  "guideCard": {
+    "difficulty": {
+      "beginner": "مبتدئ",
+      "intermediate": "متوسط",
+      "advanced": "متقدم"
+    },
+    "status": {
+      "locked": "مقفل",
+      "completed": "مكتمل",
+      "continueReading": "مواصلة القراءة",
+      "startLearning": "ابدأ التعلم"
+    },
+    "moreLocked": "+{count} مقفل",
+    "estimatedTime": "{minutes} دقيقة"
+  },
+  "guideSection": {
+    "startHere": "ابدأ هنا",
+    "complete": "مكتمل",
+    "locked": "مقفل",
+    "unlockRequirement": "أكمل {percentage}% من المستوى السابق لفتح"
+  },
+  "guides": {
+    "whatIsNostr": {
+      "title": "Nostr ببساطة",
+      "description": "افهم Nostr في 5 دقائق. تعلم كيف يعمل التواصل الاجتماعي اللامركزي، ولماذا يهم، وكيف يختلف عن المنصات التقليدية.",
+      "content": {},
+      "quiz": {
+        "title": "اختبار أساسيات Nostr",
+        "questions": [
+          {
+            "id": "nostr-acronym",
+            "title": "اسم البروتوكول",
+            "prompt": "ماذا يعني NOSTR؟",
+            "options": [
+              { "id": "a", "label": "ملاحظات وأشياء أخرى تُرسل بواسطة Relays" },
+              { "id": "b", "label": "شبكة موارد نقل آمنة" },
+              { "id": "c", "label": "مورد تقنية اجتماعية جديد" }
+            ],
+            "correctId": "a",
+            "explanation": "NOSTR تعني 'Notes and Other Stuff Transmitted by Relays' - بروتوكول بسيط ومفتوح للتواصل الاجتماعي اللامركزي.",
+            "severity": "info"
+          },
+          {
+            "id": "decentralized-nature",
+            "title": "اللامركزية",
+            "prompt": "ما الذي يجعل Nostr لامركزياً؟",
+            "options": [
+              { "id": "a", "label": "يستخدم تقنية البلوكتشين" },
+              { "id": "b", "label": "يمكن لأي شخص تشغيل Relay، والمستخدمون يتحكمون في مفاتيحهم" },
+              { "id": "c", "label": "مملوك من قبل مؤسسة غير ربحية" }
+            ],
+            "correctId": "b",
+            "explanation": "Nostr لامركزي لأن أي شخص يمكنه تشغيل خادم Relay، والمستخدمون يملكون مفاتيحهم التشفيرية. لا يوجد سلطة مركزية أو شركة تتحكم في الشبكة.",
+            "severity": "critical"
+          },
+          {
+            "id": "censorship-resistance",
+            "title": "مقاومة الرقابة",
+            "prompt": "كيف يقاوم Nostr الرقابة؟",
+            "options": [
+              { "id": "a", "label": "باستخدام الذكاء الاصطناعي لاكتشاف المحتوى المحظور" },
+              { "id": "b", "label": "بتوزيع البيانات عبر العديد من Relays التي يمكن لأي شخص تشغيلها" },
+              { "id": "c", "label": "باشتراط موافقة حكومية للـ Relays" }
+            ],
+            "correctId": "b",
+            "explanation": "مقاومة الرقابة تأتي من توزيع المحتوى عبر العديد من خوادم Relay المستقلة. إذا حظرك Relay واحد، يمكن للآخرين نشر محتواك.",
+            "severity": "critical"
+          },
+          {
+            "id": "keys-vs-accounts",
+            "title": "نظام الهوية",
+            "prompt": "ما الفرق الرئيسي بين حسابات Nostr وتويتر/فيسبوك؟",
+            "options": [
+              { "id": "a", "label": "Nostr يستخدم مفاتيح تشفيرية بدلاً من البريد/كلمة المرور" },
+              { "id": "b", "label": "Nostr أسرع" },
+              { "id": "c", "label": "Nostr لديه صور ملف شخصي أفضل" }
+            ],
+            "correctId": "a",
+            "explanation": "Nostr يستخدم أزواج المفاتيح العامة/الخاصة للهوية. مفتاحك العام (npub) هو هويتك، ومفتاحك الخاص (nsec) يثبت ملكيتك. لا يلزم بريد إلكتروني أو رقم هاتف أو قاعدة بيانات مركزية.",
+            "severity": "critical"
+          },
+          {
+            "id": "relay-function",
+            "title": "وظيفة الـ Relay",
+            "prompt": "ماذا تفعل Relays في شبكة Nostr؟",
+            "options": [
+              { "id": "a", "label": "تعدين العملات المشفرة" },
+              { "id": "b", "label": "تخزين وإعادة توجيه الرسائل بين المستخدمين" },
+              { "id": "c", "label": "التحقق من هويتك الحكومية" }
+            ],
+            "correctId": "b",
+            "explanation": "Relays هي خوادم تخزن منشوراتك وتجعلها متاحة للمستخدمين الآخرين. تعيد توجيه الرسائل لكنها لا تتحكم في من يمكنه النشر أو ما هو المحتوى المسموح به.",
+            "severity": "warning"
+          },
+          {
+            "id": "nostr-vs-mastodon",
+            "title": "Nostr مقابل Fediverse",
+            "prompt": "كيف يختلف Nostr عن Mastodon و Fediverse؟",
+            "options": [
+              { "id": "a", "label": "Nostr لديه إيموجي أفضل" },
+              { "id": "b", "label": "Nostr لا يتطلب اختيار خادم/مثيل للانضمام" },
+              { "id": "c", "label": "Nostr مملوك من قبل إيلون ماسك" }
+            ],
+            "correctId": "b",
+            "explanation": "على عكس Mastodon حيث يجب عليك الانضمام إلى خادم/مثيل محدد، يمكن لمستخدمي Nostr استخدام أي Relay دون إنشاء حساب هناك. هويتك تعمل في كل مكان على الفور.",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "keysAndSecurity": {
+      "title": "المفاتيح والأمان",
+      "description": "تعلم كيفية إنشاء وحفظ وحماية مفاتيح Nostr الخاصة بك. الدليل الكامل للأمان للمبتدئين.",
+      "content": {},
+      "quiz": {
+        "title": "اختبار الأمان",
+        "questions": [
+          {
+            "id": "sharing-keys",
+            "title": "أمان المفاتيح",
+            "prompt": "أي عنصر يمكنك مشاركته بأمان مع أي شخص؟",
+            "options": [
+              { "id": "npub", "label": "مفتاحك العام (npub)", "description": "يتيح للآخرين متابعتك أو مراسلتك" },
+              { "id": "nsec", "label": "مفتاحك الخاص (nsec)", "description": "يستخدم للتوقيع على المنشورات" },
+              { "id": "seed", "label": "عبارة الاستعادة (12/24 كلمة)", "description": "نسخ احتياطي لمحافظ Lightning" }
+            ],
+            "correctId": "npub",
+            "explanation": "مفاتيح npub هي الهوية العامة. أي شيء يبدأ بـ nsec أو عبارة استعادة يجب أن يبقى غير متصل بالإنترنت.",
+            "severity": "critical"
+          },
+          {
+            "id": "backup-rule",
+            "title": "النسخ الاحتياطي",
+            "prompt": "ما هي أأمن استراتيجية للنسخ الاحتياطي طويل الأمد لمفاتيحك؟",
+            "options": [
+              { "id": "photo", "label": "التقاط لقطة شاشة وتخزينها في iCloud/Google Photos" },
+              { "id": "note", "label": "لصق المفاتيح في تطبيق ملاحظات محمي بـ FaceID" },
+              { "id": "321", "label": "اتباع قاعدة 3-2-1 (3 نسخ / 2 وسائط / 1 غير متصل)" }
+            ],
+            "correctId": "321",
+            "explanation": "استخدم ثلاث نسخ على الأقل عبر نوعين من الوسائط مع نسخة واحدة غير متصلة (ورق، معدن). لقطات الشاشة السحابية هي نقاط فشل مفردة.",
+            "severity": "critical"
+          },
+          {
+            "id": "suspicious-client",
+            "title": "اختبار العميل الجديد",
+            "prompt": "تطبيق Nostr جديد يطلب منك لصق مفتاحك الخاص لتسجيل الدخول. ما هي أفضل خطوة؟",
+            "options": [
+              { "id": "paste", "label": "لصق المفتاح إذا كان التطبيق لديه أكثر من 100 مستخدم" },
+              { "id": "signer", "label": "استخدام signer / مفتاح hardware أو الانتظار حتى يدعم العميل التوقيع المفوض" },
+              { "id": "temp", "label": "إنشاء مفتاح مؤقت والترحيل لاحقاً" }
+            ],
+            "correctId": "signer",
+            "explanation": "لا تلصق مفتاحك الخاص الرئيسي في عملاء جدد. استخدم signer (NIP-46) أو حل hardware وانتظر حتى يتم دعم التوقيع المفوض.",
+            "severity": "warning"
+          },
+          {
+            "id": "metadata",
+            "title": "نظافة البيانات الوصفية",
+            "prompt": "كيف تقلل من تسرب البيانات الوصفية على Nostr؟",
+            "options": [
+              { "id": "gps", "label": "اترك علامات الموقع مفعلة - تساعد في الاكتشاف" },
+              { "id": "personas", "label": "استخدام هويات منفصلة، إزالة بيانات EXIF، تجنب ربط فواتير Lightning بين الهويات" },
+              { "id": "follow", "label": "متابعة أكبر عدد ممكن من Relays بملف شخصي واحد" }
+            ],
+            "correctId": "personas",
+            "explanation": "استخدم ملفات شخصية منفصلة، عطل بيانات الموقع، وابقِ معلومات Lightning/Zap منفصلة عندما يكون التخفي مهمًا.",
+            "severity": "info"
+          },
+          {
+            "id": "relay-strategy",
+            "title": "استراتيجية الـ Relay",
+            "prompt": "أي نهج Relay يوفر أفضل مزيج من الموثوقية والخصوصية؟",
+            "options": [
+              { "id": "single", "label": "استخدام Relay ضخم واحد ليكون كل شيء مركزياً" },
+              { "id": "mix", "label": "استخدام مجموعة صغيرة من Relays المدفوعة الموثوقة + مجموعة متغيرة للاكتشاف" },
+              { "id": "public", "label": "استخدام فقط Relays العامة المجانية دون اختيار" }
+            ],
+            "correctId": "mix",
+            "explanation": "الجمع بين Relays المدفوعة الموثوقة مع القليل من Relays العامة المتغيرة يوازن بين التكرار ومقاومة البريد العشوائي والخصوصية.",
+            "severity": "warning"
+          },
+          {
+            "id": "zaps",
+            "title": "أمان Zap",
+            "prompt": "أنت تُعد Zaps لأول مرة. أي خطوة تحافظ على أموالك بأمان؟",
+            "options": [
+              { "id": "custodial", "label": "إعادة استخدام نفس المحفظة الائتمانية لكل هوية" },
+              { "id": "link", "label": "ربط محفظة Lightning تتحكم فيها وتأكد من طلبات Zap قبل التوقيع" },
+              { "id": "email", "label": "إرسال عبارة الاستعادة إلى Relay حتى يمكنه السحب التلقائي" }
+            ],
+            "correctId": "link",
+            "explanation": "ربط محفظة تتحكم فيها، تأكيد كل طلب، وتجنب مشاركة حسابات الائتمان بين الهويات.",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "quickstart": {
+      "title": "البدء السريع",
+      "description": "ابدأ باستخدام Nostr في دقائق مع هذا الدليل العملي.",
+      "content": {},
+      "quiz": {
+        "title": "فحص البدء السريع",
+        "questions": [
+          {
+            "id": "first-step",
+            "title": "البدء",
+            "prompt": "ما هو أول شيء تحتاجه لاستخدام Nostr؟",
+            "options": [
+              { "id": "a", "label": "بطاقة ائتمان لدفع رسوم الحساب" },
+              { "id": "b", "label": "تطبيق عميل وزوج مفاتيح" },
+              { "id": "c", "label": "موافقة من مشرف" }
+            ],
+            "correctId": "b",
+            "explanation": "لاستخدام Nostr، تحتاج تطبيق عميل (مثل Amethyst أو Damus أو Iris) وزوج مفاتيح (npub/nsec). لا يلزم تسجيل أو دفع أو موافقة.",
+            "severity": "critical"
+          },
+          {
+            "id": "key-generation",
+            "title": "إنشاء المفتاح",
+            "prompt": "عندما تفتح عميل Nostr لأول مرة، ماذا يجب أن تفعل بمفاتيحك؟",
+            "options": [
+              { "id": "a", "label": "مشاركتها على تويتر للنسخ الاحتياطي" },
+              { "id": "b", "label": "حفظها بأمان غير متصل قبل أي شيء آخر" },
+              { "id": "c", "label": "إرسالها بالبريد الإلكتروني لنفسك" }
+            ],
+            "correctId": "b",
+            "explanation": "احفظ نسخة احتياطية من مفاتيحك غير متصلة (مكتوبة، ملف مشفر، أو مدير كلمات مرور آمن) قبل أن تبدأ النشر. فقدان مفاتيحك يعني فقدان هويتك.",
+            "severity": "critical"
+          },
+          {
+            "id": "finding-people",
+            "title": "بناء شبكتك",
+            "prompt": "كيف يمكنك إيجاد أشخاص لمتابعتهم عندما تكون جديداً على Nostr؟",
+            "options": [
+              { "id": "a", "label": "البحث برقم الهاتف" },
+              { "id": "b", "label": "استيراد متابعات تويتر، استخدام الوسوم، أو تصفح Relays الشائعة" },
+              { "id": "c", "label": "الانتظار حتى يقترح الخوارزمية الأصدقاء" }
+            ],
+            "correctId": "b",
+            "explanation": "العديد من العملاء يسمحون لك باستيراد متابعات تويتر الذين انضموا أيضاً إلى Nostr. يمكنك أيضاً البحث بالوسوم أو تصفح الخلاصات العامة أو طلب التوصيات.",
+            "severity": "warning"
+          },
+          {
+            "id": "client-choice",
+            "title": "اختيار العميل",
+            "prompt": "أي عميل Nostr يجب أن تستخدم؟",
+            "options": [
+              { "id": "a", "label": "تطبيق Nostr الرسمي" },
+              { "id": "b", "label": "أي عميل يعمل على جهازك ويشعرك بالراحة" },
+              { "id": "c", "label": "الذي لديه أكبر عدد من التنزيلات" }
+            ],
+            "correctId": "b",
+            "explanation": "لا يوجد 'عميل رسمي'. اختر عميلاً يعمل على منصتك (iOS: Damus، Android: Amethyst، Web: Iris/Snort). هويتك تعمل عبر جميعهم.",
+            "severity": "info"
+          },
+          {
+            "id": "post-visibility",
+            "title": "رؤية المنشور",
+            "prompt": "من يمكنه رؤية منشوراتك على Nostr؟",
+            "options": [
+              { "id": "a", "label": "فقط الأشخاص الذين يتابعونك" },
+              { "id": "b", "label": "أي شخص يستخدم Relay يخزن منشوراتك" },
+              { "id": "c", "label": "فقط أصدقاؤك المقربون" }
+            ],
+            "correctId": "b",
+            "explanation": "منشوراتك على Nostr عامة ويمكن رؤيتها من قبل أي شخص يتصل بـ Relays التي تستخدمها. لا توجد منشورات 'خاصة' افتراضياً.",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    "relaysDemystified": {
+      "title": "Relays ببساطة",
+      "description": "غوص عميق في كيفية عمل Relays مع تشبيهات بسيطة وأدوات تفاعلية.",
+      "content": {},
+      "quiz": {
+        "title": "اختبار Relays العميق",
+        "questions": [
+          {
+            "id": "relay-basics",
+            "title": "ما هو الـ Relay؟",
+            "prompt": "ما هو أفضل تشبيه لـ Relay في Nostr؟",
+            "options": [
+              { "id": "a", "label": "بنك يخزن أموالك" },
+              { "id": "b", "label": "لوحة إعلانات عامة حيث يمكن لأي شخص نشر رسائل" },
+              { "id": "c", "label": "حكومة تتحكم في الإنترنت" }
+            ],
+            "correctId": "b",
+            "explanation": "Relays تشبه لوحات الإعلانات العامة. يمكن لأي شخص النشر، ويمكن للآخرين قراءة ما نشرته. ليس هناك تحكم مركزي.",
+            "severity": "info"
+          },
+          {
+            "id": "user-control",
+            "title": "تحكم المستخدم",
+            "prompt": "من يتحكم في محتواك على Relays؟",
+            "options": [
+              { "id": "a", "label": "مالك Relay يمكنه حذف أي شيء" },
+              { "id": "b", "label": "أنت تتحكم - يمكنك نشر على أي Relay ويمكن للآخرين اختيار Relay الخاص بهم" },
+              { "id": "c", "label": "شركة Nostr Inc." }
+            ],
+            "correctId": "b",
+            "explanation": "أنت تختار إلى أي Relays تنشر. إذا حظرك Relay واحد، انشر على آخر. المستخدمون يتحكمون في تجربتهم باختيار Relaysهم.",
+            "severity": "critical"
+          },
+          {
+            "id": "relay-types",
+            "title": "أنواع Relays",
+            "prompt": "ما الفرق بين Relays العامة والمدفوعة؟",
+            "options": [
+              { "id": "a", "label": "العامة أفضل دائماً" },
+              { "id": "b", "label": "المدفوعة عادةً أكثر موثوقية وخالية من البريد العشوائي" },
+              { "id": "c", "label": "لا يوجد فرق" }
+            ],
+            "correctId": "b",
+            "explanation": "Relays المدفوعة لديها حوافز اقتصادية للبقاء متصلة ومرشحة. Relays العامة مجانية لكنها قد تكون غير موثوقة أو مليئة بالبريد العشوائي.",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "findingCommunity": {
+      "title": "إيجاد المجتمع",
+      "description": "اكتشف كيفية إيجاد والانضمام إلى المجتمعات على Nostr.",
+      "content": {},
+      "quiz": {
+        "title": "اختبار اكتشاف المجتمع",
+        "questions": [
+          {
+            "id": "sharing-id",
+            "title": "مشاركة الهوية",
+            "prompt": "كيف تشارك هويتك Nostr مع الآخرين؟",
+            "options": [
+              { "id": "a", "label": "إعطائهم عنوان بريدك" },
+              { "id": "b", "label": "مشاركة npub الخاص بك" },
+              { "id": "c", "label": "إرسال نص برمجي JavaScript" }
+            ],
+            "correctId": "b",
+            "explanation": "شارك npub (مفتاحك العام) للسماح للآخرين بمتابعتك. هذا يشبه اسم المستخدم لكنه آمن للمشاركة.",
+            "severity": "critical"
+          },
+          {
+            "id": "finding-groups",
+            "title": "إيجاد المجموعات",
+            "prompt": "أين تجد مجتمعات Nostr المتخصصة؟",
+            "options": [
+              { "id": "a", "label": "فقط على موقع Nostr الرسمي" },
+              { "id": "b", "label": "في Relays المواضيعية، الوسوم، وقوائم المستخدمين" },
+              { "id": "c", "label": "لا توجد مجموعات على Nostr" }
+            ],
+            "correctId": "b",
+            "explanation": "المجتمعات تتشكل حول Relays المواضيعية، الوسوم المشتركة، وقوائم المستخدمين. ابحث عن مجال اهتمامك + 'nostr'.",
+            "severity": "info"
+          },
+          {
+            "id": "twitter-bridge",
+            "title": "الترحيل من تويتر",
+            "prompt": "كيف تجد أصدقاء تويتر على Nostr؟",
+            "options": [
+              { "id": "a", "label": "لا يمكن - الشبكات منفصلة" },
+              { "id": "b", "label": "استخدام أدوات استيراد متابعات تويتر في العملاء" },
+              { "id": "c", "label": "إرسال رسائل خاصة على تويتر" }
+            ],
+            "correctId": "b",
+            "explanation": "العديد من عملاء Nostr يدعمون استيراد متابعات تويتر الذين أضافوا هويات Nostr. ابحث عن 'twitter nostr bridge'.",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    "nostrTools": {
+      "title": "أدوات Nostr الأساسية",
+      "description": "دليل منظم لأفضل أدوات Nostr والخدمات لإدارة المفاتيح واستضافة الوسائط والتحليلات والمزيد.",
+      "content": {},
+      "quiz": {
+        "title": "اختبار الأدوات والخدمات",
+        "questions": [
+          {
+            "id": "key-tools",
+            "title": "أدوات المفاتيح",
+            "prompt": "ما هو الغرض من أدوات إنشاء المفاتيح Nostr؟",
+            "options": [
+              { "id": "a", "label": "لتعدين البيتكوين" },
+              { "id": "b", "label": "لإنشاء وإدارة أزواج المفاتيح بأمان" },
+              { "id": "c", "label": "لشراء مفاتيح من الآخرين" }
+            ],
+            "correctId": "b",
+            "explanation": "أدوات إنشاء المفاتيح تساعدك على إنشاء أزواج مفاتيح آمنة وإدارتها. تستخدم RNG آمنة للحماية.",
+            "severity": "critical"
+          },
+          {
+            "id": "media-storage",
+            "title": "تخزين الوسائط",
+            "prompt": "لماذا تحتاج إلى خدمات استضافة الوسائط لـ Nostr؟",
+            "options": [
+              { "id": "a", "label": "Relays لا تخزن الصور/الفيديو مباشرة" },
+              { "id": "b", "label": "لتشفير الصور" },
+              { "id": "c", "label": "ليست ضرورية - يمكنك رفع أي شيء إلى Relays" }
+            ],
+            "correctId": "a",
+            "explanation": "Relays تخزن النصوص فقط. الصور والفيديوهات تحتاج إلى استضافة خارجية (media servers) ثم ربطها في منشوراتك.",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    "nip05Identity": {
+      "title": "هوية NIP-05",
+      "description": "أعد هوية NIP-05 الخاصة بك واحصل على اسم مستخدم قابل للقراءة مثل you@domain.com.",
+      "content": {},
+      "quiz": {
+        "title": "اختبار هوية NIP-05",
+        "questions": [
+          {
+            "id": "nip05-purpose",
+            "title": "غرض NIP-05",
+            "prompt": "ما هي الفائدة الرئيسية من NIP-05؟",
+            "options": [
+              { "id": "a", "label": "تشفير أفضل للرسائل" },
+              { "id": "b", "label": "اسم مستخدم قابل للقراءة بدلاً من npob طويل" },
+              { "id": "c", "label": "محفظة بيتكوين مجانية" }
+            ],
+            "correctId": "b",
+            "explanation": "NIP-05 يعطيك اسم مستخدم مثل you@domain.com بدلاً من npob... الطويل. يجده الآخرون أسهل.",
+            "severity": "info"
+          },
+          {
+            "id": "verification",
+            "title": "التحقق",
+            "prompt": "كيف يتحقق NIP-05 من هويتك؟",
+            "options": [
+              { "id": "a", "label": "إرسال صورة هويتك" },
+              { "id": "b", "label": "إثبات امتلاكك للنطاق عبر ملف JSON على خادمك" },
+              { "id": "c", "label": "دفع رسوم سنوية لـ Nostr Inc." }
+            ],
+            "correctId": "b",
+            "explanation": "NIP-05 يتحقق عبر ملف JSON يستضيف على نطاقك. هذا يثبت أنك تتحكم في النطاق.",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "zapsAndLightning": {
+      "title": "Zaps وشبكة Lightning",
+      "description": "أتقن فن إرسال واستقبال مدفوعات البيتكوين (Zaps) عبر شبكة Lightning.",
+      "content": {},
+      "quiz": {
+        "title": "اختبار Lightning والزaps",
+        "questions": [
+          {
+            "id": "zap-definition",
+            "title": "تعريف Zap",
+            "prompt": "ما هو Zap على Nostr؟",
+            "options": [
+              { "id": "a", "label": "نوع من المنشورات النصية" },
+              { "id": "b", "label": "مدفوعة بيتكوين عبر Lightning Network" },
+              { "id": "c", "label": "زر إعجاب محسّن" }
+            ],
+            "correctId": "b",
+            "explanation": "Zaps هي مدفوعات بيتكوين فورية عبر Lightning Network. طريقة لدعم المحتوى الجيد مباشرة.",
+            "severity": "info"
+          },
+          {
+            "id": "lightning-network",
+            "title": "شبكة Lightning",
+            "prompt": "ما هي شبكة Lightning؟",
+            "options": [
+              { "id": "a", "label": "شبكة كهربائية" },
+              { "id": "b", "label": "طبقة ثانية للبيتكوين للمدفوعات السريعة والرخيصة" },
+              { "id": "c", "label": "شبكة تواصل اجتماعي منفصلة" }
+            ],
+            "correctId": "b",
+            "explanation": "Lightning Network هي طبقة فوق البيتكوين تتيح مدفوعات فورية برسوم منخفضة. مثالية للزaps الصغيرة.",
+            "severity": "info"
+          },
+          {
+            "id": "wallet-setup",
+            "title": "إعداد المحفظة",
+            "prompt": "ما تحتاجه لاستقبال Zaps؟",
+            "options": [
+              { "id": "a", "label": "حساب بنكي" },
+              { "id": "b", "label": "محفظة Lightning تدعم Nostr" },
+              { "id": "c", "label": "بطاقة ائتمان" }
+            ],
+            "correctId": "b",
+            "explanation": "تحتاج محفظة Lightning تدعم NIP-57 (مثل Wallet of Satoshi، Alby، أو Phoenix). اربطها بملفك الشخصي.",
+            "severity": "critical"
+          }
+        ]
+      }
+    },
+    "multiClient": {
+      "title": "استخدام عدة عملاء",
+      "description": "كيفية استخدام عدة عملاء في نفس الوقت والحفاظ على مزامنة بياناتك.",
+      "content": {},
+      "quiz": {
+        "title": "اختبار استخدام عدة عملاء",
+        "questions": [
+          {
+            "id": "identity-portability",
+            "title": "قابلية نقل الهوية",
+            "prompt": "هل يمكنك استخدام نفس الهوية على عدة عملاء؟",
+            "options": [
+              { "id": "a", "label": "لا - تحتاج حساباً لكل عميل" },
+              { "id": "b", "label": "نعم - مفاتيحك تعمل على كل العملاء" },
+              { "id": "c", "label": "فقط إذا دفعت رسوماً" }
+            ],
+            "correctId": "b",
+            "explanation": "هويتك Nostr (npub/nsec) تعمل على أي عميل. استخدم Damus على iOS وAmethyst على Android بنفس المفاتيح.",
+            "severity": "info"
+          },
+          {
+            "id": "data-sync",
+            "title": "مزامنة البيانات",
+            "prompt": "كيف تبقى منشوراتك متزامنة بين العملاء؟",
+            "options": [
+              { "id": "a", "label": "نسخ ولصق يدوي" },
+              { "id": "b", "label": "استخدام نفس Relays على كل العملاء" },
+              { "id": "c", "label": "لا يمكن مزامنتها" }
+            ],
+            "correctId": "b",
+            "explanation": "استخدم نفس Relays على كل العملاء. بياناتك تُقرأ من/تُكتب إلى Relays، لذا يبقى كل شيء متزامناً.",
+            "severity": "critical"
+          }
+        ]
+      }
+    },
+    "troubleshooting": {
+      "title": "استكشاف الأخطاء وإصلاحها",
+      "description": "المشاكل الشائعة وكيفية إصلاحها. من الخلاصات الفارغة إلى مشاكل Relays.",
+      "content": {},
+      "quiz": {
+        "title": "اختبار حل المشاكل",
+        "questions": [
+          {
+            "id": "empty-feed",
+            "title": "الخلاصة الفارغة",
+            "prompt": "لماذا تبدو خلاصتك فارغة؟",
+            "options": [
+              { "id": "a", "label": "Nostr معطل" },
+              { "id": "b", "label": "غير متصل بـ Relays كافية أو لا تتابع أحداً بعد" },
+              { "id": "c", "label": "تحتاج إلى دفع رسوم" }
+            ],
+            "correctId": "b",
+            "explanation": "الخلاصات الفارغة عادةً تعني أنك غير متصل بـ Relays أو لا تتابع أحداً. أضف Relays وابحث عن مستخدمين لمتابعتهم.",
+            "severity": "warning"
+          },
+          {
+            "id": "lost-history",
+            "title": "فقدان السجل",
+            "prompt": "لماذا قد يختفي تاريخ منشوراتك؟",
+            "options": [
+              { "id": "a", "label": "Relays تحذف البيانات القديمة" },
+              { "id": "b", "label": "Nostr غير آمن" },
+              { "id": "c", "label": "تم اختراقك" }
+            ],
+            "correctId": "a",
+            "explanation": "بعض Relays تحذف البيانات القديمة لأنها مكلفة. استخدم أرشيف خاص أو Relays مدفوعة للحفاظ على السجل.",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "privacySecurity": {
+      "title": "الخصوصية والأمان",
+      "description": "أفضل الممارسات للخصوصية على Nostr.",
+      "content": {},
+      "quiz": {
+        "title": "اختبار الخصوصية والأمان",
+        "questions": [
+          {
+            "id": "public-nature",
+            "title": "الطبيعة العامة",
+            "prompt": "هل منشورات Nostr خاصة؟",
+            "options": [
+              { "id": "a", "label": "نعم - مشفرة بالكامل" },
+              { "id": "b", "label": "لا - عامة افتراضياً" },
+              { "id": "c", "label": "فقط الأصدقاء يرونها" }
+            ],
+            "correctId": "b",
+            "explanation": "منشورات Nostr عامة افتراضياً. استخدم NIP-17 للرسائل المشفرة إذا كنت بحاجة إلى خصوصية.",
+            "severity": "critical"
+          },
+          {
+            "id": "separate-identities",
+            "title": "الهويات المنفصلة",
+            "prompt": "لماذا تستخدم هويات منفصلة؟",
+            "options": [
+              { "id": "a", "label": "لأن Nostr يتطلب ذلك" },
+              { "id": "b", "label": "لعزل أنواع المحتوى المختلفة وزيادة الخصوصية" },
+              { "id": "c", "label": "ليست ضرورية أبداً" }
+            ],
+            "correctId": "b",
+            "explanation": "الهويات المنفصلة تتيح لك عزل أنشطة مختلفة (شخصية، مهنية، هوايات) لزيادة الخصوصية والتنظيم.",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    "relayGuide": {
+      "title": "دليل Relays",
+      "description": "كل ما تحتاج لمعرفته حول اختيار والاتصال بـ Relays وإدارتها.",
+      "content": {},
+      "quiz": {
+        "title": "اختبار Relays",
+        "questions": [
+          {
+            "id": "relay-choice",
+            "title": "اختيار Relays",
+            "prompt": "كم Relay يجب أن تستخدم؟",
+            "options": [
+              { "id": "a", "label": "واحد فقط" },
+              { "id": "b", "label": "4-8 موثوقين للتوازن" },
+              { "id": "c", "label": "جميع Relays المتاحة" }
+            ],
+            "correctId": "b",
+            "explanation": "استخدم 4-8 Relays موثوقين. القليل جداً = نقطة فشل. الكثير = بطء ومزامنة ثقيلة.",
+            "severity": "info"
+          },
+          {
+            "id": "paid-vs-free",
+            "title": "المدفوع مقابل المجاني",
+            "prompt": "هل Relays المدفوعة أفضل؟",
+            "options": [
+              { "id": "a", "label": "دائماً" },
+              { "id": "b", "label": "عادةً أكثر موثوقية لكن الأفضل هو المزيج" },
+              { "id": "c", "label": "لا - المجانية دائماً أفضل" }
+            ],
+            "correctId": "b",
+            "explanation": "Relays المدفوعة عادةً أكثر موثوقية لكن أفضل استراتيجية هي مزيج من المدفوعة والمجانية.",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "protocolComparison": {
+      "title": "مقارنة البروتوكولات",
+      "description": "كيف يقارن Nostr بالبدائل؟",
+      "content": {},
+      "quiz": {
+        "title": "اختبار المقارنة",
+        "questions": [
+          {
+            "id": "nostr-vs-mastodon",
+            "title": "Nostr مقابل Mastodon",
+            "prompt": "ما الاختلاف الرئيسي بين Nostr و Mastodon؟",
+            "options": [
+              { "id": "a", "label": "Nostr أسرع" },
+              { "id": "b", "label": "Nostr لا يتطلب اختيار خادم/مثيل" },
+              { "id": "c", "label": "لا يوجد اختلاف" }
+            ],
+            "correctId": "b",
+            "explanation": "Mastodon يتطلب الانضمام إلى مثيل. Nostr يسمح لك باستخدام أي Relay دون إنشاء حساب.",
+            "severity": "info"
+          },
+          {
+            "id": "nostr-vs-bluesky",
+            "title": "Nostr مقابل Bluesky",
+            "prompt": "كيف يختلف Nostr عن Bluesky؟",
+            "options": [
+              { "id": "a", "label": "Bluesky لديه إيموجي أكثر" },
+              { "id": "b", "label": "Nostr بدون خادم تماماً، Bluesky له بنية تحتية مركزية" },
+              { "id": "c", "label": "لا يوجد فرق" }
+            ],
+            "correctId": "b",
+            "explanation": "Nostr لامركزي بالكامل بدون خوادم مركزية. Bluesky لديه بنية تحتية مركزية مع خوادم AT.",
+            "severity": "info"
+          }
+        ]
+      }
+    },
+    "nip17PrivateMessages": {
+      "title": "رسائل NIP-17 الخاصة",
+      "description": "إرسال رسائل مشفرة على Nostr.",
+      "content": {},
+      "quiz": {
+        "title": "اختبار الرسائل الخاصة",
+        "questions": [
+          {
+            "id": "nip17-purpose",
+            "title": "غرض NIP-17",
+            "prompt": "ماذا يفعل NIP-17؟",
+            "options": [
+              { "id": "a", "label": "يزيد من سرعة المنشورات" },
+              { "id": "b", "label": "يضيف تشفير للرسائل الخاصة" },
+              { "id": "c", "label": "ينشئ مجموعات جديدة" }
+            ],
+            "correctId": "b",
+            "explanation": "NIP-17 يضيف تشفير للرسائل المباشرة. فقط المرسل والمستلم يمكنهما قراءتها.",
+            "severity": "info"
+          },
+          {
+            "id": "encryption-limitations",
+            "title": "قيود التشفير",
+            "prompt": "هل رسائل NIP-17 خاصة تماماً؟",
+            "options": [
+              { "id": "a", "label": "نعم - حتى Relays لا يمكنها رؤيتها" },
+              { "id": "b", "label": "النص مشفر لكن البيانات الوصفية مرئية" },
+              { "id": "c", "label": "لا - عامة تماماً" }
+            ],
+            "correctId": "b",
+            "explanation": "NIP-17 يشفر النص لكن البيانات الوصفية (من، إلى، وقت) مرئية. Relays ترى أن رسالة موجودة.",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    "outboxModel": {
+      "title": "نموذج Outbox",
+      "description": "افهم كيفية توزيع المحتوى في Nostr.",
+      "content": {
+        "section1": "ما هو نموذج Outbox؟",
+        "section2": "لماذا يهم؟",
+        "section3": "كيف يعمل؟",
+        "section4": "نموذج Inbox مقابل Outbox",
+        "section5": "التطبيق العملي",
+        "section6": "الخلاصة"
+      },
+      "quiz": {
+        "title": "اختبار نموذج Outbox",
+        "questions": [
+          {
+            "id": "outbox-basics",
+            "title": "أساسيات Outbox",
+            "prompt": "ما هو نموذج Outbox؟",
+            "options": [
+              { "id": "a", "label": "طريقة لتخزين البريد الإلكتروني" },
+              { "id": "b", "label": "نموذج حيث تنشر على Relays الخاصة بك ويقرأ الآخرون منها" },
+              { "id": "c", "label": "خدمة بريد عشوائي" }
+            ],
+            "correctId": "b",
+            "explanation": "نموذج Outbox: تنشر على Relays التي تختارها، والمتابعون يقرأون من تلك Relays. أنت تتحكم في أين يُخزن محتواك.",
+            "severity": "info"
+          },
+          {
+            "id": "inbox-difference",
+            "title": "الفرق عن Inbox",
+            "prompt": "كيف يختلف Outbox عن Inbox (مثل البريد الإلكتروني)؟",
+            "options": [
+              { "id": "a", "label": "لا يوجد فرق" },
+              { "id": "b", "label": "Inbox = يرسل إليك، Outbox = تنشر حيث تختار" },
+              { "id": "c", "label": "Outbox أبطأ" }
+            ],
+            "correctId": "b",
+            "explanation": "Inbox (بريد): يرسل إليك على خادمك. Outbox (Nostr): تنشر على Relays التي تختارها. أنت تتحكم في البنية التحتية.",
+            "severity": "info"
+          },
+          {
+            "id": "relay-list",
+            "title": "قائمة Relays",
+            "prompt": "كيف يعرف الآخرون أي Relays تستخدم؟",
+            "options": [
+              { "id": "a", "label": "لا يعرفون" },
+              { "id": "b", "label": "من خلال kind:10002 (قائمة Relays) في ملفك الشخصي" },
+              { "id": "c", "label": "من خلال إرسال بريد إلكتروني" }
+            ],
+            "correctId": "b",
+            "explanation": "ملفك الشخصي يحتوي على kind:10002 - قائمة Relays التي تستخدمها. العملاء يقرأون هذه القائمة ليعرفوا أين يجدوا منشوراتك.",
+            "severity": "critical"
+          }
+        ]
+      }
+    },
+    "faq": {
+      "title": "الأسئلة الشائعة",
+      "description": "إجابات على الأسئلة الأكثر شيوعاً.",
+      "content": {},
+      "quiz": {
+        "title": "اختبار المعرفة",
+        "questions": [
+          {
+            "id": "ownership",
+            "title": "الملكية",
+            "prompt": "من يملك Nostr؟",
+            "options": [
+              { "id": "a", "label": "شركة Nostr Inc." },
+              { "id": "b", "label": "لا أحد - بروتوكول مفتوح" },
+              { "id": "c", "label": "إيلون ماسك" }
+            ],
+            "correctId": "b",
+            "explanation": "Nostr بروتوكول مفتوح لا يملكه أحد. أي شخص يمكنه تشغيل Relay أو بناء عميل.",
+            "severity": "info"
+          },
+          {
+            "id": "cost",
+            "title": "التكلفة",
+            "prompt": "هل Nostr مجاني؟",
+            "options": [
+              { "id": "a", "label": "نعم - تماماً" },
+              { "id": "b", "label": "الاستخدام مجاني لكن Relays المدفوعة أفضل" },
+              { "id": "c", "label": "لا - يتطلب اشتراك" }
+            ],
+            "correctId": "b",
+            "explanation": "Nostr مجاني للاستخدام. Relays المجانية متاحة لكن Relays المدفوعة عادةً أكثر موثوقية.",
+            "severity": "info"
+          }
+        ]
+      }
+    }
+  },
+  "keyGenerator": {
+    "title": "أنشئ مفاتيح Nostr الخاصة بك",
+    "description": "أنشئ زوج مفاتيح آمن للوصول إلى Nostr. يتم إنشاء مفاتيحك محلياً في المتصفح ولا يتم إرسالها إلى أي خادم أبداً.",
+    "buttons": {
+      "generate": "إنشاء زوج مفاتيح جديد",
+      "generating": "جاري الإنشاء...",
+      "regenerate": "إنشاء زوج مفاتيح جديد"
+    },
+    "progress": {
+      "collectingEntropy": "جمع العشوائية...",
+      "securityAcknowledgment": "إقرار الأمان"
+    },
+    "securityWarning": {
+      "title": "تنبيه أمني هام",
+      "description": "مفتاحك الخاص (nsec) مثل كلمة المرور. أي شخص لديه حق الوصول إليه يمكنه التحكم في حسابك. أكمل قائمة الأمان أدناه قبل نسخ أو تنزيل مفاتيحك."
+    },
+    "securityChecklist": {
+      "title": "قائمة الأمان",
+      "items": {
+        "understand": {
+          "label": "أفهم أن هذه كلمة المرور الوحيدة - إذا فقدت، لا يمكن استردادها"
+        },
+        "threePlaces": {
+          "label": "سأحفظها في 3 أماكن آمنة مختلفة على الأقل"
+        },
+        "neverShare": {
+          "label": "لن أشارك مفتاح nsec (المفتاح الخاص) مع أي شخص أبداً"
+        }
+      }
+    },
+    "keys": {
+      "public": {
+        "title": "المفتاح العام (npub)",
+        "badge": "آمن للمشاركة",
+        "description": "هذا هو معرفك العام. شاركه مع الآخرين ليتمكنوا من العثور عليك ومتابعتك.",
+        "copy": "نسخ",
+        "qrCode": "رمز QR"
+      },
+      "private": {
+        "title": "المفتاح الخاص (nsec)",
+        "badge": "لا تشارك أبداً",
+        "description": "هذه كلمة مرورك. أي شخص لديه هذا يمكنه التحكم في حسابك. احفظه سرياً وآمناً.",
+        "copy": "نسخ",
+        "download": "تنزيل النسخة الاحتياطية",
+        "qrCode": "رمز QR",
+        "show": "إظهار المفتاح الخاص",
+        "hide": "إخفاء المفتاح الخاص"
+      }
+    },
+    "modal": {
+      "title": "تحذير أمني",
+      "description": "لم تكمل جميع إقرارات الأمان. نسخ مفاتيحك دون فهم المخاطر قد يؤدي إلى فقدان الوصول بشكل دائم.",
+      "goBack": "رجوع",
+      "copyAnyway": "نسخ على أي حال"
+    },
+    "toast": {
+      "success": "تم إنشاء المفاتيح بنجاح!",
+      "copied": "تم نسخ {label} إلى الحافظة",
+      "copyFailed": "فشل النسخ إلى الحافظة",
+      "downloaded": "تم تنزيل المفاتيح بنجاح"
+    },
+    "backupFile": {
+      "title": "نسخ احتياطي لمفاتيح NOSTR",
+      "generated": "تم الإنشاء",
+      "publicKey": "المفتاح العام (npub) - آمن للمشاركة",
+      "privateKey": "المفتاح الخاص (nsec) - لا تشارك أبداً",
+      "hexPrivate": "المفتاح الخاص (Hex)",
+      "hexPublic": "المفتاح العام (Hex)",
+      "warnings": {
+        "title": "تحذيرات أمنية هامة",
+        "keepSecret": "احفظ مفتاحك الخاص (nsec) سراً",
+        "neverShare": "لا تشاركه مع أي شخص أبداً",
+        "storeBackups": "احفظ النسخ الاحتياطية في عدة أماكن آمنة",
+        "onlyPassword": "هذه كلمة المرور الوحيدة - لا يمكن استردادها إذا فقدت"
+      }
+    }
+  },
+  "zapSimulator": {
+    "title": "محاكي Zap",
+    "description": "تعلم كيفية إرسال Zaps دون استخدام بيتكوين حقيقي.",
+    "steps": {
+      "setup": "إعداد",
+      "send": "إرسال Zap",
+      "receive": "الاستلام",
+      "confirm": "التأكيد"
+    },
+    "labels": {
+      "amount": "المبلغ (sats)",
+      "message": "رسالة (اختياري)",
+      "recipient": "المستلم (npub)",
+      "sendZap": "إرسال Zap",
+      "balance": "الرصيد",
+      "transactions": "المعاملات",
+      "invoice": "فاتورة Lightning"
+    },
+    "buttons": {
+      "pay": "ادفع Zap",
+      "copy": "نسخ"
+    },
+    "messages": {
+      "success": "تم إرسال Zap بنجاح! ⚡",
+      "error": "فشل إرسال Zap. تحقق من الرصيد والمستلم.",
+      "insufficient": "رصيد غير كافٍ"
+    }
+  },
+  "nostrSimulator": {
+    "title": "محاكي Nostr",
+    "description": "جرب Nostr في المتصفح دون تثبيت أي شيء.",
+    "tabs": {
+      "profile": "الملف الشخصي",
+      "post": "نشر",
+      "feed": "الخلاصة",
+      "relays": "Relays"
+    },
+    "labels": {
+      "createPost": "إنشاء منشور",
+      "yourFeed": "خلاصتك",
+      "connectRelay": "اتصال Relay",
+      "disconnectRelay": "فصل Relay"
+    }
+  },
+  "relayExplorer": {
+    "title": "مستكشف Relays",
+    "description": "استكشف Relays Nostr وتحقق من حالتها.",
+    "labels": {
+      "status": "الحالة",
+      "latency": "التأخير",
+      "users": "المستخدمون",
+      "connect": "اتصال",
+      "disconnect": "فصل"
+    },
+    "status": {
+      "online": "متصل",
+      "offline": "غير متصل",
+      "unknown": "غير معروف"
+    }
+  },
+  "relayVisualizer": {
+    "title": "مرئي Relays",
+    "description": "تصور كيف تتصل Relays وتوزع البيانات.",
+    "labels": {
+      "connections": "الاتصالات",
+      "networkSize": "حجم الشبكة",
+      "relayCount": "{count} مرحلات"
+    }
+  },
+  "relayWorldMap": {
+    "title": "خريطة Relays العالمية",
+    "description": "انظر أين توجد Relays Nostr حول العالم.",
+    "regions": {
+      "northAmerica": "أمريكا الشمالية",
+      "southAmerica": "أمريكا الجنوبية",
+      "europe": "أوروبا",
+      "asia": "آسيا",
+      "africa": "أفريقيا",
+      "oceania": "أوقيانوسيا"
+    },
+    "stats": {
+      "totalRelays": "إجمالي Relays",
+      "topRegion": "المنطقة الأولى",
+      "avgLatency": "متوسط التأخير"
+    }
+  },
+  "relayFeedBrowser": {
+    "title": "تصفح خلاصات Relays",
+    "description": "اكتشف مجتمعات Nostr من خلال تصفح خلاصات Relays.",
+    "labels": {
+      "filterByCategory": "تصفية حسب الفئة",
+      "allRelays": "جميع Relays",
+      "noRelays": "لم يتم العثور على Relays في هذه الفئة",
+      "howToAdd": "كيفية إضافة هذا Relay إلى عميلك",
+      "recommendedClients": "عملاء يدعمون تصفح Relays",
+      "moreClients": "والمزيد..."
+    },
+    "categories": {
+      "all": "الكل",
+      "general": "عام",
+      "bitcoin": "Bitcoin",
+      "art": "فن وإبداع",
+      "music": "موسيقى",
+      "tech": "تكنولوجيا",
+      "dev": "تطوير",
+      "gaming": "ألعاب",
+      "regional": "إقليمي"
+    }
+  },
+  "relayPlayground": {
+    "title": "ملعب Relays",
+    "description": "تفاعل مباشرة مع Relays باستخدام أوامر Nostr.",
+    "labels": {
+      "relayUrl": "عنوان Relay",
+      "connect": "اتصال",
+      "sendCommand": "إرسال أمر",
+      "response": "الاستجابة",
+      "history": "السجل"
+    }
+  },
+  "postFlowSimulator": {
+    "title": "محاكي تدفق المنشورات",
+    "description": "شاهد كيف تنتشر منشوراتك عبر شبكة Nostr.",
+    "steps": {
+      "create": "الإنشاء",
+      "sign": "التوقيع",
+      "publish": "النشر",
+      "propagate": "الانتشار"
+    },
+    "labels": {
+      "yourPost": "منشورك",
+      "connectedRelays": "Relays المتصلة",
+      "reachedUsers": "المستخدمون الم reached"
+    }
+  },
+  "quickstartSimulator": {
+    "title": "محاكي البدء السريع",
+    "description": "جرب Nostr في دقيقة واحدة.",
+    "steps": {
+      "generate": "إنشاء المفاتيح",
+      "connect": "التواصل",
+      "follow": "المتابعة",
+      "post": "النشر"
+    },
+    "labels": {
+      "welcome": "مرحباً بك في Nostr!",
+      "generateKeys": "أنشئ مفاتيحك",
+      "connectRelay": "اتصل بـ Relay",
+      "followSomeone": "تابع شخصاً",
+      "createFirstPost": "أنشئ أول منشور"
+    }
+  },
+  "clientComparisonTable": {
+    "title": "جدول مقارنة العملاء",
+    "description": "قارن عملاء Nostr جنباً إلى جنب.",
+    "labels": {
+      "platform": "المنصة",
+      "features": "الميزات",
+      "easeOfUse": "سهولة الاستخدام",
+      "bestFor": "الأفضل لـ"
+    }
+  },
+  "clientRecommender": {
+    "title": "موصي العملاء",
+    "description": "احصل على توصية عميل Nostr مناسب لك.",
+    "questions": {
+      "platform": "ما جهازك؟",
+      "experience": "ما مستوى خبرتك؟",
+      "priority": "ما أولويتك الرئيسية؟"
+    },
+    "results": {
+      "topRecommendation": "التوصية الأولى",
+      "beginnerFriendly": "مناسب للمبتدئين",
+      "rating": "التقييم",
+      "users": "المستخدمون",
+      "pros": "المميزات",
+      "cons": "العيوب",
+      "getApp": "احصل على {clientName}",
+      "tryWeb": "جرب النسخة الويب",
+      "alternatives": "توصيات أخرى"
+    }
+  },
+  "protocolComparisonUI": {
+    "title": "مقارنة البروتوكولات",
+    "description": "قارن Nostr ببروتوكولات التواصل الاجتماعي اللامركزية الأخرى مثل ActivityPub (Mastodon) و AT Protocol (Bluesky).",
+    "centralizedLabel": "وسائل التواصل التقليدية",
+    "nostrLabel": "Nostr",
+    "items": {
+      "identity": {
+        "title": "الهوية",
+        "centralized": "حسابك مملوك للمنصة. يمكنهم حذف أو تعليق حسابك في أي وقت.",
+        "nostr": "أنت تملك هويتك من خلال مفاتيح تشفيرية. لا أحد يمكنه حذف حسابك."
+      },
+      "data": {
+        "title": "البيانات",
+        "centralized": "منشوراتك وبياناتك مخزنة على خوادم الشركة. يمكنهم حذف أو تعديل محتواك.",
+        "nostr": "بياناتك موزعة عبر العديد من المرحلات. أنت تتحكم في مكان وجود محتواك."
+      },
+      "clients": {
+        "title": "العملاء",
+        "centralized": "أنت مقفل في تطبيق منصة واحدة. التبديل يعني فقدان متابعيك.",
+        "nostr": "استخدم أي عميل تريده. هويتك ومتابعوك يتبعونك في كل مكان."
+      },
+      "censorship": {
+        "title": "مقاومة الرقابة",
+        "centralized": "المنصات تقرر ما يمكنك قوله. يمكنهم رقابتك أو حظرك بشكل خفي.",
+        "nostr": "لا توجد سلطة مركزية تتحكم في الكلام. يمكنك دائماً إيجاد مرحلات تحمل محتواك."
+      }
+    },
+    "protocols": {
+      "nostr": "Nostr",
+      "activitypub": "ActivityPub",
+      "atProtocol": "AT Protocol"
+    },
+    "features": {
+      "decentralization": "اللامركزية",
+      "censorshipResistance": "مقاومة الرقابة",
+      "accountPortability": "قابلية نقل الحساب",
+      "easeOfUse": "سهولة الاستخدام",
+      "scalability": "قابلية التوسع"
+    },
+    "details": {
+      "learnMore": "تعرف أكثر"
+    },
+    "labels": {
+      "feature": "الميزة",
+      "nostr": "Nostr",
+      "mastodon": "Mastodon",
+      "bluesky": "Bluesky",
+      "twitter": "Twitter"
+    }
+  },
+  "nip05Checker": {
+    "title": "مدقق NIP-05",
+    "description": "تحقق من معرفات NIP-05 (مثل user@domain.com). توفر أسماء قابلة للقراءة على Nostr.",
+    "whatIsNip05": "ما هو NIP-05؟",
+    "aboutNip05": "حول NIP-05",
+    "benefits": {
+      "humanReadable": "احصل على اسم مستخدم قابل للقراءة",
+      "domainOwnership": "أثبت ملكية النطاق",
+      "checkmark": "ظهور مع علامة صح في بعض العملاء"
+    },
+    "form": {
+      "placeholder": "أدخل المعرف (مثال: jack@cash.app)",
+      "verifyButton": "التحقق من المعرف",
+      "checking": "جاري التحقق...",
+      "recent": "الأخيرة:"
+    },
+    "results": {
+      "valid": {
+        "title": "NIP-05 صالح!",
+        "description": "هذا المعرف مُعد بشكل صحيح",
+        "publicKey": "المفتاح العام (npub)",
+        "recommendedRelays": "المرحات الموصى بها"
+      },
+      "invalid": {
+        "title": "NIP-05 غير صالح",
+        "description": "تعذر التحقق من هذا المعرف"
+      },
+      "checkAnother": "التحقق من آخر",
+      "getYourOwn": "احصل على معرف NIP-05 الخاص بك"
+    },
+    "errors": {
+      "invalidFormat": {
+        "title": "صيغة غير صالحة",
+        "description": "يجب أن تكون معرفات NIP-05 بالصيغة user@domain.com",
+        "fix": "تحقق من الصيغة وحاول مرة أخرى"
+      },
+      "domainNotFound": {
+        "title": "النطاق غير موجود",
+        "description": "تعذر الوصول إلى النطاق في معرفك",
+        "fix": "تحقق مما إذا كان النطاق صحيحاً ومتاحاً"
+      },
+      "notConfigured": {
+        "title": "NIP-05 غير مُعد",
+        "description": "النطاق موجود لكن NIP-05 غير مُعد",
+        "fix": "تواصل مع مالك النطاق أو استخدم مزود NIP-05"
+      },
+      "jsonError": {
+        "title": "خطأ في تحليل JSON",
+        "description": "أعاد الخادم بيانات غير صالحة",
+        "fix": "هذه عادة مشكلة في الخادم - حاول مرة أخرى لاحقاً"
+      },
+      "networkError": {
+        "title": "خطأ في الشبكة",
+        "description": "تعذر الاتصال للتحقق من المعرف",
+        "fix": "تحقق من اتصالك بالإنترنت وحاول مرة أخرى"
+      }
+    },
+    "providers": {
+      "title": "احصل على NIP-05 الخاص بك",
+      "getOne": "احصل على معرف NIP-05 الخاص بك من هؤلاء المزودين:"
+    }
+  },
+  "emptyFeedFixer": {
+    "title": "مصلح الخلاصة الفارغة",
+    "description": "إصلاح خلاصتك الفارغة خطوة بخطوة.",
+    "steps": {
+      "checkRelays": "التحقق من Relays",
+      "addRelays": "إضافة Relays",
+      "findPeople": "إيجاد أشخاص",
+      "verify": "التحقق"
+    },
+    "labels": {
+      "detectedIssue": "المشكلة المكتشفة",
+      "solution": "الحل"
+    }
+  },
+  "troubleshootingWizard": {
+    "title": "معالج استكشاف الأخطاء",
+    "description": "حلول للمشاكل الشائعة.",
+    "problems": {
+      "emptyFeed": {
+        "title": "خلاصة فارغة",
+        "solution": "أضف Relays وتابع أشخاصاً"
+      },
+      "cantPost": {
+        "title": "لا يمكن النشر",
+        "solution": "تحقق من اتصالك بـ Relays"
+      },
+      "lostKeys": {
+        "title": "فقدت مفاتيحي",
+        "solution": "تحقق من نسختك الاحتياطية"
+      }
+    }
+  },
+  "backupChecklist": {
+    "title": "قائمة مراجعة النسخ الاحتياطي",
+    "description": "تأكد من أن مفاتيحك آمنة.",
+    "items": {
+      "writtenDown": "مكتوبة على الورق",
+      "metalWallet": "مخزنة في محفظة معدنية",
+      "passwordManager": "في مدير كلمات مرور مشفر",
+      "offline": "نسخة غير متصلة",
+      "tested": "اختبرت الاستعادة"
+    }
+  },
+  "guideNavigation": {
+    "previous": "السابق",
+    "next": "التالي",
+    "backToAllGuides": "العودة إلى جميع الأدلة",
+    "exploreAllGuides": "استكشاف جميع الأدلة",
+    "startOfLevel": "بداية مستوى {level}",
+    "levelComplete": "اكتمل {level}!",
+    "levelCompleteDescription": "لقد أكملت جميع أدلة {level}",
+    "continueToLevel": "الاستمرار إلى {level}",
+    "unlockRequirements": "أكمل المزيد من أدلة {currentLevel} لفتح {nextLevel}",
+    "offLevelMessage": "هذا الدليل ليس جزءاً من مستوى {level} الحالي"
+  },
+  "continueLearning": {
+    "allLevelsComplete": "اكتملت جميع المستويات!",
+    "allLevelsCompleteDescription": "تهانينا! لقد أكملت جميع أدلة {level} وأتقنت Nostr!",
+    "levelComplete": "اكتمل المستوى!",
+    "levelCompleteDescription": "لقد أكملت جميع أدلة {level}!",
+    "continueToLevel": "الاستمرار إلى {level}",
+    "locked": "{level} مقفل",
+    "unlockRequirements": "أكمل {count} أدلة {currentLevel} إضافية لفتح {nextLevel}",
+    "browseAllGuides": "تصفح جميع الأدلة",
+    "guideComplete": "اكتمل الدليل!",
+    "testKnowledge": "اختبر معرفتك؟",
+    "nextGuide": "مستعد للدليل التالي؟",
+    "quizDescription": "خذ الاختبار لتعزيز ما تعلمته.",
+    "continueDescription": "استمر في رحلة Nostr مع {title}",
+    "takeQuiz": "خذ الاختبار",
+    "continueLearning": "استمر في التعلم"
+  },
+  "officialAccount": {
+    "title": "الحساب الرسمي",
+    "followUs": "تابعنا على Nostr",
+    "viewProfile": "عرض الملف الشخصي على Njump",
+    "recentPosts": "المنشورات الأخيرة",
+    "showMore": "عرض المزيد",
+    "showLess": "عرض أقل",
+    "noPosts": "لا توجد منشورات حديثة",
+    "tryAgain": "حاول مرة أخرى",
+    "errors": {
+      "nip05Failed": "فشل في حل NIP-05",
+      "loadFailed": "فشل في تحميل بيانات الحساب"
+    }
+  },
+  "time": {
+    "justNow": "الآن"
+  },
+  "prerequisiteWarning": {
+    "title": "أنت تتخطى إلى الأمام",
+    "description": "هذا الدليل يعتمد على {count} {singular} لم تكملها بعد. يمكنك متابعة القراءة، لكننا نوصي بإكمال {itOrThem} أولاً للحصول على أفضل تجربة.",
+    "singular": "متطلب أساسي",
+    "plural": "متطلبات أساسية",
+    "it": "ذلك",
+    "them": "تلك",
+    "showLess": "إظهار أقل",
+    "showMore": "إظهار {count} إضافية",
+    "timeEstimate": "حوالي {minutes} دقيقة لإكمال الكل",
+    "continueAnyway": "المتابعة على أي حال",
+    "startFirst": "البدء بالمتطلب الأساسي الأول"
+  }
+}

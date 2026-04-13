@@ -13,10 +13,11 @@ interface Props extends SEOProps {
 const { locale = 'en', ...props } = Astro.props;
 const localeConfig = getLocaleConfig(locale);
 const htmlLang = localeConfig.htmlLang;
+const dir = localeConfig.direction;
 ---
 
 <!DOCTYPE html>
-<html lang={htmlLang} class="scroll-smooth">
+<html lang={htmlLang} dir={dir} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />

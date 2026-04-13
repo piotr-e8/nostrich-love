@@ -3402,7 +3402,7 @@
     "labels": {
       "connections": "Verbindungen",
       "networkSize": "Netzwerkgr\u00f6\u00dfe",
-      "relayCount": "{{count}} Relays"
+      "relayCount": "{count} Relays"
     }
   },
   "relayWorldMap": {
@@ -3532,5 +3532,18 @@
   },
   "time": {
     "justNow": "gerade eben"
+  },
+  "prerequisiteWarning": {
+    "title": "Du springst voraus",
+    "description": "Diese Anleitung baut auf {count} {singular} auf, die du noch nicht abgeschlossen hast. Du kannst weiterlesen, aber wir empfehlen, zuerst {itOrThem} abzuschließen für die beste Erfahrung.",
+    "singular": "Voraussetzung",
+    "plural": "Voraussetzungen",
+    "it": "sie",
+    "them": "sie",
+    "showLess": "Weniger anzeigen",
+    "showMore": "{count} weitere anzeigen",
+    "timeEstimate": "Etwa {minutes} Min. um alles abzuschließen",
+    "continueAnyway": "Trotzdem fortfahren",
+    "startFirst": "Mit der ersten Voraussetzung beginnen"
   }
 }

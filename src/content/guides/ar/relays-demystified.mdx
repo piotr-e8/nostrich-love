@@ -1,0 +1,79 @@
+---
+title: "كيف تنتقل المنشورات: شرح الـ Relays"
+description: "افهم كيف تعمل relays Nostr مع تشبيهات بسيطة وأدوات تفاعلية"
+estimatedTime: "5-10 دقائق"
+priority: 2
+category: "intermediate"
+prerequisites: ["keys-and-security", "quickstart"]
+---
+
+import { RelayWorldMap } from "@components/ui/RelayWorldMap";
+import { PostFlowSimulator } from "@components/ui/PostFlowSimulator";
+import { RelayExplorer } from "@components/interactive/RelayExplorer";
+import { RelaysDemystifiedQuiz } from "@components/interactive/RelaysDemystifiedQuiz";
+
+الـ Relays هي مكاتب البريد في Nostr. إنها المكان الذي تعيش فيه رسائلك وكيف تنتقل للوصول إلى المستخدمين الآخرين.
+
+## تشبيه مكتب البريد
+
+تخيل Nostr كشبكة من مكاتب البريد حول العالم.
+
+- أنت لديك صندوق بريد (مفاتيحك)
+- الـ Relays هي مكاتب البريد
+- المنشورات هي الرسائل التي ترسلها
+
+إليك الفرق الرئيسي عن وسائل التواصل الاجتماعي التقليدية: أنت تختار مكان إرسال بريدك.
+
+### قوة الاختيار
+
+في Nostr، أنت غير مقيد في مزود خدمة واحد. يمكنك:
+
+- إرسال منشورات إلى أي relay
+- الاتصال بـ relays متعددة
+- تبديل الـ relays في أي وقت
+- تشغيل relay خاص بك
+
+<RelayWorldMap client:load />
+
+## لماذا لا تتزامن المنشورات
+
+إليك أكثر الالتباسات شيوعًا: نشرت شيئًا ولكن صديقي لا يمكنه رؤيته!
+
+السبب: إذا نشرت إلى Relay A وصديقك يستخدم Relay B فقط، لن يرى منشورك.
+
+الحل: الاتصال بـ Relays متعددة
+
+<PostFlowSimulator client:load />
+
+## اختيار الـ Relays
+
+### التوصيات الافتراضية
+
+- wss://relay.damus.io - Relay رئيسي لـ Damus
+- wss://nostr.wine - Relay عام
+- wss://relay.snort.social - Relay Snort
+
+### مجانية مقابل مدفوعة
+
+**الـ Relays المجانية:** مفتوحة للجميع، قد تحتوي على حدود، رائعة للمبتدئين
+**الـ Relays المدفوعة:** تتطلب رسومًا صغيرة، أداء أفضل، أقل spam
+
+<RelayExplorer client:load />
+
+---
+
+## مرجع سريع
+
+### أفضل الممارسات
+
+1. اتصل بـ 4-8 relays للحصول على تغطية جيدة
+2. تضمين relay write واحد حيث تنشر دائمًا
+3. تحقق من uptime الـ relay قبل الاعتماد عليها
+
+### استكشاف الأخطاء
+
+- لا أستطيع رؤية أي منشورات: تحقق من الاتصال بالـ relays
+- منشوراتي تختفي: بعض الـ relays تحذف المحتوى القديم
+- Relay لا يتصل: جرب relay آخر
+
+<RelaysDemystifiedQuiz client:load />

@@ -270,11 +270,9 @@ Content is licensed under [Creative Commons CC BY 4.0](https://creativecommons.o
 ## 📬 Contact
 
 - Website: [nostrich.love](https://nostrich.love)
-- GitHub: [github.com/yourusername/nostrich-love](https://github.com/yourusername/nostrich-love)
-- Nostr: `npub1...` (coming soon)
+- GitHub: [github.com/piotr-e8/nostrich-love](https://github.com/piotr-e8/nostrich-love)
+- Nostr: npub1p6t6gjhy3q4rfmcxuff7hu3xh5u09cvzem98d48arfzsrzd9kxws3cpeyl
 
 ---
 
 Built with ❤️ for the Nostr community
-
-**Note**: Replace `yourusername` with your actual GitHub username and update contact information before publishing.

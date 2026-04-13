@@ -3403,7 +3403,7 @@
     "labels": {
       "connections": "Connections",
       "networkSize": "Network Size",
-      "relayCount": "{{count}} relays"
+      "relayCount": "{count} relays"
     }
   },
   "relayWorldMap": {
@@ -3554,5 +3554,18 @@
   },
   "time": {
     "justNow": "just now"
+  },
+  "prerequisiteWarning": {
+    "title": "You're skipping ahead",
+    "description": "This guide builds on {count} {singular} you haven't completed yet. You can continue reading, but we recommend completing {itOrThem} first for the best experience.",
+    "singular": "prerequisite",
+    "plural": "prerequisites",
+    "it": "it",
+    "them": "them",
+    "showLess": "Show less",
+    "showMore": "Show {count} more",
+    "timeEstimate": "About {minutes} min to complete all",
+    "continueAnyway": "Continue anyway",
+    "startFirst": "Start with first prerequisite"
   }
 }

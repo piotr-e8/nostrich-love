@@ -3,6 +3,7 @@ import { AlertTriangle, X, ArrowRight, BookOpen, Clock } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { checkPrerequisites } from '../../lib/progressService';
 import { Button } from '../ui/Button';
+import { useTranslation } from '../../hooks/useTranslation';
 
 export interface PrerequisiteWarningProps {
   currentGuideId: string;
@@ -29,6 +30,7 @@ export function PrerequisiteWarning({
   onDismiss,
   dismissible = true,
 }: PrerequisiteWarningProps) {
+  const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [incompletePrereqs, setIncompletePrereqs] = useState<typeof prerequisites>([]);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -105,11 +107,13 @@ export function PrerequisiteWarning({
         
         <div className="flex-1 min-w-0">
           <h3 className="text-base font-semibold text-amber-900 dark:text-amber-100">
-            You're skipping ahead
+            {t('prerequisiteWarning.title')}
           </h3>
           <p className="mt-1 text-sm text-amber-800 dark:text-amber-200/80">
-            This guide builds on {incompletePrereqs.length === 1 ? '1 prerequisite' : `${incompletePrereqs.length} prerequisites`} you haven't completed yet. 
-            You can continue reading, but we recommend completing {incompletePrereqs.length === 1 ? 'it' : 'them'} first for the best experience.
+            {t('prerequisiteWarning.description')
+              .replace('{count}', String(incompletePrereqs.length))
+              .replace('{singular}', incompletePrereqs.length === 1 ? t('prerequisiteWarning.singular') : t('prerequisiteWarning.plural'))
+              .replace('{itOrThem}', incompletePrereqs.length === 1 ? t('prerequisiteWarning.it') : t('prerequisiteWarning.them'))}
           </p>
         </div>
 
@@ -165,7 +169,9 @@ export function PrerequisiteWarning({
             onClick={() => setIsExpanded(!isExpanded)}
             className="w-full py-2 text-sm text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200 font-medium transition-colors"
           >
-            {isExpanded ? 'Show less' : `Show ${incompletePrereqs.length - 3} more`}
+            {isExpanded 
+              ? t('prerequisiteWarning.showLess') 
+              : t('prerequisiteWarning.showMore').replace('{count}', String(incompletePrereqs.length - 3))}
           </button>
         )}
       </div>
@@ -175,10 +181,10 @@ export function PrerequisiteWarning({
         {totalTime > 0 && (
           <div className="flex items-center gap-2 text-sm text-amber-700 dark:text-amber-300">
             <Clock className="h-4 w-4" />
-            <span>About {totalTime} min to complete all</span>
+            <span>{t('prerequisiteWarning.timeEstimate').replace('{minutes}', String(totalTime))}</span>
           </div>
         )}
-        
+
         <div className="flex items-center gap-3">
           <Button
             variant="ghost"
@@ -186,9 +192,9 @@ export function PrerequisiteWarning({
             onClick={handleDismiss}
             className="text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200"
           >
-            Continue anyway
+            {t('prerequisiteWarning.continueAnyway')}
           </Button>
-          
+
           <Button
             variant="primary"
             size="sm"
@@ -197,7 +203,7 @@ export function PrerequisiteWarning({
               window.location.href = `/${lang}/guides/${incompletePrereqs[0].slug}`;
             }}
           >
-            Start with first prerequisite
+            {t('prerequisiteWarning.startFirst')}
           </Button>
         </div>
       </div>

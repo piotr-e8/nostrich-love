@@ -2688,7 +2688,7 @@
     "labels": {
       "connections": "连接",
       "networkSize": "网络规模",
-      "relayCount": "{{count}} 个中继"
+      "relayCount": "{count} 个中继"
     }
   },
   "relayWorldMap": {
@@ -2760,5 +2760,18 @@
   },
   "time": {
     "justNow": "刚刚"
+  },
+  "prerequisiteWarning": {
+    "title": "你在跳读",
+    "description": "本指南基于你尚未完成的{count}个{singular}。你可以继续阅读，但我们建议先完成{itOrThem}以获得最佳体验。",
+    "singular": "前置条件",
+    "plural": "前置条件",
+    "it": "它",
+    "them": "它们",
+    "showLess": "显示更少",
+    "showMore": "显示更多{count}个",
+    "timeEstimate": "完成所有内容约需{minutes}分钟",
+    "continueAnyway": "仍然继续",
+    "startFirst": "从第一个前置条件开始"
   }
 }

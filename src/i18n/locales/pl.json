@@ -2940,7 +2940,7 @@
     "labels": {
       "connections": "Po\u0142\u0105czenia",
       "networkSize": "Rozmiar Sieci",
-      "relayCount": "{{count}} relay"
+      "relayCount": "{count} relay"
     }
   },
   "relayWorldMap": {
@@ -3070,5 +3070,18 @@
   },
   "time": {
     "justNow": "przed chwilą"
+  },
+  "prerequisiteWarning": {
+    "title": "Przeskakujesz do przodu",
+    "description": "Ten przewodnik opiera się na {count} {singular}, których jeszcze nie ukończyłeś. Możesz kontynuować czytanie, ale zalecamy najpierw ukończyć {itOrThem} dla najlepszych efektów.",
+    "singular": "wymaganiu wstępnym",
+    "plural": "wymaganiach wstępnych",
+    "it": "to",
+    "them": "je",
+    "showLess": "Pokaż mniej",
+    "showMore": "Pokaż {count} więcej",
+    "timeEstimate": "Około {minutes} min na ukończenie wszystkiego",
+    "continueAnyway": "Kontynuuj mimo to",
+    "startFirst": "Zacznij od pierwszego wymagania"
   }
 }

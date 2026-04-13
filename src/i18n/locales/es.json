@@ -3158,7 +3158,7 @@
     "labels": {
       "connections": "Conexiones",
       "networkSize": "Tama\u00f1o de Red",
-      "relayCount": "{{count}} relays"
+      "relayCount": "{count} relays"
     }
   },
   "relayWorldMap": {
@@ -3288,5 +3288,18 @@
   },
   "time": {
     "justNow": "ahora mismo"
+  },
+  "prerequisiteWarning": {
+    "title": "Estás saltando adelante",
+    "description": "Esta guía se basa en {count} {singular} que aún no has completado. Puedes continuar leyendo, pero recomendamos completar {itOrThem} primero para la mejor experiencia.",
+    "singular": "prerrequisito",
+    "plural": "prerrequisitos",
+    "it": "lo",
+    "them": "los",
+    "showLess": "Mostrar menos",
+    "showMore": "Mostrar {count} más",
+    "timeEstimate": "Aproximadamente {minutes} min para completar todo",
+    "continueAnyway": "Continuar de todos modos",
+    "startFirst": "Comenzar con el primer prerrequisito"
   }
 }

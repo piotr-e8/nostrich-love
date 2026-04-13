@@ -1,0 +1,548 @@
+---
+title: "Nostr पर अपना Community ढूंढना"
+description: "अपना Nostr tribe खोजें। Nostr पर लोगों, communities, और conversations ढूंढने की strategies जो आपके लिए important हैं।"
+estimatedTime: "10 मिनट"
+priority: 10
+category: "intermediate"
+prerequisites: ["keys-and-security", "quickstart"]
+---
+
+import { Callout } from "@components/ui/Callout";
+import { FindingCommunityQuiz } from "@components/interactive/FindingCommunityQuiz";
+
+{/* ProgressIndicator temporarily disabled - will be implemented with actual tracking later */}
+{/* <ProgressIndicator current={5} total={6} estimatedTime="10 minutes" /> */}
+
+## Hashtag Strategy (2 मिनट)
+
+### Hashtags क्यों Important हैं
+
+Hashtags Nostr पर content और लोगों को discover करने का primary way हैं:
+
+**लाभ:**
+
+- Shared interests वाले लोगों को ढूंढें
+- Ongoing conversations में शामिल हों
+- दूसरों द्वारा discover हों
+- Topical authority build करें
+
+### Popular Nostr Hashtags
+
+**General:**
+
+- #introductions - Hello कहें
+- #asknostr - प्रश्न पूछें
+- #nostr - General Nostr discussion
+
+**Technology:**
+
+- #bitcoin - Bitcoin discussion
+- #lightning - Lightning Network
+- #privacy - Privacy tools
+- #opensource - Open source software
+
+**Lifestyle:**
+
+- #photography - Photos
+- #music - Music sharing
+- #art - Visual art
+- #writing - Long-form content
+- #foodstr - Food and cooking
+- #coffeechain - Coffee culture
+- #memes - Memes and humor
+
+**Community & Culture:**
+
+- #grownostr - Gardening and growing
+- #semester - Education and learning
+- #plebchain - Bitcoin plebs community
+
+**Regional:**
+
+- #africa, #asia, #europe, #americas
+- City-specific tags
+- Language tags
+
+### Hashtags Effectively Use करना
+
+**Do:**
+
+- Per post 2-5 relevant hashtags use करें
+- अपने client में trending tags check करें
+- Hashtags follow करें जिनमें आप interested हैं
+- Events/series के लिए अपने create करें
+
+**Don't:**
+
+- 10+ hashtags के साथ spam करें
+- Irrelevant tags use करें
+- हर single post को tag करें
+- Duplicate/similar tags create करें
+
+### New Hashtags Discover करना
+
+1. **दूसरों के use को check करें** - अपनी niche में popular accounts कौन से hashtags use करते हैं देखें
+2. **Search और explore** - Different topics try करके search करें
+3. **Community से पूछें** - "What hashtags should I follow for [topic]?"
+
+<Callout type="tip">
+  **Pro tip:** Broad tags (#bitcoin) को specific (#bitcoinmining) के साथ mix करें
+  different audiences तक पहुंचने के लिए।
+</Callout>
+
+---
+
+## Relay Feeds Explore करना (2 मिनट)
+
+### Relay द्वारा Browse क्यों?
+
+Hashtags आपको topics से connect करते हैं across all of Nostr। लेकिन क्या हो अगर आप entire communities discover करना चाहें जो specific relays के around organized हैं?
+
+**Relays को different newspapers की तरह सोचें:**
+
+- **आपका current feed**: People जिन्हें आप follow करते हैं (mixed relays)
+- **Relay feed**: उस specific relay पर सब कुछ post कर रहे हैं
+
+हर relay अपनी personality और community develop करता है:
+- Bitcoin-focused relays ₿ topics discuss करते हैं
+- Art relays creative work showcase करते हैं  
+- Regional relays local communities connect करते हैं
+- Tech relays development पर focus करते हैं
+
+### Getting Started
+
+<div className="my-4 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border border-orange-200 dark:border-orange-800">
+  <a 
+    href="/relay-feed-browser" 
+    className="inline-flex items-center text-orange-700 dark:text-orange-300 font-semibold hover:underline"
+  >
+    Relay Feeds Browse करें
+    <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+    </svg>
+  </a>
+  <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+    Category द्वारा filter—Bitcoin, Art, Music, Tech, और अधिक। Join करने से पहले relays preview करें।
+  </p>
+</div>
+
+**How to use it:**
+
+1. **Pick a category** - Bitcoin, Art, Music, Tech, Development, Gaming, या Regional
+2. **Browse like a newspaper** - हर relay पर क्या हो रहा है देखें
+3. **Preview before joining** - Relay का content और community check करें
+4. **Add to your client** - Interesting relays add करने के लिए instructions follow करें
+
+### Recommended First Relay
+
+**Spatia Arcana** - Community-curated topical relay
+- URL: `wss://spatia-arcana.com`
+- Relay-based discovery के experience के लिए यहाँ शुरू करें
+
+### Which Clients Support This?
+
+**Relay browsing के लिए Best:**
+
+- **Jumble** (Web) - Specifically relay exploration के लिए built
+- **Gossip** (Desktop) - Ephemeral relay feeds
+- **Coracle** (Web) - Advanced relay management
+- **Wisp** (Web) - Clean relay browsing interface
+- **Primal** (Web/Mobile) - Fast and simple
+- **Snort** (Web) - Feature-rich
+
+<Callout type="tip">
+  **Pro tip:** Hashtags use करें topics across Nostr discover करने के लिए, और relay feeds specific interests के around organized communities find करने के लिए। दोनों approaches साथ में great काम करते हैं!
+</Callout>
+
+---
+
+## Right People Follow करना (3 मिनट)
+
+### Quality Over Quantity
+
+**50 great accounts follow करना 5,000 random से बेहतर है।**
+
+### क्या Look करें
+
+**Good follows:**
+
+- Consistently post करते हैं (ज्यादा नहीं, कम नहीं)
+- Valuable content share करते हैं
+- Community के साथ engage करते हैं
+- काफी time से हैं
+- आपकी interests match करते हैं
+
+**Red flags:**
+
+- सिर्फ self-promotion
+- Spam या low-quality posts
+- दूसरों के साथ कभी engage नहीं
+- Brand new accounts (कोई history नहीं)
+- Suspicious behavior
+
+### अपने First Follows Find करना
+
+**Method 1: Follow Packs** ⭐ Recommended
+
+Apne feed को quality accounts से fill करने का easiest way:
+
+<div className="my-4 p-4 bg-friendly-purple-50 dark:bg-friendly-purple-900/20 rounded-lg border border-friendly-purple-200 dark:border-friendly-purple-800">
+  <a 
+    href="/follow-pack" 
+    className="inline-flex items-center text-friendly-purple-700 dark:text-friendly-purple-300 font-semibold hover:underline"
+  >
+    Curated Follow Packs Browse करें
+    <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+    </svg>
+  </a>
+  <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+    Topic द्वारा instantly 50+ accounts follow करें: Bitcoin, Photography, Art, Tech, और अधिक।
+  </p>
+</div>
+
+**Method 2: Client Starter Packs**
+
+- कई clients "suggested users" offer करते हैं
+- Topic-based starter lists
+- "Who to follow" recommendations
+
+**Method 2: Search Hashtags**
+
+1. #bitcoin (या अपना interest) search करें
+2. Quality content post करने वालों को देखें
+3. उनके recent posts check करें
+4. Follow अगर vibe पसंद आए
+
+**Method 3: Follow the Followers**
+
+1. एक व्यक्ति find करें जो आपको पसंद है
+2. देखें वे किसे follow करते हैं
+3. उन accounts check करें
+4. Interesting ones को follow करें
+
+**Method 4: Community Directories**
+
+- Community-curated directories
+- GitHub lists of Nostr users
+
+### The 50-100 Rule
+
+**50-100 active follows से शुरू करें:**
+
+- Lively feed के लिए enough
+- Overwhelming नहीं
+- Quality over quantity
+- हमेशा add कर सकते हैं
+
+### Curating Over Time
+
+**Weekly review:**
+
+- Value न add करने वाले accounts unfollow करें
+- New discoveries add करें
+- Different interests balance करें
+- Inactive accounts remove करें
+
+<Callout type="info">
+  **आपका feed आपकी responsibility है।** इसे actively curate करें। Mute, unfollow, और
+  block करें इसे valuable रखने के लिए।
+</Callout>
+
+---
+
+## Community Directories (2 मिनट)
+
+### Nostr Explorers
+
+**वे क्या हैं:**
+
+- Users, posts, और hashtags search
+- Trending content discover
+- Topic द्वारा लोग find
+- Account बिना browse
+
+**How to use:**
+
+1. Nostr explorer use करें
+2. Topics search करें जो आप पसंद करते हैं
+3. देखें कौन उनके बारे में post करता है
+4. उनकी profiles check करें
+5. Interesting लोगों को follow करें
+
+### Directories and Lists
+
+**Nostr.info**
+
+- User directory
+- Client listings
+- Relay information
+
+**Community Lists**
+
+- GitHub repositories with user lists
+- Curated Twitter threads (ironic, लेकिन useful)
+- Telegram/Discord community lists
+
+**Client-Specific**
+
+- कुछ clients में built-in discovery
+- "Suggested users" features
+- Trending posts sections
+
+### अपनी Own List Create करना
+
+**अगर आप well-connected हैं:**
+
+1. Recommended follows के साथ post create करें
+2. #starterpack या similar tag use करें
+3. Newcomers को good लोग find करने में help करें
+4. Community reputation build करें
+
+---
+
+## Long-Form Content (2 मिनट)
+
+### Short Posts से Beyond
+
+Nostr सिर्फ Twitter-style microblogging नहीं है। Long-form content का rich ecosystem है:
+
+**Types of Long-Form:**
+
+- Blog posts
+- Essays
+- Threads (connected posts)
+- Newsletters
+- Technical articles
+
+### Long-Form Writers Find करना
+
+**Nostrudel**
+
+- Long-form के लिए specialized client
+- Writers की curated lists
+- Reading के लिए great
+
+**Habla.news**
+
+- News-style interface
+- Long-form focused
+- Community curated
+
+**YakiHonne**
+
+- Japanese-focused
+- Long-form support
+- Growing community
+
+### Writers Follow करना
+
+**क्या look करें:**
+
+- Consistent publishing
+- Quality over quantity
+- Readers के साथ engagement
+- Unique perspectives
+- Good signal-to-noise ratio
+
+**लाभ:**
+
+- Deeper content
+- Better discussions
+- New things सीखें
+- Relationships build करें
+
+---
+
+## Events & Coordination (2 मिनट)
+
+### Nostr पर Events Find करना
+
+**Types of Events:**
+
+- Meetups (local Nostr gatherings)
+- Conferences (Bitcoin, privacy, tech)
+- Twitter Spaces equivalents
+- Hackathons
+- AMAs (Ask Me Anything)
+
+### Event Coordination
+
+**Watch करने वाले Hashtags:**
+
+- #meetup, #event, #conference
+- #AMA, #spaces, #live
+- City-specific (#nyc, #london, #tokyo)
+
+**RSVP on Nostr:**
+
+- कुछ clients event RSVPs support करते हैं
+- Event organizers follow करें
+- Announcements watch करें
+
+### Events Create करना
+
+**Host करने के लिए:**
+
+1. Details के साथ post create करें
+2. #event hashtag use करें
+3. Relevant लोगों को tag करें
+4. Regularly updates post करें
+5. Photos के बाद share करें
+
+### Virtual Events
+
+**Twitter Spaces alternatives:**
+
+- कुछ clients audio add कर रहे हैं
+- External tools (Fountain, etc.)
+- Scheduled text AMAs
+
+<Callout type="tip">
+  **In-person > virtual:** Nostr meetups worldwide हो रहे हैं। Check करें कि आपके area में कोई है!
+</Callout>
+
+---
+
+## DM Etiquette (2 मिनट)
+
+### Safety First
+
+**Nostr DMs encrypted हैं लेकिन perfect नहीं:**
+
+- End-to-end encrypted (E2EE)
+- लेकिन metadata visible (who talks to whom)
+- कुछ clients encryption differently handle करते हैं
+
+### DM Best Practices
+
+**Do:**
+
+- Respectful रहें
+- Introduce करें
+- Relevant रहें
+- Boundaries respect करें
+- याद रखें यह अभी भी public metadata है
+
+**Don't:**
+
+- Spam या harass
+- Unsolicited messages भेजें
+- Private keys share करें (EVER)
+- Complete privacy assume करें
+- Sensitive info भेजें
+
+### Unwanted DMs Handle करना
+
+**अगर कोई bother करता है:**
+
+1. **Mute** - उनका content देखना बंद करें
+2. **Block** - वे आपसे interact नहीं कर सकते
+3. **Report** - अगर serious, community को बताएं
+4. **Don't engage** - Trolls को feed करता है
+
+**Prevention:**
+
+- "DMs open" post मत करें अगर आप mean नहीं करते
+- Selective रहें कि किसे respond करते हैं
+- अपनी instincts trust करें
+
+---
+
+## अपना Network Build करना (3 मिनट)
+
+### Engagement Strategy
+
+**The 80/20 Rule:**
+
+- 80% value add (posts, replies, zaps)
+- 20% self-promotion
+
+**Value Add करने के Ways:**
+
+- Thoughtful replies
+- Insights share करें
+- Questions answer करें
+- Content curate करें
+- Others encourage करें
+
+### Consistency Matters
+
+**Regular post करें:**
+
+- Daily great है
+- Few times a week good है
+- Weekly minimum
+- Quality over quantity
+
+**Best times to post:**
+
+- आपके audience द्वारा vary होता है
+- Experiment और see करें
+- Generally: morning/evening
+- Middle of night avoid करें (unless that's your timezone)
+
+### Relationships Build करना
+
+**One-on-one:**
+
+- उनके posts reply करें
+- उनका content zap करें
+- Thoughtful DMs भेजें
+- Details remember करें
+- Genuine रहें
+
+**Community:**
+
+- Conversations में participate करें
+- Newcomers help करें
+- Opportunities share करें
+- Others' wins celebrate करें
+
+### Patience
+
+**Time लगता है:**
+
+- First 100 followers hardest हैं
+- Momentum slowly build होता है
+- Quality relationships > quantity
+- Long term के लिए रहें
+
+<Callout type="info">
+  **Community > Audience.** Genuine connections build करें, सिर्फ follower counts नहीं।
+</Callout>
+
+---
+
+## Quick Reference
+
+**Discovery Methods:**
+
+- Hashtags (#topic)
+- Follow the followers
+- Community directories
+- Starter packs
+
+**Engagement Tips:**
+
+- Thoughtfully reply करें
+- Generously zap करें
+- Consistent रहें
+- Value पहले add करें
+
+**Safety:**
+
+- अपनी instincts trust करें
+- Block/mute freely
+- Sensitive info share मत करें
+- Metadata leaks याद रखें
+
+**याद रखें:** आपका community वहाँ है। Patient रहें, authentic रहें, helpful रहें।
+
+---
+
+## अपना Community Knowledge Test करें
+
+Ready to see if you're ready to find your tribe on Nostr?
+
+<FindingCommunityQuiz client:load />

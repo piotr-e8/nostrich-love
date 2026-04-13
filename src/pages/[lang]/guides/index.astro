@@ -6,6 +6,7 @@ import { GamificationExplainerWrapper } from '../../../components/gamification/G
 import { GuidesContainer } from '../../../components/guides/GuidesContainer';
 import { SKILL_LEVELS, type SkillLevel } from '../../../data/learning-paths';
 import { getTranslations, type Locale } from '../../../i18n';
+import { getCollection } from 'astro:content';
 
 // Generate static paths for all locales
 export async function getStaticPaths() {
@@ -15,6 +16,7 @@ export async function getStaticPaths() {
     { params: { lang: 'es' } },      // Spanish
     { params: { lang: 'de' } },      // German
     { params: { lang: 'zh' } },      // Chinese
+    { params: { lang: 'ar' } },      // Arabic
   ];
 }
 
@@ -29,291 +31,88 @@ if (lang === 'pl') {
   currentLocale = 'de';
 } else if (lang === 'zh') {
   currentLocale = 'zh';
+} else if (lang === 'ar') {
+  currentLocale = 'ar';
 }
 
+// Get translations
 const translations = getTranslations(currentLocale);
 
-// Guide metadata mapping with translations
-const guideMetadata: Record<string, {
-  title: string;
-  description: string;
-  estimatedTime: string;
-  difficulty: SkillLevel;
-  tags: string[];
-}> = {
-  'what-is-nostr': {
-    title: translations.guides.whatIsNostr?.title || 'What is Nostr?',
-    description: translations.guides.whatIsNostr?.description || 'Understanding the basics of the decentralized social protocol.',
-    estimatedTime: '5 min',
-    difficulty: 'beginner',
-    tags: ['basics', 'overview'],
-  },
-  'keys-and-security': {
-    title: translations.guides.keysAndSecurity?.title || 'Keys & Security',
-    description: translations.guides.keysAndSecurity?.description || 'Learn how to generate, save, and protect your Nostr keys.',
-    estimatedTime: '8 min',
-    difficulty: 'beginner',
-    tags: ['security', 'keys'],
-  },
-  'quickstart': {
-    title: translations.guides.quickstart?.title || 'Quickstart',
-    description: translations.guides.quickstart?.description || 'Get up and running with Nostr in minutes.',
-    estimatedTime: '10 min',
-    difficulty: 'beginner',
-    tags: ['getting-started'],
-  },
-  'finding-community': {
-    title: translations.guides.findingCommunity?.title || 'Finding Community',
-    description: translations.guides.findingCommunity?.description || 'Discover how to find and join communities on Nostr.',
-    estimatedTime: '10 min',
-    difficulty: 'beginner',
-    tags: ['community', 'social'],
-  },
-  'faq': {
-    title: translations.guides.faq?.title || 'FAQ',
-    description: translations.guides.faq?.description || 'Frequently asked questions about Nostr.',
-    estimatedTime: '10 min',
-    difficulty: 'beginner',
-    tags: ['faq', 'help'],
-  },
-  'relays-demystified': {
-    title: translations.guides.relaysDemystified?.title || 'Relays Demystified',
-    description: translations.guides.relaysDemystified?.description || 'Deep dive into how relays work.',
-    estimatedTime: '10 min',
-    difficulty: 'beginner',
-    tags: ['relays', 'technical'],
-  },
-  'outbox-model': {
-    title: translations.guides.outboxModel?.title || 'Understanding the Outbox Model',
-    description: translations.guides.outboxModel?.description || 'Learn how Nostr ensures your posts reach everyone who follows you through smart relay discovery.',
-    estimatedTime: '15 min',
-    difficulty: 'beginner',
-    tags: ['relays', 'technical', 'intermediate'],
-  },
-  'nip05-identity': {
-    title: translations.guides.nip05Identity?.title || 'NIP-05 Identity',
-    description: translations.guides.nip05Identity?.description || 'Set up your NIP-05 identifier.',
-    estimatedTime: '12 min',
-    difficulty: 'intermediate',
-    tags: ['identity', 'nip-05'],
-  },
-  'zaps-and-lightning': {
-    title: translations.guides.zapsAndLightning?.title || 'Zaps & Lightning Network',
-    description: translations.guides.zapsAndLightning?.description || 'Master sending and receiving Bitcoin payments.',
-    estimatedTime: '20 min',
-    difficulty: 'intermediate',
-    tags: ['bitcoin', 'lightning', 'zaps'],
-  },
-  'nostr-tools': {
-    title: translations.guides.nostrTools?.title || 'Essential Nostr Tools',
-    description: translations.guides.nostrTools?.description || 'A curated directory of useful Nostr tools.',
-    estimatedTime: '10 min',
-    difficulty: 'intermediate',
-    tags: ['tools', 'resources'],
-  },
-  'troubleshooting': {
-    title: translations.guides.troubleshooting?.title || 'Troubleshooting',
-    description: translations.guides.troubleshooting?.description || 'Common issues and how to fix them.',
-    estimatedTime: '15 min',
-    difficulty: 'intermediate',
-    tags: ['help', 'support'],
-  },
-  'multi-client': {
-    title: translations.guides.multiClient?.title || 'Using Multiple Clients',
-    description: translations.guides.multiClient?.description || 'How to use multiple clients simultaneously.',
-    estimatedTime: '10 min',
-    difficulty: 'intermediate',
-    tags: ['clients', 'sync'],
-  },
-  'relay-guide': {
-    title: translations.guides.relayGuide?.title || 'Relay Guide',
-    description: translations.guides.relayGuide?.description || 'Everything about choosing and managing relays.',
-    estimatedTime: '15 min',
-    difficulty: 'intermediate',
-    tags: ['relays', 'technical'],
-  },
-  'privacy-security': {
-    title: translations.guides.privacySecurity?.title || 'Privacy & Security',
-    description: translations.guides.privacySecurity?.description || 'Advanced privacy and security practices.',
-    estimatedTime: '20 min',
-    difficulty: 'advanced',
-    tags: ['privacy', 'security'],
-  },
-  'nip17-private-messages': {
-    title: translations.guides.nip17PrivateMessages?.title || 'NIP-17: Private Direct Messages',
-    description: translations.guides.nip17PrivateMessages?.description || 'Learn about NIP-17 secure messaging.',
-    estimatedTime: '12 min',
-    difficulty: 'advanced',
-    tags: ['privacy', 'nip-17', 'messaging'],
-  },
-  'protocol-comparison': {
-    title: translations.guides.protocolComparison?.title || 'Complete Protocol Comparison',
-    description: translations.guides.protocolComparison?.description || 'Technical comparison of decentralized protocols.',
-    estimatedTime: '15 min',
-    difficulty: 'advanced',
-    tags: ['technical', 'comparison'],
-  },
-};
+// Load guides from content collection
+const allGuides = await getCollection('guides', (entry) => {
+  return entry.slug.startsWith(`${currentLocale}/`);
+});
 
-// Build skill levels data with guides
-type GuideWithHref = {
-  id: string;
-  title: string;
-  description: string;
-  estimatedTime: string;
-  difficulty: SkillLevel;
-  href: string;
-  tags: string[];
-};
+// Create guide data for each skill level
+const skillLevelsData = Object.entries(SKILL_LEVELS).map(([levelId, levelConfig]) => {
+  const levelGuides = levelConfig.sequence
+    .map((slug) => {
+      const guide = allGuides.find((g) => g.slug === `${currentLocale}/${slug}`);
+      if (!guide) return null;
+      
+      return {
+        id: slug,
+        title: guide.data.title,
+        description: guide.data.description || '',
+        estimatedTime: guide.data.estimatedTime || '',
+        category: guide.data.category,
+        difficulty: levelId as SkillLevel,
+        href: `/${currentLocale}/guides/${slug}`,
+      };
+    })
+    .filter((g): g is NonNullable<typeof g> => g !== null);
 
-type SkillLevelData = {
-  id: SkillLevel;
-  label: string;
-  icon: string;
-  description: string;
-  unlockThreshold: number;
-  guides: GuideWithHref[];
-};
-
-const skillLevels: SkillLevelData[] = (['beginner', 'intermediate', 'advanced'] as SkillLevel[]).map(levelId => {
-  const level = SKILL_LEVELS[levelId];
-  const guides = level.sequence.map(slug => {
-    const meta = guideMetadata[slug] || {
-      title: slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-      description: 'Guide description coming soon.',
-      estimatedTime: '10 min',
-      difficulty: levelId,
-      tags: [],
-    };
-    
-    return {
-      id: slug,
-      ...meta,
-      href: `/${lang}/guides/${slug}`,
-    };
-  });
-  
   return {
-    id: levelId,
-    label: level.label,
-    icon: level.icon,
-    description: level.description,
-    unlockThreshold: level.unlockThreshold,
-    guides,
+    id: levelId as SkillLevel,
+    guides: levelGuides,
+    unlockThreshold: levelConfig.unlockThreshold,
   };
 });
 
-// Calculate totals
-const totalGuides = skillLevels.reduce((acc, level) => acc + level.guides.length, 0);
-
-// Translated page metadata
-const pageTitle = currentLocale === 'pl' 
-  ? 'Przewodniki Nauki - Nostr'
-  : currentLocale === 'es'
-  ? 'Guías de Aprendizaje - Nostr'
-  : currentLocale === 'de'
-  ? 'Lern-Guides - Nostr Anfänger-Guide'
-  : currentLocale === 'zh'
-  ? '学习指南 - Nostr 初学者指南'
-  : 'Learning Guides - Nostr Beginner Guide';
-
-const pageDescription = currentLocale === 'pl'
-  ? 'Przewodniki krok po kroku, aby nauczyć się Nostr od podstaw do zaawansowanego. Śledź swoje postępy i opanuj protokół.'
-  : currentLocale === 'es'
-  ? 'Guías paso a paso para aprender Nostr desde principiante hasta avanzado. Sigue tu progreso y domina el protocolo.'
-  : currentLocale === 'de'
-  ? 'Schritt-für-Schritt-Guides, um Nostr von Anfänger bis Fortgeschritten zu lernen. Verfolge deinen Fortschritt und meistere das dezentralisierte Social-Protokoll.'
-  : currentLocale === 'zh'
-  ? '从初学者到高级的分步指南，学习 Nostr。跟踪你的进度，掌握去中心化社交协议。'
-  : 'Step-by-step guides to learn Nostr from beginner to advanced. Track your progress and master the decentralized social protocol.';
+const title = translations.guidesPage?.hero?.title || 'Learn Nostr';
+const description = translations.guidesPage?.hero?.description || 'Interactive step-by-step guides to understand Nostr';
 ---
 
-<Layout
-  title={pageTitle}
-  description={pageDescription}
+<Layout 
+  title={title}
+  description={description}
   locale={currentLocale}
 >
   <Header />
-
+  
   <main id="main-content">
-    <!-- Hero Section -->
+    {/* Hero Section */}
     <section class="relative overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-friendly-purple-100/50 via-transparent to-friendly-gold-100/30 dark:from-friendly-purple-900/30 dark:to-friendly-gold-900/20" />
+      <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 dark:from-primary/5 dark:to-secondary/5" />
       
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 relative">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative">
         <div class="text-center max-w-3xl mx-auto">
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-            <span class="bg-gradient-to-r from-friendly-purple-600 to-friendly-purple-400 bg-clip-text text-transparent">
-              {translations.guidesPage?.hero?.title || 'Learn Nostr Step by Step'}
+            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              {translations.guidesPage?.hero?.title || 'Learn Nostr'}
             </span>
           </h1>
-          <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">
-            {translations.guidesPage?.hero?.description || 'Progressive skill levels from beginner to advanced. Unlock new levels as you complete guides and master the protocol.'}
+          <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+            {translations.guidesPage?.hero?.description || 'Interactive step-by-step guides to understand Nostr'}
           </p>
           
-          <!-- Progress Overview -->
-          <div id="progress-overview" class="bg-white dark:bg-gray-800 rounded-2xl border-2 border-friendly-purple-200 dark:border-friendly-purple-700 p-6 shadow-sm max-w-md mx-auto mb-8 hidden">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{translations.guidesPage?.hero?.yourProgress || 'Your Progress'}</span>
-              <span id="progress-percentage" class="text-2xl font-bold text-friendly-purple-600 dark:text-friendly-purple-400">0%</span>
-            </div>
-            <div class="h-3 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-              <div 
-                id="progress-bar"
-                class="h-full bg-gradient-to-r from-friendly-purple-500 to-friendly-purple-300 rounded-full transition-all duration-500"
-                style="width: 0%"
-              />
-            </div>
-            <p id="progress-text" class="text-sm text-gray-500 dark:text-gray-400 mt-2">
-              {translations.guidesPage?.hero?.startFirstGuide || 'Start your first guide to see progress'}
-            </p>
-          </div>
-
+          {/* Gamification Explainer */}
+          <GamificationExplainerWrapper client:load />
         </div>
       </div>
     </section>
 
-    <!-- Interest Filter & Guide Sections - Full Width -->
-    <section class="py-12">
+    {/* Guides Section */}
+    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <GuidesContainer 
-          client:only="react"
+          client:load
+          skillLevels={skillLevelsData}
           locale={currentLocale}
-          skillLevels={skillLevels.map(level => ({
-            id: level.id,
-            guides: level.guides,
-            unlockThreshold: level.unlockThreshold
-          }))}
         />
-      </div>
-    </section>
-
-
-
-    <!-- CTA Section -->
-    <section class="py-20 bg-gradient-to-br from-friendly-purple-600 to-friendly-purple-400">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl font-bold text-white mb-4">
-          {translations.guidesPage?.cta?.notSure || 'Not sure where to start?'}
-        </h2>
-        <p class="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-          {translations.guidesPage?.cta?.beginnerDescription || "Begin with our beginner guides—they're designed to take you from zero to your first post."}
-        </p>
-        <a
-          href={`/${lang}/guides/what-is-nostr`}
-          class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-friendly-purple-600 bg-white rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
-        >
-          {translations.guidesPage?.cta?.startLearning || 'Start Learning'}
-          <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-          </svg>
-        </a>
       </div>
     </section>
   </main>
 
   <Footer />
-  
-  <!-- Gamification Explainer Modal -->
-  <GamificationExplainerWrapper client:load buttonId="how-does-this-work-btn" totalGuides={totalGuides} />
 </Layout>
