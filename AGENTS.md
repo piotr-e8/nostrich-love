@@ -1,6 +1,31 @@
 # Nostrich.love - Agent Rules
 
-> **Nostrich.love** is a beginner-friendly educational platform for Nostr (Notes and Other Stuff Transmitted by Relays), a decentralized social media protocol. Uses Astro + React + Tailwind with i18n support for 4 languages.
+> **Nostrich.love** is a beginner-friendly educational platform for Nostr (Notes and Other Stuff Transmitted by Relays), a decentralized social media protocol. Uses Astro + React + Tailwind with i18n support for 7 languages (including RTL Arabic and Hindi).
+
+---
+
+## Philosophy, Mission & Essence
+
+**Core Philosophy:**  
+Nostr shouldn't require technical expertise to use. Decentralization is meaningless if only developers can access it.
+
+**Mission:**  
+Make Nostr onboarding so smooth that creators (writers, artists, musicians) can start using it without friction, confusion, or fear.
+
+**Essence:**  
+An interactive, hands-on learning platform where you **try Nostr before committing to it** - test clients in browser, find curated communities, learn by experimentation.
+
+**What it's all about:**
+- **Human over protocol:** People first, technical specs second
+- **Practice over theory:** Browser simulators, not documentation
+- **Curation over chaos:** 300+ accounts organized by interest, not "figure it out yourself"
+- **Accessibility over complexity:** 7 languages (including RTL Arabic and Hindi), visual guides, no assumptions
+
+**The Stance:**  
+Nostr keeps building infrastructure. Someone needed to build the **front door**.
+
+**Why this matters for content:**  
+Every post, guide, and feature should embody this philosophy. We're not explaining Nostr - we're making it usable.
 
 ---
 
@@ -10,7 +35,7 @@
 
 **⚠️ NEVER hardcode strings in components.** Always use the translation system.
 
-**4 Locales:** `en` (English), `pl` (Polish), `es` (Spanish), `de` (German)
+**7 Locales:** `en` (English), `pl` (Polish), `es` (Spanish), `de` (German), `zh` (Chinese), `ar` (Arabic - RTL), `hi` (Hindi)
 
 ```typescript
 // Client-side (React)
@@ -22,7 +47,32 @@ const translations = getTranslations(currentLocale);
 const title = translations.guides.whatIsNostr?.title;
 ```
 
-**Translation Files:** `/src/i18n/locales/{en,pl,es,de}.json`
+**Translation Files:** `/src/i18n/locales/{en,pl,es,de,zh,ar,hi}.json`
+
+---
+
+### ⚠️ MANDATORY: New Locale Checklist (6 Hardcoded Files)
+
+**When adding a new locale, these 6 files ALL have hardcoded locale arrays that MUST be updated — missing any one causes 404s or missing language switcher entries:**
+
+| # | File | What to Update |
+|---|------|---------------|
+| 1 | `src/components/LanguageSwitcher.tsx` | Add to `languages` array, URL detection regexes, redirect patterns, localStorage check |
+| 2 | `src/i18n/index.ts` | Add import, translations record entry, `getCurrentLocale()` detection |
+| 3 | `src/pages/[lang]/guides/[slug].astro` | Add locale to `getStaticPaths()` locales array |
+| 4 | `src/pages/[lang]/guides/index.astro` | Add params entry + locale detection if/else |
+| 5 | `src/pages/guides/index.astro` | Add to localStorage saved language check array |
+| 6 | `src/pages/progress.astro` | Add to saved language preference check array |
+
+Plus the standard config files:
+- `src/config/locales.ts` — Add locale entry with direction
+- `src/i18n/types.ts` — Add locale string to Locale type union
+- `astro.config.mjs` — Add locale string to `i18n.locales` and sitemap `i18n.locales`
+- `scripts/verify-seo.js` — Add locale to check arrays
+- `src/i18n/locales/{locale}.json` — Complete translation file
+- `src/content/guides/{locale}/` — All 16 guide MDX files
+
+**This is the #1 source of bugs when adding locales. Every previous locale addition (pl, es, de, zh, ar, hi) forgot at least one of these files.**
 
 ### 2. Guide Links MUST Include Locale Prefix
 
@@ -49,14 +99,122 @@ Watch for: "Translation key not found" warnings, TypeScript errors, link validat
 - Break complex tasks into sequential small tasks
 - Build after EVERY component creation or guide file
 
+### 6. Placeholder Syntax Patterns
+
+**CRITICAL: The codebase uses TWO different placeholder conventions**
+
+**Quiz components (double braces):**
+```typescript
+// Uses {{double}} braces
+t('quiz.progress', { current: '{{current}}', total: '{{total}}' })
+// Code does: text.replace("{{current}}", value)
+```
+
+**Navigation/other components (single braces):**
+```typescript
+// Uses {single} braces
+t('navigation.level', { level: '{level}' })
+// Code does: text.replace('{level}', value)
+```
+
+**Rule:** When creating or fixing translations with placeholders, check the component code to determine which syntax to use.
+
+### 7. Verify Translation Structure Against Component Code
+
+**Task agents can create wrong translation structures.**
+
+**Example:** Agent created `nip05Checker.messages.*`, `nip05Checker.instructions.*`
+
+**But component expected:** `nip05Checker.benefits.*`, `nip05Checker.form.*`, `nip05Checker.results.*`
+
+**Always verify:**
+```bash
+# Check what keys the component actually uses
+grep "t('componentName\." src/components/path/Component.tsx
+```
+
+**Rule:** Never trust AI-generated translation structures without verification against component code.
+
+---
+
+## Nostr Implementation Patterns
+
+### Outbox Model for Data Fetching
+
+**Correct Architecture:**
+```typescript
+// Step 1: Query bootstrap relays for relay list (kind:10002) and profile (kind:0)
+const BOOTSTRAP_RELAYS = [
+  "wss://relay.damus.io",
+  "wss://nos.lol",
+  "wss://relay.snort.social",
+];
+
+// Step 2: Parse relay list from tags
+// Tag format: ["r", "wss://url", "write"] or ["r", "wss://url"]
+// Only use relays marked "write" or with no marker
+
+// Step 3: Query those specific relays for content
+// This follows the user's actual posting behavior
+```
+
+**Why this matters:** Querying random relays often misses posts. The outbox model queries only where the user actually publishes.
+
+### Reply Detection
+
+**Filter out replies to show only original posts:**
+```typescript
+const isReply = (event: any): boolean => {
+  // Has 'e' tag (references another event)
+  const hasReplyTag = event.tags?.some((tag: string[]) => tag[0] === 'e');
+  
+  // Content starts with @mention
+  const startsWithMention = event.content?.trim().startsWith('@');
+  
+  return hasReplyTag || startsWithMention;
+};
+```
+
+### WebSocket Connection Patterns
+
+**Best Practices:**
+```typescript
+// 1. Set aggressive timeouts to prevent hanging
+const timeout = setTimeout(() => resolve(events), 4000);
+
+// 2. Resolve on EOSE, don't wait for all relays
+ws.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+  if (data[0] === "EVENT") events.push(data[2]);
+  if (data[0] === "EOSE") {
+    clearTimeout(timeout);
+    ws.close();
+    resolve(events); // Resolve immediately on EOSE
+  }
+};
+
+// 3. Use random subscription IDs to avoid collisions
+const subId = `req-${Math.random().toString(36).substr(2, 9)}`;
+```
+
+### Common Nostr Mistakes
+
+| Mistake | Solution |
+|---------|----------|
+| `relay.nostr.mom` | Use `nostr.mom` (no relay. prefix) |
+| Waiting for all relays | Resolve on first EOSE |
+| Querying random relays | Use outbox model (kind:10002) |
+| Showing all kind:1 | Filter replies with 'e' tags |
+| Including `t` in useEffect deps | Use eslint-disable or stable ref |
+
 ---
 
 ## Project Structure
 
 ```
 /src
-├── content/guides/{en,pl,es,de}/   # MDX guide content
-├── i18n/locales/{en,pl,es,de}.json # Translations
+├── content/guides/{en,pl,es,de,zh,ar}/   # MDX guide content
+├── i18n/locales/{en,pl,es,de,zh,ar}.json # Translations
 ├── components/
 │   ├── interactive/                # Quiz components
 │   └── ui/                         # Reusable UI
@@ -80,7 +238,12 @@ Watch for: "Translation key not found" warnings, TypeScript errors, link validat
 | Language-specific translation | @CONTENT_TRANSLATION.md |
 | Building UI components (quizzes, etc.) | @RULES.md → @I18N_PATTERNS.md |
 | **SEO / International SEO** | **@SEO_LESSONS_LEARNED.md → @DEPLOYMENT_CHECKLIST.md** |
-| **Adding new languages** | **@ADDING_LOCALES.md** |
+| **Content audit & guide planning** | **@CONTENT_AUDIT_AND_KNOWLEDGE_MAP.md** |
+| **Adding new languages** | **@LESSONS_ZH_LOCALE.md** (comprehensive lessons from adding Chinese) → **@LESSONS_AR_LOCALE.md** (RTL support, placeholder syntax, interactive components) |
+| **Feature differentiation & value props** | **@LESSONS_FEATURES.md** |
+| **Content strategy insights** | **@LESSONS_RETRO.md** |
+| **Nostr content patterns & influencer research** | **@LESSONS_RETRO.md** (Influencer Content Analysis section) |
+| **Refactoring & technical debt** | **@CODEBASE_AUDIT.md** (prioritized roadmap, 5 competing progress systems, 15 duplicated quiz components) |
 
 **Key Terminology:**
 - **npub** - Public key (safe to share, your identity)
@@ -281,8 +444,8 @@ grep -r "Submit\|Next\|Previous" src/components --include="*.tsx" | grep -v "t('
 # Find missing client:load directives
 grep -r "<KeyGenerator\|<WhatIsNostrQuiz" src/content/guides --include="*.mdx" | grep -v "client:load"
 
-# Check translation completeness
-jq -S 'paths' src/i18n/locales/en.json | sort > /tmp/en.txt && jq -S 'paths' src/i18n/locales/pl.json | sort > /tmp/pl.txt && diff /tmp/en.txt /tmp/pl.txt
+# Check translation completeness against English
+jq -S 'paths' src/i18n/locales/en.json | sort > /tmp/en.txt && jq -S 'paths' src/i18n/locales/hi.json | sort > /tmp/hi.txt && diff /tmp/en.txt /tmp/hi.txt
 ```
 
 ---
@@ -290,18 +453,18 @@ jq -S 'paths' src/i18n/locales/en.json | sort > /tmp/en.txt && jq -S 'paths' src
 ## Success Metrics
 
 ✅ Build passes with no errors or warnings
-✅ All 4 translation files updated for new content
+✅ All 7 translation files updated for new content
 ✅ Guide links include locale prefix
 ✅ No hardcoded strings (all use `t()`)
 ✅ Dark mode colors look correct
 ✅ Changes are small and verifiable
-✅ **SEO verification passes** (`npm run verify-seo` shows all green)
+✅ **SEO verification passes** (`npm run verify-seo` shows all green for 7 locales)
 ✅ **No hreflang errors** (check with `npm run verify-seo`)
-✅ **Dynamic HTML lang** set correctly for each locale
+✅ **Dynamic HTML lang** set correctly for each locale including Hindi
 
 ---
 
-*Last Updated: March 2026*
+*Last Updated: April 2026*
 *Project: nostrich.love*
 *Purpose: Agent rules for creating beginner-friendly Nostr educational content*
 
@@ -321,7 +484,7 @@ jq -S 'paths' src/i18n/locales/en.json | sort > /tmp/en.txt && jq -S 'paths' src
 
 **What happened:** Outbox Model Quiz was only in English despite i18n being mandatory rule
 
-**Fix:** Added quiz translations to all 4 locales (en, pl, es, de)
+**Fix:** Added quiz translations to all 5 locales (en, pl, es, de, zh)
 
 **New verification step:** Check ALL interactive components have translations in all locales before marking complete
 
@@ -373,7 +536,7 @@ const config = getLocaleConfig('de');
 
 **Context:** Passing locale from Astro pages to Layout component.
 
-**What happened:** TypeScript error: `Type 'string' is not assignable to type '"en" | "pl" | "es" | "de"'`
+**What happened:** TypeScript error: `Type 'string' is not assignable to type '"en" | "pl" | "es" | "de" | "zh"'`
 
 **Fix:** Explicit type cast when passing locale:
 
@@ -425,7 +588,7 @@ sitemap({
 
 ### 10. SEO Verification Script is Essential
 
-**Context:** Need to verify hreflang, HTML lang, OG locale across all 4 locales.
+**Context:** Need to verify hreflang, HTML lang, OG locale across all 5 locales.
 
 **What happened:** Created `npm run verify-seo` script that checks 101 pages automatically.
 
@@ -433,7 +596,7 @@ sitemap({
 - Sitemap exists with hreflang annotations
 - HTML lang attribute per locale (e.g., `lang="de"`)
 - OG locale meta tags (e.g., `de_DE`)
-- All 4 locales present
+- All 5 locales present
 - x-default hreflang fallback
 
 **Usage:**
@@ -472,3 +635,80 @@ npm run verify-seo
 **Why both:** HTML helps discovery during crawling, sitemap consolidates signals for Google.
 
 **Rule:** Never implement only one - always use both HTML hreflang and sitemap hreflang.
+
+---
+
+## Lessons Learned from Arabic Translation (RTL Support) - April 2026
+
+### 13. RTL Support Requires Logical CSS Properties
+
+**Context:** Arabic is the first RTL language in theproject.
+
+**What happened:** Standard CSS properties like `ml-4` (margin-left) don't work correctly in RTL mode - they don't flip automatically.
+
+**Fix:** Use logical CSS properties instead:
+```css
+/* Wrong - doesn't flip in RTL */
+<div class="ml-4">
+
+/* Correct - flips automatically */
+<div class="ms-4">  /* margin-start: flips based on direction */
+```
+
+**Implementation:** Project uses `tailwindcss-rtl` plugin which provides logical utility classes.
+
+**Rule:** For RTL support, always use:
+- `ms-*` / `me-*` instead of `ml-*` / `mr-*` (margin-start/end)
+- `ps-*` / `pe-*` instead of `pl-*` / `pr-*` (padding-start/end)
+- `start-*` / `end-*` instead of `left-*` / `right-*` (positioning)
+
+### 14. Interactive Components Need client:load Directive
+
+**Context:** Components using `useTranslation()` need client-side hydration in Astro.
+
+**What happened:** `RelayWorldMap` component in `relays-demystified.mdx` was missing `client:load` directive, causing translation keys to not resolve.
+
+**Fix:** Added directive to MDX file:
+```astro
+<RelayWorldMap client:load />
+```
+
+**Rule:** Any component using `useTranslation()`, React hooks, or client-side interactivity MUSThave `client:load` in MDX files.
+
+**Verification:**
+```bash
+# Find all interactive components in guides
+grep -r "client:load" src/content/guides --include="*.mdx"
+```
+
+### 15. Outbox Model Quiz Translation Was Missing
+
+**Context:** During Arabic translation, discovered Outbox Model Quiz only had English translations.
+
+**What happened:** Quiz used `t('outboxQuiz.*')` keys but only `en.json` had translations - all other locales were missing them.
+
+**Lesson:** Even with mandatory i18n rules, translation gaps happen.
+
+**Better verification:**
+```bash
+# Check ALL locales have translation keys for a component
+for locale in en pl es de zh ar hi; do
+  echo "=== $locale ==="
+  grep -c "zapSimulator\." src/i18n/locales/$locale.json || echo "MISSING"
+done
+```
+
+**Rule:** When completing any component, verify translations exist in ALL 7 locales, not just English.
+
+### 16. SEO Verification Script Must Include All Locales
+
+**Context:** SEO verification script checks for all locale variations.
+
+**Update needed:** When adding a new locale, also update `scripts/verify-seo.js` to include:
+- HTML lang attribute check (e.g., `lang="hi"` for Hindi)
+- OG locale metadata check (e.g., `hi_IN`)
+- hreflang link check
+- Test URLs for the new locale
+- Sitemap locale entry
+
+**Current status:** Script checks 7 locales (en, pl, es, de, zh, ar, hi)

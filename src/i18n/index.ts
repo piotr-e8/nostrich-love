@@ -10,12 +10,13 @@ import es from './locales/es.json';
 import de from './locales/de.json';
 import zh from './locales/zh.json';
 import ar from './locales/ar.json';
+import hi from './locales/hi.json';
 
-const translations: Record<Locale, Translations> = { en, pl, es, de, zh, ar };
+const translations: Record<Locale, Translations> = { en, pl, es, de, zh, ar, hi };
 
 /**
  * Get current locale from URL path
- * Returns 'en', 'pl', 'es', or 'de' based on URL prefix
+ * Returns 'en', 'pl', 'es', 'de', 'zh', 'ar', or 'hi' based on URL prefix
  */
 export function getCurrentLocale(path: string = typeof window !== 'undefined' ? window.location.pathname : ''): Locale {
   if (path.startsWith('/pl/')) return 'pl';
@@ -23,6 +24,7 @@ export function getCurrentLocale(path: string = typeof window !== 'undefined' ? 
   if (path.startsWith('/de/')) return 'de';
   if (path.startsWith('/zh/')) return 'zh';
   if (path.startsWith('/ar/')) return 'ar';
+  if (path.startsWith('/hi/')) return 'hi';
   return 'en';
 }
 

@@ -80,7 +80,7 @@ export async function getStaticPaths(): Promise<StaticPath[]> {
   const paths: StaticPath[] = [];
   
   // Generate paths for all languages
-  const locales = ['en', 'pl', 'es', 'de', 'zh', 'ar'];
+  const locales = ['en', 'pl', 'es', 'de', 'zh', 'ar', 'hi'];
   
   for (const locale of locales) {
     const localeGuides = allGuides.filter(guide => guide.slug.startsWith(`${locale}/`));

@@ -37,7 +37,7 @@ try {
     console.log(`   ✓ Found ${hreflangCount} hreflang link elements`);
     
     // Check for all locales
-    const locales = ['de-DE', 'en-US', 'es-ES', 'pl-PL'];
+    const locales = ['de-DE', 'en-US', 'es-ES', 'pl-PL', 'zh-CN', 'ar-SA', 'hi-IN'];
     locales.forEach(locale => {
       if (sitemap.includes(`hreflang="${locale}"`)) {
         console.log(`   ✓ Contains ${locale} hreflang references`);
@@ -58,6 +58,9 @@ const testUrls = [
   '/de/guides/what-is-nostr',
   '/pl/guides/what-is-nostr',
   '/es/guides/what-is-nostr',
+  '/zh/guides/what-is-nostr',
+  '/ar/guides/what-is-nostr',
+  '/hi/guides/what-is-nostr',
 ];
 
 const localeConfigs = {
@@ -65,6 +68,9 @@ const localeConfigs = {
   pl: { htmlLang: 'pl', ogLocale: 'pl_PL' },
   es: { htmlLang: 'es', ogLocale: 'es_ES' },
   de: { htmlLang: 'de', ogLocale: 'de_DE' },
+  zh: { htmlLang: 'zh', ogLocale: 'zh_CN' },
+  ar: { htmlLang: 'ar', ogLocale: 'ar_SA' },
+  hi: { htmlLang: 'hi', ogLocale: 'hi_IN' },
 };
 
 testUrls.forEach(url => {
@@ -110,7 +116,7 @@ testUrls.forEach(url => {
 
 // Test 3: Check guide index pages
 console.log('\n3. Checking guide index pages...');
-const indexLocales = ['en', 'de', 'pl', 'es'];
+const indexLocales = ['en', 'de', 'pl', 'es', 'zh', 'ar', 'hi'];
 indexLocales.forEach(locale => {
   const filePath = join(DIST_DIR, locale, 'guides', 'index.html');
   try {
@@ -129,7 +135,7 @@ indexLocales.forEach(locale => {
 
 console.log('\n✅ SEO Verification Complete!');
 console.log('\n📊 Summary:');
-console.log('   • All 4 locales (en, pl, es, de) are properly configured');
+console.log('   • All 7 locales (en, pl, es, de, zh, ar, hi) are properly configured');
 console.log('   • Sitemap includes hreflang annotations for all pages');
 console.log('   • HTML lang attributes are dynamic per locale');
 console.log('   • OG locale meta tags are correctly set');

@@ -8,7 +8,7 @@
   <script>
     // Check for saved language preference
     const savedLang = localStorage.getItem('preferredLanguage');
-    if (savedLang && ['en', 'pl', 'es', 'de', 'zh', 'ar'].includes(savedLang)) {
+    if (savedLang && ['en', 'pl', 'es', 'de', 'zh', 'ar', 'hi'].includes(savedLang)) {
       window.location.href = '/' + savedLang + '/guides/';
     } else {
       window.location.href = '/en/guides/';

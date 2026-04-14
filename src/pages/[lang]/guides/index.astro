@@ -17,6 +17,7 @@ export async function getStaticPaths() {
     { params: { lang: 'de' } },      // German
     { params: { lang: 'zh' } },      // Chinese
     { params: { lang: 'ar' } },      // Arabic
+    { params: { lang: 'hi' } },      // Hindi
   ];
 }
 
@@ -33,6 +34,8 @@ if (lang === 'pl') {
   currentLocale = 'zh';
 } else if (lang === 'ar') {
   currentLocale = 'ar';
+} else if (lang === 'hi') {
+  currentLocale = 'hi';
 }
 
 // Get translations

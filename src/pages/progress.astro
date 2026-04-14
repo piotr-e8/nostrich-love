@@ -531,7 +531,7 @@ const totalGuides = 15; // Total number of guides across all levels
       
       // Get current locale from localStorage or default to 'en'
       const savedLang = localStorage.getItem('preferredLanguage');
-      const currentLocale = (savedLang && ['en', 'pl', 'es', 'de', 'zh', 'ar'].includes(savedLang)) ? savedLang : 'en';
+      const currentLocale = (savedLang && ['en', 'pl', 'es', 'de', 'zh', 'ar', 'hi'].includes(savedLang)) ? savedLang : 'en';
       
       // Update guide list
       const guideList = section.querySelector('.guide-list') as HTMLElement;
