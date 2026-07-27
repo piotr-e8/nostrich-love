@@ -20,7 +20,7 @@ import { RelayPlayground } from "@components/interactive/RelayPlayground";
 
 <RelayVisualizer client:load />
 
-<Callout type="info">
+<Callout variant="info">
   **Building on Previous Knowledge:** This section briefly reviews the post office 
   analogy from [Relays Demystified](/guides/relays-demystified). If you remember 
   how relays work, feel free to skip to [Types of Relays](#types-of-relays).
@@ -79,7 +79,7 @@ When you post:
 4. Relay stores in database
 5. Relay broadcasts to subscribers
 
-<Callout type="info">
+<Callout variant="info">
   You don't need to understand the technical details. Just know that relays make
   Nostr work without central control.
 </Callout>
@@ -114,7 +114,7 @@ When you post:
 - `wss://nos.lol`
 - `wss://relay.snort.social`
 
-<Callout type="warning">
+<Callout variant="warning">
   **Avoid relay.nostr.band:** This relay has been offline/unreliable for extended periods. 
   Many guides still recommend it, but you should use the alternatives listed above instead.
 </Callout>
@@ -170,7 +170,7 @@ When you post:
 - Regional relays (Europe, Asia, etc.)
 - Language-specific relays
 
-<Callout type="tip">
+<Callout variant="success">
   **Start with free public relays.** Add paid ones later if you need better
   performance or want to support the network.
 </Callout>
@@ -190,7 +190,7 @@ wss://relay.snort.social      (Popular client)
 wss://nostr.wine              (Quality paid option - optional)
 ```
 
-<Callout type="info">
+<Callout variant="info">
   **A Note on Decentralization:** While the popular relays above are great for
   getting started, relying only on a few large relays concentrates power and
   goes against Nostr's decentralized ethos. As you become more comfortable,
@@ -253,7 +253,7 @@ wss://nostr.wine              (Quality paid option - optional)
 - Diminishing returns after 10-15
 - Quality over quantity
 
-<Callout type="warning">
+<Callout variant="warning">
   Don't add 50+ random relays. It wastes bandwidth and slows down your client.
   Stick to 5-10 quality relays.
 </Callout>
@@ -384,7 +384,7 @@ Try before you commit! Test relay speeds and see which ones work best for your l
 4. **Add to client** (same as free relays)
 5. **Enjoy better performance**
 
-<Callout type="tip">
+<Callout variant="success">
   **Hybrid approach:** Use 3-5 free relays + 1-2 paid relays. Best of both
   worlds.
 </Callout>
@@ -475,7 +475,7 @@ npm start
 - Backup database
 - Monitor logs
 
-<Callout type="warning">
+<Callout variant="warning">
   Running a relay requires ongoing maintenance. Don't start unless you're
   committed to keeping it running.
 </Callout>

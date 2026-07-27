@@ -133,12 +133,12 @@ Kolejna świetna darmowa opcja.
 - **stacker.news**: Dla użytkowników SN
 - **NostrCheck.me** - Dodatkowe narzędzia w zestawie
 
-<Note type="info">
+<Note variant="info">
   Darmowi dostawcy mogą mieć listy oczekujących lub wymagania weryfikacji. Bądź
   cierpliwy!
 </Note>
 
-<Callout type="warning">
+<Callout variant="warning">
   Darmowi dostawcy mogą zmieniać warunki lub zamykać działalność. Jeśli stajesz się poważny co do
   Nostr, rozważ upgrade na płatną opcję lub samodzielne hostowanie.
 </Callout>
@@ -223,36 +223,32 @@ Każdy rejestrator domen działa:
 
 Koszt: Zazwyczaj $10-15/rok
 
-### Krok 2: Konfiguracja DNS
-
-Dodaj rekord DNS, aby wskazywał na Twój klucz Nostr:
-
-**Typ:** TXT  
-**Nazwa:** `_@` (lub po prostu `@` dla root)  
-**Wartość:**
-
-```
-"nostr": "<twój-npub>"
-```
-
-Lub użyj przekierowania:
-
-**Typ:** CNAME  
-**Nazwa:** `nostr`  
-**Wartość:** `twój-dostawca-nostr.pl`
-
-### Krok 3: Utwórz JSON NIP-05
+### Krok 2: Utwórz plik nostr.json
 
 Hostuj plik pod `https://twojadomena.pl/.well-known/nostr.json`:
 
 ```json
 {
   "names": {
-    "alicja": "<twój-npub-tutaj>",
-    "bob": "<inny-npub>"
+    "alicja": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9"
   }
 }
 ```
+
+<Callout variant="warning" title="Użyj klucza publicznego w formacie hex, nie npub">
+  NIP-05 wymaga klucza publicznego w postaci surowego hex małymi literami.
+  Jeśli wkleisz `npub1...` do `nostr.json`, klienci nie zweryfikują Cię — i zrobią
+  to po cichu, bez żadnego komunikatu wyjaśniającego dlaczego.
+
+Większość klientów pokazuje postać hex w Ustawienia → Klucze, podpisaną
+"public key (hex)". Możesz też wkleić swój npub do narzędzia niżej na tej
+stronie, które pokazuje obie postacie obok siebie.
+
+</Callout>
+
+**Nie ma tu żadnych rekordów DNS.** Weryfikacja NIP-05 to zwykłe zapytanie
+HTTPS do `/.well-known/nostr.json`. Nie potrzebujesz rekordu TXT, CNAME ani
+żadnego innego wpisu DNS poza tym, który już kieruje Twoją domenę na serwer.
 
 Twój identyfikator staje się: `alicja@twojadomena.pl`
 
@@ -265,7 +261,7 @@ Twój identyfikator staje się: `alicja@twojadomena.pl`
 ```json
 {
   "names": {
-    "alicja": "npub1abc123..."
+    "alicja": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9"
   }
 }
 ```
@@ -376,7 +372,7 @@ Większość klientów pokazuje status NIP-05:
 - Sprawdź logi serwera pod kątem błędów
 - Upewnij się, że uprawnienia plików pozwalają na odczyt
 
-<Callout type="warning">
+<Callout variant="warning">
   Nigdy nie udostępniaj swojego nsec (klucza prywatnego) podczas konfiguracji NIP-05. Tylko Twój npub
   (klucz publiczny) jest potrzebny.
 </Callout>
@@ -413,9 +409,9 @@ Możesz hostować wiele identyfikatorów NIP-05 na jednej domenie:
 ```json
 {
   "names": {
-    "alicja": "npub1alicja...",
-    "bob": "npub1bob...",
-    "karol": "npub1karol..."
+    "alicja": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9",
+    "bob": "3bf0c63fcb93463407af97a5e5ee64fa883d107ef9e558472c4eb9aaaefa459d",
+    "karol": "82341f882b6eabcd2ba7f1ef90aad961cf074af15b9ef44a09f9d2a8fbfbe6a2"
   }
 }
 ```

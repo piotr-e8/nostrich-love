@@ -586,7 +586,7 @@ NIP-05 identifiers देखें (human-readable names जैसे alice@doma
 3. **External confirmation** - एक और platform पर जिस पर आप trust करते हैं वहाँ पूछें
 4. **Web of trust** - देखें कि आपके trust करने वाले लोग उन्हें follow करते हैं
 
-<Callout type="warning">
+<Callout variant="warning">
   हमेशा important contacts को दूसरे channel से verify करें। Impersonators अक्सर
   popular names के slight spelling variations use करते हैं।
 </Callout>
@@ -607,7 +607,7 @@ NIP-05 identifiers देखें (human-readable names जैसे alice@doma
 - ✅ नए relays existing ones से sync कर सकते हैं
 - ⚠️ Deleting relay पर नए users पुराने posts नहीं देखेंगे
 
-<Callout type="tip">
+<Callout variant="success">
   Redundancy के लिए 5-10 relays use करें। आपका content distributed है, जिससे
   single-point deletion ineffective हो जाता है।
 </Callout>
@@ -628,7 +628,7 @@ Nostr posts immutable हैं - वे posting के बाद edit नही
 - **Relay discretion** - हर relay decide करता है कि deletion requests honor करनी हैं या नहीं
 - **Permanence assume करें** - हमेशा इस mindset से post करें
 
-<Callout type="warning">
+<Callout variant="warning">
   Post करने से पहले सोचें! Nostr permanence के लिए designed है। एक बार publish
   होने के बाद, content relays पर indefinitely exist कर सकता है।
 </Callout>
@@ -678,7 +678,7 @@ Nostr-fetch या nak जैसे tools use करें अपने events e
 - `nak` - Nostr army knife various tasks के लिए
 - Personal relay - strfry, nostream, khatru
 
-<Callout type="info">
+<Callout variant="info">
   आपके posts relays पर exist करते हैं, लेकिन keys irreplaceable हैं। 3-2-1 backup rule
   सबसे ज्यादा आपकी nsec पर लागू होता है।
 </Callout>
@@ -701,7 +701,7 @@ NIP-04 (deprecated) known vulnerabilities के साथ shared secret encrypt
 | Security            | ⚠️ Vulnerable | ✅ Secure    |
 | Status              | Deprecated    | Recommended  |
 
-<Callout type="tip">
+<Callout variant="success">
    अपनी client settings check करें और NIP-17 पर upgrade करें। Amethyst, Damus, और Primal जैसे
    modern clients इसे support करते हैं।
 </Callout>
@@ -760,7 +760,7 @@ NIP-17 (recommended) के साथ: हाँ, content encrypted है औ�
 - ❌ Metadata leaks possible
 - ❌ Known vulnerabilities
 
-<Callout type="info">
+<Callout variant="info">
    Maximum privacy के लिए, NIP-17 को VPN या Tor के साथ combine करें। यह आपकी IP को
    relays से hide करता है।
 </Callout>
@@ -781,7 +781,7 @@ NIP-17 (recommended) के साथ: हाँ, content encrypted है औ�
 - **Math** - nsec को npub से derive करना impossible
 - **Security** - 256-bit cryptography आपकी protect करती है
 
-<Callout type="tip">
+<Callout variant="success">
    अपना npub हर जगह post करें! यह public होने के लिए designed है। सिर्फ आपकी nsec को
    protection चाहिए।
 </Callout>
@@ -854,7 +854,7 @@ Spam filters client-side algorithms हैं जो low-quality content hide �
 - Regular filtered/spam folder check करें
 - False positives client developers को report करें
 
-<Callout type="info">
+<Callout variant="info">
    Filters client-side हैं, network-wide नहीं। Switch clients अगर आपको
    अपना current filter behavior पसंद नहीं।
 </Callout>
@@ -904,7 +904,7 @@ Zaps Bitcoin Lightning Network use करते हैं। Process: 1) Sender 
 - Public receipts social proof create करते हैं
 - Optional private zaps available
 
-<Callout type="info">
+<Callout variant="info">
    Zaps non-custodial हैं - money directly sender से receiver तक जाती है। कोई
    platform funds hold नहीं करती।
 </Callout>

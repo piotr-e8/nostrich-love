@@ -133,12 +133,12 @@ Eine weitere großartige kostenlose Option.
 - **stacker.news**: Für SN Nutzer
 - **NostrCheck.me** - Zusätzliche Tools inklusive
 
-<Note type="info">
+<Note variant="info">
   Kostenlose Anbieter können Wartelisten oder Verifizierungsanforderungen haben. Sei
   geduldig!
 </Note>
 
-<Callout type="warning">
+<Callout variant="warning">
   Kostenlose Anbieter können Bedingungen ändern oder schließen. Wenn du Nostr ernst nimmst,
   erwäge ein Upgrade auf eine bezahlte Option oder Self-Hosting.
 </Callout>
@@ -223,36 +223,33 @@ Jeder Domain-Registrar funktioniert:
 
 Kosten: Normalerweise 10-15$/Jahr
 
-### Schritt 2: DNS Einrichtung
-
-Füge einen DNS-Eintrag hinzu, der auf deinen Nostr-Schlüssel verweist:
-
-**Typ:** TXT  
-**Name:** `_@` (oder einfach `@` für Root)  
-**Wert:**
-
-```
-"nostr": "<dein-npub>"
-```
-
-Oder verwende eine Weiterleitung:
-
-**Typ:** CNAME  
-**Name:** `nostr`  
-**Wert:** `dein-nostr-provider.com`
-
-### Schritt 3: Erstelle NIP-05 JSON
+### Schritt 2: Erstelle die nostr.json-Datei
 
 Hoste eine Datei unter `https://deinedomain.com/.well-known/nostr.json`:
 
 ```json
 {
   "names": {
-    "alice": "<dein-npub-hier>",
-    "bob": "<ein-anderer-npub>"
+    "alice": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9"
   }
 }
 ```
+
+<Callout variant="warning" title="Verwende deinen öffentlichen Schlüssel als Hex, nicht deinen npub">
+  NIP-05 erwartet deinen öffentlichen Schlüssel als reines Kleinbuchstaben-Hex.
+  Wenn du `npub1...` in `nostr.json` einträgst, schlägt die Verifizierung bei
+  allen Clients fehl — und zwar stillschweigend, ohne Fehlermeldung.
+
+Die meisten Clients zeigen die Hex-Form unter Einstellungen → Schlüssel als
+"public key (hex)". Du kannst deinen npub auch in das Prüfwerkzeug weiter unten
+auf dieser Seite einfügen, das beide Formen nebeneinander anzeigt.
+
+</Callout>
+
+**Es sind keinerlei DNS-Einträge beteiligt.** Die NIP-05-Verifizierung ist eine
+gewöhnliche HTTPS-Anfrage an `/.well-known/nostr.json`. Du brauchst weder einen
+TXT-Eintrag noch einen CNAME noch sonst einen DNS-Eintrag über den hinaus, der
+deine Domain bereits auf deinen Webserver zeigen lässt.
 
 Deine Identifikation wird: `alice@deinedomain.com`
 
@@ -265,7 +262,7 @@ Deine Identifikation wird: `alice@deinedomain.com`
 ```json
 {
   "names": {
-    "alice": "npub1abc123..."
+    "alice": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9"
   }
 }
 ```
@@ -376,7 +373,7 @@ Die meisten Clients zeigen den NIP-05 Status:
 - Prüfe Server-Logs auf Fehler
 - Stelle sicher, dass Dateiberechtigungen Lesen erlauben
 
-<Callout type="warning">
+<Callout variant="warning">
   Teile niemals deinen nsec (privaten Schlüssel) beim Einrichten von NIP-05. Nur dein npub
   (öffentlicher Schlüssel) wird benötigt.
 </Callout>
@@ -413,9 +410,9 @@ Du kannst mehrere NIP-05 Identifikationen auf einer Domain hosten:
 ```json
 {
   "names": {
-    "alice": "npub1alice...",
-    "bob": "npub1bob...",
-    "carol": "npub1carol..."
+    "alice": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9",
+    "bob": "3bf0c63fcb93463407af97a5e5ee64fa883d107ef9e558472c4eb9aaaefa459d",
+    "carol": "82341f882b6eabcd2ba7f1ef90aad961cf074af15b9ef44a09f9d2a8fbfbe6a2"
   }
 }
 ```

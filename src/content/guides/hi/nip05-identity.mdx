@@ -133,12 +133,12 @@ NIP-05 के साथ:
 - **stacker.news**: SN यूज़र्स के लिए
 - **NostrCheck.me** - अतिरिक्त टूल्स शामिल
 
-<Note type="info">
+<Note variant="info">
   मुफ्त प्रोवाइडर के पास वेटिंग लिस्ट या वेरिफिकेशन आवश्यकताएं हो सकती हैं। धैर्य
   रखें!
 </Note>
 
-<Callout type="warning">
+<Callout variant="warning">
   मुफ्त प्रोवाइडर्स शर्तें बदल सकते हैं या बंद हो सकते हैं। अगर आप Nostr के बारे में
   सीरियस हो जाते हैं, तो पेड विकल्प या सेल्फ-होस्टिंग पर विचार करें।
 </Callout>
@@ -223,36 +223,33 @@ NIP-05 के साथ:
 
 लागत: आमतौर पर $१०-१५/वर्ष
 
-### चरण २: DNS सेटअप
-
-अपने Nostr की को पॉइंट करने के लिए DNS रिकॉर्ड जोड़ें:
-
-**Type:** TXT  
-**Name:** `_@` (या रूट के लिए सिर्फ `@`)  
-**Value:**
-
-```
-"nostr": "<आपका-npub>"
-```
-
-या रीडायरेक्ट उपयोग करें:
-
-**Type:** CNAME  
-**Name:** `nostr`  
-**Value:** `your-nostr-provider.com`
-
-### चरण ३: NIP-05 JSON बनाएं
+### चरण २: nostr.json फ़ाइल बनाएं
 
 `https://yourdomain.com/.well-known/nostr.json` पर एक फाइल होस्ट करें:
 
 ```json
 {
   "names": {
-    "alice": "<आपका-npub-यहां>",
-    "bob": "<एक�-अन्य-npub>"
+    "alice": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9"
   }
 }
 ```
+
+<Callout variant="warning" title="अपनी सार्वजनिक कुंजी hex में डालें, npub नहीं">
+  NIP-05 को आपकी सार्वजनिक कुंजी lowercase hex रूप में चाहिए। अगर आप
+  `nostr.json` में `npub1...` डालते हैं, तो कोई भी क्लाइंट आपको सत्यापित नहीं कर
+  पाएगा — और यह चुपचाप विफल होगा, बिना किसी संदेश के।
+
+ज़्यादातर क्लाइंट hex रूप को सेटिंग्स → कुंजियाँ में "public key (hex)" नाम से
+दिखाते हैं। आप अपना npub इस पृष्ठ पर नीचे दिए गए टूल में भी डाल सकते हैं, जो
+दोनों रूप साथ-साथ दिखाता है।
+
+</Callout>
+
+**इसमें कोई DNS रिकॉर्ड शामिल नहीं है।** NIP-05 सत्यापन `/.well-known/nostr.json`
+के लिए एक सामान्य HTTPS अनुरोध भर है। आपको TXT रिकॉर्ड, CNAME या कोई अन्य DNS
+प्रविष्टि नहीं चाहिए — सिवाय उसके जो पहले से आपके डोमेन को आपके वेब होस्ट पर
+भेजती है।
 
 आपका पहचानकर्ता बन जाता है: `alice@yourdomain.com`
 
@@ -265,7 +262,7 @@ NIP-05 के साथ:
 ```json
 {
   "names": {
-    "alice": "npub1abc123..."
+    "alice": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9"
   }
 }
 ```
@@ -376,7 +373,7 @@ https://alice.dev/.well-known/nostr.json
 - एरर्स के लिए सर्वर लॉग्स चेक करें
 - सुनिश्चित करें फाइल परमिशन्स रीडिंग अलाउ करती हैं
 
-<Callout type="warning">
+<Callout variant="warning">
   NIP-05 सेटअप करते समय अपना nsec (प्राइवेट की) कभी साझा न करें। केवल आपका npub
   (पब्लिक की) जरूरी है।
 </Callout>
@@ -413,9 +410,9 @@ alice@community.yourdomain.com
 ```json
 {
   "names": {
-    "alice": "npub1alice...",
-    "bob": "npub1bob...",
-    "carol": "npub1carol..."
+    "alice": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9",
+    "bob": "3bf0c63fcb93463407af97a5e5ee64fa883d107ef9e558472c4eb9aaaefa459d",
+    "carol": "82341f882b6eabcd2ba7f1ef90aad961cf074af15b9ef44a09f9d2a8fbfbe6a2"
   }
 }
 ```

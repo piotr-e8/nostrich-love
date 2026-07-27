@@ -188,7 +188,33 @@ One last check before you go live:
 
 ### You're Ready! 🚀
 
-Open your chosen client and paste your nsec to log in. That's it—you're on Nostr!
+Open your chosen client and log in. **How** you log in matters more than most
+guides admit.
+
+**On a phone**, paste your nsec into the app once. A mobile app is a sandbox —
+only that app can read what you paste into it.
+
+**In a web browser, do not paste your nsec into the website.** Install a signer
+extension instead — [Alby](https://getalby.com),
+[nos2x](https://github.com/fiatjaf/nos2x) or
+[Nostore](https://apps.apple.com/app/nostore/id1666553677) on Safari. Your key
+lives in the extension; the website asks the extension to sign each action and
+never sees the key itself. Every serious web client supports this (it is called
+NIP-07), and it turns "one bad website costs you your identity" into "one bad
+website gets nothing."
+
+If you would rather keep your key off your devices entirely, a remote signer such
+as [nsec.app](https://nsec.app) (NIP-46) holds it and approves actions from a
+separate app.
+
+<Callout variant="warning" title="A website that asks for your nsec is a red flag">
+  Once a site has your nsec, it has your identity permanently — you cannot rotate
+  a Nostr key or revoke access. There is no password reset and no support desk.
+
+Legitimate web clients ask you to connect a signer. If a site asks you to type or
+paste your private key directly into a form, close the tab.
+
+</Callout>
 
 <div className="my-8 text-center">
   <p className="text-gray-600 dark:text-gray-400 mb-4">

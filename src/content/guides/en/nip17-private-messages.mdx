@@ -20,14 +20,28 @@ NIP-17 is a Nostr protocol specification that defines **Private Direct Messages*
 
 Unlike NIP-04, which used a single layer of AES-256-CBC encryption, NIP-17 uses:
 
-1. **Seal** - Inner encryption layer protecting the message content
-2. **Gift Wrap** - Outer encryption layer that hides sender and recipient metadata
+1. **Seal** (kind 13) — an inner layer that encrypts the message and hides which
+   key signed it
+2. **Gift wrap** (kind 1059) — an outer envelope signed by a throwaway key, so
+   your real identity never appears on the event that relays store
 
-This dual-layer approach ensures that:
+This layering means:
 
 - Message content remains private
-- **Even relay operators cannot see who is talking to whom**
-- Message patterns and metadata are protected from network observers
+- **Relays cannot see who sent a message** — the gift wrap is signed by a random
+  one-time key, not by you
+- Timestamps are randomised, so message timing is harder to correlate
+
+<Callout variant="warning" title="Relays can still see who you are messaging">
+  The gift wrap carries the recipient's public key in a plaintext `p` tag. It has
+  to — otherwise the recipient's relay would not know who to deliver it to. NIP-17
+  hides the **sender**, not the **recipient**.
+
+Anyone reading a relay's stream can see that someone sent you a message and when,
+just not who or what. If your threat model requires hiding that you received
+anything at all, NIP-17 by itself is not enough.
+
+</Callout>
 
 ## Why NIP-17 Matters: The NIP-04 Security Problem
 
@@ -38,17 +52,17 @@ NIP-04 was Nostr's original direct message protocol, but it has several critical
 | Feature                | NIP-04                   | NIP-17                                |
 | ---------------------- | ------------------------ | ------------------------------------- |
 | **Encryption**         | Single-layer AES-256-CBC | Dual-layer (seal + gift wrap)         |
-| **Sender Metadata**    | Visible to relays        | Hidden from everyone except recipient |
-| **Recipient Metadata** | Visible to relays        | Hidden from everyone except recipient |
+| **Sender Metadata**    | Visible to relays        | Hidden — signed by a one-time key     |
+| **Recipient Metadata** | Visible to relays        | **Still visible** — plaintext `p` tag |
 | **Message Content**    | Encrypted                | Encrypted                             |
-| **Replay Protection**  | None                     | Built-in timestamps                   |
-| **Forward Secrecy**    | No                       | Better (per-message keys)             |
+| **Replay Protection**  | None                     | Randomised timestamps                 |
+| **Forward Secrecy**    | No                       | No — NIP-44 does not provide it       |
 | **Security Status**    | **Deprecated**           | **Recommended**                       |
 | **Interoperability**   | Widely supported         | Growing support                       |
 
 ### The Core Problem with NIP-04
 
-NIP-04 messages expose **who is talking to whom** on the blockchain. While the message body is encrypted, the envelope contains:
+NIP-04 messages expose **who is talking to whom** to every relay that stores them. (Nostr has no blockchain — events simply sit on relays, and anyone may read from a relay.) While the message body is encrypted, the envelope contains:
 
 ```
 # NIP-04 Event Structure (simplified)
@@ -108,9 +122,15 @@ Visual Representation:
 
 ### Key Benefits
 
-1. **Metadata Privacy**: No one except the recipient can determine who sent the message or who it was sent to
-2. **Unlinkability**: Multiple messages between the same parties appear as unrelated events to observers
-3. **Better Forward Secrecy**: Each message uses unique ephemeral keys
+1. **Sender privacy**: Nobody except the recipient can determine who sent the
+   message. The recipient, however, is named in a plaintext `p` tag that relays
+   must be able to read.
+2. **Unlinkability**: Each message is signed by a fresh one-time key, so messages
+   from the same sender do not obviously belong together.
+3. **No forward secrecy**: NIP-44 derives its conversation key from two static
+   keys, so an attacker who later obtains your `nsec` can decrypt every message
+   they saved. The one-time keys hide *who sent* a message; they do not protect
+   past messages. Delete old conversations if that matters to you.
 
 ## Migration Guide: Switching from NIP-04 to NIP-17
 
@@ -256,6 +276,24 @@ NIP-17 provides excellent privacy but is not perfect:
 - Recipient always sees sender identity
 
 ## Troubleshooting Common Issues
+
+### "My messages never arrive" — check your DM relay list first
+
+This is the most common NIP-17 failure, and it is almost never an encryption
+problem.
+
+NIP-17 senders do not deliver to your normal relays. They look for a **kind 10050
+event** — your published list of relays that accept your direct messages — and
+send the gift wrap only there. If you have never published one, a sender's client
+has nowhere to deliver to, and the message is silently dropped. Nothing surfaces
+in either interface.
+
+**Fix:** in a client that supports NIP-17, find the DM or private-messaging relay
+setting and save at least one relay. That publishes your kind 10050 list. Pick a
+relay that actually accepts gift wraps — some relays reject kind 1059 outright.
+
+Keep the list short. Every relay you list is a relay that gets to see who is
+sending you messages.
 
 ### "Messages show as unreadable or gibberish"
 

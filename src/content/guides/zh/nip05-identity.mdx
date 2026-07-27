@@ -135,11 +135,11 @@ NIP-05 标识符是一个**便利**，不是必需的。你的 `npub` 是你在 
 - **stacker.news**：为 SN 用户
 - **NostrCheck.me** - 包含额外工具
 
-<Note type="info">
+<Note variant="info">
   免费提供商可能有等待名单或验证要求。耐心等待！
 </Note>
 
-<Callout type="warning">
+<Callout variant="warning">
   免费提供商可以更改条款或关闭。如果你认真对待 Nostr，考虑升级到付费选项或自我托管。
 </Callout>
 
@@ -223,36 +223,30 @@ NIP-05 标识符是一个**便利**，不是必需的。你的 `npub` 是你在 
 
 费用：通常每年 $10-15
 
-### 步骤 2：DNS 设置
-
-添加一个 DNS 记录指向你的 Nostr 密钥：
-
-**类型：** TXT  
-**名称：** `_@`（或根域名的 `@`）  
-**值：**
-
-```
-"nostr": "<your-npub>"
-```
-
-或使用重定向：
-
-**类型：** CNAME  
-**名称：** `nostr`  
-**值：** `your-nostr-provider.com`
-
-### 步骤 3：创建 NIP-05 JSON
+### 步骤 2：创建 nostr.json 文件
 
 在 `https://yourdomain.com/.well-known/nostr.json` 托管一个文件：
 
 ```json
 {
   "names": {
-    "alice": "<your-npub-here>",
-    "bob": "<another-npub>"
+    "alice": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9"
   }
 }
 ```
+
+<Callout variant="warning" title="使用十六进制公钥，而不是 npub">
+  NIP-05 要求使用公钥的小写十六进制原始形式。如果你把 `npub1...` 填进
+  `nostr.json`，客户端将无法验证你的身份——而且是静默失败，不会给出任何提示。
+
+大多数客户端在「设置 → 密钥」中显示十六进制形式，标注为 "public key (hex)"。
+你也可以把 npub 粘贴到本页下方的检查工具中，它会同时显示两种形式。
+
+</Callout>
+
+**完全不涉及 DNS 记录。** NIP-05 验证只是一个指向 `/.well-known/nostr.json`
+的普通 HTTPS 请求。除了已经让域名指向你的网站服务器的那条记录之外，你不需要
+TXT 记录、CNAME 或任何其他 DNS 条目。
 
 你的标识符变成：`alice@yourdomain.com`
 
@@ -265,7 +259,7 @@ NIP-05 标识符是一个**便利**，不是必需的。你的 `npub` 是你在 
 ```json
 {
   "names": {
-    "alice": "npub1abc123..."
+    "alice": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9"
   }
 }
 ```
@@ -376,7 +370,7 @@ https://alice.dev/.well-known/nostr.json
 - 检查服务器日志中的错误
 - 确保文件权限允许读取
 
-<Callout type="warning">
+<Callout variant="warning">
   设置 NIP-05 时永远不要分享你的 nsec（私钥）。只需要你的 npub（公钥）。
 </Callout>
 
@@ -412,9 +406,9 @@ alice@community.yourdomain.com
 ```json
 {
   "names": {
-    "alice": "npub1alice...",
-    "bob": "npub1bob...",
-    "carol": "npub1carol..."
+    "alice": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9",
+    "bob": "3bf0c63fcb93463407af97a5e5ee64fa883d107ef9e558472c4eb9aaaefa459d",
+    "carol": "82341f882b6eabcd2ba7f1ef90aad961cf074af15b9ef44a09f9d2a8fbfbe6a2"
   }
 }
 ```

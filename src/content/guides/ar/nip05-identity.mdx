@@ -133,12 +133,12 @@ NIP-05 (إمكانية تنفيذ Nostr #5) يتيح لك الحصول على م
 - **stacker.news**: لمستخدمي SN
 - **NostrCheck.me** - أدوات إضافية مشمولة
 
-<Note type="info">
+<Note variant="info">
   قد يكون للمزودين المجانين قوائم انتظار أو متطلبات تحقق. كن 
   صبوراً!
 </Note>
 
-<Callout type="warning">
+<Callout variant="warning">
   يمكن للمزودين المجانين تغيير الشروط أو الإغلاق. إذا أصبحت جاداً بشأن 
   Nostr، فكر في الترقية إلى خيار مدفوع أو الاستضافة الذاتية.
 </Callout>
@@ -223,36 +223,32 @@ NIP-05 (إمكانية تنفيذ Nostr #5) يتيح لك الحصول على م
 
 التكلفة: عادةً $10-15/سنة
 
-### الخطوة 2: إعداد DNS
-
-أضف سجل DNS للإشارة إلى مفتاح Nostr الخاص بك:
-
-**النوع:** TXT  
-**الاسم:** `_@` (أو فقط `@` للجذر)  
-**القيمة:**
-
-```
-"nostr": "<your-npub>"
-```
-
-أو استخدم إعادة توجيه:
-
-**النوع:** CNAME  
-**الاسم:** `nostr`  
-**القيمة:** `your-nostr-provider.com`
-
-### الخطوة 3: إنشاء NIP-05 JSON
+### الخطوة 2: إنشاء ملف nostr.json
 
 استضف ملفاً على `https://yourdomain.com/.well-known/nostr.json`:
 
 ```json
 {
   "names": {
-    "alice": "<your-npub-here>",
-    "bob": "<another-npub>"
+    "alice": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9"
   }
 }
 ```
+
+<Callout variant="warning" title="استخدم مفتاحك العام بصيغة hex، لا npub">
+  يتطلّب NIP-05 المفتاح العام بصيغة hex بأحرف صغيرة. إذا وضعت `npub1...` داخل
+  `nostr.json` فلن يتمكّن أي عميل من التحقّق منك — وسيفشل بصمت دون أي رسالة
+  توضّح السبب.
+
+تعرض معظم العملاء صيغة hex ضمن الإعدادات ← المفاتيح تحت اسم
+"public key (hex)". يمكنك أيضًا لصق npub في أداة الفحص أسفل هذه الصفحة،
+فتعرض الصيغتين معًا.
+
+</Callout>
+
+**لا علاقة لسجلات DNS بالأمر.** التحقّق في NIP-05 مجرّد طلب HTTPS عادي إلى
+`/.well-known/nostr.json`. لا تحتاج إلى سجل TXT ولا CNAME ولا أي إدخال DNS آخر
+عدا الذي يوجّه نطاقك إلى خادم موقعك أصلًا.
 
 يصبح معرفك: `alice@yourdomain.com`
 
@@ -265,7 +261,7 @@ NIP-05 (إمكانية تنفيذ Nostr #5) يتيح لك الحصول على م
 ```json
 {
   "names": {
-    "alice": "npub1abc123..."
+    "alice": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9"
   }
 }
 ```
@@ -376,7 +372,7 @@ https://alice.dev/.well-known/nostr.json
 - تحقق من سجلات الخادم للأخطاء
 - تأكد من أن أذونات الملف تسمح بالقراءة
 
-<Callout type="warning">
+<Callout variant="warning">
   لا تشارك nsec (مفتاحك الخاص) أبداً عند إعداد NIP-05. فقط npub 
   (المفتاح العام) مطلوب.
 </Callout>
@@ -413,9 +409,9 @@ alice@community.yourdomain.com
 ```json
 {
   "names": {
-    "alice": "npub1alice...",
-    "bob": "npub1bob...",
-    "carol": "npub1carol..."
+    "alice": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9",
+    "bob": "3bf0c63fcb93463407af97a5e5ee64fa883d107ef9e558472c4eb9aaaefa459d",
+    "carol": "82341f882b6eabcd2ba7f1ef90aad961cf074af15b9ef44a09f9d2a8fbfbe6a2"
   }
 }
 ```

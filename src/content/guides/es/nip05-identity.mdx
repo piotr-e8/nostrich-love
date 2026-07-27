@@ -133,12 +133,12 @@ Otra gran opción gratuita.
 - **stacker.news**: Para usuarios de SN
 - **NostrCheck.me** - Herramientas adicionales incluidas
 
-<Note type="info">
+<Note variant="info">
   Los proveedores gratuitos pueden tener listas de espera o requisitos de verificación. ¡Ten
   paciencia!
 </Note>
 
-<Callout type="warning">
+<Callout variant="warning">
   Los proveedores gratuitos pueden cambiar términos o cerrar. Si te vuelves serio sobre
   Nostr, considera actualizarte a una opción paga o auto-alojarte.
 </Callout>
@@ -223,36 +223,33 @@ Cualquier registrador de dominios funciona:
 
 Costo: Usualmente $10-15/año
 
-### Paso 2: Configuración DNS
-
-Agrega un registro DNS que apunte a tu llave Nostr:
-
-**Tipo:** TXT  
-**Nombre:** `_@` (o solo `@` para raíz)  
-**Valor:**
-
-```
-"nostr": "<tu-npub>"
-```
-
-O usa un redirect:
-
-**Tipo:** CNAME  
-**Nombre:** `nostr`  
-**Valor:** `tu-proveedor-nostr.com`
-
-### Paso 3: Crear JSON de NIP-05
+### Paso 2: Crear el archivo nostr.json
 
 Hostea un archivo en `https://tudominio.com/.well-known/nostr.json`:
 
 ```json
 {
   "names": {
-    "ana": "<tu-npub-aquí>",
-    "juan": "<otro-npub>"
+    "ana": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9"
   }
 }
 ```
+
+<Callout variant="warning" title="Usa tu clave pública en hexadecimal, no tu npub">
+  NIP-05 requiere la forma hexadecimal en minúsculas de tu clave pública. Si
+  pegas `npub1...` en `nostr.json`, los clientes no podrán verificarte — y
+  fallarán en silencio, sin ningún mensaje que explique por qué.
+
+La mayoría de los clientes muestran la forma hexadecimal en Ajustes → Claves,
+etiquetada como "public key (hex)". También puedes pegar tu npub en la
+herramienta más abajo en esta página, que muestra ambas formas.
+
+</Callout>
+
+**No hay ningún registro DNS involucrado.** La verificación NIP-05 es una
+petición HTTPS normal a `/.well-known/nostr.json`. No necesitas un registro
+TXT, un CNAME ni ninguna entrada DNS más allá de la que ya apunta tu dominio a
+tu servidor.
 
 Tu identificador se convierte en: `ana@tudominio.com`
 
@@ -265,7 +262,7 @@ Tu identificador se convierte en: `ana@tudominio.com`
 ```json
 {
   "names": {
-    "ana": "npub1abc123..."
+    "ana": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9"
   }
 }
 ```
@@ -376,7 +373,7 @@ La mayoría de los clientes muestran el estado de NIP-05:
 - Revisa logs del servidor por errores
 - Asegúrate de que los permisos de archivo permitan lectura
 
-<Callout type="warning">
+<Callout variant="warning">
   Nunca compartas tu nsec (llave privada) al configurar NIP-05. Solo tu npub
   (llave pública) es necesario.
 </Callout>
@@ -413,9 +410,9 @@ Puedes hostear múltiples identificadores NIP-05 en un dominio:
 ```json
 {
   "names": {
-    "ana": "npub1ana...",
-    "juan": "npub1juan...",
-    "carol": "npub1carol..."
+    "ana": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9",
+    "juan": "3bf0c63fcb93463407af97a5e5ee64fa883d107ef9e558472c4eb9aaaefa459d",
+    "carol": "82341f882b6eabcd2ba7f1ef90aad961cf074af15b9ef44a09f9d2a8fbfbe6a2"
   }
 }
 ```

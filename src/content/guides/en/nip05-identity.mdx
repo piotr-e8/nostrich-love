@@ -133,12 +133,12 @@ Another great free option.
 - **stacker.news**: For SN users
 - **NostrCheck.me** - Additional tools included
 
-<Note type="info">
+<Note variant="info">
   Free providers may have waiting lists or verification requirements. Be
   patient!
 </Note>
 
-<Callout type="warning">
+<Callout variant="warning">
   Free providers can change terms or shut down. If you become serious about
   Nostr, consider upgrading to a paid option or self-hosting.
 </Callout>
@@ -223,38 +223,34 @@ Any domain registrar works:
 
 Cost: Usually $10-15/year
 
-### Step 2: DNS Setup
-
-Add a DNS record to point to your Nostr key:
-
-**Type:** TXT  
-**Name:** `_@` (or just `@` for root)  
-**Value:**
-
-```
-"nostr": "<your-npub>"
-```
-
-Or use a redirect:
-
-**Type:** CNAME  
-**Name:** `nostr`  
-**Value:** `your-nostr-provider.com`
-
-### Step 3: Create NIP-05 JSON
+### Step 2: Create the nostr.json File
 
 Host a file at `https://yourdomain.com/.well-known/nostr.json`:
 
 ```json
 {
   "names": {
-    "alice": "<your-npub-here>",
-    "bob": "<another-npub>"
+    "alice": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9"
   }
 }
 ```
 
 Your identifier becomes: `alice@yourdomain.com`
+
+<Callout variant="warning" title="Use your hex public key, not your npub">
+  NIP-05 requires the raw lowercase-hex form of your public key. If you paste
+  `npub1...` into `nostr.json`, clients will fail to verify you — and they fail
+  silently, with no message explaining why.
+
+Most clients show the hex form under Settings → Keys, labelled "public key
+(hex)". You can also paste your npub into the checker further down this page,
+which displays both forms side by side.
+
+</Callout>
+
+**No DNS records are involved.** NIP-05 verification is an ordinary HTTPS
+request to `/.well-known/nostr.json`. You do not need a TXT record, a CNAME, or
+any DNS entry beyond whatever already points your domain at your web host.
 
 ### Example Setup Walkthrough
 
@@ -265,7 +261,7 @@ Your identifier becomes: `alice@yourdomain.com`
 ```json
 {
   "names": {
-    "alice": "npub1abc123..."
+    "alice": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9"
   }
 }
 ```
@@ -310,7 +306,9 @@ Most clients show NIP-05 status:
 
 **"NIP-05 not working"**
 
-- Double-check your npub is correct in nostr.json
+- **Check the key format first.** `nostr.json` must contain your public key in
+  lowercase hex — 64 characters, no `npub1` prefix. An `npub` here is the single
+  most common cause of a NIP-05 that never verifies.
 - Ensure the JSON is valid (use a JSON validator)
 - Check that the file is accessible at the exact URL
 
@@ -376,7 +374,7 @@ Most clients show NIP-05 status:
 - Check server logs for errors
 - Ensure file permissions allow reading
 
-<Callout type="warning">
+<Callout variant="warning">
   Never share your nsec (private key) when setting up NIP-05. Only your npub
   (public key) is needed.
 </Callout>
@@ -413,9 +411,9 @@ You can host multiple NIP-05 identifiers on one domain:
 ```json
 {
   "names": {
-    "alice": "npub1alice...",
-    "bob": "npub1bob...",
-    "carol": "npub1carol..."
+    "alice": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9",
+    "bob": "3bf0c63fcb93463407af97a5e5ee64fa883d107ef9e558472c4eb9aaaefa459d",
+    "carol": "82341f882b6eabcd2ba7f1ef90aad961cf074af15b9ef44a09f9d2a8fbfbe6a2"
   }
 }
 ```

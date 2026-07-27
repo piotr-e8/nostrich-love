@@ -66,7 +66,7 @@ Before diving into security practices, let's understand what threats exist on No
 - Patterns can reveal identity
 - IP addresses visible to relays
 
-<Callout type="info">
+<Callout variant="info">
   **Realistic expectations:** Nostr provides censorship resistance, not perfect
   anonymity. Understand the difference.
 </Callout>
@@ -128,7 +128,7 @@ Most people should have **at least two** Nostr identities:
 - Tablet for private
 - Maximum isolation
 
-<Callout type="tip">
+<Callout variant="success">
   **Start simple:** Create one pseudonymous account first. Add a public one
   later if needed.
 </Callout>
@@ -214,7 +214,7 @@ Most people should have **at least two** Nostr identities:
 - Single client use
 - Beginners (add later)
 
-<Callout type="warning">
+<Callout variant="warning">
   **Critical:** Your signer app becomes a single point of failure. Back it up
   securely!
 </Callout>
@@ -269,7 +269,7 @@ Most people should have **at least two** Nostr identities:
 2. Keep old account as redirect
 3. Eventually abandon old account
 
-<Callout type="tip">
+<Callout variant="success">
   **Pro tip:** If you have a NIP-05, you can update it to point to your new
   npub. People using your NIP-05 will automatically follow your new account.
 </Callout>
@@ -365,7 +365,7 @@ Even "anonymous" posts can reveal identity through:
 - ✅ No cross-references
 - ✅ Assume they're watching
 
-<Callout type="warning">
+<Callout variant="warning">
   **Paranoia check:** If you need true anonymity, assume a motivated adversary
   is analyzing everything. Act accordingly.
 </Callout>
@@ -455,7 +455,7 @@ This message is signed by both keys to prove transition.
 Please unfollow the old account and follow this one.
 ```
 
-<Callout type="info">
+<Callout variant="info">
   **Hope for the best, plan for the worst.** Having a recovery plan reduces
   panic if something goes wrong.
 </Callout>
