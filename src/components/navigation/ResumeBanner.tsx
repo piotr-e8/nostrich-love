@@ -4,6 +4,7 @@ import { cn } from '../../lib/utils';
 import { SKILL_LEVELS, type SkillLevel } from '../../data/learning-paths';
 import { getCurrentLevel, getLevelProgress } from '../../utils/gamification';
 import { getLastViewedGuide, hasRecentProgress } from '../../lib/progress';
+import { guidePathFromLocation } from "../../i18n/paths";
 
 interface ResumeBannerProps {
   className?: string;
@@ -46,7 +47,7 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
 
   const handleResume = () => {
     if (lastViewed?.slug) {
-      window.location.href = `/guides/${lastViewed.slug}`;
+      window.location.href = guidePathFromLocation(lastViewed.slug);
     }
   };
 

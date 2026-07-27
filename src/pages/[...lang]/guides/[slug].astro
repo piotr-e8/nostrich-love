@@ -48,7 +48,8 @@ import { PrerequisiteModal } from '../../../components/navigation/PrerequisiteMo
 import { BadgeEarnedModalListener } from '../../../components/gamification/BadgeEarnedModalListener';
 import type { Badge } from '../../../components/gamification/types';
 import { LEARNING_PATHS, getPreviousGuideInPath, getNextGuideInPath, getGuidePositionInPath, getPathLength } from '../../../data/learning-paths';
-import type { Locale } from '../../../config/locales';
+import { locales, type Locale } from '../../../config/locales';
+import { langParam } from '../../../i18n/paths';
 
 // Legacy GUIDE_ORDER for backward compatibility and general path
 const GUIDE_ORDER = [
@@ -71,36 +72,33 @@ const GUIDE_ORDER = [
 
 type GuideEntry = CollectionEntry<'guides'>;
 type StaticPath = {
-  params: { lang: string; slug: string };
-  props: { guide: GuideEntry; locale: string };
+  params: { lang: string | undefined; slug: string };
+  props: { guide: GuideEntry; locale: Locale };
 };
 
 export async function getStaticPaths(): Promise<StaticPath[]> {
   const allGuides = await getCollection('guides');
   const paths: StaticPath[] = [];
-  
-  // Generate paths for all languages
-  const locales = ['en', 'pl', 'es', 'de', 'zh', 'ar', 'hi'];
-  
+
   for (const locale of locales) {
     const localeGuides = allGuides.filter(guide => guide.slug.startsWith(`${locale}/`));
-    
+
     for (const guide of localeGuides) {
       const slug = guide.slug.replace(`${locale}/`, '');
-      
+
       paths.push({
-        params: { lang: locale, slug: slug },
+        // English gets `undefined` so the rest param emits /guides/<slug>
+        params: { lang: langParam(locale), slug: slug },
         props: { guide, locale } as StaticPath['props'],
       });
     }
   }
-  
+
   return paths;
 }
 
-type PageProps = { guide: GuideEntry; locale: string };
+type PageProps = { guide: GuideEntry; locale: Locale };
 const { guide, locale } = Astro.props as PageProps;
-const { lang } = Astro.params;
 const title = `${guide.data.title} - Nostr Beginner Guide`;
 const description = guide.data.description ?? 'Learn how to use Nostr with our beginner-friendly guides.';
 const { Content } = await guide.render();
@@ -275,7 +273,7 @@ const components = {
                 currentGuideId={guideSlug}
                 currentGuideTitle={guide.data.title}
                 prerequisites={prerequisiteData}
-                lang={lang}
+                lang={locale}
                 className="mb-8"
                 dismissible={true}
               />

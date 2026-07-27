@@ -3,6 +3,7 @@ import { AlertTriangle, X, ArrowRight, BookOpen, Clock, Shield, ChevronRight } f
 import { cn } from '../../lib/utils';
 import { checkPrerequisites } from '../../lib/progressService';
 import { Button } from '../ui/Button';
+import { guidePathFromLocation } from "../../i18n/paths";
 
 export interface PrerequisiteModalProps {
   currentGuideId: string;
@@ -179,7 +180,7 @@ export function PrerequisiteModal({
               {incompletePrereqs.map((prereq, index) => (
                 <a
                   key={prereq.slug}
-                  href={`/guides/${prereq.slug}`}
+                  href={guidePathFromLocation(prereq.slug)}
                   className={cn(
                     'group flex items-start gap-4 p-4 rounded-xl',
                     'bg-gray-50 dark:bg-gray-800/50',
@@ -246,7 +247,7 @@ export function PrerequisiteModal({
               className="flex-1"
               leftIcon={<BookOpen className="h-5 w-5" />}
               onClick={() => {
-                window.location.href = `/guides/${incompletePrereqs[0].slug}`;
+                window.location.href = guidePathFromLocation(incompletePrereqs[0].slug);
               }}
             >
               Go to first prerequisite

@@ -1,60 +1,39 @@
 import React, { useState, useEffect } from "react";
+import {
+  guidesIndexPath,
+  splitLocale,
+  isLocale,
+  DEFAULT_LOCALE,
+} from "../../i18n/paths";
 
 interface GuidesLinkProps {
   className?: string;
   children: React.ReactNode;
 }
 
+// This link renders on every page, so its SSR value is what crawlers index:
+// it must be the canonical, un-prefixed English path.
+const DEFAULT_HREF = guidesIndexPath(DEFAULT_LOCALE);
+
 export function GuidesLink({ className, children }: GuidesLinkProps) {
-  const [guidesHref, setGuidesHref] = useState("/en/guides");
-  const [mounted, setMounted] = useState(false);
+  const [guidesHref, setGuidesHref] = useState(DEFAULT_HREF);
 
   useEffect(() => {
-    setMounted(true);
-    
-    // Check URL first
-    const path = window.location.pathname;
-    if (path.startsWith("/de/")) {
-      setGuidesHref("/de/guides");
-    } else if (path.startsWith("/pl/")) {
-      setGuidesHref("/pl/guides");
-    } else if (path.startsWith("/es/")) {
-      setGuidesHref("/es/guides");
-    } else if (path.startsWith("/zh/")) {
-      setGuidesHref("/zh/guides");
-    } else if (path.startsWith("/ar/")) {
-      setGuidesHref("/ar/guides");
-    } else if (path.startsWith("/en/")) {
-      setGuidesHref("/en/guides");
-    } else {
-      // Check localStorage for saved preference
-      const savedLang = localStorage.getItem('preferredLanguage');
-      if (savedLang === 'de') {
-        setGuidesHref("/de/guides");
-      } else if (savedLang === 'pl') {
-        setGuidesHref("/pl/guides");
-      } else if (savedLang === 'es') {
-        setGuidesHref("/es/guides");
-      } else if (savedLang === 'zh') {
-        setGuidesHref("/zh/guides");
-      } else if (savedLang === 'ar') {
-        setGuidesHref("/ar/guides");
-      } else {
-        setGuidesHref("/en/guides");
-      }
+    const { locale } = splitLocale(window.location.pathname);
+
+    if (locale !== DEFAULT_LOCALE) {
+      setGuidesHref(guidesIndexPath(locale));
+      return;
+    }
+
+    // Un-prefixed page: honour a saved preference, if there is one.
+    const savedLang = localStorage.getItem("preferredLanguage");
+    if (isLocale(savedLang)) {
+      setGuidesHref(guidesIndexPath(savedLang));
     }
   }, []);
 
-  // During SSR/hydration, render with default href
-  // suppressHydrationWarning is needed because href changes after mount based on URL
-  if (!mounted) {
-    return (
-      <a href="/en/guides" className={className} suppressHydrationWarning>
-        {children}
-      </a>
-    );
-  }
-
+  // suppressHydrationWarning: href is recalculated after mount from the URL
   return (
     <a href={guidesHref} className={className} suppressHydrationWarning>
       {children}

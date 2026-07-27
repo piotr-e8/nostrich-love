@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { AlertTriangle, CheckCircle, BookOpen } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { isGuideCompleted } from "../../lib/progressService";
+import { guidePathFromLocation } from "../../i18n/paths";
 
 interface Prerequisite {
   slug: string;
@@ -72,7 +73,7 @@ export function PrerequisiteWarning({ prerequisites, className }: PrerequisiteWa
                     <BookOpen className="w-4 h-4 text-amber-500 flex-shrink-0" />
                   )}
                   <a
-                    href={`/guides/${prereq.slug}`}
+                    href={guidePathFromLocation(prereq.slug)}
                     className={cn(
                       "text-sm hover:underline transition-colors",
                       isCompleted

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Check, Circle, Lock, ChevronDown } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { getProgressData } from '../../lib/progressService';
+import { guidePathFromLocation } from "../../i18n/paths";
 
 interface GuideCompletionIndicatorProps {
   guides: Array<{
@@ -101,7 +102,7 @@ export function GuideCompletionIndicator({
               return (
                 <a
                   key={guide.slug}
-                  href={`/guides/${guide.slug}`}
+                  href={guidePathFromLocation(guide.slug)}
                   className={cn(
                     'flex items-center gap-3 p-2.5 rounded-lg transition-colors',
                     isCurrent && 'bg-primary/10 border border-primary/20',

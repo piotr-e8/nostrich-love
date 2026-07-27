@@ -40,6 +40,18 @@ export default defineConfig({
           hi: 'hi-IN',
         },
       },
+      // The i18n option emits one <xhtml:link> per locale but no x-default,
+      // which is what search engines fall back to for unmatched languages.
+      // Point it at the English (un-prefixed) version.
+      serialize(item) {
+        if (item.links && item.links.length > 1) {
+          const fallback = item.links.find((link) => link.lang === "en-US");
+          if (fallback && !item.links.some((link) => link.lang === "x-default")) {
+            item.links.push({ lang: "x-default", url: fallback.url });
+          }
+        }
+        return item;
+      },
     }),
   ],
   markdown: {

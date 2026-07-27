@@ -2,6 +2,7 @@
 import { siteConfig } from '../config/site';
 import type { SEOProps } from '../config/seo-types';
 import { type Locale, locales, getLocaleConfig } from '../config/locales';
+import { localePath, hasLocalizedVersions, DEFAULT_LOCALE } from '../i18n/paths';
 
 interface Props extends SEOProps {
   locale?: Locale;
@@ -34,19 +35,24 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, siteConfig.url).to
 // Get locale configuration
 const localeConfig = getLocaleConfig(locale);
 
-// Build alternate URLs for hreflang
+// Build alternate URLs for hreflang.
+// Only emit them for routes that genuinely exist in every locale — otherwise
+// we advertise 404s as alternates and search engines drop the whole cluster.
 const currentPath = Astro.url.pathname;
-const alternateUrls = locales.map(l => {
-  // Replace current locale in path with alternate locale
-  const pathWithoutLocale = currentPath.replace(/^\/(en|pl|es|de)/, '');
-  return {
-    locale: l,
-    url: `${siteConfig.url}/${l}${pathWithoutLocale}`,
-  };
-});
+const localized = hasLocalizedVersions(currentPath);
 
-// Build x-default URL (points to English version)
-const xDefaultUrl = `${siteConfig.url}/en${currentPath.replace(/^\/(en|pl|es|de)/, '')}`;
+const alternateUrls = localized
+  ? locales.map((l) => ({
+      locale: l,
+      hreflang: getLocaleConfig(l).htmlLang,
+      url: new URL(localePath(currentPath, l), siteConfig.url).toString(),
+    }))
+  : [];
+
+// x-default points at the un-prefixed English version
+const xDefaultUrl = localized
+  ? new URL(localePath(currentPath, DEFAULT_LOCALE), siteConfig.url).toString()
+  : null;
 ---
 
 <!-- Primary Meta Tags -->
@@ -59,11 +65,11 @@ const xDefaultUrl = `${siteConfig.url}/en${currentPath.replace(/^\/(en|pl|es|de)
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
 
-<!-- Hreflang tags for international SEO -->
-{alternateUrls.map(({ locale: l, url }) => (
-  <link rel="alternate" hreflang={l} href={url} />
+<!-- Hreflang tags for international SEO (guides only — see hasLocalizedVersions) -->
+{alternateUrls.map(({ hreflang, url }) => (
+  <link rel="alternate" hreflang={hreflang} href={url} />
 ))}
-<link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
+{xDefaultUrl && <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />}
 
 <!-- Language -->
 <meta name="language" content={localeConfig.htmlLang} />

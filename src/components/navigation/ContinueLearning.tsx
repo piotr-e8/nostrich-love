@@ -8,6 +8,7 @@ import {
   isLevelUnlockedLocal as isLevelUnlocked
 } from '../../lib/progress';
 import { useTranslation } from '../../hooks/useTranslation';
+import { guidesIndexPath } from "../../i18n/paths";
 
 interface ContinueLearningProps {
   nextGuide?: {
@@ -33,7 +34,7 @@ export function ContinueLearning({
   locale = 'en',
 }: ContinueLearningProps) {
   const { t } = useTranslation();
-  const guidesPrefix = locale === 'en' ? '/en/guides' : `/${locale}/guides`;
+  const guidesPrefix = guidesIndexPath(locale).replace(/\/$/, '');
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
   const [isViewingQuiz, setIsViewingQuiz] = useState(false);

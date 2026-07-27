@@ -6,37 +6,19 @@ import { GamificationExplainerWrapper } from '../../../components/gamification/G
 import { GuidesContainer } from '../../../components/guides/GuidesContainer';
 import { SKILL_LEVELS, type SkillLevel } from '../../../data/learning-paths';
 import { getTranslations, type Locale } from '../../../i18n';
+import { locales } from '../../../config/locales';
+import { langParam, isLocale, DEFAULT_LOCALE, guidePath } from '../../../i18n/paths';
 import { getCollection } from 'astro:content';
 
-// Generate static paths for all locales
+// Generate static paths for all locales.
+// English uses `undefined` so the rest param emits the un-prefixed /guides/.
 export async function getStaticPaths() {
-  return [
-    { params: { lang: 'en' } },      // English
-    { params: { lang: 'pl' } },      // Polish
-    { params: { lang: 'es' } },      // Spanish
-    { params: { lang: 'de' } },      // German
-    { params: { lang: 'zh' } },      // Chinese
-    { params: { lang: 'ar' } },      // Arabic
-    { params: { lang: 'hi' } },      // Hindi
-  ];
+  return locales.map((locale) => ({ params: { lang: langParam(locale) } }));
 }
 
 // Detect current locale from URL
 const { lang } = Astro.params;
-let currentLocale: Locale = 'en';
-if (lang === 'pl') {
-  currentLocale = 'pl';
-} else if (lang === 'es') {
-  currentLocale = 'es';
-} else if (lang === 'de') {
-  currentLocale = 'de';
-} else if (lang === 'zh') {
-  currentLocale = 'zh';
-} else if (lang === 'ar') {
-  currentLocale = 'ar';
-} else if (lang === 'hi') {
-  currentLocale = 'hi';
-}
+const currentLocale: Locale = isLocale(lang) ? lang : DEFAULT_LOCALE;
 
 // Get translations
 const translations = getTranslations(currentLocale);
@@ -60,7 +42,7 @@ const skillLevelsData = Object.entries(SKILL_LEVELS).map(([levelId, levelConfig]
         estimatedTime: guide.data.estimatedTime || '',
         category: guide.data.category,
         difficulty: levelId as SkillLevel,
-        href: `/${currentLocale}/guides/${slug}`,
+        href: guidePath(slug, currentLocale),
       };
     })
     .filter((g): g is NonNullable<typeof g> => g !== null);

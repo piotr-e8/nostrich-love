@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BookOpen, ArrowRight, X } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { getLastViewedGuide, hasRecentProgress } from '../../lib/progress';
+import { guidePathFromLocation } from "../../i18n/paths";
 
 interface ContinueReadingCardProps {
   className?: string;
@@ -35,7 +36,7 @@ export function ContinueReadingCard({ className }: ContinueReadingCardProps) {
 
   const handleResume = () => {
     if (lastViewed?.slug) {
-      window.location.href = `/guides/${lastViewed.slug}`;
+      window.location.href = guidePathFromLocation(lastViewed.slug);
     }
   };
 

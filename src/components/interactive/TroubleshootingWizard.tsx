@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { cn, copyToClipboard } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
+import { guidePathFromLocation } from "../../i18n/paths";
 
 interface Question {
   id: string;
@@ -87,7 +88,7 @@ const createSolutions = (t: (key: string) => string): Record<string, Solution> =
       t('troubleshootingWizard.solutions.newUserFeed.tips.2'),
     ],
     resources: [
-      { label: "Empty Feed Fixer", url: "/guides/quickstart" },
+      { label: "Empty Feed Fixer", url: guidePathFromLocation("quickstart") },
       { label: "Relay Explorer", url: "#relays" },
     ],
   },

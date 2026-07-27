@@ -4,6 +4,7 @@ import { cn } from '../../lib/utils';
 import { SKILL_LEVELS, type SkillLevel, getGuideLevel } from '../../data/learning-paths';
 import { isLevelUnlockedLocal } from '../../lib/progress';
 import { useTranslation } from '../../hooks/useTranslation';
+import { guidesIndexPath } from "../../i18n/paths";
 
 interface GuideInfo {
   slug: string;
@@ -136,7 +137,7 @@ export function GuideNavigation({
     );
   }
 
-  const guidesPrefix = locale === 'en' ? '/en/guides' : `/${locale}/guides`;
+  const guidesPrefix = guidesIndexPath(locale).replace(/\/$/, '');
 
   // Off-level message
   if (showOffLevelMessage) {

@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Globe, ChevronDown } from "lucide-react";
 import { cn } from "../lib/utils";
+import {
+  splitLocale,
+  localePath,
+  stripLocale,
+  isLocale,
+  hasLocalizedVersions,
+  DEFAULT_LOCALE,
+} from "../i18n/paths";
 
 interface LanguageSwitcherProps {
   className?: string;
@@ -23,94 +31,33 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
 
   useEffect(() => {
     setMounted(true);
-    // Detect current language from URL
+
     const path = window.location.pathname;
-    const isGuidesPage = path.includes('/guides/') || path.endsWith('/guides');
-    
-    if (path.startsWith("/pl/")) {
-      setCurrentLang("pl");
-      // If we're on a non-guides page with /pl/ prefix, redirect back to English
-      if (!isGuidesPage && path !== '/pl/') {
-        window.location.href = path.replace(/^\/pl/, '') || '/';
-        return;
-      }
-    } else if (path.startsWith("/es/")) {
-      setCurrentLang("es");
-      // If we're on a non-guides page with /es/ prefix, redirect back to English
-      if (!isGuidesPage && path !== '/es/') {
-        window.location.href = path.replace(/^\/es/, '') || '/';
-        return;
-      }
-    } else if (path.startsWith("/de/")) {
-      setCurrentLang("de");
-      // If we're on a non-guides page with /de/ prefix, redirect back to English
-      if (!isGuidesPage && path !== '/de/') {
-        window.location.href = path.replace(/^\/de/, '') || '/';
-        return;
-      }
-    } else if (path.startsWith("/zh/")) {
-      setCurrentLang("zh");
-      // If we're on a non-guides page with /zh/ prefix, redirect back to English
-      if (!isGuidesPage && path !== '/zh/') {
-        window.location.href = path.replace(/^\/zh/, '') || '/';
-        return;
-      }
-    } else if (path.startsWith("/ar/")) {
-      setCurrentLang("ar");
-      // If we're on a non-guides page with /ar/ prefix, redirect back to English
-      if (!isGuidesPage && path !== '/ar/') {
-        window.location.href = path.replace(/^\/ar/, '') || '/';
-        return;
-      }
-    } else if (path.startsWith("/hi/")) {
-      setCurrentLang("hi");
-      // If we're on a non-guides page with /hi/ prefix, redirect back to English
-      if (!isGuidesPage && path !== '/hi/') {
-        window.location.href = path.replace(/^\/hi/, '') || '/';
-        return;
-      }
-    } else if (path.startsWith("/en/")) {
-      setCurrentLang("en");
-    } else {
-      // Check if there's a saved preference in localStorage
+    const { locale } = splitLocale(path);
+    setCurrentLang(locale);
+
+    // Only the guides exist in every locale. On a guides page served in the
+    // default locale, honour a previously saved preference.
+    if (locale === DEFAULT_LOCALE && hasLocalizedVersions(path)) {
       const savedLang = localStorage.getItem('preferredLanguage');
-      if (savedLang && ['en', 'pl', 'es', 'de', 'zh', 'ar', 'hi'].includes(savedLang)) {
+      if (isLocale(savedLang) && savedLang !== DEFAULT_LOCALE) {
         setCurrentLang(savedLang);
-        // Only redirect to locale-prefixed URL if we're on a guides page
-        if (savedLang !== 'en' && isGuidesPage) {
-          window.location.href = `/${savedLang}${path}`;
-        }
-      } else {
-        setCurrentLang("en");
+        window.location.href = localePath(path, savedLang);
       }
     }
   }, []);
 
   const switchLanguage = (langCode: string) => {
-    const currentPath = window.location.pathname;
-    let newPath: string;
+    if (!isLocale(langCode)) return;
 
-    // Save preference
+    const currentPath = window.location.pathname;
     localStorage.setItem('preferredLanguage', langCode);
 
-    // Check if we're on a guides page (the only translated content)
-    const isGuidesPage = currentPath.includes('/guides/') || currentPath.endsWith('/guides');
-
-    if (isGuidesPage) {
-      // For guides, use locale-prefixed URLs
-      // Remove any existing locale prefix
-      const pathWithoutLocale = currentPath.replace(/^\/(en|pl|es|de|zh|ar|hi)(\/|$)/, '/') || '/';
-
-      if (langCode === "en") {
-        newPath = `/en${pathWithoutLocale}`;
-      } else {
-        newPath = `/${langCode}${pathWithoutLocale}`;
-      }
-    } else {
-      // For all other pages, stay on English version
-      // Remove any locale prefix if present
-      newPath = currentPath.replace(/^\/(pl|es|de|zh|ar|hi)\//, '/');
-    }
+    // Guides are the only translated content; everything else is English-only,
+    // so switching there just drops any stale locale prefix.
+    const newPath = hasLocalizedVersions(currentPath)
+      ? localePath(currentPath, langCode)
+      : stripLocale(currentPath);
 
     window.location.href = newPath;
   };

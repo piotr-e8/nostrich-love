@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Check, Circle, Lock, ChevronDown, ArrowLeft, AlertCircle } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { loadGamificationData } from '../../utils/gamification';
+import { guidePathFromLocation } from "../../i18n/paths";
 
 export interface EnhancedGuideCompletionIndicatorProps {
   guides: Array<{
@@ -154,7 +155,7 @@ export function EnhancedGuideCompletionIndicator({
                   return (
                     <a
                       key={prereqSlug}
-                      href={`/guides/${prereqSlug}`}
+                      href={guidePathFromLocation(prereqSlug)}
                       className="flex items-center gap-2 p-2 rounded-md bg-white dark:bg-gray-800 border border-amber-200 dark:border-amber-700 hover:border-amber-400 dark:hover:border-amber-500 transition-colors"
                     >
                       <ArrowLeft className="h-3 w-3 text-amber-600 dark:text-amber-400" />
@@ -193,7 +194,7 @@ export function EnhancedGuideCompletionIndicator({
               return (
                 <a
                   key={guide.slug}
-                  href={`/guides/${guide.slug}`}
+                  href={guidePathFromLocation(guide.slug)}
                   className={cn(
                     'flex items-center gap-3 p-2.5 rounded-lg transition-colors relative',
                     isCurrent && 'bg-primary/10 border border-primary/20',
