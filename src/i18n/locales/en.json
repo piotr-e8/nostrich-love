@@ -225,7 +225,7 @@
             "options": [
               {
                 "id": "gps",
-                "label": "Leave location tags enabled\u2014it helps discovery"
+                "label": "Leave location tags enabled—it helps discovery"
               },
               {
                 "id": "personas",
@@ -2150,7 +2150,7 @@
       "scoreDisplay": "{{score}} / {{total}} correct answers",
       "conceptsMastered": "Critical concepts mastered",
       "nextSteps": "Next steps",
-      "perfectScore": "Share your knowledge\u2014help onboard someone new.",
+      "perfectScore": "Share your knowledge—help onboard someone new.",
       "reviewSections": "Review the sections you missed below.",
       "retakeQuiz": "Retake quiz",
       "questionCounter": "Question {{current}} of {{total}}",
@@ -2166,7 +2166,30 @@
       "feedback": {
         "correct": "Nice!",
         "incorrect": "Not quite"
-      }
+      },
+      "advancedRelayGuide": "Advanced relay guide",
+      "backToSecurityBasics": "Back to security basics",
+      "badgeEarned": "Badge earned",
+      "findWalletTools": "Find wallet tools",
+      "fixConnectionIssues": "Fix connection issues",
+      "fixZapIssues": "Fix zap issues",
+      "getFreeNIP05": "Get a free NIP-05",
+      "getStartedNostr": "Get started with Nostr",
+      "keySecurityGuide": "Keys and security guide",
+      "learnMoreRelays": "Learn more about relays",
+      "learnZaps": "Learn about zaps",
+      "nostrBasics": "Nostr basics",
+      "perfectScoreTitle": "Perfect score",
+      "privacyExpert": "Privacy Expert",
+      "privacySecurity": "Privacy and security guide",
+      "relayBasics": "Relay basics",
+      "reviewKeys": "Review keys and security",
+      "reviewOutboxModel": "Review the outbox model",
+      "reviewPrivacyGuide": "Review the privacy guide",
+      "securityBestPractices": "Security best practices",
+      "startUsingNostr": "Start using Nostr",
+      "tryDifferentClients": "Try different clients",
+      "tryQuickstart": "Try the quickstart"
     }
   },
   "clientRecommender": {
@@ -3266,18 +3289,44 @@
       "pause": "Pause",
       "reset": "Reset",
       "step": "Step",
-      "speed": "Speed"
+      "speed": "Speed",
+      "sending": "Sending...",
+      "processing": "Processing...",
+      "delivering": "Delivering...",
+      "complete": "Complete!"
     },
     "nodes": {
       "user": "User",
       "relay": "Relay",
-      "client": "Client"
+      "client": "Client",
+      "alice": "Alice",
+      "bob": "Bob",
+      "carol": "Carol",
+      "office": "Relay"
     },
     "messages": {
       "sending": "Sending post...",
       "received": "Post received!",
       "broadcasting": "Broadcasting to relays...",
-      "syncing": "Syncing with network..."
+      "syncing": "Syncing with network...",
+      "delivering": "Delivering to {{recipients}}...",
+      "noDelivery": "No one else reads from these relays",
+      "receivedOne": "{{recipient}} received it. {{other}} reads from a different relay.",
+      "noOneShares": "Not delivered. No one else reads from Alice's relays.",
+      "connectFirst": "Connect Alice to a relay first",
+      "ready": "Ready to send"
+    },
+    "connection": "connection",
+    "connections": "connections",
+    "buttons": {
+      "send": "Send a post",
+      "sendFromAlice": "Send from Alice"
+    },
+    "explanation": {
+      "deliveryTitle": "How delivery works: ",
+      "deliveryDesc": "Someone only sees Alice's post if they read from at least one of the relays she published it to.",
+      "insightTitle": "Key insight: ",
+      "insightDesc": "Relays never pass posts to each other. If Alice publishes only to Relay 1 and Carol only reads from Relay 2, Carol will never see Alice's posts."
     }
   },
   "quickstartSimulator": {
@@ -3288,13 +3337,74 @@
       "chooseClient": "Choose a Client",
       "connectRelay": "Connect to Relays",
       "makePost": "Make Your First Post",
-      "followPeople": "Follow People"
+      "followPeople": "Follow People",
+      "interact": "Interact with Posts",
+      "receiveZap": "Receive a Zap"
     },
     "buttons": {
       "next": "Next Step",
       "previous": "Previous",
       "restart": "Start Over",
-      "tryIt": "Try It"
+      "tryIt": "Try It",
+      "generateKeys": "Generate Keys",
+      "generating": "Generating...",
+      "generateNewKeys": "Generate New Keys",
+      "copyPublic": "Copy Public Key",
+      "copyPrivate": "Copy Private Key",
+      "copied": "Copied",
+      "show": "Show",
+      "hide": "Hide",
+      "back": "Back",
+      "continue": "Continue",
+      "post": "Post",
+      "follow": "Follow",
+      "reply": "Reply",
+      "repost": "Repost",
+      "like": "Like",
+      "awesome": "Awesome"
+    },
+    "keyGen": {
+      "description": "Every Nostr account is just a pair of keys — generate a practice pair to see what they look like.",
+      "publicKeyTitle": "Public Key (npub)",
+      "publicKeyDesc": "Safe to share with anyone",
+      "privateKeyTitle": "Private Key (nsec)",
+      "privateKeyDesc": "Never share this with anyone",
+      "important": "These practice keys only work here — they aren't real. With real keys, share your npub freely, but keep your nsec in a password manager or signer app and never paste it into a website or send it to anyone."
+    },
+    "simulator": "Simulator",
+    "simulationMode": "Simulation Mode",
+    "simulationNote": "This is a simulation for practice — install the real app when you're ready to join Nostr.",
+    "relayStep": {
+      "description": "Relays are the servers that store and pass along your posts — connect to a few so more people can see what you write.",
+      "connected": "Connected",
+      "connectOne": "Connect a Relay First"
+    },
+    "postStep": {
+      "title": "Make Your First Post",
+      "description": "Write a short note and publish it to the relays you just connected to.",
+      "placeholder": "What's on your mind?",
+      "tip": "Your first post is a good place to introduce yourself — many people add #introductions so others can find them."
+    },
+    "followStep": {
+      "title": "Follow People",
+      "description": "Your feed stays empty until you follow people, so follow at least three to fill it up.",
+      "following": "Following"
+    },
+    "interactStep": {
+      "description": "Likes, reposts, and replies are how conversations grow on Nostr.",
+      "instruction": "Click the heart to like the post and finish this step."
+    },
+    "zapStep": {
+      "title": "Receive a Zap",
+      "description": "Zaps are small Bitcoin payments people send to posts they enjoy.",
+      "invitation": "Someone liked your first post enough to send you a few sats.",
+      "receive": "Receive Zap",
+      "received": "You received 1,000 sats!",
+      "earnInfo": "Sats are small amounts of real Bitcoin, sent straight to the Lightning wallet linked to your profile."
+    },
+    "completion": {
+      "title": "First Day Complete!",
+      "description": "You connected to relays, published a post, followed people, and received your first zap — you're ready to do all of this in a real client."
     }
   },
   "protocolComparisonUI": {
@@ -3461,7 +3571,7 @@
     },
     "cta": {
       "notSure": "Not sure where to start?",
-      "beginnerDescription": "Begin with our beginner guides\u2014they're designed to take you from zero to your first post.",
+      "beginnerDescription": "Begin with our beginner guides—they're designed to take you from zero to your first post.",
       "startLearning": "Start Learning"
     },
     "filter": {
