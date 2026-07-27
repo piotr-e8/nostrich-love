@@ -284,14 +284,16 @@ export function BadgeEarnedModal({
                     transition={{ delay: 0.6 }}
                     className="flex justify-center gap-4 mb-8"
                   >
-                    <div className="px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-xl">
-                      <p className="text-xs text-gray-500 dark:text-gray-400 uppercase">
-                        Category
-                      </p>
-                      <p className="text-sm font-semibold text-gray-900 dark:text-white capitalize">
-                        {badge.category}
-                      </p>
-                    </div>
+                    {badge.category && (
+                      <div className="px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-xl">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 uppercase">
+                          Category
+                        </p>
+                        <p className="text-sm font-semibold text-gray-900 dark:text-white capitalize">
+                          {badge.category}
+                        </p>
+                      </div>
+                    )}
                     <div className="px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-xl">
                       <p className="text-xs text-gray-500 dark:text-gray-400 uppercase">
                         Rarity

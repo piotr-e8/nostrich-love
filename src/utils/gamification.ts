@@ -29,7 +29,8 @@ export type BadgeId =
   | 'knowledge-seeker'
   | 'nostr-graduate'
   | 'security-conscious'
-  | 'relay-explorer';
+  | 'relay-explorer'
+  | 'privacy-expert';
 
 /** Badge rarity level for UI display */
 export type BadgeRarity = 'common' | 'rare' | 'epic' | 'legendary';
@@ -96,6 +97,7 @@ export interface GamificationStats {
   accountsFollowed: number;
   keysBackedUp: boolean;
   relaysConnected: number;
+  privacyQuizPerfectScore?: boolean;
 }
 
 /** Complete gamification data stored in localStorage */
@@ -207,6 +209,14 @@ export const BADGE_DEFINITIONS: Badge[] = [
     rarity: 'common',
     requirement: 'Connect to 3+ relays',
   },
+  {
+    id: 'privacy-expert',
+    name: 'Privacy Expert',
+    description: 'Scored 100% on the Privacy & Security quiz',
+    icon: '🛡️',
+    rarity: 'epic',
+    requirement: 'Complete the Privacy & Security quiz with a perfect score',
+  },
 ];
 
 /** Total number of beginner guides (for Nostr Graduate calculation) */
@@ -268,6 +278,7 @@ function getDefaultData(): GamificationData {
       accountsFollowed: 0,
       keysBackedUp: false,
       relaysConnected: 0,
+      privacyQuizPerfectScore: false,
     },
     version: CURRENT_VERSION,
   };
@@ -776,6 +787,12 @@ export function updateConnectedRelays(count: number): void {
   checkAndAwardBadges();
 }
 
+export function recordPrivacyQuizPerfectScore(): void {
+  const data = loadGamificationData();
+  data.stats.privacyQuizPerfectScore = true;
+  saveGamificationData(data);
+}
+
 // =============================================================================
 // BADGE CHECKING & AUTO-AWARD
 // =============================================================================
@@ -853,6 +870,9 @@ function checkBadgeRequirement(badgeId: BadgeId, data: GamificationData): boolea
     case 'relay-explorer':
       return data.stats.relaysConnected >= 3;
       
+    case 'privacy-expert':
+      return data.stats.privacyQuizPerfectScore === true;
+      
     default:
       return false;
   }
@@ -876,6 +896,7 @@ const NIP58_BADGE_URIS: Record<BadgeId, string> = {
   'nostr-graduate': 'nostr:badges:nostr-graduate:nostrich-love',
   'security-conscious': 'nostr:badges:security-conscious:nostrich-love',
   'relay-explorer': 'nostr:badges:relay-explorer:nostrich-love',
+  'privacy-expert': 'nostr:badges:privacy-expert:nostrich-love',
 };
 
 /**

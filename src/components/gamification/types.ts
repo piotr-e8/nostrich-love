@@ -10,7 +10,9 @@ export interface Badge {
   description: string;
   emoji: string;
   unlockedAt?: Date;
-  category: 'beginner' | 'intermediate' | 'advanced' | 'special';
+  // Optional: GAMIFICATION_CONFIG.badges carries no category, so awarded badges
+  // arrive without one rather than being labelled with an invented value.
+  category?: 'beginner' | 'intermediate' | 'advanced' | 'special';
   rarity: 'common' | 'rare' | 'epic' | 'legendary';
   requirement: string;
 }

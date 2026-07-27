@@ -355,7 +355,10 @@ const allBadges: Badge[] = [
       const badgeId = card.getAttribute('data-badge-id');
       if (!badgeId) return;
 
-      const isUnlocked = unlockedBadges[badgeId]?.unlockedAt != null;
+      // Both writers (utils/gamification.ts and utils/gamificationEngine.ts)
+      // persist `earned` / `earnedAt`. Reading `unlockedAt` here meant no badge
+      // ever showed as earned.
+      const isUnlocked = unlockedBadges[badgeId]?.earned === true;
       const badgeInfo = badgeMetadata[badgeId];
       
       if (isUnlocked) {
@@ -442,7 +445,7 @@ const allBadges: Badge[] = [
 
     currentModalBadgeId = badgeId;
     const data = getGamificationData();
-    const unlockedAt = data?.badges?.[badgeId]?.unlockedAt;
+    const unlockedAt = data?.badges?.[badgeId]?.earnedAt;
 
     // Update modal content
     const emojiEl = document.getElementById('modal-emoji');

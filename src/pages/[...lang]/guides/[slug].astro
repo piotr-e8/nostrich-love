@@ -58,6 +58,8 @@ const GUIDE_ORDER = [
   'keys-and-security',
   'quickstart',
   'relays-demystified',
+  // Placed here to match LEARNING_PATHS.beginner.sequence in data/learning-paths.ts
+  'outbox-model',
   'nip05-identity',
   'zaps-and-lightning',
   'finding-community',
@@ -146,6 +148,16 @@ const prerequisiteData = prerequisites.map(prereqSlug => {
 });
 
 // Calculate prev/next based on global order (path-based navigation handled client-side)
+// A slug missing from GUIDE_ORDER yields indexOf === -1, i.e. currentGuideNumGlobal
+// === 0, which silently hides "Previous" and sends "Next" back to the first guide.
+// Fail loudly at build time instead of shipping backwards navigation.
+if (currentGuideNumGlobal === 0) {
+  throw new Error(
+    `Guide "${guideSlug}" is missing from GUIDE_ORDER in [slug].astro. ` +
+    `Add it there (and to LEARNING_PATHS) or its prev/next navigation will be wrong.`
+  );
+}
+
 const prevGuideSlug = currentGuideNumGlobal > 1 ? GUIDE_ORDER[currentGuideNumGlobal - 2] : null;
 const nextGuideSlug = currentGuideNumGlobal < totalGuidesGlobal ? GUIDE_ORDER[currentGuideNumGlobal] : null;
 

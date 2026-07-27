@@ -14,7 +14,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
-import { recordActivity, awardBadge } from "../../utils/gamification";
+import { recordActivity, awardBadge, recordPrivacyQuizPerfectScore } from "../../utils/gamification";
 
 type Severity = "critical" | "warning" | "info";
 
@@ -106,7 +106,8 @@ export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
   useEffect(() => {
     if (showResults && score === total && !badgeAwarded) {
       // Award perfect score badge
-      const success = awardBadge('privacy-expert' as any);
+      const success = awardBadge('privacy-expert');
+      recordPrivacyQuizPerfectScore();
       if (success) {
         setBadgeAwarded(true);
       }

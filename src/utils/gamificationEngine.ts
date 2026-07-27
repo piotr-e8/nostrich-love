@@ -147,7 +147,7 @@ function saveData(data: GamificationData): void {
 /**
  * Record an activity
  * This is the main function to call from components
- * Delegates streak tracking to gamification.ts to avoid data conflicts
+ * Delegates ALL data mutations to gamification.ts to avoid dual-write conflicts
  * 
  * @param activityId - The activity that occurred (from config)
  * @param metadata - Optional metadata (e.g., count, guideId, etc.)
@@ -156,8 +156,6 @@ export function recordActivity(
   activityId: ActivityId,
   metadata?: { count?: number; guideId?: string }
 ): void {
-  // Use gamification.ts data to avoid conflicts
-  const data = loadGamificationData() as unknown as GamificationData;
   const activity = GAMIFICATION_CONFIG.activities[activityId];
   
   if (!activity) {
@@ -167,51 +165,23 @@ export function recordActivity(
 
   console.log(`[Gamification] Recording activity: ${activity.name}`);
 
-  // 1. Update streak if configured (using local logic)
+  // Delegate streak update to gamification.ts's recordActivity()
+  // which loads, mutates, and saves in a single atomic operation
   if (activity.triggers.streak) {
-    updateStreak(data);
+    recordGamificationActivity();
   }
 
-  // 2. Check and award badges if configured (using local logic)
+  // Check and award badges if configured
   if (activity.triggers.badges.length > 0) {
+    const data = loadGamificationData() as unknown as GamificationData;
     checkAndAwardBadgesForActivity(data, activityId, metadata);
+    saveGamificationData(data as any);
   }
-
-  // 3. Save updated data using gamification.ts to maintain data integrity
-  saveGamificationData(data as any);
   
-  // 4. Dispatch event for real-time updates
+  // Dispatch event for real-time updates
   if (isBrowser()) {
     window.dispatchEvent(new Event('gamification-updated'));
   }
-}
-
-/**
- * Update streak based on activity
- */
-function updateStreak(data: GamificationData): void {
-  const now = Date.now();
-  const lastActive = data.progress.lastActive;
-  
-  if (lastActive) {
-    const lastDate = new Date(lastActive).setHours(0, 0, 0, 0);
-    const today = new Date(now).setHours(0, 0, 0, 0);
-    const daysDiff = Math.floor((today - lastDate) / (1000 * 60 * 60 * 24));
-    
-    if (daysDiff === 1) {
-      // Consecutive day
-      data.progress.streakDays += 1;
-    } else if (daysDiff > 1) {
-      // Streak broken
-      data.progress.streakDays = 1;
-    }
-    // If same day, don't change streak
-  } else {
-    // First activity ever
-    data.progress.streakDays = 1;
-  }
-  
-  data.progress.lastActive = now;
 }
 
 /**
@@ -276,11 +246,23 @@ function awardBadge(data: GamificationData, badgeId: string): void {
     const badge = GAMIFICATION_CONFIG.badges[badgeId as BadgeId];
     console.log(`[Gamification] Badge awarded: ${badge?.name || badgeId}`);
     
-    // Could dispatch a custom event here for toast notifications
-    if (isBrowser()) {
-      window.dispatchEvent(new CustomEvent('badge-awarded', { 
-        detail: { badgeId, badgeName: badge?.name } 
-      }));
+    // BadgeEarnedModalListener listens for 'badge-earned' and expects a full
+    // Badge object. This used to emit 'badge-awarded' with only an id and a
+    // name, so the modal never opened — and would have rendered blank if it had.
+    if (isBrowser() && badge) {
+      window.dispatchEvent(
+        new CustomEvent('badge-earned', {
+          detail: {
+            id: badgeId,
+            name: badge.name,
+            description: badge.description,
+            emoji: badge.icon,
+            rarity: badge.rarity,
+            requirement: badge.requirement,
+            unlockedAt: new Date(),
+          },
+        })
+      );
     }
   }
 }
