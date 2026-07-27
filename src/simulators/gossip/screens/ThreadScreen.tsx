@@ -93,10 +93,6 @@ export const ThreadScreen: React.FC<ThreadScreenProps> = ({
 
       <div className="gossip-thread-main gossip-content">
         {renderNote(note, true)}
-        {note.replies?.map((replyId) => {
-          // In a real app, we'd fetch the reply note
-          return null;
-        })}
       </div>
     </div>
   );

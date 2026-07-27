@@ -15,7 +15,9 @@ const title = `Try ${snortConfig.name} - Nostr Client Simulator`;
 const description = snortConfig.description;
 ---
 
-<Layout title={title} description={description}>
+{/* Simulators are moving to the standalone sandstr project — kept reachable
+     but excluded from search indexes and site navigation. */}
+<Layout title={title} description={description} noindex={true}>
   <Header />
   
   <div class="simulator-page min-h-screen bg-gray-100 dark:bg-gray-950">

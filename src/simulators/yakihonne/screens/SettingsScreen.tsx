@@ -14,7 +14,8 @@ import {
   HelpCircle,
   LogOut,
   ChevronRight,
-  Palette
+  Palette,
+  Copy
 } from 'lucide-react';
 
 interface SettingsScreenProps {

@@ -44,7 +44,9 @@ function getPlatformLabel(platform: SimulatorConfig['platform']) {
 }
 ---
 
-<Layout title={title} description={description}>
+{/* Simulators are moving to the standalone sandstr project — kept reachable
+     but excluded from search indexes and site navigation. */}
+<Layout title={title} description={description} noindex={true}>
   <div class="simulators-index min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-950 dark:to-gray-900 py-12">
     <div class="max-w-6xl mx-auto px-4">
       {/* Hero */}
