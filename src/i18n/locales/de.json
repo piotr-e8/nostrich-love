@@ -3564,7 +3564,7 @@
   "guidesPage": {
     "hero": {
       "title": "Lerne Nostr Schritt für Schritt",
-      "description": "Progressive Schwierigkeitsstufen von Anfänger bis Fortgeschritten. Schalte neue Level frei, während du Anleitungen abschließt und das Protokoll meisterst.",
+      "description": "Stufen von Anfänger bis Fortgeschritten. Alles ist frei zugänglich — die Stufen zeigen nur eine sinnvolle Reihenfolge.",
       "yourProgress": "Dein Fortschritt",
       "startFirstGuide": "Starte deine erste Anleitung, um den Fortschritt zu sehen"
     },
@@ -3613,18 +3613,14 @@
       "advanced": "Experte"
     },
     "status": {
-      "locked": "Gesperrt",
       "completed": "Abgeschlossen",
       "continueReading": "Weiterlesen",
       "startLearning": "Jetzt Lernen"
-    },
-    "moreLocked": "+{count} weitere gesperrt"
+    }
   },
   "guideSection": {
     "startHere": "Hier Starten",
-    "complete": "Abgeschlossen",
-    "locked": "Gesperrt",
-    "unlockRequirement": "Schließe {count} weitere {level} Anleitungen ab, um freizuschalten"
+    "complete": "Abgeschlossen"
   },
   "officialAccount": {
     "title": "Offizielles Konto",

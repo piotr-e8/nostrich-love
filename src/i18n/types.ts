@@ -147,17 +147,13 @@ export interface Translations {
       advanced: string;
     };
     status: {
-      locked: string;
       completed: string;
       continueReading: string;
       startLearning: string;
     };
-    moreLocked: string;
   };
   guideSection?: {
     startHere: string;
     complete: string;
-    locked: string;
-    unlockRequirement: string;
   };
 }

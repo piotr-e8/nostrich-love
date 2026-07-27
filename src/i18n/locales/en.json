@@ -3565,7 +3565,7 @@
   "guidesPage": {
     "hero": {
       "title": "Learn Nostr Step by Step",
-      "description": "Progressive skill levels from beginner to advanced. Unlock new levels as you complete guides and master the protocol.",
+      "description": "Progressive skill levels from beginner to advanced. Everything is open — the levels just show a sensible order to read in.",
       "yourProgress": "Your Progress",
       "startFirstGuide": "Start your first guide to see progress"
     },
@@ -3614,18 +3614,14 @@
       "advanced": "Advanced"
     },
     "status": {
-      "locked": "Locked",
       "completed": "Completed",
       "continueReading": "Continue Reading",
       "startLearning": "Start Learning"
-    },
-    "moreLocked": "+{count} more locked"
+    }
   },
   "guideSection": {
     "startHere": "Start Here",
-    "complete": "Complete",
-    "locked": "Locked",
-    "unlockRequirement": "Complete {count} more {level} guides to unlock"
+    "complete": "Complete"
   },
   "relayFeedBrowser": {
     "title": "Browse Relay Feeds",

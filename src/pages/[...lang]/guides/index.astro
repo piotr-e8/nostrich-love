@@ -50,7 +50,6 @@ const skillLevelsData = Object.entries(SKILL_LEVELS).map(([levelId, levelConfig]
   return {
     id: levelId as SkillLevel,
     guides: levelGuides,
-    unlockThreshold: levelConfig.unlockThreshold,
   };
 });
 

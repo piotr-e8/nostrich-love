@@ -39,24 +39,6 @@ export interface PrerequisiteWarningProps {
   dismissible?: boolean;
 }
 
-export interface PrerequisiteModalProps {
-  /** Current guide identifier */
-  currentGuideId: string;
-  /** Current guide display title */
-  currentGuideTitle: string;
-  /** Array of prerequisite guides */
-  prerequisites: PrerequisiteGuide[];
-  /** Whether this is a critical guide requiring special attention */
-  isCritical?: boolean;
-  /** Custom message for critical guides */
-  criticalMessage?: string;
-  /** Callback when user chooses to continue anyway */
-  onContinueAnyway?: () => void;
-  /** Callback when modal is closed */
-  onClose?: () => void;
-  /** Additional CSS classes */
-  className?: string;
-}
 
 export interface EnhancedGuideCompletionIndicatorProps {
   /** Array of all guides in the learning path */

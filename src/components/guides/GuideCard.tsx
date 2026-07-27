@@ -1,5 +1,5 @@
 import React from 'react';
-import { Lock, CheckCircle2, Clock, ArrowRight, BookOpen } from 'lucide-react';
+import { CheckCircle2, Clock, ArrowRight, BookOpen } from 'lucide-react';
 import { useTranslation } from '../../hooks/useTranslation';
 
 export type SkillLevel = 'beginner' | 'intermediate' | 'advanced';
@@ -16,11 +16,9 @@ export interface Guide {
 
 export interface GuideCardProps {
   guide?: Guide;
-  isLocked?: boolean;
   isCompleted?: boolean;
   isInProgress?: boolean;
   level?: SkillLevel;
-  unlockRequirement?: string;
   index?: number;
 }
 
@@ -42,57 +40,7 @@ const getDifficultyLabel = (difficulty: SkillLevel, t: (key: string) => string) 
 };
 
 /**
- * Locked variant of GuideCard
- * Shows mystery state with lock icon and unlock requirements
- */
-const LockedCard: React.FC<{ level: SkillLevel; unlockRequirement: string; index?: number }> = ({
-  level,
-  unlockRequirement,
-  index = 0,
-}) => {
-  const [isHovered, setIsHovered] = React.useState(false);
-  const { t } = useTranslation();
-
-  return (
-    <div
-      className="relative h-[200px] p-6 bg-gray-100 dark:bg-gray-800 rounded-2xl border-2 border-gray-200 dark:border-gray-700 cursor-not-allowed transition-all duration-200 hover:border-gray-300 dark:hover:border-gray-600"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{ animationDelay: `${index * 50}ms` }}
-      aria-label={t('guideCard.status.locked')}
-    >
-      {/* Lock Icon Centered */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className={`transition-transform duration-200 ${isHovered ? 'scale-110' : ''}`}>
-          <Lock className="w-12 h-12 text-gray-500 dark:text-gray-500" />
-        </div>
-      </div>
-
-      {/* Hover Overlay with Requirements */}
-      {isHovered && (
-        <div className="absolute inset-0 bg-gray-100/95 dark:bg-gray-800/95 rounded-2xl flex items-center justify-center p-4">
-          <div className="text-center">
-            <Lock className="w-8 h-8 text-gray-500 dark:text-gray-500 mx-auto mb-2" />
-            <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">
-              {unlockRequirement}
-            </p>
-          </div>
-        </div>
-      )}
-
-      {/* Level Indicator at Bottom */}
-      <div className="absolute bottom-4 left-6 right-6 flex items-center justify-between">
-        <span className={`w-2 h-2 rounded-full ${levelColors[level]}`} />
-        <span className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-          {t('guideCard.status.locked')}
-        </span>
-      </div>
-    </div>
-  );
-};
-
-/**
- * Unlocked variant of GuideCard
+ * GuideCard
  * Shows guide details with completion status and hover effects
  */
 const UnlockedCard: React.FC<{ guide: Guide; isCompleted?: boolean; isInProgress?: boolean }> = ({
@@ -184,22 +132,12 @@ const UnlockedCard: React.FC<{ guide: Guide; isCompleted?: boolean; isInProgress
  */
 export const GuideCard: React.FC<GuideCardProps> = ({
   guide,
-  isLocked = false,
   isCompleted = false,
   isInProgress = false,
   level = 'beginner',
-  unlockRequirement = 'Complete more guides to unlock',
   index = 0,
 }) => {
-  if (isLocked || !guide) {
-    return (
-      <LockedCard
-        level={level}
-        unlockRequirement={unlockRequirement}
-        index={index}
-      />
-    );
-  }
+  if (!guide) return null;
 
   return (
     <UnlockedCard

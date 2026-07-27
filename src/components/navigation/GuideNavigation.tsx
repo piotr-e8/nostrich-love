@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { SKILL_LEVELS, type SkillLevel, getGuideLevel } from '../../data/learning-paths';
-import { isLevelUnlockedLocal } from '../../lib/progress';
 import { useTranslation } from '../../hooks/useTranslation';
 import { guidesIndexPath } from "../../i18n/paths";
 
@@ -68,13 +67,9 @@ export function GuideNavigation({
         
         if (nextLvl) {
           setNextLevel(nextLvl);
-          const isNextUnlocked = isLevelUnlockedLocal(nextLvl);
-          setIsNextLevelUnlocked(isNextUnlocked);
-          if (isNextUnlocked) {
-            // Get first guide of next level
-            const nextLevelFirst = SKILL_LEVELS[nextLvl].sequence[0];
-            setNextLevelFirstGuide(nextLevelFirst);
-          }
+          // Nothing is gated any more — the next level is always reachable.
+          setIsNextLevelUnlocked(true);
+          setNextLevelFirstGuide(SKILL_LEVELS[nextLvl].sequence[0]);
         }
         
         // Previous guide (if not first)

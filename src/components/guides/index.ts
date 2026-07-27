@@ -11,5 +11,3 @@ export type { InterestFilterProps, InterestFilterOption } from './InterestFilter
 export { LevelProgressBar } from './LevelProgressBar';
 export type { LevelProgressBarProps } from './LevelProgressBar';
 
-export { UnlockButton } from './UnlockButton';
-export type { UnlockButtonProps } from './UnlockButton';

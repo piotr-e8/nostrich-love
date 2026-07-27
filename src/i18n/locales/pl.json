@@ -3102,7 +3102,7 @@
   "guidesPage": {
     "hero": {
       "title": "Ucz się Nostr Krok po Kroku",
-      "description": "Stopniowe poziomy umiejętności od początkującego do zaawansowanego. Odblokuj nowe poziomy, ukończ przewodniki i opanuj protokół.",
+      "description": "Stopniowe poziomy od początkującego do zaawansowanego. Wszystko jest dostępne — poziomy pokazują tylko sensowną kolejność czytania.",
       "yourProgress": "Twój Postęp",
       "startFirstGuide": "Rozpocznij pierwszy przewodnik, aby zobaczyć postęp"
     },
@@ -3151,18 +3151,14 @@
       "advanced": "Zaawansowany"
     },
     "status": {
-      "locked": "Zablokowany",
       "completed": "Ukończony",
       "continueReading": "Kontynuuj Czytanie",
       "startLearning": "Rozpocznij Naukę"
-    },
-    "moreLocked": "+{count} więcej zablokowanych"
+    }
   },
   "guideSection": {
     "startHere": "Zacznij Tutaj",
-    "complete": "Ukończony",
-    "locked": "Zablokowany",
-    "unlockRequirement": "Ukończ {count} więcej przewodników na poziomie {level}, aby odblokować"
+    "complete": "Ukończony"
   },
   "officialAccount": {
     "title": "Oficjalne Konto",

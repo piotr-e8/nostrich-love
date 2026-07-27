@@ -2272,7 +2272,7 @@
   "guidesPage": {
     "hero": {
       "title": "循序渐进学习 Nostr",
-      "description": "从新手到高级的渐进式技能等级。完成指南并掌握协议后解锁新等级。",
+      "description": "从入门到进阶的循序渐进等级。所有内容都已开放——等级只是给出一个合理的阅读顺序。",
       "yourProgress": "你的进度",
       "startFirstGuide": "开始你的第一个指南以查看进度"
     },
@@ -2312,12 +2312,10 @@
       "advanced": "高级"
     },
     "status": {
-      "locked": "已锁定",
       "completed": "已完成",
       "continueReading": "继续阅读",
       "startLearning": "开始学习"
-    },
-    "moreLocked": "还有 {{count}} 个已锁定"
+    }
   },
   "guideNavigation": {
     "previous": "上一篇",
@@ -3623,9 +3621,7 @@
   },
   "guideSection": {
     "startHere": "从这里开始",
-    "complete": "完成",
-    "locked": "锁定",
-    "unlockRequirement": "再完成 {count} 个 {level} 指南以解锁"
+    "complete": "完成"
   },
   "relayFeedBrowser": {
     "title": "浏览中继动态",

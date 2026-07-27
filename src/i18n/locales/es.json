@@ -3320,7 +3320,7 @@
   "guidesPage": {
     "hero": {
       "title": "Aprende Nostr Paso a Paso",
-      "description": "Niveles de habilidad progresivos desde principiante hasta avanzado. Desbloquea nuevos niveles a medida que completas guías y dominas el protocolo.",
+      "description": "Niveles progresivos, de principiante a avanzado. Todo está disponible: los niveles solo sugieren un orden sensato de lectura.",
       "yourProgress": "Tu Progreso",
       "startFirstGuide": "Comienza tu primera guía para ver el progreso"
     },
@@ -3369,18 +3369,14 @@
       "advanced": "Avanzado"
     },
     "status": {
-      "locked": "Bloqueado",
       "completed": "Completado",
       "continueReading": "Continuar Leyendo",
       "startLearning": "Comenzar a Aprender"
-    },
-    "moreLocked": "+{count} más bloqueados"
+    }
   },
   "guideSection": {
     "startHere": "Comienza Aquí",
-    "complete": "Completado",
-    "locked": "Bloqueado",
-    "unlockRequirement": "Completa {count} guías más de nivel {level} para desbloquear"
+    "complete": "Completado"
   },
   "officialAccount": {
     "title": "Cuenta Oficial",

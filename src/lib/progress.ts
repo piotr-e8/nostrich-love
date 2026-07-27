@@ -24,10 +24,6 @@ import {
 import {
   getCurrentLevel,
   setCurrentLevel,
-  getUnlockedLevels,
-  isLevelUnlocked,
-  unlockLevel,
-  unlockAllLevels,
   hasManualUnlock,
   getCompletedInLevel,
   isGuideCompletedInLevel,
@@ -376,33 +372,9 @@ export function shouldShowProgressIndicators(): boolean {
 // NEW SKILL LEVEL FUNCTIONS
 // =============================================================================
 
-/**
- * Get array of unlocked levels
- */
-export function getUnlockedLevelsLocal(): SkillLevel[] {
-  return getUnlockedLevels();
-}
 
-/**
- * Check if a specific level is unlocked
- */
-export function isLevelUnlockedLocal(level: SkillLevel): boolean {
-  return isLevelUnlocked(level);
-}
 
-/**
- * Unlock a specific level
- */
-export function unlockLevelLocal(level: SkillLevel): void {
-  unlockLevel(level);
-}
 
-/**
- * Manually unlock all levels
- */
-export function unlockAllLevelsLocal(): void {
-  unlockAllLevels();
-}
 
 /**
  * Check if user has manually unlocked all levels

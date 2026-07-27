@@ -26,7 +26,7 @@ const totalGuides = 15; // Total number of guides across all levels
             </span>
           </h1>
           <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">
-            Master Nostr one level at a time. Complete guides to unlock new skills and advance through the ranks.
+            Master Nostr one level at a time. Everything is open — this just tracks how far you have got.
           </p>
         </div>
       </div>
@@ -95,7 +95,7 @@ const totalGuides = 15; // Total number of guides across all levels
             <!-- Level Sections -->
             <div id="level-container" class="space-y-8">
               <!-- Beginner Level -->
-              <section class="level-section relative" data-level="beginner" data-unlocked="true">
+              <section class="level-section relative" data-level="beginner">
                 <div class="bg-white dark:bg-gray-800 rounded-2xl border-2 border-green-200 dark:border-green-700 p-6 md:p-8 shadow-sm transition-all duration-300">
                   <!-- Level Header -->
                   <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
@@ -108,12 +108,6 @@ const totalGuides = 15; // Total number of guides across all levels
                         <p class="text-gray-600 dark:text-gray-400">Foundation of Nostr</p>
                       </div>
                     </div>
-                    <span class="status-badge inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 font-semibold">
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                      </svg>
-                      Unlocked
-                    </span>
                   </div>
 
                   <!-- Progress Bar -->
@@ -127,18 +121,6 @@ const totalGuides = 15; // Total number of guides across all levels
                     </div>
                   </div>
 
-                  <!-- Unlock Requirements (shown if not unlocked) -->
-                  <div class="unlock-requirements hidden mb-6 p-4 bg-gray-100 dark:bg-gray-700/50 rounded-xl">
-                    <div class="flex items-start gap-3">
-                      <svg class="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                      </svg>
-                      <div>
-                        <p class="font-medium text-gray-900 dark:text-white">Unlock Requirements</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Complete 4 Beginner guides to unlock Intermediate</p>
-                      </div>
-                    </div>
-                  </div>
 
                   <!-- Guide List -->
                   <div class="guide-list space-y-3">
@@ -148,8 +130,8 @@ const totalGuides = 15; // Total number of guides across all levels
               </section>
 
               <!-- Intermediate Level -->
-              <section class="level-section relative" data-level="intermediate" data-unlocked="false">
-                <div class="bg-white dark:bg-gray-800 rounded-2xl border-2 border-friendly-purple-200 dark:border-friendly-purple-700 p-6 md:p-8 shadow-sm transition-all duration-300 locked">
+              <section class="level-section relative" data-level="intermediate">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl border-2 border-friendly-purple-200 dark:border-friendly-purple-700 p-6 md:p-8 shadow-sm transition-all duration-300">
                   <!-- Level Header -->
                   <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div class="flex items-center gap-4">
@@ -161,12 +143,6 @@ const totalGuides = 15; // Total number of guides across all levels
                         <p class="text-gray-600 dark:text-gray-400">Level up your skills</p>
                       </div>
                     </div>
-                    <span class="status-badge inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 font-semibold">
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                      </svg>
-                      Locked
-                    </span>
                   </div>
 
                   <!-- Progress Bar -->
@@ -180,18 +156,6 @@ const totalGuides = 15; // Total number of guides across all levels
                     </div>
                   </div>
 
-                  <!-- Unlock Requirements -->
-                  <div class="unlock-requirements mb-6 p-4 bg-friendly-purple-50 dark:bg-friendly-purple-900/20 rounded-xl border border-friendly-purple-200 dark:border-friendly-purple-700">
-                    <div class="flex items-start gap-3">
-                      <svg class="w-5 h-5 text-friendly-purple-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <div>
-                        <p class="font-medium text-friendly-purple-700 dark:text-friendly-purple-400">Unlock Requirements</p>
-                        <p class="text-sm text-friendly-purple-600 dark:text-friendly-purple-300">Complete 4 more Beginner guides to unlock Intermediate</p>
-                      </div>
-                    </div>
-                  </div>
 
                   <!-- Guide List -->
                   <div class="guide-list space-y-3">
@@ -201,8 +165,8 @@ const totalGuides = 15; // Total number of guides across all levels
               </section>
 
               <!-- Advanced Level -->
-              <section class="level-section relative" data-level="advanced" data-unlocked="false">
-                <div class="bg-white dark:bg-gray-800 rounded-2xl border-2 border-friendly-gold-200 dark:border-friendly-gold-700 p-6 md:p-8 shadow-sm transition-all duration-300 locked">
+              <section class="level-section relative" data-level="advanced">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl border-2 border-friendly-gold-200 dark:border-friendly-gold-700 p-6 md:p-8 shadow-sm transition-all duration-300">
                   <!-- Level Header -->
                   <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div class="flex items-center gap-4">
@@ -214,12 +178,6 @@ const totalGuides = 15; // Total number of guides across all levels
                         <p class="text-gray-600 dark:text-gray-400">Master the protocol</p>
                       </div>
                     </div>
-                    <span class="status-badge inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 font-semibold">
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                      </svg>
-                      Locked
-                    </span>
                   </div>
 
                   <!-- Progress Bar -->
@@ -233,18 +191,6 @@ const totalGuides = 15; // Total number of guides across all levels
                     </div>
                   </div>
 
-                  <!-- Unlock Requirements -->
-                  <div class="unlock-requirements mb-6 p-4 bg-friendly-gold-50 dark:bg-friendly-gold-900/20 rounded-xl border border-friendly-gold-200 dark:border-friendly-gold-700">
-                    <div class="flex items-start gap-3">
-                      <svg class="w-5 h-5 text-friendly-gold-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <div>
-                        <p class="font-medium text-friendly-gold-700 dark:text-friendly-gold-400">Unlock Requirements</p>
-                        <p class="text-sm text-friendly-gold-600 dark:text-friendly-gold-300">Complete 4 Intermediate guides to unlock Advanced</p>
-                      </div>
-                    </div>
-                  </div>
 
                   <!-- Guide List -->
                   <div class="guide-list space-y-3">
@@ -282,7 +228,7 @@ const totalGuides = 15; // Total number of guides across all levels
           Keep leveling up!
         </h2>
         <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
-          Every guide completed brings you closer to unlocking new levels. Your Nostr mastery awaits!
+          Every guide you finish moves you further along. Nothing is gated — read in any order you like.
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
@@ -314,20 +260,6 @@ const totalGuides = 15; // Total number of guides across all levels
 </Layout>
 
 <style>
-  .level-section.locked .bg-white,
-  .level-section.locked .bg-gray-800 {
-    opacity: 0.7;
-  }
-  
-  .level-section.locked .guide-list {
-    filter: blur(2px);
-    pointer-events: none;
-  }
-  
-  .level-section.locked:hover .bg-white,
-  .level-section.locked:hover .bg-gray-800 {
-    opacity: 0.85;
-  }
   
   .guide-item {
     transition: all 0.2s ease;
@@ -349,7 +281,7 @@ const totalGuides = 15; // Total number of guides across all levels
 </style>
 
 <script>
-  import { loadGamificationData, getUnlockedLevels, getCompletedInLevel, getLevelProgress } from '../utils/gamification';
+  import { loadGamificationData, getCompletedInLevel, getLevelProgress } from '../utils/gamification';
   import { SKILL_LEVELS, getLevelLength } from '../data/learning-paths';
 
   const STORAGE_KEY = 'nostrich-gamification-v1';
@@ -416,7 +348,7 @@ const totalGuides = 15; // Total number of guides across all levels
 
   // Update summary cards
   function updateSummaryCards() {
-    const { completedGuides, unlockedLevels, completedByLevel } = getProgressData();
+    const { completedGuides, completedByLevel } = getProgressData();
     const totalGuides = 15;
     
     // Update guides completed count
@@ -427,7 +359,10 @@ const totalGuides = 15; // Total number of guides across all levels
     
     // Update current level
     const levelOrder = ['beginner', 'intermediate', 'advanced'];
-    const currentLevel = unlockedLevels[unlockedLevels.length - 1] || 'beginner';
+    // Furthest level the reader has actually started, rather than unlocked.
+    const currentLevel = [...levelOrder].reverse().find(
+      (lvl) => (completedByLevel[lvl]?.length || 0) > 0
+    ) || 'beginner';
     const levelIcons: Record<string, string> = {
       beginner: '🌱',
       intermediate: '🚀',
@@ -454,51 +389,16 @@ const totalGuides = 15; // Total number of guides across all levels
 
   // Update level sections
   function updateLevelSections() {
-    const { unlockedLevels, completedByLevel } = getProgressData();
+    const { completedByLevel } = getProgressData();
     const levels: ('beginner' | 'intermediate' | 'advanced')[] = ['beginner', 'intermediate', 'advanced'];
     
     levels.forEach((level, index) => {
       const section = document.querySelector(`[data-level="${level}"]`) as HTMLElement;
       if (!section) return;
       
-      const isUnlocked = unlockedLevels.includes(level);
       const completed = completedByLevel[level]?.length || 0;
       const total = getLevelLength(level);
       const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
-      
-      // Update unlock status
-      section.setAttribute('data-unlocked', isUnlocked.toString());
-      const card = section.querySelector('.bg-white, .bg-gray-800') as HTMLElement;
-      const statusBadge = section.querySelector('.status-badge') as HTMLElement;
-      
-      if (isUnlocked) {
-        section.classList.remove('locked');
-        if (card) {
-          card.classList.remove('locked');
-          card.style.opacity = '1';
-        }
-        if (statusBadge) {
-          statusBadge.className = 'status-badge inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 font-semibold';
-          statusBadge.innerHTML = `
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            Unlocked
-          `;
-        }
-      } else {
-        section.classList.add('locked');
-        if (card) card.classList.add('locked');
-        if (statusBadge) {
-          statusBadge.className = 'status-badge inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 font-semibold';
-          statusBadge.innerHTML = `
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
-            Locked
-          `;
-        }
-      }
       
       // Update progress bar
       const progressText = section.querySelector('.progress-text') as HTMLElement;
@@ -506,35 +406,6 @@ const totalGuides = 15; // Total number of guides across all levels
       
       if (progressText) progressText.textContent = `${completed}/${total} guides`;
       if (progressFill) progressFill.style.width = `${percentage}%`;
-      
-      // Update unlock requirements
-      const unlockReqs = section.querySelector('.unlock-requirements') as HTMLElement;
-      if (unlockReqs) {
-        if (isUnlocked) {
-          unlockReqs.classList.add('hidden');
-        } else {
-          unlockReqs.classList.remove('hidden');
-          const reqText = unlockReqs.querySelector('p:last-child') as HTMLElement;
-          if (reqText && index > 0) {
-            const prevLevel = levels[index - 1];
-            const prevCompleted = completedByLevel[prevLevel]?.length || 0;
-            const threshold = 4;
-            const needed = Math.max(0, threshold - prevCompleted);
-            if (needed > 0) {
-              reqText.textContent = `Complete ${needed} more ${prevLevel.charAt(0).toUpperCase() + prevLevel.slice(1)} guide${needed > 1 ? 's' : ''} to unlock ${level.charAt(0).toUpperCase() + level.slice(1)}`;
-            } else {
-              reqText.textContent = `You're ready to unlock ${level.charAt(0).toUpperCase() + level.slice(1)}!`;
-            }
-          }
-        }
-      }
-      
-      // Get current locale from localStorage or default to 'en'
-      const savedLang = localStorage.getItem('preferredLanguage');
-      const currentLocale = (savedLang && ['en', 'pl', 'es', 'de', 'zh', 'ar', 'hi'].includes(savedLang)) ? savedLang : 'en';
-      // English is served un-prefixed (prefixDefaultLocale: false), so /en/guides/*
-      // only 301-redirects. Inline scripts cannot import src/i18n/paths.
-      const guidesPrefix = currentLocale === 'en' ? '/guides' : `/${currentLocale}/guides`;
       
       // Update guide list
       const guideList = section.querySelector('.guide-list') as HTMLElement;
@@ -643,23 +514,6 @@ const totalGuides = 15; // Total number of guides across all levels
       }
     });
     
-    // Handle clicks on locked levels
-    document.querySelectorAll('.level-section.locked').forEach(section => {
-      section.addEventListener('click', (e) => {
-        // Don't intercept if clicking on a guide link
-        if ((e.target as HTMLElement).closest('a')) return;
-        
-        // Show unlock requirements
-        const reqs = section.querySelector('.unlock-requirements');
-        if (reqs) {
-          reqs.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          reqs.classList.add('ring-2', 'ring-friendly-purple-400');
-          setTimeout(() => {
-            reqs.classList.remove('ring-2', 'ring-friendly-purple-400');
-          }, 2000);
-        }
-      });
-    });
   }
 
   // Run initialization

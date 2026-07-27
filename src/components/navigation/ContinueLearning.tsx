@@ -5,7 +5,6 @@ import { SKILL_LEVELS, type SkillLevel, getNextLevel, getGuideLevel } from '../.
 import { 
   getCompletedGuidesInLevel as getCompletedInLevel, 
   getLevelProgressLocal as getLevelProgress,
-  isLevelUnlockedLocal as isLevelUnlocked
 } from '../../lib/progress';
 import { useTranslation } from '../../hooks/useTranslation';
 import { guidesIndexPath } from "../../i18n/paths";
@@ -80,9 +79,9 @@ export function ContinueLearning({
       // Get next level info
       const nextLevel = getNextLevel(guideLevel);
       if (nextLevel) {
-        const nextUnlocked = isLevelUnlocked(nextLevel);
-        const threshold = SKILL_LEVELS[nextLevel].unlockThreshold;
-        const guidesNeeded = Math.max(0, threshold - completedCount);
+        // Nothing is gated any more.
+        const nextUnlocked = true;
+        const guidesNeeded = 0;
         
         setNextLevelInfo({
           level: nextLevel,

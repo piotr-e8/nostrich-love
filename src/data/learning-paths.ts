@@ -15,7 +15,6 @@ export interface SkillLevelConfig {
   icon: string;
   description: string;
   sequence: string[]; // Ordered list of guide slugs
-  unlockThreshold: number; // Number of guides to complete in previous level
   estimatedTotalTime: string;
 }
 
@@ -34,7 +33,6 @@ export const SKILL_LEVELS: Record<SkillLevel, SkillLevelConfig> = {
       'relays-demystified',
       'outbox-model'
     ],
-    unlockThreshold: 0, // Always unlocked
     estimatedTotalTime: '75 min'
   },
   
@@ -51,7 +49,6 @@ export const SKILL_LEVELS: Record<SkillLevel, SkillLevelConfig> = {
       'multi-client',
       'relay-guide'
     ],
-    unlockThreshold: 5, // 70% of 6 guides = 4.2, rounded up to 5 (or minimum 4, so 5)
     estimatedTotalTime: '75 min'
   },
   
@@ -65,7 +62,6 @@ export const SKILL_LEVELS: Record<SkillLevel, SkillLevelConfig> = {
       'nip17-private-messages',
       'protocol-comparison'
     ],
-    unlockThreshold: 3, // Only 3 guides, so need all 3 (can't do 70% of 3 = 2.1, max(4,2.1)=4, but only 3 exist)
     estimatedTotalTime: '45 min'
   }
 } as const;
@@ -165,25 +161,7 @@ export function isValidLevel(levelId: string): levelId is SkillLevel {
   return levelId in SKILL_LEVELS;
 }
 
-/**
- * Get unlock threshold for a level
- */
-export function getUnlockThreshold(levelId: SkillLevel): number {
-  const level = SKILL_LEVELS[levelId];
-  return level ? level.unlockThreshold : 0;
-}
 
-/**
- * Check if a level should be unlocked based on completion count
- */
-export function shouldUnlockLevel(
-  levelId: SkillLevel, 
-  completedInPreviousLevel: number
-): boolean {
-  const threshold = getUnlockThreshold(levelId);
-  if (threshold === 0) return true; // Beginner is always unlocked
-  return completedInPreviousLevel >= threshold;
-}
 
 /**
  * Get all guides across all levels

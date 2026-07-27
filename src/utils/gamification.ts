@@ -1106,61 +1106,9 @@ export function setCurrentLevel(level: 'beginner' | 'intermediate' | 'advanced')
   saveGamificationData(data);
 }
 
-/**
- * Get array of unlocked levels
- */
-export function getUnlockedLevels(): ('beginner' | 'intermediate' | 'advanced')[] {
-  const data = loadGamificationData();
-  return data.progress?.unlockedLevels || ['beginner'];
-}
 
-/**
- * Check if a specific level is unlocked
- */
-export function isLevelUnlocked(level: 'beginner' | 'intermediate' | 'advanced'): boolean {
-  const data = loadGamificationData();
-  return data.progress?.unlockedLevels?.includes(level) || false;
-}
 
-/**
- * Unlock a specific level
- * @param level - The level to unlock
- * @param data - Optional data object (to avoid reloading from storage)
- */
-export function unlockLevel(level: 'beginner' | 'intermediate' | 'advanced', data?: GamificationData): void {
-  console.log(`[unlockLevel] Called for ${level}`, data ? '(with data)' : '(will load)');
-  
-  if (!data) {
-    data = loadGamificationData();
-  }
-  
-  console.log(`[unlockLevel] Current unlockedLevels:`, data.progress.unlockedLevels);
-  console.log(`[unlockLevel] Already includes ${level}?`, data.progress.unlockedLevels.includes(level));
-  
-  if (!data.progress.unlockedLevels.includes(level)) {
-    data.progress.unlockedLevels.push(level);
-    // Sort to maintain order
-    const order = ['beginner', 'intermediate', 'advanced'];
-    data.progress.unlockedLevels.sort((a, b) => order.indexOf(a) - order.indexOf(b));
-    
-    console.log(`[unlockLevel] After push, unlockedLevels:`, data.progress.unlockedLevels);
-    console.log(`[unlockLevel] Calling saveGamificationData...`);
-    saveGamificationData(data);
-    console.log(`[unlockLevel] Save complete`);
-  } else {
-    console.log(`[unlockLevel] Level ${level} already unlocked, skipping`);
-  }
-}
 
-/**
- * Manually unlock all levels
- */
-export function unlockAllLevels(): void {
-  const data = loadGamificationData();
-  data.progress.unlockedLevels = ['beginner', 'intermediate', 'advanced'];
-  data.progress.manualUnlock = true;
-  saveGamificationData(data);
-}
 
 /**
  * Check if user has manually unlocked all levels
@@ -1220,56 +1168,12 @@ export function completeGuideInLevel(
     });
   }
 
-  // Check if we should unlock the next level (pass data to avoid reloading)
-  checkAndUnlockNextLevel(level, data);
-
   saveGamificationData(data);
 
   // Trigger badge check
   checkAndAwardBadges();
 }
 
-/**
- * Check if next level should be unlocked (70% or 4/6 threshold)
- * @param currentLevel - The level to check
- * @param data - Optional data object (to avoid reloading from storage)
- */
-function checkAndUnlockNextLevel(currentLevel: 'beginner' | 'intermediate' | 'advanced', data?: GamificationData): void {
-  if (!data) {
-    data = loadGamificationData();
-  }
-  const completedInLevel = data.progress.completedByLevel[currentLevel].length;
-
-  // Get total guides in this level from SKILL_LEVELS
-  const totalInLevel = SKILL_LEVELS[currentLevel]?.sequence?.length || 0;
-
-  // Threshold: 70% or 4 guides, whichever is higher
-  const threshold = Math.max(4, Math.ceil(totalInLevel * 0.7));
-
-  console.log(`[checkAndUnlockNextLevel] ${currentLevel}: ${completedInLevel}/${totalInLevel} (threshold: ${threshold})`);
-
-  if (completedInLevel >= threshold) {
-    const levels: ('beginner' | 'intermediate' | 'advanced')[] = ['beginner', 'intermediate', 'advanced'];
-    const currentIndex = levels.indexOf(currentLevel);
-    const nextLevel = levels[currentIndex + 1];
-
-    if (nextLevel && !data.progress.unlockedLevels.includes(nextLevel)) {
-      console.log(`[checkAndUnlockNextLevel] Unlocking ${nextLevel}!`);
-      unlockLevel(nextLevel, data); // Pass data to avoid overwriting
-
-      // Dispatch event for UI updates
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('levelUnlocked', {
-          detail: { level: nextLevel, previousLevel: currentLevel }
-        }));
-      }
-    } else if (nextLevel) {
-      console.log(`[checkAndUnlockNextLevel] ${nextLevel} already unlocked`);
-    }
-  } else {
-    console.log(`[checkAndUnlockNextLevel] Threshold not met for ${currentLevel}`);
-  }
-}
 
 /**
  * Get progress stats for a specific level
@@ -1365,10 +1269,6 @@ export function useGamification() {
     // NEW: Skill level functions
     getCurrentLevel,
     setCurrentLevel,
-    getUnlockedLevels,
-    isLevelUnlocked,
-    unlockLevel,
-    unlockAllLevels,
     hasManualUnlock,
     getCompletedInLevel,
     isGuideCompletedInLevel,
@@ -1421,10 +1321,6 @@ export default {
   // NEW: Skill level exports
   getCurrentLevel,
   setCurrentLevel,
-  getUnlockedLevels,
-  isLevelUnlocked,
-  unlockLevel,
-  unlockAllLevels,
   hasManualUnlock,
   getCompletedInLevel,
   isGuideCompletedInLevel,

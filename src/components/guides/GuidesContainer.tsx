@@ -5,13 +5,12 @@ import { InterestFilter } from './InterestFilter';
 import { GuideSection } from './GuideSection';
 import type { SkillLevel } from './GuideCard';
 import type { Guide } from './GuideCard';
-import { getLastInterestFilterLocal, setLastInterestFilterLocal, unlockLevelLocal } from '../../lib/progress';
+import { getLastInterestFilterLocal, setLastInterestFilterLocal } from '../../lib/progress';
 import { type Locale, t as translate } from '../../i18n';
 
 interface GuideLevelData {
   id: SkillLevel;
   guides: Guide[];
-  unlockThreshold: number;
 }
 
 interface GuidesContainerProps {
@@ -76,12 +75,6 @@ export const GuidesContainer: React.FC<GuidesContainerProps> = ({
     }
   };
 
-  // Handle level unlock
-  const handleUnlock = (level: SkillLevel) => {
-    unlockLevelLocal(level);
-    // Force re-render by updating state
-    window.dispatchEvent(new CustomEvent('levelUnlocked', { detail: { level } }));
-  };
 
   // Combine filter and search
   const getActiveSearch = () => {
@@ -155,8 +148,6 @@ export const GuidesContainer: React.FC<GuidesContainerProps> = ({
             key={level.id}
             level={level.id}
             totalCount={level.guides.length}
-            unlockThreshold={level.unlockThreshold}
-            onUnlock={() => handleUnlock(level.id)}
             guides={level.guides}
             inProgressGuideIds={inProgressGuideIds}
             activeFilter={getActiveSearch()}

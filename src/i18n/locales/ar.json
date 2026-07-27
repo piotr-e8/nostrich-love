@@ -133,7 +133,7 @@
   "guidesPage": {
     "hero": {
       "title": "تعلم Nostr خطوة بخطوة",
-      "description": "مستويات مهارات متدرجة من المبتدئين إلى المتقدمين. افتح مستويات جديدة كلما أكملت الأدلة وأتقنت البروتوكول.",
+      "description": "مستويات متدرّجة من المبتدئ إلى المتقدّم. كل شيء متاح — المستويات تقترح ترتيب قراءة معقولًا فحسب.",
       "yourProgress": "تقدمك",
       "startFirstGuide": "ابدأ أول دليل لتظهر التقدم"
     },
@@ -182,19 +182,15 @@
       "advanced": "متقدم"
     },
     "status": {
-      "locked": "مقفل",
       "completed": "مكتمل",
       "continueReading": "مواصلة القراءة",
       "startLearning": "ابدأ التعلم"
     },
-    "moreLocked": "+{count} مقفل",
     "estimatedTime": "{minutes} دقيقة"
   },
   "guideSection": {
     "startHere": "ابدأ هنا",
-    "complete": "مكتمل",
-    "locked": "مقفل",
-    "unlockRequirement": "أكمل {percentage}% من المستوى السابق لفتح"
+    "complete": "مكتمل"
   },
   "guides": {
     "whatIsNostr": {

@@ -44,7 +44,6 @@ import { ContinueLearning } from '../../../components/navigation/ContinueLearnin
 import { GuideCompletionIndicator } from '../../../components/navigation/GuideCompletionIndicator';
 import { EnhancedGuideCompletionIndicator } from '../../../components/navigation/EnhancedGuideCompletionIndicator';
 import { PrerequisiteWarning } from '../../../components/navigation/PrerequisiteWarning';
-import { PrerequisiteModal } from '../../../components/navigation/PrerequisiteModal';
 import { BadgeEarnedModalListener } from '../../../components/gamification/BadgeEarnedModalListener';
 import type { Badge } from '../../../components/gamification/types';
 import { LEARNING_PATHS, getPreviousGuideInPath, getNextGuideInPath, getGuidePositionInPath, getPathLength } from '../../../data/learning-paths';
@@ -220,16 +219,6 @@ const components = {
   <MinimalProgressBar client:load guideId={guideSlug} estimatedTimeMinutes={estimatedTimeMinutes} />
   <ProgressTracker client:load guideSlug={guideSlug} guideTitle={guide.data.title} />
 
-  {/* Show modal for critical guides with incomplete prerequisites */}
-  {prerequisites.length > 0 && guide.data.isCritical && (
-    <PrerequisiteModal
-      client:load
-      currentGuideId={guideSlug}
-      currentGuideTitle={guide.data.title}
-      prerequisites={prerequisiteData}
-      isCritical={true}
-    />
-  )}
 
   <main id="main-content" class="py-16">
     <section class="relative overflow-hidden">

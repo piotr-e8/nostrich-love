@@ -739,19 +739,15 @@
       "advanced": "उन्नत"
     },
     "status": {
-      "locked": "बंद",
       "completed": "पूर्ण",
       "continueReading": "पढ़ना जारी रखें",
       "startLearning": "सीखना शुरू करें"
     },
-    "moreLocked": "+{count} और बंद",
     "estimatedTime": "{minutes} मिनट"
   },
   "guideSection": {
     "startHere": "यहाँ से शुरू करें",
-    "complete": "पूर्ण",
-    "locked": "बंद",
-    "unlockRequirement": "अनलॉक करने के लिए {count} गाइड पूरे करें"
+    "complete": "पूर्ण"
   },
   "zapSimulator": {
     "title": "ज़ैप सिम्युलेटर",

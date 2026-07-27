@@ -175,8 +175,6 @@ const dir = localeConfig.direction;
               lastActive: null,
               // NEW: Skill level fields (replacing activePath/pathProgress)
               currentLevel: 'beginner',
-              unlockedLevels: ['beginner'],
-              manualUnlock: false,
               completedByLevel: {
                 beginner: [],
                 intermediate: [],
@@ -223,8 +221,6 @@ const dir = localeConfig.direction;
             
             // NEW: Skill level fields (replacing activePath/pathProgress)
             if (!data.progress.currentLevel) data.progress.currentLevel = 'beginner';
-            if (!data.progress.unlockedLevels) data.progress.unlockedLevels = ['beginner'];
-            if (data.progress.manualUnlock === undefined) data.progress.manualUnlock = false;
             if (!data.progress.completedByLevel) {
               data.progress.completedByLevel = { beginner: [], intermediate: [], advanced: [] };
             }

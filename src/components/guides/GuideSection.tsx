@@ -1,23 +1,18 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Lock, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { GuideCard, type Guide } from './GuideCard';
 import { LevelProgressBar } from './LevelProgressBar';
-import { UnlockButton } from './UnlockButton';
-import { getUnlockedLevelsLocal, getCompletedGuidesInLevel, getLevelProgressLocal } from '../../lib/progress';
-import { SKILL_LEVELS } from '../../data/learning-paths';
+import { getCompletedGuidesInLevel } from '../../lib/progress';
 import { useTranslation } from '../../hooks/useTranslation';
 
 export type SkillLevel = 'beginner' | 'intermediate' | 'advanced';
 
 export interface GuideSectionProps {
   level: SkillLevel;
-  isLocked?: boolean;
   completedCount?: number;
   totalCount: number;
-  unlockThreshold: number;
-  onUnlock: () => void;
   guides: Guide[];
   completedGuideIds?: string[];
   inProgressGuideIds?: string[];
@@ -45,29 +40,15 @@ const levelConfigBase = {
   },
 };
 
-// Helper to get translated level label
-const getLevelLabel = (levelId: SkillLevel, t: (key: string) => string) => {
-  return t(`skillLevels.${levelId}.label`);
-};
-
-const previousLevel: Record<SkillLevel, SkillLevel | null> = {
-  beginner: null,
-  intermediate: 'beginner',
-  advanced: 'intermediate',
-};
-
 /**
  * GuideSection Component
  * Displays a skill level section with header, progress bar, and guide cards
- * Reads locked state and progress from localStorage
+ * Reads completion progress from localStorage
  */
 export const GuideSection: React.FC<GuideSectionProps> = ({
   level,
-  isLocked: isLockedProp,
   completedCount: completedCountProp,
   totalCount,
-  unlockThreshold,
-  onUnlock,
   guides,
   completedGuideIds: completedGuideIdsProp,
   inProgressGuideIds = [],
@@ -83,40 +64,18 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
   });
   
   const config = getLevelConfig(level);
-  const prevLevel = previousLevel[level];
 
-  // Unlocked by default. The server cannot read localStorage, so defaulting to
-  // locked meant the guides hub server-rendered padlocks and zero guide links —
-  // invisible to crawlers and to anyone before JS runs. The real lock state is
-  // applied by the effect below, immediately after mount.
-  const [isLocked, setIsLocked] = useState(isLockedProp ?? false);
   const [completedCount, setCompletedCount] = useState(completedCountProp ?? 0);
   const [completedGuideIds, setCompletedGuideIds] = useState<string[]>(completedGuideIdsProp ?? []);
 
   // Hydrate from localStorage on client side only
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const unlockedLevels = getUnlockedLevelsLocal();
-      const isLevelLocked = !unlockedLevels.includes(level);
-      setIsLocked(isLevelLocked);
 
       const completed = getCompletedGuidesInLevel(level);
       setCompletedCount(completed.length);
       setCompletedGuideIds(completed);
     }
-  }, [level]);
-
-  // Listen for levelUnlocked event to update UI in real-time
-  useEffect(() => {
-    const handleLevelUnlocked = (event: CustomEvent<{ level: SkillLevel }>) => {
-      if (event.detail.level === level) {
-        const unlockedLevels = getUnlockedLevelsLocal();
-        setIsLocked(!unlockedLevels.includes(level));
-      }
-    };
-
-    window.addEventListener('levelUnlocked', handleLevelUnlocked as EventListener);
-    return () => window.removeEventListener('levelUnlocked', handleLevelUnlocked as EventListener);
   }, [level]);
 
   // Filter guides based on interest filter
@@ -145,92 +104,6 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
     });
   }, [filteredGuides, completedGuideIds]);
 
-  // Calculate previous level progress for unlock button
-  // BUG FIX: Use actual completed count from previous level, not threshold
-  const previousLevelCompleted = prevLevel 
-    ? getCompletedGuidesInLevel(prevLevel).length 
-    : completedCount;
-  const previousLevelTotal = prevLevel 
-    ? SKILL_LEVELS[prevLevel].sequence.length 
-    : totalCount;
-
-  if (isLocked) {
-    return (
-      <section 
-        className="relative p-6 lg:p-8 bg-gray-100/50 dark:bg-gray-800/30 rounded-2xl border-2 border-gray-200 dark:border-gray-700 mb-12"
-        aria-label={`${config.title} section - Locked`}
-      >
-        {/* Locked Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
-          <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${config.bgColor} opacity-50`}>
-            <Lock className="w-6 h-6 text-gray-500 dark:text-gray-400" />
-          </div>
-          <div className="flex-1">
-            <div className="flex items-center gap-3">
-              <h2 className="text-2xl font-bold text-gray-600 dark:text-gray-400">
-                {config.title}
-              </h2>
-              <span className="px-2 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs font-medium rounded">
-                {t('guideSection.locked')}
-              </span>
-            </div>
-            <p className="text-gray-600 dark:text-gray-400">
-              {prevLevel 
-                ? t('guideSection.unlockRequirement')
-                    .replace('{count}', String(unlockThreshold))
-                    .replace('{level}', getLevelLabel(prevLevel, t).toLowerCase())
-                : t('guideSection.unlockRequirement')
-                    .replace('{count}', String(unlockThreshold))
-                    .replace('{level}', t('skillLevels.beginner.label').toLowerCase())}
-            </p>
-          </div>
-          <UnlockButton
-            level={level}
-            onUnlock={onUnlock}
-            completedInPrevious={previousLevelCompleted}
-            totalInPrevious={previousLevelTotal}
-            threshold={unlockThreshold}
-          />
-        </div>
-
-        {/* Locked Progress Bar - Show PREVIOUS level progress to indicate unlock progress */}
-        <div className="mb-6">
-          <LevelProgressBar
-            completed={previousLevelCompleted}
-            total={previousLevelTotal}
-            threshold={unlockThreshold}
-            level={prevLevel || 'beginner'}
-            showNextLevelUnlock={true}
-            nextLevelName={config.title}
-          />
-        </div>
-
-        {/* Locked Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Array.from({ length: Math.min(3, totalCount) }).map((_, index) => (
-            <GuideCard
-              key={`locked-${level}-${index}`}
-              isLocked={true}
-              level={level}
-              unlockRequirement={t('guideSection.unlockRequirement')
-                .replace('{count}', String(unlockThreshold - completedCount))
-                .replace('{level}', prevLevel ? getLevelLabel(prevLevel, t).toLowerCase() : '')}
-              index={index}
-            />
-          ))}
-          {totalCount > 3 && (
-            <div className="flex items-center justify-center h-[200px] bg-gray-100 dark:bg-gray-800 rounded-2xl border-2 border-dashed border-gray-300 dark:border-gray-600">
-              <span className="text-gray-500 dark:text-gray-400 text-sm">
-                {t('guideCard.moreLocked').replace('{count}', String(totalCount - 3))}
-              </span>
-            </div>
-          )}
-        </div>
-      </section>
-    );
-  }
-
-  // Unlocked State
   return (
     <section 
       className="relative p-6 lg:p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 mb-12"
@@ -270,9 +143,7 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
         <LevelProgressBar
           completed={completedCount}
           total={totalCount}
-          threshold={unlockThreshold}
           level={level}
-          showNextLevelUnlock={false}
         />
       </div>
 
