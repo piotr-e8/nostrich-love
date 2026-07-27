@@ -6,8 +6,7 @@ import { GuideSection } from './GuideSection';
 import type { SkillLevel } from './GuideCard';
 import type { Guide } from './GuideCard';
 import { getLastInterestFilterLocal, setLastInterestFilterLocal, unlockLevelLocal } from '../../lib/progress';
-import type { Locale } from '../../i18n';
-import { useTranslation } from '../../hooks/useTranslation';
+import { type Locale, t as translate } from '../../i18n';
 
 interface GuideLevelData {
   id: SkillLevel;
@@ -43,15 +42,16 @@ export const GuidesContainer: React.FC<GuidesContainerProps> = ({
   skillLevels,
   locale = 'en',
 }) => {
-  const { t } = useTranslation();
+  // Bind translations to the locale the page was built for. useTranslation()
+  // derives the locale from window.location, which is empty during SSR, so it
+  // rendered every locale's guides hub in English.
+  const t = (key: string) => translate(key, locale);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isClient, setIsClient] = useState(false);
   const [inProgressGuideIds, setInProgressGuideIds] = useState<string[]>([]);
 
   // Load saved filter and in-progress guides on mount
   useEffect(() => {
-    setIsClient(true);
     if (typeof window !== 'undefined') {
       const savedFilter = getLastInterestFilterLocal();
       setActiveFilter(savedFilter);
@@ -89,22 +89,10 @@ export const GuidesContainer: React.FC<GuidesContainerProps> = ({
     return activeFilter;
   };
 
-  // Don't render until client-side to avoid hydration issues
-  if (!isClient) {
-    return (
-      <div className="space-y-8">
-        {skillLevels.map((level) => (
-          <div 
-            key={level.id}
-            className="relative p-6 lg:p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 mb-12 animate-pulse"
-          >
-            <div className="h-20 bg-gray-200 dark:bg-gray-700 rounded-lg" />
-          </div>
-        ))}
-      </div>
-    );
-  }
-
+  // No client-only gate: this component must server-render the real guide list.
+  // Initial state (no filter, nothing in progress) matches what the server
+  // produces, so the first client render is identical and hydration is clean.
+  // localStorage-derived state is applied by the effect above, after mount.
   return (
     <>
 

@@ -90,8 +90,10 @@ const description = translations.guidesPage?.hero?.description || 'Interactive s
     {/* Guides Section */}
     <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <GuidesContainer 
-          client:load
+        {/* client:idle, not client:load — the guide list is server-rendered, so
+            hydration only powers search and the interest filter. */}
+        <GuidesContainer
+          client:idle
           skillLevels={skillLevelsData}
           locale={currentLocale}
         />

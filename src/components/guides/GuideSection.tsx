@@ -85,16 +85,16 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
   const config = getLevelConfig(level);
   const prevLevel = previousLevel[level];
 
-  // Read actual state from localStorage (client-side only)
-  const [isLocked, setIsLocked] = useState(isLockedProp ?? true);
+  // Unlocked by default. The server cannot read localStorage, so defaulting to
+  // locked meant the guides hub server-rendered padlocks and zero guide links —
+  // invisible to crawlers and to anyone before JS runs. The real lock state is
+  // applied by the effect below, immediately after mount.
+  const [isLocked, setIsLocked] = useState(isLockedProp ?? false);
   const [completedCount, setCompletedCount] = useState(completedCountProp ?? 0);
   const [completedGuideIds, setCompletedGuideIds] = useState<string[]>(completedGuideIdsProp ?? []);
-  const [isClient, setIsClient] = useState(false);
 
   // Hydrate from localStorage on client side only
   useEffect(() => {
-    setIsClient(true);
-    
     if (typeof window !== 'undefined') {
       const unlockedLevels = getUnlockedLevelsLocal();
       const isLevelLocked = !unlockedLevels.includes(level);
@@ -153,23 +153,6 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
   const previousLevelTotal = prevLevel 
     ? SKILL_LEVELS[prevLevel].sequence.length 
     : totalCount;
-
-  // Don't render locked state details until client-side to avoid hydration mismatch
-  // Show loading state on server, real state on client
-  if (!isClient) {
-    return (
-      <section className="relative p-6 lg:p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 mb-12">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
-          <div className="w-12 h-12 rounded-xl bg-gray-200 dark:bg-gray-700 animate-pulse" />
-          <div className="flex-1">
-            <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-48 animate-pulse mb-2" />
-            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-64 animate-pulse" />
-          </div>
-        </div>
-        <div className="h-32 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
-      </section>
-    );
-  }
 
   if (isLocked) {
     return (
