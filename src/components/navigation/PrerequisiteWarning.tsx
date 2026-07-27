@@ -4,6 +4,7 @@ import { cn } from '../../lib/utils';
 import { checkPrerequisites } from '../../lib/progressService';
 import { Button } from '../ui/Button';
 import { useTranslation } from '../../hooks/useTranslation';
+import { guidePath } from "../../i18n/paths";
 
 export interface PrerequisiteWarningProps {
   currentGuideId: string;
@@ -133,7 +134,7 @@ export function PrerequisiteWarning({
         {incompletePrereqs.slice(0, isExpanded ? undefined : 3).map((prereq, index) => (
           <a
             key={prereq.slug}
-            href={`/${lang}/guides/${prereq.slug}`}
+            href={guidePath(prereq.slug, lang)}
             className={cn(
               'group flex items-center gap-3 p-3 rounded-xl',
               'bg-white/60 dark:bg-gray-900/60',
@@ -200,7 +201,7 @@ export function PrerequisiteWarning({
             size="sm"
             leftIcon={<BookOpen className="h-4 w-4" />}
             onClick={() => {
-              window.location.href = `/${lang}/guides/${incompletePrereqs[0].slug}`;
+              window.location.href = guidePath(incompletePrereqs[0].slug, lang);
             }}
           >
             {t('prerequisiteWarning.startFirst')}

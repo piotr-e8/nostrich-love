@@ -15,6 +15,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
 import { recordActivity, awardBadge, recordPrivacyQuizPerfectScore } from "../../utils/gamification";
+import { guidePath } from "../../i18n/paths";
 
 type Severity = "critical" | "warning" | "info";
 
@@ -267,13 +268,13 @@ export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
           >
             <a
               className="inline-flex items-center justify-center rounded-xl border border-primary/40 px-4 py-3 font-semibold text-primary transition hover:bg-primary/10"
-              href={`/${locale}/guides/privacy-security`}
+              href={guidePath("privacy-security", locale)}
             >
               {t("ui.quiz.reviewPrivacyGuide")}
             </a>
             <a
               className="inline-flex items-center justify-center rounded-xl border border-gray-300 px-4 py-3 font-semibold text-gray-800 transition hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
-              href={`/${locale}/guides/keys-and-security`}
+              href={guidePath("keys-and-security", locale)}
             >
               {t("ui.quiz.backToSecurityBasics")}
             </a>

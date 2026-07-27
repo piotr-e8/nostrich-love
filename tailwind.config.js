@@ -1,3 +1,5 @@
+import colors from "tailwindcss/colors";
+
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: "class",
@@ -35,9 +37,14 @@ export default {
           light: "#FFFFFF",
           dark: "#0F0A1A",
         },
-        success: "#22C55E",
-        danger: "#EF4444",
-        warning: "#F59E0B",
+        // Full scales, not flat values. 235 usages across 25 components ask for
+        // shades (text-success-500, bg-warning-500, text-success-900, ...) and a
+        // flat colour generates none of them — those classes compiled to nothing,
+        // leaving e.g. the KeyGenerator's copy confirmation white-on-white.
+        // The DEFAULTs below are the previous flat values, so nothing shifts.
+        success: { ...colors.green, DEFAULT: colors.green[500] },
+        danger: { ...colors.red, DEFAULT: colors.red[500] },
+        warning: { ...colors.amber, DEFAULT: colors.amber[500] },
         // Friendly theme colors based on nostrich logo
         friendly: {
           purple: {

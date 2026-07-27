@@ -532,6 +532,9 @@ const totalGuides = 15; // Total number of guides across all levels
       // Get current locale from localStorage or default to 'en'
       const savedLang = localStorage.getItem('preferredLanguage');
       const currentLocale = (savedLang && ['en', 'pl', 'es', 'de', 'zh', 'ar', 'hi'].includes(savedLang)) ? savedLang : 'en';
+      // English is served un-prefixed (prefixDefaultLocale: false), so /en/guides/*
+      // only 301-redirects. Inline scripts cannot import src/i18n/paths.
+      const guidesPrefix = currentLocale === 'en' ? '/guides' : `/${currentLocale}/guides`;
       
       // Update guide list
       const guideList = section.querySelector('.guide-list') as HTMLElement;
@@ -543,7 +546,7 @@ const totalGuides = 15; // Total number of guides across all levels
           const position = idx + 1;
           
           return `
-            <a href="/${currentLocale}/guides/${guideId}" 
+            <a href="${guidesPrefix}/${guideId}"
                class="guide-item flex items-center gap-4 p-3 rounded-xl border ${isCompleted ? 'border-green-200 dark:border-green-700 bg-green-50 dark:bg-green-900/20 completed' : 'border-gray-200 dark:border-gray-700 hover:border-friendly-purple-300 dark:hover:border-friendly-purple-600'} transition-all cursor-pointer"
                data-guide="${guideId}"
             >
