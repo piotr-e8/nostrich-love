@@ -14,6 +14,8 @@ export interface SEOProps {
   noindex?: boolean;
   nofollow?: boolean;
   canonical?: string;
+  /** Structured data emitted as a JSON-LD script tag. */
+  jsonLd?: Record<string, unknown>;
 }
 
 export interface PageSEO {

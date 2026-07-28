@@ -54,6 +54,9 @@ jobs:
       - name: Every form control has an accessible name
         run: npm run check:labels
 
+      - name: SEO invariants (canonicals, hreflang, JSON-LD, sitemap)
+        run: npm run verify-seo
+
       - name: Dependency audit (high and critical only)
         # advisory-only for now: the tree currently has known high findings that
         # need dependency bumps, and failing every PR on them would train people

@@ -47,7 +47,7 @@ import { PrerequisiteWarning } from '../../../components/navigation/Prerequisite
 import { BadgeEarnedModalListener } from '../../../components/gamification/BadgeEarnedModalListener';
 import type { Badge } from '../../../components/gamification/types';
 import { LEARNING_PATHS, getPreviousGuideInPath, getNextGuideInPath, getGuidePositionInPath, getPathLength } from '../../../data/learning-paths';
-import { locales, type Locale } from '../../../config/locales';
+import { locales, getLocaleConfig, type Locale } from '../../../config/locales';
 import { langParam } from '../../../i18n/paths';
 
 // Legacy GUIDE_ORDER for backward compatibility and general path
@@ -119,6 +119,32 @@ const estimatedTimeMinutes = parseInt(guide.data.estimatedTime?.match(/\d+/)?.[0
 
 // Check if guide has a quiz by looking for Quiz component imports in the raw body
 const hasQuiz = guide.body?.includes('Quiz') || false;
+
+// Structured data: this is an educational article, free to read, in this locale
+const guideUrl = new URL(Astro.url.pathname, 'https://nostrich.love').toString();
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LearningResource',
+  name: guide.data.title,
+  description,
+  url: guideUrl,
+  inLanguage: getLocaleConfig(locale as Locale).htmlLang,
+  learningResourceType: 'Guide',
+  educationalLevel: 'Beginner',
+  isAccessibleForFree: true,
+  timeRequired: `PT${estimatedTimeMinutes}M`,
+  author: {
+    '@type': 'Person',
+    name: 'Piotr Czarnoleski',
+    url: 'https://github.com/ptrio42',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Nostrich.love',
+    url: 'https://nostrich.love',
+  },
+  ...(guide.data.tags ? { keywords: guide.data.tags.join(', ') } : {}),
+};
 
 // Get guide titles for all guides (used by client-side navigation)
 const allGuides = await getCollection('guides');
@@ -215,7 +241,7 @@ const components = {
 };
 ---
 
-<Layout title={title} description={description} locale={locale as Locale}>
+<Layout title={title} description={description} locale={locale as Locale} type="article" author="Piotr Czarnoleski" jsonLd={jsonLd}>
   <Header />
 
   <MinimalProgressBar client:idle guideId={guideSlug} estimatedTimeMinutes={estimatedTimeMinutes} />

@@ -21,6 +21,7 @@ const {
   noindex = false,
   nofollow = false,
   canonical,
+  jsonLd,
 } = Astro.props;
 
 // Format title with template
@@ -96,6 +97,9 @@ const xDefaultUrl = localized
 {type === 'article' && tags && tags.map((tag) => (
   <meta property="article:tag" content={tag} />
 ))}
+
+<!-- Structured data -->
+{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />

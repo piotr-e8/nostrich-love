@@ -1,10 +1,10 @@
 {
-  "name": "Nostr Beginner Guide",
-  "short_name": "Nostr Guide",
+  "name": "Nostrich.love — Learn Nostr",
+  "short_name": "Nostrich.love",
   "description": "A comprehensive beginner-friendly guide to Nostr - the decentralized social protocol",
   "start_url": "/",
   "display": "standalone",
-  "background_color":="#ffffff",
+  "background_color": "#ffffff",
   "theme_color": "#8B5CF6",
   "orientation": "portrait-primary",
   "icons": [

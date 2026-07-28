@@ -1,143 +1,118 @@
-#!/usr/bin/env node
 /**
- * SEO Verification Script
- * Checks that international SEO is properly implemented
+ * SEO invariants check — runs against dist/, exits non-zero on failure.
+ *
+ * Replaces an earlier version that validated routes the routing refactor
+ * removed and always exited 0 (audit findings #75/#90). Every check here
+ * encodes a decision documented in docs/audit-2026-07/session-handoff.md:
+ * English is served un-prefixed, hreflang is emitted only for routes that
+ * exist in all seven locales, and the sitemap must agree with the pages.
  */
+import { readFileSync, existsSync } from "node:fs";
+import { join } from "node:path";
 
-import { readFileSync } from 'fs';
-import { join } from 'path';
+const DIST = "dist";
+const SITE = "https://nostrich.love";
+const LOCALES = ["pl", "es", "de", "zh", "ar", "hi"]; // prefixed locales; en is un-prefixed
 
-const DIST_DIR = './dist';
-const BASE_URL = 'https://nostrich.love';
+let failures = 0;
+const fail = (msg) => {
+  failures++;
+  console.error(`✗ ${msg}`);
+};
+const ok = (msg) => console.log(`✓ ${msg}`);
 
-console.log('🔍 Verifying International SEO Implementation\n');
+const read = (p) => readFileSync(join(DIST, p), "utf8");
 
-// Test 1: Check sitemap exists and has hreflang
-console.log('1. Checking sitemap...');
-try {
-  const sitemapIndex = readFileSync(join(DIST_DIR, 'sitemap-index.xml'), 'utf-8');
-  console.log('   ✓ sitemap-index.xml exists');
-  
-  if (sitemapIndex.includes('sitemap-0.xml')) {
-    console.log('   ✓ References sitemap-0.xml');
-    
-    const sitemap = readFileSync(join(DIST_DIR, 'sitemap-0.xml'), 'utf-8');
-    
-    // Check for hreflang annotations
-    if (sitemap.includes('xhtml:link')) {
-      console.log('   ✓ Contains hreflang annotations (xhtml:link)');
-    } else {
-      console.log('   ✗ Missing hreflang annotations');
-      process.exit(1);
-    }
-    
-    // Count URLs with hreflang
-    const hreflangMatches = sitemap.match(/xhtml:link/g);
-    const hreflangCount = hreflangMatches ? hreflangMatches.length : 0;
-    console.log(`   ✓ Found ${hreflangCount} hreflang link elements`);
-    
-    // Check for all locales
-    const locales = ['de-DE', 'en-US', 'es-ES', 'pl-PL', 'zh-CN', 'ar-SA', 'hi-IN'];
-    locales.forEach(locale => {
-      if (sitemap.includes(`hreflang="${locale}"`)) {
-        console.log(`   ✓ Contains ${locale} hreflang references`);
-      } else {
-        console.log(`   ✗ Missing ${locale} hreflang references`);
-      }
-    });
-  }
-} catch (e) {
-  console.error('   ✗ Sitemap not found:', e.message);
+if (!existsSync(DIST)) {
+  console.error("dist/ does not exist — run `npm run build` first");
   process.exit(1);
 }
 
-// Test 2: Check sample HTML files
-console.log('\n2. Checking generated HTML files...');
-const testUrls = [
-  '/en/guides/what-is-nostr',
-  '/de/guides/what-is-nostr',
-  '/pl/guides/what-is-nostr',
-  '/es/guides/what-is-nostr',
-  '/zh/guides/what-is-nostr',
-  '/ar/guides/what-is-nostr',
-  '/hi/guides/what-is-nostr',
-];
+// --- 1. The old /en/ scheme must be gone -----------------------------------
+if (existsSync(join(DIST, "en"))) {
+  fail("dist/en/ exists — English must be served un-prefixed");
+} else {
+  ok("no dist/en/ — English is un-prefixed");
+}
 
-const localeConfigs = {
-  en: { htmlLang: 'en', ogLocale: 'en_US' },
-  pl: { htmlLang: 'pl', ogLocale: 'pl_PL' },
-  es: { htmlLang: 'es', ogLocale: 'es_ES' },
-  de: { htmlLang: 'de', ogLocale: 'de_DE' },
-  zh: { htmlLang: 'zh', ogLocale: 'zh_CN' },
-  ar: { htmlLang: 'ar', ogLocale: 'ar_SA' },
-  hi: { htmlLang: 'hi', ogLocale: 'hi_IN' },
-};
+// --- 2. English guide page: canonical, hreflang, JSON-LD, og:type ----------
+const SAMPLE = "guides/what-is-nostr/index.html";
+if (!existsSync(join(DIST, SAMPLE))) {
+  fail(`${SAMPLE} missing`);
+} else {
+  const html = read(SAMPLE);
 
-testUrls.forEach(url => {
-  const locale = url.split('/')[1];
-  const filePath = join(DIST_DIR, url, 'index.html');
-  
-  try {
-    const html = readFileSync(filePath, 'utf-8');
-    const config = localeConfigs[locale];
-    
-    // Check HTML lang
-    if (html.includes(`lang="${config.htmlLang}"`)) {
-      console.log(`   ✓ ${locale}: HTML lang="${config.htmlLang}"`);
-    } else {
-      console.log(`   ✗ ${locale}: Missing/incorrect HTML lang`);
+  const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
+  if (canonical === `${SITE}/guides/what-is-nostr/`) ok(`canonical: ${canonical}`);
+  else fail(`canonical is ${canonical}, expected ${SITE}/guides/what-is-nostr/`);
+
+  const hreflangs = [...html.matchAll(/hreflang="([^"]+)"/g)].map((m) => m[1]);
+  const expected = ["en", ...LOCALES, "x-default"];
+  const missing = expected.filter((l) => !hreflangs.includes(l));
+  if (missing.length === 0 && hreflangs.length === expected.length)
+    ok(`guide hreflang set complete (${hreflangs.length})`);
+  else fail(`guide hreflang wrong — got [${hreflangs}], missing [${missing}]`);
+
+  const ld = html.match(/<script type="application\/ld\+json"[^>]*>(.*?)<\/script>/s)?.[1];
+  if (!ld) fail("guide page has no JSON-LD");
+  else {
+    try {
+      const parsed = JSON.parse(ld);
+      if (parsed["@type"]) ok(`JSON-LD parses (@type: ${parsed["@type"]})`);
+      else fail("JSON-LD has no @type");
+    } catch {
+      fail("JSON-LD does not parse");
     }
-    
-    // Check OG locale
-    if (html.includes(`content="${config.ogLocale}"`)) {
-      console.log(`   ✓ ${locale}: OG locale="${config.ogLocale}"`);
-    } else {
-      console.log(`   ✗ ${locale}: Missing/incorrect OG locale`);
-    }
-    
-    // Check hreflang links
-    if (html.includes('rel="alternate" hreflang="')) {
-      console.log(`   ✓ ${locale}: Has hreflang links`);
-    } else {
-      console.log(`   ✗ ${locale}: Missing hreflang links`);
-    }
-    
-    // Check x-default
-    if (html.includes('hreflang="x-default"')) {
-      console.log(`   ✓ ${locale}: Has x-default hreflang`);
-    } else {
-      console.log(`   ✗ ${locale}: Missing x-default hreflang`);
-    }
-    
-  } catch (e) {
-    console.log(`   ✗ ${locale}: Could not read ${filePath}`);
   }
-});
 
-// Test 3: Check guide index pages
-console.log('\n3. Checking guide index pages...');
-const indexLocales = ['en', 'de', 'pl', 'es', 'zh', 'ar', 'hi'];
-indexLocales.forEach(locale => {
-  const filePath = join(DIST_DIR, locale, 'guides', 'index.html');
-  try {
-    const html = readFileSync(filePath, 'utf-8');
-    const config = localeConfigs[locale];
-    
-    if (html.includes(`lang="${config.htmlLang}"`)) {
-      console.log(`   ✓ ${locale}/guides/: HTML lang="${config.htmlLang}"`);
-    } else {
-      console.log(`   ✗ ${locale}/guides/: Missing HTML lang`);
-    }
-  } catch (e) {
-    console.log(`   ✗ ${locale}/guides/: Could not read file`);
+  if (/property="og:type" content="article"/.test(html)) ok("og:type is article on guides");
+  else fail("guide og:type is not article");
+}
+
+// --- 3. Localized guide pages exist with their own canonicals --------------
+for (const l of LOCALES) {
+  const p = `${l}/guides/what-is-nostr/index.html`;
+  if (!existsSync(join(DIST, p))) {
+    fail(`${p} missing`);
+    continue;
   }
-});
+  const canonical = read(p).match(/<link rel="canonical" href="([^"]+)"/)?.[1];
+  if (canonical === `${SITE}/${l}/guides/what-is-nostr/`) ok(`${l} canonical correct`);
+  else fail(`${l} canonical is ${canonical}`);
+}
 
-console.log('\n✅ SEO Verification Complete!');
-console.log('\n📊 Summary:');
-console.log('   • All 7 locales (en, pl, es, de, zh, ar, hi) are properly configured');
-console.log('   • Sitemap includes hreflang annotations for all pages');
-console.log('   • HTML lang attributes are dynamic per locale');
-console.log('   • OG locale meta tags are correctly set');
-console.log('   • x-default hreflang fallback is implemented');
-console.log('\n🚀 Ready for Google indexing!');
+// --- 4. English-only pages must NOT advertise alternates -------------------
+for (const p of ["tools/index.html", "glossary/index.html"]) {
+  if (!existsSync(join(DIST, p))) {
+    fail(`${p} missing`);
+    continue;
+  }
+  const n = (read(p).match(/hreflang=/g) || []).length;
+  if (n === 0) ok(`${p} has no hreflang (English-only route)`);
+  else fail(`${p} advertises ${n} hreflang alternates for pages that may not exist`);
+}
+
+// --- 5. Sitemap exists and agrees with the un-prefixed scheme --------------
+if (!existsSync(join(DIST, "sitemap-index.xml"))) fail("sitemap-index.xml missing");
+else ok("sitemap-index.xml present");
+
+if (existsSync(join(DIST, "sitemap-0.xml"))) {
+  const sm = read("sitemap-0.xml");
+  if (sm.includes(`${SITE}/en/`)) fail("sitemap contains /en/ URLs (old scheme)");
+  else ok("sitemap has no /en/ URLs");
+  if (sm.includes(`${SITE}/guides/what-is-nostr/`)) ok("sitemap lists un-prefixed English guides");
+  else fail("sitemap is missing the un-prefixed English guide URLs");
+} else {
+  fail("sitemap-0.xml missing");
+}
+
+// --- 6. Manifest must be valid JSON (it is linked from every page) ---------
+try {
+  JSON.parse(readFileSync("public/site.webmanifest", "utf8"));
+  ok("site.webmanifest is valid JSON");
+} catch {
+  fail("site.webmanifest is not valid JSON");
+}
+
+console.log(failures === 0 ? "\nAll SEO invariants hold." : `\n${failures} SEO invariant(s) violated.`);
+process.exit(failures === 0 ? 0 : 1);
