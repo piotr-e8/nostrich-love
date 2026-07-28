@@ -619,8 +619,8 @@ npm run verify-seo
 
 ## References
 
-- LESSONS_HI_LOCALE.md — Hindi locale addition (6 hardcoded-array discovery)
-- LESSONS_AR_LOCALE.md — Arabic locale addition (RTL, placeholder syntax, client:load)
-- LESSONS_ZH_LOCALE.md — Chinese locale addition
+- docs/internal/LESSONS_HI_LOCALE.md — Hindi locale addition (6 hardcoded-array discovery)
+- docs/internal/LESSONS_AR_LOCALE.md — Arabic locale addition (RTL, placeholder syntax, client:load)
+- docs/internal/LESSONS_ZH_LOCALE.md — Chinese locale addition
 - Astro i18n docs: https://docs.astro.build/en/recipes/i18n/
 - tailwindcss-rtl: https://github.com/stevecochrane/tailwindcss-rtl

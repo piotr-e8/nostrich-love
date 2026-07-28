@@ -1,5 +1,12 @@
 # International SEO Deployment Checklist
 
+> **⚠️ STALE (audit 2026-07-27, findings #93–94):** this checklist predates the
+> routing refactor — its locale count, page count and URL patterns are wrong
+> (English is now served un-prefixed at `/guides/…`), and the documented deploy
+> command pushes to a home-lab host that is far behind production. Deployment
+> happens via the Vercel git integration. Kept for the verification ideas only;
+> do not follow the commands verbatim.
+
 > **Goal:** Deploy international SEO changes and verify Google properly indexes all language variants
 
 ---

@@ -255,22 +255,24 @@ const subId = `req-${Math.random().toString(36).substr(2, 9)}`;
 
 **CRITICAL:** When working on specific tasks, load the relevant documentation file:
 
+Internal reference docs live in `docs/internal/` (moved out of the repo root 2026-07-28).
+
 | Task | Load This File |
 |------|----------------|
-| Understanding project workflow and rules | @RULES.md |
-| Creating a new guide | @RULES.md → @TEACHING_METHODS.md → @I18N_PATTERNS.md → @CONTENT_TRANSLATION.md |
-| Nostr protocol knowledge | @NOSTR_KNOWLEDGE.md |
-| Translation system details | @I18N_PATTERNS.md → @I18N_REFERENCE.md |
-| Educational content structure | @TEACHING_METHODS.md |
-| Language-specific translation | @CONTENT_TRANSLATION.md |
-| Building UI components (quizzes, etc.) | @RULES.md → @I18N_PATTERNS.md |
-| **SEO / International SEO** | **@SEO_LESSONS_LEARNED.md → @DEPLOYMENT_CHECKLIST.md** |
-| **Content audit & guide planning** | **@CONTENT_AUDIT_AND_KNOWLEDGE_MAP.md** |
-| **Adding new languages** | **@LESSONS_ZH_LOCALE.md** (comprehensive lessons from adding Chinese) → **@LESSONS_AR_LOCALE.md** (RTL support, placeholder syntax, interactive components) |
-| **Feature differentiation & value props** | **@LESSONS_FEATURES.md** |
-| **Content strategy insights** | **@LESSONS_RETRO.md** |
-| **Nostr content patterns & influencer research** | **@LESSONS_RETRO.md** (Influencer Content Analysis section) |
-| **Refactoring & technical debt** | **@CODEBASE_AUDIT.md** (prioritized roadmap, 5 competing progress systems, 15 duplicated quiz components) |
+| Understanding project workflow and rules | @docs/internal/RULES.md |
+| Creating a new guide | @docs/internal/RULES.md → @docs/internal/TEACHING_METHODS.md → @docs/internal/I18N_PATTERNS.md → @docs/internal/CONTENT_TRANSLATION.md |
+| Nostr protocol knowledge | @docs/internal/NOSTR_KNOWLEDGE.md |
+| Translation system details | @docs/internal/I18N_PATTERNS.md → @docs/internal/I18N_REFERENCE.md |
+| Educational content structure | @docs/internal/TEACHING_METHODS.md |
+| Language-specific translation | @docs/internal/CONTENT_TRANSLATION.md |
+| Building UI components (quizzes, etc.) | @docs/internal/RULES.md → @docs/internal/I18N_PATTERNS.md |
+| **SEO / International SEO** | **@docs/SEO_LESSONS_LEARNED.md** (DEPLOYMENT_CHECKLIST.md is stale — see its header) |
+| **Content audit & guide planning** | **@docs/internal/CONTENT_AUDIT_AND_KNOWLEDGE_MAP.md** |
+| **Adding new languages** | **@docs/internal/LESSONS_ZH_LOCALE.md** (comprehensive lessons from adding Chinese) → **@docs/internal/LESSONS_AR_LOCALE.md** (RTL support, placeholder syntax, interactive components) |
+| **Feature differentiation & value props** | **@docs/internal/LESSONS_FEATURES.md** |
+| **Content strategy insights** | **@docs/internal/LESSONS_RETRO.md** |
+| **Nostr content patterns & influencer research** | **@docs/internal/LESSONS_RETRO.md** (Influencer Content Analysis section) |
+| **Refactoring & technical debt** | **@docs/audit-2026-07/open-findings.md** (current, verified) → @docs/internal/CODEBASE_AUDIT.md (older) |
 
 **Key Terminology:**
 - **npub** - Public key (safe to share, your identity)
@@ -295,10 +297,10 @@ const subId = `req-${Math.random().toString(36).substr(2, 9)}`;
 
 **Examples in this project:**
 - AGENTS.md (this file) - Critical rules
-- RULES.md - Detailed workflows
-- NOSTR_KNOWLEDGE.md - Protocol knowledge
-- TEACHING_METHODS.md - Pedagogical patterns
-- I18N_PATTERNS.md - Translation conventions
+- docs/internal/RULES.md - Detailed workflows
+- docs/internal/NOSTR_KNOWLEDGE.md - Protocol knowledge
+- docs/internal/TEACHING_METHODS.md - Pedagogical patterns
+- docs/internal/I18N_PATTERNS.md - Translation conventions
 
 ### Treat as SKILL if it describes:
 
@@ -341,7 +343,7 @@ description: Generate Nostr key pairs (npub/nsec)
 ### Location differences:
 
 - **AGENTS:** `AGENTS.md` in project root (auto-loaded)
-- **KNOWLEDGE:** `{NAME}.md` files in project root (loaded on-demand)
+- **KNOWLEDGE:** `{NAME}.md` files in `docs/internal/` (loaded on-demand)
 - **SKILL:** `.opencode/skills/{name}/SKILL.md` (invoked via `skill` tool)
 
 ---
