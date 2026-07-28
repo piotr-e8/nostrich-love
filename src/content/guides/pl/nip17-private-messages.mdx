@@ -20,14 +20,29 @@ NIP-17 to specyfikacja protokołu Nostr, która definiuje **Prywatne Wiadomości
 
 W przeciwieństwie do NIP-04, który używał pojedynczej warstwy szyfrowania AES-256-CBC, NIP-17 używa:
 
-1. **Seal** - Wewnętrzna warstwa szyfrowania chroniąca treść wiadomości
-2. **Gift Wrap** - Zewnętrzna warstwa szyfrowania ukrywająca metadane nadawcy i odbiorcy
+1. **Seal** (kind 13) — wewnętrzna warstwa, która szyfruje wiadomość i ukrywa,
+   który klucz ją podpisał
+2. **Gift wrap** (kind 1059) — zewnętrzna koperta podpisana kluczem
+   jednorazowym, dzięki czemu Twoja prawdziwa tożsamość nigdy nie pojawia się
+   w evencie przechowywanym przez relaye
 
-To podejście dwuwarstwowe zapewnia, że:
+To rozwarstwienie oznacza, że:
 
 - Treść wiadomości pozostaje prywatna
-- **Nawet operatorzy relayów nie widzą kto z kim rozmawia**
-- Wzorce wiadomości i metadane są chronione przed obserwatorami sieci
+- **Relaye nie widzą, kto wysłał wiadomość** — gift wrap jest podpisany losowym
+  kluczem jednorazowym, a nie Twoim
+- Timestampy są losowane, więc trudniej skorelować momenty wysyłki
+
+<Callout variant="warning" title="Relaye nadal widzą, do kogo piszesz">
+  Gift wrap niesie klucz publiczny odbiorcy w jawnym tagu `p`. Musi go nieść —
+  inaczej relay odbiorcy nie wiedziałby, komu dostarczyć wiadomość. NIP-17
+  ukrywa **nadawcę**, a nie **odbiorcę**.
+
+Każdy, kto czyta strumień relaya, widzi, że ktoś wysłał Ci wiadomość i kiedy —
+nie widzi tylko kto i co. Jeśli Twój model zagrożeń wymaga ukrycia samego faktu,
+że cokolwiek dostałeś, sam NIP-17 nie wystarczy.
+
+</Callout>
 
 ## Dlaczego NIP-17 Ma Znaczenie: Problem Bezpieczeństwa NIP-04
 
@@ -35,20 +50,20 @@ NIP-04 był oryginalnym protokołem wiadomości bezpośrednich w Nostr, ale ma k
 
 ### Porównanie: NIP-04 vs NIP-17
 
-| Cecha                | NIP-04                   | NIP-17                                |
-| ---------------------- | ------------------------ | ------------------------------------- |
-| **Szyfrowanie**         | Pojedyncza warstwa AES-256-CBC | Dwuwarstwowe (seal + gift wrap)         |
-| **Metadane Nadawcy**    | Widoczne dla relayów        | Ukryte przed wszystkimi oprócz odbiorcy |
-| **Metadane Odbiorcy** | Widoczne dla relayów        | Ukryte przed wszystkimi oprócz odbiorcy |
-| **Treść Wiadomości**    | Zaszyfrowana                | Zaszyfrowana                             |
-| **Ochrona przed Replay**  | Brak                     | Wbudowane timestamps                   |
-| **Forward Secrecy**    | Nie                       | Lepsza (klucze per-wiadomość)         |
-| **Status Bezpieczeństwa**    | **Przestarzały**           | **Zalecany**                       |
-| **Interoperacyjność**   | Powszechnie wspierany         | Rosnące wsparcie                       |
+| Cecha                     | NIP-04                         | NIP-17                                  |
+| ------------------------- | ------------------------------ | --------------------------------------- |
+| **Szyfrowanie**           | Pojedyncza warstwa AES-256-CBC | Dwuwarstwowe (seal + gift wrap)         |
+| **Metadane Nadawcy**      | Widoczne dla relayów           | Ukryte — podpisane kluczem jednorazowym |
+| **Metadane Odbiorcy**     | Widoczne dla relayów           | **Nadal widoczne** — jawny tag `p`      |
+| **Treść Wiadomości**      | Zaszyfrowana                   | Zaszyfrowana                            |
+| **Ochrona przed Replay**  | Brak                           | Losowane timestampy                     |
+| **Forward Secrecy**       | Nie                            | Nie — NIP-44 tego nie zapewnia          |
+| **Status Bezpieczeństwa** | **Przestarzały**               | **Zalecany**                            |
+| **Interoperacyjność**     | Powszechnie wspierany          | Rosnące wsparcie                        |
 
 ### Podstawowy Problem z NIP-04
 
-Wiadomości NIP-04 ujawniają **kto z kim rozmawia** w blockchainie. Podczas gdy treść wiadomości jest zaszyfrowana, koperta zawiera:
+Wiadomości NIP-04 ujawniają **kto z kim rozmawia** każdemu relayowi, który je przechowuje. (Nostr nie ma żadnego blockchaina — eventy po prostu leżą na relayach, a czytać z relaya może każdy.) Podczas gdy treść wiadomości jest zaszyfrowana, koperta zawiera:
 
 ```
 # Struktura Eventu NIP-04 (uproszczona)
@@ -256,6 +271,24 @@ NIP-17 zapewnia doskonałą prywatność, ale nie jest doskonały:
 - Odbiorca zawsze widzi tożsamość nadawcy
 
 ## Rozwiązywanie Powszechnych Problemów
+
+### „Moje wiadomości nigdy nie docierają" — najpierw sprawdź listę relayów DM
+
+To najczęstsza awaria NIP-17 i prawie nigdy nie chodzi o szyfrowanie.
+
+Nadawcy NIP-17 nie dostarczają na Twoje zwykłe relaye. Szukają **eventu kind
+10050** — Twojej opublikowanej listy relayów przyjmujących wiadomości bezpośrednie
+— i wysyłają gift wrap wyłącznie tam. Jeśli nigdy jej nie opublikowałeś, klient
+nadawcy nie ma dokąd dostarczyć i wiadomość znika po cichu. Żaden z interfejsów
+nic nie pokaże.
+
+**Naprawa:** w kliencie obsługującym NIP-17 znajdź ustawienie relayów dla
+wiadomości prywatnych i zapisz przynajmniej jeden relay. To publikuje Twoją listę
+kind 10050. Wybierz relay, który faktycznie przyjmuje gift wrapy — część odrzuca
+kind 1059.
+
+Trzymaj listę krótką. Każdy relay na niej to relay, który widzi, kto Ci pisze.
+
 
 ### "Wiadomości wyświetlają się jako nieczytelne lub bełkot"
 

@@ -20,14 +20,30 @@ NIP-17 es una especificación del protocolo Nostr que define **Mensajes Directos
 
 A diferencia de NIP-04, que usaba una sola capa de encriptación AES-256-CBC, NIP-17 usa:
 
-1. **Seal** - Capa de encriptación interna protegiendo el contenido del mensaje
-2. **Gift Wrap** - Capa de encriptación externa que oculta los metadatos del remitente y destinatario
+1. **Seal** (kind 13) — la capa interna, que encripta el mensaje y oculta qué
+   clave lo firmó
+2. **Gift wrap** (kind 1059) — el sobre exterior, firmado con una clave
+   desechable, de modo que tu identidad real nunca aparece en el evento que
+   guardan los relays
 
-Este enfoque de doble capa asegura que:
+Este sistema de capas significa que:
 
 - El contenido del mensaje permanece privado
-- **Incluso los operadores de relays no pueden ver quién habla con quién**
-- Los patrones de mensaje y metadatos están protegidos de observadores de la red
+- **Los relays no pueden ver quién envió un mensaje** — el gift wrap está firmado
+  con una clave aleatoria de un solo uso, no con la tuya
+- Los timestamps se aleatorizan, así que es más difícil correlacionar cuándo se
+  envían los mensajes
+
+<Callout variant="warning" title="Los relays sí pueden ver a quién le escribes">
+  El gift wrap lleva la clave pública del destinatario en un tag `p` en texto
+  plano. No puede ser de otra forma: si no, el relay del destinatario no sabría a
+  quién entregárselo. NIP-17 oculta al **remitente**, no al **destinatario**.
+
+Cualquiera que lea el flujo de eventos de un relay puede ver que alguien te envió
+un mensaje y cuándo, pero no quién ni qué. Si tu modelo de amenaza exige ocultar
+incluso que recibiste algo, NIP-17 por sí solo no basta.
+
+</Callout>
 
 ## Por Qué Importa NIP-17: El Problema de Seguridad de NIP-04
 
@@ -35,20 +51,20 @@ NIP-04 fue el protocolo de mensaje directo original de Nostr, pero tiene varios 
 
 ### Comparación: NIP-04 vs NIP-17
 
-| Característica         | NIP-04                   | NIP-17                                |
-| ---------------------- | ------------------------ | ------------------------------------- |
-| **Encriptación**       | Una capa AES-256-CBC     | Doble capa (seal + gift wrap)         |
-| **Metadatos Remitente**| Visible para relays      | Oculto de todos excepto destinatario  |
-| **Metadatos Destinatario** | Visible para relays    | Oculto de todos excepto destinatario  |
-| **Contenido Mensaje**  | Encriptado               | Encriptado                            |
-| **Protección Replay**  | Ninguna                  | Timestamps integrados                 |
-| **Secreto Hacia Adelante** | No                  | Mejor (claves por mensaje)            |
-| **Estado Seguridad**   | **Deprecado**            | **Recomendado**                       |
-| **Interoperabilidad**  | Ampliamente soportado    | Soporte creciente                     |
+| Característica                 | NIP-04                | NIP-17                                        |
+| ------------------------------ | --------------------- | --------------------------------------------- |
+| **Encriptación**               | Una capa AES-256-CBC  | Doble capa (seal + gift wrap)                 |
+| **Metadatos del remitente**    | Visible para relays   | Oculto — firmado con una clave de un solo uso |
+| **Metadatos del destinatario** | Visible para relays   | **Sigue visible** — tag `p` en texto plano    |
+| **Contenido del mensaje**      | Encriptado            | Encriptado                                    |
+| **Protección contra replay**   | Ninguna               | Timestamps aleatorizados                      |
+| **Secreto hacia adelante**     | No                    | No — NIP-44 no lo proporciona                 |
+| **Estado de seguridad**        | **Deprecado**         | **Recomendado**                               |
+| **Interoperabilidad**          | Ampliamente soportado | Soporte creciente                             |
 
 ### El Problema Central con NIP-04
 
-Los mensajes NIP-04 exponen **quién habla con quién** en la blockchain. Mientras que el cuerpo del mensaje está encriptado, el sobre contiene:
+Los mensajes NIP-04 exponen **quién habla con quién** ante cada relay que los almacena. (Nostr no tiene blockchain: los eventos simplemente residen en los relays, y cualquiera puede leer de un relay.) Mientras que el cuerpo del mensaje está encriptado, el sobre contiene:
 
 ```
 # Estructura de Evento NIP-04 (simplificada)
@@ -108,9 +124,17 @@ Representación Visual:
 
 ### Beneficios Clave
 
-1. **Privacidad de Metadatos**: Nadie excepto el destinatario puede determinar quién envió el mensaje o a quién fue enviado
-2. **No Vinculable**: Múltiples mensajes entre las mismas partes aparecen como eventos no relacionados para observadores
-3. **Mejor Secreto Hacia Adelante**: Cada mensaje usa claves efímeras únicas
+1. **Privacidad del remitente**: nadie salvo el destinatario puede determinar
+   quién envió el mensaje. El destinatario, en cambio, aparece nombrado en un tag
+   `p` en texto plano que los relays tienen que poder leer.
+2. **No vinculable**: cada mensaje se firma con una clave nueva de un solo uso,
+   así que los mensajes de un mismo remitente no se ven obviamente relacionados
+   entre sí.
+3. **Sin secreto hacia adelante**: NIP-44 deriva su clave de conversación a
+   partir de dos claves estáticas, de modo que un atacante que más adelante
+   consiga tu `nsec` podrá desencriptar todos los mensajes que haya guardado. Las
+   claves de un solo uso ocultan *quién envió* un mensaje; no protegen los
+   mensajes pasados. Borra las conversaciones antiguas si eso te importa.
 
 ## Guía de Migración: Cambiando de NIP-04 a NIP-17
 
@@ -256,6 +280,25 @@ NIP-17 proporciona excelente privacidad pero no es perfecto:
 - El destinatario siempre ve la identidad del remitente
 
 ## Solución de Problemas Comunes
+
+### "Mis mensajes nunca llegan" — revisa primero tu lista de relays para DMs
+
+Este es el fallo más común de NIP-17, y casi nunca es un problema de
+encriptación.
+
+Quien te escribe con NIP-17 no entrega el mensaje a tus relays habituales. Su
+cliente busca un **evento kind 10050** — la lista que publicas de los relays que
+aceptan tus mensajes directos — y envía el gift wrap solo ahí. Si nunca has
+publicado una, el cliente del remitente no tiene dónde entregarlo y el mensaje se
+descarta en silencio. No aparece nada en ninguna de las dos interfaces.
+
+**Solución:** en un cliente compatible con NIP-17, busca el ajuste de relays para
+mensajes directos o privados y guarda al menos un relay. Eso publica tu lista
+kind 10050. Elige un relay que realmente acepte gift wraps: algunos rechazan de
+plano los eventos kind 1059.
+
+Mantén la lista corta. Cada relay que incluyas es un relay que podrá ver quién te
+está enviando mensajes.
 
 ### "Los mensajes aparecen como ilegibles o sin sentido"
 

@@ -188,7 +188,34 @@ Eine letzte Prüfung, bevor du loslegst:
 
 ### Du Bist Bereit! 🚀
 
-Öffne deinen gewählten Client und füge deinen nsec ein, um dich anzumelden. Das war's—du bist auf Nostr!
+Öffne deinen gewählten Client und melde dich an. **Wie** du dich anmeldest, ist
+wichtiger, als die meisten Anleitungen zugeben.
+
+**Auf dem Handy** fügst du deinen nsec einmal in die App ein. Eine mobile App ist
+eine Sandbox — nur sie kann lesen, was du dort einfügst.
+
+**Im Browser: füge deinen nsec niemals in die Website ein.** Installiere
+stattdessen eine Signer-Erweiterung — [Alby](https://getalby.com),
+[nos2x](https://github.com/fiatjaf/nos2x) oder
+[Nostore](https://apps.apple.com/app/nostore/id1666553677) für Safari. Der
+Schlüssel bleibt in der Erweiterung; die Website bittet sie, jede Aktion zu
+signieren, und sieht den Schlüssel selbst nie. Jeder ernstzunehmende Web-Client
+unterstützt das (es heißt NIP-07). Damit wird aus „eine schlechte Website kostet
+dich deine Identität" ein „eine schlechte Website bekommt nichts".
+
+Wenn du den Schlüssel gar nicht auf deinen Geräten haben willst, verwahrt ihn ein
+Remote-Signer wie [nsec.app](https://nsec.app) (NIP-46) und bestätigt Aktionen aus
+einer separaten App.
+
+<Callout variant="warning" title="Eine Website, die nach deinem nsec fragt, ist ein Warnsignal">
+  Sobald eine Seite deinen nsec hat, hat sie dauerhaft deine Identität — ein
+  Nostr-Schlüssel lässt sich weder rotieren noch der Zugriff entziehen. Es gibt
+  kein Passwort-Zurücksetzen und keinen Support.
+
+Seriöse Web-Clients bitten dich, einen Signer zu verbinden. Verlangt eine Seite,
+den privaten Schlüssel in ein Formular zu tippen oder einzufügen: Tab schließen.
+
+</Callout>
 
 <div className="my-8 text-center">
   <p className="text-gray-600 dark:text-gray-400 mb-4">

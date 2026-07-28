@@ -188,7 +188,33 @@ Ostatnie sprawdzenie, zanim wejdziesz na żywo:
 
 ### Jesteś Gotowy! 🚀
 
-Otwórz wybranego klienta i wklej swój nsec, aby się zalogować. To wszystko—jesteś na Nostr!
+Otwórz wybranego klienta i zaloguj się. **To, jak** się logujesz, ma większe
+znaczenie, niż przyznaje większość poradników.
+
+**Na telefonie** wklej nsec do aplikacji raz. Aplikacja mobilna to piaskownica —
+tylko ona odczyta to, co do niej wkleisz.
+
+**W przeglądarce nie wklejaj nsec na stronę.** Zainstaluj rozszerzenie
+podpisujące — [Alby](https://getalby.com),
+[nos2x](https://github.com/fiatjaf/nos2x) albo
+[Nostore](https://apps.apple.com/app/nostore/id1666553677) na Safari. Klucz
+zostaje w rozszerzeniu; strona prosi je o podpisanie każdej akcji i nigdy nie
+widzi samego klucza. Każdy poważny klient webowy to obsługuje (nazywa się to
+NIP-07) i zamienia „jedna zła strona kosztuje Cię tożsamość" w „jedna zła strona
+nie dostaje nic".
+
+Jeśli wolisz w ogóle nie trzymać klucza na swoich urządzeniach, zdalny podpisujący
+jak [nsec.app](https://nsec.app) (NIP-46) przechowa go i będzie zatwierdzał akcje
+z osobnej aplikacji.
+
+<Callout variant="warning" title="Strona, która prosi o nsec, to sygnał ostrzegawczy">
+  Gdy strona ma Twój nsec, ma Twoją tożsamość na zawsze — klucza Nostr nie da się
+  zrotować ani odebrać mu dostępu. Nie ma resetu hasła ani działu wsparcia.
+
+Uczciwe klienty webowe proszą o podłączenie podpisującego. Jeśli strona każe
+wpisać lub wkleić klucz prywatny do formularza, zamknij kartę.
+
+</Callout>
 
 <div className="my-8 text-center">
   <p className="text-gray-600 dark:text-gray-400 mb-4">

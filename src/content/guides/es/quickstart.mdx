@@ -188,7 +188,31 @@ Una última verificación antes de entrar en vivo:
 
 ### ¡Estás Listo! 🚀
 
-Abre tu cliente elegido y pega tu nsec para iniciar sesión. Eso es todo—¡estás en Nostr!
+Abre tu cliente elegido e inicia sesión. **Cómo** inicias sesión importa más de lo
+que admiten la mayoría de las guías.
+
+**En el móvil**, pega tu nsec en la app una vez. Una app móvil es un entorno
+aislado: solo esa app puede leer lo que pegas en ella.
+
+**En el navegador, no pegues tu nsec en el sitio web.** Instala una extensión
+firmante — [Alby](https://getalby.com),
+[nos2x](https://github.com/fiatjaf/nos2x) o
+[Nostore](https://apps.apple.com/app/nostore/id1666553677) en Safari. La clave
+vive en la extensión; el sitio le pide que firme cada acción y nunca ve la clave.
+Todo cliente web serio lo admite (se llama NIP-07), y convierte «un sitio malo te
+cuesta tu identidad» en «un sitio malo no obtiene nada».
+
+Si prefieres no tener la clave en tus dispositivos, un firmante remoto como
+[nsec.app](https://nsec.app) (NIP-46) la guarda y aprueba acciones desde otra app.
+
+<Callout variant="warning" title="Un sitio que te pide el nsec es una señal de alarma">
+  Cuando un sitio tiene tu nsec, tiene tu identidad para siempre: una clave Nostr
+  no se puede rotar ni revocar. No hay restablecimiento de contraseña ni soporte.
+
+Los clientes web legítimos te piden conectar un firmante. Si un sitio te pide
+escribir o pegar tu clave privada en un formulario, cierra la pestaña.
+
+</Callout>
 
 <div className="my-8 text-center">
   <p className="text-gray-600 dark:text-gray-400 mb-4">

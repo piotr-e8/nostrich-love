@@ -20,14 +20,32 @@ NIP-17 ist eine Nostr-Protokoll-Spezifikation, die **Private Direktnachrichten**
 
 Im Gegensatz zu NIP-04, das eine einzelne Schicht AES-256-CBC Verschlüsselung nutzte, verwendet NIP-17:
 
-1. **Seal** - Innere Verschlüsselungsschicht, die den Nachrichteninhalt schützt
-2. **Gift Wrap** - Äußere Verschlüsselungsschicht, die Absender- und Empfänger-Metadaten verbirgt
+1. **Seal** (kind 13) — eine innere Schicht, die die Nachricht verschlüsselt und
+   verbirgt, welcher Schlüssel sie signiert hat
+2. **Gift Wrap** (kind 1059) — ein äußerer Umschlag, der mit einem
+   Wegwerf-Schlüssel signiert wird, sodass deine echte Identität nie auf dem
+   Event auftaucht, das die Relays speichern
 
-Dieser duale Ansatz stellt sicher, dass:
+Diese Schichtung bedeutet:
 
-- Nachrichteninhalte privat bleiben
-- **Selbst Relay-Betreiber nicht sehen können, wer mit wem spricht**
-- Nachrichtenmuster und Metadaten vor Netzwerkbeobachtern geschützt sind
+- Nachrichteninhalte bleiben privat
+- **Relays können nicht sehen, wer eine Nachricht gesendet hat** — das Gift Wrap
+  ist mit einem zufälligen Einmal-Schlüssel signiert, nicht mit deinem
+- Zeitstempel werden zufällig verschoben, wodurch sich das Timing von Nachrichten
+  schwerer korrelieren lässt
+
+<Callout variant="warning" title="Relays sehen weiterhin, wem du schreibst">
+  Das Gift Wrap trägt den öffentlichen Schlüssel des Empfängers in einem
+  Klartext-`p`-Tag. Das muss es auch — sonst wüsste das Relay des Empfängers
+  nicht, wem es die Nachricht zustellen soll. NIP-17 verbirgt den **Absender**,
+  nicht den **Empfänger**.
+
+Wer den Stream eines Relays mitliest, sieht, dass dir jemand eine Nachricht
+geschickt hat und wann — nur nicht, wer und was. Wenn dein Bedrohungsmodell
+verlangt, dass niemand überhaupt erfährt, dass du etwas empfangen hast, reicht
+NIP-17 allein nicht aus.
+
+</Callout>
 
 ## Warum NIP-17 Wichtig Ist: Das NIP-04 Sicherheitsproblem
 
@@ -35,20 +53,20 @@ NIP-04 war Nostrs ursprüngliches Direktnachrichten-Protokoll, aber es hat mehre
 
 ### Vergleich: NIP-04 vs NIP-17
 
-| Feature                | NIP-04                   | NIP-17                                |
-| ---------------------- | ------------------------ | ------------------------------------- |
-| **Verschlüsselung**    | Einschichtig AES-256-CBC | Zweischichtig (seal + gift wrap)      |
-| **Absender-Metadaten** | Sichtbar für Relays      | Verborgen außer für Empfänger         |
-| **Empfänger-Metadaten**| Sichtbar für Relays      | Verborgen außer für Empfänger         |
-| **Nachrichteninhalt**  | Verschlüsselt            | Verschlüsselt                         |
-| **Replay-Schutz**      | Keiner                   | Eingebaute Zeitstempel                |
-| **Forward Secrecy**    | Nein                     | Besser (pro-Nachricht Schlüssel)      |
-| **Sicherheitsstatus**  | **Veraltet**             | **Empfohlen**                         |
-| **Interoperabilität**  | Weit unterstützt         | Wachsende Unterstützung               |
+| Feature                 | NIP-04                   | NIP-17                                    |
+| ----------------------- | ------------------------ | ----------------------------------------- |
+| **Verschlüsselung**     | Einschichtig AES-256-CBC | Zweischichtig (seal + gift wrap)          |
+| **Absender-Metadaten**  | Sichtbar für Relays      | Verborgen — mit Einmal-Schlüssel signiert |
+| **Empfänger-Metadaten** | Sichtbar für Relays      | **Weiterhin sichtbar** — Klartext-`p`-Tag |
+| **Nachrichteninhalt**   | Verschlüsselt            | Verschlüsselt                             |
+| **Replay-Schutz**       | Keiner                   | Zufällige Zeitstempel                     |
+| **Forward Secrecy**     | Nein                     | Nein — NIP-44 bietet sie nicht            |
+| **Sicherheitsstatus**   | **Veraltet**             | **Empfohlen**                             |
+| **Interoperabilität**   | Weit unterstützt         | Wachsende Unterstützung                   |
 
 ### Das Kernproblem mit NIP-04
 
-NIP-04 Nachrichten enthüllen **wer mit wem spricht** auf der Blockchain. Während der Nachrichteninhalt verschlüsselt ist, enthält der Umschlag:
+NIP-04 Nachrichten enthüllen **wer mit wem spricht** gegenüber jedem Relay, das sie speichert. (Nostr hat keine Blockchain — Events liegen einfach auf Relays, und jeder darf von einem Relay lesen.) Während der Nachrichteninhalt verschlüsselt ist, enthält der Umschlag:
 
 ```
 # NIP-04 Event Struktur (vereinfacht)
@@ -256,6 +274,26 @@ NIP-17 bietet exzellente Privatsphäre, ist aber nicht perfekt:
 - Der Empfänger sieht immer die Absender-Identität
 
 ## Fehlerbehebung bei Häufigen Problemen
+
+### „Meine Nachrichten kommen nie an" — prüfe zuerst deine DM-Relay-Liste
+
+Das ist der häufigste NIP-17-Fehler, und fast nie liegt es an der Verschlüsselung.
+
+NIP-17-Absender liefern nicht an deine normalen Relays. Sie suchen nach einem
+**kind-10050-Event** — deiner veröffentlichten Liste von Relays, die deine
+Direktnachrichten annehmen — und schicken das Gift Wrap ausschließlich dorthin.
+Hast du nie eine veröffentlicht, hat der Client des Absenders kein Ziel und die
+Nachricht wird stillschweigend verworfen. In keiner der beiden Oberflächen
+erscheint etwas.
+
+**Lösung:** Suche in einem Client mit NIP-17-Unterstützung die Relay-Einstellung
+für private Nachrichten und speichere mindestens ein Relay. Damit wird deine
+kind-10050-Liste veröffentlicht. Wähle ein Relay, das Gift Wraps tatsächlich
+annimmt — manche lehnen kind 1059 ab.
+
+Halte die Liste kurz. Jedes Relay darauf ist ein Relay, das sieht, wer dir
+schreibt.
+
 
 ### "Nachrichten zeigen sich als unlesbar oder Kauderwelsch"
 
