@@ -149,11 +149,23 @@ describe('badge persistence', () => {
   });
 
   it('the badge-earned event name matches between dispatcher and listener', () => {
-    const dispatcher = read('src/utils/gamificationEngine.ts');
+    // Every dispatcher and the listener must reference the shared
+    // BADGE_EARNED_EVENT constant — a hardcoded string on either side is
+    // exactly the drift that broke the modal (#49).
+    const engine = read('src/utils/gamificationEngine.ts');
+    const gamification = read('src/utils/gamification.ts');
     const listener = read('src/components/gamification/BadgeEarnedModalListener.tsx');
-    const dispatched = [...dispatcher.matchAll(/CustomEvent\(\s*['"]([\w-]+)['"]/g)].map((m) => m[1]);
-    const listened = [...listener.matchAll(/addEventListener\(\s*['"]([\w-]+)['"]/g)].map((m) => m[1]);
-    for (const name of listened) expect(dispatched).toContain(name);
+
+    expect(gamification).toMatch(/export const BADGE_EARNED_EVENT/);
+    expect(gamification).toMatch(/CustomEvent\(\s*BADGE_EARNED_EVENT/);
+    expect(engine).toMatch(/CustomEvent\(\s*BADGE_EARNED_EVENT/);
+    expect(listener).toMatch(/addEventListener\(\s*BADGE_EARNED_EVENT/);
+    expect(listener).toMatch(/removeEventListener\(\s*BADGE_EARNED_EVENT/);
+
+    // no stray hardcoded event names in dispatch/listen calls
+    const all = engine + gamification + listener;
+    expect(all).not.toMatch(/CustomEvent\(\s*['"]badge-/);
+    expect(all).not.toMatch(/addEventListener\(\s*['"]badge-/);
   });
 });
 

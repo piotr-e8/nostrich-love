@@ -6,6 +6,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { BadgeEarnedModal } from './BadgeEarnedModal';
+import { BADGE_EARNED_EVENT } from '../../utils/gamification';
 import type { Badge } from './types';
 
 export function BadgeEarnedModalListener() {
@@ -19,10 +20,10 @@ export function BadgeEarnedModalListener() {
       setIsOpen(true);
     };
 
-    window.addEventListener('badge-earned', handleBadgeEarned as EventListener);
+    window.addEventListener(BADGE_EARNED_EVENT, handleBadgeEarned as EventListener);
 
     return () => {
-      window.removeEventListener('badge-earned', handleBadgeEarned as EventListener);
+      window.removeEventListener(BADGE_EARNED_EVENT, handleBadgeEarned as EventListener);
     };
   }, []);
 

@@ -48,18 +48,18 @@ export const GAMIFICATION_CONFIG = {
     'first-post': {
       id: 'first-post',
       name: 'First Post',
-      description: 'Made your first post on Nostr',
+      description: 'Learned how to make your first post on Nostr',
       icon: '📝',
       rarity: 'common' as const,
-      requirement: 'Publish your first note (requires Nostr client)',
+      requirement: 'Complete the Quickstart guide',
     },
     'zap-receiver': {
       id: 'zap-receiver',
       name: 'Zap Receiver',
-      description: 'Received your first Lightning zap',
+      description: 'Learned how Lightning zaps work',
       icon: '⚡',
       rarity: 'rare' as const,
-      requirement: 'Receive a zap from another user (requires Nostr client)',
+      requirement: 'Complete the Zaps guide',
     },
     'community-builder': {
       id: 'community-builder',
@@ -74,23 +74,23 @@ export const GAMIFICATION_CONFIG = {
       name: 'Knowledge Seeker',
       description: 'Completed 3 guides',
       icon: '📚',
-      rarity: 'common' as const,
+      rarity: 'rare' as const,
       requirement: 'Complete any 3 learning guides',
     },
     'nostr-graduate': {
       id: 'nostr-graduate',
       name: 'Nostr Graduate',
-      description: 'Completed all learning guides',
+      description: 'Completed 9 guides',
       icon: '🎓',
       rarity: 'epic' as const,
-      requirement: 'Complete all 9 beginner-friendly guides',
+      requirement: 'Complete any 9 guides',
     },
     'security-conscious': {
       id: 'security-conscious',
       name: 'Security Conscious',
       description: 'Backed up your keys',
       icon: '🛡️',
-      rarity: 'common' as const,
+      rarity: 'rare' as const,
       requirement: 'Download your key backup file',
     },
     'relay-explorer': {
@@ -105,7 +105,7 @@ export const GAMIFICATION_CONFIG = {
       id: 'privacy-expert',
       name: 'Privacy Expert',
       description: 'Scored 100% on the Privacy & Security quiz',
-      icon: '🛡️',
+      icon: '🕵️',
       rarity: 'epic' as const,
       requirement: 'Complete the Privacy & Security quiz with a perfect score',
     },
@@ -240,7 +240,11 @@ export const GAMIFICATION_CONFIG = {
      * Making first post (requires external client)
      * - Counts toward streak
      * - Awards first-post badge
-     * NOTE: This requires actual Nostr client usage
+     * NOTE (#54): no in-app surface fires this any more — the posting
+     * simulators moved to the standalone sandstr project. The badge is now
+     * earned by completing the Quickstart guide (see checkBadgeRequirement
+     * in utils/gamification.ts); this activity is kept for a future client
+     * integration only.
      */
     makeFirstPost: {
       id: 'make-first-post',
@@ -261,7 +265,11 @@ export const GAMIFICATION_CONFIG = {
      * Receiving first zap (requires external client)
      * - Counts toward streak
      * - Awards zap-receiver badge
-     * NOTE: This requires actual Nostr client usage
+     * NOTE (#54): no in-app surface fires this any more — the zap simulators
+     * moved to the standalone sandstr project. The badge is now earned by
+     * completing the Zaps guide (see checkBadgeRequirement in
+     * utils/gamification.ts); this activity is kept for a future client
+     * integration only.
      */
     receiveFirstZap: {
       id: 'receive-first-zap',
@@ -282,6 +290,9 @@ export const GAMIFICATION_CONFIG = {
      * Completing a quiz
      * - Counts toward streak
      * - Awards privacy-expert badge for perfect score on privacy quiz
+     * NOTE: PrivacySecurityQuiz awards the badge directly through
+     * utils/gamification.ts (awardBadge + recordPrivacyQuizPerfectScore);
+     * nothing calls recordActivity('completeQuiz') today.
      */
     completeQuiz: {
       id: 'complete-quiz',

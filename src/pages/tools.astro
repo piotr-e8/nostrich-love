@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import { BadgeEarnedModalListener } from '../components/gamification/BadgeEarnedModalListener';
 import { KeyGenerator, NIP05Checker, RelayPlayground, FollowPackFinder } from '../components/interactive';
 
 const title = 'Interactive Tools';
@@ -89,4 +90,6 @@ const tools = [
   </main>
 
   <Footer />
+  <!-- Badge celebrations can fire from this page (key generation / follows / import) -->
+  <BadgeEarnedModalListener client:only="react" />
 </Layout>

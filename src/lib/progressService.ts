@@ -1,6 +1,25 @@
 // Progress tracking service for anonymous localStorage-based progress
 // Aligned with Nostr values: privacy-first, no server contact, user control
 // Now unified with gamification system (nostrich-gamification-v1)
+//
+// ARCHITECTURE NOTE (#35): this module and utils/gamification.ts both write
+// the same storage key but model it differently (per-guide map here vs
+// badges/stats/levels there). Routing all gamification writes through this
+// service would mean rebuilding its lossy guides-map model around badges,
+// streaks and per-level progress — a rewrite, not a consolidation. Instead,
+// the single choke point for privacy enforcement is
+// gamification.saveGamificationData() (which reads the same
+// nostrich-privacy-settings key), and this module's own writes stay guarded
+// by getPrivacySettings(). Import/restore is an explicit user action and is
+// allowed to write regardless of the tracking toggle.
+
+import {
+  loadGamificationData,
+  saveGamificationData,
+  mergeImportedGamificationData,
+  type GamificationData,
+} from '../utils/gamification';
+import { getGuideLevel } from '../data/learning-paths';
 
 const STORAGE_KEY = 'nostrich-gamification-v1';
 const DEVICE_ID_KEY = 'nostrich-device-id';
@@ -20,11 +39,12 @@ function getDeviceId(): string {
   return deviceId;
 }
 
-// Default privacy settings - all opt-in, disabled by default
+// Default privacy settings — tracking is ON by default (opt-out via the
+// settings page). Everything stays on this device either way.
 const defaultPrivacySettings: PrivacySettings = {
-  trackingEnabled: true,        // ← Enable tracking
+  trackingEnabled: true,
   dataRetention: 'forever',
-  showProgressIndicators: true, // ← Show indicators
+  showProgressIndicators: true,
   toursEnabled: true,
 };
 
@@ -51,6 +71,12 @@ export interface ProgressData {
   guides: Record<string, GuideProgress>;
   preferences: PrivacySettings;
   lastUpdatedAt: string;
+  /**
+   * Full gamification state (badges, streak, stats, per-level progress).
+   * Present in exports since #52 so a restore on a fresh browser loses
+   * nothing; imports of older exports without it are still accepted.
+   */
+  gamification?: GamificationData;
 }
 
 // Get privacy settings
@@ -128,15 +154,17 @@ export function getProgressData(): ProgressData {
 }
 
 // Save progress data (merges with existing gamification data)
-function saveProgressData(data: ProgressData): void {
-  if (!isBrowser) return;
-  
+// @returns whether anything was persisted — 'session' retention drops the
+// write by design, and import must not report success for a dropped write
+function saveProgressData(data: ProgressData): boolean {
+  if (!isBrowser) return false;
+
   const settings = getPrivacySettings();
-  
+
   // Check retention policy
   if (settings.dataRetention === 'session') {
     // Don't save to localStorage - session only
-    return;
+    return false;
   }
   
   // Clean old data based on retention
@@ -153,24 +181,62 @@ function saveProgressData(data: ProgressData): void {
     console.error('Error reading existing gamification data:', e);
   }
   
-  // Convert guides object to completedGuides array format
-  const completedGuides = Object.values(cleanedData.guides)
+  // Convert guides object to completedGuides array format. Union with the
+  // already-persisted list so this writer can never silently drop
+  // completions recorded by the gamification writers (#35).
+  const existingProgress = (existingData.progress as Record<string, unknown>) || {};
+  const existingCompleted = Array.isArray(existingProgress.completedGuides)
+    ? (existingProgress.completedGuides as string[])
+    : [];
+  const derivedCompleted = Object.values(cleanedData.guides)
     .filter(g => g.status === 'completed')
     .map(g => g.guideId);
-  
+  const completedGuides = [...new Set([...existingCompleted, ...derivedCompleted])];
+
+  // Keep the per-level view and the Recent Activity timestamps in sync with
+  // the flat list, so /progress does not diverge from it (#35).
+  const existingByLevel = (existingProgress.completedByLevel as Record<string, string[]>) || {};
+  const completedByLevel = {
+    beginner: [...(existingByLevel.beginner || [])],
+    intermediate: [...(existingByLevel.intermediate || [])],
+    advanced: [...(existingByLevel.advanced || [])],
+  };
+  const completedGuidesWithTimestamps = Array.isArray(existingProgress.completedGuidesWithTimestamps)
+    ? [...(existingProgress.completedGuidesWithTimestamps as { id: string; completedAt: string }[])]
+    : [];
+  completedGuides.forEach((guideId) => {
+    const level = getGuideLevel(guideId);
+    if (level && !completedByLevel[level].includes(guideId)) {
+      completedByLevel[level].push(guideId);
+    }
+    if (!completedGuidesWithTimestamps.find((g) => g.id === guideId)) {
+      completedGuidesWithTimestamps.push({
+        id: guideId,
+        completedAt: cleanedData.guides[guideId]?.completedAt || new Date().toISOString(),
+      });
+    }
+  });
+
   // Merge: keep existing gamification data, update progress fields
   const mergedData = {
     ...existingData,
     progress: {
-      ...(existingData.progress as Record<string, unknown> || {}),
+      ...existingProgress,
       completedGuides,
-      lastActive: new Date().toISOString(),
+      completedByLevel,
+      completedGuidesWithTimestamps,
+      // recordActivity() in gamification.ts is the SOLE owner of lastActive
+      // (#48). Stamping Date.now() here let a scroll-progress write land
+      // before the day's recordActivity() ran, which then saw a same-day
+      // repeat and silently skipped the streak increment.
+      lastActive: existingProgress.lastActive ?? null,
     },
     // Only update version if not present
     version: (existingData.version as number) || 1,
   };
-  
+
   localStorage.setItem(STORAGE_KEY, JSON.stringify(mergedData));
+  return true;
 }
 
 // Clean old data based on retention policy
@@ -268,20 +334,48 @@ export function markGuideCompleted(guideId: string): void {
   });
 }
 
-// Export progress data as JSON
+// Export progress data as JSON.
+// Includes the FULL persisted gamification state (badges, streak, stats,
+// per-level progress) — the guides map alone loses everything else (#52).
 export function exportProgressData(): string {
-  const data = getProgressData();
+  const data: ProgressData = {
+    ...getProgressData(),
+    gamification: loadGamificationData(),
+  };
   return JSON.stringify(data, null, 2);
 }
 
-// Import progress data from JSON
+// Import progress data from JSON.
+// Accepts both the old partial shape ({schemaVersion, guides, ...}) and the
+// full shape that additionally carries `gamification` (#52). Import is an
+// explicit user action, so it restores data even when tracking is disabled.
 export function importProgressData(jsonString: string): boolean {
   try {
     const data = JSON.parse(jsonString) as ProgressData;
+    if (!data || typeof data !== 'object') return false;
+
+    let imported = false;
+
     if (data.schemaVersion && data.guides) {
-      saveProgressData(data);
-      return true;
+      const wrote = saveProgressData(data);
+      // saveProgressData writes only the progress section; on a fresh
+      // browser that leaves a state without badges/stats. Run it through
+      // the normalizing loader so raw readers see the full schema. Forced:
+      // an import is an explicit user action (#51). Skipped under 'session'
+      // retention, where saveProgressData deliberately persisted nothing —
+      // and where reporting success would show "imported" for a no-op.
+      if (wrote) {
+        saveGamificationData(loadGamificationData(), { force: true });
+        imported = true;
+      }
     }
+
+    if (data.gamification && data.gamification.badges && data.gamification.progress) {
+      mergeImportedGamificationData(data.gamification);
+      imported = true;
+    }
+
+    return imported;
   } catch (e) {
     console.error('Error importing progress data:', e);
   }

@@ -20,6 +20,12 @@ import {
   getGuideLevel
 } from '../data/learning-paths';
 
+// Import privacy settings (progressService owns the toggle)
+import {
+  isTrackingEnabled,
+  shouldShowProgressIndicators as shouldShowProgressIndicatorsService
+} from './progressService';
+
 // Import gamification functions
 import {
   getCurrentLevel,
@@ -198,6 +204,9 @@ export function setLastViewedGuide(
     percentage?: number;
   }
 ): void {
+  // Respect the privacy toggle (#51): last-viewed is tracking data too.
+  if (!isTrackingEnabled()) return;
+
   const data = getGamificationData();
   const currentLevel = getCurrentLevel();
 
@@ -230,8 +239,9 @@ export function setLastViewedGuide(
     localStorage.setItem('nostrich-last-viewed', JSON.stringify(lastViewed));
   }
 
-  data.progress.lastActive = Date.now();
-
+  // NOTE (#48): lastActive is deliberately NOT written here. recordActivity()
+  // in gamification.ts owns it — writing it first made every guide view look
+  // like a same-day repeat, so the streak never left 0.
   saveGamificationData(data);
 }
 
@@ -372,8 +382,9 @@ export function getStreakDays(): number {
  * Maintains compatibility with existing code
  */
 export function shouldShowProgressIndicators(): boolean {
-  // Always show progress indicators in this version
-  return true;
+  // Delegate to progressService so the privacy settings are honored (#51);
+  // this used to hard-return true, ignoring the user's toggle.
+  return shouldShowProgressIndicatorsService();
 }
 
 // =============================================================================

@@ -8,7 +8,7 @@
  * - Structure: { badges, progress, stats }
  * 
  * Features:
- * - 8 achievement badges with auto-award logic
+ * - 9 achievement badges with auto-award logic
  * - Progress tracking (guides, streaks, activity)
  * - Optional NIP-58 badge publishing to Nostr network
  */
@@ -143,7 +143,26 @@ export const GAMIFICATION_STORAGE_KEY = 'nostrich-gamification-v1';
 const STORAGE_KEY = GAMIFICATION_STORAGE_KEY;
 const CURRENT_VERSION = 1;
 
-/** All 8 badge definitions */
+/**
+ * Name of the window CustomEvent fired whenever a badge is earned.
+ * Shared by every award path and by BadgeEarnedModalListener so the
+ * dispatcher and the listener can never drift apart again (#49).
+ */
+export const BADGE_EARNED_EVENT = 'badge-earned';
+
+/** Same key progressService uses for the privacy toggle (read-only here). */
+const PRIVACY_SETTINGS_KEY = 'nostrich-privacy-settings';
+
+/**
+ * Guides whose completion earns the repurposed client badges (#54).
+ * The in-app posting/zap simulators moved to the standalone sandstr project,
+ * so these badges are now earned by completing the guides that teach the
+ * same skills. The legacy stats (firstPostMade/firstZapReceived) still count.
+ */
+const FIRST_POST_GUIDE = 'quickstart';
+const ZAP_GUIDE = 'zaps-and-lightning';
+
+/** All 9 badge definitions */
 export const BADGE_DEFINITIONS: Badge[] = [
   {
     id: 'key-master',
@@ -156,18 +175,18 @@ export const BADGE_DEFINITIONS: Badge[] = [
   {
     id: 'first-post',
     name: 'First Post',
-    description: 'Made your first post on Nostr',
+    description: 'Learned how to make your first post on Nostr',
     icon: '📝',
     rarity: 'common',
-    requirement: 'Publish your first note',
+    requirement: 'Complete the Quickstart guide',
   },
   {
     id: 'zap-receiver',
     name: 'Zap Receiver',
-    description: 'Received your first Lightning zap',
+    description: 'Learned how Lightning zaps work',
     icon: '⚡',
     rarity: 'rare',
-    requirement: 'Receive a zap from another user',
+    requirement: 'Complete the Zaps guide',
   },
   {
     id: 'community-builder',
@@ -180,7 +199,7 @@ export const BADGE_DEFINITIONS: Badge[] = [
   {
     id: 'knowledge-seeker',
     name: 'Knowledge Seeker',
-    description: 'Completed 3 beginner guides',
+    description: 'Completed 3 learning guides',
     icon: '📚',
     rarity: 'rare',
     requirement: 'Complete any 3 guides',
@@ -188,10 +207,10 @@ export const BADGE_DEFINITIONS: Badge[] = [
   {
     id: 'nostr-graduate',
     name: 'Nostr Graduate',
-    description: 'Completed all beginner guides',
+    description: 'Completed 9 guides',
     icon: '🎓',
     rarity: 'epic',
-    requirement: 'Complete every beginner guide',
+    requirement: 'Complete any 9 guides',
   },
   {
     id: 'security-conscious',
@@ -213,7 +232,7 @@ export const BADGE_DEFINITIONS: Badge[] = [
     id: 'privacy-expert',
     name: 'Privacy Expert',
     description: 'Scored 100% on the Privacy & Security quiz',
-    icon: '🛡️',
+    icon: '🕵️',
     rarity: 'epic',
     requirement: 'Complete the Privacy & Security quiz with a perfect score',
   },
@@ -231,6 +250,25 @@ const TOTAL_BEGINNER_GUIDES = 9; // Based on the sequence in guides/index.astro
  */
 function isBrowser(): boolean {
   return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
+}
+
+/**
+ * Mirror of progressService.getPrivacySettings().trackingEnabled, read
+ * directly from localStorage to avoid a module cycle (progressService imports
+ * from this file). Tracking defaults to enabled; only an explicit opt-out
+ * blocks writes (#51).
+ */
+function isTrackingEnabled(): boolean {
+  try {
+    const stored = localStorage.getItem(PRIVACY_SETTINGS_KEY);
+    if (stored) {
+      const settings = JSON.parse(stored);
+      if (settings && settings.trackingEnabled === false) return false;
+    }
+  } catch {
+    // Unreadable settings must not block writes; fall through to enabled.
+  }
+  return true;
 }
 
 /**
@@ -401,9 +439,24 @@ export function loadGamificationData(): GamificationData {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       const parsed = JSON.parse(stored) as GamificationData;
+      if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) {
+        throw new Error('Stored gamification value is not an object');
+      }
+
+      // Normalization: a partial writer (e.g. an old-shape import via
+      // progressService) may have persisted a state missing whole sections.
+      // That is migratable, not corrupt — only unparseable/non-object JSON
+      // is quarantined below (#111).
+      const defaultData = getDefaultData();
+      if (!parsed.badges) parsed.badges = defaultData.badges;
+      if (!parsed.progress) parsed.progress = defaultData.progress;
+      if (!parsed.stats) parsed.stats = defaultData.stats;
+      if (!Array.isArray(parsed.progress.completedGuides)) parsed.progress.completedGuides = [];
+      if (!Array.isArray(parsed.progress.completedGuidesWithTimestamps)) parsed.progress.completedGuidesWithTimestamps = [];
+      if (typeof parsed.progress.streakDays !== 'number') parsed.progress.streakDays = 0;
+      if (parsed.progress.lastActive === undefined) parsed.progress.lastActive = null;
 
       // Migration: ensure all badge IDs exist
-      const defaultData = getDefaultData();
       BADGE_DEFINITIONS.forEach((badge) => {
         if (!parsed.badges[badge.id]) {
           parsed.badges[badge.id] = { earned: false, earnedAt: 0 };
@@ -448,7 +501,14 @@ export function loadGamificationData(): GamificationData {
       return parsed;
     }
   } catch (error) {
-    console.warn('Error loading gamification data:', error);
+    console.warn('Error loading gamification data, quarantining corrupt state:', error);
+    // Remove the corrupt value so it cannot latch every future read AND
+    // write into failure (#111). The user restarts from defaults.
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // storage itself is unavailable — nothing more we can do
+    }
   }
 
   return getDefaultData();
@@ -457,20 +517,40 @@ export function loadGamificationData(): GamificationData {
 /**
  * Save gamification data to localStorage
  * @param data - Gamification data to save
+ * @param options - force bypasses the privacy gate (explicit user actions
+ *   such as import/restore only)
+ * @returns whether the write actually landed — callers that celebrate an
+ *   award (modal dispatch) must not do so when the gate dropped the write,
+ *   or users with tracking disabled get a phantom celebration on every retry
  */
-export function saveGamificationData(data: GamificationData): void {
-  if (!isBrowser()) return;
+export function saveGamificationData(data: GamificationData, options?: { force?: boolean }): boolean {
+  if (!isBrowser()) return false;
+
+  // Respect the privacy toggle for every tracking write (#51). All badge,
+  // streak, stats and completion mutations funnel through this function.
+  if (!options?.force && !isTrackingEnabled()) return false;
 
   try {
     // Read existing data directly from localStorage (without triggering migration)
     let existing: GamificationData;
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
-      existing = JSON.parse(stored);
+      try {
+        existing = JSON.parse(stored);
+        if (typeof existing !== 'object' || existing === null || Array.isArray(existing)) {
+          throw new Error('Stored gamification value is not an object');
+        }
+      } catch (parseError) {
+        // A corrupt stored value used to throw here on EVERY save, silently
+        // disabling all future writes (#111). Quarantine it instead.
+        console.warn('Corrupt gamification data found, resetting it:', parseError);
+        localStorage.removeItem(STORAGE_KEY);
+        existing = getDefaultData();
+      }
     } else {
       existing = getDefaultData();
     }
-    
+
     // Merge data
     const merged = {
       ...existing,
@@ -490,8 +570,10 @@ export function saveGamificationData(data: GamificationData): void {
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
     console.log('[saveGamificationData] Saved data with unlockedLevels:', merged.progress.unlockedLevels);
+    return true;
   } catch (error) {
     console.warn('Error saving gamification data:', error);
+    return false;
   }
 }
 
@@ -520,16 +602,101 @@ export function exportGamificationData(): string {
 export function importGamificationData(jsonString: string): boolean {
   try {
     const data = JSON.parse(jsonString) as GamificationData;
-    
+
     // Validate structure
     if (data.badges && data.progress && data.stats && data.version) {
-      saveGamificationData(data);
+      mergeImportedGamificationData(data);
       return true;
     }
   } catch (error) {
     console.error('Error importing gamification data:', error);
   }
   return false;
+}
+
+/**
+ * Merge an imported gamification snapshot into the current state without
+ * losing anything earned locally (#52): a badge stays earned if either side
+ * earned it, guide lists are unioned, and counters keep their higher value.
+ * Used by both import paths (settings page via progressService, and
+ * importGamificationData above).
+ */
+export function mergeImportedGamificationData(imported: GamificationData): void {
+  const existing = loadGamificationData();
+  const merged = getDefaultData();
+
+  // Badges: earned wins; keep the local record when both sides earned it
+  BADGE_DEFINITIONS.forEach((badge) => {
+    const local = existing.badges[badge.id];
+    const incoming = imported.badges?.[badge.id];
+    if (local?.earned) {
+      merged.badges[badge.id] = local;
+    } else if (incoming?.earned) {
+      merged.badges[badge.id] = { earned: true, earnedAt: incoming.earnedAt || Date.now() };
+    }
+  });
+
+  const union = (a?: string[], b?: string[]) => [...new Set([...(a || []), ...(b || [])])];
+  const toMillis = (value: number | string | null | undefined): number | null => {
+    if (value === null || value === undefined) return null;
+    const ms = typeof value === 'number' ? value : new Date(value).getTime();
+    return Number.isFinite(ms) ? ms : null;
+  };
+  const lastActiveCandidates = [
+    toMillis(existing.progress.lastActive),
+    toMillis(imported.progress?.lastActive),
+  ].filter((ms): ms is number => ms !== null);
+
+  // Completion timestamps: union by guide id, local entry wins
+  const timestamps = new Map<string, { id: string; completedAt: string }>();
+  (imported.progress?.completedGuidesWithTimestamps || []).forEach((g) => timestamps.set(g.id, g));
+  (existing.progress.completedGuidesWithTimestamps || []).forEach((g) => timestamps.set(g.id, g));
+
+  merged.progress = {
+    ...existing.progress,
+    completedGuides: union(existing.progress.completedGuides, imported.progress?.completedGuides),
+    completedGuidesWithTimestamps: [...timestamps.values()],
+    streakDays: Math.max(existing.progress.streakDays || 0, imported.progress?.streakDays || 0),
+    lastActive: lastActiveCandidates.length > 0 ? Math.max(...lastActiveCandidates) : null,
+    currentLevel: imported.progress?.currentLevel || existing.progress.currentLevel,
+    unlockedLevels: union(
+      existing.progress.unlockedLevels,
+      imported.progress?.unlockedLevels
+    ) as GamificationProgress['unlockedLevels'],
+    manualUnlock: Boolean(existing.progress.manualUnlock || imported.progress?.manualUnlock),
+    completedByLevel: {
+      beginner: union(existing.progress.completedByLevel?.beginner, imported.progress?.completedByLevel?.beginner),
+      intermediate: union(existing.progress.completedByLevel?.intermediate, imported.progress?.completedByLevel?.intermediate),
+      advanced: union(existing.progress.completedByLevel?.advanced, imported.progress?.completedByLevel?.advanced),
+    },
+    lastInterestFilter: existing.progress.lastInterestFilter ?? imported.progress?.lastInterestFilter ?? null,
+  };
+
+  merged.stats = {
+    keysGenerated: Boolean(existing.stats.keysGenerated || imported.stats?.keysGenerated),
+    firstPostMade: Boolean(existing.stats.firstPostMade || imported.stats?.firstPostMade),
+    firstZapReceived: Boolean(existing.stats.firstZapReceived || imported.stats?.firstZapReceived),
+    accountsFollowed: Math.max(existing.stats.accountsFollowed || 0, imported.stats?.accountsFollowed || 0),
+    keysBackedUp: Boolean(existing.stats.keysBackedUp || imported.stats?.keysBackedUp),
+    relaysConnected: Math.max(existing.stats.relaysConnected || 0, imported.stats?.relaysConnected || 0),
+    privacyQuizPerfectScore: Boolean(existing.stats.privacyQuizPerfectScore || imported.stats?.privacyQuizPerfectScore),
+  };
+
+  // The imported progress may satisfy requirements the snapshot predates —
+  // award those inside the same forced write (checkAndAwardBadges' own save
+  // would be blocked while tracking is disabled).
+  const newlyEarned: BadgeId[] = [];
+  BADGE_DEFINITIONS.forEach((badge) => {
+    if (!merged.badges[badge.id].earned && checkBadgeRequirement(badge.id, merged)) {
+      merged.badges[badge.id] = { earned: true, earnedAt: Date.now() };
+      newlyEarned.push(badge.id);
+    }
+  });
+
+  // Import is an explicit user action: it may write even when tracking is
+  // disabled (#51) — the user is restoring their own data.
+  saveGamificationData(merged, { force: true });
+  newlyEarned.forEach((badgeId) => dispatchBadgeEarned(badgeId));
 }
 
 // =============================================================================
@@ -579,23 +746,53 @@ export function hasBadge(badgeId: BadgeId): boolean {
 }
 
 /**
+ * Notify the UI that a badge was just earned. BadgeEarnedModalListener shows
+ * the celebration modal for this event, so EVERY award path must dispatch it
+ * — not only the config-driven engine (#49).
+ */
+function dispatchBadgeEarned(badgeId: BadgeId): void {
+  if (typeof window === 'undefined' || typeof window.dispatchEvent !== 'function') return;
+
+  const definition = BADGE_DEFINITIONS.find((b) => b.id === badgeId);
+  if (!definition) return;
+
+  window.dispatchEvent(
+    new CustomEvent(BADGE_EARNED_EVENT, {
+      detail: {
+        id: definition.id,
+        name: definition.name,
+        description: definition.description,
+        emoji: definition.icon,
+        rarity: definition.rarity,
+        requirement: definition.requirement,
+        unlockedAt: new Date(),
+      },
+    })
+  );
+}
+
+/**
  * Award a badge to the user
  * @param badgeId - Badge identifier to award
  * @returns True if badge was newly awarded, false if already had it
  */
 export function awardBadge(badgeId: BadgeId): boolean {
   const data = loadGamificationData();
-  
+
   if (data.badges[badgeId].earned) {
     return false; // Already earned
   }
-  
+
   data.badges[badgeId] = {
     earned: true,
     earnedAt: Date.now(),
   };
-  
-  saveGamificationData(data);
+
+  // Celebrate only when the award actually persisted — with tracking
+  // disabled the gate drops the write, and dispatching anyway would show
+  // the modal on every retry while /badges keeps the badge locked.
+  if (!saveGamificationData(data)) return false;
+  dispatchBadgeEarned(badgeId);
   return true;
 }
 
@@ -824,9 +1021,14 @@ export function checkAndAwardBadges(): BadgeCheckResult {
     }
   });
   
-  // Save if any badges were awarded
+  // Save if any badges were awarded; a dropped write (tracking disabled)
+  // means nothing was earned — don't dispatch and don't report awards.
   if (newlyEarned.length > 0) {
-    saveGamificationData(data);
+    if (saveGamificationData(data)) {
+      newlyEarned.forEach((badgeId) => dispatchBadgeEarned(badgeId));
+    } else {
+      newlyEarned.length = 0;
+    }
   }
   
   const progress = calculateProgress();
@@ -850,10 +1052,12 @@ function checkBadgeRequirement(badgeId: BadgeId, data: GamificationData): boolea
       return data.stats.keysGenerated;
       
     case 'first-post':
-      return data.stats.firstPostMade;
-      
+      // Repurposed (#54): the posting simulators moved to sandstr, so the
+      // Quickstart guide (which walks through the first post) earns this now.
+      return data.stats.firstPostMade || data.progress.completedGuides.includes(FIRST_POST_GUIDE);
+
     case 'zap-receiver':
-      return data.stats.firstZapReceived;
+      return data.stats.firstZapReceived || data.progress.completedGuides.includes(ZAP_GUIDE);
       
     case 'community-builder':
       return data.stats.accountsFollowed >= 10;
@@ -1176,6 +1380,16 @@ export function completeGuideInLevel(
 
 
 /**
+ * Canonical unlock-threshold formula (#50). Level gating is gone from the UI,
+ * but canUnlockNext is still part of getLevelProgress' public shape — every
+ * consumer must derive it from this single function instead of re-deriving
+ * the number.
+ */
+export function getLevelUnlockThreshold(totalGuidesInLevel: number): number {
+  return Math.max(4, Math.ceil(totalGuidesInLevel * 0.7));
+}
+
+/**
  * Get progress stats for a specific level
  */
 export function getLevelProgress(level: 'beginner' | 'intermediate' | 'advanced'): {
@@ -1190,8 +1404,7 @@ export function getLevelProgress(level: 'beginner' | 'intermediate' | 'advanced'
   const total = SKILL_LEVELS[level]?.sequence?.length || 0;
   const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
-  const threshold = Math.max(4, Math.ceil(total * 0.7));
-  const canUnlockNext = completed >= threshold;
+  const canUnlockNext = completed >= getLevelUnlockThreshold(total);
 
   return { completed, total, percentage, canUnlockNext };
 }

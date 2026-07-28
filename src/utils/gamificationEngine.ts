@@ -7,8 +7,9 @@
 
 import { GAMIFICATION_CONFIG, type ActivityId, type BadgeId } from '../config/gamification';
 import { SKILL_LEVELS, type SkillLevel } from '../data/learning-paths';
-import { 
-  loadGamificationData, 
+import {
+  BADGE_EARNED_EVENT,
+  loadGamificationData,
   saveGamificationData,
   completeGuide,
   completeGuideInLevel,
@@ -16,7 +17,6 @@ import {
 } from './gamification';
 
 const STORAGE_KEY = 'nostrich-gamification-v1';
-const CURRENT_VERSION = 1;
 
 // Storage format - MUST match gamification.ts interface
 interface GamificationData {
@@ -44,105 +44,10 @@ interface GamificationData {
 // Check if running in browser
 const isBrowser = () => typeof window !== 'undefined';
 
-/**
- * Get default/empty gamification data
- */
-function getDefaultData(): GamificationData {
-  // Initialize all badges as unearned
-  const badges: Record<string, { earned: boolean; earnedAt: number }> = {};
-  Object.keys(GAMIFICATION_CONFIG.badges).forEach((badgeId) => {
-    badges[badgeId] = { earned: false, earnedAt: 0 };
-  });
-
-  return {
-    badges,
-    progress: {
-      completedGuides: [],
-      completedGuidesWithTimestamps: [],
-      streakDays: 0,
-      lastActive: null,
-      // NEW: Skill level defaults
-      currentLevel: 'beginner',
-      unlockedLevels: ['beginner'],
-      manualUnlock: false,
-      completedByLevel: {
-        beginner: [],
-        intermediate: [],
-        advanced: []
-      },
-      lastInterestFilter: null
-    },
-    stats: {},
-    version: CURRENT_VERSION,
-  };
-}
-
-/**
- * Load gamification data from localStorage
- */
-function loadData(): GamificationData {
-  if (!isBrowser()) return getDefaultData();
-
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      const parsed = JSON.parse(stored) as GamificationData;
-      
-      // Ensure all badges exist (migration for new badges)
-      const defaultData = getDefaultData();
-      Object.keys(defaultData.badges).forEach((badgeId) => {
-        if (!parsed.badges[badgeId]) {
-          parsed.badges[badgeId] = { earned: false, earnedAt: 0 };
-        }
-      });
-      
-      // Ensure completedGuidesWithTimestamps exists
-      if (!parsed.progress.completedGuidesWithTimestamps) {
-        parsed.progress.completedGuidesWithTimestamps = [];
-      }
-      
-      // NEW: Ensure skill level fields exist (migration for Phase 1)
-      if (!parsed.progress.currentLevel) {
-        parsed.progress.currentLevel = 'beginner';
-      }
-      if (!parsed.progress.unlockedLevels) {
-        parsed.progress.unlockedLevels = ['beginner'];
-      }
-      if (parsed.progress.manualUnlock === undefined) {
-        parsed.progress.manualUnlock = false;
-      }
-      if (!parsed.progress.completedByLevel) {
-        parsed.progress.completedByLevel = {
-          beginner: [],
-          intermediate: [],
-          advanced: []
-        };
-      }
-      if (parsed.progress.lastInterestFilter === undefined) {
-        parsed.progress.lastInterestFilter = null;
-      }
-      
-      return parsed;
-    }
-  } catch (error) {
-    console.warn('Error loading gamification data:', error);
-  }
-
-  return getDefaultData();
-}
-
-/**
- * Save gamification data to localStorage
- */
-function saveData(data: GamificationData): void {
-  if (!isBrowser()) return;
-  
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  } catch (error) {
-    console.error('Error saving gamification data:', error);
-  }
-}
+// NOTE: this module used to carry its own loadData/saveData pair for the
+// shared storage key. They were dead code (all live mutations delegate to
+// gamification.ts) but still a latent writer that bypassed both the merge
+// logic and the privacy gate, so they were removed (#35/#51).
 
 /**
  * Record an activity
@@ -174,8 +79,23 @@ export function recordActivity(
   // Check and award badges if configured
   if (activity.triggers.badges.length > 0) {
     const data = loadGamificationData() as unknown as GamificationData;
-    checkAndAwardBadgesForActivity(data, activityId, metadata);
-    saveGamificationData(data as any);
+
+    // Persist the counters behind threshold badges so the "next badge"
+    // progress on /badges reflects reality instead of a permanent 0/N.
+    if (metadata?.count !== undefined) {
+      if (activityId === 'selectRelays') {
+        data.stats.relaysConnected = Math.max(Number(data.stats.relaysConnected) || 0, metadata.count);
+      } else if (activityId === 'followAccounts') {
+        data.stats.accountsFollowed = Math.max(Number(data.stats.accountsFollowed) || 0, metadata.count);
+      }
+    }
+
+    const newlyAwarded = checkAndAwardBadgesForActivity(data, activityId, metadata);
+    // Celebrate only after the write lands — the privacy gate may drop it,
+    // and dispatching first showed the modal for a badge that never saved.
+    if (saveGamificationData(data as any)) {
+      newlyAwarded.forEach((badgeId) => dispatchBadgeEarnedFromConfig(badgeId));
+    }
   }
   
   // Dispatch event for real-time updates
@@ -191,7 +111,8 @@ function checkAndAwardBadgesForActivity(
   data: GamificationData,
   activityId: ActivityId,
   metadata?: { count?: number; guideId?: string }
-): void {
+): BadgeId[] {
+  const newlyAwarded: BadgeId[] = [];
   const activity = GAMIFICATION_CONFIG.activities[activityId];
   
   activity.triggers.badges.forEach(({ badgeId, trigger }) => {
@@ -225,46 +146,58 @@ function checkAndAwardBadgesForActivity(
         break;
     }
     
-    if (shouldAward) {
-      awardBadge(data, badgeId);
+    if (shouldAward && awardBadge(data, badgeId)) {
+      newlyAwarded.push(badgeId as BadgeId);
     }
   });
+
+  return newlyAwarded;
 }
 
 /**
- * Award a badge
+ * Award a badge. Mutates state only — the modal dispatch happens in
+ * trackActivity() after the write lands, so a save dropped by the privacy
+ * gate cannot produce a phantom celebration.
+ * @returns whether the badge was newly awarded
  */
-function awardBadge(data: GamificationData, badgeId: string): void {
+function awardBadge(data: GamificationData, badgeId: string): boolean {
   if (!data.badges[badgeId]) {
     data.badges[badgeId] = { earned: false, earnedAt: 0 };
   }
-  
-  if (!data.badges[badgeId].earned) {
-    data.badges[badgeId].earned = true;
-    data.badges[badgeId].earnedAt = Date.now();
-    
-    const badge = GAMIFICATION_CONFIG.badges[badgeId as BadgeId];
-    console.log(`[Gamification] Badge awarded: ${badge?.name || badgeId}`);
-    
-    // BadgeEarnedModalListener listens for 'badge-earned' and expects a full
-    // Badge object. This used to emit 'badge-awarded' with only an id and a
-    // name, so the modal never opened — and would have rendered blank if it had.
-    if (isBrowser() && badge) {
-      window.dispatchEvent(
-        new CustomEvent('badge-earned', {
-          detail: {
-            id: badgeId,
-            name: badge.name,
-            description: badge.description,
-            emoji: badge.icon,
-            rarity: badge.rarity,
-            requirement: badge.requirement,
-            unlockedAt: new Date(),
-          },
-        })
-      );
-    }
-  }
+
+  if (data.badges[badgeId].earned) return false;
+
+  data.badges[badgeId].earned = true;
+  data.badges[badgeId].earnedAt = Date.now();
+
+  const badge = GAMIFICATION_CONFIG.badges[badgeId as BadgeId];
+  console.log(`[Gamification] Badge awarded: ${badge?.name || badgeId}`);
+  return true;
+}
+
+/**
+ * Dispatch the badge-earned event for the celebration modal.
+ * BadgeEarnedModalListener listens for BADGE_EARNED_EVENT and expects a
+ * full Badge object. This used to emit a differently named event with only
+ * an id and a name, so the modal never opened — and would have rendered
+ * blank if it had. The shared constant keeps both sides in sync (#49).
+ */
+function dispatchBadgeEarnedFromConfig(badgeId: BadgeId): void {
+  const badge = GAMIFICATION_CONFIG.badges[badgeId];
+  if (!isBrowser() || !badge) return;
+  window.dispatchEvent(
+    new CustomEvent(BADGE_EARNED_EVENT, {
+      detail: {
+        id: badgeId,
+        name: badge.name,
+        description: badge.description,
+        emoji: badge.icon,
+        rarity: badge.rarity,
+        requirement: badge.requirement,
+        unlockedAt: new Date(),
+      },
+    })
+  );
 }
 
 /**
