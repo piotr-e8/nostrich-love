@@ -7,12 +7,27 @@
       "permanent": true
     },
     {
+      "source": "/en/guides/",
+      "destination": "/guides/",
+      "permanent": true
+    },
+    {
       "source": "/en/guides/:slug",
       "destination": "/guides/:slug",
       "permanent": true
     },
     {
+      "source": "/en/guides/:slug/",
+      "destination": "/guides/:slug/",
+      "permanent": true
+    },
+    {
       "source": "/en",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/",
       "destination": "/",
       "permanent": true
     }
