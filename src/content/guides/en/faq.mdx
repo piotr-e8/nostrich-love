@@ -7,7 +7,7 @@ category: "reference"
 prerequisites: []
 ---
 
-import { FAQAccordion } from "@components/ui/FAQAccordion";
+import FAQAccordion from "@components/ui/FAQAccordion.astro";
 
 {/* Search functionality coming soon */}
 
@@ -27,7 +27,6 @@ Nostr is a **protocol**—like email or the web. It defines how messages move be
 <FAQAccordion 
   question="What's the difference between npub and nsec? Which one do I share?"
   category="security"
-  client:idle
 >
   These are your two keys that work together:
 
@@ -55,7 +54,6 @@ Nostr is a **protocol**—like email or the web. It defines how messages move be
 <FAQAccordion 
   question="If I lose my private key, can I recover my account?"
   category="security"
-  client:idle
 >
   **No. There is no recovery.**
 
@@ -83,7 +81,6 @@ This is by design. Nostr is decentralized, which means there's no central author
 <FAQAccordion 
   question="Why do I need to save these long strings of characters?"
   category="basics"
-  client:idle
 >
   Those "long strings" are cryptographic keys. Here's why they look like gibberish:
 
@@ -108,7 +105,6 @@ This is by design. Nostr is decentralized, which means there's no central author
 <FAQAccordion 
   question="What's a NIP-05 identifier and do I need one?"
   category="advanced"
-  client:idle
 >
   A NIP-05 identifier is like a human-readable username for Nostr.
 
@@ -146,7 +142,6 @@ This is by design. Nostr is decentralized, which means there's no central author
 <FAQAccordion 
   question="Which Nostr client should I use? There are so many!"
   category="getting-started"
-  client:idle
 >
   There are dozens of Nostr clients, each with different strengths. Here's a quick guide:
 
@@ -184,7 +179,6 @@ This is by design. Nostr is decentralized, which means there's no central author
 <FAQAccordion 
   question="If I switch clients, will my posts and followers come with me?"
   category="basics"
-  client:idle
 >
   **Yes! This is the magic of Nostr.**
 
@@ -219,7 +213,6 @@ This is why Nostr is powerful—you're never trapped in one app.
 <FAQAccordion 
   question="Do I need to create a new account for each app?"
   category="basics"
-  client:idle
 >
   **No! One account works everywhere.**
 
@@ -253,7 +246,6 @@ This is one of Nostr's superpowers—true portability.
 <FAQAccordion 
   question="What are relays and why do I need to choose them?"
   category="technical"
-  client:idle
 >
   **Relays are the post offices of Nostr.**
 
@@ -295,7 +287,6 @@ Nostr is decentralized—no central server. You pick which post offices to use. 
 <FAQAccordion 
   question="If I post to one relay, will everyone see it?"
   category="technical"
-  client:idle
 >
   **Not automatically.** This confuses many beginners.
 
@@ -331,7 +322,6 @@ Nostr is decentralized—no central server. You pick which post offices to use. 
 <FAQAccordion 
   question="Why is my feed empty? Where is everyone?"
   category="troubleshooting"
-  client:idle
 >
   **The #1 beginner issue!** Here's why and how to fix it:
 
@@ -371,7 +361,6 @@ Nostr is decentralized—no central server. You pick which post offices to use. 
 <FAQAccordion 
   question="Which relays should I connect to?"
   category="technical"
-  client:idle
 >
   **Start with these reliable, free relays:**
 
@@ -412,7 +401,6 @@ wss://relay.current.fyi       (Fast, minimal)
 <FAQAccordion 
   question="How do I find people to follow?"
   category="getting-started"
-  client:idle
 >
   **Finding your community is the key to enjoying Nostr.** Here's how:
 
@@ -453,7 +441,6 @@ wss://relay.current.fyi       (Fast, minimal)
 <FAQAccordion 
   question="What are 'zaps' and how do I set them up?"
   category="advanced"
-  client:idle
 >
   **Zaps are Bitcoin tips sent over the Lightning Network.**
 
@@ -504,7 +491,6 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 <FAQAccordion 
   question="Why can't I see my old posts?"
   category="troubleshooting"
-  client:idle
 >
   **This usually happens for one of three reasons:**
 
@@ -552,7 +538,6 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 <FAQAccordion 
   question="Why are some of my messages not delivering?"
   category="troubleshooting"
-  client:idle
 >
   Usually relay connectivity issues. Messages may not deliver if: recipient is offline, relays are down, or you're not connected to the same relays. Check your relay connections, try adding more relays, or wait for propagation. Use multiple relays for redundancy.
 
@@ -575,7 +560,6 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 <FAQAccordion 
   question="How do I verify someone's identity?"
   category="security"
-  client:idle
 >
   Look for NIP-05 identifiers (human-readable names like alice@domain.com). Check if their profile has a verification badge. Cross-reference their npub on multiple platforms. For important contacts, verify through another communication channel. Be wary of accounts with slight spelling variations of popular names.
 
@@ -596,7 +580,6 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 <FAQAccordion 
   question="What happens if a relay deletes my content?"
   category="technical"
-  client:idle
 >
   If one relay deletes your content, it still exists on other relays you're connected to. However, new users on that specific relay won't see historical posts. This is why using multiple relays is recommended - your data is distributed, not centralized. You can always re-post to new relays.
 
@@ -617,7 +600,6 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 <FAQAccordion 
   question="Can I edit or delete posts?"
   category="basics"
-  client:idle
 >
   Nostr posts are immutable - they cannot be edited after posting. You can post a correction or follow-up note. For deletion, you can send a deletion request, but relays may or may not honor it. Think before you post - permanence is a feature of the protocol.
 
@@ -638,7 +620,6 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 <FAQAccordion 
   question="Why do I see different content on different clients?"
   category="technical"
-  client:idle
 >
   Each client connects to different default relays. Your feed depends on which relays you're connected to and who you follow. If Relay A has different users than Relay B, you'll see different content. This is normal - add more relays or follow more people to see consistent content across clients.
 
@@ -661,7 +642,6 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 <FAQAccordion 
   question="How do I backup my entire Nostr history?"
   category="security"
-  client:idle
 >
   Use tools like nostr-fetch or nak to export your events. Back up your nsec (private key) securely - this is critical. Your npub events are stored on relays, but having a local backup is wise. Consider using a personal relay to store your complete history.
 
@@ -688,7 +668,6 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 <FAQAccordion 
   question="What's the difference between NIP-04 and NIP-17 DMs?"
   category="advanced"
-  client:idle
 >
   NIP-04 (deprecated) uses shared secret encryption with known vulnerabilities. NIP-17 (recommended) uses sealed sender and gift-wrap for better privacy. NIP-17 hides metadata about who is messaging whom. Migrate to clients supporting NIP-17 for secure private messaging.
 
@@ -711,7 +690,6 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 <FAQAccordion 
   question="How do I run my own relay?"
   category="advanced"
-  client:idle
 >
   Popular options: strfry (Rust, high performance), nostream (TypeScript, easy setup), or khatru (Go). Requirements: server (VPS ~$5-20/month), domain name, basic CLI knowledge. Benefits: data sovereignty, custom policies, learning experience. See our Relay Guide for detailed setup instructions.
 
@@ -742,7 +720,6 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 <FAQAccordion 
   question="Are my DMs actually private?"
   category="security"
-  client:idle
 >
   With NIP-17 (recommended): Yes, content is encrypted and metadata is minimized. With old NIP-04: Content is encrypted but metadata leaks are possible. Relay operators can see you're messaging but not content or exact recipient with NIP-17. For maximum privacy, also use VPN/Tor.
 
@@ -770,7 +747,6 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 <FAQAccordion 
   question="Can someone steal my account if they guess my npub?"
   category="security"
-  client:idle
 >
   No. Your npub (public key) is meant to be shared - it's like your username. Your nsec (private key) is your password. Keep nsec secret. Knowing npub alone cannot compromise your account. Share your npub freely, protect your nsec religiously.
 
@@ -791,7 +767,6 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 <FAQAccordion 
   question="Why is content moderation different on Nostr?"
   category="basics"
-  client:idle
 >
   Nostr has no central moderation. Each client and user decides what to show/hide. You can: mute accounts, block users, use clients with spam filters, choose relays with content policies. It's client-side moderation vs platform-side. Freedom comes with responsibility to curate your own experience.
 
@@ -817,7 +792,6 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 <FAQAccordion 
   question="How do I find my friends from Twitter/X?"
   category="getting-started"
-  client:idle
 >
   Check if they've shared their npub on Twitter bio/posts. Use NIP-05 identifiers if they have one (easier to remember). Ask them directly. Some tools scan for Twitter users who've posted Nostr keys. Search their Twitter handle + "npub" on search engines.
 
@@ -836,7 +810,6 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 <FAQAccordion 
   question="What are 'spam filters' and how do they work?"
   category="advanced"
-  client:idle
 >
   Spam filters are client-side algorithms that hide low-quality content. They analyze: account age, web of trust, content patterns, zap receipts. Each client implements differently. You can usually adjust sensitivity or disable. False positives happen - check "show all" if missing legitimate posts.
 
@@ -864,7 +837,6 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 <FAQAccordion 
   question="Why does my feed show old posts suddenly?"
   category="troubleshooting"
-  client:idle
 >
   This happens when: you connect to a new relay with old data, your client re-syncs from relays, or someone zaps an old post bringing it to top. Nostr has no chronological "feed" - it's aggregated from multiple sources. Old posts resurfacing is normal behavior.
 
@@ -884,7 +856,6 @@ Unlike Twitter's chronological feed, Nostr aggregates from many sources. Content
 <FAQAccordion 
   question="How do zaps work technically?"
   category="advanced"
-  client:idle
 >
   Zaps use Bitcoin Lightning Network. Process: 1) Sender creates Lightning invoice, 2) Sender publishes zap receipt (kind 9735) with payment proof, 3) Client displays zap with sender profile, 4) Receiver gets sats in their Lightning wallet. NIP-57 standardizes this. No escrow or platform - direct P2P payments.
 

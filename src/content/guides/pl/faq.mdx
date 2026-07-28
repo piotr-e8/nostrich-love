@@ -7,7 +7,7 @@ category: "reference"
 prerequisites: []
 ---
 
-import { FAQAccordion } from "@components/ui/FAQAccordion";
+import FAQAccordion from "@components/ui/FAQAccordion.astro";
 
 {/* Funkcja wyszukiwania wkrótce */}
 
@@ -27,7 +27,6 @@ Nostr to **protokół**—jak email czy sieć. Definiuje, jak wiadomości przemi
 <FAQAccordion 
   question="Jaka jest różnica między npub a nsec? Który udostępniać?"
   category="security"
-  client:idle
 >
   To są Twoje dwa klucze, które współpracują ze sobą:
 
@@ -55,7 +54,6 @@ Nostr to **protokół**—jak email czy sieć. Definiuje, jak wiadomości przemi
 <FAQAccordion 
   question="Jeśli zgubię klucz prywatny, czy mogę odzyskać konto?"
   category="security"
-  client:idle
 >
   **Nie. Nie ma odzyskiwania.**
 
@@ -83,7 +81,6 @@ To celowe. Nostr jest zdecentralizowany, co oznacza, że nie ma centralnego orga
 <FAQAccordion 
   question="Dlaczego muszę zapisywać te długie ciągi znaków?"
   category="basics"
-  client:idle
 >
   Te "długie ciągi" to klucze kryptograficzne. Oto dlaczego wyglądają jak bełkot:
 
@@ -108,7 +105,6 @@ To celowe. Nostr jest zdecentralizowany, co oznacza, że nie ma centralnego orga
 <FAQAccordion 
   question="Co to jest identyfikator NIP-05 i czy go potrzebuję?"
   category="advanced"
-  client:idle
 >
   Identyfikator NIP-05 to jak czytelna nazwa użytkownika dla Nostr.
 
@@ -146,7 +142,6 @@ To celowe. Nostr jest zdecentralizowany, co oznacza, że nie ma centralnego orga
 <FAQAccordion 
   question="Którego klienta Nostr powinienem używać? Jest ich tyle!"
   category="getting-started"
-  client:idle
 >
   Jest dziesiątki klientów Nostr, każdy z innymi mocnymi stronami. Oto krótki przewodnik:
 
@@ -184,7 +179,6 @@ To celowe. Nostr jest zdecentralizowany, co oznacza, że nie ma centralnego orga
 <FAQAccordion 
   question="Jeśli przełączę klientów, czy moje posty i obserwujący pójdą ze mną?"
   category="basics"
-  client:idle
 >
   **Tak! To jest magia Nostr.**
 
@@ -219,7 +213,6 @@ Dlatego Nostr jest potężny—nigdy nie jesteś uwięziony w jednej aplikacji.
 <FAQAccordion 
   question="Czy muszę tworzyć nowe konto dla każdej aplikacji?"
   category="basics"
-  client:idle
 >
   **Nie! Jedno konto działa wszędzie.**
 
@@ -253,7 +246,6 @@ To jedna z supermocy Nostr—prawdziwa przenośność.
 <FAQAccordion 
   question="Czym są relaye i dlaczego muszę je wybierać?"
   category="technical"
-  client:idle
 >
   **Relaye to poczty Nostr.**
 
@@ -295,7 +287,6 @@ Nostr jest zdecentralizowany—nie ma centralnego serwera. Wybierasz, których p
 <FAQAccordion 
   question="Jeśli postuję do jednego relaya, czy wszyscy to zobaczą?"
   category="technical"
-  client:idle
 >
   **Nie automatycznie.** To myli wielu początkujących.
 
@@ -331,7 +322,6 @@ Nostr jest zdecentralizowany—nie ma centralnego serwera. Wybierasz, których p
 <FAQAccordion 
   question="Dlaczego mój feed jest pusty? Gdzie jest wszyscy?"
   category="troubleshooting"
-  client:idle
 >
   **Problem nr 1 początkujących!** Oto dlaczego i jak to naprawić:
 
@@ -371,7 +361,6 @@ Nostr jest zdecentralizowany—nie ma centralnego serwera. Wybierasz, których p
 <FAQAccordion 
   question="Do jakich relayów powinienem się połączyć?"
   category="technical"
-  client:idle
 >
   **Zacznij od tych niezawodnych, darmowych relayów:**
 
@@ -412,7 +401,6 @@ wss://relay.current.fyi       (Szybki, minimalistyczny)
 <FAQAccordion 
   question="Jak znaleźć ludzi do obserwowania?"
   category="getting-started"
-  client:idle
 >
   **Znalezienie swojej społeczności to klucz do czerpania radości z Nostr.** Oto jak:
 
@@ -453,7 +441,6 @@ wss://relay.current.fyi       (Szybki, minimalistyczny)
 <FAQAccordion 
   question="Czym sa zapy i jak je skonfigurowac?"
   category="advanced"
-  client:idle
 >
   **Zapy to napiwki w Bitcoinie wysylane przez Lightning Network.**
 
@@ -504,7 +491,6 @@ Pomysl o nich jako o "lajkach z wartoscia"—sa sposobem na wspieranie tworcow, 
 <FAQAccordion 
   question="Dlaczego nie widze moich starych postow?"
   category="troubleshooting"
-  client:idle
 >
   **To zwykle dzieje sie z jednego z trzech powodow:**
 
@@ -552,7 +538,6 @@ Pomysl o nich jako o "lajkach z wartoscia"—sa sposobem na wspieranie tworcow, 
 <FAQAccordion 
   question="Dlaczego niektore z moich wiadomosci nie sa dostarczane?"
   category="troubleshooting"
-  client:idle
 >
   Zwykle problemy z lacznoscia z relayami. Wiadomosci moga nie byc dostarczane, jesli: odbiorca jest offline, relaye sa wylaczone, lub nie jestes polaczony z tymi samymi relayami. Sprawdz swoje polaczenia z relayami, sprobuj dodac wiecej relayow lub poczekaj na propagacje. Uzywaj wielu relayow dla redundancji.
 
@@ -575,7 +560,6 @@ Pomysl o nich jako o "lajkach z wartoscia"—sa sposobem na wspieranie tworcow, 
 <FAQAccordion 
   question="Jak zweryfikowac czyjas tozsamosc?"
   category="security"
-  client:idle
 >
   Szukaj identyfikatorow NIP-05 (czytelne nazwy jak alicja@domena.com). Sprawdz czy ich profil ma odznake weryfikacji. Sprawdz krzyzowo ich npub na wielu platformach. Dla waznych kontaktow, zweryfikuj przez inny kanal komunikacji. Badz ostrozny wobec kont z drobnymi zmianami w pisowni popularnych nazw.
 
@@ -596,7 +580,6 @@ Pomysl o nich jako o "lajkach z wartoscia"—sa sposobem na wspieranie tworcow, 
 <FAQAccordion 
   question="Co sie stanie, jesli relay usunie moja tresc?"
   category="technical"
-  client:idle
 >
   Jesli jeden relay usunie Twoja tresc, nadal istnieje na innych relayach, z ktorymi jestes polaczony. Jednak nowi uzytkownicy na tym konkretnym relayu nie zobacza historycznych postow. Dlatego zaleca sie uzywanie wielu relayow - Twoje dane sa rozproszone, a nie scentralizowane. Zawsze mozesz opublikowac ponownie na nowych relayach.
 
@@ -617,7 +600,6 @@ Pomysl o nich jako o "lajkach z wartoscia"—sa sposobem na wspieranie tworcow, 
 <FAQAccordion 
   question="Czy moge edytowac lub usuwac posty?"
   category="basics"
-  client:idle
 >
   Posty Nostr sa niezmienne - nie moga byc edytowane po opublikowaniu. Mozesz opublikowac korekte lub kontynuacje notatki. Dla usuniecia, mozesz wyslac prosbe o usuniecie, ale relaye moga ja uszanowac lub nie. Pomysl zanim opublikujesz - trwalosc to cecha protokolu.
 
@@ -638,7 +620,6 @@ Pomysl o nich jako o "lajkach z wartoscia"—sa sposobem na wspieranie tworcow, 
 <FAQAccordion 
   question="Dlaczego widze rozne tresci na roznych klientach?"
   category="technical"
-  client:idle
 >
   Kazdy klient laczy sie z roznymi domyslnymi relayami. Twoj feed zalezy od tego, z ktorymi relayami jestes polaczony i kogo obserwujesz. Jesli Relay A ma innych uzytkownikow niz Relay B, zobaczysz rozne tresci. To normalne - dodaj wiecej relayow lub obserwuj wiecej ludzi, aby zobaczyc spojne tresci miedzy klientami.
 
@@ -661,7 +642,6 @@ Pomysl o nich jako o "lajkach z wartoscia"—sa sposobem na wspieranie tworcow, 
 <FAQAccordion 
   question="Jak zrobic backup calej historii Nostr?"
   category="security"
-  client:idle
 >
   Uzyj narzedzi takich jak nostr-fetch lub nak, aby wyeksportowac swoje eventy. Zrob backup swojego nsec (klucza prywatnego) bezpiecznie - to krytyczne. Twoje eventy npub sa przechowywane na relayach, ale posiadanie lokalnego backupu jest madre. Rozwaz uzycie osobistego relaya do przechowywania swojej pelnej historii.
 
@@ -688,7 +668,6 @@ Pomysl o nich jako o "lajkach z wartoscia"—sa sposobem na wspieranie tworcow, 
 <FAQAccordion 
   question="Jaka jest roznica miedzy DM-ami NIP-04 i NIP-17?"
   category="advanced"
-  client:idle
 >
   NIP-04 (przestarzaly) uzywa szyfrowania wspolnym kluczem z znanymi podatnosciami. NIP-17 (zalecany) uzywa zamknietego nadawcy i gift-wrap dla lepszej prywatnosci. NIP-17 ukrywa metadane o tym, kto z kim rozmawia. Migruj do klientow wspierajacych NIP-17 dla bezpiecznych prywatnych wiadomosci.
 
@@ -711,7 +690,6 @@ Pomysl o nich jako o "lajkach z wartoscia"—sa sposobem na wspieranie tworcow, 
 <FAQAccordion 
   question="Jak uruchomic wlasny relay?"
   category="advanced"
-  client:idle
 >
   Popularne opcje: strfry (Rust, wysoka wydajnosc), nostream (TypeScript, latwa konfiguracja) lub khatru (Go). Wymagania: serwer (VPS ~$5-20/miesiac), domena, podstawowa znajomosc CLI. Korzysci: suwerennosc danych, niestandardowe polityki, doswiadczenie edukacyjne. Zobacz nasz Przewodnik po Relayach dla szczegolowych instrukcji konfiguracji.
 
@@ -742,7 +720,6 @@ Pomysl o nich jako o "lajkach z wartoscia"—sa sposobem na wspieranie tworcow, 
 <FAQAccordion 
   question="Czy moje DM-y sa faktycznie prywatne?"
   category="security"
-  client:idle
 >
   Z NIP-17 (zalecany): Tak, tresc jest zaszyfrowana, a metadane sa zminimalizowane. Ze starym NIP-04: Tresc jest zaszyfrowana, ale mozliwe sa wycieki metadanych. Operatorzy relayow moga widziec, ze wysylasz wiadomosci, ale nie tresc ani dokladnego odbiorcy z NIP-17. Dla maksymalnej prywatnosci, uzyj rowniez VPN/Tor.
 
@@ -770,7 +747,6 @@ Pomysl o nich jako o "lajkach z wartoscia"—sa sposobem na wspieranie tworcow, 
 <FAQAccordion 
   question="Czy ktos moze ukrasc moje konto, jesli zgadnie moj npub?"
   category="security"
-  client:idle
 >
   **Nie. Twoj npub (klucz publiczny) jest przeznaczony do udostepniania—to jak Twoja nazwa uzytkownika. Twoj nsec (klucz prywatny) to Twoje haslo. Trzymaj nsec w tajemnicy. Znajac sam npub nie mozna skompromitowac Twojego konta. Udostepniaj swobodnie swoj npub, strzez religijnie swojego nsec.**
 
@@ -791,7 +767,6 @@ Pomysl o nich jako o "lajkach z wartoscia"—sa sposobem na wspieranie tworcow, 
 <FAQAccordion 
   question="Dlaczego moderacja tresci jest inna na Nostr?"
   category="basics"
-  client:idle
 >
   Nostr nie ma centralnej moderacji. Kazdy klient i uzytkownik decyduje, co pokazywac/ukrywac. Mozesz: wyciszac konta, blokowac uzytkownikow, uzywac klientow z filtrami spamu, wybierac relaye z politykami tresci. To moderacja po stronie klienta vs po stronie platformy. Wolnosc przychodzi z odpowiedzialnoscia za ksztaltowanie wlasnego doswiadczenia.
 
@@ -817,7 +792,6 @@ Pomysl o nich jako o "lajkach z wartoscia"—sa sposobem na wspieranie tworcow, 
 <FAQAccordion 
   question="Jak znalezc swoich znajomych z Twittera/X?"
   category="getting-started"
-  client:idle
 >
   Sprawdz czy udostepnili swoj npub w bio/postach na Twitterze. Uzyj identyfikatorow NIP-05, jesli maja jeden (latwiejszy do zapamietania). Zapytaj ich bezposrednio. Niektore narzedzia skanuja uzytkownikow Twittera, ktorzy opublikowali klucze Nostr. Wyszukaj ich handle Twittera + "npub" w wyszukiwarkach.
 
@@ -836,7 +810,6 @@ Pomysl o nich jako o "lajkach z wartoscia"—sa sposobem na wspieranie tworcow, 
 <FAQAccordion 
   question="Czym sa filtry spamu i jak dzialaja?"
   category="advanced"
-  client:idle
 >
   Filtry spamu to algorytmy po stronie klienta, ktore ukrywaja tresci niskiej jakosci. Analizuja: wiek konta, siec zaufania, wzorce tresci, potwierdzenia zapow. Kazdy klient implementuje inaczej. Zazwyczaj mozesz dostosowac czulosc lub wylaczyc. Zdarzaja sie falszywe pozytywy - sprawdz "pokaz wszystko" jesli brakuje prawidlowych postow.
 
@@ -864,7 +837,6 @@ Pomysl o nich jako o "lajkach z wartoscia"—sa sposobem na wspieranie tworcow, 
 <FAQAccordion 
   question="Dlaczego moj feed nagle pokazuje stare posty?"
   category="troubleshooting"
-  client:idle
 >
   To sie dzieje, gdy: laczysz sie z nowym relayem ze starymi danymi, Twoj klient ponownie synchronizuje z relayami, lub ktos zapuje stary post, wynoszac go na gore. Nostr nie ma chronologicznego "feedu" - jest agregowany z wielu zrodel. Pojawianie sie starych postow to normalne zachowanie.
 
@@ -884,7 +856,6 @@ W przeciwienstwie do chronologicznego feedu Twittera, Nostr agreguje z wielu zro
 <FAQAccordion 
   question="Jak dzialaja zapy technicznie?"
   category="advanced"
-  client:idle
 >
   Zapy uzywaja Bitcoin Lightning Network. Proces: 1) Nadawca tworzy fakture Lightning, 2) Nadawca publikuje potwierdzenie zapu (kind 9735) z dowodem platnosci, 3) Klient wyswietla zap z profilem nadawcy, 4) Odbiorca dostaje sats w swoim portfelu Lightning. NIP-57 standaryzuje to. Brak escrow ani platformy - bezposrednie platnosci P2P.
 

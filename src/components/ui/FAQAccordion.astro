@@ -1,0 +1,170 @@
+---
+/**
+ * FAQAccordion
+ *
+ * A native <details>/<summary> disclosure. This used to be a React island, which
+ * meant each FAQ page mounted 29 separate React roots (203 across all seven
+ * locales) purely to toggle visibility — something the browser does for free.
+ *
+ * Being an .astro component it ships no JavaScript at all, works before (and
+ * without) hydration, and inherits the browser's keyboard handling: Enter and
+ * Space toggle, and in-page find can reveal collapsed content.
+ */
+interface Props {
+  question: string;
+  category?:
+    | 'security'
+    | 'basics'
+    | 'technical'
+    | 'advanced'
+    | 'troubleshooting'
+    | 'getting-started';
+  class?: string;
+  defaultOpen?: boolean;
+}
+
+const {
+  question,
+  category = 'basics',
+  class: className = '',
+  defaultOpen = false,
+} = Astro.props;
+
+const styles: Record<string, string> = {
+  security: 'bg-red-500/10 text-red-500 border-red-500/30',
+  basics: 'bg-blue-500/10 text-blue-500 border-blue-500/30',
+  technical: 'bg-purple-500/10 text-purple-500 border-purple-500/30',
+  advanced: 'bg-amber-500/10 text-amber-500 border-amber-500/30',
+  troubleshooting: 'bg-green-500/10 text-green-500 border-green-500/30',
+  'getting-started': 'bg-primary-500/10 text-primary-500 border-primary-500/30',
+};
+
+const labels: Record<string, string> = {
+  security: 'Security',
+  basics: 'Basics',
+  technical: 'Technical',
+  advanced: 'Advanced',
+  troubleshooting: 'Troubleshooting',
+  'getting-started': 'Getting Started',
+};
+
+// lucide glyphs, inlined so the component stays JS-free
+const icons: Record<string, string> = {
+  shield:
+    '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
+  help:
+    '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>',
+  server:
+    '<rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/>',
+  zap:
+    '<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>',
+};
+
+const iconFor: Record<string, string> = {
+  security: 'shield',
+  basics: 'help',
+  technical: 'server',
+  advanced: 'zap',
+  troubleshooting: 'help',
+  'getting-started': 'help',
+};
+
+const chipClass = styles[category] ?? styles.basics;
+const iconSvg = icons[iconFor[category] ?? 'help'];
+---
+
+<details
+  class:list={[
+    'faq-item group mb-6 overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800/30',
+    className,
+  ]}
+  open={defaultOpen}
+>
+  <summary
+    class="flex cursor-pointer list-none items-start gap-4 p-5 transition-all hover:bg-gray-50 dark:hover:bg-gray-800/50"
+  >
+    <div class="flex-1">
+      <div class="mb-2 flex items-center gap-3">
+        <span
+          class:list={[
+            'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium',
+            chipClass,
+          ]}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            set:html={iconSvg}
+          />
+          {labels[category] ?? labels.basics}
+        </span>
+      </div>
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{question}</h3>
+    </div>
+
+    <div
+      class="faq-chevron flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-gray-200 transition-all dark:bg-gray-700"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="text-gray-500 transition-colors dark:text-gray-400"
+        aria-hidden="true"
+      >
+        <path d="m6 9 6 6 6-6"></path>
+      </svg>
+    </div>
+  </summary>
+
+  <div class="border-t border-gray-200 px-5 pb-5 pt-0 dark:border-gray-700">
+    <div class="prose prose-sm dark:prose-invert max-w-none pt-4">
+      <slot />
+    </div>
+  </div>
+</details>
+
+<style>
+  /* Safari still paints the default triangle without this. */
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item[open] .faq-chevron {
+    /* primary-500 */
+    background-color: #8b5cf6;
+    transform: rotate(180deg);
+  }
+
+  .faq-item[open] .faq-chevron svg {
+    color: #fff;
+  }
+
+  /* No open/close height animation.
+     The obvious replacement for the old framer-motion transition is
+     `::details-content { block-size: 0 -> auto }` with interpolate-size. It was
+     written and then removed: if that transition misbehaves the panel stays at
+     height 0 while `open` is true, i.e. the answer silently disappears, and it
+     could not be verified here. Native <details> opens correctly with no CSS at
+     all, so nothing is layered on top of it. */
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-item .faq-chevron {
+      transition: none;
+    }
+  }
+</style>
