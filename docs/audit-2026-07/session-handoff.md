@@ -177,10 +177,12 @@ Start from `open-findings.md`. The clusters worth knowing:
 - **Repo hygiene.** ~30 markdown files at root, many stale or contradictory. A
   65 MB git worktree copy lives in an un-gitignored `.claude/`.
 
-`market-research.md` in this directory holds the growth research: SERP maps,
-competitor analysis, distribution channels. Its headline finding is that
-`awesome-nostr`'s Tutorials section contains only developer content — there is
-no end-user task tutorial in the ecosystem's canonical directory.
+`growth-strategy.md` holds the plan: the wedge two independent strategists
+converged on, what the judge panels cut as unsupported, named outreach targets
+and keyword→page mappings. `market-research.md` is the raw research behind it.
+
+`findings-medium-low.md` holds the 164 medium/low findings. Those were **never
+re-verified** — treat them as leads.
 
 ---
 
