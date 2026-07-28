@@ -34,12 +34,12 @@ const toolItems = [
         <div class="w-10 h-10 transition-transform duration-200 group-hover:scale-105 flex-shrink-0">
           <img class="scale-[1.5]" src="/logo.png" width={40} height={40} alt="" />
         </div>
-        <LogoText client:load size="sm" className="hidden sm:block" />
+        <LogoText client:idle size="sm" className="hidden sm:block" />
       </a>
 
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex items-center gap-1" role="navigation" aria-label="Main navigation">
-        <GuidesLink client:load className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">Guides</GuidesLink>
+        <GuidesLink client:idle className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">Guides</GuidesLink>
         {navItems.map((item) => (
           <a
             href={item.href}
@@ -78,8 +78,8 @@ const toolItems = [
 
       <!-- Right side actions -->
       <div class="flex items-center gap-1">
-        <LanguageSwitcher client:load />
-        <DarkModeToggleSimple client:load />
+        <LanguageSwitcher client:idle />
+        <DarkModeToggleSimple client:idle />
         
         <!-- User Menu with Progress/Badges -->
         <div class="relative group ml-2">
@@ -162,7 +162,7 @@ const toolItems = [
       aria-label="Mobile navigation"
     >
       <div class="flex flex-col gap-2">
-        <GuidesLink client:load className="px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">Guides</GuidesLink>
+        <GuidesLink client:idle className="px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">Guides</GuidesLink>
         {navItems.map((item) => (
           <a
             href={item.href}

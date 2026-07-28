@@ -14,7 +14,7 @@ import { WhatIsNostrQuiz } from "@components/interactive/WhatIsNostrQuiz";
 { /* <ProgressIndicator current={1} total={4} estimatedTime="5 minutes" /> */ }
 
 { /* <div className="simulator-section my-12"> */ }
-  { /* <NostrSimulator client:load /> */ }
+  { /* <NostrSimulator client:idle /> */ }
 { /* </div> */ }
 
 ### The Problem (1 minute read)
@@ -61,7 +61,7 @@ You probably use email every day without thinking about this magic:
 
 ### The Difference Explained
 
-<ProtocolComparison client:load />
+<ProtocolComparison client:idle />
 
 **Centralized (Twitter, Facebook):** One company owns everything. They can ban you, change the rules, or shut down entirely.
 
@@ -173,7 +173,7 @@ That depends on what you value:
 
 Ready to check what you've learned? Take this quick quiz:
 
-<WhatIsNostrQuiz client:load />
+<WhatIsNostrQuiz client:idle />
 
 ---
 

@@ -75,10 +75,10 @@ const tools = [
                   <p class="text-gray-600 dark:text-gray-400">{tool.description}</p>
                 </div>
               </div>
-              {tool.id === 'key-generator' && <div class="max-w-3xl mx-auto"><KeyGenerator client:load /></div>}
-              {tool.id === 'follow-pack-finder' && <FollowPackFinder client:load />}
-              {tool.id === 'nip05-checker' && <div class="max-w-3xl mx-auto"><NIP05Checker client:load /></div>}
-              {tool.id === 'relay-playground' && <RelayPlayground client:load />}
+              {tool.id === 'key-generator' && <div class="max-w-3xl mx-auto"><KeyGenerator client:idle /></div>}
+              {tool.id === 'follow-pack-finder' && <FollowPackFinder client:idle />}
+              {tool.id === 'nip05-checker' && <div class="max-w-3xl mx-auto"><NIP05Checker client:idle /></div>}
+              {tool.id === 'relay-playground' && <RelayPlayground client:idle />}
             </div>
           ))}
         </div>

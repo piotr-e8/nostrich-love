@@ -27,7 +27,7 @@ Nostr 是一个**协议**——就像电子邮件或网络。它定义了消息�
 <FAQAccordion 
   question="npub 和 nsec 有什么区别？我应该分享哪一个？"
   category="security"
-  client:load
+  client:idle
 >
   这两个密钥协同工作：
 
@@ -55,7 +55,7 @@ Nostr 是一个**协议**——就像电子邮件或网络。它定义了消息�
 <FAQAccordion 
   question="如果我丢失了私钥，我能恢复我的账号吗？"
   category="security"
-  client:load
+  client:idle
 >
   **不能。没有恢复。**
 
@@ -83,7 +83,7 @@ Nostr 没有：
 <FAQAccordion 
   question="为什么我需要保存这些长串字符？"
   category="basics"
-  client:load
+  client:idle
 >
   那些"长串"是加密密钥。以下是它们看起来像乱码的原因：
 
@@ -108,7 +108,7 @@ Nostr 没有：
 <FAQAccordion 
   question="什么是 NIP-05 标识符？我需要吗？"
   category="advanced"
-  client:load
+  client:idle
 >
   NIP-05 标识符就像 Nostr 的人类可读用户名。
 
@@ -146,7 +146,7 @@ Nostr 没有：
 <FAQAccordion 
   question="我应该使用哪个 Nostr 客户端？选择太多了！"
   category="getting-started"
-  client:load
+  client:idle
 >
   Nostr 有数十个客户端，每个都有不同的优势。这里是一个快速指南：
 
@@ -184,7 +184,7 @@ Nostr 没有：
 <FAQAccordion 
   question="如果我切换客户端，我的帖子和粉丝会跟着我吗？"
   category="basics"
-  client:load
+  client:idle
 >
   **是的！这就是 Nostr 的魔力。**
 
@@ -219,7 +219,7 @@ Nostr 没有：
 <FAQAccordion 
   question="我需要为每个应用创建新账号吗？"
   category="basics"
-  client:load
+  client:idle
 >
   **不需要！一个账号到处都有效。**
 
@@ -253,7 +253,7 @@ Nostr 没有：
 <FAQAccordion 
   question="什么是中继？为什么我需要选择它们？"
   category="technical"
-  client:load
+  client:idle
 >
   **中继是 Nostr 的邮局。**
 
@@ -295,7 +295,7 @@ Nostr 是去中心化的——没有中央服务器。你选择使用哪些邮�
 <FAQAccordion 
   question="如果我发布到一个中继，所有人都能看到吗？"
   category="technical"
-  client:load
+  client:idle
 >
   **不会自动。** 这让许多新手困惑。
 
@@ -331,7 +331,7 @@ Nostr 是去中心化的——没有中央服务器。你选择使用哪些邮�
 <FAQAccordion 
   question="为什么我的动态是空的？大家都在哪里？"
   category="troubleshooting"
-  client:load
+  client:idle
 >
   **第一大新手问题！** 以下是原因和解决方法：
 
@@ -371,7 +371,7 @@ Nostr 是去中心化的——没有中央服务器。你选择使用哪些邮�
 <FAQAccordion 
   question="我应该连接哪些中继？"
   category="technical"
-  client:load
+  client:idle
 >
   **从这些可靠的免费中继开始：**
 
@@ -412,7 +412,7 @@ wss://relay.current.fyi       （快速，极简）
 <FAQAccordion 
   question="如何找人关注？"
   category="getting-started"
-  client:load
+  client:idle
 >
   **找到你的社区是享受 Nostr 的关键。** 方法如下：
 
@@ -453,7 +453,7 @@ wss://relay.current.fyi       （快速，极简）
 <FAQAccordion 
   question="什么是'闪电打赏'？如何设置？"
   category="advanced"
-  client:load
+  client:idle
 >
   **闪电打赏是通过闪电网络发送的比特币小费。**
 
@@ -505,7 +505,7 @@ wss://relay.current.fyi       （快速，极简）
 <FAQAccordion 
   question="为什么看不到我的旧帖子？"
   category="troubleshooting"
-  client:load
+  client:idle
 >
   **这通常发生在三个原因之一：**
 
@@ -553,7 +553,7 @@ wss://relay.current.fyi       （快速，极简）
 <FAQAccordion 
   question="为什么有些消息发送失败？"
   category="troubleshooting"
-  client:load
+  client:idle
 >
   通常是中继连接问题。如果接收者离线、中继宕机，或者你没有连接到相同的中继，消息可能无法发送。检查你的中继连接，尝试添加更多中继，或等待传播。使用多个中继以获得冗余。
 
@@ -576,7 +576,7 @@ wss://relay.current.fyi       （快速，极简）
 <FAQAccordion 
   question="如何验证某人的身份？"
   category="security"
-  client:load
+  client:idle
 >
   寻找 NIP-05 标识符（人类可读的名称如 alice@domain.com）。检查他们的个人资料是否有验证徽章。在多个平台上交叉引用他们的 npub。对于重要联系人，通过另一个通信渠道验证。警惕热门名称的轻微拼写变化。
 
@@ -596,7 +596,7 @@ wss://relay.current.fyi       （快速，极简）
 <FAQAccordion 
   question="如果中继删除我的内容会发生什么？"
   category="technical"
-  client:load
+  client:idle
 >
   如果一个中继删除你的内容，它仍然存在于你连接的其他中继上。然而，该特定中继上的新用户将看不到历史帖子。这就是为什么建议使用多个中继——你的数据是分布式的，不是中心化的。你可以随时重新发布到新中继。
 
@@ -616,7 +616,7 @@ wss://relay.current.fyi       （快速，极简）
 <FAQAccordion 
   question="我可以编辑或删除帖子吗？"
   category="basics"
-  client:load
+  client:idle
 >
   Nostr 帖子是不可变的——发布后无法编辑。你可以发布更正或后续说明。对于删除，你可以发送删除请求，但中继可能选择不执行。发帖前三思——持久性是协议的一个特性。
 
@@ -636,7 +636,7 @@ wss://relay.current.fyi       （快速，极简）
 <FAQAccordion 
   question="为什么我在不同客户端看到不同的内容？"
   category="technical"
-  client:load
+  client:idle
 >
   每个客户端连接到不同的默认中继。你的动态取决于你连接哪些中继以及你关注谁。如果中继 A 与中继 B 有不同的用户，你会看到不同的内容。这是正常的——添加更多中继或关注更多人，以在各个客户端看到一致的内容。
 
@@ -659,7 +659,7 @@ wss://relay.current.fyi       （快速，极简）
 <FAQAccordion 
   question="如何备份我的整个 Nostr 历史？"
   category="security"
-  client:load
+  client:idle
 >
   使用 nostr-fetch 或 nak 等工具导出你的事件。安全备份你的 nsec（私钥）——这是关键。你的 npub 事件存储在中继上，但有本地备份是明智的。考虑使用个人中继来存储你的完整历史。
 
@@ -685,7 +685,7 @@ wss://relay.current.fyi       （快速，极简）
 <FAQAccordion 
   question="NIP-04 和 NIP-17 私信有什么区别？"
   category="advanced"
-  client:load
+  client:idle
 >
   NIP-04（已弃用）使用共享密钥加密，存在已知漏洞。NIP-17（推荐）使用密封发送者和礼物包装以获得更好的隐私。NIP-17 隐藏关于谁在向谁发送消息的元数据。迁移到支持 NIP-17 的客户端以获得安全的私人消息。
 
@@ -707,7 +707,7 @@ wss://relay.current.fyi       （快速，极简）
 <FAQAccordion 
   question="如何运行自己的中继？"
   category="advanced"
-  client:load
+  client:idle
 >
   热门选项：strfry（Rust，高性能）、nostream（TypeScript，易于设置）或 khatru（Go）。要求：服务器（VPS ~$5-20/月）、域名、基本 CLI 知识。好处：数据主权、自定义政策、学习经验。查看我们的中继指南以获取详细的设置说明。
 
@@ -738,7 +738,7 @@ wss://relay.current.fyi       （快速，极简）
 <FAQAccordion 
   question="我的私信真的私密吗？"
   category="security"
-  client:load
+  client:idle
 >
   使用 NIP-17（推荐）：是的，内容是加密的，元数据被最小化。使用旧的 NIP-04：内容是加密的，但元数据泄露是可能的。使用中继操作员可以看到你在发消息，但使用 NIP-17 看不到内容或确切的接收者。为了最大隐私，还使用 VPN/Tor。
 
@@ -765,7 +765,7 @@ wss://relay.current.fyi       （快速，极简）
 <FAQAccordion 
   question="如果有人猜到我的 npub，他们能窃取我的账号吗？"
   category="security"
-  client:load
+  client:idle
 >
   不会。你的 npub（公钥）是要分享的——就像你的用户名。你的 nsec（私钥）是你的密码。保密 nsec。仅知道 npub 无法危害你的账号。自由分享你的 npub，虔诚地保护你的 nsec。
 
@@ -785,7 +785,7 @@ wss://relay.current.fyi       （快速，极简）
 <FAQAccordion 
   question="Nostr 上的内容审核为什么不同？"
   category="basics"
-  client:load
+  client:idle
 >
   Nostr 没有中央审核。每个客户端和用户决定显示/隐藏什么。你可以：静音账号、屏蔽用户、使用带垃圾邮件过滤器的客户端、选择有内容政策的中继。这是客户端端审核与平台端审核。自由伴随着策划你自己体验的责任。
 
@@ -811,7 +811,7 @@ wss://relay.current.fyi       （快速，极简）
 <FAQAccordion 
   question="如何找到我在 Twitter/X 上的朋友？"
   category="getting-started"
-  client:load
+  client:idle
 >
   检查他们是否在 Twitter 简介/帖子中分享了他们的 npub。如果他们有，使用 NIP-05 标识符（更容易记住）。直接询问他们。一些工具扫描已发布 Nostr 密钥的 Twitter 用户。在搜索引擎上搜索他们的 Twitter 用户名 + "npub"。
 
@@ -830,7 +830,7 @@ wss://relay.current.fyi       （快速，极简）
 <FAQAccordion 
   question="什么是'垃圾邮件过滤器'，它们如何工作？"
   category="advanced"
-  client:load
+  client:idle
 >
   垃圾邮件过滤器是客户端端算法，隐藏低质量内容。它们分析：账号年龄、信任网络、内容模式、打赏收据。每个客户端实现不同。你通常可以调整敏感度或禁用。会有误报——如果错过合法帖子，检查"显示全部"。
 
@@ -857,7 +857,7 @@ wss://relay.current.fyi       （快速，极简）
 <FAQAccordion 
   question="为什么我的动态突然显示旧帖子？"
   category="troubleshooting"
-  client:load
+  client:idle
 >
   当以下情况发生时：你连接到带有旧数据的新中继，你的客户端从中继重新同步，或有人打赏旧帖子将其置顶。Nostr 没有按时间顺序的"动态"——它来自多个来源的聚合。旧帖子重新出现是正常行为。
 
@@ -877,7 +877,7 @@ wss://relay.current.fyi       （快速，极简）
 <FAQAccordion 
   question="闪电打赏在技术上是如何工作的？"
   category="advanced"
-  client:load
+  client:idle
 >
   闪电打赏使用比特币闪电网络。流程：1）发送者创建闪电发票，2）发送者发布带有支付证明的打赏收据（kind 9735），3）客户端显示带有发送者个人资料的打赏，4）接收者在他们的闪电钱包中收到聪。NIP-57 将其标准化。没有托管或平台——直接的 P2P 支付。
 

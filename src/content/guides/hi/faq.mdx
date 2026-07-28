@@ -27,7 +27,7 @@ Nostr एक **प्रोटोकॉल** है—जैसे ईमेल 
 <FAQAccordion 
   question="npub और nsec में क्या अंतर है? मुझे कौन सा share करना चाहिए?"
   category="security"
-  client:load
+  client:idle
 >
   ये आपकी दो keys हैं जो एक साथ काम करती हैं:
 
@@ -55,7 +55,7 @@ Nostr एक **प्रोटोकॉल** है—जैसे ईमेल 
 <FAQAccordion 
   question="अगर मैं अपनी private key खो दूं तो क्या मैं अपना account recover कर सकता हूं?"
   category="security"
-  client:load
+  client:idle
 >
   **नहीं। कोई recovery नहीं है।**
 
@@ -83,7 +83,7 @@ Nostr में कोई नहीं है:
 <FAQAccordion 
   question="मुझे इन लंबी strings of characters को क्यों save करना होता है?"
   category="basics"
-  client:load
+  client:idle
 >
   वे "लंबी strings" cryptographic keys हैं। यहाँ बताया गया है कि वे gibberish क्यों दिखती हैं:
 
@@ -108,7 +108,7 @@ Nostr में कोई नहीं है:
 <FAQAccordion 
   question="NIP-05 identifier क्या है और क्या मुझे इसकी जरूरत है?"
   category="advanced"
-  client:load
+  client:idle
 >
   NIP-05 identifier एक human-readable username की तरह है Nostr के लिए।
 
@@ -146,7 +146,7 @@ Nostr में कोई नहीं है:
 <FAQAccordion 
   question="कौन सा Nostr client use करूं? बहुत सारे हैं!"
   category="getting-started"
-  client:load
+  client:idle
 >
   Nostr clients कई दर्जन हैं, हर एक अलग strengths के साथ। यहाँ एक quick guide है:
 
@@ -184,7 +184,7 @@ Nostr में कोई नहीं है:
 <FAQAccordion 
   question="अगर मैं clients switch करूं तो क्या मेरे posts और followers मेरे साथ आएंगे?"
   category="basics"
-  client:load
+  client:idle
 >
   **हाँ! यह Nostr का magic है।**
 
@@ -219,7 +219,7 @@ Nostr में कोई नहीं है:
 <FAQAccordion 
   question="क्या मुझे हर app के लिए नया account बनाना होगा?"
   category="basics"
-  client:load
+  client:idle
 >
 **नहीं! एक account हर जगह काम करता है।**
 
@@ -253,7 +253,7 @@ Traditional social media के विपरीत जहाँ Twitter, Instagr
 <FAQAccordion 
   question="Relays क्या हैं और मुझे उन्हें choose करना क्यों पड़ता है?"
   category="technical"
-  client:load
+  client:idle
 >
 **Relays Nostr के post offices हैं।**
 
@@ -295,7 +295,7 @@ Nostr decentralized है—कोई central server नहीं। आप cho
 <FAQAccordion 
   question="अगर मैं एक relay पर post करूं तो क्या सब देखेंगे?"
   category="technical"
-  client:load
+  client:idle
 >
 **स्वचालित रूप से नहीं।** यह कई beginners को confuse करता है।
 
@@ -331,7 +331,7 @@ Nostr decentralized है—कोई central server नहीं। आप cho
 <FAQAccordion 
   question="मेरा feed खाली क्यों है? सब कहाँ हैं?"
   category="troubleshooting"
-  client:load
+  client:idle
 >
 **#1 beginner issue!** यहाँ क्यों और कैसे fix करें:
 
@@ -371,7 +371,7 @@ Nostr decentralized है—कोई central server नहीं। आप cho
 <FAQAccordion 
   question="मुझे किस relays से connect होना चाहिए?"
   category="technical"
-  client:load
+  client:idle
 >
 **इन reliable, free relays से शुरू करें:**
 
@@ -412,7 +412,7 @@ wss://relay.current.fyi       (Fast, minimal)
 <FAQAccordion 
   question="मुझे follow करने के लिए लोग कैसे मिलें?"
   category="getting-started"
-  client:load
+  client:idle
 >
 **अपना community ढूंढना Nostr का आनंद लेने की key है।** यहाँ कैसे:
 
@@ -453,7 +453,7 @@ wss://relay.current.fyi       (Fast, minimal)
 <FAQAccordion 
   question="'zaps' क्या हैं और मैं उन्हें कैसे setup करूं?"
   category="advanced"
-  client:load
+  client:idle
 >
 **Zaps Lightning Network पर भेजे गए Bitcoin tips हैं।**
 
@@ -504,7 +504,7 @@ wss://relay.current.fyi       (Fast, minimal)
 <FAQAccordion 
   question="मैं अपने पुराने posts क्यों नहीं देख सकता?"
   category="troubleshooting"
-  client:load
+  client:idle
 >
 **यह आमतौर पर तीन कारणों से होता है:**
 
@@ -552,7 +552,7 @@ wss://relay.current.fyi       (Fast, minimal)
 <FAQAccordion 
   question="मेरे कुछ messages deliver क्यों नहीं हो रहे?"
   category="troubleshooting"
-  client:load
+  client:idle
 >
 आमतौर पर relay connectivity issues। Messages deliver नहीं हो सकती अगर: recipient offline है, relays down हैं, या आप same relays से connected नहीं हैं। अपने relay connections check करें, और relays add करने की कोशिश करें, या propagation का wait करें। Redundancy के लिए multiple relays use करें।
 
@@ -575,7 +575,7 @@ wss://relay.current.fyi       (Fast, minimal)
 <FAQAccordion 
   question="मैं किसी की identity कैसे verify करूं?"
   category="security"
-  client:load
+  client:idle
 >
 NIP-05 identifiers देखें (human-readable names जैसे alice@domain.com)। Check करें कि उनकी profile में verification badge है। Cross-platform पर उनका npub verify करें। Important contacts के लिए, दूसरे communication channel से verify करें। Popular names के slight spelling variations वाले accounts से सावधान रहें।
 
@@ -596,7 +596,7 @@ NIP-05 identifiers देखें (human-readable names जैसे alice@doma
 <FAQAccordion 
   question="अगर कोई relay मेरा content delete कर दे तो क्या होगा?"
   category="technical"
-  client:load
+  client:idle
 >
 अगर एक relay आपका content delete कर देता है, तो यह अभी भी दूसरे relays पर exist करेगा जिनसे आप connected हैं। हालांकि, उस specific relay पर नए users पुराने posts नहीं देखेंगे। यही कारण है कि multiple relays use करना recommended है - आपका data distributed है, centralized नहीं। आप हमेशा नए relays पर re-post कर सकते हैं।
 
@@ -617,7 +617,7 @@ NIP-05 identifiers देखें (human-readable names जैसे alice@doma
 <FAQAccordion 
   question="क्या मैं posts edit या delete कर सकता हूं?"
   category="basics"
-  client:load
+  client:idle
 >
 Nostr posts immutable हैं - वे posting के बाद edit नहीं हो सकती। आप correction या follow-up note post कर सकते हैं। Deletion के लिए, आप deletion request भेज सकते हैं, लेकिन relays इसे honor करें या नहीं, यह उन पर निर्भर करता है। Post करने से पहले सोचें - permanence protocol की feature है।
 
@@ -638,7 +638,7 @@ Nostr posts immutable हैं - वे posting के बाद edit नही
 <FAQAccordion 
   question="मुझे different clients पर different content क्यों दिखता है?"
   category="technical"
-  client:load
+  client:idle
 >
 हर client different default relays से connect होता है। आपका feed इस बात पर निर्भर करता है कि आप किस relays से connected हैं और आप किसे follow करते हैं। अगर Relay A पर Relay B से अलग users हैं, तो आप different content देखेंगे। यह normal है - consistent content देखने के लिए across clients ज्यादा relays add करें या ज्यादा लोगों को follow करें।
 
@@ -661,7 +661,7 @@ Nostr posts immutable हैं - वे posting के बाद edit नही
 <FAQAccordion 
   question="मैं अपना पूरा Nostr history कैसे backup करूं?"
   category="security"
-  client:load
+  client:idle
 >
 Nostr-fetch या nak जैसे tools use करें अपने events export करने के लिए। अपनी nsec (private key) securely backup करें - यह critical है। आपके npub events relays पर stored हैं, लेकिन local backup रखना wise है। Complete history store करने के लिए personal relay use करने पर विचार करें।
 
@@ -688,7 +688,7 @@ Nostr-fetch या nak जैसे tools use करें अपने events e
 <FAQAccordion 
   question="NIP-04 और NIP-17 DMs में क्या अंतर है?"
   category="advanced"
-  client:load
+  client:idle
 >
 NIP-04 (deprecated) known vulnerabilities के साथ shared secret encryption use करता है। NIP-17 (recommended) better privacy के लिए sealed sender और gift-wrap use करता है। NIP-17 metadata hide करता है कि कौन किसे message कर रहा है। Secure private messaging के लिए NIP-17 support करने वाले clients पर migrate करें।
 
@@ -711,7 +711,7 @@ NIP-04 (deprecated) known vulnerabilities के साथ shared secret encrypt
 <FAQAccordion 
   question="मैं अपना खुद का relay कैसे चलाऊं?"
   category="advanced"
-  client:load
+  client:idle
 >
 Popular options: strfry (Rust, high performance), nostream (TypeScript, easy setup), या khatru (Go)। Requirements: server (VPS ~$5-20/month), domain name, basic CLI knowledge। Benefits: data sovereignty, custom policies, learning experience। Detailed setup instructions के लिए हमारा Relay Guide देखें।
 
@@ -742,7 +742,7 @@ Popular options: strfry (Rust, high performance), nostream (TypeScript, easy set
 <FAQAccordion 
   question="क्या मेरे DMs वास्तव में private हैं?"
   category="security"
-  client:load
+  client:idle
 >
 NIP-17 (recommended) के साथ: हाँ, content encrypted है और metadata minimized है। पुराने NIP-04 के साथ: Content encrypted है लेकिन metadata leaks possible हैं। NIP-17 के साथ Relay operators देख सकते हैं कि आप message कर रहे हैं लेकिन content या exact recipient नहीं। Maximum privacy के लिए, VPN/Tor भी use करें।
 
@@ -770,7 +770,7 @@ NIP-17 (recommended) के साथ: हाँ, content encrypted है औ�
 <FAQAccordion 
   question="अगर कोई मेरा npub guess कर ले तो क्या वे मेरा account चुरा सकते हैं?"
   category="security"
-  client:load
+  client:idle
 >
 नहीं। आपका npub (public key) share करने के लिए है - यह आपका username जैसा है। आपका nsec (private key) आपका password है। nsec को secret रखें। केवल npub जानने से account compromise नहीं हो सकता। अपना npub freely share करें, अपनी nsec religiously protect करें।
 
@@ -791,7 +791,7 @@ NIP-17 (recommended) के साथ: हाँ, content encrypted है औ�
 <FAQAccordion 
   question="Nostr पर content moderation अलग क्यों है?"
   category="basics"
-  client:load
+  client:idle
 >
 Nostr में कोई central moderation नहीं है। हर client और user decide करता है कि क्या show/hide करना है। आप कर सकते हैं: accounts mute, users block, spam filters वाले clients use, content policies वाले relays choose। यह client-side vs platform-side moderation है। Freedom आपके अपने experience को curate करने की responsibility के साथ आती है।
 
@@ -817,7 +817,7 @@ Nostr में कोई central moderation नहीं है। हर clien
 <FAQAccordion 
   question="मैं अपने दोस्तों को Twitter/X से कैसे ढूंढूं?"
   category="getting-started"
-  client:load
+  client:idle
 >
 Check करें कि उन्होंने अपने Twitter bio/posts में अपना npub share किया है। NIP-05 identifiers use करें अगर उनके पास है (याद रखना आसान)। Direct रूप से पूछें। कुछ tools Twitter users scan करते हैं जिन्होंने Nostr keys post किए हैं। Search engines पर उनका Twitter handle + "npub" search करें।
 
@@ -836,7 +836,7 @@ Check करें कि उन्होंने अपने Twitter bio/post
 <FAQAccordion 
   question="'spam filters' क्या हैं और वे कैसे काम करते हैं?"
   category="advanced"
-  client:load
+  client:idle
 >
 Spam filters client-side algorithms हैं जो low-quality content hide करते हैं। वे analyze करते हैं: account age, web of trust, content patterns, zap receipts। हर client differently implement करता है। आप आमतौर पर sensitivity adjust या disable कर सकते हैं। False positives happen - legitimate posts missing हों तो "show all" check करें।
 
@@ -864,7 +864,7 @@ Spam filters client-side algorithms हैं जो low-quality content hide �
 <FAQAccordion 
   question="मेरा feed अचानक पुराने posts क्यों दिखाता है?"
   category="troubleshooting"
-  client:load
+  client:idle
 >
 यह तब होता है जब: आप नए relay से connect होते हैं जिसमें पुराना data है, आपका client relays से re-sync करता है, या कोई पुराने post को zap करता है जिससे वह top पर आ जाता है। Nostr में कोई chronological "feed" नहीं है - यह multiple sources से aggregate होता है। पुराने posts resurfacing normal behavior है।
 
@@ -884,7 +884,7 @@ Twitter के chronological feed के विपरीत, Nostr कई source
 <FAQAccordion 
   question="Zaps technically कैसे काम करते हैं?"
   category="advanced"
-  client:load
+  client:idle
 >
 Zaps Bitcoin Lightning Network use करते हैं। Process: 1) Sender Lightning invoice create करता है, 2) Sender zap receipt (kind 9735) payment proof के साथ publish करता है, 3) Client sender profile के साथ zap display करता है, 4) Receiver अपने Lightning wallet में sats प्राप्त करता है। NIP-57 इसे standardize करता है। कोई escrow या platform नहीं - direct P2P payments।
 
