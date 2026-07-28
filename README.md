@@ -32,7 +32,7 @@ A comprehensive, beginner-friendly web application for learning about the Nostr 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/nostrich-love.git
+git clone https://github.com/piotr-e8/nostrich-love.git
 cd nostrich-love
 ```
 
@@ -240,7 +240,7 @@ We welcome contributions! Here's how:
 
 ### Reporting Issues
 
-Found a bug or have a suggestion? [Open an issue](https://github.com/yourusername/nostrich-love/issues) with:
+Found a bug or have a suggestion? [Open an issue](https://github.com/piotr-e8/nostrich-love/issues) with:
 
 - Clear description of the problem
 - Steps to reproduce
@@ -249,9 +249,9 @@ Found a bug or have a suggestion? [Open an issue](https://github.com/yourusernam
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+The code is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
-Content is licensed under [Creative Commons CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+The educational content (the guides in `src/content/` and their translations) is licensed under [Creative Commons CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
 ## 🙏 Acknowledgments
 
