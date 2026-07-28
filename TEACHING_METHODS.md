@@ -485,14 +485,15 @@ Before publishing new content:
 
 ---
 
-## 9. Integration with Other Skills
+## 9. Integration with Other Rule Files
 
-**Related skills:**
-- **[SKILLS.md]** - Core rules, build verification
+**Related rule files:**
+- **[AGENTS.md]** - Critical rules loaded automatically (build verification, i18n)
+- **[RULES.md]** - Detailed workflows and patterns
 - **[NOSTR_KNOWLEDGE.md]** - Technical accuracy, NIP details
 - **[I18N_PATTERNS.md]** - Translation system, quiz structure
 
-**Skill combinations:**
+**Rule file combinations:**
 - **Creating a guide:** TEACHING_METHODS + NOSTR_KNOWLEDGE + I18N_PATTERNS
 - **Fixing quiz:** TEACHING_METHODS + I18N_PATTERNS
 - **Writing advanced content:** NOSTR_KNOWLEDGE + TEACHING_METHODS (skip analogies)

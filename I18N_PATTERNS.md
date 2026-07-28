@@ -432,16 +432,42 @@ Watch for:
 
 ## Validation Checklist
 
-Before completing translation work:
+### Pre-Merge Checklist
 
-- [ ] Added keys to `/src/i18n/locales/en.json`
-- [ ] Copied same structure to `pl.json`, `es.json`, `de.json`
-- [ ] Translated content in all 4 files
-- [ ] Verified key structure is identical across locales
-- [ ] Updated any hardcoded strings to use `t()`
-- [ ] Checked guide links include locale prefix
-- [ ] Ran `npm run build` with no warnings
-- [ ] No "Translation key not found" in console
+Before submitting translation work:
+
+- [ ] **All 4 locales updated:** en.json, pl.json, es.json, de.json
+- [ ] **Key structure identical:** Same keys in all files (check with `jq`)
+- [ ] **No hardcoded strings:** All UI text uses `t()` function
+- [ ] **Locale prefixes:** All guide links use `/${locale}/guides/...`
+- [ ] **client:load present:** Interactive components have `client:load` directive
+- [ ] **Frontmatter correct:** Only `title`, `description`, `estimatedTime` translated
+- [ ] **TypeScript types:** Updated `/src/i18n/types.ts` if adding new categories
+- [ ] **Technical terms:** npub, nsec, NIP-XX, Relay, Zap remain in English
+- [ ] **No infinite loops:** useEffect depends on `locale`, not `t` function
+- [ ] **Dark mode styles:** All `dark:` prefixes complete with `bg-`/`text-`
+- [ ] **Build passes:** `npm run build` with no errors or warnings
+- [ ] **Console clean:** No "Translation key not found" warnings
+- [ ] **Visual check:** Tested in browser for each locale
+- [ ] **Components work:** Interactive components render in target language
+
+### Quick Verification Commands
+
+```bash
+# Check translation completeness across all locales
+jq -S 'paths' src/i18n/locales/en.json | sort > /tmp/en_paths.txt && \
+jq -S 'paths' src/i18n/locales/pl.json | sort > /tmp/pl_paths.txt && \
+diff /tmp/en_paths.txt /tmp/pl_paths.txt
+
+# Find hardcoded strings in components (should return nothing)
+grep -r "Submit\|Next\|Previous" src/components --include="*.tsx" | grep -v "t('"
+
+# Find missing client:load directives
+grep -r "<KeyGenerator\|<WhatIsNostrQuiz\|<ProtocolComparison" src/content/guides --include="*.mdx" | grep -v "client:load"
+
+# Build verification
+npm run build 2>&1 | grep -i "warning\|error\|Translation key not found"
+```
 
 ## Common Mistakes & Fixes
 
@@ -496,9 +522,109 @@ const { getValue } = useTranslation();
 const questions = getValue('guides.whatIsNostr.quiz.questions'); // Returns array
 ```
 
-## Integration with Other Skills
+### Mistake 5: Maximum Update Depth Exceeded (React Error)
 
-- **SKILLS.md** - Core rules including i18n requirements
+**Symptom:** React error "Maximum update depth exceeded" in components using translations
+
+**Cause:** Using the `t` function from `useTranslation` as a `useEffect` dependency creates an infinite loop because `t` is recreated on every render.
+
+**❌ WRONG:**
+```tsx
+useEffect(() => {
+  setSecurityChecks(getSecurityChecks(t));
+}, [t]); // ❌ This causes infinite loop
+```
+
+**✅ CORRECT:**
+```tsx
+const { t, locale } = useTranslation();
+
+useEffect(() => {
+  setSecurityChecks(getSecurityChecks(t));
+}, [locale]); // ✅ Only depend on locale, not t
+```
+
+**Affected Files:** `/src/components/interactive/KeyGenerator.tsx`
+
+### Mistake 6: Missing TypeScript Types for New Keys
+
+**Symptom:** TypeScript errors: "Property 'guidesPage' does not exist on type 'Translations'"
+
+**Cause:** Added new translation keys to JSON files but didn't update TypeScript interface in `/src/i18n/types.ts`
+
+**Fix:**
+```typescript
+// In /src/i18n/types.ts
+export interface Translations {
+  // ... existing keys
+  guidesPage?: {
+    hero: { title: string; description: string; };
+    // ...
+  };
+  // Add other new categories here - make them optional
+}
+```
+
+**Best Practice:** Make all new translation properties optional (`?`) to maintain backward compatibility.
+
+### Mistake 7: Hardcoded Strings in Data Files
+
+**Symptom:** Components show English text even when translations exist
+
+**Cause:** Data arrays defined outside components don't use translation function
+
+**❌ WRONG:**
+```typescript
+// In data file (e.g., /src/data/learning-paths.ts)
+export const learningPaths = [
+  { 
+    title: "Getting Started", // Hardcoded English
+    description: "Learn the basics" 
+  }
+];
+```
+
+**✅ CORRECT:**
+```typescript
+// Use translation keys, resolve in component
+export const learningPaths = [
+  { 
+    titleKey: "learningPaths.gettingStarted.title",
+    descriptionKey: "learningPaths.gettingStarted.description"
+  }
+];
+
+// In component:
+const title = t(learningPath.titleKey);
+```
+
+### Mistake 8: Dark Mode Style Errors
+
+**Symptom:** Elements appear white in dark mode or text is invisible
+
+**Cause:** Tailwind CSS classes missing `dark:` prefix or missing `bg-`/`text-` prefix
+
+**❌ WRONG:**
+```tsx
+<div className="bg-yellow-50 dark:yellow-900/20"> // Missing 'bg-' prefix
+<span className="text-white"> // No dark: variant
+```
+
+**✅ CORRECT:**
+```tsx
+<div className="bg-yellow-50 dark:bg-yellow-900/20">
+<span className="text-gray-900 dark:text-white">
+```
+
+**Common mistakes:**
+- `dark:yellow-900/20` without `bg-` prefix
+- `dark:red-900/30` without `bg-` prefix in badges
+- `text-white` without `dark:text-white` pair
+
+## Integration with Other Rule Files
+
+- **AGENTS.md** - Critical rules including i18n requirements (loaded automatically)
+- **RULES.md** - Detailed workflows and patterns
 - **NOSTR_KNOWLEDGE.md** - Technical content that needs translation
 - **TEACHING_METHODS.md** - Educational content structure
 
@@ -510,4 +636,16 @@ const questions = getValue('guides.whatIsNostr.quiz.questions'); // Returns arra
 *Purpose: Core i18n patterns for nostrich.love*
 *Status: stable*
 *Next Review: When adding new locales*
+
+## Changelog
+
+**March 2026 - Translation Docs Consolidation:**
+- Added 4 new technical issues (Mistakes #5-8):
+  - Maximum update depth exceeded
+  - Missing TypeScript types
+  - Hardcoded strings in data files
+  - Dark mode style errors
+- Enhanced Validation Checklist with pre-merge items
+- Added quick verification commands
+- Consolidated content from GUIDE_TRANSLATION_PROCESS.md and TRANSLATION_MAINTENANCE.md
 
