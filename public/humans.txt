@@ -1,13 +1,13 @@
 /* TEAM */
-  Project Lead: Nostr Community
+  Project Lead: Piotr Czarnoleski (ptrio42)
   Contact: hello [at] nostrich.love
   Site: https://nostrich.love
-  Location: Global
-  
-  Development: Open Source Contributors
-  GitHub: https://github.com/nostr-protocol/nostr
-  
-  Design: Nostr Community
+  Location: Poland
+
+  Development: Piotr Czarnoleski (ptrio42) and contributors
+  GitHub: https://github.com/ptrio42
+
+  Design: Piotr Czarnoleski (ptrio42)
 
 /* THANKS */
   Nostr Protocol Creators: fiatjaf and contributors
@@ -18,7 +18,7 @@
   The entire Nostr community for support and feedback
 
 /* SITE */
-  Last update: 2025-02-10
+  Last update: 2026-07-28
   Standards: HTML5, CSS3, TypeScript
   Components: Astro, React, Tailwind CSS
   Software: VS Code, Git, Node.js

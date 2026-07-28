@@ -46,16 +46,16 @@ export const siteConfig = {
 
   // Author info for humans.txt
   author: {
-    name: "Nostr Community",
+    name: "Piotr Czarnoleski (ptrio42)",
     email: "hello@nostrich.love",
     website: "https://nostrich.love",
-    location: "Global",
+    location: "Poland",
   },
 
   // Credits
   credits: {
-    design: "Nostr Community",
-    development: "Open Source Contributors",
+    design: "Piotr Czarnoleski (ptrio42)",
+    development: "Piotr Czarnoleski (ptrio42) and contributors",
     lastUpdate: new Date().toISOString().split("T")[0],
   },
 } as const;
