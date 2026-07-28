@@ -45,14 +45,6 @@ export function PrivacyControls() {
     setTimeout(() => setMessage(''), 3000);
   };
   
-  const handleToggleTours = () => {
-    const updated = { ...settings, toursEnabled: !settings.toursEnabled };
-    updatePrivacySettings(updated);
-    setSettings(updated);
-    setMessage(updated.toursEnabled ? 'Client tours enabled' : 'Client tours disabled');
-    setTimeout(() => setMessage(''), 3000);
-  };
-  
   const handleRetentionChange = (retention: PrivacySettings['dataRetention']) => {
     const updated = { ...settings, dataRetention: retention };
     updatePrivacySettings(updated);
@@ -158,32 +150,6 @@ export function PrivacyControls() {
         </div>
       </div>
 
-      {/* Client Tours Toggle */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-2">
-          <div>
-            <h4 className="font-medium">Client Simulator Tours</h4>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Enable interactive guided tours for Nostr client simulators
-            </p>
-          </div>
-          <button
-            onClick={handleToggleTours}
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-              settings.toursEnabled ? 'bg-primary' : 'bg-gray-300 dark:bg-gray-600'
-            }`}
-            role="switch"
-            aria-checked={settings.toursEnabled}
-          >
-            <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                settings.toursEnabled ? 'translate-x-6' : 'translate-x-1'
-              }`}
-            />
-          </button>
-        </div>
-      </div>
-      
       {/* Data Retention */}
       <div className="mb-6">
         <h4 id={retentionLabelId} className="font-medium mb-2">Data Retention</h4>

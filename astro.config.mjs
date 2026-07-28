@@ -28,11 +28,6 @@ export default defineConfig({
     }),
     mdx(),
     sitemap({
-      // Simulators are moving to the standalone sandstr project. The routes stay
-      // reachable for now but carry noindex, so keep them out of the sitemap too —
-      // submitting a noindex URL is a contradictory signal.
-      filter: (page) =>
-        !/\/simulators(\/|$)/.test(page) && !/\/damus-demo\/?$/.test(page),
       i18n: {
         defaultLocale: 'en',
         locales: {

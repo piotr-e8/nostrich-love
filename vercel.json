@@ -45,6 +45,21 @@
       "source": "/en/",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/simulators",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/simulators/:slug*",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/damus-demo",
+      "destination": "/",
+      "permanent": false
     }
   ]
 }
