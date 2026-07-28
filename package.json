@@ -28,6 +28,7 @@
     "@astrojs/react": "^4.4.2",
     "@astrojs/sitemap": "^3.7.0",
     "@astrojs/tailwind": "^6.0.2",
+    "@fontsource/inter": "^5.3.0",
     "@noble/secp256k1": "^3.0.0",
     "@radix-ui/react-slot": "^1.2.4",
     "@types/qrcode": "^1.5.6",

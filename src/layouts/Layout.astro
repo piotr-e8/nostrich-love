@@ -1,4 +1,8 @@
 ---
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
 import "../styles/globals.css";
 import SEO from "../components/SEO.astro";
 import { siteConfig } from "../config/site";
@@ -30,12 +34,6 @@ const dir = localeConfig.direction;
       /* Prevent FOUC for dark mode */
       html.dark { background-color: #0F0A1A; }
       html.dark body { background-color: #0F0A1A; color: #ffffff; }
-      
-      /* Critical font display */
-      @font-face {
-        font-family: 'Inter';
-        font-display: swap;
-      }
       
       /* Skip to content link */
       .skip-to-content {
@@ -133,9 +131,7 @@ const dir = localeConfig.direction;
     </script>
     
     <!-- Fonts with display=swap for performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Inter is self-hosted via @fontsource (no third-party font requests) -->
     
     <!-- Cloudflare Web Analytics (Privacy-friendly, no cookies, GDPR compliant) -->
     {siteConfig.analytics.enabled && (
