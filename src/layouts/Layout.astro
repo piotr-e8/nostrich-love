@@ -138,7 +138,7 @@ const dir = localeConfig.direction;
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     
     <!-- Cloudflare Web Analytics (Privacy-friendly, no cookies, GDPR compliant) -->
-    {siteConfig.analytics.enabled && siteConfig.analytics.cloudflareToken !== 'YOUR_CLOUDFLARE_TOKEN' && (
+    {siteConfig.analytics.enabled && (
       <script defer src={`https://static.cloudflareinsights.com/beacon.min.js`} data-cf-beacon={`{"token": "${siteConfig.analytics.cloudflareToken}"}`}></script>
     )}
     

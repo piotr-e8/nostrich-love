@@ -22,11 +22,8 @@ export { RelayVisualizer } from "./RelayVisualizer";
 export { ClientCard, ClientGrid } from "./ClientCard";
 export type { Client, ClientCardProps, ClientGridProps } from "./ClientCard";
 
-export { Stepper, CircularProgress, Checklist } from "./ProgressIndicator";
-export type {
-  ProgressStep,
-  ChecklistItem as ChecklistProgressItem,
-} from "./ProgressIndicator";
+export { ProgressIndicator } from "./ProgressIndicator";
+export type { ProgressIndicatorProps } from "./ProgressIndicator";
 
 export { HoverCard } from "../HoverCard";
 export type { HoverCardProps } from "../HoverCard";

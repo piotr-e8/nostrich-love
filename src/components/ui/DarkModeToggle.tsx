@@ -3,6 +3,17 @@ import { Sun, Moon, Monitor } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 type Theme = 'light' | 'dark' | 'system';
+type ResolvedTheme = 'light' | 'dark';
+
+const isTheme = (value: string | null): value is Theme =>
+  value === 'light' || value === 'dark' || value === 'system';
+
+const getSystemTheme = (): ResolvedTheme =>
+  window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+/** Maps the user's preference onto the theme that should actually be applied. */
+const resolveTheme = (theme: Theme): ResolvedTheme =>
+  theme === 'system' ? getSystemTheme() : theme;
 
 interface DarkModeToggleProps {
   className?: string;
@@ -16,15 +27,14 @@ export function DarkModeToggle({ className, showLabel = false }: DarkModeToggleP
   useEffect(() => {
     setMounted(true);
     // Check for saved preference
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
-    if (savedTheme) {
+    const savedTheme = localStorage.getItem('theme');
+    if (isTheme(savedTheme)) {
       setTheme(savedTheme);
-      applyTheme(savedTheme);
+      applyTheme(resolveTheme(savedTheme));
     } else {
       // Check system preference
-      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       setTheme('system');
-      applyTheme(systemDark ? 'dark' : 'light');
+      applyTheme(getSystemTheme());
     }
 
     // Listen for system preference changes
@@ -38,7 +48,7 @@ export function DarkModeToggle({ className, showLabel = false }: DarkModeToggleP
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  const applyTheme = (newTheme: 'light' | 'dark') => {
+  const applyTheme = (newTheme: ResolvedTheme) => {
     const root = document.documentElement;
     if (newTheme === 'dark') {
       root.classList.add('dark');
@@ -50,13 +60,8 @@ export function DarkModeToggle({ className, showLabel = false }: DarkModeToggleP
   const handleThemeChange = (newTheme: Theme) => {
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
-    
-    if (newTheme === 'system') {
-      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      applyTheme(systemDark ? 'dark' : 'light');
-    } else {
-      applyTheme(newTheme);
-    }
+
+    applyTheme(resolveTheme(newTheme));
   };
 
   if (!mounted) {

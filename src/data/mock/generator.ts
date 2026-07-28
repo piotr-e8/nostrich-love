@@ -3,8 +3,8 @@
  * Programmatic utilities for creating new mock data
  */
 
-import type { MockUser, MockNote, MockThread, MockRelay, NostrEvent, ContentCategory } from './types';
-import { EventKind } from './types';
+import type { MockUser, MockNote, MockThread, MockRelay, NostrEvent } from './types';
+import { EventKind, ContentCategory } from './types';
 import {
   generateHex,
   generateNpub,

@@ -1,8 +1,10 @@
 import React from "react";
 import { cn } from "../lib/utils";
 
+type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
+
 interface ReadingTimeHeadingProps {
-  level: 1 | 2 | 3 | 4 | 5 | 6;
+  level: HeadingLevel;
   children: React.ReactNode;
   className?: string;
 }
@@ -29,7 +31,7 @@ export function ReadingTimeHeading({
     : childrenString;
   const readingTime = match ? match[1] : null;
 
-  const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
+  const HeadingTag = `h${level}` as `h${HeadingLevel}`;
 
   return (
     <HeadingTag

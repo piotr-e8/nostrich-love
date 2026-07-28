@@ -35,7 +35,7 @@ export function ValueCard({
         {isString ? (
           <span className="text-2xl">{icon}</span>
         ) : (
-          <Icon className="w-6 h-6 text-primary-500" />
+          <Icon icon={icon} />
         )}
       </div>
       <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>

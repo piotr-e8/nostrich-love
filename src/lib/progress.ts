@@ -81,7 +81,15 @@ function getGamificationData(): GamificationData {
         completedByLevel: { beginner: [], intermediate: [], advanced: [] },
         lastInterestFilter: null
       },
-      stats: {},
+      stats: {
+        keysGenerated: false,
+        firstPostMade: false,
+        firstZapReceived: false,
+        accountsFollowed: 0,
+        keysBackedUp: false,
+        relaysConnected: 0,
+        privacyQuizPerfectScore: false
+      },
       version: 1
     };
   }

@@ -282,9 +282,18 @@ const totalGuides = 15; // Total number of guides across all levels
 
 <script>
   import { loadGamificationData, getCompletedInLevel, getLevelProgress } from '../utils/gamification';
-  import { SKILL_LEVELS, getLevelLength } from '../data/learning-paths';
+  import { SKILL_LEVELS, getLevelLength, type SkillLevel } from '../data/learning-paths';
 
   const STORAGE_KEY = 'nostrich-gamification-v1';
+
+  /** Shape returned by getProgressData() — pinned so the success and the
+   *  error branch agree and level keys stay indexable by SkillLevel. */
+  interface ProgressSnapshot {
+    completedGuides: string[];
+    completedWithTimestamps: { id: string; completedAt: string }[];
+    unlockedLevels: SkillLevel[];
+    completedByLevel: Record<SkillLevel, string[]>;
+  }
   
   // Guide metadata for display
   const guideMetadata: Record<string, { title: string; description: string }> = {
@@ -322,7 +331,7 @@ const totalGuides = 15; // Total number of guides across all levels
   }
 
   // Get progress data
-  function getProgressData() {
+  function getProgressData(): ProgressSnapshot {
     try {
       const data = loadGamificationData();
       return {
@@ -358,7 +367,7 @@ const totalGuides = 15; // Total number of guides across all levels
     }
     
     // Update current level
-    const levelOrder = ['beginner', 'intermediate', 'advanced'];
+    const levelOrder: SkillLevel[] = ['beginner', 'intermediate', 'advanced'];
     // Furthest level the reader has actually started, rather than unlocked.
     const currentLevel = [...levelOrder].reverse().find(
       (lvl) => (completedByLevel[lvl]?.length || 0) > 0
@@ -410,6 +419,12 @@ const totalGuides = 15; // Total number of guides across all levels
       // Update guide list
       const guideList = section.querySelector('.guide-list') as HTMLElement;
       if (guideList) {
+        // English is served un-prefixed (prefixDefaultLocale: false), so
+        // /en/guides/* would only 301. Inline scripts cannot import i18n/paths.
+        const savedLang = localStorage.getItem('preferredLanguage');
+        const locale = savedLang && ['en','pl','es','de','zh','ar','hi'].includes(savedLang) ? savedLang : 'en';
+        const guidesPrefix = locale === 'en' ? '/guides' : `/${locale}/guides`;
+
         const guides = SKILL_LEVELS[level]?.sequence || [];
         guideList.innerHTML = guides.map((guideId, idx) => {
           const meta = guideMetadata[guideId] || { title: guideId, description: '' };

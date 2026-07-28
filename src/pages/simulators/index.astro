@@ -5,11 +5,13 @@
  */
 
 import Layout from '../../layouts/Layout.astro';
-import { 
+import {
   allSimulatorConfigs,
   getConfigsByPlatform,
-  type SimulatorConfig 
 } from '../../simulators/shared/configs';
+// `configs.ts` imports SimulatorConfig as a type but does not re-export it —
+// take the type from where it is actually declared.
+import type { SimulatorConfig } from '../../simulators/shared/types';
 
 const title = 'Nostr Client Simulators';
 const description = 'Try out 7 different Nostr clients in your browser. No installation required.';

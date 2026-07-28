@@ -4,6 +4,7 @@ import { cn } from '../../lib/utils';
 import { SKILL_LEVELS, type SkillLevel, getGuideLevel } from '../../data/learning-paths';
 import { useTranslation } from '../../hooks/useTranslation';
 import { guidesIndexPath } from "../../i18n/paths";
+import type { Locale } from '../../config/locales';
 
 interface GuideInfo {
   slug: string;
@@ -13,7 +14,7 @@ interface GuideInfo {
 interface GuideNavigationProps {
   guideTitles?: Record<string, string>;
   className?: string;
-  locale?: string;
+  locale?: Locale;
 }
 
 export function GuideNavigation({

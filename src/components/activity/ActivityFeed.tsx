@@ -22,7 +22,7 @@ interface ActivityItemData {
   };
 }
 
-interface ActivityFeedProps {
+export interface ActivityFeedProps {
   activities?: ActivityItemData[];
   maxItems?: number;
   className?: string;

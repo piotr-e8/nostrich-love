@@ -24,7 +24,8 @@ export function ScreenshotGallery({
   // Ensure screenshots is an array and filter out invalid screenshots
   const screenshotsArray = Array.isArray(screenshots) ? screenshots : [];
   const validScreenshots = screenshotsArray.filter(
-    (s): s is Screenshot => s && typeof s === "object" && "src" in s && s.src,
+    (s): s is Screenshot =>
+      Boolean(s) && typeof s === "object" && "src" in s && Boolean(s.src),
   );
 
   const goToPrevious = () => {

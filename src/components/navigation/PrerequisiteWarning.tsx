@@ -5,6 +5,7 @@ import { checkPrerequisites } from '../../lib/progressService';
 import { Button } from '../ui/Button';
 import { useTranslation } from '../../hooks/useTranslation';
 import { guidePath } from "../../i18n/paths";
+import type { Locale } from '../../config/locales';
 
 export interface PrerequisiteWarningProps {
   currentGuideId: string;
@@ -14,7 +15,7 @@ export interface PrerequisiteWarningProps {
     title: string;
     estimatedTime?: string;
   }>;
-  lang?: string;
+  lang?: Locale;
   className?: string;
   onDismiss?: () => void;
   dismissible?: boolean;

@@ -1,0 +1,62 @@
+name: CI
+
+# 84k lines shipped straight to production with nothing between the editor and
+# the live site. Every gate below exists because something got through: an
+# unbound identifier that threw at runtime, guide URLs that 404'd for months,
+# form controls with no accessible name, and translation keys that rendered as
+# raw dotted strings.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    # the build alone has taken 7 minutes on a loaded machine; 152 pages across
+    # 7 locales is not fast
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      # Content collection types are generated, not committed; astro check and
+      # the .astro files both need them.
+      - name: Sync Astro types
+        run: npx astro sync
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit and integrity tests
+        run: npm run test
+
+      - name: Build
+        run: npm run build
+
+      - name: No broken internal links
+        run: npm run check:links
+
+      - name: Every form control has an accessible name
+        run: npm run check:labels
+
+      - name: Dependency audit (high and critical only)
+        # advisory-only for now: the tree currently has known high findings that
+        # need dependency bumps, and failing every PR on them would train people
+        # to ignore this job
+        run: npm audit --audit-level=high || true
+        continue-on-error: true

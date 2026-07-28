@@ -167,8 +167,8 @@ export function BadgeDisplay({
                     : 'bg-gray-100 dark:bg-gray-900 border-gray-200 dark:border-gray-700 grayscale opacity-60'
                 )}
               >
-                {/* Category Indicator */}
-                {unlocked && (
+                {/* Category Indicator (badges without a category have no dot) */}
+                {unlocked && badge.category && (
                   <div
                     className={cn(
                       'absolute top-2 left-2 w-2 h-2 rounded-full bg-gradient-to-r',

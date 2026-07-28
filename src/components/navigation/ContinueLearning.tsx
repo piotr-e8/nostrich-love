@@ -8,6 +8,7 @@ import {
 } from '../../lib/progress';
 import { useTranslation } from '../../hooks/useTranslation';
 import { guidesIndexPath } from "../../i18n/paths";
+import type { Locale } from '../../config/locales';
 
 interface ContinueLearningProps {
   nextGuide?: {
@@ -20,7 +21,7 @@ interface ContinueLearningProps {
   className?: string;
   hasQuiz?: boolean; // Whether the current guide has a quiz
   quizSelector?: string; // CSS selector for quiz element (default: '[data-quiz]')
-  locale?: string;
+  locale?: Locale;
 }
 
 export function ContinueLearning({
