@@ -29,3 +29,7 @@ experiments
 ai-docs
 ai-scripts
 learning
+
+# Agent tooling — local config and a 65 MB worktree copy, not project source
+.claude/
+.opencode/
