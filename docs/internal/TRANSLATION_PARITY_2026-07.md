@@ -44,6 +44,23 @@ done.
 The measurement script lives in the session notes; the approach is:
 strip frontmatter/code/imports, count `^#{2,4} ` headings, count
 non-whitespace non-syntax characters, compare per slug against `en`.
-UI-string parity (a separate axis) is measured by key count in
-`src/i18n/locales/*.json`: en 920, zh 920, de 902, es 893, pl 809, hi 624,
-ar 583 (2026-07-28).
+## UI-string parity (corrected 2026-07-28, second measurement)
+
+An earlier count reported "920 keys in en" — that was a flattened-path
+undercount. Counting actual leaf values (dicts and arrays recursed):
+
+| locale | leaves | missing vs en (2120) | stale extra keys |
+|---|---|---|---|
+| zh | 2120 | 0 | 0 |
+| de | 2102 | 18 | 0 |
+| pl | 1919 | 390 | 189 |
+| es | 2057 | 252 | 189 |
+| ar | 1134 | **1123** | 137 |
+| hi | 916 | **1589** | 385 |
+
+Because the runtime falls back to English per key, ar readers see roughly
+half and hi readers roughly three-quarters of the site chrome in English.
+Note many missing keys belong to English-only routes (simulators, audience
+pages), so the *user-visible* gap on localized routes is smaller — scoping
+which keys matter is part of the milestone-1 work. Do not quote the old
+583/920-style percentages anywhere; use this table.

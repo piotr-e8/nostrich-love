@@ -10,70 +10,228 @@ prerequisites: ["keys-and-security", "quickstart"]
 import { RelayWorldMap } from "@components/ui/RelayWorldMap";
 import { PostFlowSimulator } from "@components/ui/PostFlowSimulator";
 import { RelayExplorer } from "@components/interactive/RelayExplorer";
+import { TroubleshootingWizard } from "@components/interactive/TroubleshootingWizard";
 import { RelaysDemystifiedQuiz } from "@components/interactive/RelaysDemystifiedQuiz";
 
-الـ Relays هي مكاتب البريد في Nostr. إنها المكان الذي تعيش فيه رسائلك وكيف تنتقل للوصول إلى المستخدمين الآخرين.
+الـ Relays هي مكاتب البريد في Nostr. إنها المكان الذي تعيش فيه رسائلك والطريقة التي تنتقل بها لتصل إلى المستخدمين الآخرين.
 
-## تشبيه مكتب البريد
+## تشبيه مكتب البريد 🏤
 
 تخيل Nostr كشبكة من مكاتب البريد حول العالم.
 
-- أنت لديك صندوق بريد (مفاتيحك)
-- الـ Relays هي مكاتب البريد
-- المنشورات هي الرسائل التي ترسلها
+- **أنت** لديك صندوق بريد (مفاتيحك)
+- **الـ Relays** هي مكاتب البريد
+- **المنشورات** هي الرسائل التي ترسلها
 
-إليك الفرق الرئيسي عن وسائل التواصل الاجتماعي التقليدية: أنت تختار مكان إرسال بريدك.
+إليك الفرق الرئيسي عن وسائل التواصل الاجتماعي التقليدية: **أنت تختار أين ترسل بريدك.**
+
+```
+Traditional Social Media:    Nostr:
+┌──────────────────┐        ┌──────────────────┐
+│ One Big Server   │        │ Many Post Offices│
+│ (Twitter/X)      │        │ (Relays)         │
+│                  │        │                  │
+│ Everyone in      │        │ You pick which   │
+│ one place        │        │ ones to use      │
+└──────────────────┘        └──────────────────┘
+```
 
 ### قوة الاختيار
 
-في Nostr، أنت غير مقيد في مزود خدمة واحد. يمكنك:
+في Nostr، أنت غير مقيد بمزود خدمة واحد. يمكنك:
 
 - إرسال منشورات إلى أي relay
 - الاتصال بـ relays متعددة
 - تبديل الـ relays في أي وقت
 - تشغيل relay خاص بك
 
-<RelayWorldMap client:idle />
+<RelayWorldMap />
 
-## لماذا لا تتزامن المنشورات
+## لماذا لا تتزامن المنشورات 🔄
 
-إليك أكثر الالتباسات شيوعًا: نشرت شيئًا ولكن صديقي لا يمكنه رؤيته!
+إليك أكثر الالتباسات شيوعًا التي يواجهها المستخدمون الجدد:
 
-السبب: إذا نشرت إلى Relay A وصديقك يستخدم Relay B فقط، لن يرى منشورك.
+> "نشرت شيئًا ولكن صديقي لا يمكنه رؤيته!"
 
-الحل: الاتصال بـ Relays متعددة
+### الشرح المرئي
+
+```
+Your Connection                    Friend's Connection
+     │                                  │
+     ▼                                  ▼
+┌──────────┐                     ┌──────────┐
+│ Relay A  │         ❌          │ Relay B  │
+│ (wss://...)│      No link      │(wss://...)│
+└──────────┘                     └──────────┘
+     │                                  │
+   Your posts                         Friend's posts
+```
+
+**إذا نشرت إلى Relay A وكان صديقك يستخدم Relay B فقط، فلن يرى منشورك.**
+
+### الحل: الاتصال بـ Relays متعددة
+
+```
+Your Connection
+     │
+┌────┴────┐
+│ Relay A │
+│ Relay B │  ← Connect to both!
+│ Relay C │
+└────┬────┘
+     │
+   Your posts → Reach more people
+```
+
+معظم عملاء Nostr يوصلونك بعدة relays افتراضية. لكن فهم هذا يساعدك عندما:
+
+- لا تستطيع رؤية محتوى شخص ما
+- تريد الانضمام إلى مجتمع معين
+- تحتاج إلى استكشاف أخطاء المنشورات المفقودة
 
 <PostFlowSimulator client:idle />
 
-## اختيار الـ Relays
+## اختيار الـ Relays 🔌
 
 ### التوصيات الافتراضية
 
-- wss://relay.damus.io - Relay رئيسي لـ Damus
-- wss://nostr.wine - Relay عام
-- wss://relay.snort.social - Relay Snort
+إذا كنت في البداية، التزم بهذه الـ relays الشائعة والموثوقة:
+
+| Relay                      | الوصف                  | الموثوقية  |
+| -------------------------- | ---------------------- | ---------- |
+| `wss://relay.damus.io`     | Relay رئيسي لـ Damus   | ⭐⭐⭐⭐⭐ |
+| `wss://nostr.wine`         | Relay عام              | ⭐⭐⭐⭐   |
+| `wss://relay.snort.social` | Relay اجتماعي لـ Snort | ⭐⭐⭐⭐   |
+
+### الاكتشاف حسب الاهتمامات
+
+غالبًا ما تشغّل المجتمعات relays خاصة بها للنقاشات المركّزة:
+
+- **Bitcoin**: `wss://nostr.bitcoiner.social`
+- **التطوير**: `wss://relay.nostrdevs.com`
+- **الفن**: `wss://relay.nostrich.art`
+
+<RelayExplorer client:idle />
 
 ### مجانية مقابل مدفوعة
 
-**الـ Relays المجانية:** مفتوحة للجميع، قد تحتوي على حدود، رائعة للمبتدئين
-**الـ Relays المدفوعة:** تتطلب رسومًا صغيرة، أداء أفضل، أقل spam
+**الـ Relays المجانية**
 
-<RelayExplorer client:idle />
+- مفتوحة للجميع
+- قد تحتوي على حدود لمعدل الاستخدام
+- قد تمتلئ بالـ spam
+- رائعة للمبتدئين
+
+**الـ Relays المدفوعة**
+
+- تتطلب عادةً رسومًا صغيرة (غالبًا 1000-5000 sats شهريًا)
+- أداء أفضل
+- أقل spam
+- تدعم مشغّلي الـ relays
+
+> 💡 **نصيحة:** ابدأ بالـ relays المجانية. يمكنك دائمًا إضافة relays مدفوعة لاحقًا.
+
+---
+
+## متقدم: نموذج Outbox (NIP-65) [متقدم]
+
+<Note type="advanced">
+  هذا القسم اختياري. يمكنك استخدام Nostr بشكل ممتاز دون فهم NIP-65.
+</Note>
+
+### ما هو NIP-65؟
+
+يقدّم NIP-65 طريقة أذكى للتعامل مع الـ relays تُسمى "نموذج outbox".
+
+**بدلًا من:** أن تتصل يدويًا بأكثر من 10 relays
+**تفعل:** نشر قائمة الـ relays المفضلة لديك مرة واحدة، وترك العملاء يتولون الباقي
+
+### كيف يعمل
+
+```
+1. You publish a relay list:
+   {
+     "read": ["wss://relay-a.com"],
+     "write": ["wss://relay-b.com"]
+   }
+
+2. Other clients read this and know:
+   - Where to find your posts (read relays)
+   - Where to send you messages (write relays)
+```
+
+### إعداد Relays شخصية
+
+للمستخدمين المتقدمين، تشغيل relay خاص بك يمنحك:
+
+- **تحكمًا كاملًا** في بياناتك
+- **موثوقية تامة** (لا اعتماد على الآخرين)
+- **خصوصية** (بياناتك فقط على الـ relay)
+
+برامج الـ relays الشخصية الشائعة:
+
+- [strfry](https://github.com/hoytech/strfry) - تطبيق سريع بلغة C++
+- [nostr-rs-relay](https://gitlab.com/soapbox-pub/nostr-rs-relay) - تطبيق بلغة Rust
+
+> 📚 راجع [دليل الـ Relays](/ar/guides/relay-guide) للحصول على تعليمات الإعداد المفصلة.
 
 ---
 
 ## مرجع سريع
 
+### أوامر الـ Relays الشائعة
+
+في معظم العملاء، يمكنك:
+
+- **إضافة relay**: الإعدادات ← Relays ← إضافة
+- **إزالة relay**: اضغط مطولًا/انقر على الـ relay ← إزالة
+- **التحقق من الحالة**: قائمة الـ relays تعرض حالة الاتصال
+
 ### أفضل الممارسات
 
-1. اتصل بـ 4-8 relays للحصول على تغطية جيدة
-2. تضمين relay write واحد حيث تنشر دائمًا
-3. تحقق من uptime الـ relay قبل الاعتماد عليها
+1. **اتصل بـ 4-8 relays** للحصول على تغطية جيدة
+2. **ضمّن relay واحدًا للكتابة (write)** تنشر عليه دائمًا
+3. **تحقق من uptime الـ relay** قبل الاعتماد عليه
+4. **حدّث قائمة الـ relays باستمرار** مع نمو الشبكة
 
-### استكشاف الأخطاء
+---
 
-- لا أستطيع رؤية أي منشورات: تحقق من الاتصال بالـ relays
-- منشوراتي تختفي: بعض الـ relays تحذف المحتوى القديم
-- Relay لا يتصل: جرب relay آخر
+## استكشاف الأخطاء
+
+### "لا أستطيع رؤية أي منشورات"
+
+- تحقق من أنك متصل بأي relays (الإعدادات ← Relays)
+- جرّب إضافة relays شائعة من القائمة أعلاه
+- انتظر لحظة حتى يتم تحميل المحتوى
+
+### "منشوراتي تختفي"
+
+- بعض الـ relays تحذف المحتوى القديم لتوفير المساحة
+- اتصل بمزيد من الـ relays لضمان التكرار
+- فكّر في relay مدفوع للتخزين الدائم
+
+### "الـ Relay لا يتصل"
+
+- تحقق من اتصالك بالإنترنت
+- جرّب رابط الـ relay في المتصفح (يجب أن تظهر صفحة خطأ/ws)
+- قد يكون الـ relay متوقفًا - جرّب واحدًا آخر
+
+<TroubleshootingWizard client:idle />
+
+---
+
+## اختبر فهمك
+
+هل تعتقد أنك أتقنت الـ relays؟ اختبر معرفتك:
 
 <RelaysDemystifiedQuiz client:idle />
+
+---
+
+## هل لا تزال لديك أسئلة؟
+
+انضم إلى مجتمع Nostr:
+
+- [Nostr Reddit](https://reddit.com/r/nostr)
+- [Nostr Telegram](https://t.me/nostr_protocol)
+- [Stacker News](https://stacker.news) (منتدى Bitcoin/Nostr)
