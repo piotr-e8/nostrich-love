@@ -466,6 +466,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                 <input
                   type="text"
+                  aria-label="Enter npub to follow"
                   value={customNpub}
                   onChange={(e) => setCustomNpub(e.target.value)}
                   placeholder="Enter npub to follow..."

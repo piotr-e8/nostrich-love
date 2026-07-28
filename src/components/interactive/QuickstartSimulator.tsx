@@ -351,9 +351,10 @@ function IrisSimulation() {
       
       <div className="p-4">
         <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4 mb-4">
-          <input 
-            type="text" 
-            placeholder="What's happening?" 
+          <input
+            type="text"
+            aria-label="Write a post"
+            placeholder="What's happening?"
             className="w-full bg-transparent border-none outline-none text-gray-700 dark:text-gray-300"
           />
           <div className="flex justify-end mt-2">
@@ -456,9 +457,10 @@ function CoracleSimulation() {
         </div>
         
         <div className="mt-6 flex gap-2">
-          <input 
-            type="text" 
-            placeholder="Say something..." 
+          <input
+            type="text"
+            aria-label="Write a post"
+            placeholder="Say something..."
             className="flex-1 px-4 py-2 rounded-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm"
           />
           <button className="bg-indigo-600 text-white px-6 py-2 rounded-full text-sm font-semibold">
@@ -608,6 +610,7 @@ function FirstDaySimulator({ className }: { className?: string }) {
                   <div className="w-10 h-10 bg-purple-500 rounded-full flex-shrink-0" />
                   <div className="flex-1">
                     <textarea
+                      aria-label={t("quickstartSimulator.postStep.title")}
                       placeholder={t("quickstartSimulator.postStep.placeholder")}
                       className="w-full bg-transparent border-none resize-none outline-none text-gray-800 dark:text-gray-200"
                       rows={3}

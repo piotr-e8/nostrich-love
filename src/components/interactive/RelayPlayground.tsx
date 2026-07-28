@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef, useId } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Globe,
@@ -530,6 +530,7 @@ export function RelayPlayground({ className }: { className?: string }) {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            aria-label={t('relayPlayground.search.placeholder')}
             placeholder={t('relayPlayground.search.placeholder')}
             className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:outline-none"
           />
@@ -1069,6 +1070,7 @@ function EventStreamViewer({
   relays: Relay[];
 }) {
   const { t } = useTranslation();
+  const maxEventsId = useId();
   const [selectedRelay, setSelectedRelay] = useState<Relay | null>(null);
   const [events, setEvents] = useState<StreamEvent[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
@@ -1235,10 +1237,11 @@ function EventStreamViewer({
 
         {/* Max Events */}
         <div>
-          <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">
+          <label htmlFor={maxEventsId} className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">
             {t('relayPlayground.queryTab.limit')}: {maxEvents}
           </label>
           <input
+            id={maxEventsId}
             type="range"
             min="10"
             max="100"
@@ -1329,6 +1332,8 @@ function QueryTester({
   relays: Relay[];
 }) {
   const { t } = useTranslation();
+  const relaySelectId = useId();
+  const limitId = useId();
   const [selectedRelay, setSelectedRelay] = useState<Relay | null>(null);
   const [queryKinds, setQueryKinds] = useState<number[]>([1]);
   const [limit, setLimit] = useState(10);
@@ -1429,8 +1434,9 @@ function QueryTester({
 
           {/* Relay */}
           <div className="mb-4">
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.connectionTab.selectRelay')}</label>
+            <label htmlFor={relaySelectId} className="block text-sm text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.connectionTab.selectRelay')}</label>
             <select
+              id={relaySelectId}
               value={selectedRelay?.id || ""}
               onChange={(e) => setSelectedRelay(relays.find(r => r.id === e.target.value) || null)}
               className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-lg text-gray-900 dark:text-white"
@@ -1465,8 +1471,9 @@ function QueryTester({
 
           {/* Limit */}
           <div className="mb-4">
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.queryTab.limit')}: {limit}</label>
+            <label htmlFor={limitId} className="block text-sm text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.queryTab.limit')}: {limit}</label>
             <input
+              id={limitId}
               type="range"
               min="1"
               max="50"

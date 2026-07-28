@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import { motion } from "framer-motion";
 import { Zap, Bitcoin, ArrowRight, Check, Copy } from "lucide-react";
 import { cn, copyToClipboard } from "../../lib/utils";
@@ -12,6 +12,7 @@ const PRESET_AMOUNTS = [10, 100, 1000, 5000, 10000];
 
 export function ZapSimulator({ className }: ZapSimulatorProps) {
   const { t } = useTranslation();
+  const amountInputId = useId();
   const [amount, setAmount] = useState(100);
   const [customAmount, setCustomAmount] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
@@ -50,7 +51,7 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
 
       <div className="space-y-4">
         <div>
-          <label className="text-sm text-gray-600 dark:text-gray-400 mb-2 block">
+          <label htmlFor={amountInputId} className="text-sm text-gray-600 dark:text-gray-400 mb-2 block">
             {t('zapSimulator.labels.amount')}
           </label>
           <div className="flex flex-wrap gap-2 mb-3">
@@ -73,6 +74,7 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
             ))}
           </div>
           <input
+            id={amountInputId}
             type="number"
             placeholder={t('zapSimulator.labels.amount')}
             value={customAmount}

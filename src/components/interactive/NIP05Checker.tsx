@@ -335,6 +335,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
             <AtSign className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
             <input
               type="text"
+              aria-label={t('nip05Checker.form.placeholder')}
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
               onKeyDown={(e) =>

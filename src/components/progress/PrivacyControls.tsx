@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useId } from 'react';
 import type { PrivacySettings } from '../../lib/progressService';
 import {
   getPrivacySettings,
@@ -20,7 +20,10 @@ export function PrivacyControls() {
   const [importText, setImportText] = useState('');
   const [showImport, setShowImport] = useState(false);
   const [message, setMessage] = useState('');
-  
+  // Names the retention <select> from its own visible heading, so the two can
+  // never drift apart. useId guards against a second instance on the page.
+  const retentionLabelId = useId();
+
   useEffect(() => {
     setMounted(true);
     setSettings(getPrivacySettings());
@@ -183,11 +186,12 @@ export function PrivacyControls() {
       
       {/* Data Retention */}
       <div className="mb-6">
-        <h4 className="font-medium mb-2">Data Retention</h4>
+        <h4 id={retentionLabelId} className="font-medium mb-2">Data Retention</h4>
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
           How long to keep your progress data
         </p>
         <select
+          aria-labelledby={retentionLabelId}
           value={settings.dataRetention}
           onChange={(e) => handleRetentionChange(e.target.value as PrivacySettings['dataRetention'])}
           disabled={!settings.trackingEnabled}
@@ -221,6 +225,7 @@ export function PrivacyControls() {
         {showImport && (
           <div className="mt-3">
             <textarea
+              aria-label="Paste exported progress data"
               value={importText}
               onChange={(e) => setImportText(e.target.value)}
               placeholder="Paste your exported progress data here..."

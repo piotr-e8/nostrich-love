@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useMemo, useEffect, useRef, useCallback, useId } from 'react';
 import QRCode from 'qrcode';
 import { generateSecretKey, getPublicKey, finalizeEvent, nip19 } from 'nostr-tools';
 import type { CuratedAccount } from '../../types/follow-pack';
@@ -51,6 +51,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
   const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
   const isMountedRef = useRef(true);
   const hasPublishedRef = useRef(false);
+  const packNameId = useId();
 
   // Generate burner keypair and publish when modal opens - only once
   useEffect(() => {
@@ -521,10 +522,11 @@ export const ExportModal: React.FC<ExportModalProps> = ({
           
           {/* Pack name input */}
           <div className="mt-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label htmlFor={packNameId} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Pack Name
             </label>
             <input
+              id={packNameId}
               type="text"
               value={packName}
               onChange={(e) => setPackName(e.target.value)}
@@ -811,6 +813,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
               <div className="relative">
                 <textarea
                   readOnly
+                  aria-label="Follow pack npub list to copy"
                   value={npubList}
                   className="w-full h-48 p-4 text-sm font-mono bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-gray-300 resize-none"
                 />

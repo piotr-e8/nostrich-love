@@ -169,6 +169,7 @@ function ComposeModal({ isOpen, onClose, onPost }: { isOpen: boolean; onClose: (
               <div className="flex gap-3">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-pink-400" />
                 <textarea
+                  aria-label="Write your note"
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   placeholder="What's on your mind?"

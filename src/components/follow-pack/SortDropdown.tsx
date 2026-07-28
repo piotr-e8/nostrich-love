@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 import type { FilterState } from '../../types/follow-pack';
 
 interface SortDropdownProps {
@@ -17,10 +17,13 @@ export const SortDropdown: React.FC<SortDropdownProps> = ({
   value,
   onChange,
 }) => {
+  const captionId = useId();
+
   return (
     <div className="flex items-center gap-2">
-      <span className="text-sm text-gray-600 dark:text-gray-400">Sort by:</span>
+      <span id={captionId} className="text-sm text-gray-600 dark:text-gray-400">Sort by:</span>
       <select
+        aria-labelledby={captionId}
         value={value}
         onChange={(e) => onChange(e.target.value as FilterState['sortBy'])}
         className="

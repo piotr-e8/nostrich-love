@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useMemo, useEffect, useRef, useCallback, useId } from 'react';
 import type { FollowPackGeneratorProps, MatchedAccount } from '../../types/twitter-bridge';
 
 // QRCode module will be loaded dynamically to avoid hydration issues
@@ -21,6 +21,7 @@ export const FollowPackGenerator: React.FC<FollowPackGeneratorProps> = ({
   const [copied, setCopied] = useState(false);
   const copiedTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [packName, setPackName] = useState('My Twitter Friends on Nostr');
+  const packNameId = useId();
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -155,10 +156,11 @@ export const FollowPackGenerator: React.FC<FollowPackGeneratorProps> = ({
           
           {/* Pack name input */}
           <div className="mt-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label htmlFor={packNameId} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Pack Name
             </label>
             <input
+              id={packNameId}
               type="text"
               value={packName}
               onChange={(e) => setPackName(e.target.value)}
@@ -278,6 +280,7 @@ export const FollowPackGenerator: React.FC<FollowPackGeneratorProps> = ({
               <div className="relative">
                 <textarea
                   readOnly
+                  aria-label="Nostr npub list for your selected friends"
                   value={npubList}
                   className="w-full h-48 p-4 text-sm font-mono bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-gray-300 resize-none"
                 />

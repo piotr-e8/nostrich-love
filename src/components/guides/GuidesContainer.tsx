@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useId } from 'react';
 import { InterestFilter } from './InterestFilter';
 import { GuideSection } from './GuideSection';
 import type { SkillLevel } from './GuideCard';
@@ -45,6 +45,9 @@ export const GuidesContainer: React.FC<GuidesContainerProps> = ({
   // derives the locale from window.location, which is empty during SSR, so it
   // rendered every locale's guides hub in English.
   const t = (key: string) => translate(key, locale);
+  // Ties the visible caption above the search box to the input as its
+  // accessible name; useId keeps it unique if the container is ever mounted twice.
+  const searchLabelId = useId();
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [inProgressGuideIds, setInProgressGuideIds] = useState<string[]>([]);
@@ -111,7 +114,7 @@ export const GuidesContainer: React.FC<GuidesContainerProps> = ({
 
       {/* Search */}
       <div className="mb-8">
-        <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 text-center">
+        <p id={searchLabelId} className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 text-center">
           {t('ui.search.placeholder')}
         </p>
         <div className="relative max-w-xl mx-auto">
@@ -120,6 +123,7 @@ export const GuidesContainer: React.FC<GuidesContainerProps> = ({
             </svg>
           <input
             type="text"
+            aria-labelledby={searchLabelId}
             placeholder={t('ui.search.placeholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}

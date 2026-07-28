@@ -20,6 +20,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       </div>
       <input
         type="text"
+        aria-label="Search accounts"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}

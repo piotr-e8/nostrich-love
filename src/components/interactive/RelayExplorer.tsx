@@ -639,6 +639,7 @@ export function RelayExplorer({
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                aria-label={t('relayExplorer.search.placeholder')}
                 placeholder={t('relayExplorer.search.placeholder')}
                 className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border border-border-dark rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
               />
@@ -715,6 +716,7 @@ export function RelayExplorer({
                 value={customRelayInput}
                 onChange={(e) => setCustomRelayInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && addCustomRelay()}
+                aria-label={t('relayExplorer.customRelay.placeholder')}
                 placeholder={t('relayExplorer.customRelay.placeholder')}
                 className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border border-border-dark rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
               />

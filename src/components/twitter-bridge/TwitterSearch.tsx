@@ -76,6 +76,7 @@ export const TwitterSearch: React.FC<TwitterSearchProps> = ({
             type="text"
             value={handle}
             onChange={(e) => setHandle(e.target.value)}
+            aria-label="Your Twitter handle"
             placeholder="Enter your Twitter handle"
             className="w-full pl-10 pr-32 py-4 text-lg bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:border-friendly-purple-500 dark:focus:border-friendly-purple-400 focus:ring-4 focus:ring-friendly-purple-500/10 transition-all text-gray-900 dark:text-white placeholder-gray-400"
             disabled={isLoading}
@@ -151,6 +152,7 @@ export const TwitterSearch: React.FC<TwitterSearchProps> = ({
               type="file"
               accept=".csv,text/csv"
               onChange={handleFileChange}
+              aria-label="Upload your Twitter following list (CSV file)"
               className="hidden"
             />
             
