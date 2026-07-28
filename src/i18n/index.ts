@@ -3,16 +3,34 @@ import { locales } from '../config/locales';
 
 export type { Locale } from './types';
 
-// Import translations
-import en from './locales/en.json';
-import pl from './locales/pl.json';
-import es from './locales/es.json';
-import de from './locales/de.json';
-import zh from './locales/zh.json';
-import ar from './locales/ar.json';
-import hi from './locales/hi.json';
+const FALLBACK_LOCALE: Locale = 'en';
 
-const translations: Record<Locale, Translations> = { en, pl, es, de, zh, ar, hi };
+// Statically importing all seven locales put 564 KB of translations into a
+// single client chunk that every interactive page downloaded — roughly 6x more
+// than any reader needs, since a page is built for exactly one locale.
+//
+// The server still needs all seven (one build renders every locale). The client
+// loads only the locale it is showing, plus English, because getValue() falls
+// back to English and several locales are far from complete (ar is missing
+// ~1100 keys, hi ~1600) — without the fallback those readers would see raw
+// dotted keys.
+//
+// Top-level await keeps t() and getValue() synchronous for callers: this module
+// finishes resolving before any importer runs, and islands are loaded
+// asynchronously anyway.
+const translations: Partial<Record<Locale, Translations>> = {};
+
+if (import.meta.env.SSR) {
+  Object.assign(translations, (await import('./locales.server')).default);
+} else {
+  const load = async (locale: Locale) => {
+    translations[locale] = (await import(`./locales/${locale}.json`)).default as Translations;
+  };
+  const current = getCurrentLocale();
+  await Promise.all(
+    current === FALLBACK_LOCALE ? [load(current)] : [load(current), load(FALLBACK_LOCALE)]
+  );
+}
 
 /**
  * Get current locale from URL path
@@ -52,7 +70,7 @@ export function getValue(key: string, locale: Locale = getCurrentLocale()): any 
       value = value[k];
     } else {
       // Fallback to English
-      value = translations['en'];
+      value = translations[FALLBACK_LOCALE];
       for (const k of keys) {
         if (value && typeof value === 'object' && k in value) {
           value = value[k];
@@ -72,7 +90,7 @@ export function getValue(key: string, locale: Locale = getCurrentLocale()): any 
  * Get all translations for a specific locale
  */
 export function getTranslations(locale: Locale): Translations {
-  return translations[locale] || translations['en'];
+  return (translations[locale] || translations[FALLBACK_LOCALE]) as Translations;
 }
 
 /**
