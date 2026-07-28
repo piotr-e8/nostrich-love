@@ -30,18 +30,18 @@ import { RelayPlayground } from "@components/interactive/RelayPlayground";
 
 **Los relays son servidores que almacenan y reenvían tus mensajes de Nostr.**
 
-Piensa en ellos como oficinas de correos:
+Piensa en ellos como apartados postales:
 
-- Dejas una carta (tu publicación) en tu oficina de correos local
-- Ellos la reenvían a otras oficinas de correos
-- Los destinatarios la recogen de su oficina de correos local
+- Dejas una copia de tu carta (tu publicación) en varias oficinas de correos
+- Cada oficina de correos guarda su propia copia—no se reenvían el correo entre ellas
+- Los destinatarios la recogen de una oficina de correos que ambos usan
 
 En Nostr:
 
 - **Tú** escribes una nota (publicación)
-- **El cliente** la envía a los relays a los que te has conectado
-- **Los relays** la almacenan y comparten con otros relays
-- **Los seguidores** la reciben de los relays a los que están conectados
+- **El cliente** envía una copia a cada relay al que te has conectado
+- **Los relays** la almacenan y la sirven a quien la pida—pero por defecto no la pasan a otros relays
+- **Los seguidores** la reciben de los relays a los que están conectados, así que sus listas de relays y la tuya necesitan superponerse
 
 ### Por Qué Esto Importa
 

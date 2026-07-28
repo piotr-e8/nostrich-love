@@ -31,18 +31,18 @@ import { RelayPlayground } from "@components/interactive/RelayPlayground";
 
 **Relays sind Server, die deine Nostr-Nachrichten speichern und weiterleiten.**
 
-Denk an sie wie Postämter:
+Denk an sie wie Postfächer:
 
-- Du gibst einen Brief (deinen Post) bei deinem lokalen Postamt ab
-- Sie leiten ihn an andere Postämter weiter
-- Empfänger holen ihn von ihrem lokalen Postamt ab
+- Du gibst eine Kopie deines Briefs (deines Posts) bei mehreren Postämtern ab
+- Jedes Postamt behält seine eigene Kopie – sie leiten nichts aneinander weiter
+- Empfänger holen ihn bei einem Postamt ab, das ihr beide nutzt
 
 Bei Nostr:
 
 - **Du** schreibst eine Notiz (Post)
-- **Client** sendet sie an Relays, mit denen du verbunden bist
-- **Relays** speichern sie und teilen mit anderen Relays
-- **Follower** empfangen sie von Relays, mit denen sie verbunden sind
+- **Client** sendet eine Kopie an jedes Relay, mit dem du verbunden bist
+- **Relays** speichern sie und liefern sie an jeden aus, der danach fragt – aber standardmäßig geben sie sie nicht an andere Relays weiter
+- **Follower** empfangen sie von ihren Relays – deshalb müssen sich eure Relay-Listen überschneiden
 
 ### Warum das wichtig ist
 

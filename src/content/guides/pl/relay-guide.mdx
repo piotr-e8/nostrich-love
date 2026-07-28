@@ -30,18 +30,18 @@ import { RelayPlayground } from "@components/interactive/RelayPlayground";
 
 **Relaye to serwery, które przechowują i przekazują Twoje wiadomości Nostr.**
 
-Pomyśl o nich jak o pocztach:
+Pomyśl o nich jak o skrytkach pocztowych:
 
-- Zostawiasz list (swój post) w swojej lokalnej poczcie
-- Oni przekazują go do innych poczt
-- Odbiorcy odbierają ze swojej lokalnej poczty
+- Zostawiasz kopię listu (swojego posta) w kilku pocztach
+- Każda poczta trzyma własną kopię—nie przekazują listów sobie nawzajem
+- Odbiorcy odbierają go z poczty, z której korzystacie oboje
 
 W Nostr:
 
 - **Ty** piszesz notatkę (post)
-- **Klient** wysyła ją do relayów, z którymi jesteś połączony
-- **Relaye** przechowują ją i dzielą się z innymi relayami
-- **Obserwujący** odbierają z relayów, z którymi są połączeni
+- **Klient** wysyła kopię do każdego relaya, z którym jesteś połączony
+- **Relaye** przechowują ją i udostępniają każdemu, kto o nią poprosi—ale domyślnie nie przekazują jej innym relayom
+- **Obserwujący** odbierają ją z relayów, z którymi są połączeni, więc Wasze listy relayów muszą się pokrywać
 
 ### Dlaczego To Ma Znaczenie
 

@@ -8,6 +8,7 @@ prerequisites: []
 ---
 
 import FAQAccordion from "@components/ui/FAQAccordion.astro";
+import { Callout } from "@components/ui/Callout";
 
 {/* Search functionality coming soon */}
 
@@ -464,13 +465,13 @@ Denk an sie als "Likes mit Wert" – sie sind eine Möglichkeit, Creators zu unt
 **Wie Zaps empfangen:**
 
 1. **Hol dir eine Lightning-Wallet:**
-   - Alby (Browser-Extension)
-   - Wallet of Satoshi (Mobile, am einfachsten)
+   - Das eingebaute Wallet deines Clients (z.B. Primal – am einfachsten)
+   - Coinos (gehostetes Web-Wallet)
    - Phoenix (Mobile, mehr Kontrolle)
 
 2. **Füge zu deinem Profil hinzu:**
    - Gehe zu Profil-Einstellungen
-   - Füge Lightning-Adresse hinzu (sieht aus wie: du@walletofsatoshi.com)
+   - Füge Lightning-Adresse hinzu (sieht aus wie: du@coinos.io)
    - Oder füge LNURL hinzu
 
 3. **Sag es den Leuten:**
@@ -587,7 +588,7 @@ Denk an sie als "Likes mit Wert" – sie sind eine Möglichkeit, Creators zu unt
 
 - ❌ Von einem Relay gelöscht ≠ überall gelöscht
 - ✅ Content bleibt auf anderen Relays, mit denen du verbunden bist
-- ✅ Neue Relays können von existierenden synchronisieren
+- ✅ Dein Client kann deine Notes erneut zu neuen Relays broadcasten
 - ⚠️ Neue Nutzer auf dem löschenden Relay sehen alte Posts nicht
 
 <Callout variant="success">
@@ -857,27 +858,29 @@ Anders als Twitters chronologischer Feed aggregiert Nostr aus vielen Quellen. Co
   question="Wie funktionieren Zaps technisch?"
   category="advanced"
 >
-  Zaps nutzen Bitcoin Lightning Network. Prozess: 1) Sender erstellt Lightning-Invoice, 2) Sender veröffentlicht Zap-Beleg (kind 9735) mit Zahlungsnachweis, 3) Client zeigt Zap mit Sender-Profil, 4) Empfänger erhält Sats in ihrer Lightning-Wallet. NIP-57 standardisiert dies. Kein Escrow oder Plattform - direkte P2P-Zahlungen.
+  Zaps nutzen das Bitcoin Lightning Network und werden durch NIP-57 standardisiert. Der Ablauf läuft über den LNURL-Server des Empfängers – den Service hinter der Lightning-Adresse im Profil.
 
 **Technischer Ablauf:**
 
-1. **Invoice-Erstellung** - Senders Wallet erstellt Lightning-Invoice
-2. **Zahlung** - Sender bezahlt die Invoice
-3. **Beleg** - Kind 9735 Event veröffentlicht mit Zahlungsnachweis
-4. **Anzeige** - Clients zeigen Zap mit Sender-Info
-5. **Abwicklung** - Empfänger erhält Sats in ihrer Wallet
+1. **Zap-Request** - Der Client des Senders erstellt und signiert einen kind 9734 Zap-Request und sendet ihn an den LNURL-Server des Empfängers (der 9734 wird NICHT auf Relays veröffentlicht)
+2. **Invoice** - Der LNURL-Server des Empfängers antwortet mit einer Lightning-Invoice, die sich auf diesen Zap-Request festlegt
+3. **Zahlung** - Der Sender bezahlt die Invoice
+4. **Beleg** - Der LNURL-Server des Empfängers (nicht der Sender) signiert den kind 9735 Zap-Beleg und veröffentlicht ihn auf den im Zap-Request angegebenen Relays
+5. **Anzeige** - Clients zeigen den Zap an
 
 **Wichtige Punkte:**
 
 - Nutzt NIP-57-Standard
-- Direktes P2P (kein Mittelsmann)
-- Sofortige Abwicklung
+- Der Beleg wird vom Wallet-Server des Empfängers veröffentlicht und ist laut Spezifikation KEIN Zahlungsnachweis
+- Nahezu sofortige Abwicklung
 - Öffentliche Belege erstellen Social Proof
 - Optional private Zaps verfügbar
 
 <Callout variant="info">
-  Zaps sind non-custodial - Geld fließt direkt von Sender zu Empfänger. Keine
-  Plattform hält Guthaben.
+  Zaps sind nur dann durchgehend non-custodial, wenn der Empfänger
+  self-custodial Lightning betreibt. Die Lightning-Adressen der meisten Nutzer
+  zeigen auf einen gehosteten Anbieter, der die Sats empfängt und hält und den
+  Beleg signiert.
 </Callout>
 
 </FAQAccordion>
@@ -901,4 +904,4 @@ Dieser Guide wird ständig verbessert. Wenn etwas unklar oder falsch ist, reiche
 
 ---
 
-_Zuletzt aktualisiert: Februar 2026_
+_Zuletzt aktualisiert: Juli 2026_

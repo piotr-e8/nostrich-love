@@ -8,6 +8,7 @@ prerequisites: []
 ---
 
 import FAQAccordion from "@components/ui/FAQAccordion.astro";
+import { Callout } from "@components/ui/Callout";
 
 {/* Funkcja wyszukiwania wkrótce */}
 
@@ -464,13 +465,13 @@ Pomysl o nich jako o "lajkach z wartoscia"—sa sposobem na wspieranie tworcow, 
 **Jak odbierac zapy:**
 
 1. **Zdobadz portfel Lightning:**
-   - Alby (rozszerzenie przegladarki)
-   - Wallet of Satoshi (mobilny, najlatwiejszy)
+   - Wbudowany portfel Twojego klienta (np. Primal—najlatwiejszy)
+   - Coinos (hostowany portfel webowy)
    - Phoenix (mobilny, wiecej kontroli)
 
 2. **Dodaj do swojego profilu:**
    - Idz do ustawien profilu
-   - Dodaj Adres Lightning (wyglada jak: ty@walletofsatoshi.com)
+   - Dodaj Adres Lightning (wyglada jak: ty@coinos.io)
    - Lub dodaj LNURL
 
 3. **Powiedz ludziom:**
@@ -587,7 +588,7 @@ Pomysl o nich jako o "lajkach z wartoscia"—sa sposobem na wspieranie tworcow, 
 
 - ❌ Usuniecie z jednego relaya ≠ usuniecie wszedzie
 - ✅ Tresc pozostaje na innych relayach, z ktorymi jestes polaczony
-- ✅ Nowe relaye moga synchronizowac z istniejacych
+- ✅ Twoj klient moze ponownie rozglosic Twoje notatki na nowe relaye
 - ⚠️ Nowi uzytkownicy na usuwajacym relayu nie zobacza starych postow
 
 <Callout variant="success">
@@ -857,27 +858,28 @@ W przeciwienstwie do chronologicznego feedu Twittera, Nostr agreguje z wielu zro
   question="Jak dzialaja zapy technicznie?"
   category="advanced"
 >
-  Zapy uzywaja Bitcoin Lightning Network. Proces: 1) Nadawca tworzy fakture Lightning, 2) Nadawca publikuje potwierdzenie zapu (kind 9735) z dowodem platnosci, 3) Klient wyswietla zap z profilem nadawcy, 4) Odbiorca dostaje sats w swoim portfelu Lightning. NIP-57 standaryzuje to. Brak escrow ani platformy - bezposrednie platnosci P2P.
+  Zapy uzywaja Bitcoin Lightning Network, standaryzuje je NIP-57. Proces: 1) Twoj klient wysyla podpisane zadanie zapu (kind 9734) do serwera portfela odbiorcy—uslugi LNURL stojacej za adresem Lightning w jego profilu, 2) ten serwer zwraca fakture Lightning, 3) placisz ja, 4) serwer portfela odbiorcy podpisuje i publikuje potwierdzenie zapu (kind 9735) na relayach, 5) klienci wyswietlaja zap. Zadna platforma Nostr nie stoi posrodku—platnosc trafia prosto do portfela, na ktory wskazuje adres Lightning odbiorcy.
 
 **Przeplyw techniczny:**
 
-1. **Tworzenie faktury** - Portfel nadawcy tworzy fakture Lightning
-2. **Platnosc** - Nadawca placi fakture
-3. **Potwierdzenie** - Event kind 9735 opublikowany z dowodem platnosci
-4. **Wyswietlenie** - Klienci pokazuja zap z info nadawcy
-5. **Rozliczenie** - Odbiorca dostaje sats w swoim portfelu
+1. **Zadanie zapu** - Klient nadawcy tworzy i podpisuje zadanie zapu kind 9734 i wysyla je do serwera LNURL odbiorcy (nie jest publikowane na relayach)
+2. **Tworzenie faktury** - Serwer LNURL odbiorcy zwraca fakture Lightning powiazana z tym zadaniem zapu
+3. **Platnosc** - Nadawca placi fakture
+4. **Potwierdzenie** - Serwer LNURL odbiorcy (nie nadawca) podpisuje potwierdzenie zapu kind 9735 i publikuje je na relayach wskazanych w zadaniu zapu
+5. **Wyswietlenie** - Klienci pokazuja zap z info nadawcy
 
 **Kluczowe punkty:**
 
 - Uzywa standardu NIP-57
-- Bezposrednie P2P (brak posrednika)
-- Natychmiastowe rozliczenie
+- Potwierdzenie zapu publikuje serwer portfela odbiorcy i zgodnie ze specyfikacja **nie** jest ono dowodem platnosci
+- Niemal natychmiastowe rozliczenie przez Lightning
 - Publiczne potwierdzenia tworza dowod spoleczny
 - Opcjonalne prywatne zapy dostepne
 
 <Callout variant="info">
-  Zapy sa niekustodialne - pieniadze przeplywaja bezposrednio od nadawcy do odbiorcy. Brak
-  platformy trzymajacej srodki.
+  Zapy sa niekustodialne od konca do konca tylko wtedy, gdy odbiorca uzywa samodzielnego
+  Lightning. Adresy Lightning wiekszosci uzytkownikow wskazuja na hostowanego dostawce
+  portfela, ktory odbiera i trzyma za nich sats—i to on podpisuje potwierdzenie zapu.
 </Callout>
 
 </FAQAccordion>
@@ -901,4 +903,4 @@ Ten przewodnik ciągle się polepsza. Jeśli coś jest niejasne lub niepoprawne,
 
 ---
 
-_Ostatnia aktualizacja: Luty 2026_
+_Ostatnia aktualizacja: Lipiec 2026_

@@ -8,6 +8,7 @@ prerequisites: []
 ---
 
 import FAQAccordion from "@components/ui/FAQAccordion.astro";
+import { Callout } from "@components/ui/Callout";
 
 {/* Search functionality coming soon */}
 
@@ -135,7 +136,7 @@ Esto es por diseño. Nostr es descentralizado, lo que significa que no hay autor
 2. Configura tu propio dominio (si tienes uno) - Gratis
 3. Opciones gratuitas de algunos servicios
 
-[Aprende más: Obtén un NIP-05 →](/es/guides/nip05-identity
+[Aprende más: Obtén un NIP-05 →](/es/guides/nip05-identity)
 
 </FAQAccordion>
 
@@ -464,13 +465,13 @@ Piensa en ellos como "me gusta con valor"—son una forma de apoyar a los creado
 **Cómo recibir zaps:**
 
 1. **Obtén un wallet Lightning:**
-   - Alby (extensión de navegador)
-   - Wallet of Satoshi (móvil, más fácil)
+   - El wallet integrado de tu cliente (ej. Primal—el más fácil)
+   - Coinos (wallet web alojado)
    - Phoenix (móvil, más control)
 
 2. **Agrega a tu perfil:**
    - Ve a configuración de perfil
-   - Agrega Lightning Address (se ve así: tu@walletofsatoshi.com)
+   - Agrega Lightning Address (se ve así: tu@coinos.io)
    - O agrega LNURL
 
 3. **Díselo a la gente:**
@@ -587,7 +588,7 @@ Piensa en ellos como "me gusta con valor"—son una forma de apoyar a los creado
 
 - ❌ Eliminado de un relay ≠ eliminado en todas partes
 - ✅ El contenido permanece en otros relays a los que estás conectado
-- ✅ Los nuevos relays pueden sincronizar desde los existentes
+- ✅ Tu cliente puede volver a transmitir tus notas a nuevos relays
 - ⚠️ Los nuevos usuarios en el relay eliminante no verán publicaciones antiguas
 
 <Callout variant="success">
@@ -857,27 +858,29 @@ A diferencia del feed cronológico de Twitter, Nostr agrega de muchas fuentes. E
   question="¿Cómo funcionan técnicamente los zaps?"
   category="advanced"
 >
-  Los zaps usan Bitcoin Lightning Network. Proceso: 1) El remitente crea una factura Lightning, 2) El remitente publica un recibo de zap (kind 9735) con prueba de pago, 3) El cliente muestra el zap con perfil del remitente, 4) El receptor recibe sats en su wallet Lightning. NIP-57 estandariza esto. Sin escrow o plataforma—pagos P2P directos.
+  Los zaps usan Bitcoin Lightning Network, estandarizados por NIP-57. Proceso: 1) Tu cliente envía una solicitud de zap firmada (kind 9734) al servidor de wallet del receptor—el servicio LNURL detrás del Lightning address de su perfil, 2) ese servidor devuelve una factura Lightning, 3) tú la pagas, 4) el servidor de wallet del receptor firma y publica el recibo de zap (kind 9735) en los relays, 5) los clientes muestran el zap. Ninguna plataforma de Nostr está en medio—el pago va directo al wallet al que apunta el Lightning address del receptor.
 
 **Flujo técnico:**
 
-1. **Creación de factura** - El wallet del remitente crea una factura Lightning
-2. **Pago** - El remitente paga la factura
-3. **Recibo** - Evento tipo 9735 publicado con prueba de pago
-4. **Mostrar** - Los clientes muestran el zap con info del remitente
-5. **Liquidación** - El receptor recibe sats en su wallet
+1. **Solicitud de zap** - El cliente del remitente crea y firma una solicitud de zap kind 9734 y la envía al servidor LNURL del receptor (no se publica en los relays)
+2. **Creación de factura** - El servidor LNURL del receptor devuelve una factura Lightning comprometida con esa solicitud de zap
+3. **Pago** - El remitente paga la factura
+4. **Recibo** - El servidor LNURL del receptor (no el remitente) firma un recibo de zap kind 9735 y lo publica en los relays listados en la solicitud de zap
+5. **Mostrar** - Los clientes muestran el zap con info del remitente
 
 **Puntos clave:**
 
 - Usa estándar NIP-57
-- P2P directo (sin intermediario)
-- Liquidación instantánea
+- El recibo de zap lo publica el servidor de wallet del receptor, y según la especificación **no** es prueba de pago
+- Liquidación casi instantánea sobre Lightning
 - Recibos públicos crean prueba social
 - Zaps privados opcionales disponibles
 
 <Callout variant="info">
-  Los zaps son no-custodial—el dinero fluye directamente del remitente al receptor. Ninguna
-  plataforma retiene fondos.
+  Los zaps solo son no-custodiales de extremo a extremo si el receptor usa Lightning
+  auto-custodial. Los Lightning addresses de la mayoría de los usuarios apuntan a un
+  proveedor de wallet alojado, que recibe y retiene los sats por ellos—y es también
+  quien firma el recibo de zap.
 </Callout>
 
 </FAQAccordion>
@@ -901,4 +904,4 @@ Esta guía mejora constantemente. Si algo no está claro o es incorrecto, envía
 
 ---
 
-_Actualizado por última vez: Febrero 2026_
+_Actualizado por última vez: Julio 2026_

@@ -95,85 +95,87 @@ Bevor du Zaps senden oder empfangen kannst, brauchst du ein Lightning Wallet.
 
 #### Für Anfänger
 
-**Alby** (Browser-Erweiterung)
+**Primal Wallet** (In die Primal-App integriert)
 
-- Einfache Einrichtung
-- Großartige Nostr-Integration
-- Funktioniert in Web-Clients
-- [getalby.com](https://getalby.com)
+- Keine Einrichtung nötig—direkt im Client
+- Self-custodial (Spark-basiert seit Primal 3.0)
+- Web, iOS und Android
+- [primal.net](https://primal.net)
+
+**Coinos** (Web)
+
+- Gehostetes Web-Wallet
+- Lightning Address inklusive: `du@coinos.io`
+- Custodial—halte die Beträge klein
+- [coinos.io](https://coinos.io)
 
 **Phoenix** (Mobil)
 
 - Benutzerfreundlich
 - Self-custodial
 - iOS und Android
+- Seit April 2025 wieder im US App Store
+- Hinweis: Self-custody bedeutet kleine On-Chain-/Kanal-Gebühren, wenn du ein winziges Startguthaben auflädst
 - [phoenix.acinq.co](https://phoenix.acinq.co)
 
 #### Für Fortgeschrittene Nutzer
 
+**Alby Hub** (Web/Selbst gehostet)
+
+- Self-custodial Lightning Node (Cloud oder selbst gehostet)
+- Lightning Address inklusive
+- Funktioniert mit der Alby-Browser-Erweiterung und Alby Go
+- Verbindet sich per NWC mit jedem Nostr Client
+- [getalby.com](https://getalby.com)
+
 **Zeus** (Mobil)
 
-- Verbinde dich mit deiner eigenen Node
+- Verbinde dich mit deiner eigenen Node oder nutze das eingebaute Wallet
 - Volle Kontrolle
 - Power-User Features
-- [zeusln.app](https://zeusln.app)
-
-**Mutiny** (Web/Mobil)
-
-- Self-custodial im Browser
-- Kein App Store nötig
-- [app.mutinywallet.com](https://app.mutinywallet.com)
+- [zeusln.com](https://zeusln.com)
 
 ### Custodial vs Non-Custodial
 
-**Custodial (Alby, Wallet of Satoshi)**
+**Custodial (Coinos und andere gehostete Wallets)**
 
 - ✅ Einfache Einrichtung
 - ✅ Niedrigere Gebühren
 - ❌ Sie halten deine Mittel
 - ❌ KYC kann erforderlich sein
 
-**Non-Custodial (Phoenix, Zeus, Mutiny)**
+**Non-Custodial (Primal Wallet, Phoenix, Alby Hub, Zeus)**
 
 - ✅ Du kontrollierst deine Schlüssel
 - ✅ Bessere Privatsphäre
 - ❌ Etwas komplexer
 - ❌ Höhere On-Chain Gebühren
 
-> 💡 **Empfehlung**: Starte mit Alby für Web-Nutzung + Phoenix für Mobile. Upgrade auf Non-Custodial, wenn du dich wohl fühlst.
+> 💡 **Empfehlung**: Starte mit einem gehosteten oder eingebauten Wallet für kleine Beträge. Wechsle zu voller Self-Custody (Phoenix oder Alby Hub), wenn dein Guthaben wächst.
 
-### Option 3: Wallet of Satoshi (Am Einfachsten)
+### Was Ist mit Wallet of Satoshi und Mutiny?
 
-**Am besten für:** Komplette Anfänger, die Einfachheit wollen
+Ältere Anleitungen empfehlen diese Wallets noch—sie sind nicht mehr aktuell:
 
-**Vorteile:**
+- **Mutiny** wurde eingestellt (angekündigt im August 2024; alle Apps, Services und der Support endeten am 31. Dezember 2024). Sende keine Mittel dorthin.
+- **Wallet of Satoshi** hat seinen klassischen Custodial-Service im November 2023 in den USA eingestellt und Anfang 2026 in der EU beendet. Der Neustart als Spark-basiertes Wallet, das als self-custodial vermarktet wird, ist ein anderes Produkt.
 
-- Keine Einrichtung erforderlich
-- Einfach herunterladen und loslegen
-- Lightning Address inklusive
-- Funktioniert sofort
-
-**Nachteile:**
-
-- Not your keys, not your coins
-- Erfordert Vertrauen in Anbieter
-- Limits bei Abhebungen
-
-**Plattform:** iOS, Android
+Für den einfachsten Start nutze ein in den Client eingebautes Wallet (wie das von Primal) oder Coinos.
 
 ---
 
 ### Dein Wallet Verbinden
 
-#### Schritt-für-Schritt: Alby + Web Client
+#### Schritt-für-Schritt: Alby Hub + Web Client
 
-1. **Installiere Alby Extension**
-   - Chrome/Firefox: [getalby.com](https://getalby.com)
-   - Erstelle Account oder nutze existierenden
+1. **Richte Alby Hub Ein**
+   - [getalby.com](https://getalby.com) (Cloud oder selbst gehostet)
+   - Alby Hub ist eine self-custodial Node—Alby bietet kein gehostetes Custodial-Guthaben mehr an
+   - Die Browser-Erweiterung ist optional und wird mit dem Hub verknüpft
 
-2. **Hol Dir Deinen Connection String**
-   - Alby Dashboard → API Keys
-   - Oder: Profil → Nostr Wallet Connect
+2. **Erstelle Eine NWC-Verbindung**
+   - In Alby Hub: neue App-Verbindung (Nostr Wallet Connect) erstellen
+   - Kopiere den NWC-Connection-String
 
 3. **Mit Client Verbinden**
    - In deinem Nostr Client (Primal, Iris, etc.)
@@ -195,34 +197,31 @@ Bevor du Zaps senden oder empfangen kannst, brauchst du ein Lightning Wallet.
    - Kaufe Bitcoin oder empfange von woanders
    - Brauchst mindestens 10.000 Sats zum Starten
 
-3. **Hol Dir LNURL oder Lightning Address**
-   - Phoenix → Empfangen → Lightning Address
-   - Kopiere `deinname@phoenix.wallet` oder LNURL
+3. **Kenne Phoenix' Empfangs-Eigenheiten**
+   - Phoenix stellt Lightning-Invoices aus
+   - Es bietet keine klassische `name@provider` Lightning Address, wie sie die meisten Nostr Clients erwarten (die `@phoenixwallet.me`-Adresse ist ein experimentelles BIP-353-Feature)
 
-4. **Füge zu Nostr Profil Hinzu**
-   - Client → Profil → Bearbeiten
-   - Lightning Address einfügen
+4. **Kombiniere Es für Zaps mit Einer Lightning Address**
+   - Nutze eine Adresse von einem Wallet, das eine bereitstellt (eingebautes Client-Wallet, Coinos oder Alby Hub)
+   - Behalte Phoenix als Self-Custody-Wallet für größere Guthaben
 
-#### Schritt-für-Schritt: Wallet of Satoshi + Mobile Client
+#### Schritt-für-Schritt: Eingebautes Client-Wallet (z.B. Primal)
 
-1. **Lade Wallet of Satoshi Herunter**
-   - Gehe zum App Store (iOS/Android)
-   - Suche "Wallet of Satoshi"
-   - Herunterladen und installieren
-   - Öffne die App (kein Account nötig!)
+1. **Aktiviere das Wallet in Deinem Client**
+   - Öffne den Wallet-Bereich deines Clients
+   - Primals eingebautes Wallet ist self-custodial (Web/iOS/Android)
+   - Folge den Aktivierungsschritten in der App
 
 2. **Hol Dir Deine Lightning Address**
-   - Tippe "Empfangen"
-   - Suche nach deiner Lightning Address
-   - Sieht so aus: `benutzername@walletofsatoshi.com`
+   - Das Wallet zeigt dir deine Lightning Address
+   - Sieht so aus: `benutzername@provider.com`
    - Schreib dies auf—du wirst es brauchen
 
 3. **Füge zu Deinem Nostr Profil Hinzu**
-   - Öffne deinen Nostr Client (Damus, Amethyst, Iris, etc.)
-   - Gehe zu Profil Bearbeiten
+   - Clients mit eingebautem Wallet tragen die Adresse meist automatisch ins Profil ein
+   - Falls nicht: Gehe zu Profil Bearbeiten
    - Finde "Lightning Address" oder "LN Address" Feld
-   - Füge deine Adresse ein
-   - Speichere Änderungen
+   - Füge deine Adresse ein und speichere
 
 4. **Verifiziere, Dass Es Funktioniert**
    - Suche nach ⚡ Symbol auf deinem Profil
@@ -231,7 +230,7 @@ Bevor du Zaps senden oder empfangen kannst, brauchst du ein Lightning Wallet.
    - Du solltest eine Zap-Benachrichtigung in deinem Client sehen
 
 <Callout variant="warning">
-  **Wichtig:** Schreib deine Wallet-Recovery-Phrase auf, wenn du Phoenix nutzt! Wenn du den Zugriff auf dein Wallet verlierst, verlierst du dein Bitcoin. Keine Ausnahmen.
+  **Wichtig:** Schreib deine Wallet-Recovery-Phrase auf, wenn du ein self-custodial Wallet nutzt (Phoenix, Primal Wallet, Alby Hub, Zeus)! Wenn du den Zugriff auf dein Wallet verlierst, verlierst du dein Bitcoin. Keine Ausnahmen.
 </Callout>
 
 ---
@@ -282,7 +281,7 @@ Das personalisiert die Interaktion und hilft Creators zu verstehen, welcher Cont
 Um Zaps zu empfangen, musst du konfigurieren, wohin sie gehen:
 
 1. **Hol Dir Deine Lightning Address oder LNURL**
-   - Von deinem Wallet (Alby, Phoenix, etc.)
+   - Von deinem Wallet (dem eingebauten Wallet deines Clients, Coinos, Alby Hub, etc.)
    - Format: `deinname@provider.com`
 
 2. **Füge zu Deinem Profil Hinzu**
@@ -494,9 +493,10 @@ Tritt der Zapping-Community bei:
 
 | Wallet | Schwierigkeit | Kontrolle | Am Besten Für |
 |--------|---------------|-----------|---------------|
-| Wallet of Satoshi | Am Einfachsten | Custodial | Anfänger |
-| Alby | Einfach | Browser | Desktop-Nutzer |
+| Primal Wallet (eingebaut) | Am Einfachsten | Self-custody | Anfänger |
+| Coinos | Einfach | Custodial | Web-Nutzer, kleine Beträge |
 | Phoenix | Mittel | Self-custody | Ernsthafte Nutzer |
+| Alby Hub | Mittel | Self-custody | Desktop-Nutzer |
 | Zeus | Schwer | Volle Kontrolle | Power-User |
 
 **Zap-Beträge:**

@@ -95,90 +95,91 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 
 #### 给初学者
 
-**Alby**（浏览器扩展）
+**Primal Wallet**（内置于 Primal 应用）
 
-- 易于设置
-- 出色的 Nostr 集成
-- 在网页客户端中工作
-- [getalby.com](https://getalby.com)
+- 零设置——内置于 Primal 客户端
+- 自 Primal 3.0 起为基于 Spark 的自我托管钱包
+- 网页、iOS 和 Android
+- [primal.net](https://primal.net)
+
+**Coinos**（网页钱包）
+
+- 托管式网页钱包
+- 提供 `you@coinos.io` 闪电地址
+- 托管——只存放小额资金
+- [coinos.io](https://coinos.io)
 
 **Phoenix**（移动版）
 
 - 用户友好
 - 自我托管
-- iOS 和 Android
+- iOS 和 Android（2025 年 4 月起重新上架美国 App Store）
+- 注意：自我托管意味着首次充值小额资金时会有少量链上/通道费用
 - [phoenix.acinq.co](https://phoenix.acinq.co)
 
 #### 给高级用户
 
+**Alby Hub**（自我托管闪电节点）
+
+- 云端或自托管运行
+- 包含闪电地址
+- 可搭配 Alby 浏览器扩展和 Alby Go
+- 通过 NWC 连接到任何 Nostr 客户端
+- [getalby.com](https://getalby.com)
+
 **Zeus**（移动版）
 
-- 连接到你自己的节点
+- 连接到你自己的节点，或使用内置钱包
 - 完全控制
 - 高级用户功能
-- [zeusln.app](https://zeusln.app)
-
-**Mutiny**（网页/移动版）
-
-- 浏览器中的自我托管
-- 无需应用商店
-- [app.mutinywallet.com](https://app.mutinywallet.com)
+- [zeusln.com](https://zeusln.com)
 
 ### 托管 vs 非托管
 
-**托管（Alby、Wallet of Satoshi）**
+**托管（Coinos 及其他托管式钱包）**
 
 - ✅ 易于设置
 - ✅ 更低费用
 - ❌ 他们持有你的资金
 - ❌ 可能需要 KYC
 
-**非托管（Phoenix、Zeus、Mutiny）**
+**非托管（Primal Wallet、Phoenix、Alby Hub、Zeus）**
 
 - ✅ 你控制你的密钥
 - ✅ 更好的隐私
 - ❌ 稍微复杂
 - ❌ 更高的链上费用
 
-> 💡 **推荐**：网页使用 Alby，移动使用 Phoenix。随着你熟悉，升级到非托管。
+> 💡 **推荐**：小额资金先用托管式或客户端内置钱包起步。随着余额增长，升级到完全自我托管（Phoenix 或 Alby Hub）。
 
-### 选项 3：Wallet of Satoshi（最简单）
+### Wallet of Satoshi 和 Mutiny 呢？
 
-**最适合：** 想要简单的完全初学者
+许多较旧的指南仍然推荐它们——这些信息已经过时了：
 
-**优点：**
+- **Mutiny 已关闭**：2024 年 8 月宣布停运，所有应用、服务和支持已于 2024 年 12 月 31 日终止。不要向它发送资金。
+- **Wallet of Satoshi**：其经典的托管服务于 2023 年 11 月退出美国市场，并于 2026 年初在欧盟范围内停止。它已重新推出为基于 Spark、宣传为自我托管的钱包——这是一个不同的产品。
 
-- 无需设置
-- 下载即用
-- 包含闪电地址
-- 立即工作
-
-**缺点：**
-
-- 不是你的密钥，不是你的币
-- 需要信任提供商
-- 提款有限制
-
-**平台：** iOS、Android
+想要最简单的起步方式，请使用客户端内置钱包（如 Primal 的）或 Coinos。
 
 ---
 
 ### 连接你的钱包
 
-#### 分步：Alby + 网页客户端
+#### 分步：Alby Hub + 网页客户端
 
-1. **安装 Alby 扩展**
-   - Chrome/Firefox：[getalby.com](https://getalby.com)
-   - 创建账户或使用现有的
+1. **设置 Alby Hub**
+   - 前往 [getalby.com](https://getalby.com)（云端或自托管）
+   - Alby Hub 是一个自我托管的闪电节点——Alby 不再提供托管式余额
+   - 浏览器扩展是可选的，可关联到你的 Hub
 
-2. **获取你的连接字符串**
-   - Alby 仪表板 → API 密钥
-   - 或：个人资料 → Nostr 钱包连接
+2. **创建 NWC 应用连接**
+   - 在 Alby Hub 中创建一个新的应用连接
+   - 复制 NWC 连接字符串
 
 3. **连接到客户端**
    - 在你的 Nostr 客户端（Primal、Iris 等）
    - 设置 → 钱包 → 连接
-   - 粘贴连接字符串
+   - 粘贴 NWC 连接字符串
 
 4. **用小额闪电打赏测试**
    - 找到你喜欢的帖子
@@ -195,34 +196,28 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
    - 购买比特币或从其他地方接收
    - 开始需要至少 10,000 聪
 
-3. **获取 LNURL 或闪电地址**
-   - Phoenix → 接收 → 闪电地址
-   - 复制 `yourname@phoenix.wallet` 或 LNURL
+3. **了解 Phoenix 的接收限制**
+   - Phoenix 提供的是闪电发票（invoice）
+   - 它不提供大多数 Nostr 客户端期望的经典 `name@provider` 闪电地址
+   - 其 `@phoenixwallet.me` 地址支持是一个实验性的 BIP-353 功能
 
-4. **添加到你的 Nostr 个人资料**
-   - 客户端 → 个人资料 → 编辑
-   - 粘贴闪电地址
+4. **接收闪电打赏时，请搭配一个闪电地址**
+   - 使用能提供闪电地址的钱包（客户端内置钱包、Coinos 或 Alby Hub）
+   - 把 Phoenix 留作存放较大余额的自我托管钱包
 
-#### 分步：Wallet of Satoshi + 移动客户端
+#### 分步：客户端内置钱包（例如 Primal）
 
-1. **下载 Wallet of Satoshi**
-   - 去应用商店（iOS/Android）
-   - 搜索 "Wallet of Satoshi"
-   - 下载并安装
-   - 打开应用（无需账户！）
+1. **在你的客户端中激活钱包**
+   - 打开客户端的钱包区域并按提示激活
+   - Primal 的内置钱包是自我托管的（网页/iOS/Android）
 
 2. **获取你的闪电地址**
-   - 点击"接收"
-   - 寻找你的闪电地址
-   - 它看起来像这样：`username@walletofsatoshi.com`
-   - 写下来——你会需要它
+   - 钱包会显示你的闪电地址
+   - 它看起来像这样：`username@provider.com`
 
 3. **添加到你的 Nostr 个人资料**
-   - 打开你的 Nostr 客户端（Damus、Amethyst、Iris 等）
-   - 转到编辑个人资料
-   - 找到"闪电地址"或"LN 地址"字段
-   - 粘贴你的地址
-   - 保存更改
+   - 带内置钱包的客户端通常会自动填写个人资料中的闪电地址字段
+   - 如果没有，转到编辑个人资料，粘贴你的地址并保存
 
 4. **验证它是否有效**
    - 在你的个人资料上寻找 ⚡ 图标
@@ -231,7 +226,7 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
    - 你应该在客户端中看到闪电打赏通知
 
 <Callout variant="warning">
-  **重要：** 如果使用 Phoenix，写下你的钱包恢复助记词！如果你失去钱包访问权限，你就失去了你的比特币。没有例外。
+  **重要：** 如果使用自我托管钱包（Phoenix、Primal Wallet、Alby Hub、Zeus），写下你的钱包恢复助记词！如果你失去钱包访问权限，你就失去了你的比特币。没有例外。
 </Callout>
 
 ---
@@ -282,7 +277,7 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 要接收闪电打赏，你需要配置它们去哪里：
 
 1. **获取你的闪电地址或 LNURL**
-   - 从你的钱包（Alby、Phoenix 等）
+   - 从你的钱包（客户端内置钱包、Coinos、Alby Hub 等）
    - 格式：`yourname@provider.com`
 
 2. **添加到你的个人资料**
@@ -494,9 +489,10 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 
 | 钱包 | 难度 | 控制 | 最适合 |
 |--------|-----------|---------|----------|
-| Wallet of Satoshi | 最简单 | 托管 | 初学者 |
-| Alby | 简单 | 浏览器 | 桌面用户 |
+| Primal Wallet（内置） | 最简单 | 自我托管 | 初学者 |
+| Coinos | 简单 | 托管 | 网页用户、小额资金 |
 | Phoenix | 中等 | 自我托管 | 认真用户 |
+| Alby Hub | 中等 | 自我托管 | 桌面用户 |
 | Zeus | 困难 | 完全控制 | 高级用户 |
 
 **闪电打赏金额：**

@@ -30,18 +30,18 @@ import { RelayPlayground } from "@components/interactive/RelayPlayground";
 
 **Relays are servers that store and forward your Nostr messages.**
 
-Think of them like post offices:
+Think of them like post office boxes:
 
-- You drop off a letter (your post) at your local post office
-- They forward it to other post offices
-- Recipients pick it up from their local post office
+- You drop a copy of your letter (your post) at several post offices
+- Each post office keeps its own copy—they don't forward mail to each other
+- Recipients pick it up from a post office you both use
 
 In Nostr:
 
 - **You** write a note (post)
-- **Client** sends it to relays you've connected to
-- **Relays** store it and share with other relays
-- **Followers** receive it from relays they're connected to
+- **Client** sends a copy to each relay you've connected to
+- **Relays** store it and serve it to anyone who asks—but by default they don't pass it on to other relays
+- **Followers** receive it from relays they're connected to, so your relay lists need to overlap
 
 ### Why This Matters
 

@@ -2,7 +2,7 @@
 title: "NIP-17: Private Direktnachrichten - Ein Vollständiger Guide"
 description: "Lerne über NIP-17, den sicheren Ersatz für NIP-04, und wie du deine privaten Nachrichten in Nostr migrierst"
 published: 2025-02-11
-lastUpdated: 2025-02-11
+lastUpdated: 2026-07-28
 author: "Nostr Community"
 category: "advanced"
 difficulty: "advanced"
@@ -11,6 +11,7 @@ prerequisites: ["keys-and-security", "quickstart"]
 ---
 
 import { NIP17PrivateMessagesQuiz } from "@components/interactive/NIP17PrivateMessagesQuiz";
+import { Callout } from "@components/ui/Callout";
 
 NIP-17 stellt ein bedeutendes Sicherheits-Upgrade dar, wie private Nachrichten in Nostr funktionieren. Dieser Guide erklärt, warum du dich für diese Protokollverbesserung interessieren solltest, wie du vom alten NIP-04 Standard migrierst und praktische Schritte zur Sicherung deiner Kommunikation.
 
@@ -130,6 +131,27 @@ Visuelle Darstellung:
 2. **Unverknüpfbarkeit**: Mehrere Nachrichten zwischen denselben Parteien erscheinen Beobachtern als unzusammenhängende Events
 3. **Bessere Forward Secrecy**: Jede Nachricht nutzt einzigartige ephemere Schlüssel
 
+### Zustellung: Die DM-Relay-Liste (Kind 10050)
+
+Seal und Gift Wrap beschreiben, wie eine Nachricht verpackt wird. Ein drittes
+Element — das **kind-10050-Event** — beschreibt, wohin sie zugestellt wird. Es
+ist eine kleine, öffentliche Liste der Relays, die deine privaten Nachrichten
+annehmen.
+
+Die Spezifikation ist hier streng: Absender MÜSSEN Gift Wraps ausschließlich an
+die Relays in der kind-10050-Liste des Empfängers veröffentlichen. Hast du nie
+eine veröffentlicht, giltst du laut Spezifikation als "nicht bereit, Nachrichten
+zu empfangen", und Clients sollen es gar nicht erst versuchen — an dich
+adressierte DMs werden also stillschweigend nie zugestellt. Auf keiner der
+beiden Seiten erscheint ein Fehler.
+
+Zwei praktische Regeln:
+
+- **Veröffentliche eine Liste, bevor du NIP-17-DMs erwartest** (siehe Schritt 3
+  des Migrations-Guides unten)
+- **Halte sie klein** — die Spezifikation empfiehlt 1-3 Relays, und jedes
+  gelistete Relay sieht, wer dir Nachrichten schickt
+
 ## Migrations-Guide: Wechsel von NIP-04 zu NIP-17
 
 Die Migration zu NIP-17 ist mit modernen Nostr Clients unkompliziert. So machst du den Wechsel.
@@ -171,7 +193,24 @@ Bevor du migrierst, überprüfe, ob dein Client NIP-17 unterstützt:
 2. Unter "Direktnachrichten" wähle "NIP-17 (Empfohlen)"
 3. Änderungen gelten sofort für neue Konversationen
 
-### Schritt 3: Kommuniziere mit Deinen Kontakten
+### Schritt 3: Publiziere Deine DM-Relay-Liste (Kind 10050)
+
+NIP-17-Absender liefern nur an die Relays, die du in deinem kind-10050-Event
+listest — ohne eine solche Liste werden Nachrichten an dich stillschweigend
+verworfen (siehe
+[Zustellung: Die DM-Relay-Liste](#zustellung-die-dm-relay-liste-kind-10050) oben).
+
+1. Suche in deinem Client die Einstellung für DM-, Privatnachrichten- oder
+   Messaging-Relays
+2. Füge ein bis drei Relays hinzu, die Gift Wraps (kind 1059) annehmen — manche
+   Relays lehnen sie ab
+3. Speichern — dein Client veröffentlicht die kind-10050-Liste für dich
+
+Manche Clients veröffentlichen diese Liste automatisch, wenn du NIP-17
+aktivierst. Verlass dich nicht darauf: Verifiziere die Zustellung in Schritt 5,
+bevor du dich darauf verlässt.
+
+### Schritt 4: Kommuniziere mit Deinen Kontakten
 
 NIP-17 funktioniert nur, wenn **beide** Parteien NIP-17 Unterstützung haben. Sende eine Nachricht an häufige Kontakte:
 
@@ -183,7 +222,7 @@ Bitte aktualisiere deinen Nostr Client, falls du es noch nicht getan hast.
 Unsere zukünftigen Nachrichten werden sicherer sein!"
 ```
 
-### Schritt 4: Verifiziere Migrationserfolg
+### Schritt 5: Verifiziere Migrationserfolg
 
 Um zu bestätigen, dass NIP-17 funktioniert:
 
@@ -293,6 +332,8 @@ annimmt — manche lehnen kind 1059 ab.
 
 Halte die Liste kurz. Jedes Relay darauf ist ein Relay, das sieht, wer dir
 schreibt.
+(Das ist [Schritt 3 des Migrations-Guides](#schritt-3-publiziere-deine-dm-relay-liste-kind-10050) —
+wenn du ihn übersprungen hast, fang dort an.)
 
 
 ### "Nachrichten zeigen sich als unlesbar oder Kauderwelsch"
@@ -346,8 +387,9 @@ Der Migrationsprozess ist unkompliziert: Aktualisiere deinen Client, verifiziere
 
 1. ✅ Aktualisiere deinen Nostr Client auf die neueste Version
 2. ✅ Aktiviere NIP-17 in den Einstellungen
-3. ✅ Verifiziere mit Kontakten, dass sie NIP-17 unterstützen
-4. ✅ Beginne NIP-17 für alle neuen privaten Konversationen zu nutzen
+3. ✅ Publiziere deine DM-Relay-Liste (kind 10050) — ohne sie kommt nichts an
+4. ✅ Verifiziere mit Kontakten, dass sie NIP-17 unterstützen
+5. ✅ Beginne NIP-17 für alle neuen privaten Konversationen zu nutzen
 
 Denk dran: Privatsphäre ist eine Praxis, kein Produkt. NIP-17 gibt dir die Werkzeuge—nutze sie weise.
 
@@ -361,6 +403,6 @@ Bereit, dein Verständnis sicherer Nachrichten zu testen?
 
 ---
 
-_Zuletzt aktualisiert: 11. Februar 2025_
+_Zuletzt aktualisiert: 28. Juli 2026_
 
 _Hast du Fragen? Nimm an der Diskussion auf Nostr teil oder öffne ein Issue in diesem Dokumentations-Repository._

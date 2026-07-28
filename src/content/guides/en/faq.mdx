@@ -8,6 +8,7 @@ prerequisites: []
 ---
 
 import FAQAccordion from "@components/ui/FAQAccordion.astro";
+import { Callout } from "@components/ui/Callout";
 
 {/* Search functionality coming soon */}
 
@@ -135,7 +136,7 @@ This is by design. Nostr is decentralized, which means there's no central author
 2. Set up your own domain (if you own one) - Free
 3. Free options from some services
 
-[Learn more: Get a NIP-05 →](/guides/nip05-identity
+[Learn more: Get a NIP-05 →](/guides/nip05-identity)
 
 </FAQAccordion>
 
@@ -464,13 +465,13 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 **How to receive zaps:**
 
 1. **Get a Lightning wallet:**
-   - Alby (browser extension)
-   - Wallet of Satoshi (mobile, easiest)
+   - Your client's built-in wallet (e.g., Primal—easiest)
+   - Coinos (hosted web wallet)
    - Phoenix (mobile, more control)
 
 2. **Add to your profile:**
    - Go to profile settings
-   - Add Lightning Address (looks like: you@walletofsatoshi.com)
+   - Add Lightning Address (looks like: you@coinos.io)
    - Or add LNURL
 
 3. **Tell people:**
@@ -587,7 +588,7 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 
 - ❌ Deleted from one relay ≠ deleted everywhere
 - ✅ Content remains on other relays you're connected to
-- ✅ New relays can sync from existing ones
+- ✅ Your client can re-broadcast your notes to new relays
 - ⚠️ New users on the deleting relay won't see old posts
 
 <Callout variant="success">
@@ -857,27 +858,29 @@ Unlike Twitter's chronological feed, Nostr aggregates from many sources. Content
   question="How do zaps work technically?"
   category="advanced"
 >
-  Zaps use Bitcoin Lightning Network. Process: 1) Sender creates Lightning invoice, 2) Sender publishes zap receipt (kind 9735) with payment proof, 3) Client displays zap with sender profile, 4) Receiver gets sats in their Lightning wallet. NIP-57 standardizes this. No escrow or platform - direct P2P payments.
+  Zaps use the Bitcoin Lightning Network, standardized by NIP-57. Process: 1) Your client sends a signed zap request (kind 9734) to the recipient's wallet server—the LNURL service behind the Lightning address in their profile, 2) that server returns a Lightning invoice, 3) you pay it, 4) the recipient's wallet server signs and publishes the zap receipt (kind 9735) to relays, 5) clients display the zap. No Nostr platform sits in the middle—the payment goes straight to whatever wallet the recipient's Lightning address points at.
 
 **Technical flow:**
 
-1. **Invoice creation** - Sender's wallet creates Lightning invoice
-2. **Payment** - Sender pays the invoice
-3. **Receipt** - Kind 9735 event published with proof of payment
-4. **Display** - Clients show zap with sender info
-5. **Settlement** - Receiver gets sats in their wallet
+1. **Zap request** - Sender's client creates and signs a kind 9734 zap request and sends it to the recipient's LNURL server (it is not published to relays)
+2. **Invoice creation** - The recipient's LNURL server returns a Lightning invoice committing to that zap request
+3. **Payment** - Sender pays the invoice
+4. **Receipt** - The recipient's LNURL server (not the sender) signs a kind 9735 zap receipt and publishes it to the relays listed in the zap request
+5. **Display** - Clients show zap with sender info
 
 **Key points:**
 
 - Uses NIP-57 standard
-- Direct P2P (no middleman)
-- Instant settlement
+- The zap receipt is published by the recipient's wallet server, and per the spec it is **not** proof of payment
+- Near-instant settlement over Lightning
 - Public receipts create social proof
 - Optional private zaps available
 
 <Callout variant="info">
-  Zaps are non-custodial - money flows directly from sender to receiver. No
-  platform holds funds.
+  Zaps are only non-custodial end-to-end if the recipient runs self-custodial
+  Lightning. Most users' Lightning addresses point at a hosted wallet provider,
+  which receives and holds the sats for them—and is also the party that signs
+  the zap receipt.
 </Callout>
 
 </FAQAccordion>
@@ -901,4 +904,4 @@ This guide is constantly improving. If something is unclear or incorrect, submit
 
 ---
 
-_Last updated: February 2026_
+_Last updated: July 2026_

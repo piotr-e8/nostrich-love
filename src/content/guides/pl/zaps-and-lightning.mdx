@@ -95,90 +95,90 @@ Zanim będziesz mógł wysyłać lub odbierać zapy, potrzebujesz portfela Light
 
 #### Dla Początkujących
 
-**Alby** (Rozszerzenie Przeglądarki)
+**Primal Wallet** (Wbudowany w aplikację Primal)
 
-- Łatwa konfiguracja
-- Świetna integracja z Nostr
-- Działa w klientach webowych
-- [getalby.com](https://getalby.com)
+- Zero konfiguracji—aktywujesz go w kliencie
+- Samodzielny (oparty na Spark) od Primal 3.0
+- Web, iOS i Android
+- [primal.net](https://primal.net)
+
+**Coinos** (Web)
+
+- Hostowany portfel działający w każdej przeglądarce
+- Daje Ci adres Lightning `ty@coinos.io`
+- Custodial—trzymaj tylko małe kwoty
+- [coinos.io](https://coinos.io)
 
 **Phoenix** (Mobilny)
 
 - Przyjazny użytkownikowi
 - Samodzielny
-- iOS i Android
+- iOS i Android (ponownie w amerykańskim App Store od kwietnia 2025)
+- Uwaga: prawdziwa samodzielność oznacza małe opłaty on-chain/za kanał przy zasilaniu portfela niewielkim pierwszym saldem
 - [phoenix.acinq.co](https://phoenix.acinq.co)
 
 #### Dla Zaawansowanych Użytkowników
 
+**Alby Hub** (Desktop/Chmura + Rozszerzenie Przeglądarki)
+
+- Twój własny samodzielny węzeł Lightning, w chmurze lub self-hosted
+- Adres Lightning w zestawie; współpracuje z rozszerzeniem przeglądarki Alby i mobilną aplikacją Alby Go
+- Łączy się z każdym klientem Nostr przez Nostr Wallet Connect (NWC)
+- [getalby.com](https://getalby.com)
+
 **Zeus** (Mobilny)
 
-- Połącz ze swoim własnym węzłem
+- Połącz ze swoim własnym węzłem lub użyj wbudowanego portfela
 - Pełna kontrola
 - Funkcje dla zaawansowanych
-- [zeusln.app](https://zeusln.app)
-
-**Mutiny** (Web/Mobilny)
-
-- Samodzielny w przeglądarce
-- Nie potrzeba sklepu z aplikacjami
-- [app.mutinywallet.com](https://app.mutinywallet.com)
+- [zeusln.com](https://zeusln.com)
 
 ### Custodial vs Non-Custodial
 
-**Custodial (Alby, Wallet of Satoshi)**
+**Custodial (Coinos i inne hostowane portfele)**
 
 - ✅ Łatwa konfiguracja
 - ✅ Niższe opłaty
 - ❌ Oni trzymają Twoje środki
 - ❌ KYC może być wymagane
 
-**Non-Custodial (Phoenix, Zeus, Mutiny)**
+**Non-Custodial (Primal Wallet, Phoenix, Alby Hub, Zeus)**
 
 - ✅ Ty kontrolujesz swoje klucze
 - ✅ Lepsza prywatność
 - ❌ Trochę bardziej złożone
 - ❌ Wyższe opłaty on-chain
 
-> 💡 **Rekomendacja**: Zacznij od Alby do użytku web + Phoenix do użytku mobilnego. Przejdź na non-custodial, gdy poczujesz się pewnie.
+> 💡 **Rekomendacja**: Zacznij od hostowanego lub wbudowanego portfela na małe kwoty. Przejdź na pełną samodzielność (Phoenix lub Alby Hub), gdy Twoje saldo urośnie.
 
-### Opcja 3: Wallet of Satoshi (Najłatwiejszy)
+### A Co z Wallet of Satoshi i Mutiny?
 
-**Najlepszy dla:** Kompletnych początkujących, którzy chcą prostoty
+Starsze poradniki o Nostr polecają te dwa portfele. Te rady są nieaktualne:
 
-**Zalety:**
+- **Mutiny Wallet został zamknięty.** Zespół ogłosił zamknięcie w sierpniu 2024 i do 31 grudnia 2024 zakończył działanie wszystkich aplikacji, usług hostowanych i wsparcia. Nie wysyłaj tam środków.
+- **Wallet of Satoshi nie jest już tą bezobsługową aplikacją custodial, z której słynął.** Jego klasyczna usługa custodial opuściła rynek amerykański w listopadzie 2023, a na początku 2026 została wycofana w całej UE. Od tego czasu wystartował ponownie jako portfel oparty na Spark, reklamowany jako samodzielny—to inny produkt niż ten opisywany w starszych poradnikach.
 
-- Nie wymaga konfiguracji
-- Po prostu pobierz i działaj
-- Adres Lightning w zestawie
-- Działa natychmiast
-
-**Wady:**
-
-- Nie Twoje klucze, nie Twoje monety
-- Wymaga zaufania dostawcy
-- Limity wypłat
-
-**Platforma:** iOS, Android
+Aby dziś zacząć najłatwiej, użyj wbudowanego portfela swojego klienta (jak ten w Primal) lub hostowanego portfela webowego, takiego jak Coinos.
 
 ---
 
 ### Łączenie Portfela
 
-#### Krok po Kroku: Alby + Klient Web
+#### Krok po Kroku: Alby Hub + Klient Web
 
-1. **Zainstaluj Rozszerzenie Alby**
-   - Chrome/Firefox: [getalby.com](https://getalby.com)
-   - Utwórz konto lub użyj istniejącego
+1. **Skonfiguruj Alby Hub**
+   - Uruchom hub na [getalby.com](https://getalby.com)—w chmurze lub self-hosted
+   - Alby Hub to samodzielny węzeł Lightning; Alby nie oferuje już hostowanego salda custodial
+   - Opcjonalnie zainstaluj rozszerzenie przeglądarki Alby i połącz je ze swoim hubem, aby zapować jednym kliknięciem w klientach webowych
 
-2. **Zdobądź Swój Ciąg Połączenia**
-   - Pulpit Alby → Klucze API
-   - Lub: Profil → Nostr Wallet Connect
+2. **Zdobądź Ciąg Połączenia Nostr Wallet Connect (NWC)**
+   - W Alby Hub utwórz nowe połączenie aplikacji dla swojego klienta Nostr
+   - Skopiuj wygenerowany ciąg połączenia
 
 3. **Połącz z Klientem**
    - W swoim kliencie Nostr (Primal, Iris, itp.)
    - Ustawienia → Portfel → Połącz
-   - Wklej ciąg połączenia
+   - Wklej ciąg połączenia NWC
 
 4. **Przetestuj Małym Zapem**
    - Znajdź post, który Ci się podoba
@@ -195,34 +195,28 @@ Zanim będziesz mógł wysyłać lub odbierać zapy, potrzebujesz portfela Light
    - Kup Bitcoina lub otrzymaj z innego źródła
    - Potrzebujesz co najmniej 10,000 sats, aby zacząć
 
-3. **Zdobądź LNURL lub Adres Lightning**
-   - Phoenix → Odbierz → Adres Lightning
-   - Skopiuj `twojeimię@phoenix.wallet` lub LNURL
+3. **Poznaj Ograniczenia Odbierania w Phoenix**
+   - Phoenix daje Ci faktury Lightning do odbierania płatności
+   - Nie daje Ci klasycznego adresu Lightning `imię@dostawca`, którego większość klientów Nostr oczekuje do zapów (obsługa czytelnego adresu na `@phoenixwallet.me` to eksperymentalna funkcja BIP-353)
 
-4. **Dodaj do Profilu Nostr**
-   - Klient → Profil → Edytuj
-   - Wklej Adres Lightning
+4. **Do Odbierania Zapów Sparuj Go z Adresem Lightning**
+   - Zapy trafiają na adres Lightning w Twoim profilu Nostr
+   - Użyj adresu z portfela, który go oferuje (wbudowany portfel Twojego klienta, Coinos lub Alby Hub), a Phoenix zostaw jako samodzielny portfel na większe salda
 
-#### Krok po Kroku: Wallet of Satoshi + Klient Mobilny
+#### Krok po Kroku: Portfel Wbudowany w Klienta (np. Primal)
 
-1. **Pobierz Wallet of Satoshi**
-   - Idź do sklepu z aplikacjami (iOS/Android)
-   - Wyszukaj "Wallet of Satoshi"
-   - Pobierz i zainstaluj
-   - Otwórz aplikację (nie potrzeba konta!)
+1. **Aktywuj Portfel w Swoim Kliencie**
+   - Otwórz zakładkę portfela w swoim kliencie i podążaj za instrukcjami aktywacji
+   - Wbudowany portfel Primal jest samodzielny i działa na web, iOS i Androidzie
 
 2. **Zdobądź Swój Adres Lightning**
-   - Dotknij "Odbierz"
-   - Poszukaj swojego adresu Lightning
-   - Wygląda tak: `nazwaużytkownika@walletofsatoshi.com`
-   - Zapisz to—będziesz tego potrzebować
+   - Po aktywacji portfel pokaże Twój adres Lightning
+   - Wygląda tak: `nazwaużytkownika@dostawca.com`
+   - To tutaj będą trafiać zapy
 
 3. **Dodaj do Swojego Profilu Nostr**
-   - Otwórz swojego klienta Nostr (Damus, Amethyst, Iris, itp.)
-   - Idź do Edytuj Profil
-   - Znajdź pole "Adres Lightning" lub "LN Address"
-   - Wklej swój adres
-   - Zapisz zmiany
+   - Klienci z wbudowanym portfelem zwykle uzupełniają to pole za Ciebie
+   - Jeśli nie: Edytuj Profil → znajdź pole "Adres Lightning" lub "LN Address" → wklej → zapisz
 
 4. **Zweryfikuj, Że Działa**
    - Poszukaj ikony ⚡ na swoim profilu
@@ -231,7 +225,7 @@ Zanim będziesz mógł wysyłać lub odbierać zapy, potrzebujesz portfela Light
    - Powinieneś zobaczyć powiadomienie o zapie w swoim kliencie
 
 <Callout variant="warning">
-  **Ważne:** Zapisz swoją frazę odzyskiwania portfela, jeśli używasz Phoenix! Jeśli stracisz dostęp do swojego portfela, tracisz swojego Bitcoina. Bez wyjątków.
+  **Ważne:** Zapisz swoją frazę odzyskiwania portfela, jeśli używasz portfela samodzielnego (Phoenix, Primal Wallet, Alby Hub, Zeus)! Jeśli stracisz dostęp do swojego portfela, tracisz swojego Bitcoina. Bez wyjątków.
 </Callout>
 
 ---
@@ -282,7 +276,7 @@ To personalizuje interakcję i pomaga twórcom wiedzieć, jaka treść rezonuje.
 Aby odbierać zapy, musisz skonfigurować, gdzie mają trafiać:
 
 1. **Zdobądź swój Adres Lightning lub LNURL**
-   - Ze swojego portfela (Alby, Phoenix, itp.)
+   - Ze swojego portfela (wbudowany portfel Twojego klienta, Coinos, Alby Hub, itp.)
    - Format: `twojeimię@provider.com`
 
 2. **Dodaj do Swojego Profilu**
@@ -494,9 +488,10 @@ Dołącz do społeczności zapiującej:
 
 | Portfel | Trudność | Kontrola | Najlepszy Dla |
 |---------|-----------|---------|----------|
-| Wallet of Satoshi | Najłatwiejszy | Custodial | Początkujący |
-| Alby | Łatwy | Przeglądarka | Użytkownicy desktopowi |
-| Phoenix | Średni | Samodzielny | Powązani użytkownicy |
+| Primal Wallet (wbudowany) | Najłatwiejszy | Samodzielny | Początkujący |
+| Coinos | Łatwy | Custodial | Użytkownicy web, małe kwoty |
+| Phoenix | Średni | Samodzielny | Poważni użytkownicy |
+| Alby Hub | Średni | Samodzielny | Użytkownicy desktopowi |
 | Zeus | Trudny | Pełna kontrola | Zaawansowani użytkownicy |
 
 **Kwoty Zapów:**

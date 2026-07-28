@@ -95,90 +95,90 @@ Before you can send or receive zaps, you need a Lightning wallet.
 
 #### For Beginners
 
-**Alby** (Browser Extension)
+**Primal Wallet** (Built into the Primal app)
 
-- Easy setup
-- Great Nostr integration
-- Works in web clients
-- [getalby.com](https://getalby.com)
+- Zero setup—activate it inside the client
+- Self-custodial (Spark-based) since Primal 3.0
+- Web, iOS, and Android
+- [primal.net](https://primal.net)
+
+**Coinos** (Web)
+
+- Hosted wallet that runs in any browser
+- Gives you a `you@coinos.io` Lightning address
+- Custodial—keep only small amounts
+- [coinos.io](https://coinos.io)
 
 **Phoenix** (Mobile)
 
 - User-friendly
 - Self-custodial
-- iOS and Android
+- iOS and Android (back in the US App Store since April 2025)
+- Note: true self-custody means small on-chain/channel fees when funding a tiny first balance
 - [phoenix.acinq.co](https://phoenix.acinq.co)
 
 #### For Advanced Users
 
+**Alby Hub** (Desktop/Cloud + Browser Extension)
+
+- Your own self-custodial Lightning node, in the cloud or self-hosted
+- Lightning address included; pairs with the Alby browser extension and the Alby Go mobile app
+- Connects to any Nostr client via Nostr Wallet Connect (NWC)
+- [getalby.com](https://getalby.com)
+
 **Zeus** (Mobile)
 
-- Connect to your own node
+- Connect to your own node, or use the built-in wallet
 - Full control
 - Power user features
-- [zeusln.app](https://zeusln.app)
-
-**Mutiny** (Web/Mobile)
-
-- Self-custodial in browser
-- No app store needed
-- [app.mutinywallet.com](https://app.mutinywallet.com)
+- [zeusln.com](https://zeusln.com)
 
 ### Custodial vs Non-Custodial
 
-**Custodial (Alby, Wallet of Satoshi)**
+**Custodial (Coinos and other hosted wallets)**
 
 - ✅ Easy setup
 - ✅ Lower fees
 - ❌ They hold your funds
 - ❌ KYC may be required
 
-**Non-Custodial (Phoenix, Zeus, Mutiny)**
+**Non-Custodial (Primal Wallet, Phoenix, Alby Hub, Zeus)**
 
 - ✅ You control your keys
 - ✅ Better privacy
 - ❌ Slightly more complex
 - ❌ Higher on-chain fees
 
-> 💡 **Recommendation**: Start with Alby for web use + Phoenix for mobile. Upgrade to non-custodial as you get comfortable.
+> 💡 **Recommendation**: Start with a hosted or built-in wallet for small amounts. Upgrade to full self-custody (Phoenix or Alby Hub) as your balance grows.
 
-### Option 3: Wallet of Satoshi (Easiest)
+### What About Wallet of Satoshi and Mutiny?
 
-**Best for:** Complete beginners who want simplicity
+Older Nostr guides recommend these two. That advice is out of date:
 
-**Pros:**
+- **Mutiny Wallet shut down.** The team announced the shutdown in August 2024 and ended all apps, hosted services, and support by December 31, 2024. Don't send funds there.
+- **Wallet of Satoshi is no longer the zero-setup custodial app it was famous for.** Its classic custodial service left the US market in November 2023 and was discontinued across the EU in early 2026. It has since relaunched around a Spark-based wallet marketed as self-custodial—a different product from the one older guides describe.
 
-- No setup required
-- Just download and go
-- Lightning address included
-- Works immediately
-
-**Cons:**
-
-- Not your keys, not your coins
-- Requires trust in provider
-- Limits on withdrawals
-
-**Platform:** iOS, Android
+For the easiest start today, use your client's built-in wallet (like Primal's) or a hosted web wallet like Coinos instead.
 
 ---
 
 ### Connecting Your Wallet
 
-#### Step-by-Step: Alby + Web Client
+#### Step-by-Step: Alby Hub + Web Client
 
-1. **Install Alby Extension**
-   - Chrome/Firefox: [getalby.com](https://getalby.com)
-   - Create account or use existing
+1. **Set Up Alby Hub**
+   - Start a hub at [getalby.com](https://getalby.com)—in the cloud or self-hosted
+   - Alby Hub is a self-custodial Lightning node; Alby no longer offers a hosted custodial balance
+   - Optionally install the Alby browser extension and link it to your hub for one-click zaps in web clients
 
-2. **Get Your Connection String**
-   - Alby Dashboard → API Keys
-   - Or: Profile → Nostr Wallet Connect
+2. **Get a Nostr Wallet Connect (NWC) String**
+   - In Alby Hub, create a new app connection for your Nostr client
+   - Copy the connection string it generates
 
 3. **Connect to Client**
    - In your Nostr client (Primal, Iris, etc.)
    - Settings → Wallet → Connect
-   - Paste connection string
+   - Paste the NWC connection string
 
 4. **Test with a Small Zap**
    - Find a post you like
@@ -195,34 +195,28 @@ Before you can send or receive zaps, you need a Lightning wallet.
    - Buy Bitcoin or receive from elsewhere
    - Need at least 10,000 sats to start
 
-3. **Get LNURL or Lightning Address**
-   - Phoenix → Receive → Lightning Address
-   - Copy `yourname@phoenix.wallet` or LNURL
+3. **Know Phoenix's Receiving Limits**
+   - Phoenix gives you Lightning invoices to receive payments
+   - It does not give you the classic `name@provider` Lightning address most Nostr clients expect for zaps (its human-readable address support on `@phoenixwallet.me` is an experimental BIP-353 feature)
 
-4. **Add to Nostr Profile**
-   - Client → Profile → Edit
-   - Paste Lightning Address
+4. **For Receiving Zaps, Pair It with a Lightning Address**
+   - Zaps arrive at the Lightning address in your Nostr profile
+   - Use an address from a wallet that provides one (your client's built-in wallet, Coinos, or Alby Hub), and keep Phoenix as your self-custody wallet for larger balances
 
-#### Step-by-Step: Wallet of Satoshi + Mobile Client
+#### Step-by-Step: Built-In Client Wallet (e.g., Primal)
 
-1. **Download Wallet of Satoshi**
-   - Go to app store (iOS/Android)
-   - Search "Wallet of Satoshi"
-   - Download and install
-   - Open the app (no account needed!)
+1. **Activate the Wallet Inside Your Client**
+   - Open your client's wallet tab and follow the activation prompts
+   - Primal's built-in wallet is self-custodial and works on web, iOS, and Android
 
 2. **Get Your Lightning Address**
-   - Tap "Receive"
-   - Look for your Lightning address
-   - It looks like: `username@walletofsatoshi.com`
-   - Write this down—you'll need it
+   - Once active, the wallet shows your Lightning address
+   - It looks like: `username@provider.com`
+   - This is where zaps will arrive
 
 3. **Add to Your Nostr Profile**
-   - Open your Nostr client (Damus, Amethyst, Iris, etc.)
-   - Go to Edit Profile
-   - Find "Lightning Address" or "LN Address" field
-   - Paste your address
-   - Save changes
+   - Clients with a built-in wallet usually fill this in for you
+   - If not: Edit Profile → find "Lightning Address" or "LN Address" field → paste → save
 
 4. **Verify It Works**
    - Look for ⚡ icon on your profile
@@ -231,7 +225,7 @@ Before you can send or receive zaps, you need a Lightning wallet.
    - You should see zap notification in your client
 
 <Callout variant="warning">
-  **Important:** Write down your wallet recovery phrase if using Phoenix! If you lose access to your wallet, you lose your Bitcoin. No exceptions.
+  **Important:** Write down your wallet recovery phrase if using a self-custodial wallet (Phoenix, Primal Wallet, Alby Hub, Zeus)! If you lose access to your wallet, you lose your Bitcoin. No exceptions.
 </Callout>
 
 ---
@@ -282,7 +276,7 @@ This personalizes the interaction and helps creators know what content resonates
 To receive zaps, you need to configure where they go:
 
 1. **Get your Lightning Address or LNURL**
-   - From your wallet (Alby, Phoenix, etc.)
+   - From your wallet (your client's built-in wallet, Coinos, Alby Hub, etc.)
    - Format: `yourname@provider.com`
 
 2. **Add to Your Profile**
@@ -494,9 +488,10 @@ Join the zapping community:
 
 | Wallet | Difficulty | Control | Best For |
 |--------|-----------|---------|----------|
-| Wallet of Satoshi | Easiest | Custodial | Beginners |
-| Alby | Easy | Browser | Desktop users |
+| Primal Wallet (built-in) | Easiest | Self-custody | Beginners |
+| Coinos | Easy | Custodial | Web users, small amounts |
 | Phoenix | Medium | Self-custody | Serious users |
+| Alby Hub | Medium | Self-custody | Desktop users |
 | Zeus | Hard | Full control | Power users |
 
 **Zap Amounts:**

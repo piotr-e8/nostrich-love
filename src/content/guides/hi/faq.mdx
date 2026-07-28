@@ -8,6 +8,7 @@ prerequisites: []
 ---
 
 import FAQAccordion from "@components/ui/FAQAccordion.astro";
+import { Callout } from "@components/ui/Callout";
 
 {/* Search functionality coming soon */}
 
@@ -135,7 +136,7 @@ Nostr में कोई नहीं है:
 2. अपना own domain setup करें (अगर आपके पास एक है) - Free
 3. कुछ services से free options
 
-[और जानें: Get a NIP-05 →](/hi/guides/nip05-identity
+[और जानें: Get a NIP-05 →](/hi/guides/nip05-identity)
 
 </FAQAccordion>
 
@@ -464,13 +465,13 @@ wss://relay.current.fyi       (Fast, minimal)
 **Zaps receive कैसे करें:**
 
 1. **Lightning wallet प्राप्त करें:**
-   - Alby (browser extension)
-   - Wallet of Satoshi (mobile, easiest)
+   - आपके client का built-in wallet (जैसे Primal—easiest)
+   - Coinos (hosted web wallet)
    - Phoenix (mobile, more control)
 
 2. **Profile में add करें:**
    - Profile settings पर जाएं
-   - Lightning Address add करें (looks like: you@walletofsatoshi.com)
+   - Lightning Address add करें (looks like: you@coinos.io)
    - या LNURL add करें
 
 3. **लोगों को बताएं:**
@@ -587,7 +588,7 @@ NIP-05 identifiers देखें (human-readable names जैसे alice@doma
 
 - ❌ एक relay से delete = हर जगह से delete नहीं
 - ✅ Content दूसरे connected relays पर रहता है
-- ✅ नए relays existing ones से sync कर सकते हैं
+- ✅ आपका client आपके notes नए relays पर re-broadcast कर सकता है
 - ⚠️ Deleting relay पर नए users पुराने posts नहीं देखेंगे
 
 <Callout variant="success">
@@ -857,27 +858,27 @@ Twitter के chronological feed के विपरीत, Nostr कई source
   question="Zaps technically कैसे काम करते हैं?"
   category="advanced"
 >
-Zaps Bitcoin Lightning Network use करते हैं। Process: 1) Sender Lightning invoice create करता है, 2) Sender zap receipt (kind 9735) payment proof के साथ publish करता है, 3) Client sender profile के साथ zap display करता है, 4) Receiver अपने Lightning wallet में sats प्राप्त करता है। NIP-57 इसे standardize करता है। कोई escrow या platform नहीं - direct P2P payments।
+Zaps Bitcoin Lightning Network use करते हैं और NIP-57 इस process को standardize करता है। इसमें sender का client, recipient का LNURL server (उनके profile के Lightning address के पीछे की service), और Lightning payment मिलकर काम करते हैं।
 
 **Technical flow:**
 
-1. **Invoice creation** - Sender's wallet Lightning invoice create करती है
-2. **Payment** - Sender invoice pay करता है
-3. **Receipt** - Kind 9735 event payment proof के साथ publish होता है
-4. **Display** - Clients sender info के साथ zap दिखाते हैं
-5. **Settlement** - Receiver अपनी wallet में sats प्राप्त करता है
+1. **Zap request** - Sender का client kind 9734 zap request create और sign करता है और उसे recipient के LNURL server को भेजता है (यह 9734 relays पर publish नहीं होता)
+2. **Invoice** - Recipient का LNURL server उस zap request से जुड़ा Lightning invoice return करता है
+3. **Payment** - Sender invoice pay करता है
+4. **Receipt** - Recipient का LNURL server (sender नहीं) kind 9735 zap receipt sign करके zap request में listed relays पर publish करता है
+5. **Display** - Clients zap दिखाते हैं
 
 **Key points:**
 
-- NIP-57 standard use करता है
-- Direct P2P (no middleman)
-- Instant settlement
+- Receipt recipient के wallet server द्वारा publish होती है और spec के अनुसार यह payment का proof नहीं है
+- लगभग instant settlement
 - Public receipts social proof create करते हैं
 - Optional private zaps available
 
 <Callout variant="info">
-   Zaps non-custodial हैं - money directly sender से receiver तक जाती है। कोई
-   platform funds hold नहीं करती।
+   Zaps end-to-end non-custodial सिर्फ तभी हैं जब recipient self-custodial Lightning
+   चलाता है। ज्यादातर users का Lightning address किसी hosted provider की ओर point करता है
+   जो sats receive करके hold करता है और receipt sign करता है।
 </Callout>
 
 </FAQAccordion>
@@ -901,4 +902,4 @@ Nostr community helpful और welcoming है:
 
 ---
 
-_Last updated: February 2026_
+_Last updated: July 2026_

@@ -2,7 +2,7 @@
 title: "NIP-17: Prywatne Wiadomości Bezpośrednie - Kompletny Przewodnik"
 description: "Dowiedz się o NIP-17, bezpiecznym zamienniku dla NIP-04, i jak migrować swoje prywatne wiadomości w Nostr"
 published: 2025-02-11
-lastUpdated: 2025-02-11
+lastUpdated: 2026-07-28
 author: "Społeczność Nostr"
 category: "advanced"
 difficulty: "advanced"
@@ -11,6 +11,7 @@ prerequisites: ["keys-and-security", "quickstart"]
 ---
 
 import { NIP17PrivateMessagesQuiz } from "@components/interactive/NIP17PrivateMessagesQuiz";
+import { Callout } from "@components/ui/Callout";
 
 NIP-17 reprezentuje znaczącą aktualizację bezpieczeństwa dla prywatnych wiadomości w Nostr. Ten przewodnik wyjaśnia dlaczego powinieneś dbać o tę poprawę protokołu, jak migrować ze starego standardu NIP-04 oraz praktyczne kroki do zabezpieczenia swoich komunikacji.
 
@@ -127,6 +128,25 @@ Reprezentacja Wizualna:
 2. **Niepowiązywalność**: Wielokrotne wiadomości między tymi samymi stronami wyglądają jako niepowiązane eventy dla obserwatorów
 3. **Lepsza Forward Secrecy**: Każda wiadomość używa unikalnych kluczy efemerycznych
 
+### Dostarczanie: Lista Relayów DM (Kind 10050)
+
+Seal i gift wrap opisują, jak wiadomość jest zapakowana. Trzeci element —
+**event kind 10050** — opisuje, dokąd jest dostarczana. To mała, publiczna
+lista relayów, które przyjmują Twoje prywatne wiadomości.
+
+Specyfikacja jest w tej kwestii rygorystyczna: nadawcy MUSZĄ publikować gift
+wrapy wyłącznie na relaye z listy kind 10050 odbiorcy. Jeśli nigdy jej nie
+opublikowałeś, specyfikacja traktuje Cię jako "niegotowego na odbieranie
+wiadomości" i klienci nie powinny nawet próbować — więc DM-y adresowane do
+Ciebie po cichu nigdy nie są dostarczane. Po żadnej stronie nie ma błędu.
+
+Dwie praktyczne zasady:
+
+- **Opublikuj ją, zanim zaczniesz oczekiwać jakichkolwiek DM-ów NIP-17** (zobacz
+  Krok 3 przewodnika migracji poniżej)
+- **Trzymaj ją małą** — specyfikacja zaleca 1-3 relaye, a każdy relay na liście
+  widzi, kto wysyła Ci wiadomości
+
 ## Przewodnik Migracji: Przełączanie z NIP-04 na NIP-17
 
 Migrowanie do NIP-17 jest proste z nowoczesnymi klientami Nostr. Oto jak dokonać zmiany.
@@ -168,7 +188,22 @@ Przed migracją, zweryfikuj czy Twój klient wspiera NIP-17:
 2. Pod "Wiadomości Bezpośrednimi," wybierz "NIP-17 (Zalecany)"
 3. Zmiany mają zastosowanie natychmiast do nowych rozmów
 
-### Krok 3: Skomunikuj się ze Swoimi Kontaktami
+### Krok 3: Opublikuj Swoją Listę Relayów DM (Kind 10050)
+
+Nadawcy NIP-17 dostarczają wyłącznie na relaye wymienione w Twoim evencie kind
+10050 — bez niego wiadomości do Ciebie są po cichu porzucane (zobacz
+[Dostarczanie: Lista Relayów DM](#dostarczanie-lista-relayów-dm-kind-10050) powyżej).
+
+1. W swoim kliencie poszukaj ustawienia relayów DM, wiadomości prywatnych lub
+   wiadomości bezpośrednich
+2. Dodaj od jednego do trzech relayów, które przyjmują gift wrapy (kind 1059) —
+   niektóre relaye je odrzucają
+3. Zapisz — Twój klient opublikuje listę kind 10050 za Ciebie
+
+Niektórzy klienci publikują tę listę automatycznie po włączeniu NIP-17. Nie
+zakładaj tego: zweryfikuj dostarczanie w Kroku 5, zanim na tym polegasz.
+
+### Krok 4: Skomunikuj się ze Swoimi Kontaktami
 
 NIP-17 działa tylko jeśli **obie** strony mają wsparcie NIP-17. Wyślij wiadomość do częstych kontaktów:
 
@@ -180,7 +215,7 @@ Proszę zaktualizuj swojego klienta Nostr, jeśli jeszcze tego nie zrobiłeś.
 Nasze przyszłe wiadomości będą bezpieczniejsze!"
 ```
 
-### Krok 4: Zweryfikuj Sukces Migracji
+### Krok 5: Zweryfikuj Sukces Migracji
 
 Aby potwierdzić, że NIP-17 działa:
 
@@ -285,7 +320,9 @@ nic nie pokaże.
 **Naprawa:** w kliencie obsługującym NIP-17 znajdź ustawienie relayów dla
 wiadomości prywatnych i zapisz przynajmniej jeden relay. To publikuje Twoją listę
 kind 10050. Wybierz relay, który faktycznie przyjmuje gift wrapy — część odrzuca
-kind 1059.
+kind 1059. (To jest
+[Krok 3 przewodnika migracji](#krok-3-opublikuj-swoją-listę-relayów-dm-kind-10050) —
+jeśli go pominąłeś, zacznij od niego.)
 
 Trzymaj listę krótką. Każdy relay na niej to relay, który widzi, kto Ci pisze.
 
@@ -341,8 +378,9 @@ Proces migracji jest prosty: zaktualizuj klienta, zweryfikuj czy Twoi kontakty w
 
 1. ✅ Zaktualizuj swojego klienta Nostr do najnowszej wersji
 2. ✅ Włącz NIP-17 w ustawieniach
-3. ✅ Zweryfikuj ze swoimi kontaktami, że wspierają NIP-17
-4. ✅ Zacznij używać NIP-17 dla wszystkich nowych prywatnych rozmów
+3. ✅ Opublikuj swoją listę relayów DM (kind 10050) — bez niej nic nie dociera
+4. ✅ Zweryfikuj ze swoimi kontaktami, że wspierają NIP-17
+5. ✅ Zacznij używać NIP-17 dla wszystkich nowych prywatnych rozmów
 
 Pamiętaj: Prywatność to praktyka, nie produkt. NIP-17 daje Ci narzędzia—używaj ich mądrze.
 
@@ -356,6 +394,6 @@ Gotowy sprawdzić swoje zrozumienie bezpiecznych wiadomości?
 
 ---
 
-_Ostatnia aktualizacja: 11 lutego 2025_
+_Ostatnia aktualizacja: 28 lipca 2026_
 
 _Masz pytania? Dołącz do dyskusji na Nostr lub otwórz issue w tym repozytorium dokumentacji._

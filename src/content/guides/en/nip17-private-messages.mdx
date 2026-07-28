@@ -2,7 +2,7 @@
 title: "NIP-17: Private Direct Messages - A Complete Guide"
 description: "Learn about NIP-17, the secure replacement for NIP-04, and how to migrate your private messaging in Nostr"
 published: 2025-02-11
-lastUpdated: 2025-02-11
+lastUpdated: 2026-07-28
 author: "Nostr Community"
 category: "advanced"
 difficulty: "advanced"
@@ -11,6 +11,7 @@ prerequisites: ["keys-and-security", "quickstart"]
 ---
 
 import { NIP17PrivateMessagesQuiz } from "@components/interactive/NIP17PrivateMessagesQuiz";
+import { Callout } from "@components/ui/Callout";
 
 NIP-17 represents a significant security upgrade to how private messages work in Nostr. This guide explains why you should care about this protocol improvement, how to migrate from the old NIP-04 standard, and practical steps to secure your communications.
 
@@ -132,6 +133,25 @@ Visual Representation:
    they saved. The one-time keys hide *who sent* a message; they do not protect
    past messages. Delete old conversations if that matters to you.
 
+### Delivery: The DM Relay List (Kind 10050)
+
+Seal and gift wrap describe how a message is packaged. A third piece — the
+**kind 10050 event** — describes where it is delivered. It is a small, public
+list of the relays that accept your private messages.
+
+The spec is strict about this: senders MUST publish gift wraps only to the
+relays in the recipient's kind 10050 list. If you have never published one, the
+spec treats you as "not ready to receive messages" and clients shouldn't even
+try — so DMs addressed to you are silently never delivered. There is no error
+on either side.
+
+Two practical rules:
+
+- **Publish one before expecting any NIP-17 DMs** (see Step 3 of the migration
+  guide below)
+- **Keep it small** — the spec recommends 1-3 relays, and every relay you list
+  gets to see who is sending you messages
+
 ## Migration Guide: Switching from NIP-04 to NIP-17
 
 Migrating to NIP-17 is straightforward with modern Nostr clients. Here's how to make the switch.
@@ -173,7 +193,21 @@ Before migrating, verify your client supports NIP-17:
 2. Under "Direct Messages," select "NIP-17 (Recommended)"
 3. Changes apply immediately to new conversations
 
-### Step 3: Communicate with Your Contacts
+### Step 3: Publish Your DM Relay List (Kind 10050)
+
+NIP-17 senders deliver only to the relays you list in your kind 10050 event —
+without one, messages to you are silently dropped (see
+[Delivery: The DM Relay List](#delivery-the-dm-relay-list-kind-10050) above).
+
+1. In your client, look for the DM, private-messages, or messaging-relay setting
+2. Add one to three relays that accept gift wraps (kind 1059) — some relays
+   reject them
+3. Save — your client publishes the kind 10050 list for you
+
+Some clients publish this list automatically when you enable NIP-17. Don't
+assume: verify delivery in Step 5 before relying on it.
+
+### Step 4: Communicate with Your Contacts
 
 NIP-17 only works if **both** parties have NIP-17 support. Send a note to frequent contacts:
 
@@ -185,7 +219,7 @@ Please update your Nostr client if you haven't already.
 Our future messages will be more secure!"
 ```
 
-### Step 4: Verify Migration Success
+### Step 5: Verify Migration Success
 
 To confirm NIP-17 is working:
 
@@ -291,6 +325,8 @@ in either interface.
 **Fix:** in a client that supports NIP-17, find the DM or private-messaging relay
 setting and save at least one relay. That publishes your kind 10050 list. Pick a
 relay that actually accepts gift wraps — some relays reject kind 1059 outright.
+(This is [Step 3 of the migration guide](#step-3-publish-your-dm-relay-list-kind-10050) —
+if you skipped it, start there.)
 
 Keep the list short. Every relay you list is a relay that gets to see who is
 sending you messages.
@@ -346,8 +382,9 @@ The migration process is straightforward: update your client, verify your contac
 
 1. ✅ Update your Nostr client to the latest version
 2. ✅ Enable NIP-17 in settings
-3. ✅ Verify with contacts that they support NIP-17
-4. ✅ Start using NIP-17 for all new private conversations
+3. ✅ Publish your DM relay list (kind 10050) — without it, nothing arrives
+4. ✅ Verify with contacts that they support NIP-17
+5. ✅ Start using NIP-17 for all new private conversations
 
 Remember: Privacy is a practice, not a product. NIP-17 gives you the tools—use them wisely.
 
@@ -361,6 +398,6 @@ Ready to check your understanding of secure messaging?
 
 ---
 
-_Last updated: February 11, 2025_
+_Last updated: July 28, 2026_
 
 _Have questions? Join the discussion on Nostr or open an issue on this documentation repository._
