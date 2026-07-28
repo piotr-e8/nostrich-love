@@ -55,29 +55,56 @@ const title = translations.guides.whatIsNostr?.title;
 
 **When adding a new locale, these 6 files ALL have hardcoded locale arrays that MUST be updated — missing any one causes 404s or missing language switcher entries:**
 
+Rewritten July 2026 — the old list named three files that no longer exist and
+several places that now derive the locale list instead of hardcoding it.
+
+**Single source of truth:** `src/config/locales.ts`. Add the locale there first;
+everything that iterates (`getStaticPaths`, the sitemap, the path helpers) picks
+it up automatically.
+
 | # | File | What to Update |
 |---|------|---------------|
-| 1 | `src/components/LanguageSwitcher.tsx` | Add to `languages` array, URL detection regexes, redirect patterns, localStorage check |
-| 2 | `src/i18n/index.ts` | Add import, translations record entry, `getCurrentLocale()` detection |
-| 3 | `src/pages/[lang]/guides/[slug].astro` | Add locale to `getStaticPaths()` locales array |
-| 4 | `src/pages/[lang]/guides/index.astro` | Add params entry + locale detection if/else |
-| 5 | `src/pages/guides/index.astro` | Add to localStorage saved language check array |
-| 6 | `src/pages/progress.astro` | Add to saved language preference check array |
+| 1 | `src/config/locales.ts` | Add the code plus `htmlLang`, `ogLocale`, `name`, `direction`. **Start here.** |
+| 2 | `src/i18n/types.ts` | Add the code to the `Locale` union |
+| 3 | `src/i18n/locales/{locale}.json` | Full translation file — keys must match `en.json` exactly, camelCase under `guides` |
+| 4 | `src/i18n/locales.server.ts` | Add the static import (server needs all locales; the client loads one) |
+| 5 | `src/content/guides/{locale}/` | All 16 guide MDX files, same slugs as `en/` |
+| 6 | `src/components/LanguageSwitcher.tsx` | Add to the `languages` display array (flag + label only) |
+| 7 | `astro.config.mjs` | Add to `i18n.locales` and to the sitemap `i18n.locales` map |
+| 8 | `src/pages/progress.astro` | Inline script cannot import config — add to its locale array |
 
-Plus the standard config files:
-- `src/config/locales.ts` — Add locale entry with direction
-- `src/i18n/types.ts` — Add locale string to Locale type union
-- `astro.config.mjs` — Add locale string to `i18n.locales` and sitemap `i18n.locales`
-- `scripts/verify-seo.js` — Add locale to check arrays
-- `src/i18n/locales/{locale}.json` — Complete translation file
-- `src/content/guides/{locale}/` — All 16 guide MDX files
+`src/pages/[...lang]/guides/*.astro` no longer needs touching: it iterates
+`locales` from config. There is no `src/pages/guides/index.astro` any more —
+English is served from the rest route.
 
-**This is the #1 source of bugs when adding locales. Every previous locale addition (pl, es, de, zh, ar, hi) forgot at least one of these files.**
+**Verify with the gates, not by eye:**
+```bash
+npm run test        # guide-slug parity, key casing, missing keys
+npm run build && npm run check:links
+```
 
-### 2. Guide Links MUST Include Locale Prefix
+### 2. Guide Links: English is UN-prefixed
 
-**❌ WRONG:** `/guides/what-is-nostr`
-**✅ CORRECT:** `/en/guides/what-is-nostr` or `/${locale}/guides/what-is-nostr`
+Reversed in July 2026. `astro.config.mjs` sets `prefixDefaultLocale: false`, so
+English lives at `/guides/<slug>` and **`/en/guides/*` only 301-redirects**.
+Linking through a redirect wastes crawl budget and is a bug, not a style issue.
+
+**❌ WRONG:** `/en/guides/what-is-nostr`, or `` `/${locale}/guides/x` `` built by hand
+**✅ CORRECT:** import the helper — it is the single source of truth and is unit tested
+
+```ts
+import { guidePath, guidesIndexPath, localePath } from '@/i18n/paths';
+
+guidePath('what-is-nostr')        // -> /guides/what-is-nostr
+guidePath('what-is-nostr', 'pl')  // -> /pl/guides/what-is-nostr
+```
+
+Inside MDX, link to your own locale: a Polish guide links to `/pl/guides/x`, an
+English guide to `/guides/x`. `tests/content-integrity.test.ts` fails the build
+if a translated guide links at an English path, or if anything links to `/en/`.
+
+Inline `<script>` in `.astro` cannot import the helper — compute the prefix
+locally there (`locale === 'en' ? '/guides' : `/${locale}/guides``).
 
 ### 3. Dark Mode Colors
 
@@ -424,7 +451,7 @@ Me: "I'm now using the writing-plans skill. Creating bite-sized implementation p
 | No build verification in 10+ min | RUN `npm run build` immediately |
 | 3 failed attempts at same issue | ASK FOR HELP, don't keep trying |
 | Adding strings without `t()` function | REVERT. Use translation system. |
-| Writing `/guides/` without locale | ADD locale prefix: `/en/guides/...` |
+| Hand-building a guide URL | USE `guidePath()` from `@/i18n/paths`. English is un-prefixed; `/en/` only redirects. |
 | Creating quiz without reference | Compare with WhatIsNostrQuiz.tsx FIRST |
 
 ---
@@ -662,23 +689,33 @@ npm run verify-seo
 - `ps-*` / `pe-*` instead of `pl-*` / `pr-*` (padding-start/end)
 - `start-*` / `end-*` instead of `left-*` / `right-*` (positioning)
 
-### 14. Interactive Components Need client:load Directive
+### 14. Interactive Components Need a Hydration Directive — but NOT client:load
 
-**Context:** Components using `useTranslation()` need client-side hydration in Astro.
+**Superseded July 2026.** The original rule said every interactive component
+needs `client:load`. That produced 429 of them, so React, framer-motion and
+every quiz mounted while the page was still loading.
 
-**What happened:** `RelayWorldMap` component in `relays-demystified.mdx` was missing `client:load` directive, causing translation keys to not resolve.
+**Rule now:** use `client:idle`. It defers hydration past first paint, which
+moved 66% of a FAQ page's JavaScript off the critical path.
 
-**Fix:** Added directive to MDX file:
 ```astro
-<RelayWorldMap client:load />
+<RelayWorldMap client:idle />
 ```
 
-**Rule:** Any component using `useTranslation()`, React hooks, or client-side interactivity MUSThave `client:load` in MDX files.
+`client:visible` would be better still — it skips components the reader never
+scrolls to — but it could not be verified in the automated browser here
+(`document.hidden` stays true, and Chrome suspends IntersectionObserver in a
+hidden document, so nothing ever hydrates and it looks broken). Confirm it in a
+real browser before switching content widgets over.
+
+**Do not add a directive at all** if the component does not need JavaScript.
+`FAQAccordion` was 29 React roots per FAQ page until it became an `.astro`
+component wrapping `<details>/<summary>` — zero JS, and it works before
+hydration and with JS off.
 
 **Verification:**
 ```bash
-# Find all interactive components in guides
-grep -r "client:load" src/content/guides --include="*.mdx"
+grep -rn "client:load" src/content/guides --include="*.mdx"   # expect none
 ```
 
 ### 15. Outbox Model Quiz Translation Was Missing
