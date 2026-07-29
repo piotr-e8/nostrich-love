@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   AtSign,
   Check,
@@ -267,13 +266,9 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
       <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 md:p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4"
-          >
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4 animate-scale-in motion-reduce:animate-none">
             <AtSign className="w-8 h-8 text-primary-600 dark:text-primary-400" />
-          </motion.div>
+          </div>
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
             {t('nip05Checker.title')}
           </h2>
@@ -283,7 +278,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
         </div>
 
         {/* What is NIP-05 Info */}
-        <motion.button
+        <button
           onClick={() => setShowHelp(!showHelp)}
           className="w-full mb-6 text-left"
         >
@@ -291,16 +286,10 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
             <HelpCircle className="w-5 h-5" />
             <span className="font-medium">{t('nip05Checker.whatIsNip05')}</span>
           </div>
-        </motion.button>
+        </button>
 
-        <AnimatePresence>
-          {showHelp && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="mb-6"
-            >
+        {showHelp && (
+            <div className="mb-6 animate-slide-down motion-reduce:animate-none">
               <div className="bg-info-500/10 border border-info-500/30 rounded-xl p-4">
                 <h3 className="font-semibold text-info-500 mb-2">
                   {t('nip05Checker.aboutNip05')}
@@ -325,9 +314,8 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                   </li>
                 </ul>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+        )}
 
         {/* Input */}
         <div className="space-y-4">
@@ -390,14 +378,8 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
           {isChecking && (
             <span className="sr-only">{t('nip05Checker.form.checking')}</span>
           )}
-          <AnimatePresence mode="wait">
           {result && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="mt-6"
-            >
+            <div className="mt-6 animate-slide-up motion-reduce:animate-none">
               {result.isValid ? (
                 <div className="bg-success-500/10 border border-success-500/30 rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-4">
@@ -545,9 +527,8 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
               >
                 {t('nip05Checker.results.checkAnother')}
               </button>
-            </motion.div>
+            </div>
           )}
-          </AnimatePresence>
         </div>
 
         {/* Get NIP-05 Providers */}

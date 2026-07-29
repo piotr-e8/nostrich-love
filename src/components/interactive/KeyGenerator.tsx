@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
   Copy,
   Eye,
@@ -51,6 +50,8 @@ interface KeyGeneratorProps {
   onKeysGenerated?: (keys: KeyPair) => void;
 }
 
+const MODAL_EXIT_DURATION_MS = 300;
+
 const getSecurityChecks = (t: (key: string) => string): SecurityCheck[] => [
   {
     id: "understand",
@@ -89,8 +90,59 @@ export function KeyGenerator({
   const [entropyProgress, setEntropyProgress] = useState(0);
   const [showWarningModal, setShowWarningModal] = useState(false);
   const [pendingAction, setPendingAction] = useState<(() => void) | null>(null);
+  // Timed-exit modal state (StreakBanner idiom)
+  const [modalEntered, setModalEntered] = useState(false);
+  const [modalExiting, setModalExiting] = useState(false);
+  const modalExitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const allChecksPassed = securityChecks.every((check) => check.checked);
+
+  useEffect(() => {
+    // Double rAF: paint the hidden state first so the enter transition runs
+    if (!showWarningModal) {
+      setModalEntered(false);
+      return;
+    }
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => setModalEntered(true));
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [showWarningModal]);
+
+  useEffect(
+    () => () => {
+      if (modalExitTimer.current) clearTimeout(modalExitTimer.current);
+    },
+    [],
+  );
+
+  const closeWarningModal = () => {
+    if (modalExiting) return;
+    setModalExiting(true);
+    modalExitTimer.current = setTimeout(() => {
+      setModalExiting(false);
+      setShowWarningModal(false);
+    }, MODAL_EXIT_DURATION_MS);
+  };
+
+  // Opening must cancel an exit in flight: `showWarningModal` stays true for
+  // the whole 300 ms exit window, so a plain setShowWarningModal(true) there
+  // is a no-op and the pending timer would close the modal the user just
+  // re-requested. (AnimatePresence used to re-enter in this case.)
+  const openWarningModal = () => {
+    if (modalExitTimer.current) {
+      clearTimeout(modalExitTimer.current);
+      modalExitTimer.current = null;
+    }
+    setModalExiting(false);
+    setShowWarningModal(true);
+  };
+
+  const isModalShown = modalEntered && !modalExiting;
 
   // Load security checks from localStorage only once on mount, or when locale changes
   useEffect(() => {
@@ -179,7 +231,7 @@ export function KeyGenerator({
   const handleCopy = async (text: string, label: string) => {
     if (!allChecksPassed) {
       setPendingAction(() => () => performCopy(text, label));
-      setShowWarningModal(true);
+      openWarningModal();
       return;
     }
     await performCopy(text, label);
@@ -241,13 +293,9 @@ ${t('keyGenerator.backupFile.warnings.title')}:
       <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 md:p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4"
-          >
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4 animate-scale-in motion-reduce:animate-none">
             <Shield className="w-8 h-8 text-primary-600 dark:text-primary-400" />
-          </motion.div>
+          </div>
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
             {t('keyGenerator.title')}
           </h2>
@@ -258,11 +306,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
 
         {/* Generate Button */}
         {!keys && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center"
-          >
+          <div className="text-center animate-slide-up motion-reduce:animate-none">
             <button
               onClick={generateKeys}
               disabled={isGenerating}
@@ -286,27 +330,19 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                   <span>{Math.min(100, Math.round(entropyProgress))}%</span>
                 </div>
                 <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                  <motion.div
-                    className="h-full bg-gradient-to-r from-primary-500 to-success-500"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${Math.min(100, entropyProgress)}%` }}
-                    transition={{ duration: 0.1 }}
+                  <div
+                    className="h-full bg-gradient-to-r from-primary-500 to-success-500 transition-[width] duration-100 ease-out-quint motion-reduce:transition-none"
+                    style={{ width: `${Math.min(100, entropyProgress)}%` }}
                   />
                 </div>
               </div>
             )}
-          </motion.div>
+          </div>
         )}
 
         {/* Keys Display */}
-        <AnimatePresence>
-          {keys && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="space-y-6"
-            >
+        {keys && (
+          <div className="space-y-6 animate-slide-up motion-reduce:animate-none">
               {/* Security Warning */}
               <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl p-4">
                 <div className="flex items-start gap-3">
@@ -386,13 +422,11 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                     </span>
                   </div>
                   <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                    <motion.div
-                      className="h-full bg-gradient-to-r from-primary-500 to-success-500"
-                      initial={{ width: 0 }}
-                      animate={{
+                    <div
+                      className="h-full bg-gradient-to-r from-primary-500 to-success-500 transition-[width] duration-300 ease-out-quint motion-reduce:transition-none"
+                      style={{
                         width: `${(securityChecks.filter((c) => c.checked).length / securityChecks.length) * 100}%`,
                       }}
-                      transition={{ duration: 0.3 }}
                     />
                   </div>
                 </div>
@@ -514,26 +548,26 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                   {t('keyGenerator.buttons.regenerate')}
                 </button>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+          </div>
+        )}
       </div>
 
       {/* Warning Modal */}
-      <AnimatePresence>
-        {showWarningModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-            onClick={() => setShowWarningModal(false)}
+      {showWarningModal && (
+          <div
+            className={cn(
+              "fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4",
+              "transition-opacity duration-300 motion-reduce:transition-none",
+              isModalShown ? "opacity-100" : "opacity-0",
+            )}
+            onClick={closeWarningModal}
           >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 max-w-md w-full"
+            <div
+              className={cn(
+                "bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 max-w-md w-full",
+                "transition-all duration-300 ease-out-quint motion-reduce:transition-none",
+                isModalShown ? "opacity-100 scale-100" : "opacity-0 scale-95",
+              )}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center gap-3 mb-4">
@@ -549,50 +583,46 @@ ${t('keyGenerator.backupFile.warnings.title')}:
               </p>
               <div className="flex gap-3">
                 <button
-                  onClick={() => setShowWarningModal(false)}
+                  onClick={closeWarningModal}
                   className="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-white rounded-lg transition-all"
                 >
                   {t('keyGenerator.modal.goBack')}
                 </button>
                 <button
                   onClick={() => {
-                    setShowWarningModal(false);
                     pendingAction?.();
                     setPendingAction(null);
+                    closeWarningModal();
                   }}
                   className="flex-1 px-4 py-2 bg-warning-500/20 hover:bg-yellow-200 dark:hover:bg-yellow-800 text-yellow-700 dark:text-yellow-400 rounded-lg transition-all"
                 >
                   {t('keyGenerator.modal.copyAnyway')}
                 </button>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
 
       {/* Toast Notification — persistent polite live region: announces the key
           generation result ("Keys generated successfully!") plus copy/download
           feedback to screen readers the moment the toast renders */}
       <div aria-live="polite">
-        <AnimatePresence>
         {toast && (
-          <motion.div
-            initial={{ opacity: 0, y: 50, x: "-50%" }}
-            animate={{ opacity: 1, y: 0, x: "-50%" }}
-            exit={{ opacity: 0, y: 20, x: "-50%" }}
-            className={cn(
-              "fixed bottom-6 left-1/2 px-6 py-3 rounded-xl shadow-2xl z-50 flex items-center gap-2",
-              toast.type === "success" && "bg-success-500 text-white",
-              toast.type === "error" && "bg-error-500 text-white",
-              toast.type === "warning" && "bg-warning-500 text-black",
-            )}
-          >
-            {toast.type === "success" && <Check className="w-5 h-5" />}
-            {toast.type === "error" && <AlertTriangle className="w-5 h-5" />}
-            {toast.message}
-          </motion.div>
+          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+            <div
+              className={cn(
+                "px-6 py-3 rounded-xl shadow-2xl flex items-center gap-2 animate-slide-up motion-reduce:animate-none",
+                toast.type === "success" && "bg-success-500 text-white",
+                toast.type === "error" && "bg-error-500 text-white",
+                toast.type === "warning" && "bg-warning-500 text-black",
+              )}
+            >
+              {toast.type === "success" && <Check className="w-5 h-5" />}
+              {toast.type === "error" && <AlertTriangle className="w-5 h-5" />}
+              {toast.message}
+            </div>
+          </div>
         )}
-        </AnimatePresence>
       </div>
     </div>
   );

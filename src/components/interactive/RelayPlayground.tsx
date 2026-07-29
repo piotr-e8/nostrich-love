@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useRef, useId } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   Globe,
   Zap,
@@ -455,13 +454,9 @@ export function RelayPlayground({ className }: { className?: string }) {
       <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 md:p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4"
-          >
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4 animate-scale-in motion-reduce:animate-none">
             <Globe className="w-8 h-8 text-primary-600 dark:text-primary-400" />
-          </motion.div>
+          </div>
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
             {t('relayPlayground.title')}
           </h2>
@@ -537,7 +532,6 @@ export function RelayPlayground({ className }: { className?: string }) {
         </div>
 
         {/* Tab Content */}
-        <AnimatePresence mode="wait">
           {activeTab === "connection" && (
             <ConnectionLab
               key="connection"
@@ -574,7 +568,6 @@ export function RelayPlayground({ className }: { className?: string }) {
               relays={filteredRelays}
             />
           )}
-        </AnimatePresence>
       </div>
     </div>
   );
@@ -596,12 +589,7 @@ function ConnectionLab({
 }) {
   const { t } = useTranslation();
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      className="space-y-6"
-    >
+    <div className="space-y-6 animate-slide-up motion-reduce:animate-none">
       {/* Educational Banner */}
       <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 flex items-start gap-3">
         <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
@@ -619,9 +607,8 @@ function ConnectionLab({
           </div>
         ) : (
           relays.map((relay) => (
-            <motion.div
+            <div
               key={relay.id}
-              layout
               onClick={() => onSelectRelay(relay)}
               className={cn(
                 "relative p-4 border rounded-xl cursor-pointer transition-all",
@@ -678,20 +665,14 @@ function ConnectionLab({
                   {t(`relayPlayground.status.${relay.status}`)}
                 </span>
               </div>
-            </motion.div>
+            </div>
           ))
         )}
       </div>
 
       {/* Selected Relay Details */}
-      <AnimatePresence>
-        {selectedRelay && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="bg-gray-100/50 dark:bg-gray-800/50 border border-gray-700 rounded-xl p-6"
-          >
+      {selectedRelay && (
+          <div className="bg-gray-100/50 dark:bg-gray-800/50 border border-gray-700 rounded-xl p-6 animate-slide-down motion-reduce:animate-none">
             <div className="flex items-start justify-between mb-4">
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{selectedRelay.name}</h3>
@@ -754,10 +735,9 @@ function ConnectionLab({
                 {t('relayPlayground.nipsTab.description')}
               </p>
             </div>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
-    </motion.div>
+    </div>
   );
 }
 
@@ -788,12 +768,7 @@ function HealthDashboard({
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      className="space-y-6"
-    >
+    <div className="space-y-6 animate-slide-up motion-reduce:animate-none">
       {/* Sort Controls */}
       <div className="flex items-center gap-4">
         <span className="text-gray-600 dark:text-gray-400 text-sm">Sort by:</span>
@@ -892,7 +867,7 @@ function HealthDashboard({
           </p>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -916,12 +891,7 @@ function NIPDetector({
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      className="space-y-6"
-    >
+    <div className="space-y-6 animate-slide-up motion-reduce:animate-none">
       {/* What are NIPs? */}
       <div className="bg-purple-500/10 border border-purple-500/30 rounded-xl p-4 flex items-start gap-3">
         <Info className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
@@ -937,13 +907,12 @@ function NIPDetector({
           const percentage = getSupportPercentage(nip);
           
           return (
-            <motion.button
+            <button
               key={nip}
               onClick={() => setSelectedNIP(selectedNIP === nip ? null : nip)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
               className={cn(
                 "p-3 rounded-xl border text-left transition-all",
+                "hover:scale-105 active:scale-95 motion-reduce:transform-none",
                 selectedNIP === nip
                   ? "border-purple-500 bg-purple-500/20"
                   : "border-gray-700 hover:border-purple-500/50 bg-gray-100/30 dark:bg-gray-800/30"
@@ -966,20 +935,14 @@ function NIPDetector({
               <div className="mt-2 text-xs text-gray-500">
                 {supportCount} / {relays.length} {t('relayPlayground.nipsTab.supported')}
               </div>
-            </motion.button>
+            </button>
           );
         })}
       </div>
 
       {/* Selected NIP Details */}
-      <AnimatePresence>
-        {selectedNIP && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="bg-gray-100/50 dark:bg-gray-800/50 border border-gray-700 rounded-xl p-6"
-          >
+      {selectedNIP && (
+          <div className="bg-gray-100/50 dark:bg-gray-800/50 border border-gray-700 rounded-xl p-6 animate-slide-down motion-reduce:animate-none">
             <div className="flex items-start justify-between mb-4">
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">NIP-{selectedNIP}</h3>
@@ -1030,9 +993,8 @@ function NIPDetector({
                 )}
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
 
       {/* Common NIPs */}
       <div className="bg-gray-100/30 dark:bg-gray-800/30 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
@@ -1059,7 +1021,7 @@ function NIPDetector({
           ))}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -1168,12 +1130,7 @@ function EventStreamViewer({
   }, []);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      className="space-y-6"
-    >
+    <div className="space-y-6 animate-slide-up motion-reduce:animate-none">
       {/* Educational Banner */}
       <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
         <div className="flex items-start gap-3">
@@ -1321,7 +1278,7 @@ function EventStreamViewer({
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -1411,12 +1368,7 @@ function QueryTester({
   }, []);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      className="space-y-6"
-    >
+    <div className="space-y-6 animate-slide-up motion-reduce:animate-none">
       {/* Educational Banner */}
       <div className="bg-purple-500/10 border border-purple-500/30 rounded-xl p-4">
         <div className="flex items-start gap-3">
@@ -1552,6 +1504,6 @@ function QueryTester({
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

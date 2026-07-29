@@ -5,11 +5,12 @@
  * Features badges, progress tracking, streaks, and getting started guide
  */
 
-import React, { useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useState, useRef } from 'react';
 import { X, Award, Trophy, Star, Flame, Target, BookOpen, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
+
+const EXIT_DURATION_MS = 300;
 
 export interface GamificationExplainerProps {
   isOpen: boolean;
@@ -28,23 +29,22 @@ interface FeatureCardProps {
 }
 
 const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description, color, delay }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay, duration: 0.4 }}
+  <div
     className={cn(
+      'animate-slide-up motion-reduce:animate-none',
       'p-4 rounded-xl border transition-all',
       'bg-white dark:bg-gray-800',
       'border-gray-200 dark:border-gray-700',
       'hover:shadow-md hover:border-friendly-purple/30'
     )}
+    style={{ animationDelay: `${Math.round(delay * 1000)}ms` }}
   >
     <div className={cn('w-10 h-10 rounded-lg flex items-center justify-center mb-3', color)}>
       {icon}
     </div>
     <h4 className="font-semibold text-gray-900 dark:text-white mb-1">{title}</h4>
     <p className="text-sm text-gray-600 dark:text-gray-400">{description}</p>
-  </motion.div>
+  </div>
 );
 
 export function GamificationExplainer({
@@ -54,8 +54,48 @@ export function GamificationExplainer({
   totalGuides = 15,
   currentStreak = 0,
 }: GamificationExplainerProps) {
+  // Timed-exit idiom (StreakBanner): content mounts in its hidden state,
+  // `entered` flips on the next frame and CSS transitions it in; closing
+  // plays the exit transition before telling the parent to unmount us.
+  const [entered, setEntered] = useState(false);
+  const [exiting, setExiting] = useState(false);
+  const exitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setEntered(false);
+      return;
+    }
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => setEntered(true));
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [isOpen]);
+
+  useEffect(
+    () => () => {
+      if (exitTimer.current) clearTimeout(exitTimer.current);
+    },
+    []
+  );
+
+  const handleClose = () => {
+    if (exiting) return;
+    setExiting(true);
+    exitTimer.current = setTimeout(() => {
+      setExiting(false);
+      onClose();
+    }, EXIT_DURATION_MS);
+  };
+
+  const isShown = entered && !exiting;
+
   // Trap focus inside the dialog; Escape closes, focus returns to the opener.
-  const modalRef = useFocusTrap<HTMLDivElement>(isOpen, onClose);
+  const modalRef = useFocusTrap<HTMLDivElement>(isOpen, handleClose);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -84,31 +124,29 @@ export function GamificationExplainer({
   ];
 
   return (
-    <AnimatePresence>
+    <>
       {isOpen && (
         <>
           {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
-            onClick={onClose}
+          <div
+            className={cn(
+              'fixed inset-0 bg-black/60 backdrop-blur-sm z-50',
+              'transition-opacity duration-300 motion-reduce:transition-none',
+              isShown ? 'opacity-100' : 'opacity-0'
+            )}
+            onClick={handleClose}
             aria-hidden="true"
           />
 
           {/* Modal */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 30 }}
-            transition={{
-              type: 'spring',
-              stiffness: 300,
-              damping: 25,
-            }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
+          <div
+            className={cn(
+              'fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none',
+              'transition-all duration-300 ease-out-quint motion-reduce:transition-none',
+              isShown
+                ? 'opacity-100 scale-100 translate-y-0'
+                : 'opacity-0 scale-95 translate-y-8'
+            )}
             role="dialog"
             aria-modal="true"
             aria-labelledby="gamification-title"
@@ -125,18 +163,30 @@ export function GamificationExplainer({
             >
               {/* Header Gradient */}
               <div className="relative h-24 bg-gradient-to-br from-friendly-purple via-purple-600 to-friendly-purple overflow-hidden flex-shrink-0">
-                {/* Animated Background */}
-                <motion.div
-                  className="absolute inset-0"
-                  animate={{
-                    background: [
-                      'radial-gradient(circle at 30% 50%, rgba(255,255,255,0.2) 0%, transparent 50%)',
-                      'radial-gradient(circle at 70% 50%, rgba(255,255,255,0.2) 0%, transparent 50%)',
-                      'radial-gradient(circle at 30% 50%, rgba(255,255,255,0.2) 0%, transparent 50%)',
-                    ],
-                  }}
-                  transition={{ duration: 4, repeat: Infinity }}
-                />
+                {/* Animated Background: oversized glow shuttling side to side
+                    (CSS can't tween a radial-gradient's center, so we move the
+                    element instead). */}
+                <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+                  <div
+                    className="absolute -left-[30%] top-0 h-full w-[160%] animate-gamification-shimmer motion-reduce:animate-none"
+                    style={{
+                      background:
+                        'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 0%, transparent 35%)',
+                    }}
+                  />
+                </div>
+                <style>{`
+                  @keyframes gamification-shimmer-kf {
+                    0%, 100% { transform: translateX(-12%); }
+                    50% { transform: translateX(12%); }
+                  }
+                  .animate-gamification-shimmer {
+                    animation: gamification-shimmer-kf 4s ease-in-out infinite;
+                  }
+                  @media (prefers-reduced-motion: reduce) {
+                    .animate-gamification-shimmer { animation: none; }
+                  }
+                `}</style>
 
                 {/* Decorative Elements */}
                 <div className="absolute top-3 left-4">
@@ -151,7 +201,7 @@ export function GamificationExplainer({
 
                 {/* Close Button */}
                 <button
-                  onClick={onClose}
+                  onClick={handleClose}
                   className={cn(
                     'absolute top-3 right-3 p-2 rounded-xl',
                     'bg-white/10 hover:bg-white/20 backdrop-blur-sm',
@@ -164,11 +214,9 @@ export function GamificationExplainer({
 
                 {/* Title */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="text-center"
+                  <div
+                    className="animate-slide-up motion-reduce:animate-none text-center"
+                    style={{ animationDelay: '200ms' }}
                   >
                     <div className="flex items-center justify-center gap-2 mb-1">
                       <Award className="w-6 h-6 text-white" />
@@ -182,17 +230,16 @@ export function GamificationExplainer({
                     >
                       Gamification System
                     </h2>
-                  </motion.div>
+                  </div>
                 </div>
               </div>
 
               {/* Scrollable Content */}
               <div className="flex-1 overflow-y-auto p-6 space-y-6">
                 {/* 1. Badges System */}
-                <motion.section
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 }}
+                <section
+                  className="animate-slide-in-left motion-reduce:animate-none"
+                  style={{ animationDelay: '300ms' }}
                 >
                   <div className="flex items-center gap-2 mb-3">
                     <div className="w-8 h-8 rounded-lg bg-friendly-purple/10 flex items-center justify-center">
@@ -209,23 +256,22 @@ export function GamificationExplainer({
                   {/* Badge Examples */}
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {badgeExamples.map((badge, index) => (
-                      <motion.div
+                      <div
                         key={badge.name}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.4 + index * 0.1 }}
                         className={cn(
+                          'animate-scale-in motion-reduce:animate-none',
                           'p-3 rounded-xl border border-gray-200 dark:border-gray-700',
                           'bg-gray-50 dark:bg-gray-700/50',
                           'flex items-center gap-3'
                         )}
+                        style={{ animationDelay: `${400 + index * 100}ms` }}
                       >
                         <div className="text-2xl">{badge.emoji}</div>
                         <div>
                           <p className="font-semibold text-sm text-gray-900 dark:text-white">{badge.name}</p>
                           <p className="text-xs text-gray-500 dark:text-gray-400">{badge.desc}</p>
                         </div>
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
                   
@@ -233,13 +279,12 @@ export function GamificationExplainer({
                     <Star className="w-4 h-4" />
                     <span>Collect all 8 badges to become a Nostr Expert!</span>
                   </div>
-                </motion.section>
+                </section>
 
                 {/* 2. Progress Tracking */}
-                <motion.section
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.5 }}
+                <section
+                  className="animate-slide-in-left motion-reduce:animate-none"
+                  style={{ animationDelay: '500ms' }}
                 >
                   <div className="flex items-center gap-2 mb-3">
                     <div className="w-8 h-8 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
@@ -260,24 +305,21 @@ export function GamificationExplainer({
                       <span className="text-lg font-bold text-friendly-purple">{progressPercentage}%</span>
                     </div>
                     <div className="h-3 w-full bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${progressPercentage}%` }}
-                        transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
-                        className="h-full bg-gradient-to-r from-friendly-purple to-friendly-purple-400 rounded-full"
+                      <div
+                        className="h-full bg-gradient-to-r from-friendly-purple to-friendly-purple-400 rounded-full transition-[width] duration-[800ms] delay-[600ms] ease-out motion-reduce:transition-none"
+                        style={{ width: entered ? `${progressPercentage}%` : '0%' }}
                       />
                     </div>
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
                       {currentProgress} of {totalGuides} guides completed
                     </p>
                   </div>
-                </motion.section>
+                </section>
 
                 {/* 3. Streak System */}
-                <motion.section
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6 }}
+                <section
+                  className="animate-slide-in-left motion-reduce:animate-none"
+                  style={{ animationDelay: '600ms' }}
                 >
                   <div className="flex items-center gap-2 mb-3">
                     <div className="w-8 h-8 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center">
@@ -304,13 +346,12 @@ export function GamificationExplainer({
                       </p>
                     </div>
                   </div>
-                </motion.section>
+                </section>
 
                 {/* 4. How to Start */}
-                <motion.section
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.7 }}
+                <section
+                  className="animate-slide-in-left motion-reduce:animate-none"
+                  style={{ animationDelay: '700ms' }}
                 >
                   <div className="flex items-center gap-2 mb-3">
                     <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
@@ -323,12 +364,10 @@ export function GamificationExplainer({
                   
                   <div className="space-y-2">
                     {steps.map((step, index) => (
-                      <motion.div
+                      <div
                         key={step.num}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.8 + index * 0.1 }}
-                        className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg"
+                        className="animate-slide-in-left motion-reduce:animate-none flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg"
+                        style={{ animationDelay: `${800 + index * 100}ms` }}
                       >
                         <div className={cn(
                           'w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm',
@@ -346,20 +385,18 @@ export function GamificationExplainer({
                         {index === steps.length - 1 && (
                           <CheckCircle2 className="w-5 h-5 text-green-500" />
                         )}
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
-                </motion.section>
+                </section>
               </div>
 
               {/* Footer with Got It Button */}
               <div className="p-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 flex-shrink-0">
-                <motion.button
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.9 }}
-                  onClick={onClose}
+                <button
+                  onClick={handleClose}
                   className={cn(
+                    'animate-slide-up motion-reduce:animate-none',
                     'w-full py-3.5 px-6 rounded-xl font-semibold text-white',
                     'bg-gradient-to-r from-friendly-purple to-purple-600',
                     'hover:from-purple-600 hover:to-purple-700',
@@ -368,16 +405,17 @@ export function GamificationExplainer({
                     'dark:focus:ring-offset-gray-800',
                     'flex items-center justify-center gap-2'
                   )}
+                  style={{ animationDelay: '900ms' }}
                 >
                   <CheckCircle2 className="w-5 h-5" />
                   Got it!
-                </motion.button>
+                </button>
               </div>
             </div>
-          </motion.div>
+          </div>
         </>
       )}
-    </AnimatePresence>
+    </>
   );
 }
 

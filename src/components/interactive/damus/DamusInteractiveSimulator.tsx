@@ -1,5 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import {
   Home,
   Search,
@@ -13,6 +12,9 @@ import {
   VolumeX,
   Flag,
   UserX,
+  MoreHorizontal,
+  MessageCircle,
+  Heart,
 } from "lucide-react";
 import { cn } from "../../../lib/utils";
 import {
@@ -27,8 +29,6 @@ import {
   Sheet,
   type Post,
   type Tab,
-  IOS_SPRING,
-  IOS_SMOOTH,
 } from "./Interactions";
 
 // Mock Data
@@ -111,57 +111,95 @@ const TABS: Tab[] = [
 // ============================================
 // COMPOSE MODAL
 // ============================================
+const MODAL_EXIT_DURATION_MS = 300;
+
 function ComposeModal({ isOpen, onClose, onPost }: { isOpen: boolean; onClose: () => void; onPost: (content: string) => void }) {
   const [content, setContent] = useState("");
+  // Timed-exit modal state (StreakBanner idiom)
+  const [entered, setEntered] = useState(false);
+  const [exiting, setExiting] = useState(false);
+  const exitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setEntered(false);
+      return;
+    }
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => setEntered(true));
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [isOpen]);
+
+  useEffect(
+    () => () => {
+      if (exitTimer.current) clearTimeout(exitTimer.current);
+    },
+    [],
+  );
+
+  const handleClose = () => {
+    if (exiting) return;
+    setExiting(true);
+    exitTimer.current = setTimeout(() => {
+      setExiting(false);
+      onClose();
+    }, MODAL_EXIT_DURATION_MS);
+  };
+
+  const isShown = entered && !exiting;
 
   const handlePost = () => {
     if (content.trim()) {
       onPost(content);
       setContent("");
-      onClose();
+      handleClose();
     }
   };
 
+  if (!isOpen) return null;
+
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center"
-          onClick={onClose}
+        <div
+          className={cn(
+            "fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center",
+            "transition-opacity duration-300 motion-reduce:transition-none",
+            isShown ? "opacity-100" : "opacity-0"
+          )}
+          onClick={handleClose}
         >
-          <motion.div
-            initial={{ y: "100%", scale: 0.95 }}
-            animate={{ y: 0, scale: 1 }}
-            exit={{ y: "100%", scale: 0.95 }}
-            transition={IOS_SMOOTH}
-            className="bg-white dark:bg-gray-900 w-full sm:w-[400px] sm:rounded-2xl rounded-t-2xl overflow-hidden"
+          <div
+            className={cn(
+              "bg-white dark:bg-gray-900 w-full sm:w-[400px] sm:rounded-2xl rounded-t-2xl overflow-hidden",
+              "transition-all duration-300 ease-out-quint motion-reduce:transition-none",
+              isShown ? "translate-y-0 scale-100" : "translate-y-full scale-95"
+            )}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
-              <motion.button
-                onClick={onClose}
-                className="text-purple-600 font-semibold"
-                whileTap={{ scale: 0.9 }}
+              <button
+                onClick={handleClose}
+                className="text-purple-600 font-semibold active:scale-90 transition-transform motion-reduce:transition-none motion-reduce:transform-none"
               >
                 Cancel
-              </motion.button>
-              <motion.button
+              </button>
+              <button
                 onClick={handlePost}
                 disabled={!content.trim()}
                 className={cn(
                   "px-4 py-1.5 rounded-full font-semibold text-sm",
                   content.trim()
-                    ? "bg-purple-600 text-white"
+                    ? "bg-purple-600 text-white active:scale-95 transition-transform motion-reduce:transition-none motion-reduce:transform-none"
                     : "bg-purple-300 text-white cursor-not-allowed"
                 )}
-                whileTap={content.trim() ? { scale: 0.95 } : {}}
               >
                 Post
-              </motion.button>
+              </button>
             </div>
 
             {/* Input */}
@@ -188,10 +226,8 @@ function ComposeModal({ isOpen, onClose, onPost }: { isOpen: boolean; onClose: (
                 </span>
               </div>
             </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+          </div>
+        </div>
   );
 }
 
@@ -211,22 +247,21 @@ function ProfileModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
     <Sheet isOpen={isOpen} onClose={onClose} title="Profile Options">
       <div className="space-y-1">
         {menuItems.map((item, index) => (
-          <motion.button
+          <button
             key={item.label}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.05, ...IOS_SPRING }}
             className={cn(
               "w-full flex items-center gap-3 p-4 rounded-xl text-left",
+              "animate-slide-in-left motion-reduce:animate-none",
+              "active:scale-[0.98] transition-transform motion-reduce:transition-none motion-reduce:transform-none",
               item.destructive
                 ? "text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
                 : "text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
             )}
-            whileTap={{ scale: 0.98 }}
+            style={{ animationDelay: `${index * 50}ms` }}
           >
             <item.icon className="w-5 h-5" />
             <span className="font-medium">{item.label}</span>
-          </motion.button>
+          </button>
         ))}
       </div>
     </Sheet>
@@ -268,27 +303,19 @@ function HomeTimeline({
       {/* Header */}
       <div className="sticky top-0 z-10 bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
         <div className="flex items-center justify-between px-4 py-3">
-          <motion.button 
-            className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-pink-400"
-            whileTap={{ scale: 0.9 }}
-            transition={IOS_SPRING}
+          <button 
+            className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 active:scale-90 transition-transform motion-reduce:transition-none motion-reduce:transform-none"
           />
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={IOS_SPRING}
-          >
+          <div className="animate-scale-in motion-reduce:animate-none">
             <svg viewBox="0 0 24 24" className="w-8 h-8 text-purple-600 fill-current">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
             </svg>
-          </motion.div>
-          <motion.button
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
-            whileTap={{ scale: 0.9 }}
-            transition={IOS_SPRING}
+          </div>
+          <button
+            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 active:scale-90 transition-transform motion-reduce:transition-none motion-reduce:transform-none"
           >
             <Settings className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-          </motion.button>
+          </button>
         </div>
 
         {/* Tab Bar */}
@@ -298,12 +325,10 @@ function HomeTimeline({
       {/* Stories Row */}
       <div className="flex gap-4 px-4 py-3 overflow-x-auto scrollbar-hide border-b border-gray-200 dark:border-gray-800">
         {STORIES.map((story, index) => (
-          <motion.div
+          <div
             key={story.id}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: index * 0.05, ...IOS_SPRING }}
-            className="flex flex-col items-center gap-1"
+            className="flex flex-col items-center gap-1 animate-scale-in motion-reduce:animate-none"
+            style={{ animationDelay: `${index * 50}ms` }}
           >
             <StoryRing
               image={story.image}
@@ -313,21 +338,18 @@ function HomeTimeline({
             <span className="text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap">
               {story.name}
             </span>
-          </motion.div>
+          </div>
         ))}
       </div>
 
       {/* Posts Feed */}
       <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefreshing}>
         <div className="divide-y divide-gray-200 dark:divide-gray-800">
-          <AnimatePresence mode="popLayout">
-            {postsState.map((post, index) => (
-              <motion.div
+          {postsState.map((post, index) => (
+              <div
                 key={post.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, x: -100 }}
-                transition={{ delay: index * 0.05, ...IOS_SMOOTH }}
+                className="animate-slide-up motion-reduce:animate-none"
+                style={{ animationDelay: `${index * 50}ms` }}
               >
                 <NoteCard
                   post={post}
@@ -336,9 +358,8 @@ function HomeTimeline({
                   onZap={onZap}
                   onReply={onReply}
                 />
-              </motion.div>
-            ))}
-          </AnimatePresence>
+              </div>
+          ))}
         </div>
       </PullToRefresh>
     </div>
@@ -410,15 +431,10 @@ export function DamusInteractiveSimulator() {
       <div className="h-full flex flex-col bg-white dark:bg-black">
         {/* Content Area */}
         <div className="flex-1 overflow-hidden relative">
-          <AnimatePresence mode="wait">
-            {activeTab === "home" && (
-              <motion.div
+          {activeTab === "home" && (
+              <div
                 key="home"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="h-full"
+                className="h-full animate-fade-in motion-reduce:animate-none"
               >
                 <HomeTimeline
                   activeTab={feedTab}
@@ -429,65 +445,49 @@ export function DamusInteractiveSimulator() {
                   onZap={handleZap}
                   onReply={handleReply}
                 />
-              </motion.div>
-            )}
+              </div>
+          )}
 
-            {activeTab === "search" && (
-              <motion.div
+          {activeTab === "search" && (
+              <div
                 key="search"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={IOS_SMOOTH}
-                className="h-full flex items-center justify-center bg-white dark:bg-black"
+                className="h-full flex items-center justify-center bg-white dark:bg-black animate-slide-in-right motion-reduce:animate-none"
               >
                 <div className="text-center">
                   <Search className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                   <p className="text-gray-500 dark:text-gray-400">Search coming soon...</p>
                 </div>
-              </motion.div>
-            )}
+              </div>
+          )}
 
-            {activeTab === "notifications" && (
-              <motion.div
+          {activeTab === "notifications" && (
+              <div
                 key="notifications"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={IOS_SMOOTH}
-                className="h-full flex items-center justify-center bg-white dark:bg-black"
+                className="h-full flex items-center justify-center bg-white dark:bg-black animate-slide-in-right motion-reduce:animate-none"
               >
                 <div className="text-center">
                   <Bell className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                   <p className="text-gray-500 dark:text-gray-400">No notifications yet</p>
                 </div>
-              </motion.div>
-            )}
+              </div>
+          )}
 
-            {activeTab === "messages" && (
-              <motion.div
+          {activeTab === "messages" && (
+              <div
                 key="messages"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={IOS_SMOOTH}
-                className="h-full flex items-center justify-center bg-white dark:bg-black"
+                className="h-full flex items-center justify-center bg-white dark:bg-black animate-slide-in-right motion-reduce:animate-none"
               >
                 <div className="text-center">
                   <Mail className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                   <p className="text-gray-500 dark:text-gray-400">Messages coming soon...</p>
                 </div>
-              </motion.div>
-            )}
+              </div>
+          )}
 
-            {activeTab === "profile" && (
-              <motion.div
+          {activeTab === "profile" && (
+              <div
                 key="profile"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={IOS_SMOOTH}
-                className="h-full bg-white dark:bg-black overflow-y-auto"
+                className="h-full bg-white dark:bg-black overflow-y-auto animate-slide-in-right motion-reduce:animate-none"
               >
                 {/* Profile Header */}
                 <div className="relative">
@@ -497,27 +497,19 @@ export function DamusInteractiveSimulator() {
                   {/* Profile Info */}
                   <div className="px-4 pb-4">
                     <div className="flex justify-between items-end -mt-12 mb-3">
-                      <motion.div
-                        className="w-24 h-24 rounded-full border-4 border-white dark:border-black bg-gradient-to-br from-purple-400 to-pink-400"
-                        whileTap={{ scale: 0.95 }}
-                        transition={IOS_SPRING}
-                      />
+                      <div className="w-24 h-24 rounded-full border-4 border-white dark:border-black bg-gradient-to-br from-purple-400 to-pink-400 active:scale-95 transition-transform motion-reduce:transition-none motion-reduce:transform-none" />
                       <div className="flex gap-2">
-                        <motion.button
-                          className="px-4 py-1.5 border border-gray-300 dark:border-gray-700 rounded-full font-semibold text-sm"
-                          whileTap={{ scale: 0.95 }}
-                          transition={IOS_SPRING}
+                        <button
+                          className="px-4 py-1.5 border border-gray-300 dark:border-gray-700 rounded-full font-semibold text-sm active:scale-95 transition-transform motion-reduce:transition-none motion-reduce:transform-none"
                         >
                           Edit Profile
-                        </motion.button>
-                        <motion.button
+                        </button>
+                        <button
                           onClick={() => setIsProfileOpen(true)}
-                          className="p-2 border border-gray-300 dark:border-gray-700 rounded-full"
-                          whileTap={{ scale: 0.9 }}
-                          transition={IOS_SPRING}
+                          className="p-2 border border-gray-300 dark:border-gray-700 rounded-full active:scale-90 transition-transform motion-reduce:transition-none motion-reduce:transform-none"
                         >
                           <MoreHorizontal className="w-4 h-4" />
-                        </motion.button>
+                        </button>
                       </div>
                     </div>
 
@@ -566,9 +558,8 @@ export function DamusInteractiveSimulator() {
                     />
                   ))}
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+              </div>
+          )}
         </div>
 
         {/* Bottom Navigation */}

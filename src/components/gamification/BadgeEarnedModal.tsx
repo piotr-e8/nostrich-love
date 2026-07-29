@@ -5,12 +5,13 @@
  * Features celebration effects, badge display, and action buttons
  */
 
-import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useState, useRef } from 'react';
 import { X, Share2, Award, Sparkles, Zap, Check } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
 import type { BadgeEarnedModalProps } from './types';
+
+const EXIT_DURATION_MS = 300;
 
 // Confetti particle component
 interface Particle {
@@ -47,29 +48,38 @@ const ConfettiEffect: React.FC<{ isActive: boolean }> = ({ isActive }) => {
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[60] overflow-hidden">
+      <style>{`
+        @keyframes badge-confetti-fall {
+          from {
+            transform: translateY(0) rotate(var(--confetti-rot)) scale(var(--confetti-scale));
+            opacity: 1;
+          }
+          to {
+            transform: translateY(140vh) rotate(calc(var(--confetti-rot) + 360deg)) scale(var(--confetti-scale));
+            opacity: 0;
+          }
+        }
+        .badge-confetti-particle {
+          animation: badge-confetti-fall var(--confetti-duration) ease-out both;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .badge-confetti-particle { animation: none; opacity: 0; }
+        }
+      `}</style>
       {particles.map((particle) => (
-        <motion.div
+        <div
           key={particle.id}
-          initial={{
-            x: `${particle.x}%`,
-            y: `${particle.y}%`,
-            rotate: particle.rotation,
-            scale: particle.scale,
-            opacity: 1,
-          }}
-          animate={{
-            y: '120%',
-            rotate: particle.rotation + 360,
-            opacity: 0,
-          }}
-          transition={{
-            duration: 2 + Math.random() * 1,
-            ease: 'easeOut',
-          }}
-          className="absolute w-3 h-3 rounded-sm"
-          style={{
-            backgroundColor: particle.color,
-          }}
+          className="badge-confetti-particle absolute w-3 h-3 rounded-sm"
+          style={
+            {
+              backgroundColor: particle.color,
+              left: `${particle.x}%`,
+              top: `${particle.y}%`,
+              '--confetti-rot': `${particle.rotation}deg`,
+              '--confetti-scale': particle.scale,
+              '--confetti-duration': `${2 + Math.random()}s`,
+            } as React.CSSProperties
+          }
         />
       ))}
     </div>
@@ -85,8 +95,58 @@ export function BadgeEarnedModal({
 }: BadgeEarnedModalProps) {
   const [isCopied, setIsCopied] = useState(false);
 
+  // Timed-exit idiom (StreakBanner): content mounts in its hidden state,
+  // `entered` flips on the next frame and CSS transitions it in; closing
+  // plays the exit transition before telling the parent to unmount us.
+  const [entered, setEntered] = useState(false);
+  const [exiting, setExiting] = useState(false);
+  const exitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setEntered(false);
+      return;
+    }
+    // A new badge can be earned while the previous one's exit is still
+    // playing (isOpen stays true for the whole 300 ms window, so the listener
+    // only swaps the `badge` prop). Cancel the exit in flight or its timer
+    // would call onClose() and silently drop the new badge. `badge` is in the
+    // deps for exactly this case; AnimatePresence used to re-enter here.
+    if (exitTimer.current) {
+      clearTimeout(exitTimer.current);
+      exitTimer.current = null;
+    }
+    setExiting(false);
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => setEntered(true));
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [isOpen, badge]);
+
+  useEffect(
+    () => () => {
+      if (exitTimer.current) clearTimeout(exitTimer.current);
+    },
+    []
+  );
+
+  const handleClose = () => {
+    if (exiting) return;
+    setExiting(true);
+    exitTimer.current = setTimeout(() => {
+      setExiting(false);
+      onClose();
+    }, EXIT_DURATION_MS);
+  };
+
+  const isShown = entered && !exiting;
+
   // Trap focus inside the dialog; Escape closes, focus returns to the opener.
-  const modalRef = useFocusTrap<HTMLDivElement>(isOpen, onClose);
+  const modalRef = useFocusTrap<HTMLDivElement>(isOpen, handleClose);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -121,31 +181,28 @@ export function BadgeEarnedModal({
       {/* Confetti Effect */}
       {showConfetti && <ConfettiEffect isActive={isOpen} />}
 
-      <AnimatePresence>
-        {isOpen && (
+      {isOpen && (
           <>
             {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
-              onClick={onClose}
+            <div
+              className={cn(
+                'fixed inset-0 bg-black/60 backdrop-blur-sm z-50',
+                'transition-opacity duration-300 motion-reduce:transition-none',
+                isShown ? 'opacity-100' : 'opacity-0'
+              )}
+              onClick={handleClose}
               aria-hidden="true"
             />
 
             {/* Modal */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, y: 50 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: 50 }}
-              transition={{
-                type: 'spring',
-                stiffness: 300,
-                damping: 25,
-              }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
+            <div
+              className={cn(
+                'fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none',
+                'transition-all duration-300 ease-out-quint motion-reduce:transition-none',
+                isShown
+                  ? 'opacity-100 scale-100 translate-y-0'
+                  : 'opacity-0 scale-95 translate-y-8'
+              )}
               role="dialog"
               aria-modal="true"
               aria-labelledby="badge-earned-title"
@@ -162,18 +219,29 @@ export function BadgeEarnedModal({
               >
                 {/* Header Gradient */}
                 <div className="relative h-32 bg-gradient-to-br from-friendly-purple via-purple-600 to-friendly-gold overflow-hidden">
-                  {/* Animated Background Elements */}
-                  <motion.div
-                    className="absolute inset-0"
-                    animate={{
-                      background: [
-                        'radial-gradient(circle at 20% 50%, rgba(255,215,0,0.3) 0%, transparent 50%)',
-                        'radial-gradient(circle at 80% 50%, rgba(255,215,0,0.3) 0%, transparent 50%)',
-                        'radial-gradient(circle at 20% 50%, rgba(255,215,0,0.3) 0%, transparent 50%)',
-                      ],
+                  {/* Animated Background: oversized gold glow shuttling side to
+                      side (CSS can't tween a radial-gradient's center, so we
+                      move the element instead). */}
+                  <div
+                    className="badge-modal-shimmer absolute -left-[30%] top-0 h-full w-[160%]"
+                    style={{
+                      background:
+                        'radial-gradient(circle at 50% 50%, rgba(255,215,0,0.3) 0%, transparent 35%)',
                     }}
-                    transition={{ duration: 4, repeat: Infinity }}
+                    aria-hidden="true"
                   />
+                  <style>{`
+                    @keyframes badge-modal-shimmer-kf {
+                      0%, 100% { transform: translateX(-18%); }
+                      50% { transform: translateX(18%); }
+                    }
+                    .badge-modal-shimmer {
+                      animation: badge-modal-shimmer-kf 4s ease-in-out infinite;
+                    }
+                    @media (prefers-reduced-motion: reduce) {
+                      .badge-modal-shimmer { animation: none; }
+                    }
+                  `}</style>
                   
                   {/* Sparkles */}
                   <div className="absolute top-4 left-4">
@@ -188,7 +256,7 @@ export function BadgeEarnedModal({
 
                   {/* Close Button */}
                   <button
-                    onClick={onClose}
+                    onClick={handleClose}
                     className={cn(
                       'absolute top-4 right-4 p-2 rounded-xl',
                       'bg-white/10 hover:bg-white/20 backdrop-blur-sm',
@@ -202,45 +270,27 @@ export function BadgeEarnedModal({
 
                 {/* Badge Icon */}
                 <div className="relative -mt-16 flex justify-center">
-                  <motion.div
-                    initial={{ scale: 0, rotate: -180 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    transition={{
-                      type: 'spring',
-                      stiffness: 200,
-                      damping: 15,
-                      delay: 0.2,
-                    }}
+                  <div
                     className={cn(
+                      'animate-spin-in motion-reduce:animate-none',
                       'w-32 h-32 rounded-3xl flex items-center justify-center',
                       'bg-white dark:bg-gray-700 shadow-2xl',
                       'border-4 border-friendly-gold'
                     )}
+                    style={{ animationDelay: '200ms' }}
                   >
-                    <motion.div
-                      animate={{
-                        scale: [1, 1.1, 1],
-                        rotate: [0, 5, -5, 0],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        repeatType: 'reverse',
-                      }}
-                      className="text-6xl"
-                    >
+                    <div className="animate-streak-wiggle motion-reduce:animate-none text-6xl">
                       {badge.emoji}
-                    </motion.div>
-                  </motion.div>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Content */}
                 <div className="px-8 pb-8 pt-4 text-center">
                   {/* Congratulations Text */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
+                  <div
+                    className="animate-slide-up motion-reduce:animate-none"
+                    style={{ animationDelay: '300ms' }}
                   >
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-friendly-gold/10 rounded-full mb-4">
                       <Award className="w-4 h-4 text-friendly-gold" />
@@ -248,34 +298,28 @@ export function BadgeEarnedModal({
                         Badge Earned!
                       </span>
                     </div>
-                  </motion.div>
+                  </div>
 
-                  <motion.h2
+                  <h2
                     id="badge-earned-title"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                    className="text-2xl font-bold text-gray-900 dark:text-white mb-2"
+                    className="animate-slide-up motion-reduce:animate-none text-2xl font-bold text-gray-900 dark:text-white mb-2"
+                    style={{ animationDelay: '400ms' }}
                   >
                     {badge.name}
-                  </motion.h2>
+                  </h2>
 
-                  <motion.p
+                  <p
                     id="badge-earned-description"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                    className="text-gray-600 dark:text-gray-400 mb-6"
+                    className="animate-slide-up motion-reduce:animate-none text-gray-600 dark:text-gray-400 mb-6"
+                    style={{ animationDelay: '500ms' }}
                   >
                     {badge.description}
-                  </motion.p>
+                  </p>
 
                   {/* Badge Details */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 }}
-                    className="flex justify-center gap-4 mb-8"
+                  <div
+                    className="animate-slide-up motion-reduce:animate-none flex justify-center gap-4 mb-8"
+                    style={{ animationDelay: '600ms' }}
                   >
                     {badge.category && (
                       <div className="px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-xl">
@@ -295,14 +339,12 @@ export function BadgeEarnedModal({
                         {badge.rarity}
                       </p>
                     </div>
-                  </motion.div>
+                  </div>
 
                   {/* Action Buttons */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.7 }}
-                    className="space-y-3"
+                  <div
+                    className="animate-slide-up motion-reduce:animate-none space-y-3"
+                    style={{ animationDelay: '700ms' }}
                   >
                     {onClaim && (
                       <button
@@ -347,7 +389,7 @@ export function BadgeEarnedModal({
                       </button>
 
                       <button
-                        onClick={onClose}
+                        onClick={handleClose}
                         className={cn(
                           'flex-1 py-3 px-4 rounded-xl font-medium',
                           'border border-gray-300 dark:border-gray-600',
@@ -360,13 +402,12 @@ export function BadgeEarnedModal({
                         Maybe Later
                       </button>
                     </div>
-                  </motion.div>
+                  </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </>
-        )}
-      </AnimatePresence>
+      )}
     </>
   );
 }

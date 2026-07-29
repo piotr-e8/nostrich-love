@@ -6,7 +6,6 @@
  */
 
 import React from 'react';
-import { motion } from 'framer-motion';
 import { cn } from '../../lib/utils';
 import type { ActivityType } from '../../data/activities';
 
@@ -72,11 +71,9 @@ export function ActivityItem({
   const displayIcon = icon || typeIcons[type];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 20 }}
+    <div
       className={cn(
+        'animate-slide-in-left motion-reduce:animate-none',
         'group relative flex items-start gap-3 p-3 rounded-xl border transition-all duration-300',
         'hover:shadow-md hover:scale-[1.02] cursor-default',
         styles.bg,
@@ -123,7 +120,7 @@ export function ActivityItem({
         )}
         aria-hidden="true"
       />
-    </motion.div>
+    </div>
   );
 }
 

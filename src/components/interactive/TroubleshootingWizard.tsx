@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Wrench,
   AlertCircle,
@@ -363,9 +362,48 @@ export function TroubleshootingWizard({
   const [history, setHistory] = useState<string[]>([]);
   const [solution, setSolution] = useState<Solution | null>(null);
   const [showDiagnosticInfo, setShowDiagnosticInfo] = useState(false);
+  // Timed-exit modal state (StreakBanner idiom)
+  const [modalEntered, setModalEntered] = useState(false);
+  const [modalExiting, setModalExiting] = useState(false);
+  const modalExitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    // Double rAF: paint the hidden state first so the enter transition runs
+    if (!showDiagnosticInfo) {
+      setModalEntered(false);
+      return;
+    }
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => setModalEntered(true));
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [showDiagnosticInfo]);
+
+  useEffect(
+    () => () => {
+      if (modalExitTimer.current) clearTimeout(modalExitTimer.current);
+    },
+    [],
+  );
+
+  const closeDiagnosticInfo = () => {
+    if (modalExiting) return;
+    setModalExiting(true);
+    modalExitTimer.current = setTimeout(() => {
+      setModalExiting(false);
+      setShowDiagnosticInfo(false);
+    }, 300);
+  };
+
+  const isModalShown = modalEntered && !modalExiting;
+
   // Trap focus inside the dialog; Escape closes, focus returns to the opener.
   const diagnosticModalRef = useFocusTrap<HTMLDivElement>(showDiagnosticInfo, () =>
-    setShowDiagnosticInfo(false),
+    closeDiagnosticInfo(),
   );
   const [diagnosticInfo, setDiagnosticInfo] = useState({
     userAgent: "",
@@ -440,13 +478,9 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
       <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 md:p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4"
-          >
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4 animate-scale-in motion-reduce:animate-none">
             <Wrench className="w-8 h-8 text-primary-500" />
-          </motion.div>
+          </div>
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
             {t('troubleshootingWizard.title')}
           </h2>
@@ -458,15 +492,13 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
         {/* Progress Indicator */}
         <div className="flex items-center gap-2 mb-6">
           <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-            <motion.div
-              className="h-full bg-primary-500"
-              initial={{ width: 0 }}
-              animate={{
+            <div
+              className="h-full bg-primary-500 transition-[width] duration-300 ease-out-quint motion-reduce:transition-none"
+              style={{
                 width: solution
                   ? "100%"
                   : `${((history.length + 1) / 5) * 100}%`,
               }}
-              transition={{ duration: 0.3 }}
             />
           </div>
           <span className="text-sm text-gray-600 dark:text-gray-400">
@@ -486,14 +518,8 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
         )}
 
         {/* Solution View */}
-        <AnimatePresence mode="wait">
-          {solution ? (
-            <motion.div
-              key="solution"
-              initial={{ opacity: 1, y: 0 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-            >
+        {solution ? (
+            <div key="solution">
               {/* Severity Badge */}
               <div
                 className={cn(
@@ -592,14 +618,9 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
                   {t('troubleshootingWizard.saveDiagnosticInfo')}
                 </button>
               </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="question"
-              initial={{ opacity: 1, y: 0 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-            >
+            </div>
+        ) : (
+            <div key="question">
               {/* Question */}
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
                 {currentQuestion.text}
@@ -627,9 +648,8 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
                   </button>
                 ))}
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+        )}
 
         {/* Reset Button (when not showing solution) */}
         {!solution && history.length > 0 && (
@@ -669,24 +689,25 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
       </div>
 
       {/* Diagnostic Info Modal */}
-      <AnimatePresence>
-        {showDiagnosticInfo && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-            onClick={() => setShowDiagnosticInfo(false)}
+      {showDiagnosticInfo && (
+          <div
+            className={cn(
+              "fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4",
+              "transition-opacity duration-300 motion-reduce:transition-none",
+              isModalShown ? "opacity-100" : "opacity-0",
+            )}
+            onClick={closeDiagnosticInfo}
           >
-            <motion.div
+            <div
               ref={diagnosticModalRef}
               role="dialog"
               aria-modal="true"
               aria-labelledby="diagnostic-info-title"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 max-w-md w-full"
+              className={cn(
+                "bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 max-w-md w-full",
+                "transition-all duration-300 ease-out-quint motion-reduce:transition-none",
+                isModalShown ? "opacity-100 scale-100" : "opacity-0 scale-95",
+              )}
               onClick={(e) => e.stopPropagation()}
             >
               <h3 id="diagnostic-info-title" className="text-xl font-bold text-gray-900 dark:text-white mb-4">
@@ -722,16 +743,15 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
                   {t('troubleshootingWizard.diagnosticInfo.copy')}
                 </button>
                 <button
-                  onClick={() => setShowDiagnosticInfo(false)}
+                  onClick={closeDiagnosticInfo}
                   className="px-4 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 text-gray-900 dark:text-white rounded-xl font-medium transition-all"
                 >
                   {t('troubleshootingWizard.diagnosticInfo.close')}
                 </button>
               </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </div>
+          </div>
+      )}
     </div>
   );
 }

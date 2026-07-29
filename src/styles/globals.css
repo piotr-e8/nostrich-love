@@ -89,6 +89,31 @@
   }
 }
 
+/*
+ * Toggleable expand/collapse without framer-motion height:0 -> height:"auto".
+ * For content that stays mounted and toggles open/closed (accordions, FAQ):
+ *
+ *   <div className={cn('collapse-grid', open && 'is-open')}>
+ *     <div className="collapse-inner">...content...</div>
+ *   </div>
+ *
+ * For content that conditionally MOUNTS (quiz explanations), don't animate
+ * height at all — just render with animate-slide-down.
+ * (The global prefers-reduced-motion clamp below already neutralizes this.)
+ */
+.collapse-grid {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.collapse-grid.is-open {
+  grid-template-rows: 1fr;
+}
+.collapse-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
 /* Prose Typography Improvements */
 .prose {
   max-width: none;

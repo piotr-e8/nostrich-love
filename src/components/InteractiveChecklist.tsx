@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Check, CheckCircle2, Clock, ArrowUpRight } from "lucide-react";
 import { cn } from "../lib/utils";
 
@@ -83,9 +82,8 @@ export function InteractiveChecklist({
         const isCompleted = completedItems.has(item.id);
 
         return (
-          <motion.div
+          <div
             key={item.id}
-            layout
             onClick={(e) => toggleItem(item.id, e)}
             className={cn(
               "group relative overflow-hidden rounded-2xl border-2 p-6 transition-all cursor-pointer",
@@ -104,17 +102,11 @@ export function InteractiveChecklist({
                     : "border-gray-300 dark:border-gray-600 group-hover:border-primary-500",
                 )}
               >
-                <AnimatePresence>
-                  {isCompleted && (
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      exit={{ scale: 0 }}
-                    >
-                      <Check className="w-4 h-4 text-white" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {isCompleted && (
+                  <div className="animate-scale-pop motion-reduce:animate-none">
+                    <Check className="w-4 h-4 text-white" />
+                  </div>
+                )}
               </div>
             </div>
 
@@ -199,7 +191,7 @@ export function InteractiveChecklist({
                 )}
               </div>
             </div>
-          </motion.div>
+          </div>
         );
       })}
     </div>
@@ -222,6 +214,21 @@ export function ChecklistProgress({
   }
   const [completed, setCompleted] = useState(0);
   const [mounted, setMounted] = useState(false);
+  // Drives the width transition: bar mounts at 0%, then `entered` flips on
+  // the next frame and CSS transitions the width in (StreakBanner idiom).
+  const [entered, setEntered] = useState(false);
+
+  useEffect(() => {
+    if (!mounted) return;
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => setEntered(true));
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [mounted]);
 
   useEffect(() => {
     setMounted(true);
@@ -280,11 +287,9 @@ export function ChecklistProgress({
       </div>
 
       <div className="h-3 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-800">
-        <motion.div
-          className="h-full rounded-full bg-gradient-to-r from-primary to-secondary"
-          initial={{ width: 0 }}
-          animate={{ width: `${percentage}%` }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+        <div
+          className="h-full rounded-full bg-gradient-to-r from-primary to-secondary transition-[width] duration-500 ease-out motion-reduce:transition-none"
+          style={{ width: entered ? `${percentage}%` : "0%" }}
         />
       </div>
     </div>

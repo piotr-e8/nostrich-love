@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   Key,
   Copy,
@@ -532,13 +531,10 @@ function FirstDaySimulator({ className }: { className?: string }) {
 
       {/* Step Content */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
-        <AnimatePresence mode="wait">
           {currentStep === "relays" && (
-            <motion.div
+            <div
               key="relays"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
+              className="animate-slide-up motion-reduce:animate-none"
             >
               <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                 <Server className="w-6 h-6 text-purple-600" />
@@ -587,15 +583,13 @@ function FirstDaySimulator({ className }: { className?: string }) {
               >
                 {connectedRelays.length > 0 ? t("quickstartSimulator.buttons.continue") : t("quickstartSimulator.relayStep.connectOne")}
               </button>
-            </motion.div>
+            </div>
           )}
 
           {currentStep === "post" && (
-            <motion.div
+            <div
               key="post"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
+              className="animate-slide-up motion-reduce:animate-none"
             >
               <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                 <Send className="w-6 h-6 text-purple-600" />
@@ -635,15 +629,13 @@ function FirstDaySimulator({ className }: { className?: string }) {
                   {t("quickstartSimulator.postStep.tip")}
                 </p>
               </div>
-            </motion.div>
+            </div>
           )}
 
           {currentStep === "follow" && (
-            <motion.div
+            <div
               key="follow"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
+              className="animate-slide-up motion-reduce:animate-none"
             >
               <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                 <UserPlus className="w-6 h-6 text-purple-600" />
@@ -695,15 +687,13 @@ function FirstDaySimulator({ className }: { className?: string }) {
                   {t("quickstartSimulator.buttons.continue")}
                 </button>
               </div>
-            </motion.div>
+            </div>
           )}
 
           {currentStep === "interact" && (
-            <motion.div
+            <div
               key="interact"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
+              className="animate-slide-up motion-reduce:animate-none"
             >
               <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                 <Heart className="w-6 h-6 text-purple-600" />
@@ -745,15 +735,13 @@ function FirstDaySimulator({ className }: { className?: string }) {
               <p className="text-sm text-gray-500 mt-4 text-center">
                 {t("quickstartSimulator.interactStep.instruction")}
               </p>
-            </motion.div>
+            </div>
           )}
 
           {currentStep === "zap" && (
-            <motion.div
+            <div
               key="zap"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
+              className="animate-slide-up motion-reduce:animate-none"
             >
               <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                 <Zap className="w-6 h-6 text-yellow-500" />
@@ -780,10 +768,8 @@ function FirstDaySimulator({ className }: { className?: string }) {
                   </button>
                 </div>
               ) : (
-                <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className="bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-500 rounded-xl p-6 text-center"
+                <div
+                  className="animate-scale-in motion-reduce:animate-none bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-500 rounded-xl p-6 text-center"
                 >
                   <div className="text-4xl mb-2">⚡</div>
                   <h4 className="text-xl font-bold text-yellow-800 dark:text-yellow-400 mb-2">
@@ -798,17 +784,14 @@ function FirstDaySimulator({ className }: { className?: string }) {
                   >
                     {t("quickstartSimulator.buttons.awesome")}
                   </button>
-                </motion.div>
+                </div>
               )}
-            </motion.div>
+            </div>
           )}
-        </AnimatePresence>
 
         {completedSteps.size === steps.length && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="mt-6 text-center"
+          <div
+            className="animate-scale-in motion-reduce:animate-none mt-6 text-center"
           >
             <div className="bg-green-50 dark:bg-green-900/20 border-2 border-green-500 rounded-xl p-6">
               <div className="text-4xl mb-2">🎉</div>
@@ -819,7 +802,7 @@ function FirstDaySimulator({ className }: { className?: string }) {
                 {t("quickstartSimulator.completion.description")}
               </p>
             </div>
-          </motion.div>
+          </div>
         )}
       </div>
     </div>

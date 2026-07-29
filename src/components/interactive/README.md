@@ -43,7 +43,7 @@ Generate secure npub/nsec key pairs client-side with comprehensive security educ
 #### Animations & UX
 - Animated generation process with entropy collection bar
 - Typewriter-style reveal of keys
-- Framer Motion transitions for smooth UX
+- CSS transitions/keyframes for smooth UX (framer-motion was removed)
 - Toast notifications for actions
 
 ### Props
@@ -335,7 +335,7 @@ All components use:
 - **CSS custom properties** for theming
 - **Dark mode** support via `dark:` variants
 - **Responsive design** for all screen sizes
-- **Framer Motion** for animations
+- **CSS transitions + Tailwind keyframes** for animations (framer-motion was removed)
 
 ### Color System
 
@@ -369,7 +369,6 @@ All components include:
 - `react` ^19.x
 - `react-dom` ^19.x
 - `nostr-tools` - Key generation and Nostr utilities
-- `framer-motion` - Animations
 - `lucide-react` - Icons
 - `clsx` + `tailwind-merge` - Class name utilities
 - `qrcode` - QR code generation

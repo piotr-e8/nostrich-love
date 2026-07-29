@@ -5,7 +5,6 @@
  * Shown in sidebar on desktop, footer on mobile
  */
 
-import { motion } from 'framer-motion';
 import { BookOpen, Award, Flame, Clock, Trophy, Zap } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -96,12 +95,10 @@ export function ActivityFeed({
         {displayActivities.map((activity, index) => {
           const Icon = iconMap[activity.type];
           return (
-            <motion.div
+            <div
               key={activity.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="flex items-start gap-3"
+              className="animate-slide-in-left motion-reduce:animate-none flex items-start gap-3"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className={cn('w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0', colorMap[activity.type])}>
                 {activity.metadata?.badgeEmoji ? (
@@ -118,7 +115,7 @@ export function ActivityFeed({
                   {formatTimeAgo(activity.timestamp)}
                 </p>
               </div>
-            </motion.div>
+            </div>
           );
         })}
       </div>
@@ -145,12 +142,10 @@ export function ActivityFeed({
         {displayActivities.map((activity, index) => {
           const Icon = iconMap[activity.type];
           return (
-            <motion.div
+            <div
               key={activity.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+              className="animate-slide-up motion-reduce:animate-none p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="flex items-start gap-3">
                 <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0', colorMap[activity.type])}>
@@ -175,7 +170,7 @@ export function ActivityFeed({
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           );
         })}
       </div>

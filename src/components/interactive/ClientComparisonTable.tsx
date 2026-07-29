@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   Smartphone,
   Monitor,
@@ -399,14 +398,8 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
         </div>
 
         {/* Expandable Filters */}
-        <AnimatePresence>
-          {showFilters && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 space-y-4"
-            >
+        {showFilters && (
+            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 space-y-4 animate-slide-down motion-reduce:animate-none">
               {/* Platform Filters */}
               <div>
                 <p className="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium">{t('clientComparisonTable.filters.platform')}</p>
@@ -490,21 +483,18 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                   {t('clientComparisonTable.clearFilters')}
                 </button>
               )}
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+        )}
       </div>
 
       {/* Client Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredClients.map((client) => (
-          <motion.div
+          <div
             key={client.id}
-            layout
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
             className={cn(
               "bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all cursor-pointer",
+              "animate-slide-up motion-reduce:animate-none",
               expandedClient === client.id ? "ring-2 ring-purple-500" : "hover:border-purple-300 dark:hover:border-purple-700"
             )}
             onClick={() => setExpandedClient(expandedClient === client.id ? null : client.id)}
@@ -596,14 +586,8 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
             </div>
 
             {/* Expanded Details */}
-            <AnimatePresence>
-              {expandedClient === client.id && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  className="border-t border-gray-200 dark:border-gray-700"
-                >
+            {expandedClient === client.id && (
+                <div className="border-t border-gray-200 dark:border-gray-700 animate-slide-down motion-reduce:animate-none">
                   <div className="p-4 space-y-4">
                     {/* Links */}
                     <div className="flex flex-wrap gap-2">
@@ -687,10 +671,9 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                       </div>
                     </div>
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
+                </div>
+            )}
+          </div>
         ))}
       </div>
 

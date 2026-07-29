@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   RefreshCw,
   ExternalLink,
@@ -404,22 +403,15 @@ export function OfficialAccountWidget({
       {/* Loading State */}
       {loading && (
         <div className="flex items-center justify-center py-8">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-          >
+          <div className="animate-spin motion-reduce:animate-none">
             <RefreshCw className="w-6 h-6 text-orange-500" />
-          </motion.div>
+          </div>
         </div>
       )}
 
       {/* Error State */}
       {error && !loading && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col items-center gap-3 py-6"
-        >
+        <div className="flex flex-col items-center gap-3 py-6 animate-slide-down motion-reduce:animate-none">
           <AlertCircle className="w-8 h-8 text-red-500" />
           <p className="text-sm text-gray-600 dark:text-gray-400 text-center">
             {error}
@@ -430,7 +422,7 @@ export function OfficialAccountWidget({
           >
             {t("officialAccount.tryAgain") || "Try Again"}
           </button>
-        </motion.div>
+        </div>
       )}
 
       {/* Content */}
@@ -449,15 +441,11 @@ export function OfficialAccountWidget({
               <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                 {t("officialAccount.recentPosts") || "Recent Posts"}
               </h4>
-              <AnimatePresence mode="popLayout">
-                {visibleNotes.map((note, index) => (
-                  <motion.div
+              {visibleNotes.map((note, index) => (
+                  <div
                     key={note.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ delay: index * 0.05 }}
-                    className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer group"
+                    className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer group animate-slide-up motion-reduce:animate-none"
+                    style={{ animationDelay: `${index * 50}ms` }}
                     onClick={() =>
                       window.open(
                         `https://njump.me/${note.id}`,
@@ -472,9 +460,8 @@ export function OfficialAccountWidget({
                     <span className="text-xs text-gray-400 dark:text-gray-500 mt-1 block">
                       {formatTimeAgo(note.created_at)}
                     </span>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+                  </div>
+              ))}
             </div>
           )}
 

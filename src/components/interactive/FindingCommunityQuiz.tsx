@@ -13,7 +13,6 @@ import {
   CheckCircle2,
   XCircle,
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
 import { guidePath } from "../../i18n/paths";
@@ -51,7 +50,6 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
-  const [direction, setDirection] = useState(0);
 
   // Handle case where translations haven't loaded yet
   if (!questions || questions.length === 0) {
@@ -89,7 +87,6 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
   };
 
   const handleNext = () => {
-    setDirection(1);
     if (currentIndex === total - 1) {
       setShowResults(true);
       return;
@@ -98,96 +95,51 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
   };
 
   const handlePrev = () => {
-    setDirection(-1);
     setCurrentIndex((prev) => Math.max(prev - 1, 0));
   };
 
   const handleRestart = () => {
-    setDirection(0);
     setCurrentIndex(0);
     setAnswers({});
     setShowResults(false);
-  };
-
-  const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 50 : -50,
-      opacity: 0,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction: number) => ({
-      x: direction > 0 ? -50 : 50,
-      opacity: 0,
-    }),
-  };
-
-  const optionVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.08,
-        duration: 0.3,
-        ease: [0.22, 1, 0.36, 1] as const,
-      },
-    }),
   };
 
   if (showResults) {
     const successRate = Math.round((score / total) * 100);
 
     return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      <div
         data-quiz
         className={cn(
-          "rounded-3xl border border-gray-200 bg-white p-8 shadow-xl dark:border-gray-800 dark:bg-gray-900",
+          "animate-scale-in motion-reduce:animate-none rounded-3xl border border-gray-200 bg-white p-8 shadow-xl dark:border-gray-800 dark:bg-gray-900",
           className,
         )}
       >
         <div className="flex flex-col items-center text-center">
-          <motion.div
-            initial={{ scale: 0, rotate: -180 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ 
-              type: "spring",
-              stiffness: 260,
-              damping: 20,
-              delay: 0.1 
-            }}
+          <div
+            className="animate-spin-in motion-reduce:animate-none"
+            style={{ animationDelay: "100ms" }}
           >
             <Users className="h-12 w-12 text-primary-600 dark:text-primary-400" />
-          </motion.div>
+          </div>
           
-          <motion.h3 
-            className="mt-4 text-3xl font-bold text-gray-900 dark:text-white"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+          <h3
+            className="animate-slide-up motion-reduce:animate-none mt-4 text-3xl font-bold text-gray-900 dark:text-white"
+            style={{ animationDelay: "200ms" }}
           >
             {t("ui.quiz.gradeTitle").replace("{{title}}", quizTitle).replace("{{rate}}", successRate.toString())}
-          </motion.h3>
+          </h3>
           
-          <motion.p 
-            className="mt-2 text-gray-600 dark:text-gray-300"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+          <p
+            className="animate-slide-up motion-reduce:animate-none mt-2 text-gray-600 dark:text-gray-300"
+            style={{ animationDelay: "300ms" }}
           >
             {t("ui.quiz.scoreDisplay").replace("{{score}}", score.toString()).replace("{{total}}", total.toString())}
-          </motion.p>
+          </p>
 
-          <motion.div 
-            className="mt-6 grid w-full gap-4 rounded-2xl bg-gray-50 p-4 dark:bg-gray-800/60"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
+          <div
+            className="animate-slide-up motion-reduce:animate-none mt-6 grid w-full gap-4 rounded-2xl bg-gray-50 p-4 dark:bg-gray-800/60"
+            style={{ animationDelay: "400ms" }}
           >
             <ResultRow
               label={t("ui.quiz.conceptsMastered")}
@@ -201,13 +153,11 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
                   : t("ui.quiz.reviewSections")
               }
             />
-          </motion.div>
+          </div>
 
-          <motion.div 
-            className="mt-6 grid w-full gap-3 sm:grid-cols-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
+          <div
+            className="animate-slide-up motion-reduce:animate-none mt-6 grid w-full gap-3 sm:grid-cols-2"
+            style={{ animationDelay: "500ms" }}
           >
             <a
               className="inline-flex items-center justify-center rounded-xl border border-primary/40 px-4 py-3 font-semibold text-primary-600 dark:text-primary-400 transition hover:bg-primary/10"
@@ -221,23 +171,19 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
             >
               {t("ui.quiz.learnZaps")}
             </a>
-          </motion.div>
+          </div>
 
-          <motion.button
+          <button
             type="button"
             onClick={handleRestart}
-            className="mt-8 inline-flex items-center gap-2 rounded-xl bg-primary-600 px-5 py-3 font-semibold text-white shadow-lg hover:bg-primary-700 hover:shadow-xl transition-all"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.6 }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            className="animate-scale-in motion-reduce:animate-none mt-8 inline-flex items-center gap-2 rounded-xl bg-primary-600 px-5 py-3 font-semibold text-white shadow-lg hover:bg-primary-700 hover:shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none"
+            style={{ animationDelay: "600ms" }}
           >
             <RotateCcw className="h-4 w-4" />
             {t("ui.quiz.retakeQuiz")}
-          </motion.button>
+          </button>
         </div>
-      </motion.div>
+      </div>
     );
   }
 
@@ -254,63 +200,47 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
     >
       <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <motion.p 
+          <p
             key={`title-${currentIndex}`}
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="text-xs font-semibold uppercase tracking-wider text-primary-600 dark:text-primary-400"
+            className="animate-slide-in-left motion-reduce:animate-none text-xs font-semibold uppercase tracking-wider text-primary-600 dark:text-primary-400"
           >
             {quizTitle}
-          </motion.p>
-          <motion.h3 
+          </p>
+          <h3
             key={`heading-${currentIndex}`}
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.05 }}
-            className="text-2xl font-bold text-gray-900 dark:text-white"
+            className="animate-slide-in-left motion-reduce:animate-none text-2xl font-bold text-gray-900 dark:text-white"
+            style={{ animationDelay: "50ms" }}
           >
             {currentQuestion.title}
-          </motion.h3>
-          <motion.p 
+          </h3>
+          <p
             key={`counter-${currentIndex}`}
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-sm text-gray-500 dark:text-gray-400"
+            className="animate-slide-in-left motion-reduce:animate-none text-sm text-gray-500 dark:text-gray-400"
+            style={{ animationDelay: "100ms" }}
           >
             {t("ui.quiz.questionCounter").replace("{{current}}", (currentIndex + 1).toString()).replace("{{total}}", total.toString())}
-          </motion.p>
+          </p>
         </div>
         <div className="w-full rounded-full bg-gray-100 p-1 dark:bg-gray-800 sm:w-56">
-          <motion.div
-            className="rounded-full bg-gradient-to-r from-primary to-secondary py-1 px-2 text-center text-xs font-semibold text-white min-w-[60px]"
-            initial={{ width: `${Math.max(15, ((answeredCount - 1) / total) * 100)}%` }}
-            animate={{ width: `${Math.max(15, (answeredCount / total) * 100)}%` }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          <div
+            className="rounded-full bg-gradient-to-r from-primary to-secondary py-1 px-2 text-center text-xs font-semibold text-white min-w-[60px] transition-[width] duration-500 ease-out-quint motion-reduce:transition-none"
+            style={{ width: `${Math.max(15, (answeredCount / total) * 100)}%` }}
           >
             {answeredCount}/{total} {t("ui.quiz.answered")}
-          </motion.div>
+          </div>
         </div>
       </header>
 
-      <AnimatePresence mode="wait" custom={direction}>
-        <motion.div
-          key={currentIndex}
-          custom={direction}
-          variants={slideVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <motion.div 
-            className="rounded-2xl border border-gray-100 bg-gray-50 p-4 text-sm text-gray-700 dark:border-gray-800 dark:bg-gray-800/60 dark:text-gray-200"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+      <div
+        key={currentIndex}
+        className="animate-slide-in-right motion-reduce:animate-none"
+      >
+          <div
+            className="animate-slide-up motion-reduce:animate-none rounded-2xl border border-gray-100 bg-gray-50 p-4 text-sm text-gray-700 dark:border-gray-800 dark:bg-gray-800/60 dark:text-gray-200"
+            style={{ animationDelay: "100ms" }}
           >
             {currentQuestion.prompt}
-          </motion.div>
+          </div>
 
           <div className="mt-6 space-y-3">
             {currentQuestion.options.map((option, i) => {
@@ -319,20 +249,17 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
               const showState = Boolean(selectedOption);
 
               return (
-                <motion.button
+                <button
                   key={option.id}
-                  custom={i}
-                  variants={optionVariants}
-                  initial="hidden"
-                  animate="visible"
-                  whileHover={!showState ? { scale: 1.01, x: 4 } : {}}
-                  whileTap={!showState ? { scale: 0.99 } : {}}
                   type="button"
                   onClick={() => !showState && handleSelect(option.id)}
                   aria-pressed={isSelected}
                   disabled={showState}
+                  style={{ animationDelay: `${i * 80}ms` }}
                   className={cn(
-                    "w-full rounded-2xl border px-4 py-3 text-left transition-all duration-300",
+                    "animate-slide-up motion-reduce:animate-none w-full rounded-2xl border px-4 py-3 text-left transition-all duration-300 motion-reduce:transition-none",
+                    !showState &&
+                      "hover:scale-[1.01] hover:translate-x-1 active:scale-[0.99] motion-reduce:transform-none",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                     isSelected && "border-primary bg-primary/10 shadow-md",
                     showState && isAnswer && "border-success-500 bg-success-500/10 shadow-md",
@@ -353,22 +280,20 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
                           {option.label}
                         </p>
                         {showState && isAnswer && (
-                          <motion.div
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{ delay: 0.2, type: "spring", stiffness: 400 }}
+                          <div
+                            className="animate-scale-pop motion-reduce:animate-none"
+                            style={{ animationDelay: "200ms" }}
                           >
                             <CheckCircle2 aria-hidden="true" className="h-4 w-4 text-success-500" />
-                          </motion.div>
+                          </div>
                         )}
                         {showState && isSelected && !isAnswer && (
-                          <motion.div
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{ delay: 0.2, type: "spring", stiffness: 400 }}
+                          <div
+                            className="animate-scale-pop motion-reduce:animate-none"
+                            style={{ animationDelay: "200ms" }}
                           >
                             <XCircle aria-hidden="true" className="h-4 w-4 text-error-500" />
-                          </motion.div>
+                          </div>
                         )}
                         <span className="sr-only">{showState && isAnswer ? t("ui.quiz.feedback.correct") : showState && isSelected && !isAnswer ? t("ui.quiz.feedback.incorrect") : ""}</span>
                       </div>
@@ -379,98 +304,90 @@ export function FindingCommunityQuiz({ className }: FindingCommunityQuizProps) {
                       )}
                     </div>
                   </div>
-                </motion.button>
+                </button>
               );
             })}
           </div>
 
           <div aria-live="polite">
-            <AnimatePresence>
             {selectedOption && (
-              <motion.div
-                initial={{ opacity: 0, height: 0, y: -10 }}
-                animate={{ opacity: 1, height: "auto", y: 0 }}
-                exit={{ opacity: 0, height: 0, y: -10 }}
-                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              <div
                 className={cn(
-                  "mt-4 rounded-2xl border px-4 py-3 text-sm overflow-hidden",
+                  "animate-slide-down motion-reduce:animate-none mt-4 rounded-2xl border px-4 py-3 text-sm overflow-hidden",
                   isCorrect
                     ? "border-success-500 bg-success-500/10 text-success-900 dark:text-success-100"
                     : "border-error-500 bg-error-500/10 text-error-900 dark:text-error-100",
                 )}
               >
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.15 }}
+                <div
+                  className="animate-fade-in motion-reduce:animate-none"
+                  style={{ animationDelay: "150ms" }}
                 >
                   {isCorrect ? (
                     <span className="flex items-center gap-2">
-                      <motion.span
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: "spring", stiffness: 400, delay: 0.2 }}
+                      <span
+                        className="inline-flex animate-scale-pop motion-reduce:animate-none"
+                        style={{ animationDelay: "200ms" }}
                       >
                         <CheckCircle2 aria-hidden="true" className="h-4 w-4 text-success-500" />
-                      </motion.span>
+                      </span>
                       <span className="font-semibold">{t("ui.quiz.feedback.correct")}</span>
                     </span>
                   ) : (
                     <span className="flex items-center gap-2">
-                      <motion.span
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: "spring", stiffness: 400, delay: 0.2 }}
+                      <span
+                        className="inline-flex animate-scale-pop motion-reduce:animate-none"
+                        style={{ animationDelay: "200ms" }}
                       >
                         <XCircle aria-hidden="true" className="h-4 w-4 text-error-500" />
-                      </motion.span>
+                      </span>
                       <span className="font-semibold">{t("ui.quiz.feedback.incorrect")}</span>
                     </span>
                   )}
                   {" "}{currentQuestion.explanation}
-                </motion.div>
-              </motion.div>
+                </div>
+              </div>
             )}
-            </AnimatePresence>
           </div>
-        </motion.div>
-      </AnimatePresence>
+      </div>
 
       <footer className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <motion.div 
-          className="text-xs uppercase tracking-wider text-gray-400"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
+        <div
+          className="animate-fade-in motion-reduce:animate-none text-xs uppercase tracking-wider text-gray-400"
+          style={{ animationDelay: "300ms" }}
         >
           {currentQuestion.severity === "critical" && t("ui.quiz.severity.critical")}
           {currentQuestion.severity === "warning" && t("ui.quiz.severity.warning")}
           {currentQuestion.severity === "info" && t("ui.quiz.severity.info")}
-        </motion.div>
+        </div>
 
         <div className="flex gap-3">
-          <motion.button
+          <button
             type="button"
             onClick={handlePrev}
             disabled={currentIndex === 0}
-            whileHover={currentIndex > 0 ? { x: -2 } : {}}
-            whileTap={currentIndex > 0 ? { scale: 0.98 } : {}}
-            className="inline-flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition disabled:opacity-50 dark:border-gray-700 dark:text-gray-300"
+            className={cn(
+              "inline-flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition disabled:opacity-50 dark:border-gray-700 dark:text-gray-300 motion-reduce:transition-none",
+              currentIndex > 0 &&
+                "hover:-translate-x-0.5 active:scale-[0.98] motion-reduce:transform-none",
+            )}
           >
             <ChevronLeft className="h-4 w-4" />
             {t("ui.quiz.backButton")}
-          </motion.button>
-          <motion.button
+          </button>
+          <button
             type="button"
             onClick={handleNext}
             disabled={!selectedOption}
-            whileHover={selectedOption ? { x: 2 } : {}}
-            whileTap={selectedOption ? { scale: 0.98 } : {}}
-            className="inline-flex items-center gap-2 rounded-xl bg-primary-600 px-5 py-2 text-sm font-semibold text-white shadow-md transition disabled:opacity-50 hover:shadow-lg"
+            className={cn(
+              "inline-flex items-center gap-2 rounded-xl bg-primary-600 px-5 py-2 text-sm font-semibold text-white shadow-md transition disabled:opacity-50 hover:shadow-lg motion-reduce:transition-none",
+              selectedOption &&
+                "hover:translate-x-0.5 active:scale-[0.98] motion-reduce:transform-none",
+            )}
           >
             {currentIndex === total - 1 ? t("ui.quiz.seeResults") : t("ui.quiz.nextButton")}
             <ChevronRight className="h-4 w-4" />
-          </motion.button>
+          </button>
         </div>
       </footer>
     </div>

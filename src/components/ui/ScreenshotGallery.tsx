@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
 import { cn } from "../../lib/utils";
+
+const LIGHTBOX_EXIT_DURATION_MS = 200;
 
 interface Screenshot {
   src: string;
@@ -20,6 +21,43 @@ export function ScreenshotGallery({
 }: ScreenshotGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  // Timed-exit idiom (StreakBanner): fade in via double-rAF, fade out on a timer.
+  const [entered, setEntered] = useState(false);
+  const [exiting, setExiting] = useState(false);
+  const exitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!isLightboxOpen) {
+      setEntered(false);
+      return;
+    }
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => setEntered(true));
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [isLightboxOpen]);
+
+  useEffect(
+    () => () => {
+      if (exitTimer.current) clearTimeout(exitTimer.current);
+    },
+    [],
+  );
+
+  const closeLightbox = () => {
+    if (exiting) return;
+    setExiting(true);
+    exitTimer.current = setTimeout(() => {
+      setExiting(false);
+      setIsLightboxOpen(false);
+    }, LIGHTBOX_EXIT_DURATION_MS);
+  };
+
+  const isLightboxShown = entered && !exiting;
 
   // Ensure screenshots is an array and filter out invalid screenshots
   const screenshotsArray = Array.isArray(screenshots) ? screenshots : [];
@@ -125,17 +163,17 @@ export function ScreenshotGallery({
       </div>
 
       {/* Lightbox */}
-      <AnimatePresence>
-        {isLightboxOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
-            onClick={() => setIsLightboxOpen(false)}
+      {isLightboxOpen && (
+          <div
+            className={cn(
+              "fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4",
+              "transition-opacity duration-200 motion-reduce:transition-none",
+              isLightboxShown ? "opacity-100" : "opacity-0",
+            )}
+            onClick={closeLightbox}
           >
             <button
-              onClick={() => setIsLightboxOpen(false)}
+              onClick={closeLightbox}
               className="absolute top-4 right-4 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all"
             >
               <X className="w-6 h-6 text-white" />
@@ -170,9 +208,8 @@ export function ScreenshotGallery({
                 </button>
               </>
             )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+      )}
     </>
   );
 }

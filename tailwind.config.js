@@ -95,6 +95,44 @@ export default {
       // the banner mounts site-wide from Layout.astro, and framer-motion was
       // ~305 KB of JS loaded on every page just for these two idle wiggles.
       keyframes: {
+        // Shared enter-animation vocabulary for the framer-motion removal (#28).
+        // Enter-only: exiting elements just unmount (except modals, which use
+        // the StreakBanner timed-exit transition pattern). Every animation
+        // below runs with fill-mode "both" so a per-item inline
+        // `animationDelay` (staggered lists) keeps the element hidden until
+        // its delay elapses. Pair each usage with motion-reduce:animate-none.
+        "fade-in": {
+          from: { opacity: "0" },
+        },
+        "slide-up": {
+          from: { opacity: "0", transform: "translateY(1rem)" },
+        },
+        "slide-down": {
+          from: { opacity: "0", transform: "translateY(-0.625rem)" },
+        },
+        "slide-in-left": {
+          from: { opacity: "0", transform: "translateX(-1.5rem)" },
+        },
+        "slide-in-right": {
+          from: { opacity: "0", transform: "translateX(1.5rem)" },
+        },
+        "scale-in": {
+          from: { opacity: "0", transform: "scale(0.92)" },
+        },
+        "scale-pop": {
+          "0%": { opacity: "0", transform: "scale(0)" },
+          "70%": { opacity: "1", transform: "scale(1.12)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        "spin-in": {
+          from: { opacity: "0", transform: "scale(0) rotate(-180deg)" },
+          to: { opacity: "1", transform: "scale(1) rotate(0deg)" },
+        },
+        // Infinite attention loop (replaces repeat: Infinity scale pulses).
+        "pulse-scale": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.15)" },
+        },
         "streak-wiggle": {
           "0%, 100%": { transform: "scale(1) rotate(0deg)" },
           "35%": { transform: "scale(1.1) rotate(5deg)" },
@@ -106,8 +144,25 @@ export default {
         },
       },
       animation: {
+        // "both" fill-mode is load-bearing: staggered items set an inline
+        // animationDelay and must stay in their `from` state until it elapses.
+        "fade-in": "fade-in 0.3s ease-out both",
+        "slide-up": "slide-up 0.35s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "slide-down": "slide-down 0.3s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "slide-in-left":
+          "slide-in-left 0.35s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "slide-in-right":
+          "slide-in-right 0.35s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "scale-in": "scale-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "scale-pop": "scale-pop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "spin-in": "spin-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "pulse-scale": "pulse-scale 1.5s ease-in-out infinite",
         "streak-wiggle": "streak-wiggle 2s ease-in-out infinite",
         "streak-beat": "streak-beat 1s ease-in-out infinite",
+      },
+      transitionTimingFunction: {
+        // The easing framer-motion usages passed as [0.22, 1, 0.36, 1].
+        "out-quint": "cubic-bezier(0.22, 1, 0.36, 1)",
       },
       typography: (theme) => ({
         DEFAULT: {

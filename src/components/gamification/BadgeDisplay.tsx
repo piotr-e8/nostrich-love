@@ -6,7 +6,6 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, Sparkles, Trophy } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import type { BadgeDisplayProps, Badge } from './types';
@@ -117,16 +116,15 @@ export function BadgeDisplay({
           const rarityStyle = rarityStyles[badge.rarity];
 
           return (
-            <motion.div
+            <div
               key={badge.id}
               role="listitem"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
               className={cn(
+                'animate-slide-up motion-reduce:animate-none',
                 'relative group cursor-pointer',
                 !unlocked && 'cursor-not-allowed'
               )}
+              style={{ animationDelay: `${index * 50}ms` }}
               onMouseEnter={() => setHoveredBadge(badge.id)}
               onMouseLeave={() => setHoveredBadge(null)}
               onClick={() => handleBadgeClick(badge)}
@@ -139,18 +137,11 @@ export function BadgeDisplay({
               }
             >
               {/* Celebration Effect */}
-              <AnimatePresence>
-                {isCelebrating && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 1.5 }}
-                    className="absolute inset-0 z-20 pointer-events-none flex items-center justify-center"
-                  >
-                    <Sparkles className="w-16 h-16 text-friendly-gold animate-pulse" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {isCelebrating && (
+                <div className="animate-scale-in motion-reduce:animate-none absolute inset-0 z-20 pointer-events-none flex items-center justify-center">
+                  <Sparkles className="w-16 h-16 text-friendly-gold animate-pulse" />
+                </div>
+              )}
 
               {/* Badge Card */}
               <div
@@ -186,16 +177,15 @@ export function BadgeDisplay({
                 )}
 
                 {/* Emoji */}
-                <motion.div
+                <div
                   className={cn(
                     'text-4xl mb-2 transition-transform duration-300',
-                    isHovered && unlocked && 'scale-110'
+                    isHovered && unlocked && 'scale-110',
+                    isCelebrating && 'animate-streak-wiggle motion-reduce:animate-none'
                   )}
-                  animate={isCelebrating ? { rotate: [0, -10, 10, -10, 10, 0] } : {}}
-                  transition={{ duration: 0.5 }}
                 >
                   {badge.emoji}
-                </motion.div>
+                </div>
 
                 {/* Name */}
                 <p
@@ -223,14 +213,9 @@ export function BadgeDisplay({
               </div>
 
               {/* Hover Tooltip */}
-              <AnimatePresence>
-                {isHovered && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="absolute z-30 left-1/2 -translate-x-1/2 bottom-full mb-2 w-48 pointer-events-none"
-                  >
+              {isHovered && (
+                  <div className="absolute z-30 left-1/2 -translate-x-1/2 bottom-full mb-2 w-48 pointer-events-none">
+                    <div className="animate-slide-up motion-reduce:animate-none">
                     <div className="bg-gray-900 dark:bg-gray-800 text-white text-xs rounded-xl p-3 shadow-xl border border-gray-700">
                       <p className="font-semibold mb-1">{badge.name}</p>
                       <p className="text-gray-300 mb-2">{badge.description}</p>
@@ -242,10 +227,10 @@ export function BadgeDisplay({
                         <div className="w-2 h-2 bg-gray-900 dark:bg-gray-800 rotate-45 border-r border-b border-gray-700" />
                       </div>
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
+                    </div>
+                  </div>
+              )}
+            </div>
           );
         })}
       </div>

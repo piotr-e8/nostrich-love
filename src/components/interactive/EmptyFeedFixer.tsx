@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Users,
   Radio,
@@ -211,6 +210,46 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
   const [activeStep, setActiveStep] = useState(1);
   const [isComplete, setIsComplete] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  // Timed-exit modal state (StreakBanner idiom)
+  const [successEntered, setSuccessEntered] = useState(false);
+  const [successExiting, setSuccessExiting] = useState(false);
+  const successExitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const successAutoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    // Double rAF: paint the hidden state first so the enter transition runs
+    if (!showSuccess) {
+      setSuccessEntered(false);
+      return;
+    }
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => setSuccessEntered(true));
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [showSuccess]);
+
+  useEffect(
+    () => () => {
+      if (successExitTimer.current) clearTimeout(successExitTimer.current);
+      if (successAutoTimer.current) clearTimeout(successAutoTimer.current);
+    },
+    [],
+  );
+
+  const dismissSuccess = () => {
+    if (successExiting) return;
+    setSuccessExiting(true);
+    successExitTimer.current = setTimeout(() => {
+      setSuccessExiting(false);
+      setShowSuccess(false);
+    }, 300);
+  };
+
+  const isSuccessShown = successEntered && !successExiting;
 
   useEffect(() => {
     const saved = loadFromLocalStorage<{
@@ -275,7 +314,8 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
     setIsComplete(true);
     setShowSuccess(true);
     onComplete?.();
-    setTimeout(() => setShowSuccess(false), 5000);
+    if (successAutoTimer.current) clearTimeout(successAutoTimer.current);
+    successAutoTimer.current = setTimeout(() => dismissSuccess(), 5000);
   };
 
   const progress = Math.round(
@@ -287,13 +327,9 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
       <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 md:p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4"
-          >
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4 animate-scale-in motion-reduce:animate-none">
             <TrendingUp className="w-8 h-8 text-primary-600 dark:text-primary-400" />
-          </motion.div>
+          </div>
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
             {t('emptyFeedFixer.title')}
           </h2>
@@ -309,11 +345,9 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
             <span className="text-primary-600 dark:text-primary-400 font-medium">{progress}%</span>
           </div>
           <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-            <motion.div
-              className="h-full bg-gradient-to-r from-primary-500 to-success-500"
-              initial={{ width: 0 }}
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.5 }}
+            <div
+              className="h-full bg-gradient-to-r from-primary-500 to-success-500 transition-[width] duration-500 ease-out-quint motion-reduce:transition-none"
+              style={{ width: `${progress}%` }}
             />
           </div>
         </div>
@@ -359,12 +393,11 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
             {/* Starter Packs */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               {STARTER_PACKS.map((pack) => (
-                <motion.div
+                <div
                   key={pack.id}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
                   className={cn(
                     "border rounded-xl p-4 cursor-pointer transition-all",
+                    "hover:scale-[1.02] active:scale-[0.98] motion-reduce:transform-none",
                     selectedPack === pack.id
                       ? "border-primary-500 bg-primary-500/10"
                       : "border-gray-700 hover:border-gray-600",
@@ -390,19 +423,13 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                       </p>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
             {/* Selected Pack Details */}
-            <AnimatePresence>
-              {selectedPack && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="bg-gray-800/50 rounded-xl p-4 mb-4"
-                >
+            {selectedPack && (
+                <div className="bg-gray-800/50 rounded-xl p-4 mb-4 animate-slide-down motion-reduce:animate-none">
                   <div className="flex items-center justify-between mb-3">
                     <h4 className="font-medium text-white">
                       {STARTER_PACKS.find((p) => p.id === selectedPack)?.name}{" "}
@@ -456,9 +483,8 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                       </div>
                     ))}
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                </div>
+            )}
 
             {/* Custom Account Input */}
             <div className="flex gap-2">
@@ -651,23 +677,24 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
         </div>
 
         {/* Success Animation */}
-        <AnimatePresence>
-          {showSuccess && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+        {showSuccess && (
+            <div
+              className={cn(
+                "fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4",
+                "transition-opacity duration-300 motion-reduce:transition-none",
+                isSuccessShown ? "opacity-100" : "opacity-0",
+              )}
             >
-              <div className="bg-gray-900 border border-success-500 rounded-2xl p-8 max-w-md w-full text-center">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: "spring", damping: 10 }}
-                  className="w-20 h-20 bg-success-500 rounded-full flex items-center justify-center mx-auto mb-4"
-                >
+              <div
+                className={cn(
+                  "bg-gray-900 border border-success-500 rounded-2xl p-8 max-w-md w-full text-center",
+                  "transition-all duration-300 ease-out-quint motion-reduce:transition-none",
+                  isSuccessShown ? "opacity-100 scale-100" : "opacity-0 scale-95",
+                )}
+              >
+                <div className="w-20 h-20 bg-success-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-scale-pop motion-reduce:animate-none">
                   <Check className="w-10 h-10 text-white" />
-                </motion.div>
+                </div>
                 <h3 className="text-2xl font-bold text-white mb-2">
                   {t('emptyFeedFixer.step3.completed')}
                 </h3>
@@ -677,15 +704,14 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                     .replace('{relays}', String(connectedRelays.size))}
                 </p>
                 <button
-                  onClick={() => setShowSuccess(false)}
+                  onClick={dismissSuccess}
                   className="px-6 py-3 bg-success-500 hover:bg-success-600 text-white rounded-xl font-medium transition-all"
                 >
                   {t('emptyFeedFixer.step3.awesome')}
                 </button>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+        )}
       </div>
     </div>
   );

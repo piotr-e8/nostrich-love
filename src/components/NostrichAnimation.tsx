@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import { cn } from "../lib/utils";
 
 /**
@@ -9,6 +8,10 @@ import { cn } from "../lib/utils";
  * - Animated nostrich (ostrich) silhouette
  * - Connecting lines representing the protocol
  * - Floating keys and messages
+ *
+ * Animations are plain CSS. Bespoke keyframes live in the <style> block
+ * below (motion-library removal #28); shared enter animations come from
+ * tailwind.config.js.
  */
 
 export function NostrichHeroAnimation({ className }: { className?: string }) {
@@ -39,6 +42,91 @@ export function NostrichHeroAnimation({ className }: { className?: string }) {
 
   return (
     <div className={cn("relative w-full h-[500px] overflow-hidden", className)}>
+      {/* Bespoke keyframes for this decorative art component. Names are
+          prefixed to avoid collisions (the style tag is not scoped). */}
+      <style>{`
+        @keyframes nostrich-node-pulse {
+          0%, 100% { transform: scale(1); opacity: 0.6; }
+          50% { transform: scale(1.2); opacity: 1; }
+        }
+        @keyframes nostrich-aura {
+          0%, 100% { transform: scale(1); opacity: 0.3; }
+          50% { transform: scale(1.2); opacity: 0.5; }
+        }
+        @keyframes nostrich-float {
+          0%, 100% { transform: translateY(0); opacity: 0.4; }
+          50% { transform: translateY(-20px); opacity: 0.8; }
+        }
+        @keyframes nostrich-part-in {
+          from { opacity: 0; transform: scale(0); }
+        }
+        @keyframes nostrich-neck-in {
+          from { transform: scaleY(0); }
+        }
+        @keyframes nostrich-beak-in {
+          from { transform: scaleX(0); }
+        }
+        @keyframes nostrich-fade-in {
+          from { opacity: 0; }
+        }
+        @keyframes nostrich-crown-in {
+          from { opacity: 0; transform: scale(0) rotate(-45deg); }
+        }
+        @keyframes nostrich-beam-draw {
+          from { stroke-dashoffset: 1; }
+          to { stroke-dashoffset: 0; }
+        }
+        @keyframes nostrich-beam-pulse {
+          0%, 100% { opacity: 0.2; }
+          50% { opacity: 0.6; }
+        }
+        .nostrich-part {
+          transform-box: fill-box;
+          transform-origin: center;
+          animation: nostrich-part-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .nostrich-neck {
+          transform-box: fill-box;
+          transform-origin: bottom;
+          animation: nostrich-neck-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .nostrich-beak {
+          transform-box: fill-box;
+          transform-origin: left;
+          animation: nostrich-beak-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .nostrich-legs {
+          animation: nostrich-fade-in 0.5s ease-out both;
+        }
+        .nostrich-crown {
+          transform-box: fill-box;
+          transform-origin: center;
+          animation: nostrich-crown-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .nostrich-node {
+          animation: nostrich-node-pulse 3s ease-in-out infinite;
+        }
+        .nostrich-aura {
+          animation: nostrich-aura 4s ease-in-out infinite;
+        }
+        .nostrich-float {
+          animation: nostrich-float 4s ease-in-out infinite;
+        }
+        .nostrich-beam {
+          stroke-dasharray: 1;
+          animation:
+            nostrich-beam-draw 2s ease-out both,
+            nostrich-beam-pulse 3s ease-in-out infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .nostrich-part, .nostrich-neck, .nostrich-beak, .nostrich-legs,
+          .nostrich-crown, .nostrich-node, .nostrich-aura, .nostrich-float,
+          .nostrich-beam {
+            animation: none;
+          }
+        }
+      `}</style>
+
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-purple-950 to-gray-900" />
 
@@ -93,24 +181,16 @@ function NetworkNodes() {
   return (
     <>
       {nodes.map((node, i) => (
-        <motion.div
+        <div
           key={i}
           className="absolute"
           style={{ left: node.x, top: node.y }}
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.6, 1, 0.6],
-          }}
-          transition={{
-            duration: 3,
-            delay: node.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
         >
-          <div className="w-3 h-3 bg-primary-500 rounded-full shadow-lg shadow-primary-500/50" />
-        </motion.div>
+          <div
+            className="nostrich-node w-3 h-3 bg-primary-500 rounded-full shadow-lg shadow-primary-500/50"
+            style={{ animationDelay: `${node.delay}s` }}
+          />
+        </div>
       ))}
     </>
   );
@@ -119,196 +199,175 @@ function NetworkNodes() {
 function NostrichMascot() {
   // Stylized ostrich silhouette with purple theme
   return (
-    <motion.div
-      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 1, delay: 0.5 }}
-    >
-      {/* Glowing aura */}
-      <motion.div
-        className="absolute inset-0 blur-3xl"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{ duration: 4, repeat: Infinity }}
+    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+      {/* Inner wrapper carries the enter animation so it doesn't clobber the
+          centering transform on the positioned parent. */}
+      <div
+        className="animate-scale-in motion-reduce:animate-none [animation-duration:1s]"
+        style={{ animationDelay: "500ms" }}
       >
-        <div className="w-64 h-64 bg-gradient-to-br from-primary-500 to-purple-600 rounded-full" />
-      </motion.div>
+        {/* Glowing aura */}
+        <div className="nostrich-aura absolute inset-0 blur-3xl">
+          <div className="w-64 h-64 bg-gradient-to-br from-primary-500 to-purple-600 rounded-full" />
+        </div>
 
-      {/* Ostrich/Nostrich SVG */}
-      <svg
-        width="200"
-        height="200"
-        viewBox="0 0 200 200"
-        fill="none"
-        className="relative z-10 drop-shadow-2xl"
-      >
-        <defs>
-          <linearGradient
-            id="ostrichGradient"
-            x1="0%"
-            y1="0%"
-            x2="100%"
-            y2="100%"
-          >
-            <stop offset="0%" stopColor="#8B5CF6" />
-            <stop offset="100%" stopColor="#7C3AED" />
-          </linearGradient>
-        </defs>
-
-        {/* Body */}
-        <motion.ellipse
-          cx="100"
-          cy="130"
-          rx="45"
-          ry="35"
-          fill="url(#ostrichGradient)"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        />
-
-        {/* Neck */}
-        <motion.rect
-          x="85"
-          y="60"
-          width="30"
-          height="70"
-          rx="15"
-          fill="url(#ostrichGradient)"
-          initial={{ scaleY: 0 }}
-          animate={{ scaleY: 1 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          style={{ originY: 1 }}
-        />
-
-        {/* Head */}
-        <motion.ellipse
-          cx="100"
-          cy="50"
-          rx="25"
-          ry="20"
-          fill="url(#ostrichGradient)"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.8 }}
-        />
-
-        {/* Beak */}
-        <motion.path
-          d="M 120 50 L 145 55 L 120 60 Z"
-          fill="#F59E0B"
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.4, delay: 1 }}
-          style={{ originX: 0 }}
-        />
-
-        {/* Eye */}
-        <motion.circle
-          cx="108"
-          cy="48"
-          r="5"
-          fill="white"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.3, delay: 1.1 }}
-        />
-        <motion.circle
-          cx="108"
-          cy="48"
-          r="2"
-          fill="#1F2937"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.2, delay: 1.3 }}
-        />
-
-        {/* Legs */}
-        <motion.g
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1.2 }}
-        >
-          <rect
-            x="80"
-            y="160"
-            width="8"
-            height="30"
-            rx="4"
-            fill="url(#ostrichGradient)"
-          />
-          <rect
-            x="112"
-            y="160"
-            width="8"
-            height="30"
-            rx="4"
-            fill="url(#ostrichGradient)"
-          />
-        </motion.g>
-
-        {/* Crown feathers (showing it's the "king" of decentralized social) */}
-        <motion.g
-          initial={{ scale: 0, rotate: -45 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{ duration: 0.6, delay: 1.4 }}
-        >
-          <path
-            d="M 85 35 Q 75 15 85 25"
-            stroke="#8B5CF6"
-            strokeWidth="3"
-            fill="none"
-          />
-          <path
-            d="M 100 30 Q 100 10 100 22"
-            stroke="#8B5CF6"
-            strokeWidth="3"
-            fill="none"
-          />
-          <path
-            d="M 115 35 Q 125 15 115 25"
-            stroke="#8B5CF6"
-            strokeWidth="3"
-            fill="none"
-          />
-        </motion.g>
-      </svg>
-
-      {/* Key icon on body */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, delay: 1.6 }}
-      >
+        {/* Ostrich/Nostrich SVG */}
         <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
+          width="200"
+          height="200"
+          viewBox="0 0 200 200"
           fill="none"
-          stroke="white"
-          strokeWidth="2"
+          className="relative z-10 drop-shadow-2xl"
         >
-          <circle cx="12" cy="12" r="3" />
-          <path d="M12 12 L12 2 M12 2 L14 4 M12 2 L10 4" />
-        </svg>
-      </motion.div>
+          <defs>
+            <linearGradient
+              id="ostrichGradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop offset="0%" stopColor="#8B5CF6" />
+              <stop offset="100%" stopColor="#7C3AED" />
+            </linearGradient>
+          </defs>
 
-      {/* NOSTRICH text */}
-      <motion.div
-        className="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1.8 }}
-      >
-        <span className="text-3xl font-bold bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">
-          NOSTRICH
-        </span>
-      </motion.div>
-    </motion.div>
+          {/* Body */}
+          <ellipse
+            className="nostrich-part"
+            style={{ animationDelay: "300ms", animationDuration: "0.8s" }}
+            cx="100"
+            cy="130"
+            rx="45"
+            ry="35"
+            fill="url(#ostrichGradient)"
+          />
+
+          {/* Neck */}
+          <rect
+            className="nostrich-neck"
+            style={{ animationDelay: "500ms" }}
+            x="85"
+            y="60"
+            width="30"
+            height="70"
+            rx="15"
+            fill="url(#ostrichGradient)"
+          />
+
+          {/* Head */}
+          <ellipse
+            className="nostrich-part"
+            style={{ animationDelay: "800ms", animationDuration: "0.5s" }}
+            cx="100"
+            cy="50"
+            rx="25"
+            ry="20"
+            fill="url(#ostrichGradient)"
+          />
+
+          {/* Beak */}
+          <path
+            className="nostrich-beak"
+            style={{ animationDelay: "1000ms" }}
+            d="M 120 50 L 145 55 L 120 60 Z"
+            fill="#F59E0B"
+          />
+
+          {/* Eye */}
+          <circle
+            className="nostrich-part"
+            style={{ animationDelay: "1100ms", animationDuration: "0.3s" }}
+            cx="108"
+            cy="48"
+            r="5"
+            fill="white"
+          />
+          <circle
+            className="nostrich-part"
+            style={{ animationDelay: "1300ms", animationDuration: "0.2s" }}
+            cx="108"
+            cy="48"
+            r="2"
+            fill="#1F2937"
+          />
+
+          {/* Legs */}
+          <g className="nostrich-legs" style={{ animationDelay: "1200ms" }}>
+            <rect
+              x="80"
+              y="160"
+              width="8"
+              height="30"
+              rx="4"
+              fill="url(#ostrichGradient)"
+            />
+            <rect
+              x="112"
+              y="160"
+              width="8"
+              height="30"
+              rx="4"
+              fill="url(#ostrichGradient)"
+            />
+          </g>
+
+          {/* Crown feathers (showing it's the "king" of decentralized social) */}
+          <g className="nostrich-crown" style={{ animationDelay: "1400ms" }}>
+            <path
+              d="M 85 35 Q 75 15 85 25"
+              stroke="#8B5CF6"
+              strokeWidth="3"
+              fill="none"
+            />
+            <path
+              d="M 100 30 Q 100 10 100 22"
+              stroke="#8B5CF6"
+              strokeWidth="3"
+              fill="none"
+            />
+            <path
+              d="M 115 35 Q 125 15 115 25"
+              stroke="#8B5CF6"
+              strokeWidth="3"
+              fill="none"
+            />
+          </g>
+        </svg>
+
+        {/* Key icon on body */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div
+            className="animate-scale-in motion-reduce:animate-none"
+            style={{ animationDelay: "1600ms", animationDuration: "0.5s" }}
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              strokeWidth="2"
+            >
+              <circle cx="12" cy="12" r="3" />
+              <path d="M12 12 L12 2 M12 2 L14 4 M12 2 L10 4" />
+            </svg>
+          </div>
+        </div>
+
+        {/* NOSTRICH text */}
+        <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap">
+          <div
+            className="animate-slide-up motion-reduce:animate-none"
+            style={{ animationDelay: "1800ms", animationDuration: "0.8s" }}
+          >
+            <span className="text-3xl font-bold bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">
+              NOSTRICH
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -324,24 +383,13 @@ function FloatingElements() {
   return (
     <>
       {elements.map((el, i) => (
-        <motion.div
+        <div
           key={i}
-          className="absolute text-2xl"
-          style={{ left: el.x, top: el.y }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{
-            opacity: [0.4, 0.8, 0.4],
-            y: [0, -20, 0],
-          }}
-          transition={{
-            duration: 4,
-            delay: el.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          className="nostrich-float absolute text-2xl"
+          style={{ left: el.x, top: el.y, animationDelay: `${el.delay}s` }}
         >
           {el.icon}
-        </motion.div>
+        </div>
       ))}
     </>
   );
@@ -359,20 +407,17 @@ function ConnectionBeams() {
   return (
     <svg className="absolute inset-0 w-full h-full pointer-events-none">
       {beams.map((beam, i) => (
-        <motion.line
+        <line
           key={i}
+          className="nostrich-beam"
+          pathLength={1}
           x1={beam.x1}
           y1={beam.y1}
           x2={beam.x2}
           y2={beam.y2}
           stroke="url(#beamGradient)"
           strokeWidth="2"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: [0.2, 0.6, 0.2] }}
-          transition={{
-            pathLength: { duration: 2, delay: i * 0.3 },
-            opacity: { duration: 3, repeat: Infinity, delay: i * 0.5 },
-          }}
+          style={{ animationDelay: `${i * 0.3}s, ${i * 0.5}s` }}
         />
       ))}
       <defs>

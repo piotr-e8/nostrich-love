@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   Globe,
   Zap,
@@ -614,13 +613,9 @@ export function RelayExplorer({
       <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 md:p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4"
-          >
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4 animate-scale-in motion-reduce:animate-none">
             <Globe className="w-8 h-8 text-primary-600 dark:text-primary-400" />
-          </motion.div>
+          </div>
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
             {t('relayExplorer.title')}
           </h2>
@@ -768,16 +763,12 @@ export function RelayExplorer({
 
         {/* Relay Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <AnimatePresence mode="popLayout">
-            {filteredRelays.map((relay) => (
-              <motion.div
+          {filteredRelays.map((relay) => (
+              <div
                 key={relay.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
                 className={cn(
                   "relative border rounded-xl p-4 transition-all cursor-pointer",
+                  "animate-scale-in motion-reduce:animate-none",
                   selectedRelays.has(relay.url)
                     ? "border-primary-500 bg-primary-500/10"
                     : "border-gray-200 dark:border-gray-700 hover:border-gray-600 hover:bg-gray-100 dark:bg-gray-800/30",
@@ -889,9 +880,8 @@ export function RelayExplorer({
                     <X className="w-4 h-4" />
                   </button>
                 )}
-              </motion.div>
+              </div>
             ))}
-          </AnimatePresence>
         </div>
 
         {/* Empty State */}
@@ -937,14 +927,11 @@ export function RelayExplorer({
       </div>
 
       {/* Toast */}
-      <AnimatePresence>
-        {toast && (
-          <motion.div
-            initial={{ opacity: 0, y: 50, x: "-50%" }}
-            animate={{ opacity: 1, y: 0, x: "-50%" }}
-            exit={{ opacity: 0, y: 20, x: "-50%" }}
+      {toast && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+          <div
             className={cn(
-              "fixed bottom-6 left-1/2 px-6 py-3 rounded-xl shadow-2xl z-50 flex items-center gap-2",
+              "px-6 py-3 rounded-xl shadow-2xl flex items-center gap-2 animate-slide-up motion-reduce:animate-none",
               toast.type === "success" && "bg-success-500 text-white",
               toast.type === "error" && "bg-error-500 text-white",
               toast.type === "info" && "bg-primary-500 text-white",
@@ -954,9 +941,9 @@ export function RelayExplorer({
             {toast.type === "error" && <AlertCircle className="w-5 h-5" />}
             {toast.type === "info" && <Info className="w-5 h-5" />}
             {toast.message}
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

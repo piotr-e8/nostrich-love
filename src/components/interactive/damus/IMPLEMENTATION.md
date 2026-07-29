@@ -75,13 +75,12 @@ TAP_SCALE: 0.92  // iOS button tap feedback
 ✅ Toast notifications  
 
 ### Performance
-✅ Optimized with `will-change` and `transform`  
-✅ AnimatePresence for enter/exit animations  
-✅ Motion values for smooth gestures  
+✅ Optimized with `transform`-based animations  
+✅ CSS transitions/keyframes for enter/exit animations (no framer-motion)  
 ✅ GPU-accelerated animations only
 
 ## Technical Stack
-- **Framer Motion** - All animations and gestures
+- **CSS transitions + Tailwind keyframes** - All animations (framer-motion was removed)
 - **React** - Component architecture
 - **Tailwind CSS** - Styling
 - **Lucide React** - Icons

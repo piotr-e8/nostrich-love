@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Send, Server, User, ArrowRight } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
@@ -69,13 +68,11 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
 
           return (
             <React.Fragment key={s.id}>
-              <motion.div
-                animate={{
-                  scale: isCurrent ? 1.1 : 1,
-                  opacity: isActive ? 1 : 0.5,
-                }}
+              <div
                 className={cn(
-                  "flex flex-col items-center gap-2 p-4 rounded-xl transition-all",
+                  "flex flex-col items-center gap-2 p-4 rounded-xl transition-all motion-reduce:transition-none",
+                  isCurrent ? "scale-110" : "scale-100",
+                  isActive ? "opacity-100" : "opacity-50",
                   isActive ? "bg-primary-500/20" : "bg-white dark:bg-gray-800",
                 )}
               >
@@ -91,22 +88,21 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
                 </div>
                 <span className="text-xs text-gray-900 dark:text-white">{s.label}</span>
                 {isCurrent && (
-                  <motion.span
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-xs text-primary-400"
-                  >
+                  <span className="animate-slide-down motion-reduce:animate-none text-xs text-primary-400">
                     {s.description}
-                  </motion.span>
+                  </span>
                 )}
-              </motion.div>
+              </div>
 
               {index < steps.length - 1 && (
-                <motion.div
-                  animate={{ opacity: isActive && step > index ? 1 : 0.3 }}
+                <div
+                  className={cn(
+                    "transition-opacity motion-reduce:transition-none",
+                    isActive && step > index ? "opacity-100" : "opacity-30",
+                  )}
                 >
                   <ArrowRight className="w-5 h-5 text-gray-500" />
-                </motion.div>
+                </div>
               )}
             </React.Fragment>
           );

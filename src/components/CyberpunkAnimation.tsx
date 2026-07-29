@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../lib/utils";
 import { LogoText } from "./ui/LogoText";
 
@@ -14,6 +13,10 @@ import { LogoText } from "./ui/LogoText";
  * - Circuit board patterns with bloom effects
  * - Retro-futuristic aesthetic
  * - Accessibility: prefers-reduced-motion support
+ *
+ * Animations are plain CSS. Bespoke keyframes live in the <style> block
+ * below (motion-library removal #28); shared enter animations come from
+ * tailwind.config.js.
  */
 
 interface RelayNode {
@@ -43,11 +46,11 @@ export function CyberpunkHeroAnimation({ className }: { className?: string }) {
 
   useEffect(() => {
     setMounted(true);
-    
+
     // Check for reduced motion preference
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     setPrefersReducedMotion(mediaQuery.matches);
-    
+
     const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
     mediaQuery.addEventListener('change', handler);
     return () => {
@@ -73,16 +76,16 @@ export function CyberpunkHeroAnimation({ className }: { className?: string }) {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const url = relayUrls[Math.floor(Math.random() * relayUrls.length)];
-    
+
     const newNode: RelayNode = {
       id: Date.now(),
       x,
       y,
       url,
     };
-    
+
     setRelayNodes(prev => [...prev, newNode]);
-    
+
     // Remove node after 3 seconds - track timeout for cleanup
     const timeout = setTimeout(() => {
       setRelayNodes(prev => prev.filter(n => n.id !== newNode.id));
@@ -119,9 +122,75 @@ export function CyberpunkHeroAnimation({ className }: { className?: string }) {
       onMouseMove={handleMouseMove}
       onClick={handleClick}
     >
+      {/* Bespoke keyframes for this decorative art component. Names are
+          prefixed to avoid collisions (the style tag is not scoped). */}
+      <style>{`
+        @keyframes cyber-flash {
+          from { transform: scale(0); opacity: 1; }
+          to { transform: scale(3); opacity: 0; }
+        }
+        @keyframes cyber-rain {
+          from { transform: translateY(0); }
+          to { transform: translateY(200px); }
+        }
+        @keyframes cyber-shockwave {
+          from { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+          to { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+        }
+        @keyframes cyber-orbit {
+          from { transform: translate(0, 0); }
+          to { transform: translate(var(--orbit-x), var(--orbit-y)); }
+        }
+        @keyframes cyber-float {
+          0%, 100% { transform: translateY(0) scale(1); opacity: 0.4; }
+          50% { transform: translateY(-15px) scale(1.2); opacity: 0.9; }
+        }
+        @keyframes cyber-hover-pop {
+          to { transform: scale(1.5) rotate(360deg); opacity: 1; }
+        }
+        @keyframes cyber-beam-draw {
+          from { stroke-dashoffset: 1; }
+          to { stroke-dashoffset: 0; }
+        }
+        @keyframes cyber-beam-pulse {
+          0%, 100% { opacity: 0.2; }
+          50% { opacity: 0.6; }
+        }
+        .cyber-flash {
+          animation: cyber-flash 0.5s ease-out forwards;
+        }
+        .cyber-rain {
+          animation: cyber-rain linear infinite;
+        }
+        .cyber-shockwave {
+          animation: cyber-shockwave 1s ease-out forwards;
+        }
+        .cyber-orbit {
+          animation: cyber-orbit 4s ease-in-out infinite alternate;
+        }
+        .cyber-float {
+          animation: cyber-float ease-in-out infinite;
+        }
+        .cyber-hover-pop {
+          animation: cyber-hover-pop 0.5s ease-out forwards;
+        }
+        .cyber-beam {
+          stroke-dasharray: 1;
+          animation:
+            cyber-beam-draw 2s ease-out both,
+            cyber-beam-pulse 3s ease-in-out infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .cyber-flash, .cyber-rain, .cyber-shockwave, .cyber-orbit,
+          .cyber-float, .cyber-hover-pop, .cyber-beam {
+            animation: none;
+          }
+        }
+      `}</style>
+
       {/* Animated grid background */}
-      <div 
-        className="absolute inset-0 bg-gradient-to-b from-black via-purple-950/20 to-black" 
+      <div
+        className="absolute inset-0 bg-gradient-to-b from-black via-purple-950/20 to-black"
         aria-hidden="true"
       />
 
@@ -130,7 +199,7 @@ export function CyberpunkHeroAnimation({ className }: { className?: string }) {
         <div
           className="absolute inset-0 pointer-events-none z-5 transition-opacity duration-300"
           style={{
-            background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, 
+            background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px,
               rgba(139, 92, 246, 0.15), transparent 50%)`,
           }}
           aria-hidden="true"
@@ -188,16 +257,14 @@ export function CyberpunkHeroAnimation({ className }: { className?: string }) {
       <CircuitHub prefersReducedMotion={prefersReducedMotion} />
 
       {/* Click-spawned relay nodes */}
-      <AnimatePresence>
-        {relayNodes.map((node) => (
-          <RelayNodeComponent key={node.id} node={node} />
-        ))}
-      </AnimatePresence>
+      {relayNodes.map((node) => (
+        <RelayNodeComponent key={node.id} node={node} />
+      ))}
 
       {/* Logo text with scramble effect
       <div className="absolute bottom-20 left-1/2 -translate-x-1/2 text-center pointer-events-auto">
-        <LogoText 
-          enableScramble={!prefersReducedMotion} 
+        <LogoText
+          enableScramble={!prefersReducedMotion}
           enableGlitch={!prefersReducedMotion}
           showTagline={true}
           size="lg"
@@ -208,8 +275,8 @@ export function CyberpunkHeroAnimation({ className }: { className?: string }) {
       {!prefersReducedMotion && <FloatingCyberElements />}
 
       {/* Scan lines - reduced opacity */}
-      <div 
-        className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.15)_50%),linear-gradient(90deg,rgba(255,0,0,0.04),rgba(0,255,0,0.01),rgba(0,0,255,0.04))] z-10 pointer-events-none bg-[length:100%_2px,3px_100%] opacity-60" 
+      <div
+        className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.15)_50%),linear-gradient(90deg,rgba(255,0,0,0.04),rgba(0,255,0,0.01),rgba(0,0,255,0.04))] z-10 pointer-events-none bg-[length:100%_2px,3px_100%] opacity-60"
         aria-hidden="true"
       />
 
@@ -228,38 +295,29 @@ export function CyberpunkHeroAnimation({ className }: { className?: string }) {
 
 function RelayNodeComponent({ node }: { node: RelayNode }) {
   return (
-    <motion.div
-      className="absolute pointer-events-none"
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      exit={{ scale: 0, opacity: 0 }}
-      transition={{ duration: 0.3 }}
+    <div
+      className="animate-scale-in motion-reduce:animate-none absolute pointer-events-none"
       style={{ left: node.x - 20, top: node.y - 20 }}
     >
       {/* Flash effect */}
-      <motion.div
-        className="absolute inset-0 rounded-full bg-cyan-400"
-        initial={{ scale: 0, opacity: 1 }}
-        animate={{ scale: 3, opacity: 0 }}
-        transition={{ duration: 0.5 }}
-      />
-      
+      <div className="cyber-flash absolute inset-0 rounded-full bg-cyan-400" />
+
       {/* Node */}
       <div className="relative w-10 h-10 flex items-center justify-center">
         <div className="absolute inset-0 rounded-full border-2 border-cyan-400 bg-cyan-400/20 animate-pulse" />
         <div className="w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.8)]" />
       </div>
-      
+
       {/* Label */}
-      <motion.div
-        className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs text-cyan-400 font-mono"
-        initial={{ opacity: 0, y: -5 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-      >
-        {node.url}
-      </motion.div>
-    </motion.div>
+      <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs text-cyan-400 font-mono">
+        <div
+          className="animate-slide-down motion-reduce:animate-none"
+          style={{ animationDelay: "200ms" }}
+        >
+          {node.url}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -267,9 +325,9 @@ function MatrixRain() {
   const characters =
     "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
   const nostrMessages = ["DECENTRALIZED", "CENSORSHIP", "RESISTANT", "NOSTR", "FREEDOM", "PRIVACY"];
-  
+
   // Memoize random values to prevent re-renders
-  const [columns] = useState(() => 
+  const [columns] = useState(() =>
     [...Array(10)].map((_, i) => ({
       left: `${i * 10 + 5}%`,
       delay: Math.random() * 5,
@@ -277,7 +335,7 @@ function MatrixRain() {
       isFast: Math.random() > 0.7,
       showMessage: Math.random() > 0.9,
       message: nostrMessages[Math.floor(Math.random() * nostrMessages.length)],
-      characters: [...Array(20)].map(() => 
+      characters: [...Array(20)].map(() =>
         characters[Math.floor(Math.random() * characters.length)]
       ),
     }))
@@ -286,10 +344,10 @@ function MatrixRain() {
   return (
     <>
       {columns.map((col, i) => (
-        <motion.div
+        <div
           key={i}
           className={cn(
-            "absolute font-mono whitespace-nowrap overflow-hidden",
+            "cyber-rain absolute font-mono whitespace-nowrap overflow-hidden",
             col.isFast ? "text-cyan-300/50 text-sm" : "text-cyan-500/30 text-xs"
           )}
           style={{
@@ -300,14 +358,8 @@ function MatrixRain() {
             writingMode: "vertical-rl",
             textOrientation: "upright",
             willChange: "transform",
-          }}
-          initial={{ y: -100 }}
-          animate={{ y: [0, 200] }}
-          transition={{
-            duration: col.isFast ? col.duration * 0.5 : col.duration,
-            repeat: Infinity,
-            ease: "linear",
-            delay: col.delay,
+            animationDuration: `${col.isFast ? col.duration * 0.5 : col.duration}s`,
+            animationDelay: `${col.delay}s`,
           }}
           aria-hidden="true"
         >
@@ -322,7 +374,7 @@ function MatrixRain() {
               <span key={j}>{char}</span>
             ))
           )}
-        </motion.div>
+        </div>
       ))}
     </>
   );
@@ -332,29 +384,23 @@ function CircuitHub({ prefersReducedMotion }: { prefersReducedMotion: boolean })
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div 
+    <div
       className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Shockwave on hover */}
-      <AnimatePresence>
-        {isHovered && !prefersReducedMotion && (
-          <motion.div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-cyan-400"
-            initial={{ width: 0, height: 0, opacity: 1 }}
-            animate={{ width: 400, height: 400, opacity: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-          />
-        )}
-      </AnimatePresence>
+      {/* Shockwave on hover (one-shot, stays faded out while hover persists) */}
+      {isHovered && !prefersReducedMotion && (
+        <div className="cyber-shockwave absolute left-1/2 top-1/2 w-[400px] h-[400px] rounded-full border-2 border-cyan-400" />
+      )}
 
       {/* Outer rotating ring */}
-      <motion.div
-        className="absolute inset-0 w-64 h-64 -m-32"
-        animate={prefersReducedMotion ? {} : { rotate: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+      <div
+        className={cn(
+          "absolute inset-0 w-64 h-64 -m-32",
+          !prefersReducedMotion &&
+            "animate-spin motion-reduce:animate-none [animation-duration:20s]"
+        )}
         style={{ willChange: "transform" }}
       >
         <svg viewBox="0 0 100 100" className="w-full h-full">
@@ -369,13 +415,15 @@ function CircuitHub({ prefersReducedMotion }: { prefersReducedMotion: boolean })
             opacity="0.5"
           />
         </svg>
-      </motion.div>
+      </div>
 
       {/* Inner rotating ring (opposite direction) */}
-      <motion.div
-        className="absolute inset-0 w-48 h-48 -m-24"
-        animate={prefersReducedMotion ? {} : { rotate: -360 }}
-        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+      <div
+        className={cn(
+          "absolute inset-0 w-48 h-48 -m-24",
+          !prefersReducedMotion &&
+            "animate-spin motion-reduce:animate-none [animation-duration:15s] [animation-direction:reverse]"
+        )}
         style={{ willChange: "transform" }}
       >
         <svg viewBox="0 0 100 100" className="w-full h-full">
@@ -390,25 +438,22 @@ function CircuitHub({ prefersReducedMotion }: { prefersReducedMotion: boolean })
             opacity="0.6"
           />
         </svg>
-      </motion.div>
+      </div>
 
       {/* Central key icon with glow */}
-      <motion.div
-        className="relative w-24 h-24 cursor-pointer"
-        animate={prefersReducedMotion ? {} : {
-          scale: [1, 1.1, 1],
-        }}
-        transition={{ duration: 3, repeat: Infinity }}
-        whileHover={prefersReducedMotion ? {} : { scale: 1.15, rotate: 5 }}
+      <div
+        className={cn(
+          "relative w-24 h-24 cursor-pointer",
+          !prefersReducedMotion &&
+            "animate-pulse-scale motion-reduce:animate-none [animation-duration:3s]"
+        )}
       >
         {/* Neon bloom glow - hexagon shaped to match SVG */}
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          animate={prefersReducedMotion ? {} : {
-            scale: [1, 1.2, 1],
-            opacity: [0.4, 0.7, 0.4],
-          }}
-          transition={{ duration: 3, repeat: Infinity }}
+        <div
+          className={cn(
+            "absolute inset-0 flex items-center justify-center pointer-events-none",
+            !prefersReducedMotion && "animate-pulse motion-reduce:animate-none [animation-duration:3s]"
+          )}
         >
           <svg viewBox="0 0 100 100" className="w-[120%] h-[120%]" style={{ filter: "blur(15px)" }}>
             <polygon
@@ -417,8 +462,8 @@ function CircuitHub({ prefersReducedMotion }: { prefersReducedMotion: boolean })
               opacity="0.6"
             />
           </svg>
-        </motion.div>
-        
+        </div>
+
         <svg viewBox="0 0 100 100" className="w-full h-full relative">
           <defs>
             <linearGradient
@@ -482,31 +527,26 @@ function CircuitHub({ prefersReducedMotion }: { prefersReducedMotion: boolean })
             />
           </g>
         </svg>
-      </motion.div>
+      </div>
 
       {/* Orbiting nodes */}
       {!prefersReducedMotion && [0, 90, 180, 270].map((angle, i) => (
-        <motion.div
+        <div
           key={i}
-          className="absolute w-3 h-3"
-          style={{
-            left: "50%",
-            top: "50%",
-          }}
-          animate={{
-            x: [0, Math.cos((angle * Math.PI) / 180) * 80],
-            y: [0, Math.sin((angle * Math.PI) / 180) * 80],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            repeatType: "reverse",
-            delay: i * 0.5,
-          }}
+          className="cyber-orbit absolute w-3 h-3"
+          style={
+            {
+              left: "50%",
+              top: "50%",
+              "--orbit-x": `${Math.cos((angle * Math.PI) / 180) * 80}px`,
+              "--orbit-y": `${Math.sin((angle * Math.PI) / 180) * 80}px`,
+              animationDelay: `${i * 0.5}s`,
+            } as React.CSSProperties
+          }
           aria-hidden="true"
         >
           <div className="w-full h-full bg-cyan-400 rounded-full shadow-[0_0_10px_rgba(6,182,212,0.8)]" />
-        </motion.div>
+        </div>
       ))}
     </div>
   );
@@ -527,76 +567,58 @@ function FloatingCyberElements() {
   return (
     <>
       {elements.map((el, i) => (
-        <motion.div
+        <div
           key={i}
           className={cn(
             "absolute text-2xl cursor-pointer select-none",
+            hoveredIndex === i ? "cyber-hover-pop" : "cyber-float",
             el.color
           )}
-          style={{ left: el.x, top: el.y }}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{
-            opacity: hoveredIndex === i ? 1 : [0.4, 0.9, 0.4],
-            scale: hoveredIndex === i ? 1.5 : [1, 1.2, 1],
-            y: [0, -15, 0],
-            rotate: hoveredIndex === i ? 360 : 0,
-          }}
-          transition={{
-            duration: 4 + i,
-            delay: i * 0.3,
-            repeat: Infinity,
-            ease: "easeInOut",
-            rotate: { duration: 0.5 },
+          style={{
+            left: el.x,
+            top: el.y,
+            animationDuration: hoveredIndex === i ? undefined : `${4 + i}s`,
+            animationDelay: hoveredIndex === i ? undefined : `${i * 0.3}s`,
           }}
           onMouseEnter={() => setHoveredIndex(i)}
           onMouseLeave={() => setHoveredIndex(null)}
-          whileHover={{ scale: 1.5 }}
           aria-hidden="true"
         >
-          <span 
-            style={{ 
-              filter: hoveredIndex === i 
-                ? "drop-shadow(0 0 15px currentColor)" 
-                : "drop-shadow(0 0 8px currentColor)" 
+          <span
+            style={{
+              filter: hoveredIndex === i
+                ? "drop-shadow(0 0 15px currentColor)"
+                : "drop-shadow(0 0 8px currentColor)"
             }}
           >
             {el.icon}
           </span>
-          
+
           {/* Label on hover */}
-          <AnimatePresence>
-            {hoveredIndex === i && (
-              <motion.span
-                className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs whitespace-nowrap text-white font-mono"
-                initial={{ opacity: 0, y: -5 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -5 }}
-                transition={{ duration: 0.2 }}
-              >
+          {hoveredIndex === i && (
+            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs whitespace-nowrap text-white font-mono">
+              <span className="animate-slide-down motion-reduce:animate-none inline-block">
                 {el.label}
-              </motion.span>
-            )}
-          </AnimatePresence>
-        </motion.div>
+              </span>
+            </span>
+          )}
+        </div>
       ))}
 
       {/* Additional circuit lines */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true">
         {[...Array(5)].map((_, i) => (
-          <motion.line
+          <line
             key={`circuit-${i}`}
+            className="cyber-beam"
+            pathLength={1}
             x1={`${20 + i * 15}%`}
             y1="85%"
             x2={`${25 + i * 15}%`}
             y2="95%"
             stroke="#8B5CF6"
             strokeWidth="1"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: [0.2, 0.6, 0.2] }}
-            transition={{
-              pathLength: { duration: 2, delay: i * 0.2 },
-              opacity: { duration: 3, repeat: Infinity, delay: i * 0.3 },
-            }}
+            style={{ animationDelay: `${i * 0.2}s, ${i * 0.3}s` }}
           />
         ))}
       </svg>

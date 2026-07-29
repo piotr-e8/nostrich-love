@@ -5,8 +5,7 @@
  * Displays guides completed, streak days, badges earned, and next milestone
  */
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
 import {
   BookOpen,
   Flame,
@@ -24,6 +23,21 @@ export function ProgressTracker({
   showMilestone = true,
   compact = false,
 }: ProgressTrackerProps) {
+  // Progress indicators mount in their zero state, then `entered` flips on
+  // the next frame and CSS transitions them to the real value (StreakBanner idiom).
+  const [entered, setEntered] = useState(false);
+
+  useEffect(() => {
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => setEntered(true));
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, []);
+
   const completionPercentage = Math.round(
     (progress.guidesCompleted / progress.totalGuides) * 100
   );
@@ -80,16 +94,13 @@ export function ProgressTracker({
                 stroke="currentColor"
                 strokeWidth="3"
               />
-              <motion.path
-                className="text-friendly-purple-700 dark:text-friendly-purple-400"
+              <path
+                className="text-friendly-purple-700 dark:text-friendly-purple-400 [transition:stroke-dasharray_1s_ease-out] motion-reduce:transition-none"
                 d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="3"
-                strokeDasharray={`${completionPercentage}, 100`}
-                initial={{ strokeDasharray: '0, 100' }}
-                animate={{ strokeDasharray: `${completionPercentage}, 100` }}
-                transition={{ duration: 1, ease: 'easeOut' }}
+                strokeDasharray={entered ? `${completionPercentage}, 100` : '0, 100'}
               />
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
@@ -154,11 +165,9 @@ export function ProgressTracker({
             </span>
           </div>
           <div className="h-3 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
-            <motion.div
-              className="h-full bg-gradient-to-r from-friendly-purple to-friendly-gold rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: `${completionPercentage}%` }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
+            <div
+              className="h-full bg-gradient-to-r from-friendly-purple to-friendly-gold rounded-full transition-[width] duration-[800ms] ease-out motion-reduce:transition-none"
+              style={{ width: entered ? `${completionPercentage}%` : '0%' }}
               role="progressbar"
               aria-valuenow={completionPercentage}
               aria-valuemin={0}
@@ -228,11 +237,9 @@ export function ProgressTracker({
 
           {/* Milestone Progress */}
           <div className="mt-3 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-            <motion.div
-              className="h-full bg-friendly-gold rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: `${milestonePercentage}%` }}
-              transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+            <div
+              className="h-full bg-friendly-gold rounded-full transition-[width] duration-[800ms] delay-200 ease-out motion-reduce:transition-none"
+              style={{ width: entered ? `${milestonePercentage}%` : '0%' }}
               role="progressbar"
               aria-valuenow={milestonePercentage}
               aria-valuemin={0}

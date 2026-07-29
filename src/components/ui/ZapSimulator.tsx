@@ -1,5 +1,4 @@
 import React, { useId, useState } from "react";
-import { motion } from "framer-motion";
 import { Zap, Bitcoin, ArrowRight, Check, Copy } from "lucide-react";
 import { cn, copyToClipboard } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
@@ -106,28 +105,25 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
           </div>
         </div>
 
-        <motion.button
+        <button
           onClick={handleZap}
-          whileTap={{ scale: 0.98 }}
-          className="w-full py-4 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-semibold flex items-center justify-center gap-2 transition-all"
+          className="w-full py-4 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-semibold flex items-center justify-center gap-2 transition-all active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none"
         >
           <Bitcoin className="w-5 h-5" />
           {t('zapSimulator.buttons.pay')} {amount.toLocaleString()} sats
           <ArrowRight className="w-5 h-5" />
-        </motion.button>
+        </button>
 
         {showSuccess && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-green-100 dark:bg-green-500/20 border border-green-300 dark:border-green-500/30 rounded-lg p-4 text-center"
+          <div
+            className="animate-slide-up motion-reduce:animate-none bg-green-100 dark:bg-green-500/20 border border-green-300 dark:border-green-500/30 rounded-lg p-4 text-center"
           >
             <Zap className="w-6 h-6 text-green-600 dark:text-green-500 mx-auto mb-2" />
             <p className="text-green-700 dark:text-green-400 font-medium">{t('zapSimulator.steps.confirm')}</p>
             <p className="text-green-600 dark:text-green-400/70 text-sm">
               {t('zapSimulator.description')}
             </p>
-          </motion.div>
+          </div>
         )}
       </div>
     </div>

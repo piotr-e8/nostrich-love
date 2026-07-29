@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect } from "react";
 import {
   Mail,
   Home,
@@ -100,6 +99,25 @@ export function NostrSimulator({ className }: { className?: string }) {
 
   const isAnimating = animationPhase !== "idle";
 
+  // Drives the envelope transit: letters mount at their origin, then
+  // `phaseEntered` flips on the next frame and CSS transitions them to the
+  // destination (double-rAF idiom from StreakBanner). "complete" keeps the
+  // delivering positions so the letters stay parked at the recipients.
+  const [phaseEntered, setPhaseEntered] = useState(false);
+  useEffect(() => {
+    if (animationPhase === "complete") return;
+    setPhaseEntered(false);
+    if (animationPhase !== "sending" && animationPhase !== "delivering") return;
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => setPhaseEntered(true));
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [animationPhase]);
+
   return (
     <div className={cn("w-full my-8", className)}>
       <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 md:p-8">
@@ -117,20 +135,13 @@ export function NostrSimulator({ className }: { className?: string }) {
         </div>
 
         {/* Animation Status */}
-        <AnimatePresence mode="wait">
-          {currentMessage && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="mb-6 text-center"
-            >
-              <span className="inline-block bg-purple-500/20 text-purple-300 px-5 py-2.5 rounded-full text-sm font-medium border border-purple-500/30">
-                {currentMessage}
-              </span>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {currentMessage && (
+          <div className="mb-6 text-center animate-slide-down motion-reduce:animate-none">
+            <span className="inline-block bg-purple-500/20 text-purple-300 px-5 py-2.5 rounded-full text-sm font-medium border border-purple-500/30">
+              {currentMessage}
+            </span>
+          </div>
+        )}
 
         {/* Visualization */}
         <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 mb-8 border border-gray-700/50">
@@ -142,7 +153,7 @@ export function NostrSimulator({ className }: { className?: string }) {
             >
               {/* Connection Lines */}
               {connections.alice.map((relay) => (
-                <motion.line
+                <line
                   key={`alice-${relay}`}
                   x1="80"
                   y1="175"
@@ -151,13 +162,12 @@ export function NostrSimulator({ className }: { className?: string }) {
                   stroke={isAnimating ? "#8b5cf6" : "#4b5563"}
                   strokeWidth="2"
                   strokeDasharray="6 4"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 0.6 }}
-                  transition={{ duration: 0.5 }}
+                  opacity="0.6"
+                  className="animate-fade-in motion-reduce:animate-none"
                 />
               ))}
               {connections.bob.map((relay) => (
-                <motion.line
+                <line
                   key={`bob-${relay}`}
                   x1="520"
                   y1="87"
@@ -166,13 +176,12 @@ export function NostrSimulator({ className }: { className?: string }) {
                   stroke={isAnimating ? "#8b5cf6" : "#4b5563"}
                   strokeWidth="2"
                   strokeDasharray="6 4"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 0.6 }}
-                  transition={{ duration: 0.5 }}
+                  opacity="0.6"
+                  className="animate-fade-in motion-reduce:animate-none"
                 />
               ))}
               {connections.carol.map((relay) => (
-                <motion.line
+                <line
                   key={`carol-${relay}`}
                   x1="520"
                   y1="262"
@@ -181,42 +190,32 @@ export function NostrSimulator({ className }: { className?: string }) {
                   stroke={isAnimating ? "#8b5cf6" : "#4b5563"}
                   strokeWidth="2"
                   strokeDasharray="6 4"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 0.6 }}
-                  transition={{ duration: 0.5 }}
+                  opacity="0.6"
+                  className="animate-fade-in motion-reduce:animate-none"
                 />
               ))}
 
               {/* Animation: Alice to Post Offices */}
               {animationPhase === "sending" &&
                 connections.alice.map((relay) => (
-                  <motion.g key={`to-${relay}`}>
-                    <motion.circle
-                      r="12"
-                      fill="#fbbf24"
-                      stroke="#f59e0b"
-                      strokeWidth="2"
-                      initial={{ cx: 80, cy: 175 }}
-                      animate={{
-                        cx: 300,
-                        cy: relay === "relay1" ? 87 : 262,
-                      }}
-                      transition={{ duration: 0.8, ease: "easeInOut" }}
-                    />
-                    <motion.text
+                  <g
+                    key={`to-${relay}`}
+                    className="transition-transform duration-[800ms] ease-in-out motion-reduce:transition-none"
+                    style={{
+                      transform: phaseEntered
+                        ? `translate(300px, ${relay === "relay1" ? 87 : 262}px)`
+                        : "translate(80px, 175px)",
+                    }}
+                  >
+                    <circle r="12" fill="#fbbf24" stroke="#f59e0b" strokeWidth="2" />
+                    <text
                       fontSize="14"
                       textAnchor="middle"
                       dominantBaseline="middle"
-                      initial={{ x: 80, y: 175 }}
-                      animate={{
-                        x: 300,
-                        y: relay === "relay1" ? 87 : 262,
-                      }}
-                      transition={{ duration: 0.8, ease: "easeInOut" }}
                     >
                       ✉️
-                    </motion.text>
-                  </motion.g>
+                    </text>
+                  </g>
                 ))}
 
               {/* Animation: Processing Dots */}
@@ -226,19 +225,14 @@ export function NostrSimulator({ className }: { className?: string }) {
                   return (
                     <g key={`process-${relay}`}>
                       {[0, 1, 2].map((i) => (
-                        <motion.circle
+                        <circle
                           key={i}
                           cx={300 + (i - 1) * 15}
                           cy={y + 45}
                           r="5"
                           fill="#34d399"
-                          initial={{ scale: 0, opacity: 0 }}
-                          animate={{ scale: [0, 1, 0], opacity: [0, 1, 0] }}
-                          transition={{
-                            duration: 0.8,
-                            repeat: Infinity,
-                            delay: i * 0.2,
-                          }}
+                          className="animate-pulse motion-reduce:animate-none"
+                          style={{ animationDelay: `${i * 200}ms` }}
                         />
                       ))}
                     </g>
@@ -255,27 +249,24 @@ export function NostrSimulator({ className }: { className?: string }) {
                       const fromY = relay === "relay1" ? 87 : 262;
                       const toY = person === "bob" ? 87 : 262;
                       return (
-                        <motion.g key={`from-${relay}-to-${person}`}>
-                          <motion.circle
-                            r="12"
-                            fill="#fbbf24"
-                            stroke="#f59e0b"
-                            strokeWidth="2"
-                            initial={{ cx: 300, cy: fromY }}
-                            animate={{ cx: 520, cy: toY }}
-                            transition={{ duration: 0.8, ease: "easeInOut" }}
-                          />
-                          <motion.text
+                        <g
+                          key={`from-${relay}-to-${person}`}
+                          className="transition-transform duration-[800ms] ease-in-out motion-reduce:transition-none"
+                          style={{
+                            transform: phaseEntered
+                              ? `translate(520px, ${toY}px)`
+                              : `translate(300px, ${fromY}px)`,
+                          }}
+                        >
+                          <circle r="12" fill="#fbbf24" stroke="#f59e0b" strokeWidth="2" />
+                          <text
                             fontSize="14"
                             textAnchor="middle"
                             dominantBaseline="middle"
-                            initial={{ x: 300, y: fromY }}
-                            animate={{ x: 520, y: toY }}
-                            transition={{ duration: 0.8, ease: "easeInOut" }}
                           >
                             ✉️
-                          </motion.text>
-                        </motion.g>
+                          </text>
+                        </g>
                       );
                     })
                 )}
@@ -283,160 +274,139 @@ export function NostrSimulator({ className }: { className?: string }) {
 
             {/* Nodes */}
             {/* Alice */}
-            <motion.div
-              className={cn(
-                "absolute flex flex-col items-center justify-center",
-                "w-16 h-16 rounded-xl border-2 bg-rose-500/20 border-rose-500",
-                animationPhase === "sending" && "shadow-lg shadow-rose-500/30"
-              )}
+            <div
+              className="absolute"
               style={{ left: "13%", top: "50%", transform: "translate(-50%, -50%)" }}
-              animate={animationPhase === "sending" ? { scale: [1, 1.05, 1] } : {}}
-              transition={{ duration: 0.5, repeat: animationPhase === "sending" ? Infinity : 0 }}
+            >
+            <div
+              className={cn(
+                "flex flex-col items-center justify-center",
+                "w-16 h-16 rounded-xl border-2 bg-rose-500/20 border-rose-500",
+                animationPhase === "sending" &&
+                  "shadow-lg shadow-rose-500/30 animate-pulse-scale motion-reduce:animate-none"
+              )}
             >
               <div className="relative">
                 <Home className="w-6 h-6 text-rose-400" />
                 {animationPhase === "sending" && (
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 rounded-full border-2 border-gray-800"
-                  />
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 rounded-full border-2 border-gray-800 animate-scale-pop motion-reduce:animate-none" />
                 )}
               </div>
               <span className="absolute -bottom-7 text-white text-xs font-medium whitespace-nowrap bg-gray-900/90 px-2 py-0.5 rounded">
                 {t("nostrSimulator.nodes.alice")}
               </span>
-            </motion.div>
+            </div>
+            </div>
 
             {/* Bob */}
-            <motion.div
+            <div
+              className="absolute"
+              style={{ left: "87%", top: "25%", transform: "translate(-50%, -50%)" }}
+            >
+            <div
               className={cn(
-                "absolute flex flex-col items-center justify-center",
+                "flex flex-col items-center justify-center",
                 "w-16 h-16 rounded-xl border-2 bg-blue-500/20 border-blue-500",
                 animationPhase === "delivering" &&
                   receives("bob") &&
-                  "shadow-lg shadow-blue-500/30"
+                  "shadow-lg shadow-blue-500/30 animate-pulse-scale motion-reduce:animate-none"
               )}
-              style={{ left: "87%", top: "25%", transform: "translate(-50%, -50%)" }}
-              animate={
-                animationPhase === "delivering" && receives("bob")
-                  ? { scale: [1, 1.05, 1] }
-                  : {}
-              }
-              transition={{ duration: 0.5, repeat: animationPhase === "delivering" && receives("bob") ? Infinity : 0 }}
             >
               <div className="relative">
                 <Home className="w-6 h-6 text-blue-400" />
                 {animationPhase === "complete" && receives("bob") && (
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 rounded-full border-2 border-gray-800"
-                  />
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 rounded-full border-2 border-gray-800 animate-scale-pop motion-reduce:animate-none" />
                 )}
               </div>
               <span className="absolute -bottom-7 text-white text-xs font-medium whitespace-nowrap bg-gray-900/90 px-2 py-0.5 rounded">
                 {t("nostrSimulator.nodes.bob")}
               </span>
-            </motion.div>
+            </div>
+            </div>
 
             {/* Carol */}
-            <motion.div
+            <div
+              className="absolute"
+              style={{ left: "87%", top: "75%", transform: "translate(-50%, -50%)" }}
+            >
+            <div
               className={cn(
-                "absolute flex flex-col items-center justify-center",
+                "flex flex-col items-center justify-center",
                 "w-16 h-16 rounded-xl border-2 bg-violet-500/20 border-violet-500",
                 animationPhase === "delivering" &&
                   receives("carol") &&
-                  "shadow-lg shadow-violet-500/30"
+                  "shadow-lg shadow-violet-500/30 animate-pulse-scale motion-reduce:animate-none"
               )}
-              style={{ left: "87%", top: "75%", transform: "translate(-50%, -50%)" }}
-              animate={
-                animationPhase === "delivering" && receives("carol")
-                  ? { scale: [1, 1.05, 1] }
-                  : {}
-              }
-              transition={{ duration: 0.5, repeat: animationPhase === "delivering" && receives("carol") ? Infinity : 0 }}
             >
               <div className="relative">
                 <Home className="w-6 h-6 text-violet-400" />
                 {animationPhase === "complete" && receives("carol") && (
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 rounded-full border-2 border-gray-800"
-                  />
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 rounded-full border-2 border-gray-800 animate-scale-pop motion-reduce:animate-none" />
                 )}
               </div>
               <span className="absolute -bottom-7 text-white text-xs font-medium whitespace-nowrap bg-gray-900/90 px-2 py-0.5 rounded">
                 {t("nostrSimulator.nodes.carol")}
               </span>
-            </motion.div>
+            </div>
+            </div>
 
             {/* Post Office 1 */}
-            <motion.div
+            <div
+              className="absolute"
+              style={{ left: "50%", top: "25%", transform: "translate(-50%, -50%)" }}
+            >
+            <div
               className={cn(
-                "absolute flex flex-col items-center justify-center",
+                "flex flex-col items-center justify-center",
                 "w-20 h-20 rounded-xl border-2 bg-emerald-500/10 border-emerald-500/50",
                 animationPhase === "processing" &&
                   connections.alice.includes("relay1") &&
-                  "shadow-lg shadow-emerald-500/20"
+                  "shadow-lg shadow-emerald-500/20 animate-pulse-scale motion-reduce:animate-none"
               )}
-              style={{ left: "50%", top: "25%", transform: "translate(-50%, -50%)" }}
-              animate={
-                animationPhase === "processing" && connections.alice.includes("relay1")
-                  ? { scale: [1, 1.03, 1] }
-                  : {}
-              }
-              transition={{ duration: 0.6, repeat: animationPhase === "processing" && connections.alice.includes("relay1") ? Infinity : 0 }}
             >
               <div className="relative">
                 <Building2 className="w-7 h-7 text-emerald-400" />
                 {(animationPhase === "delivering" || animationPhase === "complete") &&
                   connections.alice.includes("relay1") && (
-                    <motion.div
-                      initial={{ y: -5, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      className="absolute -top-2 left-1/2 -translate-x-1/2"
-                    >
-                      <Mail className="w-4 h-4 text-amber-400" />
-                    </motion.div>
+                    <div className="absolute -top-2 left-1/2 -translate-x-1/2">
+                      <div className="animate-slide-down motion-reduce:animate-none">
+                        <Mail className="w-4 h-4 text-amber-400" />
+                      </div>
+                    </div>
                   )}
               </div>
               <span className="text-xs text-emerald-300 mt-1 font-medium">{t("nostrSimulator.nodes.office")} 1</span>
-            </motion.div>
+            </div>
+            </div>
 
             {/* Post Office 2 */}
-            <motion.div
+            <div
+              className="absolute"
+              style={{ left: "50%", top: "75%", transform: "translate(-50%, -50%)" }}
+            >
+            <div
               className={cn(
-                "absolute flex flex-col items-center justify-center",
+                "flex flex-col items-center justify-center",
                 "w-20 h-20 rounded-xl border-2 bg-emerald-500/10 border-emerald-500/50",
                 animationPhase === "processing" &&
                   connections.alice.includes("relay2") &&
-                  "shadow-lg shadow-emerald-500/20"
+                  "shadow-lg shadow-emerald-500/20 animate-pulse-scale motion-reduce:animate-none"
               )}
-              style={{ left: "50%", top: "75%", transform: "translate(-50%, -50%)" }}
-              animate={
-                animationPhase === "processing" && connections.alice.includes("relay2")
-                  ? { scale: [1, 1.03, 1] }
-                  : {}
-              }
-              transition={{ duration: 0.6, repeat: animationPhase === "processing" && connections.alice.includes("relay2") ? Infinity : 0 }}
             >
               <div className="relative">
                 <Building2 className="w-7 h-7 text-emerald-400" />
                 {(animationPhase === "delivering" || animationPhase === "complete") &&
                   connections.alice.includes("relay2") && (
-                    <motion.div
-                      initial={{ y: -5, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      className="absolute -top-2 left-1/2 -translate-x-1/2"
-                    >
-                      <Mail className="w-4 h-4 text-amber-400" />
-                    </motion.div>
+                    <div className="absolute -top-2 left-1/2 -translate-x-1/2">
+                      <div className="animate-slide-down motion-reduce:animate-none">
+                        <Mail className="w-4 h-4 text-amber-400" />
+                      </div>
+                    </div>
                   )}
               </div>
               <span className="text-xs text-emerald-300 mt-1 font-medium">{t("nostrSimulator.nodes.office")} 2</span>
-            </motion.div>
+            </div>
+            </div>
           </div>
         </div>
 

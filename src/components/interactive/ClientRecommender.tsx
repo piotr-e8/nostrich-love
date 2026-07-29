@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   Smartphone,
   Monitor,
@@ -356,13 +355,9 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
         <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 md:p-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="inline-flex items-center justify-center w-16 h-16 bg-success-500/20 rounded-2xl mb-4"
-            >
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-success-500/20 rounded-2xl mb-4 animate-scale-in motion-reduce:animate-none">
               <Award className="w-8 h-8 text-success-500" />
-            </motion.div>
+            </div>
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
               {t('clientRecommender.title')}
             </h2>
@@ -372,11 +367,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
           </div>
 
           {/* Top Recommendation */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-gradient-to-br from-primary-500/20 to-primary-600/10 border-2 border-primary-500 rounded-2xl p-6 mb-6"
-          >
+          <div className="bg-gradient-to-br from-primary-500/20 to-primary-600/10 border-2 border-primary-500 rounded-2xl p-6 mb-6 animate-slide-up motion-reduce:animate-none">
             <div className="flex items-start gap-4 mb-4">
               <div className="w-16 h-16 bg-primary-500 rounded-2xl flex items-center justify-center flex-shrink-0">
                 <span className="text-2xl font-bold text-white">
@@ -473,18 +464,16 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                 </a>
               )}
             </div>
-          </motion.div>
+          </div>
 
           {/* Alternatives */}
           {recommendations.length > 1 && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {recommendations.slice(1).map((client, index) => (
-                <motion.div
+                <div
                   key={client.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-gray-800/50 border border-gray-700 rounded-xl p-4"
+                  className="bg-gray-800/50 border border-gray-700 rounded-xl p-4 animate-slide-up motion-reduce:animate-none"
+                  style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-10 h-10 bg-gray-700 rounded-xl flex items-center justify-center">
@@ -532,7 +521,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                       </a>
                     )}
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           )}
@@ -570,11 +559,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
 
         {/* Step 1: Device */}
         {step === 1 && (
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-          >
+          <div className="animate-slide-in-right motion-reduce:animate-none">
             <h2 className="text-2xl font-bold text-white mb-2">
               {t('clientRecommender.steps.device.title')}
             </h2>
@@ -601,16 +586,12 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                 </button>
               ))}
             </div>
-          </motion.div>
+          </div>
         )}
 
         {/* Step 2: Priority */}
         {step === 2 && (
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-          >
+          <div className="animate-slide-in-right motion-reduce:animate-none">
             <div className="flex items-center gap-2 mb-4">
               <button
                 onClick={() => setStep(1)}
@@ -650,16 +631,12 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                 </button>
               ))}
             </div>
-          </motion.div>
+          </div>
         )}
 
         {/* Step 3: Features */}
         {step === 3 && (
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-          >
+          <div className="animate-slide-in-right motion-reduce:animate-none">
             <div className="flex items-center gap-2 mb-4">
               <button
                 onClick={() => setStep(2)}
@@ -718,7 +695,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
               {t('clientRecommender.steps.features.seeRecommendations')}
               <ChevronRight className="w-5 h-5" />
             </button>
-          </motion.div>
+          </div>
         )}
       </div>
     </div>
