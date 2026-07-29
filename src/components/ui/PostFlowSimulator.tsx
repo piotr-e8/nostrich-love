@@ -48,7 +48,7 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
   return (
     <div
       className={cn(
-        "bg-gray-100 dark:bg-white dark:bg-gray-800/30 border border-border-dark rounded-2xl p-6",
+        "bg-gray-100 dark:bg-gray-800/30 border border-gray-200 dark:border-gray-700 rounded-2xl p-6",
         className,
       )}
     >
@@ -83,8 +83,8 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
                   className={cn(
                     "w-12 h-12 rounded-xl flex items-center justify-center",
                     isActive
-                      ? "bg-primary-500 	ext-gray-900 dark:text-white"
-                      : "bg-gray-200 dark:bg-gray-700 	ext-gray-600 dark:text-gray-400",
+                      ? "bg-primary-500 text-white"
+                      : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400",
                   )}
                 >
                   <Icon className="w-6 h-6" />

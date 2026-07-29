@@ -5,6 +5,21 @@ export type { Locale } from './types';
 
 const FALLBACK_LOCALE: Locale = 'en';
 
+/**
+ * Dispatched on `window` (browser only) once translation strings for the
+ * current locale have arrived. `useTranslation` subscribes to this instead of
+ * polling. Because this module top-level awaits the load, importers always
+ * run after the strings are already in place, so today the event fires before
+ * any subscriber exists and is effectively a no-op.
+ *
+ * Caveat for future lazy locale loading: `useTranslation`'s snapshot is the
+ * URL-derived locale, so firing this event for an already-current locale will
+ * NOT re-render mounted components (useSyncExternalStore skips re-render when
+ * the snapshot is unchanged). If strings ever start arriving after mount,
+ * add a version counter to the snapshot alongside the locale.
+ */
+export const I18N_READY_EVENT = 'i18n-ready';
+
 // Statically importing all seven locales put 564 KB of translations into a
 // single client chunk that every interactive page downloaded — roughly 6x more
 // than any reader needs, since a page is built for exactly one locale.
@@ -30,6 +45,7 @@ if (import.meta.env.SSR) {
   await Promise.all(
     current === FALLBACK_LOCALE ? [load(current)] : [load(current), load(FALLBACK_LOCALE)]
   );
+  window.dispatchEvent(new CustomEvent(I18N_READY_EVENT, { detail: { locale: current } }));
 }
 
 /**

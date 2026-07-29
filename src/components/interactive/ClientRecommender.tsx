@@ -353,7 +353,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
   if (showResults && recommendations.length > 0) {
     return (
       <div className={cn("max-w-4xl mx-auto p-6", className)}>
-        <div className="bg-surface border border-border-dark rounded-2xl p-6 md:p-8">
+        <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 md:p-8">
           {/* Header */}
           <div className="text-center mb-8">
             <motion.div
@@ -484,7 +484,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-gray-800/50 border border-border-dark rounded-xl p-4"
+                  className="bg-gray-800/50 border border-gray-700 rounded-xl p-4"
                 >
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-10 h-10 bg-gray-700 rounded-xl flex items-center justify-center">
@@ -554,7 +554,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
 
   return (
     <div className={cn("max-w-2xl mx-auto p-6", className)}>
-      <div className="bg-surface border border-border-dark rounded-2xl p-6 md:p-8">
+      <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 md:p-8">
         {/* Progress */}
         <div className="flex items-center gap-2 mb-8">
           {[1, 2, 3].map((s) => (
@@ -591,7 +591,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                     "flex items-center gap-4 p-4 border rounded-xl transition-all text-left",
                     answers.device === option.value
                       ? "border-primary-500 bg-primary-500/10"
-                      : "border-border-dark hover:border-gray-600 hover:bg-gray-800/50",
+                      : "border-gray-700 hover:border-gray-600 hover:bg-gray-800/50",
                   )}
                 >
                   <div className="w-12 h-12 bg-gray-700 rounded-xl flex items-center justify-center">
@@ -635,7 +635,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                     "w-full flex items-center gap-4 p-4 border rounded-xl transition-all text-left",
                     answers.priority === option.value
                       ? "border-primary-500 bg-primary-500/10"
-                      : "border-border-dark hover:border-gray-600 hover:bg-gray-800/50",
+                      : "border-gray-700 hover:border-gray-600 hover:bg-gray-800/50",
                   )}
                 >
                   <div className="w-12 h-12 bg-gray-700 rounded-xl flex items-center justify-center">
@@ -684,7 +684,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                     "w-full flex items-center justify-between p-4 border rounded-xl transition-all",
                     answers.features.includes(option.value)
                       ? "border-primary-500 bg-primary-500/10"
-                      : "border-border-dark hover:border-gray-600 hover:bg-gray-800/50",
+                      : "border-gray-700 hover:border-gray-600 hover:bg-gray-800/50",
                   )}
                 >
                   <div className="flex items-center gap-4">

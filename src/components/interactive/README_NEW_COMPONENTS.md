@@ -146,9 +146,9 @@ import {
 
 ## Styling
 
-Components use Tailwind CSS with custom color tokens:
-- `bg-surface` - Main background
-- `border-border-dark` - Borders
+Components use Tailwind CSS utilities (no custom surface/border tokens — `bg-surface` and `border-border-dark` were never defined in tailwind.config.js and compiled to nothing):
+- `bg-white dark:bg-gray-900` (theme-aware tools) or `bg-gray-900` (dark-styled tools) - Main background
+- `border-gray-200 dark:border-gray-700` (theme-aware) or `border-gray-700` (dark-styled) - Borders
 - `text-primary-500` - Primary accent
 - `text-success-500` - Success states
 - `text-error-500` - Error states

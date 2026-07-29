@@ -284,7 +284,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
 
   return (
     <div className={cn("max-w-4xl mx-auto p-6", className)}>
-      <div className="bg-surface border border-border-dark rounded-2xl p-6 md:p-8">
+      <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 md:p-8">
         {/* Header */}
         <div className="text-center mb-8">
           <motion.div
@@ -326,7 +326,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
               "border rounded-xl p-6 transition-all",
               activeStep === 1
                 ? "border-primary-500 bg-primary-500/5"
-                : "border-border-dark",
+                : "border-gray-700",
             )}
           >
             <div className="flex items-center gap-3 mb-4">
@@ -367,7 +367,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                     "border rounded-xl p-4 cursor-pointer transition-all",
                     selectedPack === pack.id
                       ? "border-primary-500 bg-primary-500/10"
-                      : "border-border-dark hover:border-gray-600",
+                      : "border-gray-700 hover:border-gray-600",
                   )}
                   onClick={() => setSelectedPack(pack.id)}
                 >
@@ -470,7 +470,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                   value={customNpub}
                   onChange={(e) => setCustomNpub(e.target.value)}
                   placeholder="Enter npub to follow..."
-                  className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-border-dark rounded-lg text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
+                  className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
                 />
               </div>
               <button
@@ -504,7 +504,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
               "border rounded-xl p-6 transition-all",
               activeStep === 2
                 ? "border-primary-500 bg-primary-500/5"
-                : "border-border-dark",
+                : "border-gray-700",
               followedAccounts.size === 0 && "opacity-50 pointer-events-none",
             )}
           >
@@ -552,7 +552,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                     "flex items-center justify-between p-3 border rounded-lg transition-all",
                     connectedRelays.has(relay.url)
                       ? "border-success-500 bg-success-500/10"
-                      : "border-border-dark hover:border-gray-600",
+                      : "border-gray-700 hover:border-gray-600",
                   )}
                 >
                   <div>
@@ -608,7 +608,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
               "border rounded-xl p-6 transition-all",
               activeStep === 3
                 ? "border-success-500 bg-success-500/5"
-                : "border-border-dark",
+                : "border-gray-700",
               (followedAccounts.size === 0 || connectedRelays.size === 0) &&
                 "opacity-50 pointer-events-none",
             )}
@@ -635,7 +635,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={handleComplete}
-                  className="flex items-center justify-between p-4 bg-gray-800 hover:bg-gray-700 border border-border-dark hover:border-primary-500 rounded-xl transition-all group"
+                  className="flex items-center justify-between p-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-primary-500 rounded-xl transition-all group"
                 >
                   <div>
                     <p className="font-semibold text-white group-hover:text-primary-400 transition-colors">
@@ -659,7 +659,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
               exit={{ opacity: 0, scale: 0.9 }}
               className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
             >
-              <div className="bg-surface border border-success-500 rounded-2xl p-8 max-w-md w-full text-center">
+              <div className="bg-gray-900 border border-success-500 rounded-2xl p-8 max-w-md w-full text-center">
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}

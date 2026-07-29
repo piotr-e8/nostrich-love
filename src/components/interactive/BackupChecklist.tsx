@@ -184,7 +184,7 @@ export function BackupChecklist({
   if (isComplete) {
     return (
       <div className={cn("max-w-2xl mx-auto p-6", className)}>
-        <div className="bg-surface border border-success-500 rounded-2xl p-8 text-center">
+        <div className="bg-gray-900 border border-success-500 rounded-2xl p-8 text-center">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -213,7 +213,7 @@ export function BackupChecklist({
 
   return (
     <div className={cn("max-w-2xl mx-auto p-6", className)}>
-      <div className="bg-surface border border-border-dark rounded-2xl p-6 md:p-8">
+      <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 md:p-8">
         {/* Header */}
         <div className="text-center mb-8">
           <motion.div
@@ -298,7 +298,7 @@ export function BackupChecklist({
                   "w-full text-left p-4 border rounded-xl transition-all",
                   item.checked
                     ? "border-success-500/50 bg-success-500/5"
-                    : "border-border-dark hover:border-gray-600 hover:bg-gray-800/30",
+                    : "border-gray-700 hover:border-gray-600 hover:bg-gray-800/30",
                 )}
               >
                 <div className="flex items-start gap-4">
@@ -416,7 +416,7 @@ export function BackupChecklist({
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-surface border border-error-500 rounded-2xl p-6 max-w-md w-full"
+              className="bg-gray-900 border border-error-500 rounded-2xl p-6 max-w-md w-full"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center gap-3 mb-4">
@@ -473,7 +473,7 @@ export function BackupChecklist({
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-surface border border-success-500 rounded-2xl p-6 max-w-md w-full"
+              className="bg-gray-900 border border-success-500 rounded-2xl p-6 max-w-md w-full"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center gap-3 mb-4">

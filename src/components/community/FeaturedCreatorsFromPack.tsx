@@ -1,10 +1,16 @@
 import React, { useState, useMemo } from 'react';
 import type { CuratedAccount } from '../../types/follow-pack';
-import { curatedAccounts } from '../../data/follow-pack/accounts';
+import { getFeaturedAccounts } from '../../data/follow-pack/featured';
 import { getCategoryById } from '../../data/follow-pack/categories';
 
 interface FeaturedCreatorsFromPackProps {
   categoryId: string;
+  /**
+   * Capped at FEATURED_PER_CATEGORY (6): this island bundles only the small
+   * derived sample in data/follow-pack/featured.ts, not the full ~300 KB
+   * dataset. Raise the cap in scripts/generate-featured-accounts.mjs first if
+   * a page ever needs more.
+   */
   maxDisplay?: number;
   followPackUrl: string;
 }
@@ -18,11 +24,10 @@ export const FeaturedCreatorsFromPack: React.FC<FeaturedCreatorsFromPackProps> =
   
   const category = getCategoryById(categoryId);
   
-  const featuredAccounts = useMemo<CuratedAccount[]>(() => {
-    return curatedAccounts
-      .filter((account: CuratedAccount) => account.categories.includes(categoryId as any))
-      .slice(0, maxDisplay);
-  }, [categoryId, maxDisplay]);
+  const featuredAccounts = useMemo<CuratedAccount[]>(
+    () => getFeaturedAccounts(categoryId, maxDisplay),
+    [categoryId, maxDisplay]
+  );
   
   const handleImageError = (npub: string) => {
     setImageErrors(prev => new Set(prev).add(npub));

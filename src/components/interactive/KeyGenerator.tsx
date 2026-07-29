@@ -323,7 +323,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
               </div>
 
               {/* Security Checklist */}
-              <div className="bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl p-4 border border-border-dark">
+              <div className="bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
                   <Shield className="w-4 h-4 text-primary-600 dark:text-primary-400" />
                   {t('keyGenerator.securityChecklist.title')}

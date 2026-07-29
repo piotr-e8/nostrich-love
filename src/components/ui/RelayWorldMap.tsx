@@ -44,7 +44,7 @@ export function RelayWorldMap({
   return (
     <div
       className={cn(
-        "bg-gray-100 dark:bg-gray-800/30 border border-border-dark rounded-2xl p-6",
+        "bg-gray-100 dark:bg-gray-800/30 border border-gray-200 dark:border-gray-700 rounded-2xl p-6",
         className,
       )}
     >
@@ -53,7 +53,7 @@ export function RelayWorldMap({
           <Globe className="w-6 h-6 text-primary-600 dark:text-primary-400" />
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-white">{t('relayWorldMap.title')}</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('relayWorldMap.title')}</h3>
           <p className="text-sm text-gray-400">
             {relays.filter((r) => r.status === "online").length} {t('relayExplorer.selected.count').replace('{count}', '')} {t('relayWorldMap.stats.totalRelays')}
           </p>

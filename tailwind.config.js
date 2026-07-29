@@ -91,6 +91,24 @@ export default {
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
       },
+      // CSS replacements for the framer-motion loops in StreakBanner (#59/#67):
+      // the banner mounts site-wide from Layout.astro, and framer-motion was
+      // ~305 KB of JS loaded on every page just for these two idle wiggles.
+      keyframes: {
+        "streak-wiggle": {
+          "0%, 100%": { transform: "scale(1) rotate(0deg)" },
+          "35%": { transform: "scale(1.1) rotate(5deg)" },
+          "70%": { transform: "scale(1.05) rotate(-5deg)" },
+        },
+        "streak-beat": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.2)" },
+        },
+      },
+      animation: {
+        "streak-wiggle": "streak-wiggle 2s ease-in-out infinite",
+        "streak-beat": "streak-beat 1s ease-in-out infinite",
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: {
