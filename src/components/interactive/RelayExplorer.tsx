@@ -619,7 +619,7 @@ export function RelayExplorer({
             animate={{ scale: 1, opacity: 1 }}
             className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4"
           >
-            <Globe className="w-8 h-8 text-primary-500" />
+            <Globe className="w-8 h-8 text-primary-600 dark:text-primary-400" />
           </motion.div>
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
             {t('relayExplorer.title')}
@@ -823,13 +823,13 @@ export function RelayExplorer({
                 </div>
 
                 {/* Description */}
-                <p className="text-sm 	ext-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
+                <p className="text-sm  text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
                   {relay.description}
                 </p>
 
                 {/* Stats */}
                 <div className="flex items-center gap-3 text-xs mb-3">
-                  <span className="flex items-center gap-1 	ext-gray-600 dark:text-gray-400">
+                  <span className="flex items-center gap-1  text-gray-600 dark:text-gray-400">
                     <Users className="w-3 h-3" />
                     {relay.userCount}
                   </span>
@@ -912,25 +912,25 @@ export function RelayExplorer({
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
               <p className="text-2xl font-bold 	ext-gray-900 dark:text-white">{relays.length}</p>
-              <p className="text-sm 	ext-gray-600 dark:text-gray-400">{t('relayExplorer.stats.popularRelays')}</p>
+              <p className="text-sm  text-gray-600 dark:text-gray-400">{t('relayExplorer.stats.popularRelays')}</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-success-500">
                 {relays.filter((r) => r.status === "online").length}
               </p>
-              <p className="text-sm 	ext-gray-600 dark:text-gray-400">{t('relayExplorer.stats.onlineNow')}</p>
+              <p className="text-sm  text-gray-600 dark:text-gray-400">{t('relayExplorer.stats.onlineNow')}</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-primary-500">
+              <p className="text-2xl font-bold text-primary-600 dark:text-primary-400">
                 {relays.filter((r) => r.type === "free").length}
               </p>
-              <p className="text-sm 	ext-gray-600 dark:text-gray-400">{t('relayExplorer.stats.freeRelays')}</p>
+              <p className="text-sm  text-gray-600 dark:text-gray-400">{t('relayExplorer.stats.freeRelays')}</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-warning-500">
                 {selectedRelays.size}
               </p>
-              <p className="text-sm 	ext-gray-600 dark:text-gray-400">{t('relayExplorer.stats.selected')}</p>
+              <p className="text-sm  text-gray-600 dark:text-gray-400">{t('relayExplorer.stats.selected')}</p>
             </div>
           </div>
         </div>

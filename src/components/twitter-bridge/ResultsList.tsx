@@ -94,7 +94,7 @@ const AccountCard: React.FC<AccountCardProps> = ({
             <span className="font-medium text-blue-500">@{twitter.twitterHandle}</span>
             <span>→</span>
             {nostr.username && (
-              <span className="font-medium text-friendly-purple-600 dark:text-friendly-purple-400">
+              <span className="font-medium text-friendly-purple-700 dark:text-friendly-purple-400">
                 @{nostr.username}
               </span>
             )}
@@ -128,7 +128,7 @@ const AccountCard: React.FC<AccountCardProps> = ({
               px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5
               ${isSelected
                 ? 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400'
-                : 'bg-friendly-purple-600 text-white hover:bg-friendly-purple-700'
+                : 'bg-friendly-purple-700 text-white hover:bg-friendly-purple-800'
               }
             `}
           >
@@ -151,7 +151,7 @@ const AccountCard: React.FC<AccountCardProps> = ({
 
           <button
             onClick={onViewProfile}
-            className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-friendly-purple-600 dark:hover:text-friendly-purple-400 transition-colors"
+            className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-friendly-purple-700 dark:hover:text-friendly-purple-400 transition-colors"
           >
             View Profile →
           </button>
@@ -227,7 +227,7 @@ export const ResultsList: React.FC<ResultsListProps> = ({
         {selectedCount > 0 && (
           <button
             onClick={onFollowAll}
-            className="px-6 py-2.5 bg-friendly-purple-600 hover:bg-friendly-purple-700 text-white font-semibold rounded-lg transition-colors flex items-center gap-2"
+            className="px-6 py-2.5 bg-friendly-purple-700 hover:bg-friendly-purple-800 text-white font-semibold rounded-lg transition-colors flex items-center gap-2"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -270,7 +270,7 @@ export const ResultsList: React.FC<ResultsListProps> = ({
                   navigator.clipboard.writeText(text);
                 }
               }}
-              className="text-sm text-friendly-purple-600 dark:text-friendly-purple-400 hover:text-friendly-purple-700 dark:hover:text-friendly-purple-300 font-medium flex items-center gap-1"
+              className="text-sm text-friendly-purple-700 dark:text-friendly-purple-400 hover:text-friendly-purple-800 dark:hover:text-friendly-purple-300 font-medium flex items-center gap-1"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />

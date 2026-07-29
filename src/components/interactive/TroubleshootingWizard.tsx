@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { cn, copyToClipboard } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
+import { useFocusTrap } from "../../hooks/useFocusTrap";
 import { guidePathFromLocation } from "../../i18n/paths";
 
 interface Question {
@@ -362,6 +363,10 @@ export function TroubleshootingWizard({
   const [history, setHistory] = useState<string[]>([]);
   const [solution, setSolution] = useState<Solution | null>(null);
   const [showDiagnosticInfo, setShowDiagnosticInfo] = useState(false);
+  // Trap focus inside the dialog; Escape closes, focus returns to the opener.
+  const diagnosticModalRef = useFocusTrap<HTMLDivElement>(showDiagnosticInfo, () =>
+    setShowDiagnosticInfo(false),
+  );
   const [diagnosticInfo, setDiagnosticInfo] = useState({
     userAgent: "",
     platform: "",
@@ -674,13 +679,17 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
             onClick={() => setShowDiagnosticInfo(false)}
           >
             <motion.div
+              ref={diagnosticModalRef}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="diagnostic-info-title"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 max-w-md w-full"
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+              <h3 id="diagnostic-info-title" className="text-xl font-bold text-gray-900 dark:text-white mb-4">
                 {t('troubleshootingWizard.diagnosticInfo.title')}
               </h3>
               <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">

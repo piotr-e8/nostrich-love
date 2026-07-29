@@ -49,19 +49,21 @@ const toolItems = [
         <DarkModeToggleSimple client:idle />
         
         <!-- User Menu with Progress/Badges -->
-        <div class="relative group ml-2">
+        <div class="relative group ml-2" id="user-menu">
           <button
             type="button"
             class="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            id="user-menu-button"
             aria-label="User menu"
             aria-expanded="false"
             aria-haspopup="true"
+            aria-controls="user-menu-dropdown"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
           </button>
-          <div class="absolute top-full right-0 mt-1 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+          <div id="user-menu-dropdown" class="absolute top-full right-0 mt-1 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible group-[.is-open]:opacity-100 group-[.is-open]:visible group-[.is-closed]:!opacity-0 group-[.is-closed]:!invisible transition-all duration-200 z-50">
             <a
               href="/progress"
               class="block px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-700 first:rounded-t-xl transition-colors"
@@ -199,11 +201,11 @@ const toolItems = [
   const closeIcon = mobileMenuButton?.querySelector('.close-icon');
   
   mobileMenuButton?.addEventListener('click', () => {
-    const isHidden = mobileMenu?.classList.contains('hidden');
     mobileMenu?.classList.toggle('hidden');
     menuIcon?.classList.toggle('hidden');
     closeIcon?.classList.toggle('hidden');
-    mobileMenuButton?.setAttribute('aria-expanded', (!isHidden).toString());
+    const isOpen = !mobileMenu?.classList.contains('hidden');
+    mobileMenuButton?.setAttribute('aria-expanded', String(isOpen));
   });
   
   // Close menu when clicking on a link
@@ -226,4 +228,89 @@ const toolItems = [
       mobileMenuButton?.focus();
     }
   });
+
+  // Desktop user menu: hover reveal stays CSS-only; this adds keyboard
+  // (focus-within), click/touch toggle, Escape, and aria-expanded sync.
+  // `.is-open` forces the dropdown visible (click toggle); `.is-closed`
+  // forces it hidden so Escape can dismiss it while focus stays on the
+  // trigger (otherwise group-focus-within would re-reveal it).
+  const userMenu = document.getElementById('user-menu');
+  const userMenuButton = document.getElementById('user-menu-button');
+
+  if (userMenu && userMenuButton) {
+    const setExpanded = (expanded: boolean) => {
+      userMenuButton.setAttribute('aria-expanded', String(expanded));
+    };
+
+    const openUserMenu = () => {
+      userMenu.classList.remove('is-closed');
+      userMenu.classList.add('is-open');
+      setExpanded(true);
+    };
+
+    const closeUserMenu = (suppressFocusReveal = false) => {
+      userMenu.classList.remove('is-open');
+      if (suppressFocusReveal) {
+        userMenu.classList.add('is-closed');
+      }
+      setExpanded(false);
+    };
+
+    userMenuButton.addEventListener('click', () => {
+      if (userMenu.classList.contains('is-open')) {
+        closeUserMenu(true);
+      } else {
+        openUserMenu();
+      }
+    });
+
+    // Keyboard reveal is CSS (group-focus-within); keep aria-expanded honest.
+    userMenu.addEventListener('focusin', () => {
+      if (!userMenu.classList.contains('is-closed')) {
+        setExpanded(true);
+      }
+    });
+    userMenu.addEventListener('focusout', (e) => {
+      const next = e.relatedTarget;
+      if (!(next instanceof Node) || !userMenu.contains(next)) {
+        userMenu.classList.remove('is-closed');
+        closeUserMenu();
+      }
+    });
+
+    // Hover reveal is CSS; mirror the state for assistive tech.
+    userMenu.addEventListener('mouseenter', () => {
+      if (!userMenu.classList.contains('is-closed')) {
+        setExpanded(true);
+      }
+    });
+    userMenu.addEventListener('mouseleave', () => {
+      userMenu.classList.remove('is-closed');
+      if (!userMenu.classList.contains('is-open')) {
+        setExpanded(false);
+      }
+    });
+
+    // Escape closes the menu and returns focus to the trigger.
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      const active = document.activeElement;
+      const withinMenu = active instanceof Node && userMenu.contains(active);
+      if (userMenu.classList.contains('is-open') || withinMenu) {
+        closeUserMenu(true);
+        userMenuButton.focus();
+      }
+    });
+
+    // Click outside closes a click-opened menu.
+    document.addEventListener('click', (e) => {
+      if (
+        userMenu.classList.contains('is-open') &&
+        e.target instanceof Node &&
+        !userMenu.contains(e.target)
+      ) {
+        closeUserMenu();
+      }
+    });
+  }
 </script>

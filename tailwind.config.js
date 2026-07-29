@@ -9,6 +9,10 @@ export default {
       colors: {
         primary: {
           DEFAULT: "#8B5CF6",
+          // Semantic alias: darkest shade that still reads as brand purple and
+          // passes WCAG AA (4.5:1) as normal-size TEXT on white/cream (5.70:1).
+          // Same value as primary-600; use for text on light backgrounds.
+          text: "#7C3AED",
           50: "#F5F3FF",
           100: "#EDE9FE",
           200: "#DDD6FE",
@@ -49,6 +53,8 @@ export default {
         friendly: {
           purple: {
             DEFAULT: "#9B7BFF",
+            // Semantic alias = friendly-purple-700: AA-passing text on light (4.96:1).
+            text: "#7A5CCC",
             50: "#FAF8FF",
             100: "#F3F0FF",
             200: "#E8E2FF",

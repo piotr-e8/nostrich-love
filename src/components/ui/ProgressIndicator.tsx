@@ -52,7 +52,7 @@ export function ProgressIndicator({
     >
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+          <p className="text-xs font-semibold uppercase tracking-wide text-primary-600 dark:text-primary-400">
             {label}
           </p>
           <p className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -103,9 +103,9 @@ export function ProgressIndicator({
                   className={cn(
                     "flex items-center justify-center rounded-full border",
                     sizeStyles.marker,
-                    isCompleted && "border-primary bg-primary text-white",
+                    isCompleted && "border-primary bg-primary-600 text-white",
                     isCurrent &&
-                      "border-primary-500 bg-primary-50 text-primary dark:bg-primary/20",
+                      "border-primary-500 bg-primary-50 text-primary-600 dark:text-primary-400 dark:bg-primary/20",
                     !isCompleted &&
                       !isCurrent &&
                       "border-gray-300 bg-white text-gray-400 dark:border-gray-700 dark:bg-gray-900",

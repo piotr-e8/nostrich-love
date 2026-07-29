@@ -61,7 +61,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
         className
       )}>
         <div className="flex flex-col items-center text-center">
-          <Zap className="h-12 w-12 text-primary animate-pulse" />
+          <Zap className="h-12 w-12 text-primary-600 dark:text-primary-400 animate-pulse" />
           <p className="mt-4 text-gray-600 dark:text-gray-300">{t("ui.quiz.loading")}</p>
         </div>
       </div>
@@ -210,7 +210,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
             transition={{ delay: 0.5 }}
           >
             <a
-              className="inline-flex items-center justify-center rounded-xl border border-primary/40 px-4 py-3 font-semibold text-primary transition hover:bg-primary/10"
+              className="inline-flex items-center justify-center rounded-xl border border-primary/40 px-4 py-3 font-semibold text-primary-600 dark:text-primary-400 transition hover:bg-primary/10"
               href={guidePath("nostr-tools", locale)}
             >
               {t("ui.quiz.findWalletTools")}
@@ -226,7 +226,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
           <motion.button
             type="button"
             onClick={handleRestart}
-            className="mt-8 inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 font-semibold text-white shadow-lg hover:bg-primary-600 hover:shadow-xl transition-all"
+            className="mt-8 inline-flex items-center gap-2 rounded-xl bg-primary-600 px-5 py-3 font-semibold text-white shadow-lg hover:bg-primary-700 hover:shadow-xl transition-all"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.6 }}
@@ -258,7 +258,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
             key={`title-${currentIndex}`}
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-xs font-semibold uppercase tracking-wider text-primary"
+            className="text-xs font-semibold uppercase tracking-wider text-primary-600 dark:text-primary-400"
           >
             {quizTitle}
           </motion.p>
@@ -329,6 +329,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
                   whileTap={!showState ? { scale: 0.99 } : {}}
                   type="button"
                   onClick={() => !showState && handleSelect(option.id)}
+                  aria-pressed={isSelected}
                   disabled={showState}
                   className={cn(
                     "w-full rounded-2xl border px-4 py-3 text-left transition-all duration-300",
@@ -357,7 +358,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ delay: 0.2, type: "spring", stiffness: 400 }}
                           >
-                            <CheckCircle2 className="h-4 w-4 text-success-500" />
+                            <CheckCircle2 aria-hidden="true" className="h-4 w-4 text-success-500" />
                           </motion.div>
                         )}
                         {showState && isSelected && !isAnswer && (
@@ -366,9 +367,10 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ delay: 0.2, type: "spring", stiffness: 400 }}
                           >
-                            <XCircle className="h-4 w-4 text-error-500" />
+                            <XCircle aria-hidden="true" className="h-4 w-4 text-error-500" />
                           </motion.div>
                         )}
+                        <span className="sr-only">{showState && isAnswer ? t("ui.quiz.feedback.correct") : showState && isSelected && !isAnswer ? t("ui.quiz.feedback.incorrect") : ""}</span>
                       </div>
                       {option.description && (
                         <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -382,7 +384,8 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
             })}
           </div>
 
-          <AnimatePresence>
+          <div aria-live="polite">
+            <AnimatePresence>
             {selectedOption && (
               <motion.div
                 initial={{ opacity: 0, height: 0, y: -10 }}
@@ -408,7 +411,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
                         animate={{ scale: 1 }}
                         transition={{ type: "spring", stiffness: 400, delay: 0.2 }}
                       >
-                        <CheckCircle2 className="h-4 w-4 text-success-500" />
+                        <CheckCircle2 aria-hidden="true" className="h-4 w-4 text-success-500" />
                       </motion.span>
                       <span className="font-semibold">{t("ui.quiz.feedback.correct")}</span>
                     </span>
@@ -419,7 +422,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
                         animate={{ scale: 1 }}
                         transition={{ type: "spring", stiffness: 400, delay: 0.2 }}
                       >
-                        <XCircle className="h-4 w-4 text-error-500" />
+                        <XCircle aria-hidden="true" className="h-4 w-4 text-error-500" />
                       </motion.span>
                       <span className="font-semibold">{t("ui.quiz.feedback.incorrect")}</span>
                     </span>
@@ -428,7 +431,8 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
                 </motion.div>
               </motion.div>
             )}
-          </AnimatePresence>
+            </AnimatePresence>
+          </div>
         </motion.div>
       </AnimatePresence>
 
@@ -462,7 +466,7 @@ export function ZapsAndLightningQuiz({ className }: ZapsAndLightningQuizProps) {
             disabled={!selectedOption}
             whileHover={selectedOption ? { x: 2 } : {}}
             whileTap={selectedOption ? { scale: 0.98 } : {}}
-            className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2 text-sm font-semibold text-white shadow-md transition disabled:opacity-50 hover:shadow-lg"
+            className="inline-flex items-center gap-2 rounded-xl bg-primary-600 px-5 py-2 text-sm font-semibold text-white shadow-md transition disabled:opacity-50 hover:shadow-lg"
           >
             {currentIndex === total - 1 ? t("ui.quiz.seeResults") : t("ui.quiz.nextButton")}
             <ChevronRight className="h-4 w-4" />
@@ -494,7 +498,7 @@ function renderOptionIcon(optionId: string) {
     case "bitcoin":
       return <Zap className="h-5 w-5 text-warning-500" />;
     case "control":
-      return <Shield className="h-5 w-5 text-primary" />;
+      return <Shield className="h-5 w-5 text-primary-600 dark:text-primary-400" />;
     case "optional":
       return <Wallet className="h-5 w-5 text-success-500" />;
     case "address":

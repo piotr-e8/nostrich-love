@@ -19,6 +19,7 @@ import {
   copyToClipboard,
 } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
+import { useFocusTrap } from "../../hooks/useFocusTrap";
 
 interface BackupChecklistProps {
   className?: string;
@@ -92,6 +93,14 @@ export function BackupChecklist({
     message: string;
     type: "success" | "error";
   } | null>(null);
+
+  // Trap focus inside the dialogs; Escape closes, focus returns to the opener.
+  const skipModalRef = useFocusTrap<HTMLDivElement>(showSkipWarning, () =>
+    setShowSkipWarning(false),
+  );
+  const confirmModalRef = useFocusTrap<HTMLDivElement>(showConfirmation, () =>
+    setShowConfirmation(false),
+  );
 
   useEffect(() => {
     const saved = loadFromLocalStorage<{
@@ -400,6 +409,10 @@ export function BackupChecklist({
             onClick={() => setShowSkipWarning(false)}
           >
             <motion.div
+              ref={skipModalRef}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="backup-skip-title"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -410,7 +423,7 @@ export function BackupChecklist({
                 <div className="w-12 h-12 bg-error-500/20 rounded-full flex items-center justify-center">
                   <AlertTriangle className="w-6 h-6 text-error-500" />
                 </div>
-                <h3 className="text-xl font-bold text-white">{t('backupChecklist.skipModal.title')}</h3>
+                <h3 id="backup-skip-title" className="text-xl font-bold text-white">{t('backupChecklist.skipModal.title')}</h3>
               </div>
               <p className="text-gray-300 mb-4">
                 {t('backupChecklist.skipModal.description')}
@@ -453,6 +466,10 @@ export function BackupChecklist({
             onClick={() => setShowConfirmation(false)}
           >
             <motion.div
+              ref={confirmModalRef}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="backup-confirm-title"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -463,7 +480,7 @@ export function BackupChecklist({
                 <div className="w-12 h-12 bg-success-500/20 rounded-full flex items-center justify-center">
                   <CheckCircle2 className="w-6 h-6 text-success-500" />
                 </div>
-                <h3 className="text-xl font-bold text-white">{t('backupChecklist.confirmModal.title')}</h3>
+                <h3 id="backup-confirm-title" className="text-xl font-bold text-white">{t('backupChecklist.confirmModal.title')}</h3>
               </div>
               <p className="text-gray-300 mb-6">
                 {t('backupChecklist.confirmModal.description')}

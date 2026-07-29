@@ -246,7 +246,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
             animate={{ scale: 1, opacity: 1 }}
             className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4"
           >
-            <Shield className="w-8 h-8 text-primary-500" />
+            <Shield className="w-8 h-8 text-primary-600 dark:text-primary-400" />
           </motion.div>
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
             {t('keyGenerator.title')}
@@ -325,7 +325,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
               {/* Security Checklist */}
               <div className="bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl p-4 border border-border-dark">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                  <Shield className="w-4 h-4 text-primary-500" />
+                  <Shield className="w-4 h-4 text-primary-600 dark:text-primary-400" />
                   {t('keyGenerator.securityChecklist.title')}
                 </h3>
                 <div className="space-y-2">
@@ -508,7 +508,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                     setSecurityChecks(getSecurityChecks(t));
                     setQrCodeData(null);
                   }}
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-white transition-all inline-flex items-center gap-2"
+                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-all inline-flex items-center gap-2"
                 >
                   <RefreshCw className="w-4 h-4" />
                   {t('keyGenerator.buttons.regenerate')}
@@ -570,8 +570,11 @@ ${t('keyGenerator.backupFile.warnings.title')}:
         )}
       </AnimatePresence>
 
-      {/* Toast Notification */}
-      <AnimatePresence>
+      {/* Toast Notification — persistent polite live region: announces the key
+          generation result ("Keys generated successfully!") plus copy/download
+          feedback to screen readers the moment the toast renders */}
+      <div aria-live="polite">
+        <AnimatePresence>
         {toast && (
           <motion.div
             initial={{ opacity: 0, y: 50, x: "-50%" }}
@@ -589,7 +592,8 @@ ${t('keyGenerator.backupFile.warnings.title')}:
             {toast.message}
           </motion.div>
         )}
-      </AnimatePresence>
+        </AnimatePresence>
+      </div>
     </div>
   );
 }

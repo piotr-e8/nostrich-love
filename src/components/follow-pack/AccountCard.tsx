@@ -110,7 +110,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({
             flex items-center gap-1 flex-shrink-0
             ${isSelected
               ? 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400'
-              : 'bg-primary text-white hover:bg-primary/90'
+              : 'bg-primary-600 text-white hover:bg-primary-700'
             }
           `}
         >
@@ -178,7 +178,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({
         {onPreview && (
           <button
             onClick={onPreview}
-            className="text-primary hover:underline"
+            className="text-primary-600 dark:text-primary-400 hover:underline"
           >
             Preview →
           </button>

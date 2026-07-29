@@ -50,7 +50,7 @@ export function RelayWorldMap({
     >
       <div className="flex items-center gap-3 mb-6">
         <div className="w-12 h-12 rounded-xl bg-primary-500/20 flex items-center justify-center">
-          <Globe className="w-6 h-6 text-primary-500" />
+          <Globe className="w-6 h-6 text-primary-600 dark:text-primary-400" />
         </div>
         <div>
           <h3 className="text-lg font-semibold text-white">{t('relayWorldMap.title')}</h3>

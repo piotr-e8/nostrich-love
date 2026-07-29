@@ -88,7 +88,7 @@ export function PrivacyControls() {
       <h3 className="text-lg font-semibold mb-4">Privacy & Progress Settings</h3>
       
       {message && (
-        <div className="mb-4 p-3 bg-primary/10 text-primary rounded-md text-sm">
+        <div className="mb-4 p-3 bg-primary/10 text-primary-600 dark:text-primary-400 rounded-md text-sm">
           {message}
         </div>
       )}
@@ -200,7 +200,7 @@ export function PrivacyControls() {
             <button
               onClick={handleImport}
               disabled={!importText.trim()}
-              className="mt-2 px-4 py-2 bg-primary text-white rounded-md text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary/90 transition-colors"
+              className="mt-2 px-4 py-2 bg-primary-600 text-white rounded-md text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary-700 transition-colors"
             >
               Import
             </button>

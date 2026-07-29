@@ -81,7 +81,7 @@ export function ProgressTracker({
                 strokeWidth="3"
               />
               <motion.path
-                className="text-friendly-purple"
+                className="text-friendly-purple-700 dark:text-friendly-purple-400"
                 d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                 fill="none"
                 stroke="currentColor"
@@ -149,7 +149,7 @@ export function ProgressTracker({
             <span className="text-gray-600 dark:text-gray-400">
               Overall Completion
             </span>
-            <span className="font-semibold text-friendly-purple">
+            <span className="font-semibold text-friendly-purple-700 dark:text-friendly-purple-400">
               {progress.guidesCompleted}/{progress.totalGuides} Guides
             </span>
           </div>

@@ -42,7 +42,7 @@ export function ChecklistCard({
     >
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-lg font-bold text-primary">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-lg font-bold text-primary-600 dark:text-primary-400">
             {number}
           </div>
           <div>
@@ -76,7 +76,7 @@ export function ChecklistCard({
           </div>
         </div>
         {href && (
-          <ArrowUpRight className="h-5 w-5 text-gray-300 transition-colors group-hover:text-primary" />
+          <ArrowUpRight className="h-5 w-5 text-gray-300 transition-colors group-hover:text-primary-600 dark:group-hover:text-primary-400" />
         )}
       </div>
       {children && (

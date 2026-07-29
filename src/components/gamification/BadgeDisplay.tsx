@@ -98,7 +98,7 @@ export function BadgeDisplay({
           </div>
         </div>
         <div className="text-right">
-          <span className="text-2xl font-bold text-friendly-purple dark:text-friendly-purple-400">
+          <span className="text-2xl font-bold text-friendly-purple-700 dark:text-friendly-purple-400">
             {Math.round((unlockedBadgeIds.length / badges.length) * 100)}%
           </span>
         </div>

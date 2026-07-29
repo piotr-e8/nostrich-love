@@ -124,7 +124,7 @@ export function InteractiveChecklist({
                   "flex h-12 w-12 items-center justify-center rounded-2xl text-lg font-bold transition-colors",
                   isCompleted
                     ? "bg-success-500/20 text-success-600 dark:text-success-400"
-                    : "bg-primary/10 text-primary",
+                    : "bg-primary/10 text-primary-600 dark:text-primary-400",
                 )}
               >
                 {isCompleted ? (
@@ -154,7 +154,7 @@ export function InteractiveChecklist({
                           ? "noopener noreferrer"
                           : undefined
                       }
-                      className="hover:text-primary transition-colors"
+                      className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                       onClick={(e) => e.stopPropagation()}
                     >
                       {item.title}
@@ -271,7 +271,7 @@ export function ChecklistProgress({
     <div className="w-full space-y-2">
       <div className="flex items-center justify-between text-sm">
         <p className="font-medium text-gray-900 dark:text-white">{label}</p>
-        <span className="font-semibold text-primary">
+        <span className="font-semibold text-primary-600 dark:text-primary-400">
           {percentage}%
           <span className="ml-1 text-xs font-normal text-gray-500 dark:text-gray-400">
             ({completed}/{total})

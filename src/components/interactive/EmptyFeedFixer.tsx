@@ -292,7 +292,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
             animate={{ scale: 1, opacity: 1 }}
             className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4"
           >
-            <TrendingUp className="w-8 h-8 text-primary-500" />
+            <TrendingUp className="w-8 h-8 text-primary-600 dark:text-primary-400" />
           </motion.div>
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
             {t('emptyFeedFixer.title')}
@@ -306,7 +306,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
         <div className="mb-8">
           <div className="flex justify-between text-sm mb-2">
             <span className="text-gray-400">{t('emptyFeedFixer.setupProgress')}</span>
-            <span className="text-primary-500 font-medium">{progress}%</span>
+            <span className="text-primary-600 dark:text-primary-400 font-medium">{progress}%</span>
           </div>
           <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
             <motion.div
@@ -410,7 +410,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                     </h4>
                     <button
                       onClick={() => handleFollowAll(selectedPack)}
-                      className="text-sm text-primary-500 hover:text-primary-400 font-medium"
+                      className="text-sm text-primary-400 hover:text-primary-300 font-medium"
                     >
                       {t('emptyFeedFixer.step1.followAll')}
                     </button>
@@ -559,7 +559,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                     <div className="flex items-center gap-2">
                       <p className="font-medium text-white">{relay.name}</p>
                       {relay.isDefault && (
-                        <span className="text-xs bg-primary-500/20 text-primary-500 px-2 py-0.5 rounded-full">
+                        <span className="text-xs bg-primary-500/20 text-primary-400 px-2 py-0.5 rounded-full">
                           {t('emptyFeedFixer.step2.recommended')}
                         </span>
                       )}
@@ -586,7 +586,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
 
             <button
               onClick={handleConnectAllRelays}
-              className="w-full py-2 border border-primary-500 text-primary-500 hover:bg-primary-500/10 rounded-lg font-medium transition-all"
+              className="w-full py-2 border border-primary-500 text-primary-400 hover:bg-primary-500/10 rounded-lg font-medium transition-all"
             >
               {t('emptyFeedFixer.step2.connectAll')}
             </button>
@@ -638,12 +638,12 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                   className="flex items-center justify-between p-4 bg-gray-800 hover:bg-gray-700 border border-border-dark hover:border-primary-500 rounded-xl transition-all group"
                 >
                   <div>
-                    <p className="font-semibold text-white group-hover:text-primary-500 transition-colors">
+                    <p className="font-semibold text-white group-hover:text-primary-400 transition-colors">
                       {client.name}
                     </p>
                     <p className="text-sm text-gray-400">{client.platform}</p>
                   </div>
-                  <ExternalLink className="w-5 h-5 text-gray-500 group-hover:text-primary-500 transition-colors" />
+                  <ExternalLink className="w-5 h-5 text-gray-500 group-hover:text-primary-400 transition-colors" />
                 </a>
               ))}
             </div>

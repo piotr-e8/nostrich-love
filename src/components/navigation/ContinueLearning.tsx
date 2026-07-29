@@ -315,7 +315,7 @@ export function ContinueLearning({
       <div className="bg-white dark:bg-gray-900 rounded-2xl border-2 border-primary/30 shadow-2xl shadow-primary/10 p-6">
         <div className="flex items-start gap-4">
           <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-            <BookOpen className="w-6 h-6 text-primary" />
+            <BookOpen className="w-6 h-6 text-primary-600 dark:text-primary-400" />
           </div>
 
           <div className="flex-1 min-w-0">
@@ -340,7 +340,7 @@ export function ContinueLearning({
               {hasQuiz && !quizCompleted && (
                 <button
                   onClick={scrollToQuiz}
-                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-primary-600 text-white font-medium hover:bg-primary-700 transition-colors"
                 >
                   <GraduationCap className="w-4 h-4" />
                   {t('continueLearning.takeQuiz')}
@@ -353,7 +353,7 @@ export function ContinueLearning({
                   'w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-colors',
                   hasQuiz && !quizCompleted
                     ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-                    : 'bg-primary text-white hover:bg-primary/90'
+                    : 'bg-primary-600 text-white hover:bg-primary-700'
                 )}
               >
                 {t('continueLearning.continueLearning')}

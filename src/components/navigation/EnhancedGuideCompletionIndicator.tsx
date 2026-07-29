@@ -102,7 +102,7 @@ export function EnhancedGuideCompletionIndicator({
             <span className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
               Learning Progress
             </span>
-            <span className="text-xs font-medium text-primary">
+            <span className="text-xs font-medium text-primary-600 dark:text-primary-400">
               {completionPercentage}% Complete
             </span>
           </div>
@@ -210,7 +210,7 @@ export function EnhancedGuideCompletionIndicator({
                     className={cn(
                       'flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium relative',
                       isCompleted && 'bg-green-500 text-white',
-                      isCurrent && 'bg-primary text-white',
+                      isCurrent && 'bg-primary-600 text-white',
                       !isCompleted && !isCurrent && !isLocked && 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400',
                       isLocked && 'bg-gray-100 dark:bg-gray-800 text-gray-400',
                       isIncompletePrereq && !isCurrent && !isCompleted && 'bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400'
@@ -236,7 +236,7 @@ export function EnhancedGuideCompletionIndicator({
                     <p
                       className={cn(
                         'text-sm font-medium truncate',
-                        isCurrent && 'text-primary',
+                        isCurrent && 'text-primary-600 dark:text-primary-400',
                         isIncompletePrereq && !isCurrent && 'text-amber-700 dark:text-amber-300',
                         !isCurrent && !isIncompletePrereq && 'text-gray-900 dark:text-white'
                       )}
@@ -259,7 +259,7 @@ export function EnhancedGuideCompletionIndicator({
 
                   {/* Current indicator */}
                   {isCurrent && (
-                    <span className="flex-shrink-0 px-2 py-0.5 rounded text-xs font-medium bg-primary/20 text-primary">
+                    <span className="flex-shrink-0 px-2 py-0.5 rounded text-xs font-medium bg-primary/20 text-primary-600 dark:text-primary-400">
                       Current
                     </span>
                   )}

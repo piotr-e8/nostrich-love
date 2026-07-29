@@ -135,7 +135,7 @@ export function ActivityFeed({
       {/* Header */}
       <div className="p-4 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center gap-2">
-          <Zap className="w-5 h-5 text-friendly-purple" />
+          <Zap className="w-5 h-5 text-friendly-purple-700 dark:text-friendly-purple-400" />
           <h3 className="font-bold text-gray-900 dark:text-white">Recent Activity</h3>
         </div>
       </div>
@@ -184,7 +184,7 @@ export function ActivityFeed({
       <div className="p-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
         <a
           href="/guides"
-          className="text-xs text-friendly-purple hover:text-friendly-purple-dark font-medium flex items-center justify-center gap-1 transition-colors"
+          className="text-xs text-friendly-purple-700 dark:text-friendly-purple-400 hover:text-friendly-purple-dark font-medium flex items-center justify-center gap-1 transition-colors"
         >
           View all activity
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">

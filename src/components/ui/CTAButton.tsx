@@ -42,7 +42,7 @@ export function CTAButton({
       className={cn(
         "flex w-full flex-col items-center gap-1 text-center sm:flex-row sm:justify-between sm:text-left",
         variant === "outline" &&
-          "border-2 border-primary/40 text-primary hover:bg-primary/10",
+          "border-2 border-primary/40 text-primary-600 dark:text-primary-400 hover:bg-primary/10",
         className,
       )}
       leftIcon={leftIcon}

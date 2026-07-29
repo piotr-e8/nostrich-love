@@ -133,7 +133,7 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
 
       <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-900/50 rounded-xl">
         <div className="flex items-center gap-3 mb-3">
-          <Send className="w-5 h-5 text-primary-500" />
+          <Send className="w-5 h-5 text-primary-600 dark:text-primary-400" />
           <span className="text-sm font-medium text-gray-900 dark:text-white">{t("postFlowSimulator.currentStepLabel")}</span>
         </div>
         <p className="text-sm text-gray-600 dark:text-gray-400">

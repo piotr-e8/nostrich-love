@@ -23,7 +23,7 @@ export function CTA({
     primary: "bg-primary-600 hover:bg-primary-700 text-white",
     secondary: "bg-gray-700 hover:bg-gray-600 text-white",
     outline:
-      "border-2 border-primary-500 text-primary-500 hover:bg-primary-500/10",
+      "border-2 border-primary-500 text-primary-600 dark:text-primary-400 hover:bg-primary-500/10",
   };
 
   return (

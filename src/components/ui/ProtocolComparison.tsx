@@ -63,7 +63,7 @@ export function ProtocolComparison({
             </p>
           </div>
           <div className="rounded-xl bg-gradient-to-br from-primary/10 to-secondary/10 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+            <p className="text-xs font-semibold uppercase tracking-wide text-primary-600 dark:text-primary-400">
               {t("protocolComparisonUI.nostrLabel")}
             </p>
             <p className="mt-2 text-sm text-gray-900 dark:text-white">

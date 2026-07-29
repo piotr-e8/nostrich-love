@@ -272,7 +272,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
             animate={{ scale: 1, opacity: 1 }}
             className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4"
           >
-            <AtSign className="w-8 h-8 text-primary-500" />
+            <AtSign className="w-8 h-8 text-primary-600 dark:text-primary-400" />
           </motion.div>
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
             {t('nip05Checker.title')}
@@ -287,7 +287,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
           onClick={() => setShowHelp(!showHelp)}
           className="w-full mb-6 text-left"
         >
-          <div className="flex items-center gap-2 text-primary-500 hover:text-primary-400 transition-colors">
+          <div className="flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors">
             <HelpCircle className="w-5 h-5" />
             <span className="font-medium">{t('nip05Checker.whatIsNip05')}</span>
           </div>
@@ -375,7 +375,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                     setIdentifier(check);
                     setResult(null);
                   }}
-                  className="text-sm text-primary-500 hover:text-primary-400 underline"
+                  className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 underline"
                 >
                   {check}
                 </button>
@@ -384,8 +384,13 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
           )}
         </div>
 
-        {/* Result */}
-        <AnimatePresence mode="wait">
+        {/* Result — persistent polite live region so screen readers hear the
+            in-progress status and the check outcome when they render */}
+        <div aria-live="polite">
+          {isChecking && (
+            <span className="sr-only">{t('nip05Checker.form.checking')}</span>
+          )}
+          <AnimatePresence mode="wait">
           {result && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -422,7 +427,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                           <p className="font-semibold text-gray-900 dark:text-white text-lg">
                             {result.name}
                           </p>
-                          <p className="text-primary-500">
+                          <p className="text-primary-600 dark:text-primary-400">
                             {result.identifier}
                           </p>
                         </div>
@@ -436,7 +441,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                           <p className="font-semibold text-gray-900 dark:text-white text-lg">
                             {result.name}
                           </p>
-                          <p className="text-primary-500">
+                          <p className="text-primary-600 dark:text-primary-400">
                             {result.identifier}
                           </p>
                         </div>
@@ -512,7 +517,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                         {errorMessages[result.errorType].description}
                       </p>
                       <p className="text-sm">
-                        <span className="text-primary-500">Fix:</span>{" "}
+                        <span className="text-primary-600 dark:text-primary-400">Fix:</span>{" "}
                         {errorMessages[result.errorType].fix}
                       </p>
                     </div>
@@ -524,7 +529,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                   <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                     <button
                       onClick={() => setShowProviders(true)}
-                      className="text-primary-500 hover:text-primary-400 font-medium inline-flex items-center gap-2"
+                      className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium inline-flex items-center gap-2"
                     >
                       <Shield className="w-4 h-4" />
                       {t('nip05Checker.results.getYourOwn')}
@@ -542,13 +547,14 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
               </button>
             </motion.div>
           )}
-        </AnimatePresence>
+          </AnimatePresence>
+        </div>
 
         {/* Get NIP-05 Providers */}
         {(!result || showProviders) && (
           <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-              <Shield className="w-5 h-5 text-primary-500" />
+              <Shield className="w-5 h-5 text-primary-600 dark:text-primary-400" />
               {t('nip05Checker.providers.title')}
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -561,7 +567,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                   className="flex items-center justify-between p-4 bg-gray-100/50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-primary-500 rounded-xl transition-all group"
                 >
                   <div>
-                    <p className="font-medium text-gray-900 dark:text-white group-hover:text-primary-500 transition-colors">
+                    <p className="font-medium text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                       {provider.name}
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">

@@ -38,7 +38,7 @@ export function KeyVisualizer({
             <button
               type="button"
               onClick={onTogglePrivate}
-              className="text-gray-400 transition-colors hover:text-primary"
+              className="text-gray-400 transition-colors hover:text-primary-600 dark:hover:text-primary-400"
             >
               {showPrivate ? (
                 <EyeOff className="h-4 w-4" />
@@ -50,7 +50,7 @@ export function KeyVisualizer({
           <button
             type="button"
             onClick={() => onCopy?.(type)}
-            className="text-gray-400 transition-colors hover:text-primary"
+            className="text-gray-400 transition-colors hover:text-primary-600 dark:hover:text-primary-400"
           >
             <Copy className="h-4 w-4" />
           </button>

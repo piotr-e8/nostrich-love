@@ -9,6 +9,7 @@ import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Award, Trophy, Star, Flame, Target, BookOpen, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 
 export interface GamificationExplainerProps {
   isOpen: boolean;
@@ -53,17 +54,8 @@ export function GamificationExplainer({
   totalGuides = 15,
   currentStreak = 0,
 }: GamificationExplainerProps) {
-  // Handle escape key
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
-        onClose();
-      }
-    };
-
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
-  }, [isOpen, onClose]);
+  // Trap focus inside the dialog; Escape closes, focus returns to the opener.
+  const modalRef = useFocusTrap<HTMLDivElement>(isOpen, onClose);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -122,6 +114,7 @@ export function GamificationExplainer({
             aria-labelledby="gamification-title"
           >
             <div
+              ref={modalRef}
               className={cn(
                 'relative w-full max-w-2xl max-h-[90vh] bg-white dark:bg-gray-800',
                 'rounded-3xl shadow-2xl overflow-hidden pointer-events-auto',

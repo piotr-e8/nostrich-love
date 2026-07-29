@@ -28,11 +28,11 @@ export function NIP({
       )}
     >
       <div className="w-12 h-12 rounded-xl bg-primary-500/20 flex items-center justify-center flex-shrink-0">
-        <FileText className="w-6 h-6 text-primary-500" />
+        <FileText className="w-6 h-6 text-primary-600 dark:text-primary-400" />
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-xs font-mono text-primary-500 bg-primary-500/10 px-2 py-0.5 rounded">
+          <span className="text-xs font-mono text-primary-600 dark:text-primary-400 bg-primary-500/10 px-2 py-0.5 rounded">
             NIP-{number.toString().padStart(2, "0")}
           </span>
           <ExternalLink className="w-3 h-3 text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity" />

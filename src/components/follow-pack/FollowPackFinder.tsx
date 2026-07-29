@@ -271,7 +271,7 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
                 type="checkbox"
                 checked={filterState.verifiedOnly}
                 onChange={toggleVerifiedOnly}
-                className="rounded border-gray-300 text-primary focus:ring-primary"
+                className="rounded border-gray-300 text-primary-600 dark:text-primary-400 focus:ring-primary"
               />
               Verified only
             </label>
@@ -306,7 +306,7 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
               })}
               <button
                 onClick={() => setFilterState(prev => ({ ...prev, categories: [] }))}
-                className="text-primary hover:underline ml-2 text-xs"
+                className="text-primary-600 dark:text-primary-400 hover:underline ml-2 text-xs"
               >
                 Clear filters
               </button>
@@ -353,7 +353,7 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
                         className={`
                           w-8 h-8 rounded-lg text-sm font-medium
                           ${currentPage === page
-                            ? 'bg-primary text-white'
+                            ? 'bg-primary-600 text-white'
                             : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                           }
                         `}

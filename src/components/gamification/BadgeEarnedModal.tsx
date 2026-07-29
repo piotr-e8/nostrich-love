@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Share2, Award, Sparkles, Zap, Check } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import type { BadgeEarnedModalProps } from './types';
 
 // Confetti particle component
@@ -84,17 +85,8 @@ export function BadgeEarnedModal({
 }: BadgeEarnedModalProps) {
   const [isCopied, setIsCopied] = useState(false);
 
-  // Handle escape key
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
-        onClose();
-      }
-    };
-
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
-  }, [isOpen, onClose]);
+  // Trap focus inside the dialog; Escape closes, focus returns to the opener.
+  const modalRef = useFocusTrap<HTMLDivElement>(isOpen, onClose);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -160,6 +152,7 @@ export function BadgeEarnedModal({
               aria-describedby="badge-earned-description"
             >
               <div
+                ref={modalRef}
                 className={cn(
                   'relative w-full max-w-md bg-white dark:bg-gray-800',
                   'rounded-3xl shadow-2xl overflow-hidden pointer-events-auto',

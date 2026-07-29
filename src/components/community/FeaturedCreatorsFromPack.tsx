@@ -42,7 +42,7 @@ export const FeaturedCreatorsFromPack: React.FC<FeaturedCreatorsFromPackProps> =
         </p>
         <a
           href={followPackUrl}
-          className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-friendly-purple-600 hover:bg-friendly-purple-700 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl"
+          className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-friendly-purple-700 hover:bg-friendly-purple-800 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl"
         >
           Explore Community
           <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -87,7 +87,7 @@ export const FeaturedCreatorsFromPack: React.FC<FeaturedCreatorsFromPackProps> =
               )}
               
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-gray-900 dark:text-white truncate group-hover:text-friendly-purple-600 dark:group-hover:text-friendly-purple-400 transition-colors">
+                <h3 className="font-semibold text-gray-900 dark:text-white truncate group-hover:text-friendly-purple-700 dark:group-hover:text-friendly-purple-400 transition-colors">
                   {account.name}
                 </h3>
                 
@@ -141,7 +141,7 @@ export const FeaturedCreatorsFromPack: React.FC<FeaturedCreatorsFromPackProps> =
             
             {/* Hover hint */}
             <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 text-center">
-              <span className="text-xs text-friendly-purple-600 dark:text-friendly-purple-400 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="text-xs text-friendly-purple-700 dark:text-friendly-purple-400 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
                 View Profile →
               </span>
             </div>
@@ -153,7 +153,7 @@ export const FeaturedCreatorsFromPack: React.FC<FeaturedCreatorsFromPackProps> =
       <div className="text-center pt-4">
         <a
           href={followPackUrl}
-          className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-friendly-purple-600 hover:bg-friendly-purple-700 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+          className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-friendly-purple-700 hover:bg-friendly-purple-800 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
         >
           <svg className="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />

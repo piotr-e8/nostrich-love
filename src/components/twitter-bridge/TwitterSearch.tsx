@@ -84,7 +84,7 @@ export const TwitterSearch: React.FC<TwitterSearchProps> = ({
           <button
             type="submit"
             disabled={isLoading || !handle.trim()}
-            className="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2.5 bg-friendly-purple-600 hover:bg-friendly-purple-700 disabled:bg-gray-300 dark:disabled:bg-gray-700 text-white font-semibold rounded-lg transition-colors flex items-center gap-2"
+            className="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2.5 bg-friendly-purple-700 hover:bg-friendly-purple-800 disabled:bg-gray-300 dark:disabled:bg-gray-700 text-white font-semibold rounded-lg transition-colors flex items-center gap-2"
           >
             {isLoading ? (
               <>
@@ -121,7 +121,7 @@ export const TwitterSearch: React.FC<TwitterSearchProps> = ({
         <button
           type="button"
           onClick={() => setShowCSVUpload(!showCSVUpload)}
-          className="text-sm text-friendly-purple-600 dark:text-friendly-purple-400 hover:text-friendly-purple-700 dark:hover:text-friendly-purple-300 font-medium flex items-center gap-1 mx-auto"
+          className="text-sm text-friendly-purple-700 dark:text-friendly-purple-400 hover:text-friendly-purple-800 dark:hover:text-friendly-purple-300 font-medium flex items-center gap-1 mx-auto"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={showCSVUpload ? "M19 9l-7 7-7-7" : "M9 5l7 7-7 7"} />

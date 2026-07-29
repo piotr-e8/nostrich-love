@@ -27,7 +27,9 @@ export function NostrichHeroAnimation({ className }: { className?: string }) {
         )}
       >
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-primary-500 text-6xl font-bold">
+          {/* Placeholder sits on an unconditional dark gradient, so use the
+              dark-surface shade in both themes. */}
+          <div className="text-primary-400 text-6xl font-bold">
             Nostrich.love
           </div>
         </div>

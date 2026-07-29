@@ -85,7 +85,7 @@ const UnlockedCard: React.FC<{ guide: Guide; isCompleted?: boolean; isInProgress
 
       {/* Content: Title + Description */}
       <div className="mb-4">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-friendly-purple-600 dark:group-hover:text-friendly-purple-400 transition-colors line-clamp-2">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-friendly-purple-700 dark:group-hover:text-friendly-purple-400 transition-colors line-clamp-2">
           {guide.title}
         </h3>
         <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
@@ -112,7 +112,7 @@ const UnlockedCard: React.FC<{ guide: Guide; isCompleted?: boolean; isInProgress
         <span className={`text-sm font-medium transition-colors ${
           isCompleted
             ? 'text-green-600 dark:text-green-400'
-            : 'text-friendly-purple-600 dark:text-friendly-purple-400 group-hover:underline'
+            : 'text-friendly-purple-700 dark:text-friendly-purple-400 group-hover:underline'
         }`}>
           {statusText}
         </span>

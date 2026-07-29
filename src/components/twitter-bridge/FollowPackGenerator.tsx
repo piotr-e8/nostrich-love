@@ -179,7 +179,7 @@ export const FollowPackGenerator: React.FC<FollowPackGeneratorProps> = ({
                 flex-1 py-3 px-4 text-sm font-medium text-center
                 border-b-2 transition-colors
                 ${activeTab === 'qr'
-                  ? 'border-friendly-purple-600 text-friendly-purple-600 dark:text-friendly-purple-400'
+                  ? 'border-friendly-purple-600 text-friendly-purple-700 dark:text-friendly-purple-400'
                   : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
                 }
               `}
@@ -197,7 +197,7 @@ export const FollowPackGenerator: React.FC<FollowPackGeneratorProps> = ({
                 flex-1 py-3 px-4 text-sm font-medium text-center
                 border-b-2 transition-colors
                 ${activeTab === 'copy'
-                  ? 'border-friendly-purple-600 text-friendly-purple-600 dark:text-friendly-purple-400'
+                  ? 'border-friendly-purple-600 text-friendly-purple-700 dark:text-friendly-purple-400'
                   : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
                 }
               `}
@@ -215,7 +215,7 @@ export const FollowPackGenerator: React.FC<FollowPackGeneratorProps> = ({
                 flex-1 py-3 px-4 text-sm font-medium text-center
                 border-b-2 transition-colors
                 ${activeTab === 'nip02'
-                  ? 'border-friendly-purple-600 text-friendly-purple-600 dark:text-friendly-purple-400'
+                  ? 'border-friendly-purple-600 text-friendly-purple-700 dark:text-friendly-purple-400'
                   : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
                 }
               `}
@@ -326,7 +326,7 @@ export const FollowPackGenerator: React.FC<FollowPackGeneratorProps> = ({
           </p>
           <button
             onClick={onClose}
-            className="px-6 py-2 bg-friendly-purple-600 hover:bg-friendly-purple-700 text-white rounded-lg font-medium transition-colors"
+            className="px-6 py-2 bg-friendly-purple-700 hover:bg-friendly-purple-800 text-white rounded-lg font-medium transition-colors"
           >
             Done
           </button>

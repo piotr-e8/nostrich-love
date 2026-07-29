@@ -174,7 +174,7 @@ export function GuideNavigation({
           {isNextLevelUnlocked && nextLevelFirstGuide && nextLevel && (
             <a
               href={`${guidesPrefix}/${nextLevelFirstGuide}`}
-              className="inline-flex items-center px-6 py-3 bg-primary text-white rounded-xl hover:bg-primary/90 transition-colors"
+              className="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors"
             >
               {t('guideNavigation.continueToLevel').replace('{level}', t(`skillLevels.${nextLevel}.label`) || '')}
               <ArrowRight className="w-4 h-4 ml-2" />

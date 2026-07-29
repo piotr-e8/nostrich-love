@@ -47,5 +47,5 @@ export function ValueCard({
 // Handle icon as component
 function Icon({ icon }: { icon: LucideIcon }) {
   const IconComponent = icon;
-  return <IconComponent className="w-6 h-6 text-primary-500" />;
+  return <IconComponent className="w-6 h-6 text-primary-600 dark:text-primary-400" />;
 }

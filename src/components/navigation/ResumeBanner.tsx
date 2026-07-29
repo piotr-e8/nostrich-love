@@ -112,7 +112,7 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
               
               {/* Last viewed guide */}
               <div className="mt-2 flex items-center gap-2 text-sm">
-                <BookOpen className="w-4 h-4 text-primary" />
+                <BookOpen className="w-4 h-4 text-primary-600 dark:text-primary-400" />
                 <span className="text-gray-700 dark:text-gray-300">
                   You were reading: <strong className="text-gray-900 dark:text-white">{lastViewed.title}</strong>
                 </span>
@@ -149,7 +149,7 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
             <button
               onClick={handleResume}
-              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary/90 text-white font-medium rounded-lg transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors"
             >
               Resume Guide
               <ArrowRight className="w-4 h-4" />

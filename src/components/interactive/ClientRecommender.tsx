@@ -516,7 +516,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                         href={client.urls[answers.device]}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm text-primary-500 hover:text-primary-400 font-medium inline-flex items-center gap-1"
+                        className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium inline-flex items-center gap-1"
                       >
                         Get App <ExternalLink className="w-3 h-3" />
                       </a>

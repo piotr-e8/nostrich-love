@@ -67,7 +67,7 @@ export function ContinueReadingCard({ className }: ContinueReadingCardProps) {
     >
       <div className="flex items-center gap-4">
         <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-          <BookOpen className="w-5 h-5 text-primary" />
+          <BookOpen className="w-5 h-5 text-primary-600 dark:text-primary-400" />
         </div>
         
         <div className="flex-1 min-w-0">
@@ -86,7 +86,7 @@ export function ContinueReadingCard({ className }: ContinueReadingCardProps) {
           
           <button
             onClick={handleResume}
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary hover:bg-primary/90 text-white text-sm font-medium rounded-lg transition-colors"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors"
           >
             Resume
             <ArrowRight className="w-4 h-4" />
