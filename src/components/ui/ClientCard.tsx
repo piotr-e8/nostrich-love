@@ -47,7 +47,7 @@ export function ClientCard({ client, className, onClick }: ClientCardProps) {
     >
       {/* Beginner Friendly Badge */}
       {client.beginnerFriendly && (
-        <div className="absolute -right-8 top-4 rotate-45 bg-gradient-to-r from-primary-500 to-secondary-500 px-8 py-1 text-xs font-bold text-white shadow-lg">
+        <div className="absolute -end-8 top-4 rotate-45 rtl:-rotate-45 bg-gradient-to-r from-primary-500 to-secondary-500 px-8 py-1 text-xs font-bold text-white shadow-lg">
           Beginner Friendly
         </div>
       )}
@@ -115,7 +115,7 @@ export function ClientCard({ client, className, onClick }: ClientCardProps) {
       >
         Visit Website
         <svg
-          className="ml-1 h-4 w-4"
+          className="ms-1 h-4 w-4"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

@@ -152,7 +152,7 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
               className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors"
             >
               Resume Guide
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 rtl:rotate-180" />
             </button>
             
             <button
@@ -160,7 +160,7 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
               className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
               View Progress
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-4 h-4 rtl:rotate-180" />
             </button>
 
             <button
@@ -175,7 +175,7 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
           {/* Dismiss button */}
           <button
             onClick={handleDismiss}
-            className="absolute top-4 right-4 sm:static p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="absolute top-4 end-4 sm:static p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             aria-label="Dismiss"
           >
             <X className="w-5 h-5" />

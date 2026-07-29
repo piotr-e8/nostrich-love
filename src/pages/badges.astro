@@ -167,7 +167,7 @@ const allBadges: Badge[] = [
                 data-badge-requirement={badge.requirement}
               >
                 <!-- Lock Icon -->
-                <div class="absolute top-2 right-2 lock-icon">
+                <div class="absolute top-2 end-2 lock-icon">
                   <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
@@ -272,7 +272,7 @@ const allBadges: Badge[] = [
             class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-friendly-purple-700 hover:bg-friendly-purple-800 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
           >
             Start Learning
-            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="ms-2 w-5 h-5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </a>
@@ -281,7 +281,7 @@ const allBadges: Badge[] = [
             class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-friendly-purple-700 dark:text-friendly-purple-400 bg-white dark:bg-gray-800 border-2 border-friendly-purple-200 dark:border-friendly-purple-700 hover:border-friendly-purple-400 dark:hover:border-friendly-purple-500 rounded-xl transition-all duration-200"
           >
             View Progress
-            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="ms-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </a>
@@ -410,7 +410,7 @@ const allBadges: Badge[] = [
         // Add category indicator dot
         if (!card.querySelector('.category-dot')) {
           const dot = document.createElement('div');
-          dot.className = `category-dot absolute top-2 left-2 w-2 h-2 rounded-full bg-gradient-to-r ${categoryColors[badgeInfo.category]}`;
+          dot.className = `category-dot absolute top-2 start-2 w-2 h-2 rounded-full bg-gradient-to-r ${categoryColors[badgeInfo.category]}`;
           card.appendChild(dot);
         }
 

@@ -209,7 +209,7 @@ function ClientPickerSimulator({ className }: { className?: string }) {
             <button
               key={client.id}
               onClick={() => setSelectedClient(client.id)}
-              className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl p-6 text-left hover:border-purple-500 dark:hover:border-purple-500 transition-all group"
+              className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl p-6 text-start hover:border-purple-500 dark:hover:border-purple-500 transition-all group"
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center text-purple-600">
@@ -226,7 +226,7 @@ function ClientPickerSimulator({ className }: { className?: string }) {
                 {client.description}
               </p>
               <div className="mt-4 flex items-center gap-1 text-sm text-purple-600 opacity-0 group-hover:opacity-100 transition-opacity">
-                {t("quickstartSimulator.buttons.tryIt")} <ArrowRight className="w-4 h-4" />
+                {t("quickstartSimulator.buttons.tryIt")} <ArrowRight className="w-4 h-4 rtl:rotate-180" />
               </div>
             </button>
           ))}
@@ -261,7 +261,8 @@ function ClientSimulation({ client, onBack }: { client: Client; onBack: () => vo
             onClick={onBack}
             className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white flex items-center gap-1"
           >
-            ← {t("quickstartSimulator.buttons.back")}
+            <span aria-hidden="true" className="inline-block rtl:rotate-180">←</span>{" "}
+            {t("quickstartSimulator.buttons.back")}
           </button>
           <span className="text-gray-300 dark:text-gray-600">|</span>
           <span className="font-semibold">{clientData.name} {t("quickstartSimulator.simulator")}</span>

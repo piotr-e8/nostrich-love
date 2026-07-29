@@ -45,7 +45,7 @@ export function KeyCard({ npub, nsec, className, onCopy }: KeyCardProps) {
     <div className={cn('space-y-6', className)}>
       {/* Public Key Card */}
       <div className="relative overflow-hidden rounded-2xl border border-green-200 bg-green-50/50 dark:border-green-800 dark:bg-green-950/20">
-        <div className="absolute left-0 top-0 h-full w-1 bg-green-500" />
+        <div className="absolute start-0 top-0 h-full w-1 bg-green-500" />
         <div className="p-6">
           <div className="mb-4 flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-400">
@@ -90,7 +90,7 @@ export function KeyCard({ npub, nsec, className, onCopy }: KeyCardProps) {
         <div className="absolute -right-8 -top-8 h-24 w-24 rotate-45 bg-red-500/10" />
         <div className="absolute -left-8 -bottom-8 h-24 w-24 rotate-45 bg-red-500/10" />
         
-        <div className="absolute left-0 top-0 h-full w-1.5 bg-red-500" />
+        <div className="absolute start-0 top-0 h-full w-1.5 bg-red-500" />
         <div className="p-6">
           <div className="mb-4 flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-400">

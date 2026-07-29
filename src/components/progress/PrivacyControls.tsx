@@ -112,7 +112,7 @@ export function PrivacyControls() {
           >
             <span
               className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                settings.trackingEnabled ? 'translate-x-6' : 'translate-x-1'
+                settings.trackingEnabled ? 'translate-x-6 rtl:-translate-x-6' : 'translate-x-1 rtl:-translate-x-1'
               }`}
             />
           </button>
@@ -142,8 +142,8 @@ export function PrivacyControls() {
             <span
               className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
                 settings.showProgressIndicators && settings.trackingEnabled
-                  ? 'translate-x-6'
-                  : 'translate-x-1'
+                  ? 'translate-x-6 rtl:-translate-x-6'
+                  : 'translate-x-1 rtl:-translate-x-1'
               }`}
             />
           </button>

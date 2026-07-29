@@ -50,7 +50,7 @@ export const FeaturedCreatorsFromPack: React.FC<FeaturedCreatorsFromPackProps> =
           className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-friendly-purple-700 hover:bg-friendly-purple-800 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl"
         >
           Explore Community
-          <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="ms-2 w-5 h-5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
         </a>
@@ -160,11 +160,11 @@ export const FeaturedCreatorsFromPack: React.FC<FeaturedCreatorsFromPackProps> =
           href={followPackUrl}
           className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-friendly-purple-700 hover:bg-friendly-purple-800 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
         >
-          <svg className="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="me-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
           </svg>
           Follow These Accounts
-          <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="ms-2 w-5 h-5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
         </a>

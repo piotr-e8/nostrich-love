@@ -48,7 +48,7 @@ const AccountCard: React.FC<AccountCardProps> = ({
     >
       {/* Confidence indicator */}
       <div
-        className={`absolute top-0 left-0 w-full h-1 rounded-t-xl ${getConfidenceColor(confidence)}`}
+        className={`absolute top-0 start-0 w-full h-1 rounded-t-xl ${getConfidenceColor(confidence)}`}
         title={`Match confidence: ${confidence}`}
       />
 

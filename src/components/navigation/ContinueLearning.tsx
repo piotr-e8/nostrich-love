@@ -268,7 +268,7 @@ export function ContinueLearning({
                 className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
               >
                 {t('continueLearning.continueToLevel').replace('{level}', nextLevelLabel)}
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 rtl:rotate-180" />
               </button>
             ) : (
               <div className="space-y-3">
@@ -305,7 +305,7 @@ export function ContinueLearning({
       className={cn(
         // Position: side panel when quiz detected, bottom center otherwise
         hasQuiz
-          ? 'fixed right-6 top-1/2 -translate-y-1/2 z-40 w-80'
+          ? 'fixed end-6 top-1/2 -translate-y-1/2 z-40 w-80'
           : 'fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-lg',
         'animate-in fade-in duration-500',
         hasQuiz ? 'slide-in-from-right-4' : 'slide-in-from-bottom-4',
@@ -357,7 +357,7 @@ export function ContinueLearning({
                 )}
               >
                 {t('continueLearning.continueLearning')}
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 rtl:rotate-180" />
               </a>
 
               <button

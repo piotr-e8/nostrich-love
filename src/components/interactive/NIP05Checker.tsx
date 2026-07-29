@@ -280,7 +280,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
         {/* What is NIP-05 Info */}
         <button
           onClick={() => setShowHelp(!showHelp)}
-          className="w-full mb-6 text-left"
+          className="w-full mb-6 text-start"
         >
           <div className="flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors">
             <HelpCircle className="w-5 h-5" />
@@ -320,7 +320,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
         {/* Input */}
         <div className="space-y-4">
           <div className="relative">
-            <AtSign className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+            <AtSign className="absolute start-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
             <input
               type="text"
               aria-label={t('nip05Checker.form.placeholder')}
@@ -330,7 +330,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                 e.key === "Enter" && !isChecking && checkNIP05()
               }
               placeholder={t('nip05Checker.form.placeholder')}
-              className="w-full pl-12 pr-4 py-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:outline-none text-lg"
+              className="w-full ps-12 pe-4 py-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:outline-none text-lg"
             />
           </div>
 
@@ -555,7 +555,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                       {provider.description}
                     </p>
                   </div>
-                  <div className="text-right">
+                  <div className="text-end">
                     <p className="text-success-500 font-medium">
                       {provider.price}
                     </p>

@@ -93,7 +93,7 @@ export function InteractiveChecklist({
             )}
           >
             {/* Completion indicator */}
-            <div className="absolute top-4 right-4">
+            <div className="absolute top-4 end-4">
               <div
                 className={cn(
                   "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all",
@@ -110,7 +110,7 @@ export function InteractiveChecklist({
               </div>
             </div>
 
-            <div className="flex items-start gap-4 pr-8">
+            <div className="flex items-start gap-4 pe-8">
               <div
                 className={cn(
                   "flex h-12 w-12 items-center justify-center rounded-2xl text-lg font-bold transition-colors",
@@ -151,7 +151,7 @@ export function InteractiveChecklist({
                     >
                       {item.title}
                       {item.href.startsWith("http") && (
-                        <ArrowUpRight className="inline h-4 w-4 ml-1 text-gray-400" />
+                        <ArrowUpRight className="inline h-4 w-4 ms-1 text-gray-400" />
                       )}
                     </a>
                   ) : (
@@ -280,7 +280,7 @@ export function ChecklistProgress({
         <p className="font-medium text-gray-900 dark:text-white">{label}</p>
         <span className="font-semibold text-primary-600 dark:text-primary-400">
           {percentage}%
-          <span className="ml-1 text-xs font-normal text-gray-500 dark:text-gray-400">
+          <span className="ms-1 text-xs font-normal text-gray-500 dark:text-gray-400">
             ({completed}/{total})
           </span>
         </span>

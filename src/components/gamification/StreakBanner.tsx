@@ -146,9 +146,9 @@ export function StreakBanner({
         <div className="relative p-4">
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-2 left-4 text-4xl">🔥</div>
-            <div className="absolute bottom-2 right-8 text-3xl">✨</div>
-            <div className="absolute top-1/2 right-4 text-2xl">⭐</div>
+            <div className="absolute top-2 start-4 text-4xl">🔥</div>
+            <div className="absolute bottom-2 end-8 text-3xl">✨</div>
+            <div className="absolute top-1/2 end-4 text-2xl">⭐</div>
           </div>
 
           <div className="relative flex items-center gap-4">

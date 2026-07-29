@@ -114,7 +114,7 @@ export function ActivityItem({
       {/* Type Indicator Dot */}
       <div
         className={cn(
-          'absolute top-2 right-2 w-1.5 h-1.5 rounded-full opacity-0',
+          'absolute top-2 end-2 w-1.5 h-1.5 rounded-full opacity-0',
           'group-hover:opacity-100 transition-opacity duration-300',
           styles.icon.replace('text-', 'bg-')
         )}

@@ -64,7 +64,7 @@ export function ProgressIndicator({
         </div>
 
         {estimatedTime && (
-          <div className="text-right">
+          <div className="text-end">
             <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
               Est. time
             </p>

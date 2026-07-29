@@ -250,7 +250,7 @@ function ProfileModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
           <button
             key={item.label}
             className={cn(
-              "w-full flex items-center gap-3 p-4 rounded-xl text-left",
+              "w-full flex items-center gap-3 p-4 rounded-xl text-start",
               "animate-slide-in-left motion-reduce:animate-none",
               "active:scale-[0.98] transition-transform motion-reduce:transition-none motion-reduce:transform-none",
               item.destructive
@@ -570,7 +570,7 @@ export function DamusInteractiveSimulator() {
 
       {/* Compose Button */}
       {activeTab === "home" && (
-        <div className="absolute bottom-20 right-4 z-20">
+        <div className="absolute bottom-20 end-4 z-20">
           <ComposeButton onClick={() => setIsComposeOpen(true)} />
         </div>
       )}

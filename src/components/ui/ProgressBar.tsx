@@ -38,7 +38,7 @@ export function ProgressBar({
           {showFraction && (
             <span className="font-semibold text-primary-600 dark:text-primary-400">
               {percentage}%
-              <span className="ml-1 text-xs font-normal text-gray-500 dark:text-gray-400">
+              <span className="ms-1 text-xs font-normal text-gray-500 dark:text-gray-400">
                 ({clampedCurrent}/{total})
               </span>
             </span>

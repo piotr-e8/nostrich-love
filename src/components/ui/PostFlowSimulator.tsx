@@ -101,7 +101,7 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
                     isActive && step > index ? "opacity-100" : "opacity-30",
                   )}
                 >
-                  <ArrowRight className="w-5 h-5 text-gray-500" />
+                  <ArrowRight className="w-5 h-5 text-gray-500 rtl:rotate-180" />
                 </div>
               )}
             </React.Fragment>

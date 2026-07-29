@@ -111,7 +111,7 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
         >
           <Bitcoin className="w-5 h-5" />
           {t('zapSimulator.buttons.pay')} {amount.toLocaleString()} sats
-          <ArrowRight className="w-5 h-5" />
+          <ArrowRight className="w-5 h-5 rtl:rotate-180" />
         </button>
 
         {showSuccess && (

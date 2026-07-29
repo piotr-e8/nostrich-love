@@ -289,7 +289,7 @@ export function NostrSimulator({ className }: { className?: string }) {
               <div className="relative">
                 <Home className="w-6 h-6 text-rose-400" />
                 {animationPhase === "sending" && (
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 rounded-full border-2 border-gray-800 animate-scale-pop motion-reduce:animate-none" />
+                  <div className="absolute -top-1 -end-1 w-3 h-3 bg-amber-400 rounded-full border-2 border-gray-800 animate-scale-pop motion-reduce:animate-none" />
                 )}
               </div>
               <span className="absolute -bottom-7 text-white text-xs font-medium whitespace-nowrap bg-gray-900/90 px-2 py-0.5 rounded">
@@ -315,7 +315,7 @@ export function NostrSimulator({ className }: { className?: string }) {
               <div className="relative">
                 <Home className="w-6 h-6 text-blue-400" />
                 {animationPhase === "complete" && receives("bob") && (
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 rounded-full border-2 border-gray-800 animate-scale-pop motion-reduce:animate-none" />
+                  <div className="absolute -top-1 -end-1 w-3 h-3 bg-amber-400 rounded-full border-2 border-gray-800 animate-scale-pop motion-reduce:animate-none" />
                 )}
               </div>
               <span className="absolute -bottom-7 text-white text-xs font-medium whitespace-nowrap bg-gray-900/90 px-2 py-0.5 rounded">
@@ -341,7 +341,7 @@ export function NostrSimulator({ className }: { className?: string }) {
               <div className="relative">
                 <Home className="w-6 h-6 text-violet-400" />
                 {animationPhase === "complete" && receives("carol") && (
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 rounded-full border-2 border-gray-800 animate-scale-pop motion-reduce:animate-none" />
+                  <div className="absolute -top-1 -end-1 w-3 h-3 bg-amber-400 rounded-full border-2 border-gray-800 animate-scale-pop motion-reduce:animate-none" />
                 )}
               </div>
               <span className="absolute -bottom-7 text-white text-xs font-medium whitespace-nowrap bg-gray-900/90 px-2 py-0.5 rounded">
@@ -419,7 +419,7 @@ export function NostrSimulator({ className }: { className?: string }) {
                 <User className="w-4 h-4 text-rose-400" />
               </div>
               <span className="font-semibold text-white capitalize">{t("nostrSimulator.nodes.alice")}</span>
-              <span className="text-xs text-gray-500 ml-auto">
+              <span className="text-xs text-gray-500 ms-auto">
                 {connections.alice.length} {connections.alice.length !== 1 ? t("nostrSimulator.connections") : t("nostrSimulator.connection")}
               </span>
             </div>
@@ -454,7 +454,7 @@ export function NostrSimulator({ className }: { className?: string }) {
                         isConnected ? "text-emerald-400" : "text-gray-500"
                       )}
                     />
-                    <span className="flex-1 text-left">
+                    <span className="flex-1 text-start">
                       {relay === "relay1" ? `${t("nostrSimulator.nodes.office")} 1` : `${t("nostrSimulator.nodes.office")} 2`}
                     </span>
                   </button>
@@ -470,7 +470,7 @@ export function NostrSimulator({ className }: { className?: string }) {
                 <User className="w-4 h-4 text-blue-400" />
               </div>
               <span className="font-semibold text-white capitalize">{t("nostrSimulator.nodes.bob")}</span>
-              <span className="text-xs text-gray-500 ml-auto">
+              <span className="text-xs text-gray-500 ms-auto">
                 {connections.bob.length} {connections.bob.length !== 1 ? t("nostrSimulator.connections") : t("nostrSimulator.connection")}
               </span>
             </div>
@@ -505,7 +505,7 @@ export function NostrSimulator({ className }: { className?: string }) {
                         isConnected ? "text-emerald-400" : "text-gray-500"
                       )}
                     />
-                    <span className="flex-1 text-left">
+                    <span className="flex-1 text-start">
                       {relay === "relay1" ? `${t("nostrSimulator.nodes.office")} 1` : `${t("nostrSimulator.nodes.office")} 2`}
                     </span>
                   </button>
@@ -521,7 +521,7 @@ export function NostrSimulator({ className }: { className?: string }) {
                 <User className="w-4 h-4 text-violet-400" />
               </div>
               <span className="font-semibold text-white capitalize">{t("nostrSimulator.nodes.carol")}</span>
-              <span className="text-xs text-gray-500 ml-auto">
+              <span className="text-xs text-gray-500 ms-auto">
                 {connections.carol.length} {connections.carol.length !== 1 ? t("nostrSimulator.connections") : t("nostrSimulator.connection")}
               </span>
             </div>
@@ -556,7 +556,7 @@ export function NostrSimulator({ className }: { className?: string }) {
                         isConnected ? "text-emerald-400" : "text-gray-500"
                       )}
                     />
-                    <span className="flex-1 text-left">
+                    <span className="flex-1 text-start">
                       {relay === "relay1" ? `${t("nostrSimulator.nodes.office")} 1` : `${t("nostrSimulator.nodes.office")} 2`}
                     </span>
                   </button>

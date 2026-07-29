@@ -45,7 +45,7 @@ export function CTA({
         )}
       >
         {buttonText}
-        <ArrowRight className="w-4 h-4" />
+        <ArrowRight className="w-4 h-4 rtl:rotate-180" />
       </a>
     </div>
   );

@@ -83,7 +83,7 @@ export const InterestFilter: React.FC<InterestFilterProps> = ({
       <div className={`relative interest-filter-dropdown ${className}`}>
         <button
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          className="w-full flex items-center justify-between px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-left focus:outline-none focus:ring-2 focus:ring-friendly-purple-400"
+          className="w-full flex items-center justify-between px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-start focus:outline-none focus:ring-2 focus:ring-friendly-purple-400"
           aria-expanded={isDropdownOpen}
           aria-haspopup="listbox"
         >
@@ -107,7 +107,7 @@ export const InterestFilter: React.FC<InterestFilterProps> = ({
               <button
                 key={option.value ?? 'all'}
                 onClick={() => handleSelect(option.value)}
-                className={`w-full flex items-center justify-between px-4 py-3 text-left transition-colors ${
+                className={`w-full flex items-center justify-between px-4 py-3 text-start transition-colors ${
                   activeFilter === option.value
                     ? 'bg-friendly-purple-50 dark:bg-friendly-purple-900/30 text-friendly-purple-700 dark:text-friendly-purple-300'
                     : 'hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'

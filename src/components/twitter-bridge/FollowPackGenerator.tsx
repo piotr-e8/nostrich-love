@@ -258,11 +258,11 @@ export const FollowPackGenerator: React.FC<FollowPackGeneratorProps> = ({
                 </button>
               </div>
               
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 text-left">
+              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 text-start">
                 <p className="text-sm text-blue-800 dark:text-blue-200">
                   <span className="font-medium">💡 How to import:</span>
                 </p>
-                <ol className="text-sm text-blue-700 dark:text-blue-300 mt-2 ml-4 list-decimal space-y-1">
+                <ol className="text-sm text-blue-700 dark:text-blue-300 mt-2 ms-4 list-decimal space-y-1">
                   <li>Open your Nostr client (Damus, Amethyst, etc.)</li>
                   <li>Go to Settings or Profile → Import</li>
                   <li>Scan this QR code or paste the link</li>
@@ -286,7 +286,7 @@ export const FollowPackGenerator: React.FC<FollowPackGeneratorProps> = ({
                 />
                 <button
                   onClick={() => handleCopy(npubList)}
-                  className="absolute top-2 right-2 px-3 py-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                  className="absolute top-2 end-2 px-3 py-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                 >
                   {copied ? 'Copied!' : 'Copy'}
                 </button>
@@ -303,7 +303,7 @@ export const FollowPackGenerator: React.FC<FollowPackGeneratorProps> = ({
                 <pre className="w-full h-48 p-4 text-xs font-mono bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-gray-300 overflow-auto">
                   {JSON.stringify(nip02Data, null, 2)}
                 </pre>
-                <div className="absolute top-2 right-2 flex gap-2">
+                <div className="absolute top-2 end-2 flex gap-2">
                   <button
                     onClick={() => handleCopy(JSON.stringify(nip02Data, null, 2))}
                     className="px-3 py-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"

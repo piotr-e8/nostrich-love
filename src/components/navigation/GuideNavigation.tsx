@@ -148,7 +148,7 @@ export function GuideNavigation({
               href={guidesPrefix} 
               className="inline-flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
+              <ArrowLeft className="w-4 h-4 me-2 rtl:rotate-180" />
               {t('guideNavigation.backToAllGuides')}
             </a>
           </div>
@@ -177,7 +177,7 @@ export function GuideNavigation({
               className="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors"
             >
               {t('guideNavigation.continueToLevel').replace('{level}', t(`skillLevels.${nextLevel}.label`) || '')}
-              <ArrowRight className="w-4 h-4 ml-2" />
+              <ArrowRight className="w-4 h-4 ms-2 rtl:rotate-180" />
             </a>
           )}
           
@@ -195,7 +195,7 @@ export function GuideNavigation({
               href={`${guidesPrefix}/${prevGuide.slug}`}
               className="group flex items-center gap-3 p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-primary/50 transition-all"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <ArrowLeft className="w-5 h-5 rtl:rotate-180" />
               <div>
                 <p className="text-xs text-gray-500 uppercase">{t('guideNavigation.previous')}</p>
                 <p className="text-sm font-medium">{prevGuide.title}</p>
@@ -210,7 +210,7 @@ export function GuideNavigation({
             className="inline-flex items-center justify-center px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors"
           >
             {t('guideNavigation.exploreAllGuides')}
-            <ArrowRight className="w-4 h-4 ml-2" />
+            <ArrowRight className="w-4 h-4 ms-2 rtl:rotate-180" />
           </a>
         </div>
       </div>
@@ -226,7 +226,7 @@ export function GuideNavigation({
             href={`${guidesPrefix}/${prevGuide.slug}`}
             className="group flex items-center gap-3 p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-primary/50 transition-all"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="w-5 h-5 rtl:rotate-180" />
             <div>
               <p className="text-xs text-gray-500 uppercase">{t('guideNavigation.previous')}</p>
               <p className="text-sm font-medium">{prevGuide.title}</p>
@@ -241,13 +241,13 @@ export function GuideNavigation({
         {nextGuide ? (
           <a
             href={`${guidesPrefix}/${nextGuide.slug}`}
-            className="group flex items-center gap-3 p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-primary/50 transition-all sm:text-right"
+            className="group flex items-center gap-3 p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-primary/50 transition-all sm:text-end"
           >
             <div className="flex-1">
               <p className="text-xs text-gray-500 uppercase">{t('guideNavigation.next')}</p>
               <p className="text-sm font-medium">{nextGuide.title}</p>
             </div>
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-5 h-5 rtl:rotate-180" />
           </a>
         ) : (
           <div className="flex-1" />

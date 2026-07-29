@@ -297,7 +297,7 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
                     {cat.name}
                     <button
                       onClick={() => toggleCategory(catId)}
-                      className="ml-1 hover:opacity-70"
+                      className="ms-1 hover:opacity-70"
                     >
                       ×
                     </button>
@@ -306,7 +306,7 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
               })}
               <button
                 onClick={() => setFilterState(prev => ({ ...prev, categories: [] }))}
-                className="text-primary-600 dark:text-primary-400 hover:underline ml-2 text-xs"
+                className="text-primary-600 dark:text-primary-400 hover:underline ms-2 text-xs"
               >
                 Clear filters
               </button>

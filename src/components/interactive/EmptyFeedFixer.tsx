@@ -462,7 +462,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                             {account.npub.slice(-8)}
                           </p>
                         </div>
-                        <div className="flex items-center gap-3 ml-4">
+                        <div className="flex items-center gap-3 ms-4">
                           <span className="text-sm text-gray-400">
                             {account.followerCount}
                           </span>
@@ -489,14 +489,14 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
             {/* Custom Account Input */}
             <div className="flex gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+                <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                 <input
                   type="text"
                   aria-label="Enter npub to follow"
                   value={customNpub}
                   onChange={(e) => setCustomNpub(e.target.value)}
                   placeholder="Enter npub to follow..."
-                  className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
+                  className="w-full ps-10 pe-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
                 />
               </div>
               <button
@@ -519,7 +519,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                 className="mt-4 w-full py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all flex items-center justify-center gap-2"
               >
                 {t('emptyFeedFixer.step1.continue')}
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="w-5 h-5 rtl:rotate-180" />
               </button>
             )}
           </div>
@@ -623,7 +623,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                 className="mt-4 w-full py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all flex items-center justify-center gap-2"
               >
                 {t('emptyFeedFixer.step2.continue')}
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="w-5 h-5 rtl:rotate-180" />
               </button>
             )}
           </div>

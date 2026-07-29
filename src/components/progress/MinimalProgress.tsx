@@ -70,6 +70,6 @@ export function GuideCardProgress({ guideId }: GuideCardProgressProps) {
   // This is a placeholder - in real implementation, you'd check guide status
   // and show a subtle dot or arc
   return (
-    <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-gray-200 dark:bg-gray-700" />
+    <div className="absolute top-2 end-2 w-2 h-2 rounded-full bg-gray-200 dark:bg-gray-700" />
   );
 }

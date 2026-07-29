@@ -89,7 +89,7 @@ export function ContinueReadingCard({ className }: ContinueReadingCardProps) {
             className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors"
           >
             Resume
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 rtl:rotate-180" />
           </button>
           
           <button

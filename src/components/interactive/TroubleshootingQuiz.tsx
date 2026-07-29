@@ -250,7 +250,7 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
               const showState = Boolean(selectedOption);
 
               // Determine button styling based on state
-              let buttonClasses = "w-full rounded-2xl border px-4 py-3 text-left transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ";
+              let buttonClasses = "w-full rounded-2xl border px-4 py-3 text-start transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ";
               
               if (showState) {
                 // After an answer is selected
@@ -282,7 +282,7 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
                     "animate-slide-up motion-reduce:animate-none motion-reduce:transition-none",
                     buttonClasses,
                     !showState &&
-                      "hover:scale-[1.01] hover:translate-x-1 active:scale-[0.99] motion-reduce:transform-none",
+                      "hover:scale-[1.01] hover:translate-x-1 rtl:hover:-translate-x-1 active:scale-[0.99] motion-reduce:transform-none",
                   )}
                 >
                   <div className="flex items-center gap-3">
@@ -382,10 +382,10 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
             className={cn(
               "inline-flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition disabled:opacity-50 dark:border-gray-700 dark:text-gray-300 motion-reduce:transition-none",
               currentIndex > 0 &&
-                "hover:-translate-x-0.5 active:scale-[0.98] motion-reduce:transform-none",
+                "hover:-translate-x-0.5 rtl:hover:translate-x-0.5 active:scale-[0.98] motion-reduce:transform-none",
             )}
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
             {t("ui.quiz.backButton")}
           </button>
           <button
@@ -395,11 +395,11 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
             className={cn(
               "inline-flex items-center gap-2 rounded-xl bg-primary-600 px-5 py-2 text-sm font-semibold text-white shadow-md transition disabled:opacity-50 hover:shadow-lg motion-reduce:transition-none",
               selectedOption &&
-                "hover:translate-x-0.5 active:scale-[0.98] motion-reduce:transform-none",
+                "hover:translate-x-0.5 rtl:hover:-translate-x-0.5 active:scale-[0.98] motion-reduce:transform-none",
             )}
           >
             {currentIndex === total - 1 ? t("ui.quiz.seeResults") : t("ui.quiz.nextButton")}
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4 rtl:rotate-180" />
           </button>
         </div>
       </footer>

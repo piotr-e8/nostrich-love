@@ -61,7 +61,7 @@ const UnlockedCard: React.FC<{ guide: Guide; isCompleted?: boolean; isInProgress
       href={guide.href}
       className={`group block p-6 bg-white dark:bg-gray-800 rounded-2xl border transition-all duration-200 hover:shadow-lg hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-friendly-purple-400 ${
         isCompleted
-          ? 'border-l-4 border-l-green-500 border-gray-200 dark:border-gray-700'
+          ? 'border-s-4 border-s-green-500 border-gray-200 dark:border-gray-700'
           : 'border-gray-200 dark:border-gray-700 hover:border-friendly-purple-400 dark:hover:border-friendly-purple-500'
       }`}
       aria-label={`${guide.title} - ${difficultyLabel} - ${statusText}`}
@@ -116,10 +116,10 @@ const UnlockedCard: React.FC<{ guide: Guide; isCompleted?: boolean; isInProgress
         }`}>
           {statusText}
         </span>
-        <ArrowRight className={`w-5 h-5 transition-all ${
+        <ArrowRight className={`w-5 h-5 transition-all rtl:rotate-180 ${
           isCompleted
             ? 'text-green-500'
-            : 'text-gray-400 group-hover:text-friendly-purple-500 group-hover:translate-x-1'
+            : 'text-gray-400 group-hover:text-friendly-purple-500 group-hover:translate-x-1 rtl:group-hover:-translate-x-1'
         }`} />
       </div>
     </a>

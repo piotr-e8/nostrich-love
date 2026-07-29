@@ -195,7 +195,7 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
             // the focused option first — in Safari that blur (relatedTarget:
             // null) would unmount the list before the click could register.
             onMouseDown={(event) => event.preventDefault()}
-            className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-lg z-50 overflow-hidden"
+            className="absolute end-0 mt-2 w-40 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-lg z-50 overflow-hidden"
           >
             {languages.map((lang, index) => (
               <button
@@ -211,7 +211,7 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
                   setIsOpen(false);
                 }}
                 className={cn(
-                  "w-full flex items-center gap-3 px-4 py-3 text-left text-sm transition-colors",
+                  "w-full flex items-center gap-3 px-4 py-3 text-start text-sm transition-colors",
                   currentLang === lang.code
                     ? "bg-primary/10 text-primary font-medium"
                     : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800",
@@ -220,7 +220,7 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
                 <span className="text-lg" aria-hidden="true">{lang.flag}</span>
                 <span lang={lang.code}>{lang.label}</span>
                 {currentLang === lang.code && (
-                  <span className="ml-auto text-primary" aria-hidden="true">✓</span>
+                  <span className="ms-auto text-primary" aria-hidden="true">✓</span>
                 )}
               </button>
             ))}

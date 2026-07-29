@@ -611,13 +611,13 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                           <div key={relay.url} className="flex items-center justify-between text-sm">
                             <span className="text-gray-600 dark:text-gray-400 truncate flex-1">{relay.url}</span>
                             {relay.status === 'success' && (
-                              <span className="text-green-600 ml-2">✓ Saved</span>
+                              <span className="text-green-600 ms-2">✓ Saved</span>
                             )}
                             {relay.status === 'error' && (
-                              <span className="text-red-600 ml-2" title={relay.error}>✗ Failed</span>
+                              <span className="text-red-600 ms-2" title={relay.error}>✗ Failed</span>
                             )}
                             {relay.status === 'pending' && (
-                              <span className="text-yellow-600 ml-2">⏳ Pending</span>
+                              <span className="text-yellow-600 ms-2">⏳ Pending</span>
                             )}
                           </div>
                         ))}
@@ -801,11 +801,11 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                 </div>
               )}
               
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 text-left">
+              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 text-start">
                 <p className="text-sm text-blue-800 dark:text-blue-200">
                   <span className="font-medium">💡 How to import:</span>
                 </p>
-                <ol className="text-sm text-blue-700 dark:text-blue-300 mt-2 ml-4 list-decimal space-y-1">
+                <ol className="text-sm text-blue-700 dark:text-blue-300 mt-2 ms-4 list-decimal space-y-1">
                   <li>Open your Nostr client (Amethyst, Damus, etc.)</li>
                   <li>Go to Lists or search for the list address</li>
                   <li>Scan this QR code or enter the naddr</li>
@@ -829,7 +829,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                 />
                 <button
                   onClick={() => handleCopy(npubList)}
-                  className="absolute top-2 right-2 px-3 py-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                  className="absolute top-2 end-2 px-3 py-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                 >
                   {copied ? 'Copied!' : 'Copy'}
                 </button>
@@ -846,7 +846,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                 <pre className="w-full h-48 p-4 text-xs font-mono bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-gray-300 overflow-auto">
                   {JSON.stringify(nip02Data, null, 2)}
                 </pre>
-                <div className="absolute top-2 right-2 flex gap-2">
+                <div className="absolute top-2 end-2 flex gap-2">
                   <button
                     onClick={() => handleCopy(JSON.stringify(nip02Data, null, 2))}
                     className="px-3 py-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"

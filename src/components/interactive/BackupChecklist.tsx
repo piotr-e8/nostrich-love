@@ -333,7 +333,7 @@ export function BackupChecklist({
               <button
                 onClick={() => toggleCheck(item.id)}
                 className={cn(
-                  "w-full text-left p-4 border rounded-xl transition-all",
+                  "w-full text-start p-4 border rounded-xl transition-all",
                   item.checked
                     ? "border-success-500/50 bg-success-500/5"
                     : "border-gray-700 hover:border-gray-600 hover:bg-gray-800/30",

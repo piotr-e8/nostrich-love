@@ -179,7 +179,7 @@ export function ProgressTracker({
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-3 divide-x divide-gray-200 dark:divide-gray-700">
+      <div className="grid grid-cols-3 divide-x rtl:divide-x-reverse divide-gray-200 dark:divide-gray-700">
         {stats.map((stat, index) => (
           <div
             key={index}
@@ -228,7 +228,7 @@ export function ProgressTracker({
                 {progress.nextMilestone.description}
               </p>
             </div>
-            <div className="text-right flex-shrink-0">
+            <div className="text-end flex-shrink-0">
               <p className="text-sm font-bold text-friendly-gold">
                 {progress.nextMilestone.current}/{progress.nextMilestone.target}
               </p>

@@ -512,7 +512,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
             onClick={goBack}
             className="mb-4 inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white transition-colors"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-4 h-4 rtl:rotate-180" />
             {t('troubleshootingWizard.back')}
           </button>
         )}
@@ -632,18 +632,18 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
                   <button
                     key={option.value}
                     onClick={() => handleOptionSelect(option)}
-                    className="w-full text-left p-4 border border-gray-200 dark:border-gray-700 hover:border-primary-500 hover:bg-primary-500/5 rounded-xl transition-all group"
+                    className="w-full text-start p-4 border border-gray-200 dark:border-gray-700 hover:border-primary-500 hover:bg-primary-500/5 rounded-xl transition-all group"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 group-hover:bg-primary-500/20 rounded-xl flex items-center justify-center transition-colors">
                         <span className="text-gray-600 dark:text-gray-400 group-hover:text-primary-500 transition-colors">
-                          {option.icon || <ArrowRight className="w-5 h-5" />}
+                          {option.icon || <ArrowRight className="w-5 h-5 rtl:rotate-180" />}
                         </span>
                       </div>
                       <span className="font-medium text-gray-900 dark:text-white flex-1">
                         {option.label}
                       </span>
-                      <ChevronRight className="w-5 h-5 text-gray-500 group-hover:text-primary-500" />
+                      <ChevronRight className="w-5 h-5 text-gray-500 group-hover:text-primary-500 rtl:rotate-180" />
                     </div>
                   </button>
                 ))}

@@ -96,7 +96,7 @@ export function BadgeDisplay({
             </p>
           </div>
         </div>
-        <div className="text-right">
+        <div className="text-end">
           <span className="text-2xl font-bold text-friendly-purple-700 dark:text-friendly-purple-400">
             {Math.round((unlockedBadgeIds.length / badges.length) * 100)}%
           </span>
@@ -162,7 +162,7 @@ export function BadgeDisplay({
                 {unlocked && badge.category && (
                   <div
                     className={cn(
-                      'absolute top-2 left-2 w-2 h-2 rounded-full bg-gradient-to-r',
+                      'absolute top-2 start-2 w-2 h-2 rounded-full bg-gradient-to-r',
                       categoryColors[badge.category]
                     )}
                     aria-hidden="true"
@@ -171,7 +171,7 @@ export function BadgeDisplay({
 
                 {/* Lock Icon for Locked Badges */}
                 {!unlocked && (
-                  <div className="absolute top-2 right-2" aria-hidden="true">
+                  <div className="absolute top-2 end-2" aria-hidden="true">
                     <Lock className="w-4 h-4 text-gray-400" />
                   </div>
                 )}

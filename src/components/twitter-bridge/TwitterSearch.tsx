@@ -69,7 +69,7 @@ export const TwitterSearch: React.FC<TwitterSearchProps> = ({
       {/* Main Search Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+          <div className="absolute inset-y-0 start-0 ps-4 flex items-center pointer-events-none">
             <span className="text-gray-400 text-lg">@</span>
           </div>
           <input
@@ -78,13 +78,13 @@ export const TwitterSearch: React.FC<TwitterSearchProps> = ({
             onChange={(e) => setHandle(e.target.value)}
             aria-label="Your Twitter handle"
             placeholder="Enter your Twitter handle"
-            className="w-full pl-10 pr-32 py-4 text-lg bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:border-friendly-purple-500 dark:focus:border-friendly-purple-400 focus:ring-4 focus:ring-friendly-purple-500/10 transition-all text-gray-900 dark:text-white placeholder-gray-400"
+            className="w-full ps-10 pe-32 py-4 text-lg bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:border-friendly-purple-500 dark:focus:border-friendly-purple-400 focus:ring-4 focus:ring-friendly-purple-500/10 transition-all text-gray-900 dark:text-white placeholder-gray-400"
             disabled={isLoading}
           />
           <button
             type="submit"
             disabled={isLoading || !handle.trim()}
-            className="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2.5 bg-friendly-purple-700 hover:bg-friendly-purple-800 disabled:bg-gray-300 dark:disabled:bg-gray-700 text-white font-semibold rounded-lg transition-colors flex items-center gap-2"
+            className="absolute end-2 top-1/2 -translate-y-1/2 px-6 py-2.5 bg-friendly-purple-700 hover:bg-friendly-purple-800 disabled:bg-gray-300 dark:disabled:bg-gray-700 text-white font-semibold rounded-lg transition-colors flex items-center gap-2"
           >
             {isLoading ? (
               <>
@@ -161,7 +161,7 @@ export const TwitterSearch: React.FC<TwitterSearchProps> = ({
                 <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <div className="text-left">
+                <div className="text-start">
                   <p className="font-medium text-gray-900 dark:text-white">{uploadedFile.name}</p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     {(uploadedFile.size / 1024).toFixed(1)} KB
@@ -173,7 +173,7 @@ export const TwitterSearch: React.FC<TwitterSearchProps> = ({
                     e.stopPropagation();
                     handleClearFile();
                   }}
-                  className="ml-2 p-1 text-gray-400 hover:text-red-500 transition-colors"
+                  className="ms-2 p-1 text-gray-400 hover:text-red-500 transition-colors"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

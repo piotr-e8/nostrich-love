@@ -189,13 +189,13 @@ export function GamificationExplainer({
                 `}</style>
 
                 {/* Decorative Elements */}
-                <div className="absolute top-3 left-4">
+                <div className="absolute top-3 start-4">
                   <Star className="w-5 h-5 text-white/40" />
                 </div>
-                <div className="absolute bottom-3 right-6">
+                <div className="absolute bottom-3 end-6">
                   <Trophy className="w-6 h-6 text-friendly-gold/60" />
                 </div>
-                <div className="absolute top-5 right-20">
+                <div className="absolute top-5 end-20">
                   <Flame className="w-4 h-4 text-white/30" />
                 </div>
 
@@ -203,7 +203,7 @@ export function GamificationExplainer({
                 <button
                   onClick={handleClose}
                   className={cn(
-                    'absolute top-3 right-3 p-2 rounded-xl',
+                    'absolute top-3 end-3 p-2 rounded-xl',
                     'bg-white/10 hover:bg-white/20 backdrop-blur-sm',
                     'transition-all focus:outline-none focus:ring-2 focus:ring-white/50'
                   )}
@@ -380,7 +380,7 @@ export function GamificationExplainer({
                           <span className="text-gray-700 dark:text-gray-300">{step.text}</span>
                         </div>
                         {index < steps.length - 1 && (
-                          <ChevronRight className="w-4 h-4 text-gray-400" />
+                          <ChevronRight className="w-4 h-4 text-gray-400 rtl:rotate-180" />
                         )}
                         {index === steps.length - 1 && (
                           <CheckCircle2 className="w-5 h-5 text-green-500" />

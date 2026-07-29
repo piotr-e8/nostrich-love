@@ -161,7 +161,7 @@ export function PrerequisiteWarning({
               </div>
             )}
 
-            <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-amber-500 transition-colors" />
+            <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-amber-500 transition-colors rtl:rotate-180" />
           </a>
         ))}
 

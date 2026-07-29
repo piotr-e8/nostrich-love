@@ -75,7 +75,7 @@ export function LogoText({
 
         {/* Optional tagline */}
         {showTagline && (
-          <p className="absolute -bottom-5 left-0 text-xs text-gray-500 dark:text-gray-400 tracking-wide">
+          <p className="absolute -bottom-5 start-0 text-xs text-gray-500 dark:text-gray-400 tracking-wide">
             Nostr made simple
           </p>
         )}

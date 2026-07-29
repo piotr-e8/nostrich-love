@@ -511,7 +511,7 @@ export function RelayPlayground({ className }: { className?: string }) {
           <button
             onClick={checkAllRelays}
             disabled={isCheckingAll}
-            className="ml-auto flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 disabled:bg-gray-800 text-white rounded-lg font-medium transition-all"
+            className="ms-auto flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 disabled:bg-gray-800 text-white rounded-lg font-medium transition-all"
           >
             <RefreshCw className={cn("w-4 h-4", isCheckingAll && "animate-spin")} />
             {isCheckingAll ? t('relayPlayground.buttons.checking') : t('relayPlayground.buttons.checkAll')}
@@ -520,14 +520,14 @@ export function RelayPlayground({ className }: { className?: string }) {
 
         {/* Search */}
         <div className="relative mb-6">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+          <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             aria-label={t('relayPlayground.search.placeholder')}
             placeholder={t('relayPlayground.search.placeholder')}
-            className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:outline-none"
+            className="w-full ps-10 pe-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:outline-none"
           />
         </div>
 
@@ -618,7 +618,7 @@ function ConnectionLab({
               )}
             >
               {/* Connection Status Indicator */}
-              <div className="absolute top-3 right-3">
+              <div className="absolute top-3 end-3">
                 {relay.connectionState === "connected" && (
                   <div className="flex items-center gap-1 text-success-500 text-xs">
                     <Wifi className="w-3 h-3" />
@@ -798,10 +798,10 @@ function HealthDashboard({
         <table className="w-full">
           <thead className="bg-gray-100/50 dark:bg-gray-800/50">
             <tr>
-              <th className="text-left px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Relay</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.relayCard.location')}</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.connectionTab.latency')}</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.healthTab.lastChecked')}</th>
+              <th className="text-start px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Relay</th>
+              <th className="text-start px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.relayCard.location')}</th>
+              <th className="text-start px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.connectionTab.latency')}</th>
+              <th className="text-start px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.healthTab.lastChecked')}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-700">
@@ -911,7 +911,7 @@ function NIPDetector({
               key={nip}
               onClick={() => setSelectedNIP(selectedNIP === nip ? null : nip)}
               className={cn(
-                "p-3 rounded-xl border text-left transition-all",
+                "p-3 rounded-xl border text-start transition-all",
                 "hover:scale-105 active:scale-95 motion-reduce:transform-none",
                 selectedNIP === nip
                   ? "border-purple-500 bg-purple-500/20"
@@ -1013,7 +1013,7 @@ function NIPDetector({
                     style={{ width: `${getSupportPercentage(nip)}%` }}
                   />
                 </div>
-                <span className="text-sm text-gray-600 dark:text-gray-400 w-12 text-right">
+                <span className="text-sm text-gray-600 dark:text-gray-400 w-12 text-end">
                   {getSupportPercentage(nip)}%
                 </span>
               </div>
@@ -1155,7 +1155,7 @@ function EventStreamViewer({
                   setSelectedRelay(relay);
                 }}
                 className={cn(
-                  "px-3 py-2 rounded-lg text-sm font-medium transition-all text-left",
+                  "px-3 py-2 rounded-lg text-sm font-medium transition-all text-start",
                   selectedRelay?.id === relay.id
                     ? "bg-primary-600 text-white"
                     : "bg-gray-700 text-gray-300 hover:bg-gray-600"

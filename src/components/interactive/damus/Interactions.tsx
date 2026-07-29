@@ -525,7 +525,7 @@ export function ComposeButton({ onClick }: ComposeButtonProps) {
     <button
       onClick={onClick}
       className={cn(
-        "absolute bottom-20 right-4 w-14 h-14 bg-purple-600 rounded-full shadow-lg flex items-center justify-center",
+        "absolute bottom-20 end-4 w-14 h-14 bg-purple-600 rounded-full shadow-lg flex items-center justify-center",
         // Backwards fill so the enter animation's final transform releases
         // control back to the hover/active scale classes once it finishes.
         "animate-spin-in [animation-fill-mode:backwards] motion-reduce:animate-none",

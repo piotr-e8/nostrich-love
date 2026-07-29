@@ -312,9 +312,9 @@ export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
                   disabled={showState}
                   style={{ animationDelay: `${i * 80}ms` }}
                   className={cn(
-                    "animate-slide-up motion-reduce:animate-none w-full rounded-2xl border px-4 py-3 text-left transition-all duration-300 motion-reduce:transition-none",
+                    "animate-slide-up motion-reduce:animate-none w-full rounded-2xl border px-4 py-3 text-start transition-all duration-300 motion-reduce:transition-none",
                     !showState &&
-                      "hover:scale-[1.01] hover:translate-x-1 active:scale-[0.99] motion-reduce:transform-none",
+                      "hover:scale-[1.01] hover:translate-x-1 rtl:hover:-translate-x-1 active:scale-[0.99] motion-reduce:transform-none",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                     isSelected && "border-primary bg-primary/10 shadow-md",
                     showState && isAnswer && "border-success-500 bg-success-500/10 shadow-md",
@@ -421,7 +421,7 @@ export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
                 : "border-gray-300 text-gray-600 hover:border-primary hover:text-primary-600 dark:border-gray-600 dark:text-gray-400 dark:hover:border-primary dark:hover:text-primary",
             )}
           >
-            <ChevronLeft className="h-5 w-5" />
+            <ChevronLeft className="h-5 w-5 rtl:rotate-180" />
           </button>
           
           <span className="text-sm text-gray-500 dark:text-gray-400">
@@ -440,7 +440,7 @@ export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
           )}
         >
           {currentIndex === total - 1 ? t("ui.quiz.seeResults") : t("ui.quiz.nextButton")}
-          <ChevronRight className="h-4 w-4" />
+          <ChevronRight className="h-4 w-4 rtl:rotate-180" />
         </button>
       </footer>
     </div>

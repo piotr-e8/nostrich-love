@@ -52,7 +52,7 @@ export function Sidebar({
     const isExpanded = expandedSections.includes(item.id);
 
     return (
-      <div key={item.id} className={depth > 0 ? "ml-4" : ""}>
+      <div key={item.id} className={depth > 0 ? "ms-4" : ""}>
         <button
           onClick={() => {
             if (hasChildren) {
@@ -63,7 +63,7 @@ export function Sidebar({
           }}
           className={cn(
             "flex w-full items-center justify-between rounded-lg py-2 px-3 text-sm transition-all duration-150",
-            "border-l-2",
+            "border-s-2",
             isActive
               ? "border-primary-500 bg-primary-50 font-medium text-primary-600 dark:bg-primary-950 dark:text-primary-400"
               : "border-transparent text-gray-600 hover:bg-gray-50 hover:text-primary-600 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-primary-400",
@@ -137,7 +137,7 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
   return (
     <nav
       aria-label="Breadcrumb"
-      className={cn("flex items-center space-x-2 text-sm", className)}
+      className={cn("flex items-center gap-2 text-sm", className)}
     >
       {items.map((item, index) => {
         const isLast = index === items.length - 1;
@@ -200,24 +200,24 @@ export function TableOfContents({
         <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
           On this page
         </h4>
-        <ul className="space-y-1 border-l border-gray-200 dark:border-gray-700">
+        <ul className="space-y-1 border-s border-gray-200 dark:border-gray-700">
           {items.map((item) => (
             <li key={item.id}>
               <button
                 onClick={() => onItemClick?.(item.id)}
                 className={cn(
-                  "block py-1 pl-4 text-sm transition-colors duration-150",
+                  "block py-1 ps-4 text-sm transition-colors duration-150",
                   item.level === 2
-                    ? "pl-4"
+                    ? "ps-4"
                     : item.level === 3
-                      ? "pl-8"
-                      : "pl-4",
+                      ? "ps-8"
+                      : "ps-4",
                   activeId === item.id
-                    ? "border-l-2 border-primary-500 font-medium text-primary-600 dark:text-primary-400"
+                    ? "border-s-2 border-primary-500 font-medium text-primary-600 dark:text-primary-400"
                     : "text-gray-600 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400",
                 )}
                 style={{
-                  marginLeft: activeId === item.id ? "-2px" : "-1px",
+                  marginInlineStart: activeId === item.id ? "-2px" : "-1px",
                 }}
               >
                 {item.label}
@@ -255,7 +255,7 @@ export function MobileNav({
       />
 
       {/* Drawer */}
-      <div className="fixed inset-y-0 left-0 z-50 w-64 overflow-y-auto bg-white p-4 shadow-xl dark:bg-gray-900 lg:hidden">
+      <div className="fixed inset-y-0 start-0 z-50 w-64 overflow-y-auto bg-white p-4 shadow-xl dark:bg-gray-900 lg:hidden">
         <div className="mb-4 flex items-center justify-between">
           <span className="font-semibold text-gray-900 dark:text-white">
             Menu

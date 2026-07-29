@@ -158,18 +158,18 @@ export function EnhancedGuideCompletionIndicator({
                       href={guidePathFromLocation(prereqSlug)}
                       className="flex items-center gap-2 p-2 rounded-md bg-white dark:bg-gray-800 border border-amber-200 dark:border-amber-700 hover:border-amber-400 dark:hover:border-amber-500 transition-colors"
                     >
-                      <ArrowLeft className="h-3 w-3 text-amber-600 dark:text-amber-400" />
+                      <ArrowLeft className="h-3 w-3 text-amber-600 dark:text-amber-400 rtl:rotate-180" />
                       <span className="text-sm text-gray-700 dark:text-gray-300">
                         {prereqGuide.title}
                       </span>
-                      <span className="ml-auto text-xs text-amber-600 dark:text-amber-400">
+                      <span className="ms-auto text-xs text-amber-600 dark:text-amber-400">
                         Go to guide →
                       </span>
                     </a>
                   );
                 })}
                 {incompletePrereqs.length > 3 && (
-                  <p className="text-xs text-amber-700 dark:text-amber-300 pl-2">
+                  <p className="text-xs text-amber-700 dark:text-amber-300 ps-2">
                     +{incompletePrereqs.length - 3} more
                   </p>
                 )}
@@ -226,7 +226,7 @@ export function EnhancedGuideCompletionIndicator({
                     
                     {/* Prerequisite indicator dot */}
                     {isPrerequisite && (
-                      <div className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-amber-500 border-2 border-white dark:border-gray-900" 
+                      <div className="absolute -top-0.5 -end-0.5 w-3 h-3 rounded-full bg-amber-500 border-2 border-white dark:border-gray-900" 
                            title="Prerequisite for current guide" />
                     )}
                   </div>

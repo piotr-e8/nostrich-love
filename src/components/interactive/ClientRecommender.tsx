@@ -573,7 +573,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                   key={option.value}
                   onClick={() => handleDeviceSelect(option.value)}
                   className={cn(
-                    "flex items-center gap-4 p-4 border rounded-xl transition-all text-left",
+                    "flex items-center gap-4 p-4 border rounded-xl transition-all text-start",
                     answers.device === option.value
                       ? "border-primary-500 bg-primary-500/10"
                       : "border-gray-700 hover:border-gray-600 hover:bg-gray-800/50",
@@ -597,7 +597,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                 onClick={() => setStep(1)}
                 className="p-2 hover:bg-gray-700 rounded-lg transition-all"
               >
-                <ChevronLeft className="w-5 h-5 text-gray-400" />
+                <ChevronLeft className="w-5 h-5 text-gray-400 rtl:rotate-180" />
               </button>
               <h2 className="text-2xl font-bold text-white">
                 {t('clientRecommender.steps.priority.title')}
@@ -613,7 +613,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                   key={option.value}
                   onClick={() => handlePrioritySelect(option.value)}
                   className={cn(
-                    "w-full flex items-center gap-4 p-4 border rounded-xl transition-all text-left",
+                    "w-full flex items-center gap-4 p-4 border rounded-xl transition-all text-start",
                     answers.priority === option.value
                       ? "border-primary-500 bg-primary-500/10"
                       : "border-gray-700 hover:border-gray-600 hover:bg-gray-800/50",
@@ -642,7 +642,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                 onClick={() => setStep(2)}
                 className="p-2 hover:bg-gray-700 rounded-lg transition-all"
               >
-                <ChevronLeft className="w-5 h-5 text-gray-400" />
+                <ChevronLeft className="w-5 h-5 text-gray-400 rtl:rotate-180" />
               </button>
               <h2 className="text-2xl font-bold text-white">
                 {t('clientRecommender.steps.features.title')}
@@ -693,7 +693,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
               className="w-full py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all flex items-center justify-center gap-2"
             >
               {t('clientRecommender.steps.features.seeRecommendations')}
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight className="w-5 h-5 rtl:rotate-180" />
             </button>
           </div>
         )}

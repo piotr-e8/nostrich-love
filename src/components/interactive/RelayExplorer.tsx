@@ -629,14 +629,14 @@ export function RelayExplorer({
           {/* Search and Actions */}
           <div className="flex flex-col md:flex-row gap-3">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+              <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 aria-label={t('relayExplorer.search.placeholder')}
                 placeholder={t('relayExplorer.search.placeholder')}
-                className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
+                className="w-full ps-10 pe-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
               />
             </div>
             <button
@@ -705,7 +705,7 @@ export function RelayExplorer({
           {/* Custom Relay Input */}
           <div className="flex gap-2">
             <div className="relative flex-1">
-              <Server className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+              <Server className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
               <input
                 type="text"
                 value={customRelayInput}
@@ -713,7 +713,7 @@ export function RelayExplorer({
                 onKeyDown={(e) => e.key === "Enter" && addCustomRelay()}
                 aria-label={t('relayExplorer.customRelay.placeholder')}
                 placeholder={t('relayExplorer.customRelay.placeholder')}
-                className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
+                className="w-full ps-10 pe-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
               />
             </div>
             <button
@@ -776,7 +776,7 @@ export function RelayExplorer({
                 onClick={() => toggleRelaySelection(relay.url)}
               >
                 {/* Selection Indicator */}
-                <div className="absolute top-3 right-3">
+                <div className="absolute top-3 end-3">
                   <div
                     className={cn(
                       "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all",
@@ -792,7 +792,7 @@ export function RelayExplorer({
                 </div>
 
                 {/* Header */}
-                <div className="flex items-start gap-3 mb-3 pr-8">
+                <div className="flex items-start gap-3 mb-3 pe-8">
                   <div
                     className={cn(
                       "w-12 h-12 rounded-xl flex items-center justify-center",
@@ -875,7 +875,7 @@ export function RelayExplorer({
                       e.stopPropagation();
                       removeCustomRelay(relay.url);
                     }}
-                    className="absolute bottom-3 right-3 p-1 text-gray-500 hover:text-error-500 transition-colors"
+                    className="absolute bottom-3 end-3 p-1 text-gray-500 hover:text-error-500 transition-colors"
                   >
                     <X className="w-4 h-4" />
                   </button>

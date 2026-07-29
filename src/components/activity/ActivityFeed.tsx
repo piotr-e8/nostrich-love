@@ -182,7 +182,7 @@ export function ActivityFeed({
           className="text-xs text-friendly-purple-700 dark:text-friendly-purple-400 hover:text-friendly-purple-dark font-medium flex items-center justify-center gap-1 transition-colors"
         >
           View all activity
-          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-3 h-3 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </a>

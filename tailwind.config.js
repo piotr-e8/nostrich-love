@@ -244,5 +244,15 @@ export default {
       }),
     },
   },
-  plugins: [require("@tailwindcss/typography"), require("tailwindcss-rtl")],
+  // tailwindcss-rtl was removed here (#29). It targets Tailwind 1.x and its
+  // ms-/me-/ps-/pe-/start-/end-/text-start/text-end/rounded-s/border-s classes
+  // now duplicate Tailwind 3.3+ core. Worse, its inset/text-align/float/clear/
+  // rounded generators emit `[dir="rtl"] .start-0 { right: 0 }` — specificity
+  // (0,2,0) versus core's (0,1,0) — so a plugin rule carrying a PHYSICAL
+  // property shadowed every native logical one on any page with a dir
+  // attribute, which Layout.astro always sets. It emitted 30 such overrides.
+  // Nothing in src/ uses a plugin-only class (space-s-*, divide-s-*,
+  // origin-*-start, rounded-ts/te/bs/be, clear-start/end), so dropping it is
+  // pure subtraction: RTL now rests on real logical properties.
+  plugins: [require("@tailwindcss/typography")],
 };
