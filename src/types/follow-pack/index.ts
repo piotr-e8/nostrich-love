@@ -19,17 +19,35 @@ export type CategoryId =
   | 'doomscrolling'
   | 'books';
 
+/**
+ * Presentation grouping for the 16 categories. Sixteen equal chips in one flat
+ * row read as noise; five bands read as a taxonomy. Grouping is display-only —
+ * the account data knows nothing about it.
+ */
+export type CategoryGroupId = 'starter' | 'creative' | 'living' | 'ideas' | 'commerce';
+
 export type ActivityLevel = 'high' | 'medium' | 'low';
 
 export type ContentType = 'text' | 'image' | 'video' | 'article' | 'audio';
 
 export interface Category {
   id: CategoryId;
+  /**
+   * English label, and the fallback when a locale has no
+   * `followPack.categories.<id>.name` key. See getLocalizedCategories().
+   */
   name: string;
   description: string;
   icon: string;
   color: string;
   order: number;
+  group: CategoryGroupId;
+}
+
+export interface CategoryGroup {
+  id: CategoryGroupId;
+  name: string;
+  description: string;
 }
 
 export interface CuratedAccount {
@@ -81,8 +99,17 @@ export interface FilterState {
   searchQuery: string;
   activityLevel: ActivityLevel | 'all';
   contentTypes: ContentType[];
-  verifiedOnly: boolean;
-  sortBy: 'popular' | 'active' | 'name' | 'recent';
+  /**
+   * 'curated' is the dataset's own order (the starter set first), 'name' is A-Z.
+   *
+   * There used to be 'popular' and 'recent' options too. Neither could work:
+   * every row in accounts.ts has `followers` undefined and only two distinct
+   * `addedAt` values, so both were silent no-ops. A sort control that does
+   * nothing is worse than one fewer option. Same reason the "Verified only"
+   * checkbox is gone — `verified` is false or absent on all 527 accounts, so
+   * ticking it emptied the browser completely.
+   */
+  sortBy: 'curated' | 'name';
 }
 
 export interface UserSelection {

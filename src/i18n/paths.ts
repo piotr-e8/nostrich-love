@@ -78,7 +78,7 @@ export function langParam(locale: Locale): string | undefined {
  *
  * Only the guides are translated — `src/pages/[...lang]/guides/**` is the
  * only locale-aware route. Everything else (/about, /glossary, /tools,
- * /simulators/*, /nostr-for-*) is English-only, so emitting hreflang for
+ * /follow-pack, /badges, ...) is English-only, so emitting hreflang for
  * those pages advertises alternates that return 404 and gets the whole
  * cluster discarded by search engines.
  *

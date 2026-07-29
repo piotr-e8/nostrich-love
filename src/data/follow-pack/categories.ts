@@ -1,138 +1,209 @@
 // Account Categories for Follow Pack Finder
-// Order matters - displayed in this order
-// Based on imported follow pack data (naddr)
+//
+// The 16 ids below are the ids that actually appear in accounts.ts — they came
+// from the naddr follow packs the dataset was imported from, so several are
+// opaque ("jumpstart", "legit", "doomscrolling", "mystics"). The `name` and
+// `description` here are the HUMAN labels: what a beginner needs to read to
+// decide whether a bucket is for them.
+//
+// `name`/`description` are also the English fallback for the i18n keys
+// `followPack.categories.<id>.{name,description}` — see ./localize.ts. Keeping
+// the strings here as well means client islands render correct labels without
+// pulling the translation bundle into the page.
+//
+// Order matters: categories are displayed in this order, grouped by `group`.
 
-import type { Category } from '../../types/follow-pack';
+import type { Category, CategoryGroup } from '../../types/follow-pack';
 
-export const categories: Category[] = [
+/**
+ * Display bands. Sixteen flat chips read as noise; five labelled bands read as
+ * a taxonomy a newcomer can navigate.
+ */
+export const categoryGroups: CategoryGroup[] = [
   {
-    id: 'jumpstart',
-    name: 'Jumpstart Your Feed',
-    description: 'Curated starter pack for new Nostr users - essential accounts to follow',
-    icon: 'rocket',
-    color: '#F59E0B', // Amber
-    order: 1
+    id: 'starter',
+    name: 'Where to start',
+    description: 'If you only pick from one band, pick from this one.',
   },
   {
+    id: 'creative',
+    name: 'Creative work',
+    description: 'People posting things they made.',
+  },
+  {
+    id: 'living',
+    name: 'Food, land and family',
+    description: 'Everyday life, cooking, growing things, raising kids.',
+  },
+  {
+    id: 'ideas',
+    name: 'Ideas and beliefs',
+    description: 'Long-form thinking, faith, freedom and self-reliance.',
+  },
+  {
+    id: 'commerce',
+    name: 'Commerce and fun',
+    description: 'Places to spend sats, and accounts that are just enjoyable.',
+  },
+];
+
+export const categories: Category[] = [
+  // --- Where to start -------------------------------------------------------
+  {
+    id: 'jumpstart',
+    name: 'Start Here',
+    description: 'A hand-picked starter set — if you follow nothing else, follow these.',
+    icon: 'rocket',
+    color: '#B45309', // Amber 700 — passes AA as text on white
+    order: 1,
+    group: 'starter',
+  },
+  {
+    id: 'legit',
+    // Was "Who's Who", which implied a vetting authority nobody exercised:
+    // every row in accounts.ts has verified false/absent.
+    name: 'Familiar Faces',
+    description: 'Long-standing, widely-followed accounts: protocol authors, client developers, names you will keep seeing.',
+    icon: 'badge-check',
+    color: '#047857', // Emerald 700
+    order: 2,
+    group: 'starter',
+  },
+  {
+    id: 'cool_people',
+    name: 'Community Favorites',
+    description: 'Accounts other Nostr users keep recommending. No single theme — just good company.',
+    icon: 'heart',
+    color: '#1D4ED8', // Blue 700
+    order: 3,
+    group: 'starter',
+  },
+
+  // --- Creative work --------------------------------------------------------
+  {
     id: 'artists',
-    name: 'Featured Artists',
-    description: 'Curated list of visual artists, digital creators, and designers',
+    name: 'Artists & Illustrators',
+    description: 'Visual artists, illustrators and designers posting their own work.',
     icon: 'palette',
-    color: '#EC4899', // Pink
-    order: 2
+    color: '#BE185D', // Pink 700
+    order: 4,
+    group: 'creative',
   },
   {
     id: 'photography',
-    name: 'Photography',
-    description: 'Photographers capturing moments, landscapes, wildlife, and street scenes',
+    name: 'Photographers',
+    description: 'Landscape, street, wildlife and portrait work, usually at full resolution.',
     icon: 'camera',
-    color: '#14B8A6', // Teal
-    order: 3
+    color: '#0F766E', // Teal 700
+    order: 5,
+    group: 'creative',
   },
   {
     id: 'musicians',
     name: 'Musicians',
-    description: 'Musicians, producers, bands, and music creators on Nostr',
+    description: 'Musicians, producers and bands posting tracks, gigs and work in progress.',
     icon: 'music',
-    color: '#8B5CF6', // Purple
-    order: 4
-  },
-  {
-    id: 'permaculture',
-    name: 'Permaculture',
-    description: 'Homesteaders, farmers, gardeners, and regenerative agriculture practitioners',
-    icon: 'leaf',
-    color: '#22C55E', // Green
-    order: 5
-  },
-  {
-    id: 'parents',
-    name: 'Parents & Families',
-    description: 'Parents, homeschoolers, and family-focused accounts',
-    icon: 'heart',
-    color: '#F472B6', // Pink
-    order: 6
-  },
-  {
-    id: 'christians',
-    name: 'Christians',
-    description: 'Christian believers, churches, and faith-focused accounts',
-    icon: 'church',
-    color: '#FFD700', // Gold
-    order: 7
-  },
-  {
-    id: 'foodies',
-    name: 'Foodies',
-    description: 'Chefs, cooks, food bloggers, and culinary enthusiasts',
-    icon: 'utensils',
-    color: '#FF6B6B', // Coral
-    order: 8
-  },
-  {
-    id: 'mystics',
-    name: 'Mystics & Spirituality',
-    description: 'Spiritual thinkers, mystics, and those exploring consciousness',
-    icon: 'sparkles',
-    color: '#6366F1', // Indigo
-    order: 9
-  },
-  {
-    id: 'cool_people',
-    name: 'Cool People',
-    description: 'Interesting folks recommended by the community',
-    icon: 'heart',
-    color: '#3B82F6', // Blue
-    order: 10
-  },
-  {
-    id: 'sovereign',
-    name: 'Sovereign Individuals',
-    description: 'Freedom advocates, privacy enthusiasts, and independent thinkers',
-    icon: 'shield',
-    color: '#EF4444', // Red
-    order: 11
-  },
-  {
-    id: 'legit',
-    name: 'Who\'s Who',
-    description: 'Verified and well-known Nostr personalities and contributors',
-    icon: 'badge-check',
-    color: '#10B981', // Emerald
-    order: 12
-  },
-  {
-    id: 'niche',
-    name: 'Niche & Unique',
-    description: 'Special interest accounts and unique perspectives',
-    icon: 'star',
-    color: '#06B6D4', // Cyan
-    order: 13
-  },
-  {
-    id: 'merchants',
-    name: 'Merchants & Shops',
-    description: 'Businesses and merchants accepting Bitcoin and Lightning payments',
-    icon: 'shopping-bag',
-    color: '#8B5CF6', // Purple
-    order: 14
-  },
-  {
-    id: 'doomscrolling',
-    name: 'Entertainment',
-    description: 'Funny, interesting, and entertaining accounts for your feed',
-    icon: 'smile',
-    color: '#F97316', // Orange
-    order: 15
+    color: '#6D28D9', // Violet 700
+    order: 6,
+    group: 'creative',
   },
   {
     id: 'books',
-    name: 'Book Lovers',
-    description: 'Readers, authors, book reviewers, and literary enthusiasts',
+    name: 'Readers & Writers',
+    description: 'Book reviews, reading lists, and authors talking about their craft.',
     icon: 'book',
-    color: '#4B5563', // Gray/Charcoal
-    order: 16
-  }
+    color: '#374151', // Gray 700
+    order: 7,
+    group: 'creative',
+  },
+
+  // --- Food, land and family ------------------------------------------------
+  {
+    id: 'foodies',
+    name: 'Food & Cooking',
+    description: 'Recipes, home cooking, baking, and places worth eating at.',
+    icon: 'utensils',
+    color: '#B91C1C', // Red 700
+    order: 8,
+    group: 'living',
+  },
+  {
+    id: 'permaculture',
+    name: 'Growing Food & Homesteading',
+    description: 'Gardeners, farmers and homesteaders documenting regenerative practice.',
+    icon: 'leaf',
+    color: '#15803D', // Green 700
+    order: 9,
+    group: 'living',
+  },
+  {
+    id: 'parents',
+    name: 'Parents & Family Life',
+    description: 'Parents, homeschoolers and family-focused accounts.',
+    icon: 'heart',
+    color: '#A21CAF', // Fuchsia 700
+    order: 10,
+    group: 'living',
+  },
+
+  // --- Ideas and beliefs ----------------------------------------------------
+  {
+    id: 'mystics',
+    name: 'Philosophy & Spirituality',
+    description: 'Contemplative writing on meaning, consciousness and the inner life.',
+    icon: 'sparkles',
+    color: '#4338CA', // Indigo 700
+    order: 11,
+    group: 'ideas',
+  },
+  {
+    id: 'christians',
+    name: 'Christian Faith',
+    description: 'Christian believers, pastors and faith-centred accounts.',
+    icon: 'church',
+    color: '#A16207', // Yellow 700 — the old #FFD700 was unreadable as text
+    order: 12,
+    group: 'ideas',
+  },
+  {
+    id: 'sovereign',
+    name: 'Freedom & Self-Reliance',
+    description: 'Privacy advocates, self-custody, and independent-living writing.',
+    icon: 'shield',
+    color: '#C2410C', // Orange 700
+    order: 13,
+    group: 'ideas',
+  },
+
+  // --- Commerce and fun -----------------------------------------------------
+  {
+    id: 'merchants',
+    name: 'Shops That Take Bitcoin',
+    description: 'Small businesses and makers you can pay over Lightning.',
+    icon: 'shopping-bag',
+    color: '#7E22CE', // Purple 700
+    order: 14,
+    group: 'commerce',
+  },
+  {
+    id: 'doomscrolling',
+    // Was "Entertainment", which hid what the id admits.
+    name: 'Fun & Time-Wasting',
+    description: 'Memes, jokes and light entertainment for when you just want to scroll.',
+    icon: 'smile',
+    color: '#9A3412', // Orange 800
+    order: 15,
+    group: 'commerce',
+  },
+  {
+    id: 'niche',
+    name: 'Oddly Specific',
+    description: 'Very narrow interests and unusual perspectives you will not find elsewhere.',
+    icon: 'star',
+    color: '#0E7490', // Cyan 700
+    order: 16,
+    group: 'commerce',
+  },
 ];
 
 export const getCategoryById = (id: string): Category | undefined => {
@@ -141,4 +212,8 @@ export const getCategoryById = (id: string): Category | undefined => {
 
 export const getCategoriesByIds = (ids: string[]): Category[] => {
   return ids.map(id => getCategoryById(id)).filter((c): c is Category => c !== undefined);
+};
+
+export const getCategoryGroupById = (id: string): CategoryGroup | undefined => {
+  return categoryGroups.find(g => g.id === id);
 };

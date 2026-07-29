@@ -1,9 +1,10 @@
 import React, { useState, useMemo, useEffect, useRef, useCallback, useId } from 'react';
 import QRCode from 'qrcode';
-import { generateSecretKey, getPublicKey, finalizeEvent, nip19 } from 'nostr-tools';
+import { nip19 } from 'nostr-tools';
 import type { CuratedAccount } from '../../types/follow-pack';
 import { getCategoryById } from '../../data/follow-pack';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
+import { PUBLISH_RELAYS, STARTER_PACK_KIND, signStarterPack } from './starterPackEvent';
 
 interface ExportModalProps {
   isOpen: boolean;
@@ -21,11 +22,10 @@ interface RelayResult {
   error?: string;
 }
 
-const RELAYS = [
-  'wss://relay.damus.io',
-  'wss://nos.lol',
-  'wss://nostr.mom',
-];
+const RELAYS: readonly string[] = PUBLISH_RELAYS;
+
+const pendingResults = (): RelayResult[] =>
+  RELAYS.map(url => ({ url, status: 'pending' as RelayStatus }));
 
 export const ExportModal: React.FC<ExportModalProps> = ({
   isOpen,
@@ -39,37 +39,37 @@ export const ExportModal: React.FC<ExportModalProps> = ({
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
   const [qrError, setQrError] = useState<string | null>(null);
   const [publishStatus, setPublishStatus] = useState<PublishStatus>('idle');
-  const [relayResults, setRelayResults] = useState<RelayResult[]>(RELAYS.map(r => ({ url: r, status: 'pending' })));
+  const [relayResults, setRelayResults] = useState<RelayResult[]>(pendingResults);
   const [burnerNpub, setBurnerNpub] = useState<string | null>(null);
   const [burnerPk, setBurnerPk] = useState<string | null>(null);
   const [listId, setListId] = useState<string | null>(null);
   const [naddr, setNaddr] = useState<string | null>(null);
   const [verificationStatus, setVerificationStatus] = useState<'idle' | 'checking' | 'verified' | 'not_found'>('idle');
   const [debugInfo, setDebugInfo] = useState<string[]>([]);
-  const [showDetails, setShowDetails] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wsRefs = useRef<WebSocket[]>([]);
   const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
   const isMountedRef = useRef(true);
   const hasPublishedRef = useRef(false);
   const packNameId = useId();
+  const consentHeadingId = useId();
+  const tabsId = useId();
   // Trap focus inside the dialog; Escape closes, focus returns to the opener.
+  // Initial focus lands on the first focusable element, which is the header's
+  // close button — never the publish button.
   const modalRef = useFocusTrap<HTMLDivElement>(isOpen, onClose);
 
-  // Generate burner keypair and publish when modal opens - only once
-  useEffect(() => {
-    if (isOpen && selectedAccounts.length > 0 && !hasPublishedRef.current) {
-      hasPublishedRef.current = true;
-      publishToNostr();
-    }
-  }, [isOpen, selectedAccounts.length]); // eslint-disable-line react-hooks/exhaustive-deps
+  // NOTHING is published on open. Publishing happens only from the confirm
+  // button in the consent panel (audit finding #112: this used to be a mount
+  // effect that fired a signed event at three relays before the user had seen
+  // the dialog). tests/follow-pack.test.ts guards against its return.
 
   // Reset state when modal closes and cleanup resources
   useEffect(() => {
     if (!isOpen) {
       hasPublishedRef.current = false;
       setPublishStatus('idle');
-      setRelayResults(RELAYS.map(r => ({ url: r, status: 'pending' })));
+      setRelayResults(pendingResults());
       setBurnerNpub(null);
       setBurnerPk(null);
       setListId(null);
@@ -77,6 +77,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
       setQrDataUrl(null);
       setVerificationStatus('idle');
       setDebugInfo([]);
+      setActiveTab('qr');
     }
   }, [isOpen]);
 
@@ -111,193 +112,21 @@ export const ExportModal: React.FC<ExportModalProps> = ({
     });
   }, []);
 
-  const publishToNostr = useCallback(async () => {
-    if (selectedAccounts.length === 0) return;
-
-    setPublishStatus('publishing');
-    addDebug('Starting publish...');
-
-    try {
-      // Generate burner keypair
-      const sk = generateSecretKey();
-      const pk = getPublicKey(sk);
-      const npub = nip19.npubEncode(pk);
-      setBurnerNpub(npub);
-      setBurnerPk(pk);
-      addDebug(`Generated burner key: ${npub.slice(0, 20)}...`);
-
-      // Create NIP-51 starter pack event (kind 39089)
-      const newListId = `followpack-${Date.now()}`;
-      setListId(newListId);
-      
-      const eventTemplate = {
-        kind: 39089,
-        created_at: Math.floor(Date.now() / 1000),
-        tags: [
-          ['d', newListId],
-          ['title', packName],
-          ['description', `Curated follow pack with ${selectedAccounts.length} accounts from nostrich.love`],
-          ...selectedAccounts.map(account => {
-            // Decode npub to hex pubkey for NIP-51 format
-            try {
-              const decoded = nip19.decode(account.npub);
-              const pubkeyHex = decoded.data as string;
-              return ['p', pubkeyHex];
-            } catch (e) {
-              addDebug(`Failed to decode npub for ${account.name}: ${e}`);
-              // Fallback to npub (will likely fail relay validation)
-              return ['p', account.npub];
-            }
-          }),
-        ],
-        content: '',
-      };
-
-      addDebug(`Creating event with listId: ${newListId}`);
-
-      // Sign the event
-      const signedEvent = finalizeEvent(eventTemplate, sk);
-      addDebug(`Event signed. ID: ${signedEvent.id.slice(0, 16)}...`);
-
-      // Publish to relays
-      const results: RelayResult[] = [];
-      
-      for (const relayUrl of RELAYS) {
-        if (!isMountedRef.current) break;
-        
-        addDebug(`Connecting to ${relayUrl}...`);
-        try {
-          const ws = new WebSocket(relayUrl);
-          wsRefs.current.push(ws);
-          
-          const result = await new Promise<RelayResult>((resolve) => {
-            let resolved = false;
-            
-            const timeout = setTimeout(() => {
-              if (!resolved) {
-                resolved = true;
-                addDebug(`[${relayUrl}] Connection timeout`);
-                ws.close();
-                resolve({ url: relayUrl, status: 'error', error: 'Connection timeout' });
-              }
-            }, 8000);
-            timeoutsRef.current.push(timeout);
-
-            ws.onopen = () => {
-              addDebug(`[${relayUrl}] Connected`);
-              ws.send(JSON.stringify(['EVENT', signedEvent]));
-              addDebug(`[${relayUrl}] Event sent`);
-              
-              const responseTimeout = setTimeout(() => {
-                if (!resolved) {
-                  resolved = true;
-                  addDebug(`[${relayUrl}] No OK response received`);
-                  ws.close();
-                  resolve({ url: relayUrl, status: 'error', error: 'No OK response' });
-                }
-              }, 5000);
-              timeoutsRef.current.push(responseTimeout);
-
-              ws.onmessage = (msg) => {
-                try {
-                  const data = JSON.parse(msg.data);
-                  addDebug(`[${relayUrl}] Received: ${JSON.stringify(data).slice(0, 100)}`);
-                  
-                  if (data[0] === 'OK' && data[1] === signedEvent.id) {
-                    if (!resolved) {
-                      resolved = true;
-                      clearTimeout(responseTimeout);
-                      clearTimeout(timeout);
-                      ws.close();
-                      resolve({ url: relayUrl, status: 'success' });
-                    }
-                  } else if (data[0] === 'OK' && data[2] === false) {
-                    if (!resolved) {
-                      resolved = true;
-                      clearTimeout(responseTimeout);
-                      clearTimeout(timeout);
-                      ws.close();
-                      resolve({ url: relayUrl, status: 'error', error: data[3] || 'Relay rejected event' });
-                    }
-                  }
-                } catch (e) {
-                  addDebug(`[${relayUrl}] Error parsing message: ${e}`);
-                }
-              };
-            };
-
-            ws.onerror = (e) => {
-              if (!resolved) {
-                resolved = true;
-                addDebug(`[${relayUrl}] WebSocket error`);
-                clearTimeout(timeout);
-                resolve({ url: relayUrl, status: 'error', error: 'WebSocket error' });
-              }
-            };
-
-            ws.onclose = () => {
-              addDebug(`[${relayUrl}] Connection closed`);
-            };
-          });
-
-          results.push(result);
-        } catch (err) {
-          const errorMsg = err instanceof Error ? err.message : String(err);
-          addDebug(`[${relayUrl}] Exception: ${errorMsg}`);
-          results.push({ url: relayUrl, status: 'error', error: errorMsg });
-        }
-      }
-
-      setRelayResults(results);
-      const successful = results.filter(r => r.status === 'success').length;
-      addDebug(`Publish complete. ${successful}/${RELAYS.length} relays successful`);
-
-      if (successful > 0) {
-        // Generate naddr with relay hints for better discoverability
-        // Include relays where the event was successfully published
-        const successfulRelays = results
-          .filter(r => r.status === 'success')
-          .map(r => r.url.replace('wss://', ''));
-        
-        const naddrEncoded = nip19.naddrEncode({
-          kind: 39089,
-          pubkey: pk,
-          identifier: newListId,
-          relays: successfulRelays.slice(0, 2), // Include up to 2 relay hints
-        });
-        setNaddr(naddrEncoded);
-        addDebug(`Generated naddr: ${naddrEncoded.slice(0, 30)}...`);
-        addDebug(`Relay hints: ${successfulRelays.slice(0, 2).join(', ')}`);
-        
-        setPublishStatus('published');
-        
-        // Wait a moment then verify
-        const verifyTimeout = setTimeout(() => {
-          if (isMountedRef.current) {
-            verifyEventOnRelays(signedEvent.id, pk, newListId);
-          }
-        }, 2000);
-        timeoutsRef.current.push(verifyTimeout);
-      } else {
-        setPublishStatus('error');
-      }
-    } catch (err) {
-      const errorMsg = err instanceof Error ? err.message : String(err);
-      addDebug(`Fatal error: ${errorMsg}`);
-      console.error('Failed to publish:', err);
-      setPublishStatus('error');
-    }
-  }, [selectedAccounts, packName, addDebug]);
-
-  const verifyEventOnRelays = useCallback(async (eventId?: string, pubkey?: string, identifier?: string) => {
-    if (!eventId && !pubkey) return;
-    
+  /**
+   * Re-query the relays for the event that was just published.
+   *
+   * Both arguments are optional so the "Check again" button can call this with
+   * none and fall back to state. It used to bail out on `if (!eventId &&
+   * !pubkey) return` before reaching that fallback, which made the button a
+   * no-op — invisible while the whole block hid inside a <details>.
+   */
+  const verifyEventOnRelays = useCallback(async (pubkey?: string, identifier?: string) => {
     setVerificationStatus('checking');
     addDebug('Verifying event on relays...');
 
     const pk = pubkey || burnerPk;
     const id = identifier || listId;
-    
+
     if (!pk || !id) {
       addDebug('Missing pubkey or listId for verification');
       setVerificationStatus('not_found');
@@ -308,15 +137,15 @@ export const ExportModal: React.FC<ExportModalProps> = ({
 
     for (const relayUrl of RELAYS) {
       if (!isMountedRef.current) break;
-      
+
       try {
         addDebug(`[${relayUrl}] Querying for event...`);
         const ws = new WebSocket(relayUrl);
         wsRefs.current.push(ws);
-        
+
         const found = await new Promise<boolean>((resolve) => {
           let resolved = false;
-          
+
           const timeout = setTimeout(() => {
             if (!resolved) {
               resolved = true;
@@ -327,9 +156,9 @@ export const ExportModal: React.FC<ExportModalProps> = ({
           timeoutsRef.current.push(timeout);
 
           ws.onopen = () => {
-            // Query by the 'd' tag (identifier) for starter packs (kind 39089)
+            // Query by the 'd' tag (identifier) for starter packs
             const filter = {
-              kinds: [39089],
+              kinds: [STARTER_PACK_KIND],
               authors: [pk],
               '#d': [id],
             };
@@ -381,31 +210,205 @@ export const ExportModal: React.FC<ExportModalProps> = ({
     setVerificationStatus(foundCount > 0 ? 'verified' : 'not_found');
   }, [burnerPk, listId, addDebug]);
 
+  /**
+   * Publish the pack as a public NIP-51 list.
+   *
+   * Only ever invoked by the confirm button in the consent panel below. Reads
+   * `packName` at call time, so the title the user typed is the title that
+   * ships — when this ran from a mount effect it always published the default.
+   */
+  const publishToNostr = useCallback(async () => {
+    if (selectedAccounts.length === 0 || hasPublishedRef.current) return;
+    hasPublishedRef.current = true;
+
+    setPublishStatus('publishing');
+    setRelayResults(pendingResults());
+    addDebug('Starting publish...');
+
+    try {
+      const { event: signedEvent, identifier, pubkey, npub, undecodable } = signStarterPack(
+        selectedAccounts,
+        packName
+      );
+
+      setBurnerNpub(npub);
+      setBurnerPk(pubkey);
+      setListId(identifier);
+      addDebug(`Generated burner key: ${npub.slice(0, 20)}...`);
+      addDebug(`Creating event with listId: ${identifier}`);
+      undecodable.forEach(name => addDebug(`Failed to decode npub for ${name}`));
+      addDebug(`Event signed. ID: ${signedEvent.id.slice(0, 16)}...`);
+
+      // Publish to relays
+      const results: RelayResult[] = [];
+
+      for (const relayUrl of RELAYS) {
+        if (!isMountedRef.current) break;
+
+        addDebug(`Connecting to ${relayUrl}...`);
+        try {
+          const ws = new WebSocket(relayUrl);
+          wsRefs.current.push(ws);
+
+          const result = await new Promise<RelayResult>((resolve) => {
+            let resolved = false;
+
+            const timeout = setTimeout(() => {
+              if (!resolved) {
+                resolved = true;
+                addDebug(`[${relayUrl}] Connection timeout`);
+                ws.close();
+                resolve({ url: relayUrl, status: 'error', error: 'Connection timeout' });
+              }
+            }, 8000);
+            timeoutsRef.current.push(timeout);
+
+            ws.onopen = () => {
+              addDebug(`[${relayUrl}] Connected`);
+              ws.send(JSON.stringify(['EVENT', signedEvent]));
+              addDebug(`[${relayUrl}] Event sent`);
+
+              const responseTimeout = setTimeout(() => {
+                if (!resolved) {
+                  resolved = true;
+                  addDebug(`[${relayUrl}] No OK response received`);
+                  ws.close();
+                  resolve({ url: relayUrl, status: 'error', error: 'No OK response' });
+                }
+              }, 5000);
+              timeoutsRef.current.push(responseTimeout);
+
+              ws.onmessage = (msg) => {
+                try {
+                  const data = JSON.parse(msg.data);
+                  addDebug(`[${relayUrl}] Received: ${JSON.stringify(data).slice(0, 100)}`);
+
+                  // NIP-01: ["OK", <id>, <accepted:bool>, <message>]. The
+                  // boolean is the verdict and it MUST be read — matching on
+                  // the id alone reported `["OK", id, false, "blocked"]` as
+                  // "Saved" and then told the user their list was public on
+                  // relays that had refused it.
+                  if (data[0] === 'OK' && data[1] === signedEvent.id) {
+                    if (!resolved) {
+                      resolved = true;
+                      clearTimeout(responseTimeout);
+                      clearTimeout(timeout);
+                      ws.close();
+                      resolve(
+                        data[2] === true
+                          ? { url: relayUrl, status: 'success' }
+                          : {
+                              url: relayUrl,
+                              status: 'error',
+                              error: data[3] || 'Relay rejected event',
+                            }
+                      );
+                    }
+                  }
+                } catch (e) {
+                  addDebug(`[${relayUrl}] Error parsing message: ${e}`);
+                }
+              };
+            };
+
+            ws.onerror = () => {
+              if (!resolved) {
+                resolved = true;
+                addDebug(`[${relayUrl}] WebSocket error`);
+                clearTimeout(timeout);
+                resolve({ url: relayUrl, status: 'error', error: 'WebSocket error' });
+              }
+            };
+
+            ws.onclose = () => {
+              addDebug(`[${relayUrl}] Connection closed`);
+            };
+          });
+
+          results.push(result);
+        } catch (err) {
+          const errorMsg = err instanceof Error ? err.message : String(err);
+          addDebug(`[${relayUrl}] Exception: ${errorMsg}`);
+          results.push({ url: relayUrl, status: 'error', error: errorMsg });
+        }
+      }
+
+      setRelayResults(results);
+      const successful = results.filter(r => r.status === 'success').length;
+      addDebug(`Publish complete. ${successful}/${RELAYS.length} relays successful`);
+
+      if (successful > 0) {
+        // Generate naddr with relay hints for better discoverability
+        const successfulRelays = results
+          .filter(r => r.status === 'success')
+          .map(r => r.url.replace('wss://', ''));
+
+        const naddrEncoded = nip19.naddrEncode({
+          kind: STARTER_PACK_KIND,
+          pubkey,
+          identifier,
+          relays: successfulRelays.slice(0, 2), // Include up to 2 relay hints
+        });
+        setNaddr(naddrEncoded);
+        addDebug(`Generated naddr: ${naddrEncoded.slice(0, 30)}...`);
+        addDebug(`Relay hints: ${successfulRelays.slice(0, 2).join(', ')}`);
+
+        setPublishStatus('published');
+
+        // Wait a moment then verify
+        const verifyTimeout = setTimeout(() => {
+          if (isMountedRef.current) {
+            verifyEventOnRelays(pubkey, identifier);
+          }
+        }, 2000);
+        timeoutsRef.current.push(verifyTimeout);
+      } else {
+        setPublishStatus('error');
+        // Nothing landed anywhere — let the user try again.
+        hasPublishedRef.current = false;
+      }
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : String(err);
+      addDebug(`Fatal error: ${errorMsg}`);
+      console.error('Failed to publish:', err);
+      setPublishStatus('error');
+      hasPublishedRef.current = false;
+    }
+  }, [selectedAccounts, packName, addDebug, verifyEventOnRelays]);
+
   // Generate npub list for copy
   const npubList = useMemo(() => {
     return selectedAccounts.map(a => a.npub).join('\n');
   }, [selectedAccounts]);
 
-  // Generate NIP-02 format
+  // Generate NIP-02 format.
+  //
+  // NIP-02 p tags are ["p", <32-byte hex pubkey>, <relay>, <petname>]. This used
+  // to emit the bech32 `npub1...` instead, so the file labelled "NIP-02" was not
+  // NIP-02 and a client importing it follows nobody. buildStarterPackEvent
+  // already decodes for the NIP-51 path; this one did not.
   const nip02Data = useMemo(() => {
     return {
       kind: 3,
-      tags: selectedAccounts.map(account => [
-        'p',
-        account.npub,
-        '',
-        account.name,
-      ]),
+      tags: selectedAccounts.flatMap(account => {
+        try {
+          const { data } = nip19.decode(account.npub);
+          return [['p', data as string, '', account.name]];
+        } catch {
+          // Shipping an invalid tag is worse than one missing row.
+          return [];
+        }
+      }),
       content: '',
     };
   }, [selectedAccounts]);
 
-  // Generate nostr: URL for QR code using naddr
+  // Generate nostr: URL for QR code. Until (and unless) the user publishes,
+  // this is a purely local payload — the QR tab never touches the network.
   const nostrUrl = useMemo(() => {
     if (naddr) {
       return `nostr:${naddr}`;
     }
-    // Fallback to raw data if not published yet
     const jsonData = JSON.stringify({
       name: packName,
       accounts: selectedAccounts.map(a => ({ npub: a.npub, name: a.name })),
@@ -428,7 +431,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
               light: '#ffffff',
             },
           });
-          
+
           const dataUrl = await QRCode.toDataURL(nostrUrl, {
             width: 512,
             margin: 2,
@@ -436,13 +439,21 @@ export const ExportModal: React.FC<ExportModalProps> = ({
           setQrDataUrl(dataUrl);
         } catch (err) {
           console.error('QR generation error:', err);
-          setQrError('Failed to generate QR code. Please try again.');
+          // A QR code holds ~2.9 KB and the unpublished payload runs ~125 B per
+          // account, so it overflows at ~19 selections — inside the 20-50 range
+          // this page recommends. "Please try again" was a lie: no retry can
+          // ever fit the same data. Send the reader somewhere that works.
+          setQrError(
+            selectedAccounts.length > 15
+              ? `${selectedAccounts.length} accounts is more data than one QR code can hold. Use the "Copy List" tab — it has no size limit.`
+              : 'Could not generate the QR code. Use the "Copy List" tab instead.'
+          );
         }
       }
     };
 
     generateQR();
-  }, [activeTab, nostrUrl]);
+  }, [activeTab, nostrUrl, selectedAccounts.length]);
 
   const handleCopy = async (text: string) => {
     try {
@@ -455,18 +466,6 @@ export const ExportModal: React.FC<ExportModalProps> = ({
     } catch (err) {
       console.error('Failed to copy:', err);
     }
-  };
-
-  const handleDownload = (data: object, filename: string) => {
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
   };
 
   const handleDownloadQR = () => {
@@ -489,7 +488,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
       });
     });
     return Object.entries(counts)
-      .sort(([,a], [,b]) => b - a)
+      .sort(([, a], [, b]) => b - a)
       .map(([catId, count]) => ({
         category: getCategoryById(catId),
         count,
@@ -497,7 +496,24 @@ export const ExportModal: React.FC<ExportModalProps> = ({
       .filter(item => item.category);
   }, [selectedAccounts]);
 
+  const successfulRelayCount = relayResults.filter(r => r.status === 'success').length;
+
   if (!isOpen) return null;
+
+  const localOnlyNote = (
+    <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">
+      Nothing leaves your browser on this tab.
+    </p>
+  );
+
+  // Offline exports first, publishing last — the three that touch no network are
+  // the ones a beginner should reach for.
+  const tabs: Array<{ id: ExportMethod; label: string }> = [
+    { id: 'qr', label: 'QR Code' },
+    { id: 'copy', label: 'Copy List' },
+    { id: 'nip02', label: 'NIP-02' },
+    { id: 'nip51', label: 'Publish (optional)' },
+  ];
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
@@ -521,7 +537,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
             </div>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               aria-label="Close export dialog"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -529,7 +545,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
               </svg>
             </button>
           </div>
-          
+
           {/* Pack name input */}
           <div className="mt-4">
             <label htmlFor={packNameId} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -544,230 +560,84 @@ export const ExportModal: React.FC<ExportModalProps> = ({
               placeholder="Enter a name for your follow pack"
             />
           </div>
-          
-          {/* Category breakdown */}
+
+          {/* Category breakdown. The category colour is a 700-level shade: it
+              reads as a fill (white on it clears AA) but NOT as text — as
+              `color` over a 10%-alpha tint of itself on a dark surface it lands
+              at 1.4-2.7:1. So it stays in the dot, and the label uses neutrals,
+              which is what PackSidebar already does. */}
           <div className="mt-4 flex flex-wrap gap-2">
             {categoryBreakdown.map(({ category, count }) => (
               <span
                 key={category!.id}
-                className="text-xs px-2 py-1 rounded-full font-medium"
-                style={{ 
-                  backgroundColor: `${category!.color}20`, 
-                  color: category!.color 
-                }}
+                className="inline-flex items-center gap-1.5 text-xs px-2 py-1 rounded-full font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
               >
+                <span
+                  className="w-2 h-2 rounded-full flex-shrink-0"
+                  style={{ backgroundColor: category!.color }}
+                  aria-hidden="true"
+                />
                 {category!.name}: {count}
               </span>
             ))}
           </div>
-
-          {/* Publish Status */}
-          {publishStatus !== 'idle' && (
-            <div className="mt-4 space-y-2">
-              {publishStatus === 'publishing' && (
-                <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-3 flex items-center gap-3">
-                  <div className="animate-spin w-5 h-5 border-2 border-yellow-500 border-t-transparent rounded-full"></div>
-                  <p className="text-sm text-yellow-800 dark:text-yellow-200">
-                    Publishing list to Nostr relays...
-                  </p>
-                </div>
-              )}
-              
-
-              
-              {publishStatus === 'error' && (
-                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
-                  <p className="text-sm text-red-800 dark:text-red-200">
-                    <span className="font-medium">⚠ Failed to publish</span> to relays. See details below.
-                  </p>
-                </div>
-              )}
-
-              {/* Collapsible Details Section */}
-              {relayResults.length > 0 && (
-                <details className="text-sm">
-                  <summary className="cursor-pointer text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 flex items-center gap-2 py-1">
-                    <span>Details ({relayResults.filter(r => r.status === 'success').length}/{relayResults.length} relays)</span>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </summary>
-                  
-                  <div className="mt-2 space-y-2">
-                    {/* Published Status */}
-                    {publishStatus === 'published' && (
-                      <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3">
-                        <p className="text-sm text-green-800 dark:text-green-200">
-                          <span className="font-medium">✓ Published!</span> Your follow pack has been published.
-                        </p>
-                      </div>
-                    )}
-
-                    {/* Relay Status */}
-                    <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
-                      <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Relay Status:</p>
-                      <div className="space-y-1">
-                        {relayResults.map((relay) => (
-                          <div key={relay.url} className="flex items-center justify-between text-sm">
-                            <span className="text-gray-600 dark:text-gray-400 truncate flex-1">{relay.url}</span>
-                            {relay.status === 'success' && (
-                              <span className="text-green-600 ms-2">✓ Saved</span>
-                            )}
-                            {relay.status === 'error' && (
-                              <span className="text-red-600 ms-2" title={relay.error}>✗ Failed</span>
-                            )}
-                            {relay.status === 'pending' && (
-                              <span className="text-yellow-600 ms-2">⏳ Pending</span>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Verification Status */}
-                    {verificationStatus !== 'idle' && (
-                      <div className={`rounded-lg p-3 ${
-                        verificationStatus === 'verified' ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800' :
-                        verificationStatus === 'not_found' ? 'bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800' :
-                        'bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800'
-                      }`}>
-                        {verificationStatus === 'checking' && (
-                          <p className="text-sm text-blue-800 dark:text-blue-200 flex items-center gap-2">
-                            <span className="animate-spin inline-block w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full"></span>
-                            Verifying event exists on relays...
-                          </p>
-                        )}
-                        {verificationStatus === 'verified' && (
-                          <p className="text-sm text-green-800 dark:text-green-200">
-                            <span className="font-medium">✓ Verified!</span> Event confirmed on at least one relay.
-                          </p>
-                        )}
-                        {verificationStatus === 'not_found' && (
-                          <div>
-                            <p className="text-sm text-orange-800 dark:text-orange-200">
-                              <span className="font-medium">⚠ Not found yet.</span> Event may still be propagating.
-                            </p>
-                            <button
-                              onClick={() => verifyEventOnRelays()}
-                              className="mt-2 text-xs text-orange-600 dark:text-orange-300 underline"
-                            >
-                              Try verifying again
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    )}
-
-                    {/* Debug Info */}
-                    {debugInfo.length > 0 && (
-                      <details className="text-xs">
-                        <summary className="cursor-pointer text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
-                          Debug Log ({debugInfo.length} entries)
-                        </summary>
-                        <div className="mt-2 bg-gray-100 dark:bg-gray-900 p-2 rounded max-h-32 overflow-y-auto font-mono">
-                          {debugInfo.map((msg, i) => (
-                            <div key={i} className="text-gray-600 dark:text-gray-400">{msg}</div>
-                          ))}
-                        </div>
-                      </details>
-                    )}
-                  </div>
-                </details>
-              )}
-            </div>
-          )}
         </div>
 
         {/* Tabs */}
         <div className="border-b border-gray-200 dark:border-gray-700">
-          <div className="flex">
-            <button
-              onClick={() => setActiveTab('qr')}
-              className={`
-                flex-1 py-3 px-4 text-sm font-medium text-center
-                border-b-2 transition-colors
-                ${activeTab === 'qr'
-                  ? 'border-primary text-primary'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
-                }
-              `}
-            >
-              <span className="flex items-center justify-center gap-2">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4h2v-4zM6 20h2v-2H6v2zm6-2h-2v2h2v-2zm-6-6h2v-2H6v2zm12 0h-2v2h2v-2zM6 8h2V6H6v2zm12 0h-2V6h2v2zM8 12h2v-2H8v2zm8 0h-2v2h2v-2z" />
-                </svg>
-                QR Code
-              </span>
-            </button>
-            <button
-              onClick={() => setActiveTab('copy')}
-              className={`
-                flex-1 py-3 px-4 text-sm font-medium text-center
-                border-b-2 transition-colors
-                ${activeTab === 'copy'
-                  ? 'border-primary text-primary'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
-                }
-              `}
-            >
-              <span className="flex items-center justify-center gap-2">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-                Copy List
-              </span>
-            </button>
-            <button
-              onClick={() => setActiveTab('nip02')}
-              className={`
-                flex-1 py-3 px-4 text-sm font-medium text-center
-                border-b-2 transition-colors
-                ${activeTab === 'nip02'
-                  ? 'border-primary text-primary'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
-                }
-              `}
-            >
-              <span className="flex items-center justify-center gap-2">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                </svg>
-                NIP-02
-              </span>
-            </button>
-            <button
-              onClick={() => setActiveTab('nip51')}
-              className={`
-                flex-1 py-3 px-4 text-sm font-medium text-center
-                border-b-2 transition-colors
-                ${activeTab === 'nip51'
-                  ? 'border-primary text-primary'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
-                }
-              `}
-            >
-              <span className="flex items-center justify-center gap-2">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                </svg>
-                NIP-51
-              </span>
-            </button>
+          <div className="flex" role="tablist" aria-label="Export method">
+            {tabs.map(tab => (
+              <button
+                key={tab.id}
+                id={`${tabsId}-tab-${tab.id}`}
+                role="tab"
+                aria-selected={activeTab === tab.id}
+                aria-controls={`${tabsId}-panel`}
+                tabIndex={activeTab === tab.id ? 0 : -1}
+                onKeyDown={(e) => {
+                  const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+                  if (step === 0) return;
+                  e.preventDefault();
+                  // Arrow keys follow reading order, so they flip with `dir`.
+                  const dir = document.documentElement.dir === 'rtl' ? -step : step;
+                  const index = tabs.findIndex(t => t.id === activeTab);
+                  const next = tabs[(index + dir + tabs.length) % tabs.length];
+                  setActiveTab(next.id);
+                  document.getElementById(`${tabsId}-tab-${next.id}`)?.focus();
+                }}
+                onClick={() => setActiveTab(tab.id)}
+                className={`
+                  flex-1 py-3 px-2 sm:px-4 text-xs sm:text-sm font-medium text-center
+                  border-b-2 transition-colors
+                  ${activeTab === tab.id
+                    ? 'border-primary text-primary-700 dark:text-primary-300'
+                    : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                  }
+                `}
+              >
+                {tab.label}
+              </button>
+            ))}
           </div>
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-6">
+        <div
+          id={`${tabsId}-panel`}
+          role="tabpanel"
+          aria-labelledby={`${tabsId}-tab-${activeTab}`}
+          className="flex-1 overflow-y-auto p-6"
+        >
           {activeTab === 'qr' && (
             <div className="text-center">
               <div className="bg-white p-4 rounded-xl inline-block mb-4 shadow-sm" style={{ maxWidth: 'min(100%, 280px)' }}>
                 {qrError ? (
-                  <div className="w-64 h-64 flex items-center justify-center text-red-500">
+                  <div className="w-64 h-64 flex items-center justify-center text-red-600">
                     <p>{qrError}</p>
                   </div>
                 ) : (
                   <div className="w-64 h-64 flex items-center justify-center">
-                    <canvas 
+                    <canvas
                       ref={canvasRef}
                       className="rounded-lg max-w-full max-h-full object-contain"
                       width={256}
@@ -776,14 +646,14 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                   </div>
                 )}
               </div>
-              
+
               <p className="text-gray-600 dark:text-gray-400 mb-4">
-                {naddr 
-                  ? "Scan this QR code to subscribe to this NIP-51 list on Nostr"
-                  : "Scan this QR code to import these follows"
+                {naddr
+                  ? 'Scan this QR code to subscribe to the list you published'
+                  : 'Scan this QR code with your Nostr client to import these follows'
                 }
               </p>
-              
+
               <div className="flex justify-center gap-2 mb-4">
                 <button
                   onClick={handleDownloadQR}
@@ -793,32 +663,34 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                   Download QR
                 </button>
               </div>
-              
+
               {naddr && (
-                <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 mb-4">
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">List Address (naddr):</p>
+                <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 mb-4 text-start">
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">List address (naddr):</p>
                   <p className="text-xs font-mono break-all">{naddr}</p>
                 </div>
               )}
-              
+
               <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 text-start">
-                <p className="text-sm text-blue-800 dark:text-blue-200">
-                  <span className="font-medium">💡 How to import:</span>
+                <p className="text-sm text-blue-900 dark:text-blue-100">
+                  <span className="font-medium">How to import:</span>
                 </p>
-                <ol className="text-sm text-blue-700 dark:text-blue-300 mt-2 ms-4 list-decimal space-y-1">
+                <ol className="text-sm text-blue-800 dark:text-blue-200 mt-2 ms-4 list-decimal space-y-1">
                   <li>Open your Nostr client (Amethyst, Damus, etc.)</li>
-                  <li>Go to Lists or search for the list address</li>
-                  <li>Scan this QR code or enter the naddr</li>
-                  <li>Subscribe to the list to follow all accounts</li>
+                  <li>Find its QR scanner or "Import follows" screen</li>
+                  <li>Scan this code</li>
+                  <li>Confirm the follows in your client</li>
                 </ol>
               </div>
+
+              {!naddr && localOnlyNote}
             </div>
           )}
 
           {activeTab === 'copy' && (
             <div>
               <p className="text-gray-600 dark:text-gray-400 mb-4">
-                Copy this list and paste it into your client's "Import Follows" feature:
+                Copy this list and paste it into your client's "Import follows" feature:
               </p>
               <div className="relative">
                 <textarea
@@ -834,13 +706,14 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                   {copied ? 'Copied!' : 'Copy'}
                 </button>
               </div>
+              {localOnlyNote}
             </div>
           )}
 
           {activeTab === 'nip02' && (
             <div>
               <p className="text-gray-600 dark:text-gray-400 mb-4">
-                NIP-02 formatted follow list:
+                NIP-02 formatted follow list (kind 3), for clients that import a file:
               </p>
               <div className="relative">
                 <pre className="w-full h-48 p-4 text-xs font-mono bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-gray-300 overflow-auto">
@@ -855,36 +728,244 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                   </button>
                 </div>
               </div>
+              {localOnlyNote}
             </div>
           )}
 
           {activeTab === 'nip51' && (
             <div>
-              <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 mb-4">
-                <p className="text-sm text-green-800 dark:text-green-200">
-                  <span className="font-medium">✨ NIP-51 List Published!</span>
-                </p>
-              </div>
-              
-              {naddr && (
-                <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 mb-4">
-                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">List Address (naddr):</p>
-                  <div className="flex gap-2">
-                    <code className="flex-1 text-xs font-mono bg-white dark:bg-gray-800 p-2 rounded break-all">{naddr}</code>
+              {/* ---------------- CONSENT GATE ---------------- */}
+              {publishStatus === 'idle' && (
+                <div role="group" aria-labelledby={consentHeadingId} className="space-y-4">
+                  <div>
+                    <h3 id={consentHeadingId} className="text-lg font-bold text-gray-900 dark:text-white">
+                      Publish this pack as a public Nostr list?
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                      This is optional. The QR code, the npub list and the NIP-02 file all work
+                      without it, and none of them send anything anywhere.
+                    </p>
+                  </div>
+
+                  <div className="rounded-lg border border-gray-200 dark:border-gray-700 divide-y divide-gray-200 dark:divide-gray-700">
+                    <div className="p-4">
+                      <p className="text-sm font-semibold text-gray-900 dark:text-white mb-1">
+                        What gets published
+                      </p>
+                      <p className="text-sm text-gray-700 dark:text-gray-300">
+                        A NIP-51 starter pack (kind {STARTER_PACK_KIND}) containing the public
+                        keys of the {selectedAccounts.length} account
+                        {selectedAccounts.length === 1 ? '' : 's'} you selected, the pack name
+                        “{packName}”, and one line noting it came from nostrich.love. Your
+                        selection <strong>is</strong> the content: anyone reading the list learns
+                        exactly which accounts you picked.
+                      </p>
+                    </div>
+
+                    <div className="p-4">
+                      <p className="text-sm font-semibold text-gray-900 dark:text-white mb-1">
+                        Where it goes
+                      </p>
+                      <p className="text-sm text-gray-700 dark:text-gray-300">
+                        These {RELAYS.length} public relays:
+                      </p>
+                      <ul className="mt-2 space-y-1">
+                        {RELAYS.map(relay => (
+                          <li key={relay} className="text-sm font-mono text-gray-900 dark:text-gray-100 break-all">
+                            {relay}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
+                        Relays copy events to each other, so expect it to spread further than
+                        this list.
+                      </p>
+                    </div>
+
+                    <div className="p-4">
+                      <p className="text-sm font-semibold text-gray-900 dark:text-white mb-1">
+                        Who signs it
+                      </p>
+                      <p className="text-sm text-gray-700 dark:text-gray-300">
+                        A throwaway key generated in your browser and discarded immediately
+                        afterwards. It is not linked to any account you own — and nobody keeps
+                        it, <strong>not even you</strong>, so you will not be able to edit or
+                        delete this list later.
+                      </p>
+                    </div>
+
+                    <div className="p-4 bg-amber-50 dark:bg-amber-900/20">
+                      <p className="text-sm font-semibold text-amber-900 dark:text-amber-100 mb-1">
+                        It is public and effectively permanent
+                      </p>
+                      <p className="text-sm text-amber-900 dark:text-amber-100">
+                        Anyone can read it. Nostr has no reliable delete: a deletion request is
+                        only a hint that relays may ignore, and copies already made stay.
+                        Treat this as permanent.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row-reverse gap-3 pt-2">
+                    {/* Keep it local is the primary, low-risk action. */}
                     <button
-                      onClick={() => handleCopy(naddr)}
-                      className="px-3 py-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                      onClick={() => setActiveTab('qr')}
+                      className="flex-1 px-4 py-2.5 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors"
                     >
-                      {copied ? 'Copied!' : 'Copy'}
+                      Keep it local
+                    </button>
+                    <button
+                      onClick={publishToNostr}
+                      disabled={selectedAccounts.length === 0}
+                      className="flex-1 px-4 py-2.5 rounded-lg font-medium border border-red-300 dark:border-red-800 text-red-700 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Publish to {RELAYS.length} public relays
                     </button>
                   </div>
                 </div>
               )}
-              
-              {burnerNpub && (
-                <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4 mb-4">
-                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Published by (burner):</p>
-                  <p className="text-xs font-mono text-gray-600 dark:text-gray-400 break-all">{burnerNpub}</p>
+
+              {/* ---------------- IN FLIGHT ---------------- */}
+              {publishStatus === 'publishing' && (
+                <div
+                  className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 flex items-center gap-3"
+                  role="status"
+                  aria-live="polite"
+                >
+                  <div className="animate-spin w-5 h-5 border-2 border-yellow-600 border-t-transparent rounded-full" aria-hidden="true"></div>
+                  <p className="text-sm text-yellow-900 dark:text-yellow-100">
+                    Publishing your list to {RELAYS.length} relays…
+                  </p>
+                </div>
+              )}
+
+              {/* ---------------- RESULT ---------------- */}
+              {(publishStatus === 'published' || publishStatus === 'error') && (
+                <div className="space-y-4" role="status" aria-live="polite">
+                  {publishStatus === 'published' ? (
+                    <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
+                      <p className="text-sm font-semibold text-green-900 dark:text-green-100">
+                        Published.
+                      </p>
+                      <p className="text-sm text-green-900 dark:text-green-100 mt-1">
+                        This list is now public on {successfulRelayCount} of {RELAYS.length}{' '}
+                        relays. It cannot be edited or removed.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+                      <p className="text-sm font-semibold text-red-900 dark:text-red-100">
+                        Nothing was published.
+                      </p>
+                      <p className="text-sm text-red-900 dark:text-red-100 mt-1">
+                        No relay accepted the event, so no list exists. The QR code and the
+                        other export tabs still work.
+                      </p>
+                      <button
+                        onClick={publishToNostr}
+                        className="mt-2 text-sm text-red-800 dark:text-red-200 underline"
+                      >
+                        Try publishing again
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Relay results, expanded — not hidden behind a disclosure */}
+                  <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
+                    <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Relay results
+                    </p>
+                    <div className="space-y-1">
+                      {relayResults.map((relay) => (
+                        <div key={relay.url} className="flex items-center justify-between gap-2 text-sm">
+                          <span className="text-gray-700 dark:text-gray-300 font-mono truncate flex-1">{relay.url}</span>
+                          {relay.status === 'success' && (
+                            <span className="text-green-700 dark:text-green-400 ms-2 flex-shrink-0">Saved</span>
+                          )}
+                          {relay.status === 'error' && (
+                            <span className="text-red-700 dark:text-red-400 ms-2 flex-shrink-0" title={relay.error}>Failed</span>
+                          )}
+                          {relay.status === 'pending' && (
+                            <span className="text-gray-600 dark:text-gray-400 ms-2 flex-shrink-0">Pending</span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {naddr && (
+                    <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
+                      <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        List address (naddr) — share this to let others subscribe:
+                      </p>
+                      <div className="flex gap-2">
+                        <code className="flex-1 text-xs font-mono bg-white dark:bg-gray-800 p-2 rounded break-all">{naddr}</code>
+                        <button
+                          onClick={() => handleCopy(naddr)}
+                          className="px-3 py-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex-shrink-0"
+                        >
+                          {copied ? 'Copied!' : 'Copy'}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {burnerNpub && (
+                    <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4">
+                      <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Published by (throwaway key, already discarded):
+                      </p>
+                      <p className="text-xs font-mono text-gray-600 dark:text-gray-400 break-all">{burnerNpub}</p>
+                    </div>
+                  )}
+
+                  {/* Verification */}
+                  {verificationStatus !== 'idle' && (
+                    <div className={`rounded-lg p-3 ${
+                      verificationStatus === 'verified' ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800' :
+                      verificationStatus === 'not_found' ? 'bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800' :
+                      'bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800'
+                    }`}>
+                      {verificationStatus === 'checking' && (
+                        <p className="text-sm text-blue-900 dark:text-blue-100 flex items-center gap-2">
+                          <span className="animate-spin inline-block w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full" aria-hidden="true"></span>
+                          Checking that the event is really there…
+                        </p>
+                      )}
+                      {verificationStatus === 'verified' && (
+                        <p className="text-sm text-green-900 dark:text-green-100">
+                          Confirmed on at least one relay.
+                        </p>
+                      )}
+                      {verificationStatus === 'not_found' && (
+                        <div>
+                          <p className="text-sm text-orange-900 dark:text-orange-100">
+                            Not found yet — the event may still be propagating.
+                          </p>
+                          <button
+                            onClick={() => verifyEventOnRelays()}
+                            className="mt-2 text-xs text-orange-800 dark:text-orange-200 underline"
+                          >
+                            Check again
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Debug Info */}
+                  {debugInfo.length > 0 && (
+                    <details className="text-xs">
+                      <summary className="cursor-pointer text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">
+                        Technical log ({debugInfo.length} entries)
+                      </summary>
+                      <div className="mt-2 bg-gray-100 dark:bg-gray-900 p-2 rounded max-h-32 overflow-y-auto font-mono">
+                        {debugInfo.map((msg, i) => (
+                          <div key={i} className="text-gray-600 dark:text-gray-400">{msg}</div>
+                        ))}
+                      </div>
+                    </details>
+                  )}
                 </div>
               )}
             </div>
@@ -893,12 +974,12 @@ export const ExportModal: React.FC<ExportModalProps> = ({
 
         {/* Footer */}
         <div className="p-6 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
             {selectedAccounts.length} accounts
           </p>
           <button
             onClick={onClose}
-            className="px-6 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-colors"
+            className="px-6 py-2 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors"
           >
             Done
           </button>

@@ -3651,5 +3651,95 @@
     "timeEstimate": "Etwa {minutes} Min. um alles abzuschließen",
     "continueAnyway": "Trotzdem fortfahren",
     "startFirst": "Mit der ersten Voraussetzung beginnen"
+  },
+  "followPack": {
+    "groups": {
+      "starter": {
+        "name": "Wo du anfängst",
+        "description": "Wenn du nur aus einer Gruppe wählst, wähle aus dieser."
+      },
+      "creative": {
+        "name": "Kreative Arbeit",
+        "description": "Menschen, die zeigen, was sie selbst machen."
+      },
+      "living": {
+        "name": "Essen, Land und Familie",
+        "description": "Alltag, Kochen, Anbauen, Kinder."
+      },
+      "ideas": {
+        "name": "Ideen und Überzeugungen",
+        "description": "Ausführliche Gedanken, Glaube, Freiheit und Eigenständigkeit."
+      },
+      "commerce": {
+        "name": "Handel und Spaß",
+        "description": "Orte, an denen du Sats ausgibst, und Accounts, die einfach Freude machen."
+      }
+    },
+    "categories": {
+      "jumpstart": {
+        "name": "Hier anfangen",
+        "description": "Ein handverlesenes Starter-Set — wenn du niemandem sonst folgst, folge diesen."
+      },
+      "legit": {
+        "name": "Bekannte Gesichter",
+        "description": "Lang etablierte, viel gefolgte Accounts: Protokoll-Autoren, Client-Entwickler, Namen, die dir immer wieder begegnen."
+      },
+      "cool_people": {
+        "name": "Favoriten der Community",
+        "description": "Accounts, die andere Nostr-Nutzer immer wieder empfehlen. Kein festes Thema — einfach gute Gesellschaft."
+      },
+      "artists": {
+        "name": "Künstler und Illustratoren",
+        "description": "Bildende Künstler, Illustratoren und Designer, die eigene Arbeiten posten."
+      },
+      "photography": {
+        "name": "Fotografen",
+        "description": "Landschaft, Street, Wildlife und Porträt, meist in voller Auflösung."
+      },
+      "musicians": {
+        "name": "Musiker",
+        "description": "Musiker, Produzenten und Bands, die Tracks, Konzerte und Work in Progress posten."
+      },
+      "books": {
+        "name": "Lesende und Schreibende",
+        "description": "Buchkritiken, Leselisten und Autoren, die über ihr Handwerk sprechen."
+      },
+      "foodies": {
+        "name": "Essen und Kochen",
+        "description": "Rezepte, Hausmannskost, Backen und Orte, an denen es sich zu essen lohnt."
+      },
+      "permaculture": {
+        "name": "Anbau und Selbstversorgung",
+        "description": "Gärtner, Landwirte und Selbstversorger, die regenerative Praxis dokumentieren."
+      },
+      "parents": {
+        "name": "Eltern und Familienleben",
+        "description": "Eltern, Homeschooler und Accounts rund um die Familie."
+      },
+      "mystics": {
+        "name": "Philosophie und Spiritualität",
+        "description": "Nachdenkliche Texte über Sinn, Bewusstsein und das Innenleben."
+      },
+      "christians": {
+        "name": "Christlicher Glaube",
+        "description": "Christliche Gläubige, Pastoren und Accounts mit Glaubensbezug."
+      },
+      "sovereign": {
+        "name": "Freiheit und Eigenständigkeit",
+        "description": "Datenschutz-Verfechter, Eigenverwahrung und unabhängiges Leben."
+      },
+      "merchants": {
+        "name": "Läden, die Bitcoin nehmen",
+        "description": "Kleine Unternehmen und Macher, die du über Lightning bezahlen kannst."
+      },
+      "doomscrolling": {
+        "name": "Spaß und Zeitvertreib",
+        "description": "Memes, Witze und leichte Unterhaltung für Momente, in denen du einfach scrollen willst."
+      },
+      "niche": {
+        "name": "Sehr speziell",
+        "description": "Enge Interessen und ungewöhnliche Perspektiven, die du sonst nirgends findest."
+      }
+    }
   }
 }

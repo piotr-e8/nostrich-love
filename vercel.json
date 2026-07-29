@@ -60,6 +60,16 @@
       "source": "/damus-demo",
       "destination": "/",
       "permanent": false
+    },
+    {
+      "source": "/nostr-for-:slug",
+      "destination": "/follow-pack",
+      "permanent": false
+    },
+    {
+      "source": "/nostr-for-:slug/",
+      "destination": "/follow-pack/",
+      "permanent": false
     }
   ]
 }

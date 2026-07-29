@@ -3673,5 +3673,95 @@
     "timeEstimate": "完成所有内容约需{minutes}分钟",
     "continueAnyway": "仍然继续",
     "startFirst": "从第一个前置条件开始"
+  },
+  "followPack": {
+    "groups": {
+      "starter": {
+        "name": "从哪里开始",
+        "description": "如果只从一组里挑，就从这一组挑。"
+      },
+      "creative": {
+        "name": "创作",
+        "description": "发布自己作品的人。"
+      },
+      "living": {
+        "name": "食物、土地与家庭",
+        "description": "日常生活、做饭、种植、养育孩子。"
+      },
+      "ideas": {
+        "name": "思想与信念",
+        "description": "长篇思考、信仰、自由与自立。"
+      },
+      "commerce": {
+        "name": "商店与消遣",
+        "description": "可以花比特币的地方，以及单纯让人愉快的账号。"
+      }
+    },
+    "categories": {
+      "jumpstart": {
+        "name": "从这里开始",
+        "description": "精选的入门名单——如果你只关注一批人，就关注他们。"
+      },
+      "legit": {
+        "name": "熟悉的面孔",
+        "description": "长期活跃、关注者众多的账号：协议作者、客户端开发者，你会反复看到的名字。"
+      },
+      "cool_people": {
+        "name": "社区推荐",
+        "description": "其他 Nostr 用户反复推荐的账号。没有统一主题——就是值得一起待着的人。"
+      },
+      "artists": {
+        "name": "艺术家与插画师",
+        "description": "发布自己作品的视觉艺术家、插画师和设计师。"
+      },
+      "photography": {
+        "name": "摄影师",
+        "description": "风光、街头、野生动物和人像，通常是全分辨率。"
+      },
+      "musicians": {
+        "name": "音乐人",
+        "description": "发布作品、演出和创作过程的音乐人、制作人和乐队。"
+      },
+      "books": {
+        "name": "读者与写作者",
+        "description": "书评、书单，以及谈论自己写作手艺的作者。"
+      },
+      "foodies": {
+        "name": "美食与烹饪",
+        "description": "菜谱、家常菜、烘焙，以及值得一去的餐馆。"
+      },
+      "permaculture": {
+        "name": "种植与自给自足",
+        "description": "记录再生农业实践的园丁、农夫和自给农户。"
+      },
+      "parents": {
+        "name": "父母与家庭生活",
+        "description": "父母、在家教育者，以及以家庭为主题的账号。"
+      },
+      "mystics": {
+        "name": "哲学与灵性",
+        "description": "关于意义、意识和内在生活的沉思写作。"
+      },
+      "christians": {
+        "name": "基督信仰",
+        "description": "基督徒、牧师，以及以信仰为中心的账号。"
+      },
+      "sovereign": {
+        "name": "自由与自立",
+        "description": "隐私倡导者、自我保管，以及关于独立生活的写作。"
+      },
+      "merchants": {
+        "name": "接受比特币的店铺",
+        "description": "可以通过闪电网络付款的小商家和手作者。"
+      },
+      "doomscrolling": {
+        "name": "轻松消遣",
+        "description": "梗图、玩笑和轻松内容，适合你只想随手划一划的时候。"
+      },
+      "niche": {
+        "name": "非常小众",
+        "description": "很窄的兴趣和不寻常的视角，别处找不到。"
+      }
+    }
   }
 }

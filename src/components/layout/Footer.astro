@@ -28,15 +28,6 @@ const footerLinks = {
   ],
 };
 
-const communityLinks = [
-  { label: 'Artists', href: '/nostr-for-artists' },
-  { label: 'Musicians', href: '/nostr-for-musicians' },
-  { label: 'Photographers', href: '/nostr-for-photographers' },
-  { label: 'Parents', href: '/nostr-for-parents' },
-  { label: 'Foodies', href: '/nostr-for-foodies' },
-  { label: 'Book Lovers', href: '/nostr-for-books' },
-];
-
 const toolLinks = [
   { label: 'Relay Playground', href: '/tools#relay-playground' },
   { label: 'Key Generator', href: '/tools#key-generator' },
@@ -86,24 +77,6 @@ const currentYear = new Date().getFullYear();
           ))}
         </ul>
       </div>
-
-      <!-- Communities - TEMPORARILY HIDDEN
-      <div>
-        <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Communities</h3>
-        <ul class="space-y-2" role="list">
-          {communityLinks.map((link) => (
-            <li>
-              <a 
-                href={link.href}
-                class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary transition-colors"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-      -->
 
       <!-- Tools -->
       <div>

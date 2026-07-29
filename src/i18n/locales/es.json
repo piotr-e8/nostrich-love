@@ -3407,5 +3407,95 @@
     "timeEstimate": "Aproximadamente {minutes} min para completar todo",
     "continueAnyway": "Continuar de todos modos",
     "startFirst": "Comenzar con el primer prerrequisito"
+  },
+  "followPack": {
+    "groups": {
+      "starter": {
+        "name": "Por dónde empezar",
+        "description": "Si solo eliges de un grupo, elige de este."
+      },
+      "creative": {
+        "name": "Trabajo creativo",
+        "description": "Gente que publica lo que hace."
+      },
+      "living": {
+        "name": "Comida, tierra y familia",
+        "description": "Vida diaria, cocina, cultivar, criar hijos."
+      },
+      "ideas": {
+        "name": "Ideas y creencias",
+        "description": "Reflexión de fondo, fe, libertad y autosuficiencia."
+      },
+      "commerce": {
+        "name": "Comercio y diversión",
+        "description": "Sitios donde gastar sats y cuentas que simplemente se disfrutan."
+      }
+    },
+    "categories": {
+      "jumpstart": {
+        "name": "Empieza aquí",
+        "description": "Un conjunto inicial escogido a mano: si no sigues a nadie más, sigue a estos."
+      },
+      "legit": {
+        "name": "Caras conocidas",
+        "description": "Cuentas veteranas y muy seguidas: autores del protocolo, desarrolladores de clientes, nombres que verás una y otra vez."
+      },
+      "cool_people": {
+        "name": "Favoritos de la comunidad",
+        "description": "Cuentas que otros usuarios de Nostr recomiendan sin parar. Sin un tema único: buena compañía."
+      },
+      "artists": {
+        "name": "Artistas e ilustradores",
+        "description": "Artistas visuales, ilustradores y diseñadores que publican su propio trabajo."
+      },
+      "photography": {
+        "name": "Fotógrafos",
+        "description": "Paisaje, calle, naturaleza y retrato, normalmente a resolución completa."
+      },
+      "musicians": {
+        "name": "Músicos",
+        "description": "Músicos, productores y bandas que publican temas, conciertos y trabajo en curso."
+      },
+      "books": {
+        "name": "Lectores y escritores",
+        "description": "Reseñas de libros, listas de lectura y autores hablando de su oficio."
+      },
+      "foodies": {
+        "name": "Comida y cocina",
+        "description": "Recetas, cocina casera, repostería y sitios donde merece la pena comer."
+      },
+      "permaculture": {
+        "name": "Cultivo y autosuficiencia",
+        "description": "Jardineros, agricultores y granjeros que documentan prácticas regenerativas."
+      },
+      "parents": {
+        "name": "Madres, padres y familia",
+        "description": "Madres y padres, educación en casa y cuentas centradas en la familia."
+      },
+      "mystics": {
+        "name": "Filosofía y espiritualidad",
+        "description": "Escritura contemplativa sobre el sentido, la consciencia y la vida interior."
+      },
+      "christians": {
+        "name": "Fe cristiana",
+        "description": "Creyentes cristianos, pastores y cuentas centradas en la fe."
+      },
+      "sovereign": {
+        "name": "Libertad y autosuficiencia",
+        "description": "Defensores de la privacidad, autocustodia y vida independiente."
+      },
+      "merchants": {
+        "name": "Tiendas que aceptan bitcoin",
+        "description": "Pequeños negocios y artesanos a los que puedes pagar por Lightning."
+      },
+      "doomscrolling": {
+        "name": "Diversión y perder el tiempo",
+        "description": "Memes, chistes y entretenimiento ligero para cuando solo quieres desplazarte."
+      },
+      "niche": {
+        "name": "Muy específico",
+        "description": "Intereses muy concretos y perspectivas poco comunes que no encontrarás en otro sitio."
+      }
+    }
   }
 }

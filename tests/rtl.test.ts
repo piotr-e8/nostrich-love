@@ -13,8 +13,10 @@ import { fileURLToPath } from 'node:url';
  * border-e/rounded-s/rounded-e) resolve to margin-inline-start,
  * inset-inline-end, text-align:start, ... which the browser flips off `dir`.
  *
- * Measured 2026-07-29, after the migration: 2 mirrorable sites remained and
- * 117 sites / 199 tokens of deliberately-physical utilities.
+ * Measured 2026-07-30, after deleting the 8 /nostr-for-* audience pages: 2
+ * mirrorable sites remain and 96 sites / 178 tokens of deliberately-physical
+ * utilities. (Was 117/199 on 2026-07-29; the audience pages carried 17 sites
+ * of decorative blur-blob offsets, and 4 more had already gone stale.)
  *
  * These tests don't demand perfection — they demand the physical-utility
  * surface NEVER GROWS. When you migrate something, lower the baseline in the
@@ -127,12 +129,12 @@ const UNMIRRORABLE: Record<string, RegExp> = {
   'divide-x': /(?<![\w-])divide-x(?:-(?:\[[^\]]+\]|[\w./]+))?(?![\w-])/g,
 };
 
-// Baselines measured 2026-07-29. LOWER THEM, never raise: when you convert a
+// Baselines measured 2026-07-30. LOWER THEM, never raise: when you convert a
 // `left-0 right-0` pair to `inset-x-0`, or delete a decorative blob, subtract
 // the tokens you removed in the same commit. Raising a baseline means you added
 // a physical direction utility — say why in the commit message.
-const UNMIRRORABLE_SITES_BASELINE = 117;
-const UNMIRRORABLE_TOKENS_BASELINE = 199;
+const UNMIRRORABLE_SITES_BASELINE = 96;
+const UNMIRRORABLE_TOKENS_BASELINE = 178;
 
 describe('unmirrorable physical utilities (ratchet, must not grow)', () => {
   const sites = scan(UNMIRRORABLE);

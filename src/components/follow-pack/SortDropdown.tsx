@@ -6,11 +6,11 @@ interface SortDropdownProps {
   onChange: (value: FilterState['sortBy']) => void;
 }
 
+// Only the sorts the data can actually perform — see FilterState.sortBy for why
+// "Most Popular", "Most Active" and "Recently Added" were removed.
 const options: { value: FilterState['sortBy']; label: string }[] = [
-  { value: 'popular', label: 'Most Popular' },
-  { value: 'active', label: 'Most Active' },
+  { value: 'curated', label: 'Curated order' },
   { value: 'name', label: 'Name (A-Z)' },
-  { value: 'recent', label: 'Recently Added' },
 ];
 
 export const SortDropdown: React.FC<SortDropdownProps> = ({

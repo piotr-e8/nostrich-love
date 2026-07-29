@@ -3189,5 +3189,95 @@
     "timeEstimate": "Około {minutes} min na ukończenie wszystkiego",
     "continueAnyway": "Kontynuuj mimo to",
     "startFirst": "Zacznij od pierwszego wymagania"
+  },
+  "followPack": {
+    "groups": {
+      "starter": {
+        "name": "Od czego zacząć",
+        "description": "Jeśli masz wybierać tylko z jednej grupy — wybierz z tej."
+      },
+      "creative": {
+        "name": "Twórczość",
+        "description": "Ludzie, którzy pokazują to, co sami tworzą."
+      },
+      "living": {
+        "name": "Jedzenie, ziemia i rodzina",
+        "description": "Codzienne życie, gotowanie, uprawa, dzieci."
+      },
+      "ideas": {
+        "name": "Idee i przekonania",
+        "description": "Dłuższe przemyślenia, wiara, wolność i samowystarczalność."
+      },
+      "commerce": {
+        "name": "Handel i rozrywka",
+        "description": "Miejsca, w których wydasz saty, i konta, które po prostu bawią."
+      }
+    },
+    "categories": {
+      "jumpstart": {
+        "name": "Zacznij tutaj",
+        "description": "Ręcznie wybrany zestaw na start — jeśli nie zaobserwujesz nikogo innego, zaobserwuj ich."
+      },
+      "legit": {
+        "name": "Znane twarze",
+        "description": "Konta obecne od dawna i szeroko obserwowane: autorzy protokołu, twórcy klientów, nazwy, które będziesz spotykać wciąż od nowa."
+      },
+      "cool_people": {
+        "name": "Polecani przez społeczność",
+        "description": "Konta, które użytkownicy nostr polecają najczęściej. Bez jednego tematu — po prostu dobre towarzystwo."
+      },
+      "artists": {
+        "name": "Artyści i ilustratorzy",
+        "description": "Artyści wizualni, ilustratorzy i projektanci publikujący własne prace."
+      },
+      "photography": {
+        "name": "Fotografowie",
+        "description": "Pejzaż, ulica, dzika przyroda i portret — zwykle w pełnej rozdzielczości."
+      },
+      "musicians": {
+        "name": "Muzycy",
+        "description": "Muzycy, producenci i zespoły publikujący nagrania, koncerty i pracę w toku."
+      },
+      "books": {
+        "name": "Czytający i piszący",
+        "description": "Recenzje książek, listy lektur i autorzy opowiadający o swoim warsztacie."
+      },
+      "foodies": {
+        "name": "Jedzenie i gotowanie",
+        "description": "Przepisy, domowe gotowanie, pieczenie i miejsca warte odwiedzenia."
+      },
+      "permaculture": {
+        "name": "Uprawa i samowystarczalność",
+        "description": "Ogrodnicy, rolnicy i osoby prowadzące gospodarstwa w duchu regeneracji."
+      },
+      "parents": {
+        "name": "Rodzice i życie rodzinne",
+        "description": "Rodzice, edukacja domowa i konta o tematyce rodzinnej."
+      },
+      "mystics": {
+        "name": "Filozofia i duchowość",
+        "description": "Refleksyjne teksty o sensie, świadomości i życiu wewnętrznym."
+      },
+      "christians": {
+        "name": "Wiara chrześcijańska",
+        "description": "Chrześcijanie, duszpasterze i konta skupione na wierze."
+      },
+      "sovereign": {
+        "name": "Wolność i niezależność",
+        "description": "Obrońcy prywatności, samodzielne przechowywanie kluczy i niezależne życie."
+      },
+      "merchants": {
+        "name": "Sklepy przyjmujące bitcoina",
+        "description": "Małe firmy i rzemieślnicy, którym zapłacisz przez Lightning."
+      },
+      "doomscrolling": {
+        "name": "Rozrywka i zabijanie czasu",
+        "description": "Memy, żarty i lekka rozrywka, gdy chcesz po prostu przewijać."
+      },
+      "niche": {
+        "name": "Bardzo specyficzne",
+        "description": "Wąskie zainteresowania i nietypowe perspektywy, których nie znajdziesz nigdzie indziej."
+      }
+    }
   }
 }

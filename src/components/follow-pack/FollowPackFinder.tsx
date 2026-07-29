@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import type { CuratedAccount, CategoryId, UserSelection, FilterState } from '../../types/follow-pack';
-import { curatedAccounts, categories } from '../../data/follow-pack';
+import type { CategoryId, UserSelection, FilterState } from '../../types/follow-pack';
+import { curatedAccounts, categories, getCategoryCounts } from '../../data/follow-pack';
 import { AccountBrowser } from './AccountBrowser';
 import { PackSidebar } from './PackSidebar';
 import { ExportModal } from './ExportModal';
@@ -18,6 +18,15 @@ interface FollowPackFinderProps {
 
 const STORAGE_KEY = 'nostrich-follow-pack-selections';
 const ACCOUNTS_PER_PAGE = 12;
+
+// Derived once from the static dataset — every category chip and activity option
+// carries its real count, so nothing in the UI can advertise an empty bucket.
+const CATEGORY_COUNTS = getCategoryCounts();
+const ACTIVITY_COUNTS = curatedAccounts.reduce<Record<string, number>>((counts, account) => {
+  counts[account.activity] = (counts[account.activity] || 0) + 1;
+  return counts;
+}, {});
+const VALID_CATEGORY_IDS = new Set<string>(categories.map(c => c.id));
 
 export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
   initialSelectedCategories = [],
@@ -37,8 +46,7 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
     searchQuery: '',
     activityLevel: 'all',
     contentTypes: [],
-    verifiedOnly: false,
-    sortBy: 'popular',
+    sortBy: 'curated',
   });
   
   // Pagination state
@@ -78,25 +86,13 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
     if (filterState.activityLevel !== 'all') {
       filtered = filtered.filter(account => account.activity === filterState.activityLevel);
     }
-    
-    // Verified only
-    if (filterState.verifiedOnly) {
-      filtered = filtered.filter(account => account.verified);
+
+    // Sort. 'curated' keeps the dataset's own order (starter set first), so
+    // there is nothing to do for it.
+    if (filterState.sortBy === 'name') {
+      filtered.sort((a, b) => a.name.localeCompare(b.name));
     }
-    
-    // Sort
-    switch (filterState.sortBy) {
-      case 'popular':
-        filtered.sort((a, b) => (b.followers || 0) - (a.followers || 0));
-        break;
-      case 'name':
-        filtered.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      case 'recent':
-        filtered.sort((a, b) => new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime());
-        break;
-    }
-    
+
     return filtered;
   }, [filterState]);
 
@@ -116,23 +112,21 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
     const params = new URLSearchParams(window.location.search);
     const categoryParam = params.get('category');
     
-    if (categoryParam) {
-      // Validate that it's a known category
-      const validCategoryIds: CategoryId[] = ['jumpstart', 'artists', 'photography', 'musicians', 'permaculture', 'parents', 'christians', 'foodies', 'mystics', 'cool_people', 'sovereign', 'legit', 'niche', 'merchants', 'doomscrolling', 'books'];
-      
-      if (validCategoryIds.includes(categoryParam as CategoryId)) {
-        setFilterState(prev => ({
-          ...prev,
-          categories: [categoryParam as CategoryId],
-        }));
-      }
+    // Validate against the live taxonomy rather than a hand-maintained copy of
+    // it — a duplicated id list is how ?category=bitcoin and ?category=privacy
+    // ended up pointing at categories that never existed.
+    if (categoryParam && VALID_CATEGORY_IDS.has(categoryParam)) {
+      setFilterState(prev => ({
+        ...prev,
+        categories: [categoryParam as CategoryId],
+      }));
     }
   }, []);
 
   // Reset to first page when filters change
   React.useEffect(() => {
     setCurrentPage(1);
-  }, [filterState.searchQuery, filterState.categories, filterState.activityLevel, filterState.verifiedOnly, filterState.sortBy]);
+  }, [filterState.searchQuery, filterState.categories, filterState.activityLevel, filterState.sortBy]);
 
   // Get selected accounts
   const selectedAccounts = useMemo(() => {
@@ -191,11 +185,6 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
     setFilterState(prev => ({ ...prev, activityLevel: level }));
   }, []);
 
-  // Toggle verified only
-  const toggleVerifiedOnly = useCallback(() => {
-    setFilterState(prev => ({ ...prev, verifiedOnly: !prev.verifiedOnly }));
-  }, []);
-
   // Save selections to localStorage whenever they change
   React.useEffect(() => {
     const selections: UserSelection[] = Array.from(selectedNpubs).map(npub => ({
@@ -247,40 +236,29 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
 
   return (
     <div className="w-full min-h-[600px]">
-      {/* Top section - Filters */}
+      {/* Top section - Filters. The page owns the heading above this island. */}
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          Find People to Follow
-        </h2>
-        <p className="text-gray-600 dark:text-gray-400 mb-6">
-          Discover curated Nostr accounts by category. Select accounts to build your follow pack.
-        </p>
-
         <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 space-y-4">
-          <SearchBar 
+          <SearchBar
             value={filterState.searchQuery}
             onChange={setSearchQuery}
             placeholder="Search by name, username, bio, or tags..."
           />
-          
+
           <div className="flex flex-wrap items-center gap-4">
             <SortDropdown value={filterState.sortBy} onChange={setSortBy} />
-            <ActivityFilter value={filterState.activityLevel} onChange={setActivityLevel} />
-            <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={filterState.verifiedOnly}
-                onChange={toggleVerifiedOnly}
-                className="rounded border-gray-300 text-primary-600 dark:text-primary-400 focus:ring-primary"
-              />
-              Verified only
-            </label>
+            <ActivityFilter
+              value={filterState.activityLevel}
+              onChange={setActivityLevel}
+              counts={ACTIVITY_COUNTS}
+            />
           </div>
-          
+
           <CategoryFilter
             categories={categories}
             selected={filterState.categories}
             onToggle={toggleCategory}
+            counts={CATEGORY_COUNTS}
           />
           
           {filterState.categories.length > 0 && (
@@ -289,15 +267,24 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
               {filterState.categories.map(catId => {
                 const cat = categories.find(c => c.id === catId);
                 return cat ? (
-                  <span 
+                  // Colour stays in the dot: as `color` on a tint of itself over
+                  // a dark surface a 700-level shade is 1.4-2.7:1. See the same
+                  // note in ExportModal's category breakdown.
+                  <span
                     key={catId}
-                    className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium"
-                    style={{ backgroundColor: `${cat.color}20`, color: cat.color }}
+                    className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
                   >
+                    <span
+                      className="w-2 h-2 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: cat.color }}
+                      aria-hidden="true"
+                    />
                     {cat.name}
                     <button
+                      type="button"
                       onClick={() => toggleCategory(catId)}
-                      className="ms-1 hover:opacity-70"
+                      aria-label={`Remove ${cat.name} filter`}
+                      className="hover:opacity-70"
                     >
                       ×
                     </button>

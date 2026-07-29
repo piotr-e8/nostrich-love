@@ -3673,5 +3673,95 @@
     "timeEstimate": "About {minutes} min to complete all",
     "continueAnyway": "Continue anyway",
     "startFirst": "Start with first prerequisite"
+  },
+  "followPack": {
+    "groups": {
+      "starter": {
+        "name": "Where to start",
+        "description": "If you only pick from one band, pick from this one."
+      },
+      "creative": {
+        "name": "Creative work",
+        "description": "People posting things they made."
+      },
+      "living": {
+        "name": "Food, land and family",
+        "description": "Everyday life, cooking, growing things, raising kids."
+      },
+      "ideas": {
+        "name": "Ideas and beliefs",
+        "description": "Long-form thinking, faith, freedom and self-reliance."
+      },
+      "commerce": {
+        "name": "Commerce and fun",
+        "description": "Places to spend sats, and accounts that are just enjoyable."
+      }
+    },
+    "categories": {
+      "jumpstart": {
+        "name": "Start Here",
+        "description": "A hand-picked starter set — if you follow nothing else, follow these."
+      },
+      "legit": {
+        "name": "Familiar Faces",
+        "description": "Long-standing, widely-followed accounts: protocol authors, client developers, names you will keep seeing."
+      },
+      "cool_people": {
+        "name": "Community Favorites",
+        "description": "Accounts other Nostr users keep recommending. No single theme — just good company."
+      },
+      "artists": {
+        "name": "Artists & Illustrators",
+        "description": "Visual artists, illustrators and designers posting their own work."
+      },
+      "photography": {
+        "name": "Photographers",
+        "description": "Landscape, street, wildlife and portrait work, usually at full resolution."
+      },
+      "musicians": {
+        "name": "Musicians",
+        "description": "Musicians, producers and bands posting tracks, gigs and work in progress."
+      },
+      "books": {
+        "name": "Readers & Writers",
+        "description": "Book reviews, reading lists, and authors talking about their craft."
+      },
+      "foodies": {
+        "name": "Food & Cooking",
+        "description": "Recipes, home cooking, baking, and places worth eating at."
+      },
+      "permaculture": {
+        "name": "Growing Food & Homesteading",
+        "description": "Gardeners, farmers and homesteaders documenting regenerative practice."
+      },
+      "parents": {
+        "name": "Parents & Family Life",
+        "description": "Parents, homeschoolers and family-focused accounts."
+      },
+      "mystics": {
+        "name": "Philosophy & Spirituality",
+        "description": "Contemplative writing on meaning, consciousness and the inner life."
+      },
+      "christians": {
+        "name": "Christian Faith",
+        "description": "Christian believers, pastors and faith-centred accounts."
+      },
+      "sovereign": {
+        "name": "Freedom & Self-Reliance",
+        "description": "Privacy advocates, self-custody, and independent-living writing."
+      },
+      "merchants": {
+        "name": "Shops That Take Bitcoin",
+        "description": "Small businesses and makers you can pay over Lightning."
+      },
+      "doomscrolling": {
+        "name": "Fun & Time-Wasting",
+        "description": "Memes, jokes and light entertainment for when you just want to scroll."
+      },
+      "niche": {
+        "name": "Oddly Specific",
+        "description": "Very narrow interests and unusual perspectives you will not find elsewhere."
+      }
+    }
   }
 }

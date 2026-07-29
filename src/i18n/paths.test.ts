@@ -116,7 +116,7 @@ describe('hasLocalizedVersions', () => {
   });
 
   it('is false for English-only pages', () => {
-    for (const p of ['/about', '/glossary', '/tools', '/simulators/damus', '/nostr-for-parents', '/']) {
+    for (const p of ['/about', '/glossary', '/tools', '/follow-pack', '/badges', '/']) {
       expect(hasLocalizedVersions(p)).toBe(false);
     }
   });

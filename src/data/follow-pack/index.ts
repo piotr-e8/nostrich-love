@@ -5,11 +5,50 @@ import { curatedAccounts as phase1Accounts } from './accounts';
 import { additionalAccounts as phase5Accounts } from './additional-accounts';
 import type { CuratedAccount } from '../../types/follow-pack';
 
-// Merge all accounts
-export const curatedAccounts: CuratedAccount[] = [...phase1Accounts, ...phase5Accounts];
+const union = <T,>(a: T[] = [], b: T[] = []): T[] => [...new Set([...a, ...b])];
+
+/**
+ * accounts.ts is generated from imported naddr follow packs, and 13 npubs were
+ * imported more than once — 542 rows for 527 distinct people. Left alone, the
+ * same account appears twice in the browser and every category count is
+ * inflated.
+ *
+ * Collapse the duplicates here rather than rewriting the 300 KB generated file:
+ * the first row wins for scalar fields (name, bio, picture) and the list fields
+ * are unioned, so someone imported under two packs keeps BOTH categories and
+ * shows up under both filters.
+ */
+const dedupeByNpub = (accounts: CuratedAccount[]): CuratedAccount[] => {
+  const byNpub = new Map<string, CuratedAccount>();
+
+  for (const account of accounts) {
+    const existing = byNpub.get(account.npub);
+    if (!existing) {
+      byNpub.set(account.npub, { ...account });
+      continue;
+    }
+    existing.categories = union(existing.categories, account.categories);
+    existing.tags = union(existing.tags, account.tags);
+    existing.contentTypes = union(existing.contentTypes, account.contentTypes);
+  }
+
+  return [...byNpub.values()];
+};
+
+// Merge all accounts, one row per npub
+export const curatedAccounts: CuratedAccount[] = dedupeByNpub([
+  ...phase1Accounts,
+  ...phase5Accounts,
+]);
 
 // Re-export categories
-export { categories, getCategoryById, getCategoriesByIds } from './categories';
+export {
+  categories,
+  categoryGroups,
+  getCategoryById,
+  getCategoriesByIds,
+  getCategoryGroupById,
+} from './categories';
 
 // Re-export validation
 export {

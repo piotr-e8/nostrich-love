@@ -4,9 +4,15 @@ import type { FilterState } from '../../types/follow-pack';
 interface ActivityFilterProps {
   value: FilterState['activityLevel'];
   onChange: (value: FilterState['activityLevel']) => void;
+  /**
+   * Accounts per activity level. Levels with no accounts are not offered:
+   * "Occasional" matched nothing in the dataset and silently emptied the
+   * browser for anyone who picked it.
+   */
+  counts?: Record<string, number>;
 }
 
-const options: { value: FilterState['activityLevel']; label: string }[] = [
+const ALL_OPTIONS: { value: FilterState['activityLevel']; label: string }[] = [
   { value: 'all', label: 'All Activity' },
   { value: 'high', label: 'Very Active' },
   { value: 'medium', label: 'Active' },
@@ -16,8 +22,12 @@ const options: { value: FilterState['activityLevel']; label: string }[] = [
 export const ActivityFilter: React.FC<ActivityFilterProps> = ({
   value,
   onChange,
+  counts,
 }) => {
   const captionId = useId();
+  const options = counts
+    ? ALL_OPTIONS.filter(option => option.value === 'all' || (counts[option.value] ?? 0) > 0)
+    : ALL_OPTIONS;
 
   return (
     <div className="flex items-center gap-2">
@@ -35,11 +45,14 @@ export const ActivityFilter: React.FC<ActivityFilterProps> = ({
           cursor-pointer
         "
       >
-        {options.map(option => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
+        {options.map(option => {
+          const count = option.value === 'all' ? undefined : counts?.[option.value];
+          return (
+            <option key={option.value} value={option.value}>
+              {count === undefined ? option.label : `${option.label} (${count})`}
+            </option>
+          );
+        })}
       </select>
     </div>
   );
