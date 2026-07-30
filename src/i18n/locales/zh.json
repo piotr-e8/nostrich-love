@@ -2344,7 +2344,16 @@
     "quizDescription": "参加测验以巩固所学知识。",
     "continueDescription": "继续你的 Nostr 之旅，阅读 {{title}}",
     "takeQuiz": "参加测验",
-    "continueLearning": "继续学习"
+    "continueLearning": "继续学习",
+    "dismiss": "关闭",
+    "upNext": "接下来"
+  },
+  "share": {
+    "label": "分享：",
+    "onNostr": "在 Nostr 上分享",
+    "copyLink": "复制链接",
+    "sharePage": "分享此页面",
+    "linkCopied": "链接已复制"
   },
   "clientRecommender": {
     "title": "寻找最适合的客户端",
@@ -3657,6 +3666,10 @@
       "nip05Failed": "无法解析 NIP-05",
       "loadFailed": "无法加载账号数据"
     }
+  },
+  "guideFooter": {
+    "improvePage": "改进此页面",
+    "improveHint": "发现错别字或不清楚的地方？在 GitHub 上编辑此指南。"
   },
   "time": {
     "justNow": "刚刚"

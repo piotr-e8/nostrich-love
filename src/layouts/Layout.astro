@@ -28,7 +28,10 @@ const dir = localeConfig.direction;
     
     <!-- SEO Component -->
     <SEO {...props} locale={locale} />
-    
+
+    <!-- RSS feed (single English feed — un-prefixed URLs are canonical) -->
+    <link rel="alternate" type="application/rss+xml" title="Nostrich.love" href="/rss.xml" />
+
     <!-- Critical CSS to prevent FOUC -->
     <style is:inline>
       /* Prevent FOUC for dark mode */

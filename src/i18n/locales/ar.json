@@ -1934,7 +1934,16 @@
     "quizDescription": "خذ الاختبار لتعزيز ما تعلمته.",
     "continueDescription": "استمر في رحلة Nostr مع {title}",
     "takeQuiz": "خذ الاختبار",
-    "continueLearning": "استمر في التعلم"
+    "continueLearning": "استمر في التعلم",
+    "dismiss": "إغلاق",
+    "upNext": "التالي"
+  },
+  "share": {
+    "label": "مشاركة:",
+    "onNostr": "المشاركة على Nostr",
+    "copyLink": "نسخ الرابط",
+    "sharePage": "مشاركة هذه الصفحة",
+    "linkCopied": "تم نسخ الرابط"
   },
   "officialAccount": {
     "title": "الحساب الرسمي",
@@ -1949,6 +1958,10 @@
       "nip05Failed": "فشل في حل NIP-05",
       "loadFailed": "فشل في تحميل بيانات الحساب"
     }
+  },
+  "guideFooter": {
+    "improvePage": "حسّن هذه الصفحة",
+    "improveHint": "لاحظت خطأً إملائيًا أو شيئًا غير واضح؟ عدّل هذا الدليل على GitHub."
   },
   "time": {
     "justNow": "الآن"

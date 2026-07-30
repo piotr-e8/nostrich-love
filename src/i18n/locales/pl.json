@@ -3097,7 +3097,16 @@
     "quizDescription": "Rozwiąż quiz, aby utrwalić to, czego się nauczyłeś.",
     "continueDescription": "Kontynuuj swoją podróż z Nostr z przewodnikiem {title}",
     "takeQuiz": "Rozwiąż Quiz",
-    "continueLearning": "Kontynuuj Naukę"
+    "continueLearning": "Kontynuuj Naukę",
+    "dismiss": "Zamknij",
+    "upNext": "Dalej"
+  },
+  "share": {
+    "label": "Udostępnij:",
+    "onNostr": "Udostępnij na Nostr",
+    "copyLink": "Kopiuj link",
+    "sharePage": "Udostępnij tę stronę",
+    "linkCopied": "Skopiowano link"
   },
   "guidesPage": {
     "hero": {
@@ -3173,6 +3182,10 @@
       "nip05Failed": "Nie udało się rozwiązać NIP-05",
       "loadFailed": "Nie udało się załadować danych konta"
     }
+  },
+  "guideFooter": {
+    "improvePage": "Ulepsz tę stronę",
+    "improveHint": "Widzisz literówkę albo coś niejasnego? Edytuj ten poradnik na GitHubie."
   },
   "time": {
     "justNow": "przed chwilą"

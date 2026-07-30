@@ -3559,7 +3559,16 @@
     "quizDescription": "Mache das Quiz, um das Gelernte zu festigen.",
     "continueDescription": "Setze deine Nostr-Reise fort mit {title}",
     "takeQuiz": "Quiz Starten",
-    "continueLearning": "Weiter Lernen"
+    "continueLearning": "Weiter Lernen",
+    "dismiss": "Schließen",
+    "upNext": "Als Nächstes"
+  },
+  "share": {
+    "label": "Teilen:",
+    "onNostr": "Auf Nostr teilen",
+    "copyLink": "Link kopieren",
+    "sharePage": "Diese Seite teilen",
+    "linkCopied": "Link kopiert"
   },
   "guidesPage": {
     "hero": {
@@ -3635,6 +3644,10 @@
       "nip05Failed": "NIP-05 konnte nicht aufgelöst werden",
       "loadFailed": "Kontodaten konnten nicht geladen werden"
     }
+  },
+  "guideFooter": {
+    "improvePage": "Verbessere diese Seite",
+    "improveHint": "Tippfehler entdeckt oder etwas unklar? Bearbeite diesen Guide auf GitHub."
   },
   "time": {
     "justNow": "gerade eben"

@@ -3560,7 +3560,16 @@
     "quizDescription": "Take the quiz to reinforce what you've learned.",
     "continueDescription": "Continue your Nostr journey with {title}",
     "takeQuiz": "Take the Quiz",
-    "continueLearning": "Continue Learning"
+    "continueLearning": "Continue Learning",
+    "dismiss": "Dismiss",
+    "upNext": "Up next"
+  },
+  "share": {
+    "label": "Share:",
+    "onNostr": "Share on Nostr",
+    "copyLink": "Copy link",
+    "sharePage": "Share this page",
+    "linkCopied": "Link copied"
   },
   "guidesPage": {
     "hero": {
@@ -3657,6 +3666,10 @@
       "nip05Failed": "Failed to resolve NIP-05",
       "loadFailed": "Failed to load account data"
     }
+  },
+  "guideFooter": {
+    "improvePage": "Improve this page",
+    "improveHint": "Spotted a typo or something unclear? Edit this guide on GitHub."
   },
   "time": {
     "justNow": "just now"

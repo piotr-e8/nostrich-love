@@ -3315,7 +3315,16 @@
     "quizDescription": "Responde el cuestionario para reforzar lo que has aprendido.",
     "continueDescription": "Continúa tu viaje con Nostr con la guía {title}",
     "takeQuiz": "Responder Cuestionario",
-    "continueLearning": "Continuar Aprendiendo"
+    "continueLearning": "Continuar Aprendiendo",
+    "dismiss": "Cerrar",
+    "upNext": "A continuación"
+  },
+  "share": {
+    "label": "Compartir:",
+    "onNostr": "Compartir en Nostr",
+    "copyLink": "Copiar enlace",
+    "sharePage": "Compartir esta página",
+    "linkCopied": "Enlace copiado"
   },
   "guidesPage": {
     "hero": {
@@ -3391,6 +3400,10 @@
       "nip05Failed": "No se pudo resolver NIP-05",
       "loadFailed": "No se pudieron cargar los datos de la cuenta"
     }
+  },
+  "guideFooter": {
+    "improvePage": "Mejora esta página",
+    "improveHint": "¿Ves una errata o algo poco claro? Edita esta guía en GitHub."
   },
   "time": {
     "justNow": "ahora mismo"

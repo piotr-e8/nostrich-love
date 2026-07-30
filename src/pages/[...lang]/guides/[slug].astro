@@ -49,6 +49,7 @@ import type { Badge } from '../../../components/gamification/types';
 import { LEARNING_PATHS, getPreviousGuideInPath, getNextGuideInPath, getGuidePositionInPath, getPathLength } from '../../../data/learning-paths';
 import { locales, getLocaleConfig, type Locale } from '../../../config/locales';
 import { langParam } from '../../../i18n/paths';
+import { t } from '../../../i18n';
 
 // Legacy GUIDE_ORDER for backward compatibility and general path
 const GUIDE_ORDER = [
@@ -119,6 +120,15 @@ const estimatedTimeMinutes = parseInt(guide.data.estimatedTime?.match(/\d+/)?.[0
 
 // Check if guide has a quiz by looking for Quiz component imports in the raw body
 const hasQuiz = guide.body?.includes('Quiz') || false;
+
+// End-of-guide block (#101b): edit link + follow CTA.
+// The edit URL targets THIS page's locale file — every locale dir carries the
+// same 16 .mdx filenames, so the pair is always valid. piotr-e8 URLs stay safe
+// after the planned transfer to ptrio42 (GitHub redirects).
+const editUrl = `https://github.com/piotr-e8/nostrich-love/edit/main/src/content/guides/${locale}/${guideSlug}.mdx`;
+// _@nostrich.love — nip19.npubEncode of the pubkey in public/.well-known/nostr.json
+const OFFICIAL_NPUB = 'npub1p6t6gjhy3q4rfmcxuff7hu3xh5u09cvzem98d48arfzsrzd9kxws3cpeyl';
+const followUrl = `https://njump.me/${OFFICIAL_NPUB}`;
 
 // Structured data: this is an educational article, free to read, in this locale
 const guideUrl = new URL(Astro.url.pathname, 'https://nostrich.love').toString();
@@ -310,11 +320,40 @@ const components = {
 
             <Content components={components} />
             
-            <GuideNavigation 
-              client:idle 
+            <GuideNavigation
+              client:idle
               guideTitles={guideTitles}
               locale={locale}
             />
+
+            <!-- End-of-guide: improve-this-page + follow CTA (#101b). Static, no island. -->
+            <div class="not-prose mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+              <div class="min-w-0">
+                <a
+                  href={editUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                >
+                  <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                  {t('guideFooter.improvePage', locale)}
+                </a>
+                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{t('guideFooter.improveHint', locale)}</p>
+              </div>
+              <a
+                href={followUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center justify-center gap-2 self-start sm:self-auto shrink-0 px-4 py-2 rounded-full bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium transition-colors"
+              >
+                <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M13 10V3L4 14h7v7l9-11h-9z" />
+                </svg>
+                {t('officialAccount.followUs', locale)}
+              </a>
+            </div>
           </article>
         </div>
       </div>

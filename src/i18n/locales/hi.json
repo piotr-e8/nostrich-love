@@ -853,6 +853,7 @@
   },
   "officialAccount": {
     "title": "आधिकारिक खाता",
+    "followUs": "Nostr पर हमें फॉलो करें",
     "description": "Nostrich.love द्वारा संचालित",
     "follow": "फॉलो करें",
     "npub": "npub",
@@ -861,6 +862,10 @@
       "followers": "फॉलोअर्स",
       "notes": "पोस्ट"
     }
+  },
+  "guideFooter": {
+    "improvePage": "इस पेज को बेहतर बनाएं",
+    "improveHint": "कोई टाइपो या कुछ अस्पष्ट दिखा? इस गाइड को GitHub पर संपादित करें।"
   },
   "time": {
     "minutes": "{count} मिनट",
@@ -1150,7 +1155,16 @@
     "nextUp": "अगला",
     "viewAll": "सभी गाइड देखें",
     "recommended": "आपके लिए अनुशंसित",
-    "progress": "{completed} में से {total} पूर्ण"
+    "progress": "{completed} में से {total} पूर्ण",
+    "dismiss": "बंद करें",
+    "upNext": "अगला"
+  },
+  "share": {
+    "label": "साझा करें:",
+    "onNostr": "Nostr पर साझा करें",
+    "copyLink": "लिंक कॉपी करें",
+    "sharePage": "यह पेज साझा करें",
+    "linkCopied": "लिंक कॉपी हो गया"
   },
   "emptyFeedFixer": {
     "title": "खाली फीड फिक्सर",

@@ -19,6 +19,8 @@ const footerLinks = {
     { label: 'Nostr Protocol', href: 'https://nostr.com', external: true },
     { label: 'GitHub', href: siteConfig.social.github, external: true },
     { label: 'NIPs', href: 'https://github.com/nostr-protocol/nips', external: true },
+    // "RSS" is a locale-invariant acronym — no i18n key, same as its siblings.
+    { label: 'RSS', href: '/rss.xml', external: false },
   ],
   about: [
     { label: 'About Us', href: '/about' },
@@ -101,17 +103,19 @@ const currentYear = new Date().getFullYear();
         <ul class="space-y-2 mb-6" role="list">
           {footerLinks.community.map((link) => (
             <li>
-              <a 
+              <a
                 href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={link.external ? '_blank' : undefined}
+                rel={link.external ? 'noopener noreferrer' : undefined}
                 class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary transition-colors inline-flex items-center gap-1"
-                aria-label={`${link.label} (opens in new tab)`}
+                aria-label={link.external ? `${link.label} (opens in new tab)` : undefined}
               >
                 {link.label}
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
+                {link.external && (
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                )}
               </a>
             </li>
           ))}

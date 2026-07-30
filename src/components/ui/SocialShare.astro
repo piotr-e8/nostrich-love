@@ -1,53 +1,64 @@
 ---
 import { siteConfig } from '../../config/site';
+import { t } from '../../i18n';
+import { splitLocale } from '../../i18n/paths';
 
 interface Props {
   title?: string;
-  description?: string;
   url?: string;
 }
 
-const { 
-  title = siteConfig.name,
-  description = siteConfig.description,
-  url = siteConfig.url
+// The Footer (and this component with it) is rendered once per page at build
+// time, so Astro.url.pathname IS the current page — every page shares its own
+// URL instead of the homepage (audit #102).
+const { locale } = splitLocale(Astro.url.pathname);
+
+const {
+  title: titleProp,
+  url = new URL(Astro.url.pathname, siteConfig.url).href,
 } = Astro.props;
 
-const encodedTitle = encodeURIComponent(title);
-const encodedDescription = encodeURIComponent(description);
-const encodedUrl = encodeURIComponent(url);
-
 // Nostr note link (uses njump.me for sharing)
-const nostrShareUrl = `https://njump.me/?url=${encodedUrl}`;
+const nostrShareUrl = `https://njump.me/?url=${encodeURIComponent(url)}`;
 
-// Copy link function will be handled by client-side JS
+const labels = {
+  share: t('share.label', locale),
+  onNostr: t('share.onNostr', locale),
+  copyLink: t('share.copyLink', locale),
+  sharePage: t('share.sharePage', locale),
+  linkCopied: t('share.linkCopied', locale),
+};
 ---
 
 <div class="flex items-center gap-2">
-  <span class="text-sm text-gray-500 dark:text-gray-400 me-2">Share:</span>
-  
+  <span class="text-sm text-gray-500 dark:text-gray-400 me-2">{labels.share}</span>
+
   <!-- Share on Nostr -->
   <a
     href={nostrShareUrl}
     target="_blank"
     rel="noopener noreferrer"
     class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 hover:bg-purple-200 dark:hover:bg-purple-900/50 transition-colors"
-    aria-label="Share on Nostr"
-    title="Share on Nostr"
+    aria-label={labels.onNostr}
+    title={labels.onNostr}
   >
     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
       <circle cx="12" cy="12" r="3"/>
     </svg>
   </a>
-  
-  <!-- Copy Link -->
+
+  <!-- Share / copy current page. The script upgrades the label to
+       "Share this page" when navigator.share is available. -->
   <button
     type="button"
     class="copy-link-btn inline-flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-    aria-label="Copy link"
-    title="Copy link"
+    aria-label={labels.copyLink}
+    title={labels.copyLink}
     data-url={url}
+    data-title={titleProp}
+    data-share-label={labels.sharePage}
+    data-copied-message={labels.linkCopied}
   >
     <svg class="w-5 h-5 copy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -56,32 +67,63 @@ const nostrShareUrl = `https://njump.me/?url=${encodedUrl}`;
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
     </svg>
   </button>
+
+  <!-- Announces "Link copied" to screen readers alongside the icon swap -->
+  <span class="copy-live-region sr-only" aria-live="polite"></span>
 </div>
 
 <script>
-  document.querySelectorAll('.copy-link-btn').forEach((btn) => {
-    btn.addEventListener('click', async () => {
-      const url = btn.getAttribute('data-url');
-      if (!url) return;
+  document.querySelectorAll<HTMLButtonElement>('.copy-link-btn').forEach((btn) => {
+    const url = btn.dataset.url;
+    if (!url) return;
 
+    const canShare = typeof navigator.share === 'function';
+    const shareLabel = btn.dataset.shareLabel;
+    if (canShare && shareLabel) {
+      btn.setAttribute('aria-label', shareLabel);
+      btn.setAttribute('title', shareLabel);
+    }
+
+    const announce = (message: string) => {
+      const region = btn.parentElement?.querySelector('.copy-live-region');
+      if (region) region.textContent = message;
+    };
+
+    const copyWithFeedback = async () => {
       try {
         await navigator.clipboard.writeText(url);
-        
+
         // Show checkmark
         const copyIcon = btn.querySelector('.copy-icon');
         const checkIcon = btn.querySelector('.check-icon');
-        
+
         copyIcon?.classList.add('hidden');
         checkIcon?.classList.remove('hidden');
-        
+        announce(btn.dataset.copiedMessage || 'Link copied');
+
         // Reset after 2 seconds
         setTimeout(() => {
           copyIcon?.classList.remove('hidden');
           checkIcon?.classList.add('hidden');
+          announce('');
         }, 2000);
       } catch (err) {
         console.error('Failed to copy:', err);
       }
+    };
+
+    btn.addEventListener('click', async () => {
+      if (canShare) {
+        try {
+          await navigator.share({ title: btn.dataset.title || document.title, url });
+          return;
+        } catch (err) {
+          // User closed the share sheet — not an error, no fallback wanted.
+          if (err instanceof DOMException && err.name === 'AbortError') return;
+          // Real failure (permission policy, platform quirk) — fall back to copying.
+        }
+      }
+      await copyWithFeedback();
     });
   });
 </script>
