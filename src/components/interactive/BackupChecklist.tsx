@@ -423,7 +423,7 @@ export function BackupChecklist({
         <div className="mt-8 p-4 bg-info-500/10 border border-info-500/30 rounded-xl">
           <h4 className="font-medium text-info-500 mb-2 flex items-center gap-2">
             <Shield className="w-4 h-4" />
-{t('backupChecklist.securityTips')}
+{t('backupChecklist.securityTips.title')}
           </h4>
           <ul className="text-sm text-gray-400 space-y-1">
             <li>• {t('backupChecklist.securityTips.items.0')}</li>

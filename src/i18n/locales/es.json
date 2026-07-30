@@ -3,7 +3,6 @@
     "whatIsNostr": {
       "title": "Nostr Explicado Simplemente",
       "description": "Entiende Nostr en 5 minutos. Aprende cómo funciona el social media descentralizado y en qué se diferencia de plataformas tradicionales.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Fundamentos de Nostr",
         "questions": [
@@ -14,18 +13,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Una nueva plataforma de redes sociales corporativa",
-                "description": "Como Facebook o Twitter, pero nueva"
+                "label": "Una nueva plataforma de redes sociales corporativa"
               },
               {
                 "id": "b",
-                "label": "Un protocolo de comunicación similar al email",
-                "description": "Reglas que permiten a apps intercambiar mensajes"
+                "label": "Un protocolo de comunicación similar al email"
               },
               {
                 "id": "c",
-                "label": "Una blockchain con criptomoneda propia",
-                "description": "Requiere tokens para funcionar"
+                "label": "Una blockchain con criptomoneda propia"
               }
             ],
             "correctId": "b",
@@ -39,18 +35,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Solo para iniciar sesión en sitios web",
-                "description": "Como contraseñas de Facebook"
+                "label": "Solo para iniciar sesión en sitios web"
               },
               {
                 "id": "b",
-                "label": "La llave pública (npub) es tu dirección, la privada (nsec) es tu contraseña",
-                "description": "Npub la compartes, nsec la guardas en secreto"
+                "label": "La llave pública (npub) es tu dirección, la privada (nsec) es tu contraseña"
               },
               {
                 "id": "c",
-                "label": "Solo para enviar pagos Bitcoin",
-                "description": "Sin ellas no se puede usar Lightning"
+                "label": "Solo para enviar pagos Bitcoin"
               }
             ],
             "correctId": "b",
@@ -64,18 +57,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Porque pertenece a una ONG de libertad de expresión",
-                "description": "Organización defiende usuarios"
+                "label": "Porque pertenece a una ONG de libertad de expresión"
               },
               {
                 "id": "b",
-                "label": "Porque no hay servidor central que cerrar",
-                "description": "Miles de relays independientes"
+                "label": "Porque no hay servidor central que cerrar"
               },
               {
                 "id": "c",
-                "label": "Porque usa cifrado militar AES-256",
-                "description": "Protege todos los mensajes"
+                "label": "Porque usa cifrado militar AES-256"
               }
             ],
             "correctId": "b",
@@ -89,18 +79,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Computadoras que almacenan y distribuyen posts",
-                "description": "Como servidores de email, pero para redes sociales"
+                "label": "Computadoras que almacenan y distribuyen posts"
               },
               {
                 "id": "b",
-                "label": "Moderadores que revisan contenido",
-                "description": "Cada post debe ser aprobado"
+                "label": "Moderadores que revisan contenido"
               },
               {
                 "id": "c",
-                "label": "Tokens requeridos para escribir",
-                "description": "Debes comprar un relay para publicar"
+                "label": "Tokens requeridos para escribir"
               }
             ],
             "correctId": "a",
@@ -114,18 +101,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Pierdes todos los posts y empiezas de cero",
-                "description": "Cada app tiene su base de datos"
+                "label": "Pierdes todos los posts y empiezas de cero"
               },
               {
                 "id": "b",
-                "label": "Tus posts están disponibles en la nueva app",
-                "description": "Solo inicia sesión con la misma llave"
+                "label": "Tus posts están disponibles en la nueva app"
               },
               {
                 "id": "c",
-                "label": "Debes pedir al admin que migre tu cuenta",
-                "description": "Migración tarda hasta 30 días"
+                "label": "Debes pedir al admin que migre tu cuenta"
               }
             ],
             "correctId": "b",
@@ -139,18 +123,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Puedes pedir a soporte que restaure acceso",
-                "description": "Solo confirma tu identidad"
+                "label": "Puedes pedir a soporte que restaure acceso"
               },
               {
                 "id": "b",
-                "label": "Pierdes acceso a la cuenta para siempre",
-                "description": "Nadie puede ayudar a recuperarla"
+                "label": "Pierdes acceso a la cuenta para siempre"
               },
               {
                 "id": "c",
-                "label": "Puedes crear nueva llave conectada a la vieja",
-                "description": "Sistema migra tus datos automáticamente"
+                "label": "Puedes crear nueva llave conectada a la vieja"
               }
             ],
             "correctId": "b",
@@ -163,7 +144,6 @@
     "keysAndSecurity": {
       "title": "Llaves y Seguridad",
       "description": "Aprende a generar, guardar y proteger tus llaves de Nostr. Guía completa de seguridad para principiantes.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Seguridad",
         "questions": [
@@ -199,18 +179,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Guardar en notas del teléfono",
-                "description": "Acceso conveniente"
+                "label": "Guardar en notas del teléfono"
               },
               {
                 "id": "b",
-                "label": "Múltiples copias offline en lugares seguros",
-                "description": "En papel, en caja fuerte, diferentes ubicaciones"
+                "label": "Múltiples copias offline en lugares seguros"
               },
               {
                 "id": "c",
-                "label": "Guardar en el navegador",
-                "description": "Chrome tiene gestor de contraseñas"
+                "label": "Guardar en el navegador"
               }
             ],
             "correctId": "b",
@@ -224,18 +201,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Usar extensión con permisos temporales",
-                "description": "Acceso limitado sin ver nsec"
+                "label": "Usar extensión con permisos temporales"
               },
               {
                 "id": "b",
-                "label": "Introducir tu nsec real y probar",
-                "description": "La forma más rápida"
+                "label": "Introducir tu nsec real y probar"
               },
               {
                 "id": "c",
-                "label": "Crear cuenta de prueba separada",
-                "description": "Nueva llave sin acceso a tu cuenta principal"
+                "label": "Crear cuenta de prueba separada"
               }
             ],
             "correctId": "c",
@@ -249,18 +223,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Foto de perfil y nombre",
-                "description": "Información básica segura"
+                "label": "Foto de perfil y nombre"
               },
               {
                 "id": "b",
-                "label": "Nombre real, ubicación exacta, dirección",
-                "description": "Pueden identificarte en el mundo real"
+                "label": "Nombre real, ubicación exacta, dirección"
               },
               {
                 "id": "c",
-                "label": "Sitio web y NIP-05",
-                "description": "Información pública segura"
+                "label": "Sitio web y NIP-05"
               }
             ],
             "correctId": "b",
@@ -274,18 +245,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Para publicar más rápido",
-                "description": "Conexiones paralelas aceleran"
+                "label": "Para publicar más rápido"
               },
               {
                 "id": "b",
-                "label": "Para mayor resistencia a fallos",
-                "description": "Si uno falla, otros tienen tus datos"
+                "label": "Para mayor resistencia a fallos"
               },
               {
                 "id": "c",
-                "label": "Para recibir más zaps",
-                "description": "Cada relay añade bonus"
+                "label": "Para recibir más zaps"
               }
             ],
             "correctId": "b",
@@ -299,18 +267,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Usar la misma llave que para iniciar sesión",
-                "description": "Una llave para todo"
+                "label": "Usar la misma llave que para iniciar sesión"
               },
               {
                 "id": "b",
-                "label": "Usar wallet Lightning separado",
-                "description": "Aislamiento financiero de tu cuenta Nostr"
+                "label": "Usar wallet Lightning separado"
               },
               {
                 "id": "c",
-                "label": "Compartir tu dirección Lightning públicamente",
-                "description": "Fácil acceso para quienes apoyan"
+                "label": "Compartir tu dirección Lightning públicamente"
               }
             ],
             "correctId": "b",
@@ -322,14 +287,11 @@
     },
     "quickstart": {
       "title": "Inicio Rápido",
-      "description": "Comienza a usar Nostr en minutos.",
-      "content": {},
-      "quiz": {}
+      "description": "Comienza a usar Nostr en minutos."
     },
     "findingCommunity": {
       "title": "Encontrar Comunidad",
       "description": "Descubre cómo encontrar y unirte a comunidades en Nostr.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Comunidad",
         "questions": [
@@ -340,18 +302,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Revisar posts aleatorios",
-                "description": "Método de prueba y error"
+                "label": "Revisar posts aleatorios"
               },
               {
                 "id": "b",
-                "label": "Ver quién siguen personas que conoces",
-                "description": "Seguir listas de otros usuarios"
+                "label": "Ver quién siguen personas que conoces"
               },
               {
                 "id": "c",
-                "label": "Usar Google 'Nostr users'",
-                "description": "Buscar usuarios populares"
+                "label": "Usar Google 'Nostr users'"
               }
             ],
             "correctId": "b",
@@ -365,18 +324,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Solo en mensajes privados",
-                "description": "Compartir públicamente es riesgoso"
+                "label": "Solo en mensajes privados"
               },
               {
                 "id": "b",
-                "label": "En todas partes - es tu dirección pública",
-                "description": "Twitter, web, tarjetas - todo está bien"
+                "label": "En todas partes - es tu dirección pública"
               },
               {
                 "id": "c",
-                "label": "Solo en tu bio de Nostr",
-                "description": "Quedarse en una plataforma"
+                "label": "Solo en tu bio de Nostr"
               }
             ],
             "correctId": "b",
@@ -390,18 +346,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Listas recomendadas de usuarios para seguir",
-                "description": "Otros comparten sus contactos"
+                "label": "Listas recomendadas de usuarios para seguir"
               },
               {
                 "id": "b",
-                "label": "Suscripciones pagas VIP",
-                "description": "Acceso a cuentas exclusivas"
+                "label": "Suscripciones pagas VIP"
               },
               {
                 "id": "c",
-                "label": "Listas generadas automáticamente por algoritmo",
-                "description": "IA elige contactos"
+                "label": "Listas generadas automáticamente por algoritmo"
               }
             ],
             "correctId": "a",
@@ -415,18 +368,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Agregar tantos como sea posible",
-                "description": "Spamear tags populares"
+                "label": "Agregar tantos como sea posible"
               },
               {
                 "id": "b",
-                "label": "Usar pocos hashtags específicos",
-                "description": "Relevantes para el contenido"
+                "label": "Usar pocos hashtags específicos"
               },
               {
                 "id": "c",
-                "label": "Evitar hashtags - son poco profesionales",
-                "description": "Posts limpios sin tags"
+                "label": "Evitar hashtags - son poco profesionales"
               }
             ],
             "correctId": "b",
@@ -440,22 +390,41 @@
             "options": [
               {
                 "id": "a",
-                "label": "Grupos temáticos para seguir",
-                "description": "Como usuarios normales"
+                "label": "Grupos temáticos para seguir"
               },
               {
                 "id": "b",
-                "label": "Grupos privados con moderación",
-                "description": "Solicitar membresía"
+                "label": "Grupos privados con moderación"
               },
               {
                 "id": "c",
-                "label": "Suscripciones pagas",
-                "description": "Cuotas mensuales"
+                "label": "Suscripciones pagas"
               }
             ],
             "correctId": "a",
             "explanation": "Communities son grupos temáticos públicos. Puedes seguirlos para ver posts de ese tema. Es forma adicional de organizar contenido.",
+            "severity": "info"
+          },
+          {
+            "id": "community-building",
+            "title": "Crear Comunidad",
+            "prompt": "¿Cómo puedes iniciar tu propia comunidad en Nostr?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Solicitar una licencia de comunidad"
+              },
+              {
+                "id": "b",
+                "label": "Crear un hashtag, compartir buen contenido y participar con constancia"
+              },
+              {
+                "id": "c",
+                "label": "Pagar por hosting de comunidad"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "Las comunidades surgen orgánicamente alrededor de temas. Crea un hashtag único, publica contenido de calidad con regularidad, responde a otros y ten paciencia. Las comunidades crecen con la participación.",
             "severity": "info"
           }
         ]
@@ -463,14 +432,11 @@
     },
     "faq": {
       "title": "FAQ",
-      "description": "Preguntas frecuentes sobre Nostr.",
-      "content": {},
-      "quiz": {}
+      "description": "Preguntas frecuentes sobre Nostr."
     },
     "relaysDemystified": {
       "title": "Relays Desmitificados",
       "description": "Inmersión profunda en cómo funcionan los relays.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Relays",
         "questions": [
@@ -481,18 +447,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Verifica identidad",
-                "description": "Controla quién puede escribir"
+                "label": "Verifica identidad"
               },
               {
                 "id": "b",
-                "label": "Almacena y retransmite posts",
-                "description": "Como servidor de email"
+                "label": "Almacena y retransmite posts"
               },
               {
                 "id": "c",
-                "label": "Gana con publicidad",
-                "description": "Modelo basado en anuncios"
+                "label": "Gana con publicidad"
               }
             ],
             "correctId": "b",
@@ -506,18 +469,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Usar solo uno muy grande",
-                "description": "Relays populares tienen más usuarios"
+                "label": "Usar solo uno muy grande"
               },
               {
                 "id": "b",
-                "label": "Conectar a varios de diferentes tipos",
-                "description": "Públicos, privados, temáticos"
+                "label": "Conectar a varios de diferentes tipos"
               },
               {
                 "id": "c",
-                "label": "Crear tu propio relay inmediatamente",
-                "description": "Tu propia infraestructura"
+                "label": "Crear tu propio relay inmediatamente"
               }
             ],
             "correctId": "b",
@@ -531,18 +491,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Solo uno",
-                "description": "La simplicidad es mejor"
+                "label": "Solo uno"
               },
               {
                 "id": "b",
-                "label": "5-15 relays",
-                "description": "Balance entre redundancia y rendimiento"
+                "label": "5-15 relays"
               },
               {
                 "id": "c",
-                "label": "Todos los disponibles",
-                "description": "Máxima redundancia"
+                "label": "Todos los disponibles"
               }
             ],
             "correctId": "b",
@@ -556,18 +513,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Dirección en formato wss://",
-                "description": "WebSocket Secure URL"
+                "label": "Dirección en formato wss://"
               },
               {
                 "id": "b",
-                "label": "Nombre del propietario",
-                "description": "Identificador del admin"
+                "label": "Nombre del propietario"
               },
               {
                 "id": "c",
-                "label": "Contraseña de acceso",
-                "description": "Llave de conexión"
+                "label": "Contraseña de acceso"
               }
             ],
             "correctId": "a",
@@ -581,23 +535,42 @@
             "options": [
               {
                 "id": "a",
-                "label": "Esperar a que lo reparen",
-                "description": "El dueño seguramente lo arreglará"
+                "label": "Esperar a que lo reparen"
               },
               {
                 "id": "b",
-                "label": "Cambiar a otros relays",
-                "description": "Tus datos están seguros"
+                "label": "Cambiar a otros relays"
               },
               {
                 "id": "c",
-                "label": "Crear cuenta nueva",
-                "description": "Nuevo comienzo en otro relay"
+                "label": "Crear cuenta nueva"
               }
             ],
             "correctId": "b",
             "explanation": "Si usas múltiples relays, la falla de uno no es problema. Tus posts están en otros relays. Es como cambiar de proveedor de internet.",
             "severity": "info"
+          },
+          {
+            "id": "relay-ban",
+            "title": "Censura",
+            "prompt": "¿Puede un relay bloquearte?",
+            "options": [
+              {
+                "id": "a",
+                "label": "No, Nostr no se puede censurar"
+              },
+              {
+                "id": "b",
+                "label": "Sí, el operador de un relay puede negarse a almacenar tus posts, pero puedes usar otros relays"
+              },
+              {
+                "id": "c",
+                "label": "Solo si infringes una ley federal"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "Los relays individuales pueden bloquear usuarios o contenido. Sin embargo, la descentralización de Nostr significa que simplemente puedes usar otros relays. Tu identidad no está atada a ningún relay específico.",
+            "severity": "critical"
           }
         ]
       }
@@ -605,7 +578,6 @@
     "nip05Identity": {
       "title": "Identidad NIP-05",
       "description": "Configura tu identificador NIP-05.",
-      "content": {},
       "quiz": {
         "title": "Quiz: NIP-05",
         "questions": [
@@ -616,18 +588,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Reemplaza npub con dirección legible",
-                "description": "Más fácil de recordar"
+                "label": "Reemplaza npub con dirección legible"
               },
               {
                 "id": "b",
-                "label": "Añade cifrado",
-                "description": "Más seguridad"
+                "label": "Añade cifrado"
               },
               {
                 "id": "c",
-                "label": "Es requerido para usar Nostr",
-                "description": "Sin él no puedes publicar"
+                "label": "Es requerido para usar Nostr"
               }
             ],
             "correctId": "a",
@@ -641,18 +610,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Acceso gratis a premium",
-                "description": "Desbloquea funciones pagas"
+                "label": "Acceso gratis a premium"
               },
               {
                 "id": "b",
-                "label": "Más fácil encontrarte y verificación",
-                "description": "Identidad verificable"
+                "label": "Más fácil encontrarte y verificación"
               },
               {
                 "id": "c",
-                "label": "Protección automática contra spam",
-                "description": "Bloquea mensajes no deseados"
+                "label": "Protección automática contra spam"
               }
             ],
             "correctId": "b",
@@ -666,18 +632,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Sí, es requerido",
-                "description": "Sin él Nostr no funciona"
+                "label": "Sí, es requerido"
               },
               {
                 "id": "b",
-                "label": "No, es opcional",
-                "description": "Todo funciona sin NIP-05"
+                "label": "No, es opcional"
               },
               {
                 "id": "c",
-                "label": "Depende del país",
-                "description": "En algunas regiones requerido"
+                "label": "Depende del país"
               }
             ],
             "correctId": "b",
@@ -691,18 +654,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "En el perfil de cada cliente",
-                "description": "Configuración por app"
+                "label": "En el perfil de cada cliente"
               },
               {
                 "id": "b",
-                "label": "En el servidor bajo tu dominio",
-                "description": "Archivo .well-known/nostr.json"
+                "label": "En el servidor bajo tu dominio"
               },
               {
                 "id": "c",
-                "label": "En registro central de Nostr",
-                "description": "Base global única"
+                "label": "En registro central de Nostr"
               }
             ],
             "correctId": "b",
@@ -716,18 +676,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Sí, requiere dominio",
-                "description": "Dependencia de DNS"
+                "label": "Sí, requiere dominio"
               },
               {
                 "id": "b",
-                "label": "Es complemento opcional",
-                "description": "La base funciona sin dominios"
+                "label": "Es complemento opcional"
               },
               {
                 "id": "c",
-                "label": "No, porque puedes tener varios",
-                "description": "Ilimitados identificadores"
+                "label": "No, porque puedes tener varios"
               }
             ],
             "correctId": "b",
@@ -740,7 +697,6 @@
     "zapsAndLightning": {
       "title": "Zaps y Lightning",
       "description": "Domina el arte de enviar y recibir pagos Bitcoin.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Zaps",
         "questions": [
@@ -751,18 +707,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Pagos Bitcoin por Lightning",
-                "description": "Micropagos entre usuarios"
+                "label": "Pagos Bitcoin por Lightning"
               },
               {
                 "id": "b",
-                "label": "Tipos especiales de posts",
-                "description": "Mensajes con efectos de sonido"
+                "label": "Tipos especiales de posts"
               },
               {
                 "id": "c",
-                "label": "Tokens de recompensa",
-                "description": "Puntos por actividad"
+                "label": "Tokens de recompensa"
               }
             ],
             "correctId": "a",
@@ -776,18 +729,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Wallet de exchange centralizado",
-                "description": "Acceso conveniente online"
+                "label": "Wallet de exchange centralizado"
               },
               {
                 "id": "b",
-                "label": "Wallet Lightning auto-custodial",
-                "description": "Control total de fondos"
+                "label": "Wallet Lightning auto-custodial"
               },
               {
                 "id": "c",
-                "label": "El mismo que para iniciar sesión",
-                "description": "Una llave para todo"
+                "label": "El mismo que para iniciar sesión"
               }
             ],
             "correctId": "b",
@@ -801,18 +751,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Sí, sin eso no funciona",
-                "description": "Pago obligatorio"
+                "label": "Sí, sin eso no funciona"
               },
               {
                 "id": "b",
-                "label": "No, es opcional",
-                "description": "Puedes usar Nostr gratis"
+                "label": "No, es opcional"
               },
               {
                 "id": "c",
-                "label": "Solo para publicar",
-                "description": "Leer es gratis"
+                "label": "Solo para publicar"
               }
             ],
             "correctId": "b",
@@ -826,18 +773,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Compartir dirección Lightning en perfil",
-                "description": "Otros pueden enviar pagos"
+                "label": "Compartir dirección Lightning en perfil"
               },
               {
                 "id": "b",
-                "label": "Registrarte en lista de espera",
-                "description": "Esperar aprobación"
+                "label": "Registrarte en lista de espera"
               },
               {
                 "id": "c",
-                "label": "Comprar suscripción premium",
-                "description": "Cuota mensual"
+                "label": "Comprar suscripción premium"
               }
             ],
             "correctId": "a",
@@ -851,18 +795,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Comisión 10% al operador",
-                "description": "Tarifa de servicio fija"
+                "label": "Comisión 10% al operador"
               },
               {
                 "id": "b",
-                "label": "Comisiones de red casi cero",
-                "description": "Fracciones de centavo"
+                "label": "Comisiones de red casi cero"
               },
               {
                 "id": "c",
-                "label": "Tarifa fija de $1 cada uno",
-                "description": "Independiente del monto"
+                "label": "Tarifa fija de $1 cada uno"
               }
             ],
             "correctId": "b",
@@ -874,14 +815,11 @@
     },
     "nostrTools": {
       "title": "Herramientas Nostr",
-      "description": "Herramientas útiles y servicios.",
-      "content": {},
-      "quiz": {}
+      "description": "Herramientas útiles y servicios."
     },
     "troubleshooting": {
       "title": "Solución de Problemas",
       "description": "Problemas comunes y cómo solucionarlos.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Problemas",
         "questions": [
@@ -892,18 +830,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "No conectado a ningún relay",
-                "description": "Sin conexión a la red"
+                "label": "No conectado a ningún relay"
               },
               {
                 "id": "b",
-                "label": "Cuenta baneada",
-                "description": "Ban global"
+                "label": "Cuenta baneada"
               },
               {
                 "id": "c",
-                "label": "Nostr no funciona hoy",
-                "description": "Mantenimiento"
+                "label": "Nostr no funciona hoy"
               }
             ],
             "correctId": "a",
@@ -917,18 +852,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Relays borran datos antiguos",
-                "description": "Capacidad limitada"
+                "label": "Relays borran datos antiguos"
               },
               {
                 "id": "b",
-                "label": "Posts expirados",
-                "description": "Validez temporal"
+                "label": "Posts expirados"
               },
               {
                 "id": "c",
-                "label": "Cliente mal configurado",
-                "description": "Error de app"
+                "label": "Cliente mal configurado"
               }
             ],
             "correctId": "a",
@@ -942,18 +874,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Contactar soporte",
-                "description": "Puede recuperar tu llave"
+                "label": "Contactar soporte"
               },
               {
                 "id": "b",
-                "label": "Crear cuenta nueva",
-                "description": "La vieja no se recupera"
+                "label": "Crear cuenta nueva"
               },
               {
                 "id": "c",
-                "label": "Usar seed phrase de respaldo",
-                "description": "Restaurar desde copia"
+                "label": "Usar seed phrase de respaldo"
               }
             ],
             "correctId": "b",
@@ -967,18 +896,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Intentar más tarde",
-                "description": "Quizá falla temporal"
+                "label": "Intentar más tarde"
               },
               {
                 "id": "b",
-                "label": "Usar otros relays",
-                "description": "La red tiene muchas opciones"
+                "label": "Usar otros relays"
               },
               {
                 "id": "c",
-                "label": "Reiniciar computadora",
-                "description": "Soluciona todos los problemas"
+                "label": "Reiniciar computadora"
               }
             ],
             "correctId": "b",
@@ -992,18 +918,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Reportar a administración",
-                "description": "Reporte centralizado"
+                "label": "Reportar a administración"
               },
               {
                 "id": "b",
-                "label": "Usar NIP-05 para verificación",
-                "description": "Identidad verificada"
+                "label": "Usar NIP-05 para verificación"
               },
               {
                 "id": "c",
-                "label": "Cambiar seudónimo",
-                "description": "Evitar conflicto"
+                "label": "Cambiar seudónimo"
               }
             ],
             "correctId": "b",
@@ -1017,18 +940,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Mala conexión Lightning",
-                "description": "Problemas de red"
+                "label": "Mala conexión Lightning"
               },
               {
                 "id": "b",
-                "label": "Nostr sobrecargado",
-                "description": "Mucha latencia"
+                "label": "Nostr sobrecargado"
               },
               {
                 "id": "c",
-                "label": "Receptor desactivó zaps",
-                "description": "No quiere recibir"
+                "label": "Receptor desactivó zaps"
               }
             ],
             "correctId": "a",
@@ -1041,7 +961,6 @@
     "multiClient": {
       "title": "Múltiples Clientes",
       "description": "Cómo usar varios clientes simultáneamente.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Clientes",
         "questions": [
@@ -1052,18 +971,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Para redundancia y diferentes funciones",
-                "description": "Cada cliente tiene ventajas distintas"
+                "label": "Para redundancia y diferentes funciones"
               },
               {
                 "id": "b",
-                "label": "Es requerido por el protocolo",
-                "description": "Obligación del usuario"
+                "label": "Es requerido por el protocolo"
               },
               {
                 "id": "c",
-                "label": "Para tener más followers",
-                "description": "Cada cliente = gente nueva"
+                "label": "Para tener más followers"
               }
             ],
             "correctId": "a",
@@ -1077,18 +993,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Todo - posts, contactos, ajustes",
-                "description": "Sincronización completa"
+                "label": "Todo - posts, contactos, ajustes"
               },
               {
                 "id": "b",
-                "label": "Solo posts públicos",
-                "description": "Sincronización limitada"
+                "label": "Solo posts públicos"
               },
               {
                 "id": "c",
-                "label": "Nada - cada cliente es separado",
-                "description": "Sin sincronización"
+                "label": "Nada - cada cliente es separado"
               }
             ],
             "correctId": "a",
@@ -1102,18 +1015,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Teléfono para leer, computadora para escribir",
-                "description": "División de tareas"
+                "label": "Teléfono para leer, computadora para escribir"
               },
               {
                 "id": "b",
-                "label": "Usar aleatoriamente",
-                "description": "Sin estrategia"
+                "label": "Usar aleatoriamente"
               },
               {
                 "id": "c",
-                "label": "Un cliente a la vez",
-                "description": "Cambiando"
+                "label": "Un cliente a la vez"
               }
             ],
             "correctId": "a",
@@ -1127,18 +1037,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Usar la misma llave",
-                "description": "Solo iniciar sesión"
+                "label": "Usar la misma llave"
               },
               {
                 "id": "b",
-                "label": "Migrar datos manualmente",
-                "description": "Exportar/importar"
+                "label": "Migrar datos manualmente"
               },
               {
                 "id": "c",
-                "label": "Usar cuenta central",
-                "description": "Un login en todas partes"
+                "label": "Usar cuenta central"
               }
             ],
             "correctId": "a",
@@ -1152,18 +1059,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "En cuenta de prueba separada",
-                "description": "Nueva llave para probar"
+                "label": "En cuenta de prueba separada"
               },
               {
                 "id": "b",
-                "label": "En tu cuenta principal",
-                "description": "Todas las funciones de inmediato"
+                "label": "En tu cuenta principal"
               },
               {
                 "id": "c",
-                "label": "No probar",
-                "description": "Más seguro no arriesgar"
+                "label": "No probar"
               }
             ],
             "correctId": "a",
@@ -1176,7 +1080,6 @@
     "relayGuide": {
       "title": "Guía de Relays",
       "description": "Todo sobre elegir y gestionar relays.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Relays",
         "questions": [
@@ -1187,18 +1090,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Públicos, privados, pagos",
-                "description": "Diferentes modelos de acceso"
+                "label": "Públicos, privados, pagos"
               },
               {
                 "id": "b",
-                "label": "Rápidos y lentos",
-                "description": "Según velocidad"
+                "label": "Rápidos y lentos"
               },
               {
                 "id": "c",
-                "label": "Grandes y pequeños",
-                "description": "Por tamaño"
+                "label": "Grandes y pequeños"
               }
             ],
             "correctId": "a",
@@ -1212,18 +1112,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Solo uno",
-                "description": "Suficiente"
+                "label": "Solo uno"
               },
               {
                 "id": "b",
-                "label": "5-15",
-                "description": "Número apropiado"
+                "label": "5-15"
               },
               {
                 "id": "c",
-                "label": "100+",
-                "description": "Máxima redundancia"
+                "label": "100+"
               }
             ],
             "correctId": "b",
@@ -1237,18 +1134,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Mejor calidad y confiabilidad",
-                "description": "Menos spam, más espacio"
+                "label": "Mejor calidad y confiabilidad"
               },
               {
                 "id": "b",
-                "label": "Es obligatorio",
-                "description": "Sin pago no funciona"
+                "label": "Es obligatorio"
               },
               {
                 "id": "c",
-                "label": "Por estatus",
-                "description": "Prestigio"
+                "label": "Por estatus"
               }
             ],
             "correctId": "a",
@@ -1262,18 +1156,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Sí, para control total",
-                "description": "Tu propia infraestructura"
+                "label": "Sí, para control total"
               },
               {
                 "id": "b",
-                "label": "No, es muy difícil",
-                "description": "Solo para expertos"
+                "label": "No, es muy difícil"
               },
               {
                 "id": "c",
-                "label": "No importa",
-                "description": "Todos usan públicos"
+                "label": "No importa"
               }
             ],
             "correctId": "a",
@@ -1287,18 +1178,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "No hay un solo dueño",
-                "description": "Miles de operadores independientes"
+                "label": "No hay un solo dueño"
               },
               {
                 "id": "b",
-                "label": "Usan blockchain",
-                "description": "Distribución por cadena"
+                "label": "Usan blockchain"
               },
               {
                 "id": "c",
-                "label": "Son open source",
-                "description": "Código público"
+                "label": "Son open source"
               }
             ],
             "correctId": "a",
@@ -1311,7 +1199,6 @@
     "privacySecurity": {
       "title": "Privacidad y Seguridad",
       "description": "Prácticas avanzadas para usuarios avanzados.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Privacidad",
         "questions": [
@@ -1322,18 +1209,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Todo es público",
-                "description": "Datos visibles para todos"
+                "label": "Todo es público"
               },
               {
                 "id": "b",
-                "label": "Ataques de hackers",
-                "description": "Hackeos de cuentas"
+                "label": "Ataques de hackers"
               },
               {
                 "id": "c",
-                "label": "Censura por gobiernos",
-                "description": "Bloqueo de contenido"
+                "label": "Censura por gobiernos"
               }
             ],
             "correctId": "a",
@@ -1347,18 +1231,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Para diferentes propósitos",
-                "description": "Personal, profesional, anónimo"
+                "label": "Para diferentes propósitos"
               },
               {
                 "id": "b",
-                "label": "Para tener más followers",
-                "description": "Número artificial"
+                "label": "Para tener más followers"
               },
               {
                 "id": "c",
-                "label": "Es requerido",
-                "description": "Por el protocolo"
+                "label": "Es requerido"
               }
             ],
             "correctId": "a",
@@ -1372,18 +1253,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Apps que guardan llaves de forma segura",
-                "description": "Firman sin mostrar nsec"
+                "label": "Apps que guardan llaves de forma segura"
               },
               {
                 "id": "b",
-                "label": "Editores de gráficos",
-                "description": "Para firmar imágenes"
+                "label": "Editores de gráficos"
               },
               {
                 "id": "c",
-                "label": "Apps de firma digital legal",
-                "description": "Firmas legales"
+                "label": "Apps de firma digital legal"
               }
             ],
             "correctId": "a",
@@ -1397,18 +1275,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Ubicación GPS",
-                "description": "Ubicación exacta"
+                "label": "Ubicación GPS"
               },
               {
                 "id": "b",
-                "label": "Todas las anteriores",
-                "description": "Más tiempo, dispositivo, patrones"
+                "label": "Todas las anteriores"
               },
               {
                 "id": "c",
-                "label": "EXIF en fotos",
-                "description": "Datos de cámara"
+                "label": "EXIF en fotos"
               }
             ],
             "correctId": "b",
@@ -1422,18 +1297,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Cuando hay compromiso",
-                "description": "Sospecha de filtración"
+                "label": "Cuando hay compromiso"
               },
               {
                 "id": "b",
-                "label": "Cada mes",
-                "description": "Cambio regular"
+                "label": "Cada mes"
               },
               {
                 "id": "c",
-                "label": "Nunca",
-                "description": "Una llave para siempre"
+                "label": "Nunca"
               }
             ],
             "correctId": "a",
@@ -1447,18 +1319,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Tener plan de acción",
-                "description": "Qué hacer paso a paso"
+                "label": "Tener plan de acción"
               },
               {
                 "id": "b",
-                "label": "Entrar en pánico",
-                "description": "Reacción rápida"
+                "label": "Entrar en pánico"
               },
               {
                 "id": "c",
-                "label": "Esperar",
-                "description": "Quizá pase solo"
+                "label": "Esperar"
               }
             ],
             "correctId": "a",
@@ -1471,7 +1340,6 @@
     "nip17PrivateMessages": {
       "title": "NIP-17: Mensajes Privados",
       "description": "Aprende sobre NIP-17, alternativa segura a NIP-04.",
-      "content": {},
       "quiz": {
         "title": "Quiz: NIP-17",
         "questions": [
@@ -1482,18 +1350,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Para mensajes privados",
-                "description": "DMs seguros"
+                "label": "Para mensajes privados"
               },
               {
                 "id": "b",
-                "label": "Para publicar posts",
-                "description": "Notas públicas"
+                "label": "Para publicar posts"
               },
               {
                 "id": "c",
-                "label": "Para gestionar relays",
-                "description": "Configuración de servidores"
+                "label": "Para gestionar relays"
               }
             ],
             "correctId": "a",
@@ -1507,18 +1372,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Cifrado débil",
-                "description": "Se puede romper"
+                "label": "Cifrado débil"
               },
               {
                 "id": "b",
-                "label": "Sin soporte",
-                "description": "No actualizado"
+                "label": "Sin soporte"
               },
               {
                 "id": "c",
-                "label": "Demasiado lento",
-                "description": "Mucha latencia"
+                "label": "Demasiado lento"
               }
             ],
             "correctId": "a",
@@ -1532,18 +1394,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Capa adicional de cifrado",
-                "description": "Oculta metadatos"
+                "label": "Capa adicional de cifrado"
               },
               {
                 "id": "b",
-                "label": "Regalo para usuarios",
-                "description": "Funciones bonus"
+                "label": "Regalo para usuarios"
               },
               {
                 "id": "c",
-                "label": "Paquete de inicio",
-                "description": "Guía para nuevos"
+                "label": "Paquete de inicio"
               }
             ],
             "correctId": "a",
@@ -1557,18 +1416,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Clientes modernos",
-                "description": "Cada vez más apps"
+                "label": "Clientes modernos"
               },
               {
                 "id": "b",
-                "label": "Todos",
-                "description": "Protocolo estándar"
+                "label": "Todos"
               },
               {
                 "id": "c",
-                "label": "Ninguno",
-                "description": "Demasiado nuevo"
+                "label": "Ninguno"
               }
             ],
             "correctId": "a",
@@ -1582,18 +1438,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Gradualmente, informando contactos",
-                "description": "Migración paciente"
+                "label": "Gradualmente, informando contactos"
               },
               {
                 "id": "b",
-                "label": "De un día para otro",
-                "description": "Cambio rápido"
+                "label": "De un día para otro"
               },
               {
                 "id": "c",
-                "label": "No hay migración",
-                "description": "Automático"
+                "label": "No hay migración"
               }
             ],
             "correctId": "a",
@@ -1606,7 +1459,6 @@
     "protocolComparison": {
       "title": "Comparación de Protocolos",
       "description": "Comparación técnica de protocolos de medios descentralizados.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Protocolos",
         "questions": [
@@ -1617,18 +1469,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Nostr: llaves criptográficas, ActivityPub: servidores, Bluesky: DID",
-                "description": "Diferentes enfoques"
+                "label": "Nostr: llaves criptográficas, ActivityPub: servidores, Bluesky: DID"
               },
               {
                 "id": "b",
-                "label": "Todos usan emails",
-                "description": "Sistema universal"
+                "label": "Todos usan emails"
               },
               {
                 "id": "c",
-                "label": "Todos requieren NFT",
-                "description": "Tokens de identidad"
+                "label": "Todos requieren NFT"
               }
             ],
             "correctId": "a",
@@ -1642,18 +1491,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Nostr",
-                "description": "No hay servidores centrales"
+                "label": "Nostr"
               },
               {
                 "id": "b",
-                "label": "ActivityPub",
-                "description": "Federación de servidores"
+                "label": "ActivityPub"
               },
               {
                 "id": "c",
-                "label": "Bluesky",
-                "description": "AT Protocol"
+                "label": "Bluesky"
               }
             ],
             "correctId": "a",
@@ -1667,18 +1513,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Nostr",
-                "description": "Datos ligados a llave, no a servidor"
+                "label": "Nostr"
               },
               {
                 "id": "b",
-                "label": "ActivityPub",
-                "description": "Depende de la instancia"
+                "label": "ActivityPub"
               },
               {
                 "id": "c",
-                "label": "Igual en todos",
-                "description": "Interoperabilidad total"
+                "label": "Igual en todos"
               }
             ],
             "correctId": "a",
@@ -1692,18 +1535,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Nostr: relays, ActivityPub: federación, Bluesky: PDS",
-                "description": "Diferentes modelos"
+                "label": "Nostr: relays, ActivityPub: federación, Bluesky: PDS"
               },
               {
                 "id": "b",
-                "label": "Todos son blockchain",
-                "description": "Libro distribuido"
+                "label": "Todos son blockchain"
               },
               {
                 "id": "c",
-                "label": "Todos son cliente-servidor",
-                "description": "Arquitectura tradicional"
+                "label": "Todos son cliente-servidor"
               }
             ],
             "correctId": "a",
@@ -1717,18 +1557,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Depende de necesidades",
-                "description": "Cada uno tiene ventajas"
+                "label": "Depende de necesidades"
               },
               {
                 "id": "b",
-                "label": "Siempre Nostr",
-                "description": "El mejor en todo"
+                "label": "Siempre Nostr"
               },
               {
                 "id": "c",
-                "label": "Siempre ActivityPub",
-                "description": "El más popular"
+                "label": "Siempre ActivityPub"
               }
             ],
             "correctId": "a",
@@ -1741,15 +1578,6 @@
     "outboxModel": {
       "title": "Entendiendo el Modelo de Bandeja de Salida",
       "description": "Aprende cómo Nostr asegura que tus posts lleguen a todos quienes te siguen",
-      "content": {
-        "problemHook": "Publicaciones Faltantes",
-        "solutionIntro": "El Modelo de Bandeja de Salida",
-        "howItWorks": "Cómo Funciona el Descubrimiento de Relay",
-        "whyItMatters": "Por Qué Esto Importa",
-        "bestPractices": "Mejores Prácticas",
-        "commonMisconceptions": "Ideas Erróneas Comunes",
-        "technicalDeepDive": "Inmersión Técnica Profunda"
-      },
       "quiz": {
         "title": "Quiz sobre el Modelo de Bandeja de Salida",
         "questions": [
@@ -1868,40 +1696,9 @@
     }
   },
   "ui": {
-    "buttons": {
-      "submit": "Enviar",
-      "next": "Siguiente",
-      "previous": "Anterior",
-      "checkAnswer": "Comprobar respuesta",
-      "startLearning": "Comenzar a aprender",
-      "learnMore": "Saber más"
-    },
     "search": {
       "placeholder": "Buscar guías...",
-      "noResults": "No se encontraron guías.",
-      "searching": "Buscando..."
-    },
-    "common": {
-      "loading": "Cargando...",
-      "error": "Algo salió mal",
-      "success": "¡Éxito!",
-      "minutes": "min"
-    },
-    "navigation": {
-      "nextGuide": "Guía siguiente",
-      "previousGuide": "Guía anterior",
-      "backToGuides": "Volver a las guías"
-    },
-    "badges": {
-      "earned": "Ganado",
-      "locked": "Bloqueado",
-      "viewAll": "Ver todas"
-    },
-    "progress": {
-      "completed": "Completado",
-      "of": "de",
-      "guidesCompleted": "guías completadas",
-      "currentStreak": "Racha actual"
+      "noResults": "No se encontraron guías."
     },
     "quiz": {
       "loading": "Cargando quiz...",
@@ -2014,15 +1811,11 @@
       }
     },
     "results": {
-      "topRecommendation": "Mejor Recomendación",
       "beginnerFriendly": "Amigable para Principiantes",
-      "rating": "Calificación",
-      "users": "Usuarios",
       "pros": "Ventajas",
       "cons": "Desventajas",
       "getApp": "Obtener {clientName}",
-      "tryWeb": "Probar Versión Web",
-      "alternatives": "Otras Recomendaciones"
+      "tryWeb": "Probar Versión Web"
     }
   },
   "keyGenerator": {
@@ -2519,8 +2312,7 @@
       }
     },
     "providers": {
-      "title": "Obtén tu propio NIP-05",
-      "getOne": "Obtén tu propio identificador NIP-05 de estos proveedores:"
+      "title": "Obtén tu propio NIP-05"
     }
   },
   "emptyFeedFixer": {
@@ -2587,8 +2379,6 @@
     }
   },
   "clientComparisonTable": {
-    "title": "Comparación de Clientes",
-    "description": "Compara clientes Nostr lado a lado. Encuentra la aplicación perfecta para tu dispositivo y necesidades.",
     "searchPlaceholder": "Buscar clientes...",
     "filters": {
       "button": "Filtros",
@@ -2620,8 +2410,6 @@
       "description": "Intenta ajustar tus filtros para ver más resultados"
     },
     "card": {
-      "users": "Usuarios",
-      "rating": "Calificación",
       "pros": "Pros",
       "cons": "Contras",
       "links": {
@@ -2874,11 +2662,8 @@
   "relayExplorer": {
     "title": "Explorador de Relays",
     "description": "Explora y conecta a relays de Nostr. Los relays almacenan y distribuyen tus publicaciones. Conecta a múltiples relays para mejor confiabilidad.",
-    "starterPack": {
-      "title": "¿Nuevo en Nostr?",
-      "description": "Comienza con nuestro paquete inicial recomendado de 4 relays confiables",
-      "button": "Agregar Paquete Inicial"
-    },
+    "testAll": "Probar Todos",
+    "checking": "Verificando...",
     "search": {
       "placeholder": "Buscar relays..."
     },
@@ -2897,15 +2682,13 @@
       }
     },
     "selected": {
-      "title": "Relays Seleccionados",
       "count": "{count} relay(s) seleccionado(s)",
       "copy": "Copiar",
       "download": "Descargar"
     },
     "customRelay": {
       "placeholder": "Agregar relay personalizado (wss://...)",
-      "add": "Agregar",
-      "remove": "Eliminar"
+      "add": "Agregar"
     },
     "toast": {
       "starterPackAdded": "¡Relays del paquete inicial agregados!",
@@ -2918,23 +2701,12 @@
       "checkComplete": "¡Verificación de estado de relays completada!"
     },
     "card": {
-      "latency": "Latencia",
-      "users": "Usuarios",
-      "location": "Ubicación",
-      "features": "Funciones",
-      "select": "Seleccionar",
-      "deselect": "Deseleccionar",
+      "latencyUnknown": "Desconocida",
       "status": {
         "online": "En línea",
         "offline": "Fuera de línea",
         "checking": "Verificando"
       }
-    },
-    "regionLabels": {
-      "na": "América del Norte",
-      "eu": "Europa",
-      "asia": "Asia",
-      "other": "Otros"
     },
     "stats": {
       "popularRelays": "Relays Populares",
@@ -2963,8 +2735,7 @@
       "disconnect": "Desconectar",
       "inspect": "Inspeccionar",
       "clear": "Limpiar",
-      "copy": "Copiar",
-      "export": "Exportar"
+      "copy": "Copiar"
     },
     "status": {
       "online": "En línea",
@@ -2978,74 +2749,44 @@
       "selectRelay": "Selecciona un relay para probar la conexión",
       "connectionState": "Estado de Conexión",
       "latency": "Latencia",
-      "latencyMs": "{{latency}}ms",
       "unknown": "Desconocido",
       "connected": "Conectado al relay",
-      "disconnected": "Desconectado del relay",
       "error": "Error de conexión"
     },
     "healthTab": {
-      "title": "Salud del Relay",
-      "uptime": "Tiempo de Actividad",
       "responseTime": "Tiempo de Respuesta",
-      "reliability": "Fiabilidad",
       "lastChecked": "Última Verificación",
-      "history": "Historial de Verificaciones",
       "noData": "No hay datos de salud disponibles"
     },
     "nipsTab": {
       "title": "NIPs Soportados",
       "description": "Nostr Implementation Possibilities (NIPs) son extensiones de protocolo soportadas por este relay",
-      "nip": "NIP-{{number}}",
-      "supported": "{{count}} NIPs soportados",
-      "software": "Software",
-      "version": "Versión",
-      "contact": "Contacto"
+      "supported": "{{count}} NIPs soportados"
     },
     "eventsTab": {
       "title": "Eventos en Vivo",
       "description": "Eventos en tiempo real de relays conectados",
       "noEvents": "Aún no se han recibido eventos",
-      "eventId": "ID del Evento",
       "kind": "Tipo",
-      "author": "Autor",
-      "timestamp": "Marca de Tiempo",
-      "content": "Contenido",
-      "signature": "Firma"
+      "author": "Autor"
     },
     "queryTab": {
       "title": "Constructor de Consultas",
       "description": "Construye consultas Nostr personalizadas para obtener eventos específicos",
-      "filters": "Filtros",
-      "authors": "Autores",
       "kinds": "Tipos",
-      "since": "Desde",
-      "until": "Hasta",
       "limit": "Límite",
       "execute": "Ejecutar Consulta",
       "results": "Resultados",
       "noResults": "No se encontraron resultados"
     },
     "relayCard": {
-      "location": "Ubicación",
-      "software": "Software",
-      "version": "Versión"
-    },
-    "toast": {
-      "copied": "¡Copiado al portapapeles!",
-      "copyFailed": "Error al copiar",
-      "exported": "¡Datos del relay exportados!"
+      "location": "Ubicación"
     }
   },
   "nostrSimulator": {
     "title": "Simulador de Nostr",
     "description": "Simulación interactiva de cómo funciona Nostr. Ve cómo fluyen las publicaciones a través de la red descentralizada.",
     "controls": {
-      "play": "Reproducir",
-      "pause": "Pausa",
-      "reset": "Reiniciar",
-      "step": "Paso",
-      "speed": "Velocidad",
       "sending": "Enviando...",
       "processing": "Procesando...",
       "delivering": "Entregando...",
@@ -3054,7 +2795,6 @@
     "nodes": {
       "user": "Usuario",
       "relay": "Relay",
-      "client": "Cliente",
       "alice": "Alice",
       "bob": "Bob",
       "carol": "Carol",
@@ -3086,11 +2826,8 @@
     }
   },
   "quickstartSimulator": {
-    "title": "Simulador de Inicio Rápido",
-    "description": "Simula tus primeros pasos en Nostr. Aprende los conceptos básicos a través de ejemplos interactivos.",
     "steps": {
       "createKeys": "Crea Tus Claves",
-      "chooseClient": "Elige un Cliente",
       "connectRelay": "Conecta a Relays",
       "makePost": "Haz Tu Primera Publicación",
       "followPeople": "Sigue a Personas",
@@ -3098,9 +2835,6 @@
       "receiveZap": "Recibe un Zap"
     },
     "buttons": {
-      "next": "Siguiente Paso",
-      "previous": "Anterior",
-      "restart": "Comenzar de Nuevo",
       "tryIt": "Pruébalo",
       "generateKeys": "Generar Claves",
       "generating": "Generando...",
@@ -3164,8 +2898,6 @@
     }
   },
   "protocolComparisonUI": {
-    "title": "Comparación de Protocolos",
-    "description": "Compara Nostr con otros protocolos sociales descentralizados como ActivityPub (Mastodon) y AT Protocol (Bluesky).",
     "centralizedLabel": "Redes Sociales Tradicionales",
     "nostrLabel": "Nostr",
     "items": {
@@ -3189,21 +2921,6 @@
         "centralized": "Las plataformas deciden qué puedes decir. Pueden censurarte o hacer shadowban.",
         "nostr": "Ninguna autoridad central controla el discurso. Siempre puedes encontrar relays que transmitirán tu contenido."
       }
-    },
-    "protocols": {
-      "nostr": "Nostr",
-      "activitypub": "ActivityPub",
-      "atProtocol": "AT Protocol"
-    },
-    "features": {
-      "decentralization": "Descentralización",
-      "censorshipResistance": "Resistencia a la Censura",
-      "accountPortability": "Portabilidad de Cuenta",
-      "easeOfUse": "Facilidad de Uso",
-      "scalability": "Escalabilidad"
-    },
-    "details": {
-      "learnMore": "Aprende Más"
     }
   },
   "postFlowSimulator": {
@@ -3211,9 +2928,7 @@
     "description": "Ve cómo una publicación viaja desde tu dispositivo a otros usuarios a través de la red Nostr.",
     "stages": {
       "create": "Crear Publicación",
-      "sign": "Firmar con Clave",
       "send": "Enviar al Relay",
-      "broadcast": "El Relay Transmite",
       "receive": "Otros Reciben"
     },
     "labels": {
@@ -3238,54 +2953,37 @@
     "title": "Simulador de Zaps",
     "description": "Simula enviar y recibir pagos en Bitcoin (zaps) en Nostr usando la Lightning Network.",
     "steps": {
-      "createInvoice": "Crear Factura",
-      "scan": "Escanear Código QR",
-      "pay": "Pagar con Billetera",
       "confirm": "Confirmar Recepción"
     },
     "labels": {
       "amount": "Monto (sats)",
-      "memo": "Memo",
-      "sender": "Remitente",
-      "receiver": "Receptor",
       "invoice": "Factura Lightning"
     },
     "buttons": {
-      "create": "Crear Factura",
       "pay": "Pagar Zap",
-      "simulate": "Simular Zap"
+      "copy": "Copiar"
     }
   },
   "relayVisualizer": {
     "title": "Visualizador de Relays",
-    "description": "Visualiza cómo los relays se conectan y forman la malla de red Nostr.",
     "controls": {
-      "addRelay": "Agregar Relay",
-      "removeRelay": "Eliminar Relay",
       "connect": "Conectar",
       "disconnect": "Desconectar"
     },
     "labels": {
       "connections": "Conexiones",
-      "networkSize": "Tamaño de Red",
       "relayCount": "{count} relays"
     }
   },
   "relayWorldMap": {
     "title": "Mapa Mundial de Relays",
-    "description": "Ve dónde están ubicados los relays de Nostr en todo el mundo.",
     "regions": {
       "northAmerica": "América del Norte",
-      "southAmerica": "América del Sur",
       "europe": "Europa",
-      "asia": "Asia",
-      "africa": "África",
-      "oceania": "Oceanía"
+      "asia": "Asia"
     },
     "stats": {
-      "totalRelays": "Total de Relays",
-      "topRegion": "Región Principal",
-      "avgLatency": "Latencia Promedio"
+      "totalRelays": "Total de Relays"
     }
   },
   "guideNavigation": {
@@ -3329,14 +3027,7 @@
   "guidesPage": {
     "hero": {
       "title": "Aprende Nostr Paso a Paso",
-      "description": "Niveles progresivos, de principiante a avanzado. Todo está disponible: los niveles solo sugieren un orden sensato de lectura.",
-      "yourProgress": "Tu Progreso",
-      "startFirstGuide": "Comienza tu primera guía para ver el progreso"
-    },
-    "cta": {
-      "notSure": "¿No sabes por dónde empezar?",
-      "beginnerDescription": "Comienza con nuestras guías para principiantes – están diseñadas para llevarte de cero a tu primera publicación.",
-      "startLearning": "Comenzar a Aprender"
+      "description": "Niveles progresivos, de principiante a avanzado. Todo está disponible: los niveles solo sugieren un orden sensato de lectura."
     },
     "filter": {
       "filterByInterest": "Filtrar por interés"
@@ -3387,8 +3078,11 @@
     "startHere": "Comienza Aquí",
     "complete": "Completado"
   },
+  "relayFeedBrowser": {
+    "title": "Explorar Feeds de Relays",
+    "subtitle": "Descubre comunidades de Nostr explorando los feeds de relays"
+  },
   "officialAccount": {
-    "title": "Cuenta Oficial",
     "followUs": "Síguenos en Nostr",
     "viewProfile": "Ver perfil en Njump",
     "recentPosts": "Publicaciones Recientes",

@@ -3,7 +3,6 @@
     "whatIsNostr": {
       "title": "Nostr Explained Simply",
       "description": "Understand Nostr in 5 minutes. Learn how decentralized social media works, why it matters, and how it's different from traditional platforms.",
-      "content": {},
       "quiz": {
         "title": "Nostr Fundamentals Quiz",
         "questions": [
@@ -145,7 +144,6 @@
     "keysAndSecurity": {
       "title": "Keys & Security",
       "description": "Learn how to generate, save, and protect your Nostr keys. The complete security guide for beginners.",
-      "content": {},
       "quiz": {
         "title": "Security Quiz",
         "questions": [
@@ -289,150 +287,11 @@
     },
     "quickstart": {
       "title": "Quickstart",
-      "description": "Get up and running with Nostr in minutes with this hands-on quickstart guide.",
-      "content": {},
-      "quiz": {
-        "title": "Quickstart Check",
-        "questions": [
-          {
-            "id": "first-step",
-            "title": "Getting Started",
-            "prompt": "What's the very first thing you need to use Nostr?",
-            "options": [
-              {
-                "id": "a",
-                "label": "A credit card to pay for an account"
-              },
-              {
-                "id": "b",
-                "label": "A client app and a key pair"
-              },
-              {
-                "id": "c",
-                "label": "Approval from a moderator"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "To use Nostr, you need a client app (like Amethyst, Damus, or Iris) and a key pair (npub/nsec). No registration, payment, or approval required.",
-            "severity": "critical"
-          },
-          {
-            "id": "key-generation",
-            "title": "Key Creation",
-            "prompt": "When you first open a Nostr client, what should you do with your keys?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Share them on Twitter for backup"
-              },
-              {
-                "id": "b",
-                "label": "Save them securely offline before doing anything else"
-              },
-              {
-                "id": "c",
-                "label": "Email them to yourself"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "Immediately backup your keys offline (written down, encrypted file, or secure password manager) before you start posting. Losing your keys means losing your identity.",
-            "severity": "critical"
-          },
-          {
-            "id": "finding-people",
-            "title": "Building Your Network",
-            "prompt": "How can you find people to follow when you're new to Nostr?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Search by phone number"
-              },
-              {
-                "id": "b",
-                "label": "Import Twitter follows, use hashtags, or browse popular relays"
-              },
-              {
-                "id": "c",
-                "label": "Wait for the algorithm to suggest friends"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "Many clients let you import Twitter followers who've also joined Nostr. You can also search hashtags, browse public feeds, or ask for recommendations.",
-            "severity": "warning"
-          },
-          {
-            "id": "client-choice",
-            "title": "Client Selection",
-            "prompt": "Which Nostr client should you use?",
-            "options": [
-              {
-                "id": "a",
-                "label": "The official Nostr app"
-              },
-              {
-                "id": "b",
-                "label": "Any client that works on your device and feels comfortable"
-              },
-              {
-                "id": "c",
-                "label": "The one with the most downloads"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "There's no 'official' client. Choose one that works on your platform (iOS: Damus, Android: Amethyst, Web: Iris/Snort). Your identity works across all of them.",
-            "severity": "info"
-          },
-          {
-            "id": "post-visibility",
-            "title": "Post Visibility",
-            "prompt": "Who can see your posts on Nostr?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Only people who follow you"
-              },
-              {
-                "id": "b",
-                "label": "Anyone using a relay that stores your posts"
-              },
-              {
-                "id": "c",
-                "label": "Only people in your country"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "Posts are public by default and visible to anyone using relays that store them. Think of it like a public bulletin board - anyone passing by can read it.",
-            "severity": "warning"
-          },
-          {
-            "id": "relay-setup",
-            "title": "Initial Relay Setup",
-            "prompt": "When starting out, how many relays should you connect to?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Just one is enough"
-              },
-              {
-                "id": "b",
-                "label": "3-5 reliable relays for good coverage"
-              },
-              {
-                "id": "c",
-                "label": "All available relays (50+)"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "Start with 3-5 well-known, reliable relays. This gives you good coverage without overwhelming your client. You can always add more later as you learn.",
-            "severity": "info"
-          }
-        ]
-      }
+      "description": "Get up and running with Nostr in minutes with this hands-on quickstart guide."
     },
     "findingCommunity": {
       "title": "Finding Community",
       "description": "Discover how to find and join communities on Nostr.",
-      "content": {},
       "quiz": {
         "title": "Community Discovery Quiz",
         "questions": [
@@ -573,150 +432,11 @@
     },
     "faq": {
       "title": "FAQ",
-      "description": "Frequently asked questions about Nostr, answered in plain English.",
-      "content": {},
-      "quiz": {
-        "title": "FAQ Knowledge Check",
-        "questions": [
-          {
-            "id": "nostr-company",
-            "title": "Company Ownership",
-            "prompt": "Who owns Nostr?",
-            "options": [
-              {
-                "id": "a",
-                "label": "A corporation in Delaware"
-              },
-              {
-                "id": "b",
-                "label": "Jack Dorsey"
-              },
-              {
-                "id": "c",
-                "label": "No one - it's an open protocol"
-              }
-            ],
-            "correctId": "c",
-            "explanation": "Nostr is an open protocol, not a company. Anyone can build on it. Jack Dorsey donated to its development but doesn't control it.",
-            "severity": "info"
-          },
-          {
-            "id": "account-deletion",
-            "title": "Account Management",
-            "prompt": "Can you delete your Nostr account?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Yes, by clicking 'Delete Account' in settings"
-              },
-              {
-                "id": "b",
-                "label": "No, posts are distributed across relays and can't be fully erased"
-              },
-              {
-                "id": "c",
-                "label": "Only within 24 hours of posting"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "Nostr posts are distributed to multiple relays. Once posted, you can't guarantee deletion because relays you don't control may keep copies. Post carefully.",
-            "severity": "critical"
-          },
-          {
-            "id": "mobile-apps",
-            "title": "Mobile Access",
-            "prompt": "Can you use Nostr on mobile?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Only on Android"
-              },
-              {
-                "id": "b",
-                "label": "Only through the web browser"
-              },
-              {
-                "id": "c",
-                "label": "Yes, there are apps for both iOS and Android"
-              }
-            ],
-            "correctId": "c",
-            "explanation": "Nostr has native apps for both platforms: Damus (iOS), Amethyst (Android), and web clients work on mobile browsers too.",
-            "severity": "info"
-          },
-          {
-            "id": "cost",
-            "title": "Usage Cost",
-            "prompt": "Does it cost money to use Nostr?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Yes, $10/month subscription"
-              },
-              {
-                "id": "b",
-                "label": "No, the protocol is free (though some paid relays exist)"
-              },
-              {
-                "id": "c",
-                "label": "Only if you post more than 100 times"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "Nostr is free to use. Many public relays are free. Some paid relays offer better performance or features, but they're optional.",
-            "severity": "info"
-          },
-          {
-            "id": "content-moderation",
-            "title": "Moderation",
-            "prompt": "Who moderates content on Nostr?",
-            "options": [
-              {
-                "id": "a",
-                "label": "The Nostr Foundation"
-              },
-              {
-                "id": "b",
-                "label": "Each relay operator sets their own rules, and users control their own experience"
-              },
-              {
-                "id": "c",
-                "label": "AI bots scan all content"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "There's no central moderation. Relay operators decide what to host on their servers. Users choose which relays to use and can mute/block content they don't want to see.",
-            "severity": "warning"
-          },
-          {
-            "id": "lost-keys",
-            "title": "Key Recovery",
-            "prompt": "What happens if you lose your private key?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Contact Nostr support to reset it"
-              },
-              {
-                "id": "b",
-                "label": "Your identity is lost forever - create a new key pair"
-              },
-              {
-                "id": "c",
-                "label": "Use your email to recover it"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "There's no 'forgot password' option. If you lose your private key, you lose access to that identity permanently. This is why secure backups are critical.",
-            "severity": "critical"
-          }
-        ]
-      }
+      "description": "Frequently asked questions about Nostr, answered in plain English."
     },
     "relaysDemystified": {
       "title": "Relays Demystified",
       "description": "Deep dive into how relays work with simple analogies and interactive tools.",
-      "content": {},
       "quiz": {
         "title": "Relay Deep Dive Quiz",
         "questions": [
@@ -858,7 +578,6 @@
     "nip05Identity": {
       "title": "NIP-05 Identity",
       "description": "Set up your NIP-05 identifier and get a human-readable name like you@domain.com.",
-      "content": {},
       "quiz": {
         "title": "NIP-05 Identity Quiz",
         "questions": [
@@ -978,7 +697,6 @@
     "zapsAndLightning": {
       "title": "Zaps & Lightning Network",
       "description": "Master the art of sending and receiving Bitcoin payments (zaps) over the Lightning Network.",
-      "content": {},
       "quiz": {
         "title": "Lightning & Zaps Quiz",
         "questions": [
@@ -1097,128 +815,11 @@
     },
     "nostrTools": {
       "title": "Essential Nostr Tools",
-      "description": "A curated directory of the most useful Nostr tools and services for key management, media hosting, analytics, and more.",
-      "content": {},
-      "quiz": {
-        "title": "Tools & Utilities Quiz",
-        "questions": [
-          {
-            "id": "key-converter",
-            "title": "Key Tools",
-            "prompt": "What can Nostr key converter tools do?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Convert between hex and bech32 (npub/nsec) formats"
-              },
-              {
-                "id": "b",
-                "label": "Hack other people's accounts"
-              },
-              {
-                "id": "c",
-                "label": "Create free Bitcoin"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "Key converters translate between different key formats. For example, converting a hex public key to an npub format that starts with 'npub1...'.",
-            "severity": "info"
-          },
-          {
-            "id": "media-hosting",
-            "title": "Media Storage",
-            "prompt": "How do you share images on Nostr?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Upload to Nostr's central image server"
-              },
-              {
-                "id": "b",
-                "label": "Use media hosting services (nostr.build, imgur) and paste the URL"
-              },
-              {
-                "id": "c",
-                "label": "Images aren't supported"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "Nostr is text-based, so images are shared via URLs. Upload to media hosting services (nostr.build, void.cat) or IPFS, then include the link in your post.",
-            "severity": "warning"
-          },
-          {
-            "id": "analytics-tools",
-            "title": "Analytics",
-            "prompt": "What can Nostr analytics tools show you?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Your follower growth, engagement stats, and reach"
-              },
-              {
-                "id": "b",
-                "label": "Other users' private keys"
-              },
-              {
-                "id": "c",
-                "label": "Your bank balance"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "Analytics tools analyze public Nostr data to show follower counts, engagement metrics, trending topics, and help you understand your reach on the network.",
-            "severity": "info"
-          },
-          {
-            "id": "signer-apps",
-            "title": "Signer Apps",
-            "prompt": "What is a Nostr signer app?",
-            "options": [
-              {
-                "id": "a",
-                "label": "An app that signs documents"
-              },
-              {
-                "id": "b",
-                "label": "An app that securely stores your private key and signs events for other apps"
-              },
-              {
-                "id": "c",
-                "label": "An astrology app"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "Signers (like Amber, Nostrudel) securely hold your private key and sign events on behalf of other apps. This lets you use new clients without pasting your nsec everywhere.",
-            "severity": "critical"
-          },
-          {
-            "id": "backup-tools",
-            "title": "Backup Solutions",
-            "prompt": "What should you use for backing up your Nostr data?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Specialized backup tools that export your events to multiple relays"
-              },
-              {
-                "id": "b",
-                "label": "Delete everything after posting"
-              },
-              {
-                "id": "c",
-                "label": "Trust that relays will keep everything forever"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "Backup tools help export your posts and metadata, allowing you to restore your history or migrate to new relays. Don't rely on any single relay to keep your data forever.",
-            "severity": "warning"
-          }
-        ]
-      }
+      "description": "A curated directory of the most useful Nostr tools and services for key management, media hosting, analytics, and more."
     },
     "troubleshooting": {
       "title": "Troubleshooting",
       "description": "Common issues and how to fix them. From empty feeds to relay problems.",
-      "content": {},
       "quiz": {
         "title": "Problem Solving Quiz",
         "questions": [
@@ -1360,7 +961,6 @@
     "multiClient": {
       "title": "Using Multiple Clients",
       "description": "How to use multiple clients simultaneously and keep your data in sync.",
-      "content": {},
       "quiz": {
         "title": "Multi-Client Usage Quiz",
         "questions": [
@@ -1480,7 +1080,6 @@
     "relayGuide": {
       "title": "Relay Guide",
       "description": "Everything you need to know about choosing, connecting to, and managing relays.",
-      "content": {},
       "quiz": {
         "title": "Relay Management Quiz",
         "questions": [
@@ -1600,7 +1199,6 @@
     "privacySecurity": {
       "title": "Privacy & Security",
       "description": "Advanced privacy and security practices for power users.",
-      "content": {},
       "quiz": {
         "title": "Advanced Privacy & Security Quiz",
         "questions": [
@@ -1742,7 +1340,6 @@
     "nip17PrivateMessages": {
       "title": "NIP-17: Private Direct Messages",
       "description": "Learn about NIP-17, the secure replacement for NIP-04, and how to migrate your private messaging in Nostr",
-      "content": {},
       "quiz": {
         "title": "NIP-17 Private Messages Quiz",
         "questions": [
@@ -1862,7 +1459,6 @@
     "protocolComparison": {
       "title": "Complete Protocol Comparison",
       "description": "A comprehensive technical comparison of the three major decentralized social protocols. Learn the architecture, trade-offs, and which protocol fits your needs.",
-      "content": {},
       "quiz": {
         "title": "Protocol Comparison Quiz",
         "questions": [
@@ -1982,15 +1578,6 @@
     "outboxModel": {
       "title": "Understanding the Outbox Model",
       "description": "Learn how Nostr ensures your posts reach everyone who follows you through smart relay discovery",
-      "content": {
-        "problemHook": "Missing Posts",
-        "solutionIntro": "The Outbox Model",
-        "howItWorks": "How Relay Discovery Works",
-        "whyItMatters": "Why This Matters",
-        "bestPractices": "Best Practices",
-        "commonMisconceptions": "Common Misconceptions",
-        "technicalDeepDive": "Technical Deep Dive"
-      },
       "quiz": {
         "title": "Outbox Model Quiz",
         "questions": [
@@ -2109,40 +1696,9 @@
     }
   },
   "ui": {
-    "buttons": {
-      "submit": "Submit",
-      "next": "Next",
-      "previous": "Previous",
-      "checkAnswer": "Check Answer",
-      "startLearning": "Start Learning",
-      "learnMore": "Learn More"
-    },
     "search": {
       "placeholder": "Search guides...",
-      "noResults": "No guides found matching your search.",
-      "searching": "Searching..."
-    },
-    "common": {
-      "loading": "Loading...",
-      "error": "Something went wrong",
-      "success": "Success!",
-      "minutes": "min"
-    },
-    "navigation": {
-      "nextGuide": "Next Guide",
-      "previousGuide": "Previous Guide",
-      "backToGuides": "Back to Guides"
-    },
-    "badges": {
-      "earned": "Earned",
-      "locked": "Locked",
-      "viewAll": "View All Badges"
-    },
-    "progress": {
-      "completed": "Completed",
-      "of": "of",
-      "guidesCompleted": "guides completed",
-      "currentStreak": "Current streak"
+      "noResults": "No guides found matching your search."
     },
     "quiz": {
       "loading": "Loading quiz...",
@@ -2255,15 +1811,11 @@
       }
     },
     "results": {
-      "topRecommendation": "Top Recommendation",
       "beginnerFriendly": "Beginner Friendly",
-      "rating": "Rating",
-      "users": "Users",
       "pros": "Pros",
       "cons": "Cons",
       "getApp": "Get {clientName}",
-      "tryWeb": "Try Web Version",
-      "alternatives": "Other Recommendations"
+      "tryWeb": "Try Web Version"
     }
   },
   "keyGenerator": {
@@ -2760,8 +2312,7 @@
       }
     },
     "providers": {
-      "title": "Get Your Own NIP-05",
-      "getOne": "Get your own NIP-05 identifier from these providers:"
+      "title": "Get Your Own NIP-05"
     }
   },
   "emptyFeedFixer": {
@@ -2895,8 +2446,6 @@
     }
   },
   "clientComparisonTable": {
-    "title": "Client Comparison",
-    "description": "Compare Nostr clients side-by-side. Find the perfect app for your device and needs.",
     "searchPlaceholder": "Search clients...",
     "filters": {
       "button": "Filters",
@@ -2928,8 +2477,6 @@
       "description": "Try adjusting your filters to see more results"
     },
     "card": {
-      "users": "Users",
-      "rating": "Rating",
       "pros": "Pros",
       "cons": "Cons",
       "links": {
@@ -3115,11 +2662,6 @@
   "relayExplorer": {
     "title": "Relay Explorer",
     "description": "Browse and connect to Nostr relays. Relays store and distribute your posts. Connect to multiple relays for better reliability.",
-    "starterPack": {
-      "title": "New to Nostr?",
-      "description": "Start with our recommended starter pack of 4 reliable relays",
-      "button": "Add Starter Pack"
-    },
     "testAll": "Test All",
     "checking": "Checking...",
     "search": {
@@ -3140,15 +2682,13 @@
       }
     },
     "selected": {
-      "title": "Selected Relays",
       "count": "{count} relay(s) selected",
       "copy": "Copy",
       "download": "Download"
     },
     "customRelay": {
       "placeholder": "Add custom relay (wss://...)",
-      "add": "Add",
-      "remove": "Remove"
+      "add": "Add"
     },
     "toast": {
       "starterPackAdded": "Starter pack relays added!",
@@ -3161,24 +2701,12 @@
       "checkComplete": "Relay status check complete!"
     },
     "card": {
-      "latency": "Latency",
       "latencyUnknown": "Unknown",
-      "users": "Users",
-      "location": "Location",
-      "features": "Features",
-      "select": "Select",
-      "deselect": "Deselect",
       "status": {
         "online": "Online",
         "offline": "Offline",
         "checking": "Checking"
       }
-    },
-    "regionLabels": {
-      "na": "North America",
-      "eu": "Europe",
-      "asia": "Asia",
-      "other": "Other"
     },
     "stats": {
       "popularRelays": "Popular Relays",
@@ -3207,8 +2735,7 @@
       "disconnect": "Disconnect",
       "inspect": "Inspect",
       "clear": "Clear",
-      "copy": "Copy",
-      "export": "Export"
+      "copy": "Copy"
     },
     "status": {
       "online": "Online",
@@ -3222,74 +2749,44 @@
       "selectRelay": "Select a relay to test connection",
       "connectionState": "Connection State",
       "latency": "Latency",
-      "latencyMs": "{{latency}}ms",
       "unknown": "Unknown",
       "connected": "Connected to relay",
-      "disconnected": "Disconnected from relay",
       "error": "Connection error"
     },
     "healthTab": {
-      "title": "Relay Health",
-      "uptime": "Uptime",
       "responseTime": "Response Time",
-      "reliability": "Reliability",
       "lastChecked": "Last Checked",
-      "history": "Check History",
       "noData": "No health data available"
     },
     "nipsTab": {
       "title": "Supported NIPs",
       "description": "Nostr Implementation Possibilities (NIPs) are protocol extensions supported by this relay",
-      "nip": "NIP-{{number}}",
-      "supported": "{{count}} NIPs supported",
-      "software": "Software",
-      "version": "Version",
-      "contact": "Contact"
+      "supported": "{{count}} NIPs supported"
     },
     "eventsTab": {
       "title": "Live Events",
       "description": "Real-time events from connected relays",
       "noEvents": "No events received yet",
-      "eventId": "Event ID",
       "kind": "Kind",
-      "author": "Author",
-      "timestamp": "Timestamp",
-      "content": "Content",
-      "signature": "Signature"
+      "author": "Author"
     },
     "queryTab": {
       "title": "Query Builder",
       "description": "Build custom Nostr queries to fetch specific events",
-      "filters": "Filters",
-      "authors": "Authors",
       "kinds": "Kinds",
-      "since": "Since",
-      "until": "Until",
       "limit": "Limit",
       "execute": "Execute Query",
       "results": "Results",
       "noResults": "No results found"
     },
     "relayCard": {
-      "location": "Location",
-      "software": "Software",
-      "version": "Version"
-    },
-    "toast": {
-      "copied": "Copied to clipboard!",
-      "copyFailed": "Failed to copy",
-      "exported": "Relay data exported!"
+      "location": "Location"
     }
   },
   "nostrSimulator": {
     "title": "Nostr Simulator",
     "description": "Interactive simulation of how Nostr works. See how posts flow through the decentralized network.",
     "controls": {
-      "play": "Play",
-      "pause": "Pause",
-      "reset": "Reset",
-      "step": "Step",
-      "speed": "Speed",
       "sending": "Sending...",
       "processing": "Processing...",
       "delivering": "Delivering...",
@@ -3298,7 +2795,6 @@
     "nodes": {
       "user": "User",
       "relay": "Relay",
-      "client": "Client",
       "alice": "Alice",
       "bob": "Bob",
       "carol": "Carol",
@@ -3330,11 +2826,8 @@
     }
   },
   "quickstartSimulator": {
-    "title": "Quickstart Simulator",
-    "description": "Simulate your first steps on Nostr. Learn the basics through interactive examples.",
     "steps": {
       "createKeys": "Create Your Keys",
-      "chooseClient": "Choose a Client",
       "connectRelay": "Connect to Relays",
       "makePost": "Make Your First Post",
       "followPeople": "Follow People",
@@ -3342,9 +2835,6 @@
       "receiveZap": "Receive a Zap"
     },
     "buttons": {
-      "next": "Next Step",
-      "previous": "Previous",
-      "restart": "Start Over",
       "tryIt": "Try It",
       "generateKeys": "Generate Keys",
       "generating": "Generating...",
@@ -3408,8 +2898,6 @@
     }
   },
   "protocolComparisonUI": {
-    "title": "Protocol Comparison",
-    "description": "Compare Nostr with other decentralized social protocols like ActivityPub (Mastodon) and AT Protocol (Bluesky).",
     "centralizedLabel": "Traditional Social Media",
     "nostrLabel": "Nostr",
     "items": {
@@ -3433,21 +2921,6 @@
         "centralized": "Platforms decide what you can say. They can censor or shadowban you.",
         "nostr": "No central authority controls speech. You can always find relays that will carry your content."
       }
-    },
-    "protocols": {
-      "nostr": "Nostr",
-      "activitypub": "ActivityPub",
-      "atProtocol": "AT Protocol"
-    },
-    "features": {
-      "decentralization": "Decentralization",
-      "censorshipResistance": "Censorship Resistance",
-      "accountPortability": "Account Portability",
-      "easeOfUse": "Ease of Use",
-      "scalability": "Scalability"
-    },
-    "details": {
-      "learnMore": "Learn More"
     }
   },
   "postFlowSimulator": {
@@ -3455,9 +2928,7 @@
     "description": "See how a post travels from your device to other users through the Nostr network.",
     "stages": {
       "create": "Create Post",
-      "sign": "Sign with Key",
       "send": "Send to Relay",
-      "broadcast": "Relay Broadcasts",
       "receive": "Others Receive"
     },
     "labels": {
@@ -3482,55 +2953,37 @@
     "title": "Zap Simulator",
     "description": "Simulate sending and receiving Bitcoin payments (zaps) on Nostr using the Lightning Network.",
     "steps": {
-      "createInvoice": "Create Invoice",
-      "scan": "Scan QR Code",
-      "pay": "Pay with Wallet",
       "confirm": "Confirm Receipt"
     },
     "labels": {
       "amount": "Amount (sats)",
-      "memo": "Memo",
-      "sender": "Sender",
-      "receiver": "Receiver",
       "invoice": "Lightning Invoice"
     },
     "buttons": {
-      "create": "Create Invoice",
       "pay": "Pay Zap",
-      "simulate": "Simulate Zap",
       "copy": "Copy"
     }
   },
   "relayVisualizer": {
     "title": "Relay Visualizer",
-    "description": "Visualize how relays connect and form the Nostr network mesh.",
     "controls": {
-      "addRelay": "Add Relay",
-      "removeRelay": "Remove Relay",
       "connect": "Connect",
       "disconnect": "Disconnect"
     },
     "labels": {
       "connections": "Connections",
-      "networkSize": "Network Size",
       "relayCount": "{count} relays"
     }
   },
   "relayWorldMap": {
     "title": "Relay World Map",
-    "description": "See where Nostr relays are located around the world.",
     "regions": {
       "northAmerica": "North America",
-      "southAmerica": "South America",
       "europe": "Europe",
-      "asia": "Asia",
-      "africa": "Africa",
-      "oceania": "Oceania"
+      "asia": "Asia"
     },
     "stats": {
-      "totalRelays": "Total Relays",
-      "topRegion": "Top Region",
-      "avgLatency": "Avg Latency"
+      "totalRelays": "Total Relays"
     }
   },
   "guideNavigation": {
@@ -3574,14 +3027,7 @@
   "guidesPage": {
     "hero": {
       "title": "Learn Nostr Step by Step",
-      "description": "Progressive skill levels from beginner to advanced. Everything is open — the levels just show a sensible order to read in.",
-      "yourProgress": "Your Progress",
-      "startFirstGuide": "Start your first guide to see progress"
-    },
-    "cta": {
-      "notSure": "Not sure where to start?",
-      "beginnerDescription": "Begin with our beginner guides—they're designed to take you from zero to your first post.",
-      "startLearning": "Start Learning"
+      "description": "Progressive skill levels from beginner to advanced. Everything is open — the levels just show a sensible order to read in."
     },
     "filter": {
       "filterByInterest": "Filter by interest"
@@ -3634,27 +3080,9 @@
   },
   "relayFeedBrowser": {
     "title": "Browse Relay Feeds",
-    "subtitle": "Discover Nostr communities by browsing relay feeds",
-    "filterByCategory": "Filter by Category",
-    "categories": {
-      "all": "All",
-      "general": "General",
-      "bitcoin": "Bitcoin",
-      "art": "Art & Creative",
-      "music": "Music",
-      "tech": "Technology",
-      "dev": "Development",
-      "gaming": "Gaming",
-      "regional": "Regional"
-    },
-    "allRelays": "All Relays",
-    "noRelays": "No relays found in this category",
-    "howToAdd": "How to add this relay to your client",
-    "recommendedClients": "Clients with Relay Browsing",
-    "moreClients": "And more..."
+    "subtitle": "Discover Nostr communities by browsing relay feeds"
   },
   "officialAccount": {
-    "title": "Official Account",
     "followUs": "Follow us on Nostr",
     "viewProfile": "View profile on Njump",
     "recentPosts": "Recent Posts",

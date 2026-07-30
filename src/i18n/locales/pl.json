@@ -3,7 +3,6 @@
     "whatIsNostr": {
       "title": "Nostr Wyjaśniony Prosto",
       "description": "Zrozum Nostr w 5 minut. Dowiedz się, jak działa zdecentralizowane social media, dlaczego to ważne i czym różni się od tradycyjnych platform.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Podstawy Nostr",
         "questions": [
@@ -14,18 +13,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Nowa platforma social media kontrolowana przez korporację",
-                "description": "To jak Facebook czy Twitter, tylko nowy gracz"
+                "label": "Nowa platforma social media kontrolowana przez korporację"
               },
               {
                 "id": "b",
-                "label": "Protokół komunikacyjny podobny do emaila",
-                "description": "Zestaw zasad pozwalających aplikacjom wymieniać wiadomości"
+                "label": "Protokół komunikacyjny podobny do emaila"
               },
               {
                 "id": "c",
-                "label": "Sieć blockchain z własną kryptowalutą",
-                "description": "Wymaga tokenów do działania"
+                "label": "Sieć blockchain z własną kryptowalutą"
               }
             ],
             "correctId": "b",
@@ -39,18 +35,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Tylko do logowania na stronach",
-                "description": "Tak jak hasła do Facebooka"
+                "label": "Tylko do logowania na stronach"
               },
               {
                 "id": "b",
-                "label": "Klucz publiczny (npub) to Twój adres, klucz prywatny (nsec) to hasło",
-                "description": "Npub możesz pokazać wszystkim, nsec trzymaj w tajemnicy"
+                "label": "Klucz publiczny (npub) to Twój adres, klucz prywatny (nsec) to hasło"
               },
               {
                 "id": "c",
-                "label": "Służą tylko do wysyłania płatności Bitcoin",
-                "description": "Bez nich nie można używać Lightning"
+                "label": "Służą tylko do wysyłania płatności Bitcoin"
               }
             ],
             "correctId": "b",
@@ -64,18 +57,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Bo należy do organizacji non-profit",
-                "description": "Organizacja broni wolności słowa"
+                "label": "Bo należy do organizacji non-profit"
               },
               {
                 "id": "b",
-                "label": "Bo nie ma centralnego serwera do zamknięcia",
-                "description": "To tysiące niezależnych relayów na całym świecie"
+                "label": "Bo nie ma centralnego serwera do zamknięcia"
               },
               {
                 "id": "c",
-                "label": "Bo wykorzystuje wojskowe szyfrowanie",
-                "description": "AES-256 chroni wszystkie wiadomości"
+                "label": "Bo wykorzystuje wojskowe szyfrowanie"
               }
             ],
             "correctId": "b",
@@ -89,18 +79,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Komputery przechowujące i rozsyłające posty",
-                "description": "Jak serwery pocztowe, tylko dla social media"
+                "label": "Komputery przechowujące i rozsyłające posty"
               },
               {
                 "id": "b",
-                "label": "Moderatorzy sprawdzający treści",
-                "description": "Każdy post musi być zatwierdzony"
+                "label": "Moderatorzy sprawdzający treści"
               },
               {
                 "id": "c",
-                "label": "Tokeny wymagane do pisania postów",
-                "description": "Musisz kupić relay, żeby publikować"
+                "label": "Tokeny wymagane do pisania postów"
               }
             ],
             "correctId": "a",
@@ -114,18 +101,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Tracisz wszystkie posty",
-                "description": "Każda aplikacja ma własną bazę danych"
+                "label": "Tracisz wszystkie posty"
               },
               {
                 "id": "b",
-                "label": "Twoje posty są dostępne w nowej aplikacji",
-                "description": "Wystarczy zalogować się tym samym kluczem"
+                "label": "Twoje posty są dostępne w nowej aplikacji"
               },
               {
                 "id": "c",
-                "label": "Musisz prosić admina o przeniesienie",
-                "description": "Przeniesienie trwa do 30 dni"
+                "label": "Musisz prosić admina o przeniesienie"
               }
             ],
             "correctId": "b",
@@ -139,18 +123,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Możesz poprosić support o przywrócenie",
-                "description": "Wystarczy potwierdzić tożsamość"
+                "label": "Możesz poprosić support o przywrócenie"
               },
               {
                 "id": "b",
-                "label": "Tracisz dostęp do konta na zawsze",
-                "description": "Nikt nie może Ci pomóc odzyskać klucza"
+                "label": "Tracisz dostęp do konta na zawsze"
               },
               {
                 "id": "c",
-                "label": "Możesz utworzyć nowy klucz połączony ze starym",
-                "description": "System automatycznie migruje dane"
+                "label": "Możesz utworzyć nowy klucz połączony ze starym"
               }
             ],
             "correctId": "b",
@@ -163,7 +144,6 @@
     "keysAndSecurity": {
       "title": "Klucze i Bezpieczeństwo",
       "description": "Dowiedz się, jak generować, zapisywać i chronić swoje klucze Nostr. Kompletny przewodnik po bezpieczeństwie dla początkujących.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Bezpieczeństwo",
         "questions": [
@@ -199,18 +179,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Zapisać w notatniku na telefonie",
-                "description": "Wygodny dostęp z każdego urządzenia"
+                "label": "Zapisać w notatniku na telefonie"
               },
               {
                 "id": "b",
-                "label": "Wielokrotne kopie offline w bezpiecznych miejscach",
-                "description": "Na papierze, w sejfie, w różnych lokalizacjach"
+                "label": "Wielokrotne kopie offline w bezpiecznych miejscach"
               },
               {
                 "id": "c",
-                "label": "Zapisać w przeglądarce",
-                "description": "Chrome ma bezpieczny menedżer haseł"
+                "label": "Zapisać w przeglądarce"
               }
             ],
             "correctId": "b",
@@ -224,18 +201,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Użyć rozszerzenia z tymczasowymi uprawnieniami",
-                "description": "Ograniczony dostęp bez widzenia nsec"
+                "label": "Użyć rozszerzenia z tymczasowymi uprawnieniami"
               },
               {
                 "id": "b",
-                "label": "Wprowadzić prawdziwy nsec i sprawdzić",
-                "description": "Najszybszy sposób"
+                "label": "Wprowadzić prawdziwy nsec i sprawdzić"
               },
               {
                 "id": "c",
-                "label": "Utworzyć osobne konto testowe",
-                "description": "Nowy klucz bez dostępu do głównego konta"
+                "label": "Utworzyć osobne konto testowe"
               }
             ],
             "correctId": "c",
@@ -249,18 +223,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Zdjęcie profilowe i nazwa",
-                "description": "Te podstawowe informacje są bezpieczne"
+                "label": "Zdjęcie profilowe i nazwa"
               },
               {
                 "id": "b",
-                "label": "Prawdziwe imię, dokładna lokalizacja, adres",
-                "description": "Te dane pozwalają Cię zidentyfikować"
+                "label": "Prawdziwe imię, dokładna lokalizacja, adres"
               },
               {
                 "id": "c",
-                "label": "Strona internetowa i NIP-05",
-                "description": "Te informacje są publiczne"
+                "label": "Strona internetowa i NIP-05"
               }
             ],
             "correctId": "b",
@@ -274,18 +245,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Aby szybciej wysyłać posty",
-                "description": "Równoległe połączenia przyspieszają publikację"
+                "label": "Aby szybciej wysyłać posty"
               },
               {
                 "id": "b",
-                "label": "Aby zwiększyć odporność na awarie",
-                "description": "Jeśli jeden relay padnie, inne mają Twoje dane"
+                "label": "Aby zwiększyć odporność na awarie"
               },
               {
                 "id": "c",
-                "label": "Aby otrzymywać więcej zap",
-                "description": "Każdy relay dodaje bonus"
+                "label": "Aby otrzymywać więcej zap"
               }
             ],
             "correctId": "b",
@@ -299,18 +267,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Użyć tego samego klucza co do logowania",
-                "description": "Jeden klucz do wszystkiego"
+                "label": "Użyć tego samego klucza co do logowania"
               },
               {
                 "id": "b",
-                "label": "Użyć osobnego portfela Lightning",
-                "description": "Izolacja finansowa od głównego konta"
+                "label": "Użyć osobnego portfela Lightning"
               },
               {
                 "id": "c",
-                "label": "Udostępnić adres Lightning publicznie",
-                "description": "Łatwy dostęp dla wspierających"
+                "label": "Udostępnić adres Lightning publicznie"
               }
             ],
             "correctId": "b",
@@ -322,14 +287,11 @@
     },
     "quickstart": {
       "title": "Szybki Start",
-      "description": "Zacznij korzystać z Nostr w ciągu kilku minut.",
-      "content": {},
-      "quiz": {}
+      "description": "Zacznij korzystać z Nostr w ciągu kilku minut."
     },
     "findingCommunity": {
       "title": "Znajdowanie Społeczności",
       "description": "Odkryj, jak znaleźć i dołączyć do społeczności na Nostr.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Społeczność",
         "questions": [
@@ -340,18 +302,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Przeszukiwać losowe posty",
-                "description": "Metoda prób i błędów"
+                "label": "Przeszukiwać losowe posty"
               },
               {
                 "id": "b",
-                "label": "Sprawdzić, kogo obserwują znajomi",
-                "description": "Obserwować listy follow innych użytkowników"
+                "label": "Sprawdzić, kogo obserwują znajomi"
               },
               {
                 "id": "c",
-                "label": "Użyć wyszukiwarki Google",
-                "description": "Szukać popularnych użytkowników"
+                "label": "Użyć wyszukiwarki Google"
               }
             ],
             "correctId": "b",
@@ -365,18 +324,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Tylko w prywatnych wiadomościach",
-                "description": "Publiczne udostępnianie jest ryzykowne"
+                "label": "Tylko w prywatnych wiadomościach"
               },
               {
                 "id": "b",
-                "label": "Wszędzie - to publiczny adres",
-                "description": "Twitter, strona www, wizytówki"
+                "label": "Wszędzie - to publiczny adres"
               },
               {
                 "id": "c",
-                "label": "Tylko w bio na Nostr",
-                "description": "Trzymanie się jednej platformy"
+                "label": "Tylko w bio na Nostr"
               }
             ],
             "correctId": "b",
@@ -390,18 +346,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Gotowe listy rekomendowanych użytkowników",
-                "description": "Inni dzielą się znajomymi"
+                "label": "Gotowe listy rekomendowanych użytkowników"
               },
               {
                 "id": "b",
-                "label": "Płatne subskrypcje VIP",
-                "description": "Dostęp do ekskluzywnych kont"
+                "label": "Płatne subskrypcje VIP"
               },
               {
                 "id": "c",
-                "label": "Automatyczne listy przez algorytm",
-                "description": "AI dobiera znajomych"
+                "label": "Automatyczne listy przez algorytm"
               }
             ],
             "correctId": "a",
@@ -415,18 +368,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Dodawać jak najwięcej",
-                "description": "Spamowanie popularnymi tagami"
+                "label": "Dodawać jak najwięcej"
               },
               {
                 "id": "b",
-                "label": "Używać kilku konkretnych",
-                "description": "Relevantne tagi pomagają w odkrywalności"
+                "label": "Używać kilku konkretnych"
               },
               {
                 "id": "c",
-                "label": "Unikać hashtagów",
-                "description": "Są nieprofesjonalne"
+                "label": "Unikać hashtagów"
               }
             ],
             "correctId": "b",
@@ -440,22 +390,41 @@
             "options": [
               {
                 "id": "a",
-                "label": "Grupy tematyczne do obserwowania",
-                "description": "Jak zwykli użytkownicy"
+                "label": "Grupy tematyczne do obserwowania"
               },
               {
                 "id": "b",
-                "label": "Prywatne grupy z moderacją",
-                "description": "Trzeba się ubiegać o członkostwo"
+                "label": "Prywatne grupy z moderacją"
               },
               {
                 "id": "c",
-                "label": "Płatne subskrypcje",
-                "description": "Miesięczne opłaty"
+                "label": "Płatne subskrypcje"
               }
             ],
             "correctId": "a",
             "explanation": "Communities to publiczne grupy tematyczne. Możesz je obserwować, żeby widzieć posty z danego tematu. To dodatkowy sposób organizacji treści.",
+            "severity": "info"
+          },
+          {
+            "id": "community-building",
+            "title": "Tworzenie Społeczności",
+            "prompt": "Jak możesz założyć własną społeczność w Nostr?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Złożyć wniosek o licencję na społeczność"
+              },
+              {
+                "id": "b",
+                "label": "Stworzyć hashtag, dzielić się dobrymi treściami i regularnie się udzielać"
+              },
+              {
+                "id": "c",
+                "label": "Zapłacić za hosting społeczności"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "Społeczności powstają organicznie wokół tematów. Stwórz unikalny hashtag, regularnie publikuj wartościowe treści, odpowiadaj innym i bądź cierpliwy. Społeczności rosną dzięki zaangażowaniu.",
             "severity": "info"
           }
         ]
@@ -463,14 +432,11 @@
     },
     "faq": {
       "title": "FAQ",
-      "description": "Często zadawane pytania o Nostr.",
-      "content": {},
-      "quiz": {}
+      "description": "Często zadawane pytania o Nostr."
     },
     "relaysDemystified": {
       "title": "Relaye Rozwiane",
       "description": "Dogłębne spojrzenie na działanie relayów.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Relaye",
         "questions": [
@@ -481,18 +447,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Weryfikuje tożsamość",
-                "description": "Kontroluje kto może pisać"
+                "label": "Weryfikuje tożsamość"
               },
               {
                 "id": "b",
-                "label": "Przechowuje i przekazuje posty",
-                "description": "Jak serwer pocztowy"
+                "label": "Przechowuje i przekazuje posty"
               },
               {
                 "id": "c",
-                "label": "Zarabia na reklamach",
-                "description": "Model oparty na reklamach"
+                "label": "Zarabia na reklamach"
               }
             ],
             "correctId": "b",
@@ -506,18 +469,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Użyć tylko jednego największego",
-                "description": "Popularne relaye mają najwięcej użytkowników"
+                "label": "Użyć tylko jednego największego"
               },
               {
                 "id": "b",
-                "label": "Połączyć się z kilkoma różnych typów",
-                "description": "Publiczne, prywatne, tematyczne"
+                "label": "Połączyć się z kilkoma różnych typów"
               },
               {
                 "id": "c",
-                "label": "Założyć własnego od razu",
-                "description": "Własna infrastruktura"
+                "label": "Założyć własnego od razu"
               }
             ],
             "correctId": "b",
@@ -531,18 +491,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Tylko jeden",
-                "description": "Prostota jest lepsza"
+                "label": "Tylko jeden"
               },
               {
                 "id": "b",
-                "label": "5-15 relayów",
-                "description": "Balans między redundancją a wydajnością"
+                "label": "5-15 relayów"
               },
               {
                 "id": "c",
-                "label": "Wszystkie dostępne",
-                "description": "Maksymalna redundancja"
+                "label": "Wszystkie dostępne"
               }
             ],
             "correctId": "b",
@@ -556,18 +513,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Adres w formacie wss://",
-                "description": "WebSocket Secure URL"
+                "label": "Adres w formacie wss://"
               },
               {
                 "id": "b",
-                "label": "Nazwa właściciela",
-                "description": "Identyfikator admina"
+                "label": "Nazwa właściciela"
               },
               {
                 "id": "c",
-                "label": "Hasło dostępu",
-                "description": "Klucz do połączenia"
+                "label": "Hasło dostępu"
               }
             ],
             "correctId": "a",
@@ -581,23 +535,42 @@
             "options": [
               {
                 "id": "a",
-                "label": "Poczekać na naprawę",
-                "description": "Właściciel na pewno naprawi"
+                "label": "Poczekać na naprawę"
               },
               {
                 "id": "b",
-                "label": "Przełączyć się na inne relaye",
-                "description": "Twoje dane są bezpieczne"
+                "label": "Przełączyć się na inne relaye"
               },
               {
                 "id": "c",
-                "label": "Utworzyć nowe konto",
-                "description": "Nowy start na innym relayu"
+                "label": "Utworzyć nowe konto"
               }
             ],
             "correctId": "b",
             "explanation": "Jeśli używasz wielu relayów, awaria jednego nie jest problemem. Twoje posty są na innych relayach. To jak zmiana dostawcy internetu.",
             "severity": "info"
+          },
+          {
+            "id": "relay-ban",
+            "title": "Cenzura",
+            "prompt": "Czy relay może Cię zbanować?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Nie, Nostr jest niecenzurowalny"
+              },
+              {
+                "id": "b",
+                "label": "Tak, operator relaya może odmówić przechowywania Twoich postów, ale możesz korzystać z innych relayów"
+              },
+              {
+                "id": "c",
+                "label": "Tylko jeśli złamiesz prawo federalne"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "Pojedyncze relaye mogą banować użytkowników lub treści. Jednak dzięki decentralizacji Nostr możesz po prostu korzystać z innych relayów. Twoja tożsamość nie jest przypisana do żadnego konkretnego relaya.",
+            "severity": "critical"
           }
         ]
       }
@@ -605,7 +578,6 @@
     "nip05Identity": {
       "title": "Tożsamość NIP-05",
       "description": "Skonfiguruj swój identyfikator NIP-05.",
-      "content": {},
       "quiz": {
         "title": "Quiz: NIP-05",
         "questions": [
@@ -616,18 +588,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Zastępuje npub czytelnym adresem",
-                "description": "Łatwiejszy do zapamiętania"
+                "label": "Zastępuje npub czytelnym adresem"
               },
               {
                 "id": "b",
-                "label": "Dodaje szyfrowanie",
-                "description": "Zwiększa bezpieczeństwo"
+                "label": "Dodaje szyfrowanie"
               },
               {
                 "id": "c",
-                "label": "Jest wymagany do korzystania",
-                "description": "Bez niego nie można publikować"
+                "label": "Jest wymagany do korzystania"
               }
             ],
             "correctId": "a",
@@ -641,18 +610,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Darmowy dostęp do premium",
-                "description": "Odblokowuje płatne funkcje"
+                "label": "Darmowy dostęp do premium"
               },
               {
                 "id": "b",
-                "label": "Łatwiejsze znalezienie i weryfikacja",
-                "description": "Weryfikowalna tożsamość"
+                "label": "Łatwiejsze znalezienie i weryfikacja"
               },
               {
                 "id": "c",
-                "label": "Automatyczna ochrona przed spamem",
-                "description": "Blokuje niechciane wiadomości"
+                "label": "Automatyczna ochrona przed spamem"
               }
             ],
             "correctId": "b",
@@ -666,18 +632,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Tak, jest wymagany",
-                "description": "Bez niego nie działa Nostr"
+                "label": "Tak, jest wymagany"
               },
               {
                 "id": "b",
-                "label": "Nie, to opcjonalne",
-                "description": "Wszystko działa bez NIP-05"
+                "label": "Nie, to opcjonalne"
               },
               {
                 "id": "c",
-                "label": "Zależy od kraju",
-                "description": "W niektórych regionach wymagany"
+                "label": "Zależy od kraju"
               }
             ],
             "correctId": "b",
@@ -691,18 +654,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "W profilu każdego klienta",
-                "description": "Konfiguracja per aplikacja"
+                "label": "W profilu każdego klienta"
               },
               {
                 "id": "b",
-                "label": "Na serwerze pod domeną",
-                "description": "Plik .well-known/nostr.json"
+                "label": "Na serwerze pod domeną"
               },
               {
                 "id": "c",
-                "label": "W centralnym rejestrze",
-                "description": "Jedna globalna baza"
+                "label": "W centralnym rejestrze"
               }
             ],
             "correctId": "b",
@@ -716,18 +676,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Tak, wymaga domeny",
-                "description": "Zależność od DNS"
+                "label": "Tak, wymaga domeny"
               },
               {
                 "id": "b",
-                "label": "To opcjonalny dodatek",
-                "description": "Podstawa działa bez domen"
+                "label": "To opcjonalny dodatek"
               },
               {
                 "id": "c",
-                "label": "Nie, bo można mieć wiele",
-                "description": "Nieograniczona liczba identyfikatorów"
+                "label": "Nie, bo można mieć wiele"
               }
             ],
             "correctId": "b",
@@ -740,7 +697,6 @@
     "zapsAndLightning": {
       "title": "Zaps i Lightning",
       "description": "Opanuj sztukę wysyłania i odbierania płatności Bitcoin.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Zaps",
         "questions": [
@@ -751,18 +707,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Płatności Bitcoin przez Lightning",
-                "description": "Mikropłatności między użytkownikami"
+                "label": "Płatności Bitcoin przez Lightning"
               },
               {
                 "id": "b",
-                "label": "Specjalne typy postów",
-                "description": "Wiadomości z efektami dźwiękowymi"
+                "label": "Specjalne typy postów"
               },
               {
                 "id": "c",
-                "label": "Tokeny Nagrody",
-                "description": "Punkty za aktywność"
+                "label": "Tokeny Nagrody"
               }
             ],
             "correctId": "a",
@@ -776,18 +729,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Centralny giełdowy",
-                "description": "Wygodny dostęp online"
+                "label": "Centralny giełdowy"
               },
               {
                 "id": "b",
-                "label": "Samodzielny portfel Lightning",
-                "description": "Pełna kontrola nad środkami"
+                "label": "Samodzielny portfel Lightning"
               },
               {
                 "id": "c",
-                "label": "Ten sam co do logowania",
-                "description": "Jeden klucz do wszystkiego"
+                "label": "Ten sam co do logowania"
               }
             ],
             "correctId": "b",
@@ -801,18 +751,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Tak, bez tego nie działa",
-                "description": "Obowiązkowa płatność"
+                "label": "Tak, bez tego nie działa"
               },
               {
                 "id": "b",
-                "label": "Nie, to opcjonalne",
-                "description": "Można używać Nostr za darmo"
+                "label": "Nie, to opcjonalne"
               },
               {
                 "id": "c",
-                "label": "Tylko dla publikowania",
-                "description": "Czytanie jest darmowe"
+                "label": "Tylko dla publikowania"
               }
             ],
             "correctId": "b",
@@ -826,18 +773,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Udostępnić adres Lightning w profilu",
-                "description": "Inni mogą wtedy wysyłać płatności"
+                "label": "Udostępnić adres Lightning w profilu"
               },
               {
                 "id": "b",
-                "label": "Zapisać się na listę oczekujących",
-                "description": "Czekać na akceptację"
+                "label": "Zapisać się na listę oczekujących"
               },
               {
                 "id": "c",
-                "label": "Kupić subskrypcję premium",
-                "description": "Miesięczna opłata"
+                "label": "Kupić subskrypcję premium"
               }
             ],
             "correctId": "a",
@@ -851,18 +795,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Prowizja 10% dla operatora",
-                "description": "Stała opłata serwisowa"
+                "label": "Prowizja 10% dla operatora"
               },
               {
                 "id": "b",
-                "label": "Niemal zerowe opłaty sieciowe",
-                "description": "Setne części grosza"
+                "label": "Niemal zerowe opłaty sieciowe"
               },
               {
                 "id": "c",
-                "label": "Stała opłata 1 zł za każdą",
-                "description": "Niezależnie od kwoty"
+                "label": "Stała opłata 1 zł za każdą"
               }
             ],
             "correctId": "b",
@@ -874,14 +815,11 @@
     },
     "nostrTools": {
       "title": "Narzędzia Nostr",
-      "description": "Przydatne narzędzia i usługi.",
-      "content": {},
-      "quiz": {}
+      "description": "Przydatne narzędzia i usługi."
     },
     "troubleshooting": {
       "title": "Rozwiązywanie Problemów",
       "description": "Typowe problemy i sposoby ich rozwiązania.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Problemy",
         "questions": [
@@ -892,18 +830,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Nie połączono się z żadnymi relayami",
-                "description": "Brak połączenia z siecią"
+                "label": "Nie połączono się z żadnymi relayami"
               },
               {
                 "id": "b",
-                "label": "Konto zostało zbanowane",
-                "description": "Globalny ban"
+                "label": "Konto zostało zbanowane"
               },
               {
                 "id": "c",
-                "label": "Nostr nie działa dzisiaj",
-                "description": "Przerwa techniczna"
+                "label": "Nostr nie działa dzisiaj"
               }
             ],
             "correctId": "a",
@@ -917,18 +852,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Relaye usuwają stare dane",
-                "description": "Ograniczona pojemność"
+                "label": "Relaye usuwają stare dane"
               },
               {
                 "id": "b",
-                "label": "Posty wygasły",
-                "description": "Czasowe ważność"
+                "label": "Posty wygasły"
               },
               {
                 "id": "c",
-                "label": "Źle skonfigurowany klient",
-                "description": "Błąd aplikacji"
+                "label": "Źle skonfigurowany klient"
               }
             ],
             "correctId": "a",
@@ -942,18 +874,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Skontaktować się z supportem",
-                "description": "Może odzyskają klucz"
+                "label": "Skontaktować się z supportem"
               },
               {
                 "id": "b",
-                "label": "Utworzyć nowe konto",
-                "description": "Stare konto jest nie do odzyskania"
+                "label": "Utworzyć nowe konto"
               },
               {
                 "id": "c",
-                "label": "Użyć backup seed phrase",
-                "description": "Odtworzyć z kopii"
+                "label": "Użyć backup seed phrase"
               }
             ],
             "correctId": "b",
@@ -967,18 +896,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Spróbować ponownie później",
-                "description": "Może tymczasowa awaria"
+                "label": "Spróbować ponownie później"
               },
               {
                 "id": "b",
-                "label": "Użyć innych relayów",
-                "description": "Sieć ma wiele opcji"
+                "label": "Użyć innych relayów"
               },
               {
                 "id": "c",
-                "label": "Zrestartować komputer",
-                "description": "Rozwiąże wszystkie problemy"
+                "label": "Zrestartować komputer"
               }
             ],
             "correctId": "b",
@@ -992,18 +918,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Zgłosić do administracji",
-                "description": "Centralne zgłoszenie"
+                "label": "Zgłosić do administracji"
               },
               {
                 "id": "b",
-                "label": "Użyć NIP-05 dla weryfikacji",
-                "description": "Zweryfikowana tożsamość"
+                "label": "Użyć NIP-05 dla weryfikacji"
               },
               {
                 "id": "c",
-                "label": "Zmienić pseudonim",
-                "description": "Uniknąć konfliktu"
+                "label": "Zmienić pseudonim"
               }
             ],
             "correctId": "b",
@@ -1017,18 +940,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Złe połączenie Lightning",
-                "description": "Problemy z siecią"
+                "label": "Złe połączenie Lightning"
               },
               {
                 "id": "b",
-                "label": "Nostr jest przeciążony",
-                "description": "Duże opóźnienia"
+                "label": "Nostr jest przeciążony"
               },
               {
                 "id": "c",
-                "label": "Odbiorca wyłączył zaps",
-                "description": "Nie chce otrzymywać"
+                "label": "Odbiorca wyłączył zaps"
               }
             ],
             "correctId": "a",
@@ -1041,7 +961,6 @@
     "multiClient": {
       "title": "Wielu Klientów",
       "description": "Jak używać wielu klientów jednocześnie.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Klienci",
         "questions": [
@@ -1052,18 +971,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Dla redundancji i różnych funkcji",
-                "description": "Każdy klient ma inne zalety"
+                "label": "Dla redundancji i różnych funkcji"
               },
               {
                 "id": "b",
-                "label": "To wymagane przez protokół",
-                "description": "Obowiązek użytkownika"
+                "label": "To wymagane przez protokół"
               },
               {
                 "id": "c",
-                "label": "Aby mieć więcej followerów",
-                "description": "Każdy klient = nowi ludzie"
+                "label": "Aby mieć więcej followerów"
               }
             ],
             "correctId": "a",
@@ -1077,18 +993,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Wszystko - posty, kontakty, ustawienia",
-                "description": "Pełna synchronizacja"
+                "label": "Wszystko - posty, kontakty, ustawienia"
               },
               {
                 "id": "b",
-                "label": "Tylko posty publiczne",
-                "description": "Ograniczona synchronizacja"
+                "label": "Tylko posty publiczne"
               },
               {
                 "id": "c",
-                "label": "Nic - każdy klient jest osobny",
-                "description": "Brak synchronizacji"
+                "label": "Nic - każdy klient jest osobny"
               }
             ],
             "correctId": "a",
@@ -1102,18 +1015,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Telefon do czytania, komputer do pisania",
-                "description": "Podział zadań"
+                "label": "Telefon do czytania, komputer do pisania"
               },
               {
                 "id": "b",
-                "label": "Używać losowo",
-                "description": "Bez strategii"
+                "label": "Używać losowo"
               },
               {
                 "id": "c",
-                "label": "Jeden klient na raz",
-                "description": "Przełączanie"
+                "label": "Jeden klient na raz"
               }
             ],
             "correctId": "a",
@@ -1127,18 +1037,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Użyć tego samego klucza",
-                "description": "Wystarczy się zalogować"
+                "label": "Użyć tego samego klucza"
               },
               {
                 "id": "b",
-                "label": "Przenieść dane ręcznie",
-                "description": "Eksport/import"
+                "label": "Przenieść dane ręcznie"
               },
               {
                 "id": "c",
-                "label": "Użyć konta centralnego",
-                "description": "Jeden login wszędzie"
+                "label": "Użyć konta centralnego"
               }
             ],
             "correctId": "a",
@@ -1152,18 +1059,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Na osobnym koncie testowym",
-                "description": "Nowy klucz na próby"
+                "label": "Na osobnym koncie testowym"
               },
               {
                 "id": "b",
-                "label": "Na głównym koncie",
-                "description": "Pełne funkcje od razu"
+                "label": "Na głównym koncie"
               },
               {
                 "id": "c",
-                "label": "Nie testować",
-                "description": "Bezpieczniej nie ryzykować"
+                "label": "Nie testować"
               }
             ],
             "correctId": "a",
@@ -1176,7 +1080,6 @@
     "relayGuide": {
       "title": "Przewodnik po Relayach",
       "description": "Wszystko o wyborze i zarządzaniu relayami.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Relaye",
         "questions": [
@@ -1187,18 +1090,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Publiczne, prywatne, płatne",
-                "description": "Różne modele dostępu"
+                "label": "Publiczne, prywatne, płatne"
               },
               {
                 "id": "b",
-                "label": "Szybkie i wolne",
-                "description": "W zależności od prędkości"
+                "label": "Szybkie i wolne"
               },
               {
                 "id": "c",
-                "label": "Duże i małe",
-                "description": "Według wielkości"
+                "label": "Duże i małe"
               }
             ],
             "correctId": "a",
@@ -1212,18 +1112,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Tylko jeden",
-                "description": "Wystarczający"
+                "label": "Tylko jeden"
               },
               {
                 "id": "b",
-                "label": "5-15",
-                "description": "Odpowiednia liczba"
+                "label": "5-15"
               },
               {
                 "id": "c",
-                "label": "100+",
-                "description": "Maksimum redundancji"
+                "label": "100+"
               }
             ],
             "correctId": "b",
@@ -1237,18 +1134,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Lepsza jakość i niezawodność",
-                "description": "Mniej spamu, więcej miejsca"
+                "label": "Lepsza jakość i niezawodność"
               },
               {
                 "id": "b",
-                "label": "To obowiązkowe",
-                "description": "Bez płatnego nie działa"
+                "label": "To obowiązkowe"
               },
               {
                 "id": "c",
-                "label": "Dla statusu",
-                "description": "Prestiż"
+                "label": "Dla statusu"
               }
             ],
             "correctId": "a",
@@ -1262,18 +1156,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Tak, dla pełnej kontroli",
-                "description": "Własna infrastruktura"
+                "label": "Tak, dla pełnej kontroli"
               },
               {
                 "id": "b",
-                "label": "Nie, to za trudne",
-                "description": "Tylko dla ekspertów"
+                "label": "Nie, to za trudne"
               },
               {
                 "id": "c",
-                "label": "Nie ma znaczenia",
-                "description": "Wszyscy używają publicznych"
+                "label": "Nie ma znaczenia"
               }
             ],
             "correctId": "a",
@@ -1287,18 +1178,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Nie ma jednego właściciela",
-                "description": "Tysiące niezależnych operatorów"
+                "label": "Nie ma jednego właściciela"
               },
               {
                 "id": "b",
-                "label": "Używają blockchain",
-                "description": "Dystrybucja przez łańcuch"
+                "label": "Używają blockchain"
               },
               {
                 "id": "c",
-                "label": "Są open source",
-                "description": "Kod jest publiczny"
+                "label": "Są open source"
               }
             ],
             "correctId": "a",
@@ -1311,7 +1199,6 @@
     "privacySecurity": {
       "title": "Prywatność i Bezpieczeństwo",
       "description": "Zaawansowane praktyki dla zaawansowanych użytkowników.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Prywatność",
         "questions": [
@@ -1322,18 +1209,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Wszystko jest publiczne",
-                "description": "Dane widoczne dla wszystkich"
+                "label": "Wszystko jest publiczne"
               },
               {
                 "id": "b",
-                "label": "Ataki hakerskie",
-                "description": "Włamania do kont"
+                "label": "Ataki hakerskie"
               },
               {
                 "id": "c",
-                "label": "Cenzura przez rządy",
-                "description": "Blokowanie treści"
+                "label": "Cenzura przez rządy"
               }
             ],
             "correctId": "a",
@@ -1347,18 +1231,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Dla różnych celów",
-                "description": "Osobisty, zawodowy, anonimowy"
+                "label": "Dla różnych celów"
               },
               {
                 "id": "b",
-                "label": "Żeby mieć więcej followerów",
-                "description": "Sztuczna liczba"
+                "label": "Żeby mieć więcej followerów"
               },
               {
                 "id": "c",
-                "label": "To jest wymagane",
-                "description": "Przez protokół"
+                "label": "To jest wymagane"
               }
             ],
             "correctId": "a",
@@ -1372,18 +1253,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Aplikacje trzymające klucz bezpiecznie",
-                "description": "Podpisują bez pokazywania nsec"
+                "label": "Aplikacje trzymające klucz bezpiecznie"
               },
               {
                 "id": "b",
-                "label": "Edytory graficzne",
-                "description": "Do podpisywania obrazów"
+                "label": "Edytory graficzne"
               },
               {
                 "id": "c",
-                "label": "Aplikacje do podpisu cyfrowego",
-                "description": "Prawne podpisy"
+                "label": "Aplikacje do podpisu cyfrowego"
               }
             ],
             "correctId": "a",
@@ -1397,18 +1275,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Lokalizacja GPS",
-                "description": "Dokładne położenie"
+                "label": "Lokalizacja GPS"
               },
               {
                 "id": "b",
-                "label": "Wszystkie powyższe",
-                "description": "Plus czas, urządzenie, wzorce"
+                "label": "Wszystkie powyższe"
               },
               {
                 "id": "c",
-                "label": "EXIF w zdjęciach",
-                "description": "Dane z aparatu"
+                "label": "EXIF w zdjęciach"
               }
             ],
             "correctId": "b",
@@ -1422,18 +1297,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Gdy jest kompromitacja",
-                "description": "Podejrzenie wycieku"
+                "label": "Gdy jest kompromitacja"
               },
               {
                 "id": "b",
-                "label": "Co miesiąc",
-                "description": "Regularna zmiana"
+                "label": "Co miesiąc"
               },
               {
                 "id": "c",
-                "label": "Nigdy",
-                "description": "Jeden klucz na zawsze"
+                "label": "Nigdy"
               }
             ],
             "correctId": "a",
@@ -1447,18 +1319,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Mieć plan działania",
-                "description": "Co robić krok po kroku"
+                "label": "Mieć plan działania"
               },
               {
                 "id": "b",
-                "label": "Panikować",
-                "description": "Szybka reakcja"
+                "label": "Panikować"
               },
               {
                 "id": "c",
-                "label": "Czekać",
-                "description": "Może samo przejdzie"
+                "label": "Czekać"
               }
             ],
             "correctId": "a",
@@ -1471,7 +1340,6 @@
     "nip17PrivateMessages": {
       "title": "NIP-17: Prywatne Wiadomości",
       "description": "Dowiedz się o NIP-17, bezpiecznej alternatywie dla NIP-04.",
-      "content": {},
       "quiz": {
         "title": "Quiz: NIP-17",
         "questions": [
@@ -1482,18 +1350,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Do prywatnych wiadomości",
-                "description": "Bezpieczne DM-y"
+                "label": "Do prywatnych wiadomości"
               },
               {
                 "id": "b",
-                "label": "Do publikowania postów",
-                "description": "Publiczne notatki"
+                "label": "Do publikowania postów"
               },
               {
                 "id": "c",
-                "label": "Do zarządzania relayami",
-                "description": "Konfiguracja serwerów"
+                "label": "Do zarządzania relayami"
               }
             ],
             "correctId": "a",
@@ -1507,18 +1372,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Słabe szyfrowanie",
-                "description": "Można złamać"
+                "label": "Słabe szyfrowanie"
               },
               {
                 "id": "b",
-                "label": "Brak wsparcia",
-                "description": "Nieaktualizowany"
+                "label": "Brak wsparcia"
               },
               {
                 "id": "c",
-                "label": "Za wolny",
-                "description": "Duże opóźnienia"
+                "label": "Za wolny"
               }
             ],
             "correctId": "a",
@@ -1532,18 +1394,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Dodatkowa warstwa szyfrowania",
-                "description": "Ukrywa meta-dane"
+                "label": "Dodatkowa warstwa szyfrowania"
               },
               {
                 "id": "b",
-                "label": "Prezent dla użytkowników",
-                "description": "Bonusowe funkcje"
+                "label": "Prezent dla użytkowników"
               },
               {
                 "id": "c",
-                "label": "Pakiet startowy",
-                "description": "Przewodnik dla nowych"
+                "label": "Pakiet startowy"
               }
             ],
             "correctId": "a",
@@ -1557,18 +1416,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Nowoczesne klienty",
-                "description": "Coraz więcej aplikacji"
+                "label": "Nowoczesne klienty"
               },
               {
                 "id": "b",
-                "label": "Wszystkie",
-                "description": "Standardowy protokół"
+                "label": "Wszystkie"
               },
               {
                 "id": "c",
-                "label": "Żaden",
-                "description": "Zbyt nowy"
+                "label": "Żaden"
               }
             ],
             "correctId": "a",
@@ -1582,18 +1438,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Stopniowo, informując kontakty",
-                "description": "Cierpliwa migracja"
+                "label": "Stopniowo, informując kontakty"
               },
               {
                 "id": "b",
-                "label": "Z dnia na dzień",
-                "description": "Szybka zmiana"
+                "label": "Z dnia na dzień"
               },
               {
                 "id": "c",
-                "label": "Nie ma migracji",
-                "description": "Automatycznie"
+                "label": "Nie ma migracji"
               }
             ],
             "correctId": "a",
@@ -1606,7 +1459,6 @@
     "protocolComparison": {
       "title": "Porównanie Protokołów",
       "description": "Techniczne porównanie protokołów zdecentralizowanych mediów.",
-      "content": {},
       "quiz": {
         "title": "Quiz: Protokoły",
         "questions": [
@@ -1617,18 +1469,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Nostr: klucze kryptograficzne, ActivityPub: serwery, Bluesky: DID",
-                "description": "Różne podejścia do tożsamości"
+                "label": "Nostr: klucze kryptograficzne, ActivityPub: serwery, Bluesky: DID"
               },
               {
                 "id": "b",
-                "label": "Wszystkie używają emaili",
-                "description": "Uniwersalny system"
+                "label": "Wszystkie używają emaili"
               },
               {
                 "id": "c",
-                "label": "Wszystkie wymagają NFT",
-                "description": "Tokeny tożsamości"
+                "label": "Wszystkie wymagają NFT"
               }
             ],
             "correctId": "a",
@@ -1642,18 +1491,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Nostr",
-                "description": "Nie ma centralnych serwerów"
+                "label": "Nostr"
               },
               {
                 "id": "b",
-                "label": "ActivityPub",
-                "description": "Federacja serwerów"
+                "label": "ActivityPub"
               },
               {
                 "id": "c",
-                "label": "Bluesky",
-                "description": "AT Protocol"
+                "label": "Bluesky"
               }
             ],
             "correctId": "a",
@@ -1667,18 +1513,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Nostr",
-                "description": "Dane związane z kluczem, nie serwerem"
+                "label": "Nostr"
               },
               {
                 "id": "b",
-                "label": "ActivityPub",
-                "description": "Zależy od instancji"
+                "label": "ActivityPub"
               },
               {
                 "id": "c",
-                "label": "Wszędzie tak samo",
-                "description": "Pełna interoperacyjność"
+                "label": "Wszędzie tak samo"
               }
             ],
             "correctId": "a",
@@ -1692,18 +1535,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Nostr: relaye, ActivityPub: federacja, Bluesky: PDS",
-                "description": "Różne modele"
+                "label": "Nostr: relaye, ActivityPub: federacja, Bluesky: PDS"
               },
               {
                 "id": "b",
-                "label": "Wszystkie to blockchain",
-                "description": "Rozproszona księga"
+                "label": "Wszystkie to blockchain"
               },
               {
                 "id": "c",
-                "label": "Wszystkie to klient-serwer",
-                "description": "Tradycyjna architektura"
+                "label": "Wszystkie to klient-serwer"
               }
             ],
             "correctId": "a",
@@ -1717,18 +1557,15 @@
             "options": [
               {
                 "id": "a",
-                "label": "Zależy od potrzeb",
-                "description": "Każdy ma swoje zalety"
+                "label": "Zależy od potrzeb"
               },
               {
                 "id": "b",
-                "label": "Zawsze Nostr",
-                "description": "Najlepszy we wszystkim"
+                "label": "Zawsze Nostr"
               },
               {
                 "id": "c",
-                "label": "Zawsze ActivityPub",
-                "description": "Najpopularniejszy"
+                "label": "Zawsze ActivityPub"
               }
             ],
             "correctId": "a",
@@ -1741,15 +1578,6 @@
     "outboxModel": {
       "title": "Rozumienie modelu skrzynki nadawczej",
       "description": "Dowiedz się, jak Nostr zapewnia, że Twoje posty docierają do wszystkich, którzy Cię obserwują",
-      "content": {
-        "problemHook": "Brakujące Posty",
-        "solutionIntro": "Model Skrzynki Nadawczej",
-        "howItWorks": "Jak Działa Odkrywanie Relay",
-        "whyItMatters": "Dlaczego To Ma Znaczenie",
-        "bestPractices": "Najlepsze Praktyki",
-        "commonMisconceptions": "Powszechne Błędne Przekonania",
-        "technicalDeepDive": "Głębokie Zanurzenie Techniczne"
-      },
       "quiz": {
         "title": "Quiz o Modelu Skrzynki Nadawczej",
         "questions": [
@@ -1868,40 +1696,9 @@
     }
   },
   "ui": {
-    "buttons": {
-      "submit": "Wyślij",
-      "next": "Dalej",
-      "previous": "Wstecz",
-      "checkAnswer": "Sprawdź odpowiedź",
-      "startLearning": "Rozpocznij naukę",
-      "learnMore": "Dowiedz się więcej"
-    },
     "search": {
       "placeholder": "Szukaj poradników...",
-      "noResults": "Nie znaleziono poradników.",
-      "searching": "Wyszukiwanie..."
-    },
-    "common": {
-      "loading": "Ładowanie...",
-      "error": "Coś poszło nie tak",
-      "success": "Sukces!",
-      "minutes": "min"
-    },
-    "navigation": {
-      "nextGuide": "Następny poradnik",
-      "previousGuide": "Poprzedni poradnik",
-      "backToGuides": "Powrót do poradników"
-    },
-    "badges": {
-      "earned": "Zdobyte",
-      "locked": "Zablokowane",
-      "viewAll": "Zobacz wszystkie"
-    },
-    "progress": {
-      "completed": "Ukończono",
-      "of": "z",
-      "guidesCompleted": "ukończonych poradników",
-      "currentStreak": "Aktualna seria"
+      "noResults": "Nie znaleziono poradników."
     },
     "quiz": {
       "loading": "Ładowanie quizu...",
@@ -2014,15 +1811,11 @@
       }
     },
     "results": {
-      "topRecommendation": "Najlepsza Rekomendacja",
       "beginnerFriendly": "Przyjazny dla Początkujących",
-      "rating": "Ocena",
-      "users": "Użytkownicy",
       "pros": "Zalety",
       "cons": "Wady",
       "getApp": "Pobierz {clientName}",
-      "tryWeb": "Wypróbuj Wersję Web",
-      "alternatives": "Inne Rekomendacje"
+      "tryWeb": "Wypróbuj Wersję Web"
     }
   },
   "keyGenerator": {
@@ -2519,8 +2312,7 @@
       }
     },
     "providers": {
-      "title": "Uzyskaj własny NIP-05",
-      "getOne": "Uzyskaj własny identyfikator NIP-05 od tych dostawców:"
+      "title": "Uzyskaj własny NIP-05"
     }
   },
   "emptyFeedFixer": {
@@ -2653,14 +2445,225 @@
       "confirm": "Potwierdź"
     }
   },
+  "clientComparisonTable": {
+    "searchPlaceholder": "Szukaj klientów...",
+    "filters": {
+      "button": "Filtry",
+      "platform": "Platforma",
+      "features": "Kluczowe Funkcje",
+      "difficulty": "Poziom Trudności"
+    },
+    "platformLabels": {
+      "ios": "iOS",
+      "android": "Android",
+      "web": "Web",
+      "desktop": "Desktop"
+    },
+    "difficultyLabels": {
+      "beginner": "Początkujący",
+      "intermediate": "Średniozaawansowany",
+      "advanced": "Zaawansowany"
+    },
+    "featureLabels": {
+      "wallet": "Portfel",
+      "media": "Media",
+      "longform": "Długie Posty",
+      "privacy": "Prywatność"
+    },
+    "clearFilters": "Wyczyść wszystkie filtry",
+    "export": "Eksportuj",
+    "noResults": {
+      "title": "Nie znaleziono klientów",
+      "description": "Spróbuj zmienić filtry, aby zobaczyć więcej wyników"
+    },
+    "card": {
+      "pros": "Zalety",
+      "cons": "Wady",
+      "links": {
+        "web": "Web",
+        "ios": "iOS",
+        "android": "Android",
+        "desktop": "Desktop"
+      }
+    },
+    "clients": {
+      "damus": {
+        "name": "Damus",
+        "description": "Najpopularniejszy klient na iOS z dopracowanym interfejsem i płynnym działaniem.",
+        "pros": [
+          "Piękny interfejs",
+          "Łatwy w obsłudze",
+          "Aktywny rozwój",
+          "Świetne wprowadzenie",
+          "Obsługa zapów"
+        ],
+        "cons": [
+          "Tylko iOS",
+          "Ograniczona synchronizacja z desktopem",
+          "Brak długich postów"
+        ]
+      },
+      "amethyst": {
+        "name": "Amethyst",
+        "description": "Bogaty w funkcje klient na Androida ze świetnym wsparciem dla wszystkich funkcji Nostr.",
+        "pros": [
+          "Pełen funkcji",
+          "Obsługa zapów",
+          "Aktywna społeczność",
+          "Regularne aktualizacje",
+          "Duże możliwości personalizacji"
+        ],
+        "cons": [
+          "Może przytłaczać początkujących",
+          "Tylko Android",
+          "Skomplikowane ustawienia"
+        ]
+      },
+      "primal": {
+        "name": "Primal",
+        "description": "Szybki, nowoczesny klient dostępny na wszystkich platformach, o świetnej wydajności.",
+        "pros": [
+          "Wszystkie platformy",
+          "Szybkie ładowanie",
+          "Świetna wyszukiwarka",
+          "Piękny design",
+          "Regularne aktualizacje"
+        ],
+        "cons": [
+          "Część osób ma obawy o prywatność",
+          "Nowsza aplikacja",
+          "Część funkcji wciąż w rozwoju"
+        ]
+      },
+      "iris": {
+        "name": "Iris",
+        "description": "Prosty klient webowy bez rejestracji, idealny na szybki start.",
+        "pros": [
+          "Nie wymaga pobierania",
+          "Działa od razu",
+          "Przejrzysty interfejs",
+          "Open source",
+          "Prywatny"
+        ],
+        "cons": [
+          "Tylko web",
+          "Ograniczone funkcje zaawansowane",
+          "Brak integracji z portfelem"
+        ]
+      },
+      "snort": {
+        "name": "Snort",
+        "description": "Klient webowy skupiony na prostocie i wydajności.",
+        "pros": [
+          "Błyskawicznie szybki",
+          "Minimalistyczny interfejs",
+          "Bez zbędnych dodatków",
+          "Świetny do czytania",
+          "Nastawiony na prywatność"
+        ],
+        "cons": [
+          "Tylko web",
+          "Mniej funkcji społecznościowych",
+          "Brak portfela"
+        ]
+      },
+      "coracle": {
+        "name": "Coracle",
+        "description": "Klient desktopowy dla zaawansowanych użytkowników z rozbudowanymi funkcjami.",
+        "pros": [
+          "Potężne funkcje",
+          "Zoptymalizowany pod desktop",
+          "Świetny dla twórców",
+          "Zaawansowane filtrowanie",
+          "Skróty klawiszowe"
+        ],
+        "cons": [
+          "Tylko desktop",
+          "Wyższy próg wejścia",
+          "Nieprzyjazny dla urządzeń mobilnych"
+        ]
+      },
+      "current": {
+        "name": "Current",
+        "description": "Klient na iOS ze świetną integracją Nostr Wallet Connect.",
+        "pros": [
+          "Najlepsza obsługa portfela",
+          "Integracja NWC",
+          "Funkcje dla zaawansowanych",
+          "Przejrzysty interfejs"
+        ],
+        "cons": [
+          "Bardziej złożony",
+          "Tylko iOS",
+          "Wymaga nauki"
+        ]
+      },
+      "habla": {
+        "name": "Habla",
+        "description": "Klient skupiony na długich formach, z obsługą newsletterów.",
+        "pros": [
+          "Świetny do artykułów",
+          "Obsługa newsletterów",
+          "Przejrzysty edytor tekstu",
+          "Monetyzacja"
+        ],
+        "cons": [
+          "Tylko web",
+          "Mniejsza baza użytkowników",
+          "Ograniczone funkcje społecznościowe"
+        ]
+      },
+      "nostur": {
+        "name": "Nostur",
+        "description": "Bogaty w funkcje klient na iOS z naciskiem na użyteczność.",
+        "pros": [
+          "Świetny interfejs",
+          "Szybki",
+          "Dobre zarządzanie relayami",
+          "Aktywny rozwój"
+        ],
+        "cons": [
+          "Tylko iOS",
+          "Wymaga trochę nauki"
+        ]
+      },
+      "plebstr": {
+        "name": "Plebstr",
+        "description": "Prosty klient na Androida dla początkujących.",
+        "pros": [
+          "Łatwy w obsłudze",
+          "Przejrzysty design",
+          "Dobra wydajność"
+        ],
+        "cons": [
+          "Mniej funkcji",
+          "Tylko Android",
+          "Brak portfela"
+        ]
+      }
+    },
+    "tags": {
+      "beginnerFriendly": "Przyjazny dla Początkujących",
+      "popular": "Popularny",
+      "powerUser": "Dla Zaawansowanych",
+      "featureRich": "Bogaty w Funkcje",
+      "crossPlatform": "Wieloplatformowy",
+      "webOnly": "Tylko Web",
+      "minimal": "Minimalistyczny",
+      "privacy": "Prywatność",
+      "walletFocused": "Nastawiony na Portfel",
+      "longForm": "Długie Formy",
+      "writers": "Dla Piszących",
+      "ios": "iOS",
+      "android": "Android",
+      "desktop": "Desktop"
+    }
+  },
   "relayExplorer": {
     "title": "Eksplorator Relay",
     "description": "Przeglądaj i łącz się z relay Nostr. Relay przechowują i dystrybuują Twoje posty. Połącz się z wieloma relay dla lepszej niezawodności.",
-    "starterPack": {
-      "title": "Nowy w Nostr?",
-      "description": "Zacznij od naszego rekomendowanego pakietu startowego 4 niezawodnych relay",
-      "button": "Dodaj Pakiet Startowy"
-    },
+    "testAll": "Testuj Wszystkie",
+    "checking": "Sprawdzanie...",
     "search": {
       "placeholder": "Szukaj relay..."
     },
@@ -2679,15 +2682,13 @@
       }
     },
     "selected": {
-      "title": "Wybrane Relay",
       "count": "Wybrano {count} relay",
       "copy": "Kopiuj",
       "download": "Pobierz"
     },
     "customRelay": {
       "placeholder": "Dodaj własne relay (wss://...)",
-      "add": "Dodaj",
-      "remove": "Usuń"
+      "add": "Dodaj"
     },
     "toast": {
       "starterPackAdded": "Dodano relay z pakietu startowego!",
@@ -2700,23 +2701,12 @@
       "checkComplete": "Sprawdzanie statusu relay zakończone!"
     },
     "card": {
-      "latency": "Opóźnienie",
-      "users": "Użytkownicy",
-      "location": "Lokalizacja",
-      "features": "Funkcje",
-      "select": "Wybierz",
-      "deselect": "Odznacz",
+      "latencyUnknown": "Nieznane",
       "status": {
         "online": "Online",
         "offline": "Offline",
         "checking": "Sprawdzanie"
       }
-    },
-    "regionLabels": {
-      "na": "Ameryka Północna",
-      "eu": "Europa",
-      "asia": "Azja",
-      "other": "Inne"
     },
     "stats": {
       "popularRelays": "Popularne Relay",
@@ -2745,8 +2735,7 @@
       "disconnect": "Rozłącz",
       "inspect": "Zbadaj",
       "clear": "Wyczyść",
-      "copy": "Kopiuj",
-      "export": "Eksportuj"
+      "copy": "Kopiuj"
     },
     "status": {
       "online": "Online",
@@ -2760,74 +2749,44 @@
       "selectRelay": "Wybierz relay do przetestowania połączenia",
       "connectionState": "Stan Połączenia",
       "latency": "Opóźnienie",
-      "latencyMs": "{{latency}}ms",
       "unknown": "Nieznane",
       "connected": "Połączono z relay",
-      "disconnected": "Rozłączono z relay",
       "error": "Błąd połączenia"
     },
     "healthTab": {
-      "title": "Zdrowie Relay",
-      "uptime": "Czas Działania",
       "responseTime": "Czas Odpowiedzi",
-      "reliability": "Niezawodność",
       "lastChecked": "Ostatnio Sprawdzane",
-      "history": "Historia Sprawdzeń",
       "noData": "Brak dostępnych danych o zdrowiu"
     },
     "nipsTab": {
       "title": "Wspierane NIP-y",
       "description": "Nostr Implementation Possibilities (NIP-y) to rozszerzenia protokołu wspierane przez ten relay",
-      "nip": "NIP-{{number}}",
-      "supported": "{{count}} NIP-ów wspieranych",
-      "software": "Oprogramowanie",
-      "version": "Wersja",
-      "contact": "Kontakt"
+      "supported": "{{count}} NIP-ów wspieranych"
     },
     "eventsTab": {
       "title": "Zdarzenia na Żywo",
       "description": "Zdarzenia w czasie rzeczywistym z połączonych relay",
       "noEvents": "Nie otrzymano jeszcze żadnych zdarzeń",
-      "eventId": "ID Zdarzenia",
       "kind": "Typ",
-      "author": "Autor",
-      "timestamp": "Znacznik Czasu",
-      "content": "Treść",
-      "signature": "Podpis"
+      "author": "Autor"
     },
     "queryTab": {
       "title": "Kreator Zapytań",
       "description": "Twórz niestandardowe zapytania Nostr, aby pobrać konkretne zdarzenia",
-      "filters": "Filtry",
-      "authors": "Autorzy",
       "kinds": "Typy",
-      "since": "Od",
-      "until": "Do",
       "limit": "Limit",
       "execute": "Wykonaj Zapytanie",
       "results": "Wyniki",
       "noResults": "Nie znaleziono wyników"
     },
     "relayCard": {
-      "location": "Lokalizacja",
-      "software": "Oprogramowanie",
-      "version": "Wersja"
-    },
-    "toast": {
-      "copied": "Skopiowano do schowka!",
-      "copyFailed": "Nie udało się skopiować",
-      "exported": "Dane relay wyeksportowane!"
+      "location": "Lokalizacja"
     }
   },
   "nostrSimulator": {
     "title": "Symulator Nostr",
     "description": "Interaktywna symulacja działania Nostr. Zobacz jak posty przepływają przez zdecentralizowaną sieć.",
     "controls": {
-      "play": "Odtwórz",
-      "pause": "Pauza",
-      "reset": "Resetuj",
-      "step": "Krok",
-      "speed": "Prędkość",
       "sending": "Wysyłanie...",
       "processing": "Przetwarzanie...",
       "delivering": "Dostarczanie...",
@@ -2836,7 +2795,6 @@
     "nodes": {
       "user": "Użytkownik",
       "relay": "Relay",
-      "client": "Klient",
       "alice": "Alice",
       "bob": "Bob",
       "carol": "Carol",
@@ -2868,11 +2826,8 @@
     }
   },
   "quickstartSimulator": {
-    "title": "Symulator Szybkiego Startu",
-    "description": "Symuluj swoje pierwsze kroki na Nostr. Naucz się podstaw przez interaktywne przykłady.",
     "steps": {
       "createKeys": "Stwórz Swoje Klucze",
-      "chooseClient": "Wybierz Klienta",
       "connectRelay": "Połącz się z Relay",
       "makePost": "Napisz Swój Pierwszy Post",
       "followPeople": "Obserwuj Ludzi",
@@ -2880,9 +2835,6 @@
       "receiveZap": "Odbierz Zapa"
     },
     "buttons": {
-      "next": "Następny Krok",
-      "previous": "Poprzedni",
-      "restart": "Zacznij Od Nowa",
       "tryIt": "Wypróbuj",
       "generateKeys": "Wygeneruj Klucze",
       "generating": "Generowanie...",
@@ -2946,8 +2898,6 @@
     }
   },
   "protocolComparisonUI": {
-    "title": "Porównanie Protokołów",
-    "description": "Porównaj Nostr z innymi zdecentralizowanymi protokołami społecznościowymi jak ActivityPub (Mastodon) i AT Protocol (Bluesky).",
     "centralizedLabel": "Tradycyjne Media Społecznościowe",
     "nostrLabel": "Nostr",
     "items": {
@@ -2971,21 +2921,6 @@
         "centralized": "Platformy decydują co możesz powiedzieć. Mogą Cię cenzurować lub shadowbanować.",
         "nostr": "Żadna centralna władza nie kontroluje wypowiedzi. Zawsze znajdziesz relay które przekażą Twoje treści."
       }
-    },
-    "protocols": {
-      "nostr": "Nostr",
-      "activitypub": "ActivityPub",
-      "atProtocol": "AT Protocol"
-    },
-    "features": {
-      "decentralization": "Decentralizacja",
-      "censorshipResistance": "Odporność na Cenzurę",
-      "accountPortability": "Przenośność Konta",
-      "easeOfUse": "Łatność Użycia",
-      "scalability": "Skalowalność"
-    },
-    "details": {
-      "learnMore": "Dowiedz się Więcej"
     }
   },
   "postFlowSimulator": {
@@ -2993,9 +2928,7 @@
     "description": "Zobacz jak post podróżuje z Twojego urządzenia do innych użytkowników przez sieć Nostr.",
     "stages": {
       "create": "Utwórz Post",
-      "sign": "Podpisz Kluczem",
       "send": "Wyślij do Relay",
-      "broadcast": "Relay Rozgłasza",
       "receive": "Inni Otrzymują"
     },
     "labels": {
@@ -3020,54 +2953,37 @@
     "title": "Symulator Zapów",
     "description": "Symuluj wysyłanie i otrzymywanie płatności Bitcoin (zapów) na Nostr za pomocą Lightning Network.",
     "steps": {
-      "createInvoice": "Utwórz Fakturę",
-      "scan": "Zeskanuj Kod QR",
-      "pay": "Zapłać Portfelem",
       "confirm": "Potwierdź Otrzymanie"
     },
     "labels": {
       "amount": "Kwota (sats)",
-      "memo": "Notatka",
-      "sender": "Nadawca",
-      "receiver": "Odbiorca",
       "invoice": "Faktura Lightning"
     },
     "buttons": {
-      "create": "Utwórz Fakturę",
       "pay": "Zapłać Zapa",
-      "simulate": "Symuluj Zapa"
+      "copy": "Kopiuj"
     }
   },
   "relayVisualizer": {
     "title": "Wizualizator Relay",
-    "description": "Wizualizuj jak relay łączą się i tworzą sieć Nostr.",
     "controls": {
-      "addRelay": "Dodaj Relay",
-      "removeRelay": "Usuń Relay",
       "connect": "Połącz",
       "disconnect": "Rozłącz"
     },
     "labels": {
       "connections": "Połączenia",
-      "networkSize": "Rozmiar Sieci",
       "relayCount": "{count} relay"
     }
   },
   "relayWorldMap": {
     "title": "Mapa Świata Relay",
-    "description": "Zobacz gdzie na świecie znajdują się relay Nostr.",
     "regions": {
       "northAmerica": "Ameryka Północna",
-      "southAmerica": "Ameryka Południowa",
       "europe": "Europa",
-      "asia": "Azja",
-      "africa": "Afryka",
-      "oceania": "Oceania"
+      "asia": "Azja"
     },
     "stats": {
-      "totalRelays": "Wszystkich Relay",
-      "topRegion": "Najlepszy Region",
-      "avgLatency": "Śr. Opóźnienie"
+      "totalRelays": "Wszystkich Relay"
     }
   },
   "guideNavigation": {
@@ -3089,7 +3005,7 @@
     "levelCompleteDescription": "Ukończyłeś wszystkie przewodniki z poziomu {level}!",
     "continueToLevel": "Kontynuuj do {level}",
     "locked": "{level} jest Zablokowany",
-    "unlockRequirements": "Ukończ jeszcze {count} przewodnik{plural} z {currentLevel}, aby odblokować {nextLevel}",
+    "unlockRequirements": "Ukończ jeszcze {count} przewodnik(ów) z poziomu {currentLevel}, aby odblokować {nextLevel}",
     "browseAllGuides": "Przeglądaj Wszystkie Przewodniki",
     "guideComplete": "Przewodnik Ukończony!",
     "testKnowledge": "Sprawdź swoją wiedzę?",
@@ -3111,14 +3027,7 @@
   "guidesPage": {
     "hero": {
       "title": "Ucz się Nostr Krok po Kroku",
-      "description": "Stopniowe poziomy od początkującego do zaawansowanego. Wszystko jest dostępne — poziomy pokazują tylko sensowną kolejność czytania.",
-      "yourProgress": "Twój Postęp",
-      "startFirstGuide": "Rozpocznij pierwszy przewodnik, aby zobaczyć postęp"
-    },
-    "cta": {
-      "notSure": "Nie wiesz, od czego zacząć?",
-      "beginnerDescription": "Zacznij od naszych przewodników dla początkujących – zostały zaprojektowane, aby przeprowadzić Cię od zera do pierwszego posta.",
-      "startLearning": "Rozpocznij Naukę"
+      "description": "Stopniowe poziomy od początkującego do zaawansowanego. Wszystko jest dostępne — poziomy pokazują tylko sensowną kolejność czytania."
     },
     "filter": {
       "filterByInterest": "Filtruj według zainteresowań"
@@ -3169,8 +3078,11 @@
     "startHere": "Zacznij Tutaj",
     "complete": "Ukończony"
   },
+  "relayFeedBrowser": {
+    "title": "Przeglądaj Feedy Relay",
+    "subtitle": "Odkrywaj społeczności Nostr, przeglądając feedy relay"
+  },
   "officialAccount": {
-    "title": "Oficjalne Konto",
     "followUs": "Śledź nas na Nostr",
     "viewProfile": "Zobacz profil na Njump",
     "recentPosts": "Ostatnie Posty",

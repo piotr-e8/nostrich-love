@@ -64,7 +64,7 @@ export function getCurrentLocale(path: string = typeof window !== 'undefined' ? 
 
 /**
  * Get translation for a key
- * Supports dot notation: t('ui.buttons.submit')
+ * Supports dot notation: t('ui.search.placeholder')
  * Falls back to English if translation missing
  */
 export function t(key: string, locale: Locale = getCurrentLocale()): string {

@@ -25,10 +25,7 @@ export interface QuizTranslation {
 export interface GuideTranslation {
   title: string;
   description: string;
-  content: {
-    [key: string]: string;
-  };
-  quiz: QuizTranslation | {};
+  quiz?: QuizTranslation;
 }
 
 export interface Translations {
@@ -36,40 +33,9 @@ export interface Translations {
     [guideId: string]: GuideTranslation;
   };
   ui: {
-    buttons: {
-      submit: string;
-      next: string;
-      previous: string;
-      checkAnswer: string;
-      startLearning: string;
-      learnMore: string;
-    };
     search: {
       placeholder: string;
       noResults: string;
-      searching: string;
-    };
-    common: {
-      loading: string;
-      error: string;
-      success: string;
-      minutes: string;
-    };
-    navigation: {
-      nextGuide: string;
-      previousGuide: string;
-      backToGuides: string;
-    };
-    badges: {
-      earned: string;
-      locked: string;
-      viewAll: string;
-    };
-    progress: {
-      completed: string;
-      of: string;
-      guidesCompleted: string;
-      currentStreak: string;
     };
     quiz: {
       loading: string;
@@ -99,13 +65,6 @@ export interface Translations {
     hero: {
       title: string;
       description: string;
-      yourProgress: string;
-      startFirstGuide: string;
-    };
-    cta: {
-      notSure: string;
-      beginnerDescription: string;
-      startLearning: string;
     };
     filter: {
       filterByInterest: string;

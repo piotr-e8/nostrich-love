@@ -43,12 +43,12 @@ const loadLeaves = (l: string): Set<string> =>
 
 // Baselines = the measured gap. Lower them as translations land; never raise.
 const MISSING_BASELINE: Record<string, number> = {
-  pl: 390,
-  es: 252,
-  de: 18,
+  pl: 0,
+  es: 0,
+  de: 0,
   zh: 0,
-  ar: 1123,
-  hi: 1589,
+  ar: 0,
+  hi: 0,
 };
 
 describe('UI string parity ratchet (missing keys vs en must not grow)', () => {
@@ -63,6 +63,98 @@ describe('UI string parity ratchet (missing keys vs en must not grow)', () => {
           `New en.json keys must ship with translations, or raise the gap knowingly. ` +
           `First missing: ${missing.slice(0, 5).join(', ')}`
       ).toBeLessThanOrEqual(baseline);
+    });
+  }
+});
+
+// --- Placeholder & array-shape integrity ------------------------------------
+//
+// The codebase interpolates with plain .replace() using TWO conventions
+// (docs/internal/LESSONS_AR_LOCALE.md): quiz components use {{double}},
+// everything else {single}. A translation that renames, drops, or re-braces
+// a token ships a visible "{count}" (or a silently empty slot) to users.
+// So: for every key present in both en and a locale, the MULTISET of
+// placeholder tokens must match en exactly — {{x}} and {x} are distinct.
+//
+// Exception: tokens listed in OPTIONAL_TOKENS are en-morphology hacks
+// (code substitutes 's'/'' into them). Locales whose plural is not formed
+// by suffixing 's' (pl, zh, ar, hi) must NOT carry them — a Latin "s"
+// inside Polish or Devanagari text is the bug the exemption prevents.
+const OPTIONAL_TOKENS: Record<string, string[]> = {
+  'continueLearning.unlockRequirements': ['{plural}'],
+};
+
+type Entry = [path: string, value: Json];
+
+function* walkEntries(obj: Json, prefix = ''): Generator<Entry> {
+  if (Array.isArray(obj)) {
+    yield [prefix.slice(0, -1), obj];
+    for (let i = 0; i < obj.length; i++) {
+      const v = obj[i];
+      if (v !== null && typeof v === 'object') yield* walkEntries(v, `${prefix}${i}.`);
+      else yield [`${prefix}${i}`, v];
+    }
+  } else if (obj !== null && typeof obj === 'object') {
+    for (const [k, v] of Object.entries(obj)) {
+      if (v !== null && typeof v === 'object') yield* walkEntries(v, `${prefix}${k}.`);
+      else yield [`${prefix}${k}`, v];
+    }
+  }
+}
+
+function placeholderTokens(s: string): string[] {
+  const out: string[] = [];
+  for (const m of s.match(/\{\{\s*[\w.]+\s*\}\}/g) || []) out.push(m.replace(/\s+/g, ''));
+  const rest = s.replace(/\{\{\s*[\w.]+\s*\}\}/g, '');
+  for (const m of rest.match(/\{\s*[\w.]+\s*\}/g) || []) out.push(m.replace(/\s+/g, ''));
+  return out.sort();
+}
+
+const getAtPath = (obj: Json, path: string): Json | undefined =>
+  path.split('.').reduce<Json | undefined>(
+    (a, s) => (a !== null && typeof a === 'object' ? (a as any)[s] : undefined),
+    obj
+  );
+
+const loadJson = (l: string): Json =>
+  JSON.parse(readFileSync(join(LOCALES_DIR, `${l}.json`), 'utf-8'));
+
+describe('placeholder & array-shape parity vs en', () => {
+  const enJson = loadJson('en');
+  const enEntries = [...walkEntries(enJson)];
+
+  for (const locale of Object.keys(MISSING_BASELINE)) {
+    it(`${locale}: every shared key has en's exact placeholder multiset`, () => {
+      const loc = loadJson(locale);
+      const errors: string[] = [];
+      for (const [path, enVal] of enEntries) {
+        if (typeof enVal !== 'string') continue;
+        const locVal = getAtPath(loc, path);
+        if (typeof locVal !== 'string') continue; // missing keys are the ratchet's job
+        const optional = new Set(OPTIONAL_TOKENS[path] || []);
+        const a = placeholderTokens(enVal).filter((t) => !optional.has(t));
+        const b = placeholderTokens(locVal).filter((t) => !optional.has(t));
+        if (a.join(' ') !== b.join(' ')) {
+          errors.push(`${path}: en [${a.join(' ')}] vs ${locale} [${b.join(' ')}]`);
+        }
+      }
+      expect(errors, `placeholder drift in ${locale}.json:\n${errors.join('\n')}`).toEqual([]);
+    });
+
+    it(`${locale}: every array shared with en has the same length`, () => {
+      const loc = loadJson(locale);
+      const errors: string[] = [];
+      for (const [path, enVal] of enEntries) {
+        if (!Array.isArray(enVal)) continue;
+        const locVal = getAtPath(loc, path);
+        if (locVal === undefined) continue;
+        if (!Array.isArray(locVal)) {
+          errors.push(`${path}: en is array[${enVal.length}], ${locale} is ${typeof locVal}`);
+        } else if (locVal.length !== enVal.length) {
+          errors.push(`${path}: en has ${enVal.length} items, ${locale} has ${locVal.length}`);
+        }
+      }
+      expect(errors, `array-shape drift in ${locale}.json:\n${errors.join('\n')}`).toEqual([]);
     });
   }
 });
