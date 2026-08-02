@@ -17,7 +17,7 @@ const groups = getCategoryGroupsWithCounts(categoryCounts, 'en');
 const categoryCount = groups.reduce((total, group) => total + group.categories.length, 0);
 
 const title = 'Find People to Follow';
-const description = `Start your Nostr feed with ${accountCount} curated accounts across ${categoryCount} categories. Pick the ones you like and import them into any client with a QR code.`;
+const description = `Start your Nostr feed with ${accountCount} curated accounts across ${categoryCount} categories. Pick the ones you like and import them into any client — paste the list, or publish it and scan a QR code.`;
 ---
 
 <Layout title={title} description={description}>
@@ -44,7 +44,8 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
             {accountCount} hand-checked Nostr accounts, sorted into {categoryCount} categories —
             from a starter set of {categoryCounts.jumpstart} essentials to photographers,
             homesteaders, musicians and shops that take Lightning. Pick the ones that look
-            interesting, then import them into any client with a QR code.
+            interesting, then import them into any client — paste the list, or publish it
+            and scan a QR code.
           </p>
 
           <div class="flex flex-wrap justify-center gap-4 text-sm">
@@ -248,8 +249,8 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
             <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
               <h3 class="font-semibold text-gray-900 dark:text-white mb-2">How do I import into my client?</h3>
               <p class="text-gray-600 dark:text-gray-400 text-sm">
-                Scan the QR code with your Nostr client, or copy the npub list and paste it
-                into the client's "Import follows" feature. Works with Amethyst, Damus,
+                Copy the npub list and paste it into the client's "Import follows" feature —
+                or publish the pack and scan its QR code. Works with Amethyst, Damus,
                 Coracle, Primal and more.
               </p>
             </div>

@@ -403,19 +403,12 @@ export const ExportModal: React.FC<ExportModalProps> = ({
     };
   }, [selectedAccounts]);
 
-  // Generate nostr: URL for QR code. Until (and unless) the user publishes,
-  // this is a purely local payload — the QR tab never touches the network.
-  const nostrUrl = useMemo(() => {
-    if (naddr) {
-      return `nostr:${naddr}`;
-    }
-    const jsonData = JSON.stringify({
-      name: packName,
-      accounts: selectedAccounts.map(a => ({ npub: a.npub, name: a.name })),
-    });
-    const base64Data = btoa(encodeURIComponent(jsonData).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
-    return `nostr:list?d=${base64Data}`;
-  }, [naddr, packName, selectedAccounts]);
+  // The QR encodes nostr:<naddr> — a published list clients can actually
+  // fetch. There is no pre-publish QR: the old nostr:list?d=<base64> payload
+  // was not a valid NIP-21 URI (no client parses it) and overflowed QR
+  // capacity at ~19 accounts, inside the 20-50 range this page recommends.
+  // Before publishing, the QR tab shows a chooser instead.
+  const nostrUrl = useMemo(() => (naddr ? `nostr:${naddr}` : null), [naddr]);
 
   // Generate QR code
   useEffect(() => {
@@ -439,21 +432,15 @@ export const ExportModal: React.FC<ExportModalProps> = ({
           setQrDataUrl(dataUrl);
         } catch (err) {
           console.error('QR generation error:', err);
-          // A QR code holds ~2.9 KB and the unpublished payload runs ~125 B per
-          // account, so it overflows at ~19 selections — inside the 20-50 range
-          // this page recommends. "Please try again" was a lie: no retry can
-          // ever fit the same data. Send the reader somewhere that works.
-          setQrError(
-            selectedAccounts.length > 15
-              ? `${selectedAccounts.length} accounts is more data than one QR code can hold. Use the "Copy List" tab — it has no size limit.`
-              : 'Could not generate the QR code. Use the "Copy List" tab instead.'
-          );
+          // An naddr is ~120 chars, far under QR capacity — this path should
+          // be unreachable, but if it fires, point somewhere that works.
+          setQrError('Could not generate the QR code. Use the "Copy List" tab instead.');
         }
       }
     };
 
     generateQR();
-  }, [activeTab, nostrUrl, selectedAccounts.length]);
+  }, [activeTab, nostrUrl]);
 
   const handleCopy = async (text: string) => {
     try {
@@ -628,7 +615,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
           aria-labelledby={`${tabsId}-tab-${activeTab}`}
           className="flex-1 overflow-y-auto p-6"
         >
-          {activeTab === 'qr' && (
+          {activeTab === 'qr' && naddr && (
             <div className="text-center">
               <div className="bg-white p-4 rounded-xl inline-block mb-4 shadow-sm" style={{ maxWidth: 'min(100%, 280px)' }}>
                 {qrError ? (
@@ -648,10 +635,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
               </div>
 
               <p className="text-gray-600 dark:text-gray-400 mb-4">
-                {naddr
-                  ? 'Scan this QR code to subscribe to the list you published'
-                  : 'Scan this QR code with your Nostr client to import these follows'
-                }
+                Scan this QR code to subscribe to the list you published
               </p>
 
               <div className="flex justify-center gap-2 mb-4">
@@ -664,12 +648,10 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                 </button>
               </div>
 
-              {naddr && (
-                <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 mb-4 text-start">
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">List address (naddr):</p>
-                  <p className="text-xs font-mono break-all">{naddr}</p>
-                </div>
-              )}
+              <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 mb-4 text-start">
+                <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">List address (naddr):</p>
+                <p className="text-xs font-mono break-all">{naddr}</p>
+              </div>
 
               <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 text-start">
                 <p className="text-sm text-blue-900 dark:text-blue-100">
@@ -682,8 +664,37 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                   <li>Confirm the follows in your client</li>
                 </ol>
               </div>
+            </div>
+          )}
 
-              {!naddr && localOnlyNote}
+          {activeTab === 'qr' && !naddr && (
+            <div className="text-center">
+              <div className="bg-gray-50 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700 rounded-xl p-6 mb-4 text-start">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                  A scannable QR needs the list published first
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                  The QR code carries the address of your list on nostr relays, so your
+                  client can fetch it. Publish the list (you review exactly what goes
+                  out first), then come back here to scan.
+                </p>
+                <button
+                  onClick={() => setActiveTab('nip51')}
+                  className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-sm font-medium transition-colors"
+                >
+                  Review &amp; publish to get a QR
+                </button>
+              </div>
+
+              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 text-start">
+                <p className="text-sm text-blue-800 dark:text-blue-200">
+                  <span className="font-medium">Prefer not to publish anything?</span>{' '}
+                  The "Copy List" tab works instantly, holds any number of accounts,
+                  and nothing leaves your browser.
+                </p>
+              </div>
+
+              {localOnlyNote}
             </div>
           )}
 
