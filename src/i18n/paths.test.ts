@@ -10,6 +10,7 @@ import {
   isLocale,
   hasLocalizedVersions,
   localizedLocales,
+  localeEntryPath,
 } from './paths';
 import { GLOSSARY_LOCALES } from '../data/glossary';
 
@@ -162,6 +163,37 @@ describe('stripLocale', () => {
     for (const l of ['en', 'pl', 'es', 'de', 'zh', 'ar', 'hi'] as const) {
       expect(stripLocale(localePath('/guides/faq', l))).toBe('/guides/faq');
     }
+  });
+});
+
+describe('localeEntryPath', () => {
+  it('returns the matching alternate when the route ships that locale', () => {
+    expect(localeEntryPath('/guides/faq', 'pl')).toBe('/pl/guides/faq');
+    expect(localeEntryPath('/pl/guides/faq', 'de')).toBe('/de/guides/faq');
+    expect(localeEntryPath('/pl/guides/faq', 'en')).toBe('/guides/faq');
+    expect(localeEntryPath('/glossary/', 'es')).toBe('/es/glossary/');
+  });
+
+  it('never lands on an unshipped glossary locale', () => {
+    for (const l of ['zh', 'ar', 'hi'] as const) {
+      expect(GLOSSARY_LOCALES).not.toContain(l);
+      expect(localeEntryPath('/glossary/', l)).toBe(`/${l}/guides/`);
+    }
+  });
+
+  it('sends English-only pages to that locale’s guides hub, not nowhere', () => {
+    // The regression this exists for: the old switcher collapsed these to
+    // stripLocale(path) — the page the reader was already on — so picking a
+    // language on the homepage silently did nothing.
+    for (const p of ['/', '/about', '/tools', '/nostr-vs-twitter']) {
+      expect(localeEntryPath(p, 'pl')).toBe('/pl/guides/');
+      expect(localeEntryPath(p, 'hi')).toBe('/hi/guides/');
+    }
+  });
+
+  it('stays put when the requested locale is the one already being read', () => {
+    expect(localeEntryPath('/about', 'en')).toBe('/about');
+    expect(localeEntryPath('/', 'en')).toBe('/');
   });
 });
 

@@ -8,6 +8,7 @@ import { SKILL_LEVELS, type SkillLevel } from '../../../data/learning-paths';
 import { getTranslations, type Locale } from '../../../i18n';
 import { locales } from '../../../config/locales';
 import { langParam, isLocale, DEFAULT_LOCALE, guidePath } from '../../../i18n/paths';
+import { COMPARISON_PAGES } from '../../../config/comparison-pages';
 import { getCollection } from 'astro:content';
 
 // Generate static paths for all locales.
@@ -98,6 +99,36 @@ const description = translations.guidesPage?.hero?.description || 'Interactive s
         />
       </div>
     </section>
+
+    {/* Comparison pages — English only.
+        src/pages/nostr-vs-*.astro are top-level routes with no [...lang]
+        variants, so linking them from a localized hub would send a Polish or
+        Arabic reader to an English dead end. When they gain locale variants,
+        drop this gate and add them to localizedLocales() in src/i18n/paths.ts. */}
+    {currentLocale === DEFAULT_LOCALE && (
+      <section class="py-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            Switching from another network?
+          </h2>
+          <p class="text-gray-600 dark:text-gray-400 mb-6">
+            These side-by-side comparisons cover what changes, what carries over, and what does not.
+          </p>
+          <ul class="grid grid-cols-1 sm:grid-cols-3 gap-4" role="list">
+            {COMPARISON_PAGES.map((page) => (
+              <li>
+                <a
+                  href={page.href}
+                  class="block p-4 rounded-xl border border-gray-200 dark:border-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300 hover:border-primary hover:text-primary transition-colors"
+                >
+                  {page.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )}
   </main>
 
   <Footer />

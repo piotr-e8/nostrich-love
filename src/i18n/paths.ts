@@ -105,6 +105,23 @@ export function localizedLocales(path: string): readonly Locale[] {
   return NO_LOCALES;
 }
 
+/**
+ * Where the language switcher should send a reader who picks `locale` while on
+ * `path` — never a 404, never a no-op.
+ *
+ * 1. Route ships that locale (guides, glossary) → the matching alternate.
+ * 2. Already reading in that locale → stay put.
+ * 3. Otherwise (the homepage, /about, /tools, /nostr-vs-*, which are English
+ *    only) → that locale's guides hub. Previously these collapsed to
+ *    `stripLocale(path)`, i.e. the page the reader was already on, so asking
+ *    for Polish on the homepage did nothing at all.
+ */
+export function localeEntryPath(path: string, locale: Locale): string {
+  if (localizedLocales(path).includes(locale)) return localePath(path, locale);
+  if (locale === splitLocale(path).locale) return path;
+  return guidesIndexPath(locale);
+}
+
 /** Whether a path exists in at least one non-default locale. */
 export function hasLocalizedVersions(path: string): boolean {
   return localizedLocales(path).length > 0;

@@ -48,7 +48,7 @@ import { BadgeEarnedModalListener } from '../../../components/gamification/Badge
 import type { Badge } from '../../../components/gamification/types';
 import { LEARNING_PATHS, getPreviousGuideInPath, getNextGuideInPath, getGuidePositionInPath, getPathLength } from '../../../data/learning-paths';
 import { locales, getLocaleConfig, type Locale } from '../../../config/locales';
-import { langParam } from '../../../i18n/paths';
+import { langParam, DEFAULT_LOCALE } from '../../../i18n/paths';
 import { t } from '../../../i18n';
 
 // Legacy GUIDE_ORDER for backward compatibility and general path
@@ -104,7 +104,16 @@ const { guide, locale } = Astro.props as PageProps;
 // seoTitle (frontmatter, optional) is the query-matched <title>/og:title; the
 // fallback keeps the legacy suffix for guides that have not opted in. The H1
 // below always renders guide.data.title — reader-facing voice is unchanged.
-const title = guide.data.seoTitle ?? `${guide.data.title} - Nostr Beginner Guide`;
+//
+// The suffix is English, so it is only ever appended on the English route.
+// zh/ar/hi carry no seoTitle yet, and appending "- Nostr Beginner Guide" to a
+// Chinese or Arabic title spent ~24 of the ~60 SERP characters on a string the
+// reader cannot parse. Non-English guides fall back to the bare title instead.
+const title =
+  guide.data.seoTitle ??
+  (locale === DEFAULT_LOCALE
+    ? `${guide.data.title} - Nostr Beginner Guide`
+    : guide.data.title);
 const description = guide.data.description ?? 'Learn how to use Nostr with our beginner-friendly guides.';
 const { Content } = await guide.render();
 const categoryLabel = guide.data.category ? guide.data.category.replace(/-/g, ' ') : undefined;
@@ -133,6 +142,16 @@ const editUrl = `https://github.com/ptrio42/nostrich-love/edit/main/src/content/
 const OFFICIAL_NPUB = 'npub1p6t6gjhy3q4rfmcxuff7hu3xh5u09cvzem98d48arfzsrzd9kxws3cpeyl';
 const followUrl = `https://njump.me/${OFFICIAL_NPUB}`;
 
+// Machine-readable dates, when the frontmatter actually carries them.
+// `updated` is the older spelling of `lastUpdated`; read both so no guide
+// silently loses its date. Guides without a real date emit none at all —
+// see the schema comment in src/content/config.ts.
+// Frontmatter dates arrive as Date (YAML) — render the calendar day, not an
+// instant, so a UTC-midnight value cannot drift a day in either direction.
+const toISODate = (value?: Date) => value?.toISOString().slice(0, 10);
+const publishedDate = toISODate(guide.data.published);
+const modifiedDate = toISODate(guide.data.lastUpdated ?? guide.data.updated);
+
 // Structured data: this is an educational article, free to read, in this locale
 const guideUrl = new URL(Astro.url.pathname, 'https://nostrich.love').toString();
 const jsonLd = {
@@ -141,6 +160,9 @@ const jsonLd = {
   name: guide.data.title,
   description,
   url: guideUrl,
+  mainEntityOfPage: guideUrl,
+  ...(publishedDate ? { datePublished: publishedDate } : {}),
+  ...(modifiedDate ? { dateModified: modifiedDate } : {}),
   inLanguage: getLocaleConfig(locale as Locale).htmlLang,
   learningResourceType: 'Guide',
   educationalLevel: 'Beginner',
@@ -254,7 +276,7 @@ const components = {
 };
 ---
 
-<Layout title={title} description={description} locale={locale as Locale} type="article" author="Piotr Czarnoleski" jsonLd={jsonLd}>
+<Layout title={title} description={description} locale={locale as Locale} type="article" author="Piotr Czarnoleski" publishedTime={publishedDate} modifiedTime={modifiedDate} jsonLd={jsonLd}>
   <Header />
 
   <MinimalProgressBar client:idle guideId={guideSlug} estimatedTimeMinutes={estimatedTimeMinutes} />
@@ -302,9 +324,9 @@ const components = {
                 </span>
               )}
 
-              {guide.data.updated && (
+              {modifiedDate && (
                 <span class="inline-flex items-center gap-2">
-                  Last updated {guide.data.updated}
+                  Last updated <time datetime={modifiedDate}>{modifiedDate}</time>
                 </span>
               )}
             </div>

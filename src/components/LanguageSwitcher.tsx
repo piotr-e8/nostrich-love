@@ -4,7 +4,7 @@ import { cn } from "../lib/utils";
 import {
   splitLocale,
   localePath,
-  stripLocale,
+  localeEntryPath,
   isLocale,
   localizedLocales,
   DEFAULT_LOCALE,
@@ -12,6 +12,14 @@ import {
 
 interface LanguageSwitcherProps {
   className?: string;
+  /**
+   * The pathname this island was rendered for (`Astro.url.pathname`).
+   * Lets the options be real <a href> targets computed at render time instead
+   * of a JS-only jump, so middle-click, ⌘-click and "copy link" all work.
+   * Crawlable locale links live in the footer — the options here stay behind
+   * the hydration gate, so they are for humans, not for crawlers.
+   */
+  currentPath?: string;
 }
 
 const languages = [
@@ -24,13 +32,13 @@ const languages = [
   { code: "hi", label: "हिन्दी", flag: "🇮🇳" },
 ];
 
-export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
+export function LanguageSwitcher({ className, currentPath }: LanguageSwitcherProps) {
   const [currentLang, setCurrentLang] = useState("en");
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
-  const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const optionRefs = useRef<Array<HTMLAnchorElement | null>>([]);
   const listboxId = useId();
 
   useEffect(() => {
@@ -68,20 +76,24 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
     }
   }, [isOpen, currentLang]);
 
-  const switchLanguage = (langCode: string) => {
+  /**
+   * Destination for one option — see localeEntryPath for the rule.
+   * Prefers the server-supplied path so the href is correct in the very first
+   * render; falls back to the live location for any caller that omits it.
+   */
+  const hrefFor = (langCode: string): string => {
+    const path =
+      currentPath ?? (typeof window === "undefined" ? "/" : window.location.pathname);
+    return isLocale(langCode) ? localeEntryPath(path, langCode) : path;
+  };
+
+  /**
+   * Persist the choice, then let the browser follow the anchor's href — the
+   * options are real links now, so navigating here as well would fire twice.
+   */
+  const rememberLanguage = (langCode: string) => {
     if (!isLocale(langCode)) return;
-
-    const currentPath = window.location.pathname;
     localStorage.setItem('preferredLanguage', langCode);
-
-    // Target the picked locale only when THIS route is built in it
-    // (guides: all seven; glossary: en/pl/es/de). Otherwise fall back to the
-    // English version by dropping any stale locale prefix — never link a 404.
-    const newPath = localizedLocales(currentPath).includes(langCode)
-      ? localePath(currentPath, langCode)
-      : stripLocale(currentPath);
-
-    window.location.href = newPath;
   };
 
   const closeList = () => {
@@ -205,16 +217,18 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
             className="absolute end-0 mt-2 w-40 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-lg z-50 overflow-hidden"
           >
             {languages.map((lang, index) => (
-              <button
+              <a
                 key={lang.code}
                 ref={(el) => {
                   optionRefs.current[index] = el;
                 }}
+                href={hrefFor(lang.code)}
+                hrefLang={lang.code}
                 role="option"
                 aria-selected={currentLang === lang.code}
                 tabIndex={-1}
                 onClick={() => {
-                  switchLanguage(lang.code);
+                  rememberLanguage(lang.code);
                   setIsOpen(false);
                 }}
                 className={cn(
@@ -229,7 +243,7 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
                 {currentLang === lang.code && (
                   <span className="ms-auto text-primary" aria-hidden="true">✓</span>
                 )}
-              </button>
+              </a>
             ))}
           </div>
         </>

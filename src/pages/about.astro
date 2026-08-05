@@ -3,12 +3,42 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import { OfficialAccountWidget } from '../components/interactive/OfficialAccountWidget';
+import { siteConfig } from '../config/site';
 
 const title = 'About';
 const description = 'Learn about nostrich.love - an open-source project dedicated to helping newcomers understand and use the Nostr decentralized social protocol.';
+
+// The @id is referenced by the Organization node's `founder` on the homepage,
+// so the two pages describe one entity graph rather than two strangers. Guides
+// already name "Piotr Czarnoleski" as author in prose and in their
+// LearningResource — this is the addressable node those references resolve to.
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': `${siteConfig.url}/about/#person`,
+    name: 'Piotr Czarnoleski',
+    alternateName: 'ptrio42',
+    url: `${siteConfig.url}/about/`,
+    email: siteConfig.author.email,
+    sameAs: [
+      'https://github.com/ptrio42',
+      `https://njump.me/${siteConfig.social.npub}`,
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    '@id': `${siteConfig.url}/about/#aboutpage`,
+    url: `${siteConfig.url}/about/`,
+    name: `About ${siteConfig.name}`,
+    description,
+    mainEntity: { '@id': `${siteConfig.url}/#organization` },
+  },
+];
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} jsonLd={jsonLd}>
   <Header />
   
   <main id="main-content">

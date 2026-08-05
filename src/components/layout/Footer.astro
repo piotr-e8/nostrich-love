@@ -2,6 +2,8 @@
 import SocialShare from '../ui/SocialShare.astro';
 import { siteConfig } from '../../config/site';
 import { LogoText } from '../ui/LogoText';
+import { locales, getLocaleConfig } from '../../config/locales';
+import { localizedLocales, localePath, guidesIndexPath, splitLocale } from '../../i18n/paths';
 
 const footerLinks = {
   learn: [
@@ -38,6 +40,32 @@ const toolLinks = [
 ];
 
 const currentYear = new Date().getFullYear();
+
+// Crawlable language links.
+//
+// The language switcher in the header is a React island whose options are
+// <button onClick> and whose pre-hydration markup is a bare globe icon, so the
+// static HTML contained no <a href> into any locale directory at all — zero
+// un-prefixed page linked to /pl/, /es/, /de/, /zh/, /ar/ or /hi/. The locale
+// hubs were reachable only via the sitemap and hreflang, which are hints rather
+// than links, so 105 localized URLs carried no internal link equity.
+//
+// On a route that genuinely ships locale variants (guides, glossary) these
+// mirror the hreflang cluster exactly — localizedLocales() is the same source
+// of truth SEO.astro uses, so this can never advertise a 404. Everywhere else
+// they fall back to each locale's guides hub, which is the entry point a
+// non-English reader actually wants.
+const currentPath = Astro.url.pathname;
+const routeLocales = localizedLocales(currentPath);
+const hasRouteVariants = routeLocales.length > 0;
+const currentLocale = splitLocale(currentPath).locale;
+
+const languageLinks = (hasRouteVariants ? routeLocales : locales).map((code) => ({
+  code,
+  label: getLocaleConfig(code).name,
+  htmlLang: getLocaleConfig(code).htmlLang,
+  href: hasRouteVariants ? localePath(currentPath, code) : guidesIndexPath(code),
+}));
 ---
 
 <footer class="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 transition-colors duration-200" role="contentinfo">
@@ -138,8 +166,38 @@ const currentYear = new Date().getFullYear();
       </div>
     </div>
 
+    <!-- Languages -->
+    <nav
+      class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800"
+      aria-labelledby="footer-languages"
+    >
+      <h3 id="footer-languages" class="font-semibold text-gray-900 dark:text-white mb-4">
+        {hasRouteVariants ? 'Read this page in' : 'Read the guides in'}
+      </h3>
+      <ul class="flex flex-wrap gap-x-5 gap-y-2" role="list">
+        {languageLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              hreflang={link.htmlLang}
+              lang={link.htmlLang}
+              aria-current={link.code === currentLocale ? 'true' : undefined}
+              class:list={[
+                'text-sm transition-colors hover:text-primary-600 dark:hover:text-primary',
+                link.code === currentLocale
+                  ? 'text-primary-600 dark:text-primary font-medium'
+                  : 'text-gray-600 dark:text-gray-400',
+              ]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
     <!-- Bottom bar -->
-    <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4">
       <p class="text-sm text-gray-500">
         © {currentYear} {siteConfig.name}. Open source and community-driven.
       </p>

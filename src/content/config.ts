@@ -13,7 +13,19 @@ const guides = defineCollection({
       estimatedTime: z.string().optional(),
       priority: z.number().optional(),
       category: z.string().optional(),
-      updated: z.string().optional(),
+      // Machine-readable dates. `published` seeds datePublished + RSS pubDate,
+      // `lastUpdated` seeds dateModified + article:modified_time + the visible
+      // "Last updated" line. Both stay optional: a guide with no real date must
+      // ship with none rather than a build-time or git-derived stand-in, which
+      // would mark every guide "fresh" at once.
+      // `updated` is the pre-existing spelling, kept so nothing regresses.
+      //
+      // coerce.date, not string: YAML parses an unquoted `2026-07-28` into a
+      // Date, so a plain z.string() rejects the existing frontmatter. Coercing
+      // accepts both spellings and hands the pages one normalized type.
+      published: z.coerce.date().optional(),
+      lastUpdated: z.coerce.date().optional(),
+      updated: z.coerce.date().optional(),
       tags: z.array(z.string()).optional(),
       prerequisites: z.array(z.string()).optional(),
     })

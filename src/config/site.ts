@@ -32,6 +32,11 @@ export const siteConfig = {
   social: {
     github: "https://github.com/nostr-protocol/nostr",
     nostr: "https://nostr.com",
+    // This project's own accounts — the `sameAs` set that identifies the
+    // Nostrich.love entity. `github` above points at the protocol, not at us.
+    // The npub is nip19.npubEncode of the pubkey in public/.well-known/nostr.json.
+    repo: "https://github.com/ptrio42/nostrich-love",
+    npub: "npub1p6t6gjhy3q4rfmcxuff7hu3xh5u09cvzem98d48arfzsrzd9kxws3cpeyl",
   },
 
   // Navigation
