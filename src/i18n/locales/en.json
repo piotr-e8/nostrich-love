@@ -3223,6 +3223,7 @@
       "nsec": "Private key - Keep secret!",
       "nip01": "Basic protocol",
       "kind1": "Text note (post)"
-    }
+    },
+    "readGuide": "Read the {term} guide"
   }
 }

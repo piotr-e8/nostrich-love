@@ -3223,6 +3223,7 @@
       "nsec": "Private Key — geheim halten!",
       "nip01": "Basisprotokoll",
       "kind1": "Textnotiz (Post)"
-    }
+    },
+    "readGuide": "Zum Leitfaden: {term}"
   }
 }

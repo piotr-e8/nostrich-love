@@ -6,9 +6,14 @@ import { BadgeEarnedModalListener } from '../components/gamification/BadgeEarned
 import { PrivacyControls } from '../components/progress/PrivacyControls';
 ---
 
+<!-- noindex: this page renders the visitor's own localStorage state, so it is
+       identical and near-empty for everyone who is not already using the site.
+       Nobody searches for it, and it was sitting in the sitemap next to real
+       content. Also excluded from the sitemap in astro.config.mjs. -->
 <Layout
   title="Settings - Nostr Beginner Guide"
   description="Manage your privacy settings and progress tracking preferences."
+  noindex
 >
   <Header />
 

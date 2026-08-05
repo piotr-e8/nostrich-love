@@ -3223,6 +3223,7 @@
       "nsec": "Klucz prywatny — trzymaj w tajemnicy!",
       "nip01": "Podstawowy protokół",
       "kind1": "Notatka tekstowa (post)"
-    }
+    },
+    "readGuide": "Przeczytaj przewodnik: {term}"
   }
 }

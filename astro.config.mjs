@@ -28,6 +28,13 @@ export default defineConfig({
     }),
     mdx(),
     sitemap({
+      // A sitemap is a request to index, so pages carrying `noindex` must not
+      // appear in it. These three render the visitor's own localStorage state —
+      // identical and near-empty for anyone not already using the site — and
+      // were listed beside real content. Keep in step with the `noindex` prop
+      // on the matching pages in src/pages/.
+      filter: (page) =>
+        !/\/(settings|progress|badges)\/$/.test(page),
       i18n: {
         defaultLocale: 'en',
         // Bare language codes, NOT region-qualified ones (en-US, pl-PL, ...).

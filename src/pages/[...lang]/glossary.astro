@@ -2,14 +2,14 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
-import { GLOSSARY_LOCALES, type GlossaryLocale } from '../../data/glossary';
+import { GLOSSARY_LOCALES, TERM_GUIDES, type GlossaryLocale, type TermId } from '../../data/glossary';
 import type { GlossaryData, GlossaryMeta } from '../../data/glossary';
 import glossaryEn, { meta as metaEn } from '../../data/glossary/en';
 import glossaryPl, { meta as metaPl } from '../../data/glossary/pl';
 import glossaryEs, { meta as metaEs } from '../../data/glossary/es';
 import glossaryDe, { meta as metaDe } from '../../data/glossary/de';
 import { getLocaleConfig } from '../../config/locales';
-import { langParam } from '../../i18n/paths';
+import { langParam, guidePath } from '../../i18n/paths';
 import { t } from '../../i18n';
 import { breadcrumbList } from '../../lib/breadcrumbs';
 
@@ -38,9 +38,14 @@ const htmlLang = getLocaleConfig(locale).htmlLang;
 
 // Locale-correct alphabetization (bare localeCompare would sort by the
 // build machine's default collation).
-const glossaryTerms = Object.values(terms).sort((a, b) =>
-  a.term.localeCompare(b.term, htmlLang)
-);
+// Entries, not values: the id is what TERM_GUIDES is keyed on, and it is the
+// only locale-independent handle on a term.
+const glossaryTerms = Object.entries(terms)
+  .map(([id, entry]) => ({
+    ...entry,
+    guideSlug: TERM_GUIDES[id as TermId],
+  }))
+  .sort((a, b) => a.term.localeCompare(b.term, htmlLang));
 
 const pageUrl = new URL(Astro.url.pathname, 'https://nostrich.love').toString();
 const jsonLd = {
@@ -105,6 +110,15 @@ const breadcrumbs = breadcrumbList([
               <div class="glossary-item p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700" data-term={item.term.toLowerCase()} data-definition={item.definition.toLowerCase()}>
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{item.term}</h3>
                 <p class="text-gray-600 dark:text-gray-400">{item.definition}</p>
+                {item.guideSlug && (
+                  <a
+                    href={guidePath(item.guideSlug, locale)}
+                    class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary-600 dark:text-primary hover:underline"
+                  >
+                    {t('glossary.readGuide', locale).replace('{term}', item.term)}
+                    <span aria-hidden="true" class="rtl:rotate-180">→</span>
+                  </a>
+                )}
               </div>
             ))}
           </div>

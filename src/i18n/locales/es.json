@@ -3223,6 +3223,7 @@
       "nsec": "Clave privada: ¡mantenla en secreto!",
       "nip01": "Protocolo básico",
       "kind1": "Nota de texto (publicación)"
-    }
+    },
+    "readGuide": "Lee la guía sobre {term}"
   }
 }
