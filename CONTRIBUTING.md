@@ -6,7 +6,7 @@ welcome — fixing a typo in a translation is just as valuable as a new feature.
 ## Quick start
 
 ```bash
-git clone https://github.com/piotr-e8/nostrich-love.git
+git clone https://github.com/ptrio42/nostrich-love.git
 cd nostrich-love
 npm install
 npm run dev        # http://localhost:4321

@@ -1,0 +1,183 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import QRCode from 'qrcode';
+import { SUPPORT } from '../data/support';
+
+const title = 'Support Nostrich.love';
+const description =
+  'Nostrich.love is free, open source and has no ads or tracking. If it helped you get started on Nostr, you can support it with a zap, Lightning, or on-chain bitcoin.';
+
+// Build-time QR codes (SVG, no client JS). URI schemes so wallet apps open
+// straight from the camera.
+const qrOpts = { type: 'svg' as const, margin: 1, width: 220 };
+const lightningQr = await QRCode.toString(`lightning:${SUPPORT.lightning}`, qrOpts);
+const bitcoinQr = await QRCode.toString(`bitcoin:${SUPPORT.bitcoin}`, qrOpts);
+---
+
+<Layout title={title} description={description}>
+  <Header />
+
+  <main id="main-content">
+    <section class="py-12 lg:py-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4 text-gray-900 dark:text-white">
+            Value for value
+          </h1>
+          <p class="text-lg text-gray-600 dark:text-gray-300 mb-2">
+            Nostrich.love is free, open source, and carries no ads, no tracking and no
+            paywall — in seven languages. It is built and paid for by one person.
+          </p>
+          <p class="text-lg text-gray-600 dark:text-gray-300">
+            If it helped you get started, you can send some value back. Any amount,
+            entirely optional.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Zap -->
+    <section class="py-10 bg-gray-50 dark:bg-gray-900/30">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <div class="flex items-start gap-4">
+            <span class="text-3xl" aria-hidden="true">⚡</span>
+            <div class="min-w-0">
+              <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                Zap us on Nostr <span class="text-sm font-normal text-gray-500 dark:text-gray-400">(the native way)</span>
+              </h2>
+              <p class="text-gray-600 dark:text-gray-300 mb-4">
+                You just learned what zaps are — here is a safe first target. Open our
+                profile in your client and hit the zap button. It works: the profile's
+                Lightning address is verified and zap-capable.
+              </p>
+              <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3 mb-4">
+                <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Our npub:</p>
+                <p class="text-sm font-mono break-all text-gray-900 dark:text-gray-100">{SUPPORT.npub}</p>
+              </div>
+              <div class="flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  data-copy={SUPPORT.npub}
+                  class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-sm font-medium transition-colors"
+                >
+                  Copy npub
+                </button>
+                <a
+                  href={`https://njump.me/${SUPPORT.npub}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-sm font-medium transition-colors"
+                >
+                  Open our profile
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lightning -->
+    <section class="py-10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <div class="flex flex-col sm:flex-row items-start gap-6">
+            <div class="shrink-0 bg-white p-3 rounded-xl border border-gray-200 dark:border-gray-700 [&_svg]:block [&_svg]:h-[180px] [&_svg]:w-[180px]" set:html={lightningQr} />
+            <div class="min-w-0">
+              <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Lightning</h2>
+              <p class="text-gray-600 dark:text-gray-300 mb-4">
+                No Nostr client handy? Any Lightning wallet can pay this address —
+                scan the code or copy it.
+              </p>
+              <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3 mb-4">
+                <p class="text-sm font-mono break-all text-gray-900 dark:text-gray-100">{SUPPORT.lightning}</p>
+              </div>
+              <button
+                type="button"
+                data-copy={SUPPORT.lightning}
+                class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-sm font-medium transition-colors"
+              >
+                Copy Lightning address
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- On-chain -->
+    <section class="py-10 bg-gray-50 dark:bg-gray-900/30">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <div class="flex flex-col sm:flex-row items-start gap-6">
+            <div class="shrink-0 bg-white p-3 rounded-xl border border-gray-200 dark:border-gray-700 [&_svg]:block [&_svg]:h-[180px] [&_svg]:w-[180px]" set:html={bitcoinQr} />
+            <div class="min-w-0">
+              <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Bitcoin (on-chain)</h2>
+              <p class="text-gray-600 dark:text-gray-300 mb-4">
+                For larger or one-off contributions. On-chain fees apply, so Lightning
+                is the better fit for small amounts.
+              </p>
+              <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3 mb-4">
+                <p class="text-sm font-mono break-all text-gray-900 dark:text-gray-100">{SUPPORT.bitcoin}</p>
+              </div>
+              <button
+                type="button"
+                data-copy={SUPPORT.bitcoin}
+                class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-sm font-medium transition-colors"
+              >
+                Copy address
+              </button>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-4">
+                This is a single static address, so contributions to it are publicly
+                visible on the blockchain — treat it as transparent by design.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Where it goes -->
+    <section class="py-10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto text-sm text-gray-600 dark:text-gray-400">
+          <p>
+            Support pays for hosting, domains and the time it takes to keep 16 guides
+            accurate in 7 languages. If you would rather contribute skills than sats:
+            translation review is the most valuable thing you can give — every page
+            has an “Improve this page” link.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Copy feedback for screen readers -->
+    <p class="sr-only" aria-live="polite" id="copy-feedback"></p>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  // Minimal copy-to-clipboard with visible + announced feedback.
+  const feedback = document.getElementById('copy-feedback');
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+    const original = btn.textContent;
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy || '');
+        btn.textContent = 'Copied!';
+        if (feedback) feedback.textContent = 'Copied to clipboard';
+        setTimeout(() => {
+          btn.textContent = original;
+          if (feedback) feedback.textContent = '';
+        }, 2000);
+      } catch {
+        if (feedback) feedback.textContent = 'Copy failed — select the text manually';
+      }
+    });
+  });
+</script>
