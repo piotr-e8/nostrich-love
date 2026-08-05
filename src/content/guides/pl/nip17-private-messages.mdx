@@ -106,22 +106,14 @@ Wewnątrz gift wrapa znajduje się seal, który zawiera faktyczną wiadomość. 
 - Zawiera treść wiadomości
 - Ma własny timestamp dla ochrony przed replay
 
-```
-Reprezentacja Wizualna:
-┌─────────────────────────────────────┐
-│ Gift Wrap (Warstwa Zewnętrzna)      │
-│ ┌─────────────────────────────────┐ │
-│ │ Seal (Warstwa Wewnętrzna)       │ │
-│ │ ┌─────────────────────────────┐ │ │
-│ │ │ Faktyczna Treść Wiadomości  │ │ │
-│ │ │ Nadawca: real_pubkey        │ │ │
-│ │ │ Timestamp: 1234567890       │ │ │
-│ │ └─────────────────────────────┘ │ │
-│ │ Zaszyfrowane kluczem efemerycznym│ │
-│ └─────────────────────────────────┘ │
-│ Losowy pubkey, wskazówka odbiorcy   │
-└─────────────────────────────────────┘
-```
+<DiagramLayers
+  layers={[
+    { label: "Gift wrap (warstwa zewnętrzna)", note: "Losowy pubkey, wskazówka odbiorcy — tylko tyle widzi relay" },
+    { label: "Seal (warstwa wewnętrzna)", note: "Zaszyfrowany kluczem efemerycznym" },
+    { label: "Faktyczna treść wiadomości", note: "Nadawca: prawdziwy pubkey · Timestamp: 1234567890" },
+  ]}
+  caption="Każda warstwa ukrywa tę w środku, więc relay nie dowiaduje się niczego poza wskazówką odbiorcy."
+/>
 
 ### Kluczowe Korzyści
 

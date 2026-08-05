@@ -20,19 +20,20 @@ NIP-05 (Nostr Implementation Possibility #5) pozwala Ci mieć czytelny identyfik
 
 ### Problem, Który Rozwiązuje
 
-```
-Przed NIP-05:
-┌──────────────────────────────────────────────┐
-│ Obserwuj: npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxx  │
-│ "Hej, obserwuj mnie! Jestem npub1abc123..."  │
-└──────────────────────────────────────────────┘
-                ↓
-Po NIP-05:
-┌──────────────────────────────────────────────┐
-│ Obserwuj: alicja@example.pl                  │
-│ "Hej, obserwuj mnie! Jestem alicja@example.pl" │
-└──────────────────────────────────────────────┘
-```
+<DiagramCompare
+  panels={[
+    {
+      title: "Przed NIP-05",
+      lines: ['Obserwuj: npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', '"Hej, obserwuj mnie! Jestem npub1abc123…xyz789"'],
+    },
+    {
+      title: "Po NIP-05",
+      tone: "positive",
+      lines: ['Obserwuj: alicja@example.pl', '"Hej, obserwuj mnie! Jestem alicja@example.pl"'],
+    },
+  ]}
+  caption="Ta sama tożsamość, w formie, którą człowiek jest w stanie powtórzyć na głos."
+/>
 
 ### Co Otrzymujesz
 
@@ -74,13 +75,13 @@ Z NIP-05:
 
 Wiele klientów pokazuje odznakę ✓ dla użytkowników NIP-05:
 
-```
-┌─────────────────────┐
-│ 👤 Alicja ✓         │
-│ alicja@example.pl   │
-│ "Edukator Bitcoin"  │
-└─────────────────────┘
-```
+<MockProfile
+  name="Alicja"
+  handle="alicja@example.pl"
+  bio="Edukator Bitcoin"
+  verified
+  caption="Zweryfikowany adres NIP-05 pokazany tak, jak renderuje go większość klientów."
+/>
 
 To pomaga ludziom wiedzieć, że obserwują prawdziwą Ciebie, a nie oszusta.
 

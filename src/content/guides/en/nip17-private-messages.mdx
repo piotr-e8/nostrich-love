@@ -105,22 +105,14 @@ Inside the gift wrap sits the seal, which contains the actual message. This laye
 - Includes the message content
 - Has its own timestamp for replay protection
 
-```
-Visual Representation:
-┌─────────────────────────────────────┐
-│ Gift Wrap (Outer Layer)             │
-│ ┌─────────────────────────────────┐ │
-│ │ Seal (Inner Layer)              │ │
-│ │ ┌─────────────────────────────┐ │ │
-│ │ │ Actual Message Content      │ │ │
-│ │ │ Sender: real_pubkey         │ │ │
-│ │ │ Timestamp: 1234567890       │ │ │
-│ │ └─────────────────────────────┘ │ │
-│ │ Encrypted with ephemeral key    │ │
-│ └─────────────────────────────────┘ │
-│ Random pubkey, recipient hint         │
-└─────────────────────────────────────┘
-```
+<DiagramLayers
+  layers={[
+    { label: "Gift wrap (outer layer)", note: "Random pubkey, recipient hint — this is all a relay sees" },
+    { label: "Seal (inner layer)", note: "Encrypted with an ephemeral key" },
+    { label: "Actual message content", note: "Sender: real pubkey · Timestamp: 1234567890" },
+  ]}
+  caption="Each layer hides the one inside it, so a relay learns nothing but the recipient hint."
+/>
 
 ### Key Benefits
 

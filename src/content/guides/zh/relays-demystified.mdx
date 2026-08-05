@@ -25,16 +25,22 @@ import { RelaysDemystifiedQuiz } from "@components/interactive/RelaysDemystified
 
 这是与传统社交媒体的关键区别：**你选择在哪里发送你的邮件。**
 
-```
-传统社交媒体：    Nostr：
-┌──────────────────┐        ┌──────────────────┐
-│ 一个大服务器   │        │ 许多邮局│
-│ (Twitter/X)      │        │ (中继)         │
-│                  │        │                  │
-│ 每个人都在      │        │ 你选择哪些   │
-│ 一个地方        │        │ 来使用      │
-└──────────────────┘        └──────────────────┘
-```
+<DiagramCompare
+  panels={[
+    {
+      title: "传统社交媒体",
+      subtitle: "Twitter/X",
+      lines: ["一个大服务器", "所有人都挤在一个地方", "规则由公司说了算"],
+    },
+    {
+      title: "Nostr",
+      subtitle: "中继",
+      tone: "positive",
+      lines: ["许多个邮局", "由你选择用哪些", "没有单一的关停点"],
+    },
+  ]}
+  caption="一个所有人共用的服务器，对上一群由你挑选的中继。"
+/>
 
 ### 选择的力量
 
@@ -55,33 +61,40 @@ import { RelaysDemystifiedQuiz } from "@components/interactive/RelaysDemystified
 
 ### 视觉解释
 
-```
-你的连接                    朋友的连接
-     │                                  │
-     ▼                                  ▼
-┌──────────┐                     ┌──────────┐
-│ 中继 A  │         ❌          │ 中继 B  │
-│ (wss://...)│      没有链接      │(wss://...)│
-└──────────┘                     └──────────┘
-     │                                  │
-   你的帖子                         朋友的帖子
-```
+<DiagramNodes
+  rows={[
+    { nodes: [{ label: "你", sub: "只连中继 A" }, { label: "你的朋友", sub: "只连中继 B" }] },
+    {
+      connector: "没有共同的中继",
+      nodes: [
+        { label: "中继 A", sub: "wss://relay-a.example" },
+        { label: "中继 B", sub: "wss://relay-b.example" },
+      ],
+    },
+    { nodes: [{ label: "你的帖子留在这边" }, { label: "他的帖子留在那边" }] },
+  ]}
+  caption="没有共同的中继，你们谁也看不到对方的帖子。"
+/>
 
 **如果你发布到中继 A，而你的朋友只使用中继 B，他们看不到你的帖子。**
 
 ### 解决方案：连接到多个中继
 
-```
-你的连接
-     │
-┌────┴────┐
-│ 中继 A │
-│ 中继 B │  ← 连接到两者！
-│ 中继 C │
-└────┬────┘
-     │
-   你的帖子 → 触达更多人
-```
+<DiagramNodes
+  rows={[
+    { nodes: [{ label: "你", sub: "三个全都连上", tone: "positive" }] },
+    {
+      connector: "逐一发布",
+      nodes: [
+        { label: "中继 A" },
+        { label: "中继 B" },
+        { label: "中继 C" },
+      ],
+    },
+    { nodes: [{ label: "读取其中任何一个的人都能看到你的帖子", tone: "positive" }] },
+  ]}
+  caption="发布到多个中继，才是让你的帖子被找到的关键。"
+/>
 
 大多数 Nostr 客户端将你连接到几个默认中继。但理解这一点有助于当你：
 

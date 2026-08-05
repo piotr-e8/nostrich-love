@@ -51,15 +51,20 @@ Pomyśl o nich jako o "lajkach z wartością"—sposobie na wspieranie ludzi, kt
 
 ### Model Wartość-za-Wartość
 
-```
-Tradycyjne Social Media:              Nostr:
-┌──────────────────┐                 ┌──────────────────┐
-│ Darmowe posty    │                 │ Darmowe posty    │
-│ Darmowe czytanie │                 │ Darmowe czytanie │
-│ Uwaga = $$$      │                 │ Uwaga = ⚡       │
-│ (dla platformy)  │                 │ (dla twórcy)     │
-└──────────────────┘                 └──────────────────┘
-```
+<DiagramCompare
+  panels={[
+    {
+      title: "Tradycyjne social media",
+      lines: ["Darmowe posty", "Darmowe czytanie", "Uwaga płaci platformie"],
+    },
+    {
+      title: "Nostr",
+      tone: "positive",
+      lines: ["Darmowe posty", "Darmowe czytanie", "Uwaga płaci twórcy"],
+    },
+  ]}
+  caption="Po obu stronach dostęp jest tak samo darmowy — różnica polega na tym, komu płaci uwaga."
+/>
 
 ### Jak Wyglądają Zapy
 
@@ -70,17 +75,17 @@ W obsługiwanych klientach, zap pokazują się jako:
 - Sumy na postach
 - Specjalne powiadomienia, gdy je otrzymasz
 
-```
-┌────────────────────────────────────┐
-│ Alicja                             │
-│ "Właśnie opublikowałam nowy artykuł!" │
-│                                    │
-│ [❤️ 12] [💬 3] [⚡ 5,420 sats]     │
-│                                    │
-│ ⚡ Bob zapnął 1,000 sats           │
-│ ⚡ Carol zapnęła 500 sats          │
-└────────────────────────────────────┘
-```
+<MockPost
+  author="Alicja"
+  content="Właśnie opublikowałam nowy artykuł!"
+  reactions={[
+    { icon: "❤️", label: "12" },
+    { icon: "💬", label: "3" },
+    { icon: "⚡", label: "5,420 sats" },
+  ]}
+  zaps={["Bob zapnął 1,000 sats", "Carol zapnęła 500 sats"]}
+  caption="Zapy pojawiają się w jednym rzędzie z pozostałymi reakcjami, z imieniem nadawcy."
+/>
 
 ### Nie Wymagane!
 
@@ -314,12 +319,15 @@ Zapy są półpubliczne. Podczas gdy kwoty mogą być prywatne w niektórych kon
 
 Gdy ktoś zapuje Twój post, automatycznie dziel płatność ze współpracownikami:
 
-```
-Przykład: Odcinek Podcastu
-├── 70% → Host (Ty)
-├── 20% → Producent
-└── 10% → Editor
-```
+<DiagramSplit
+  title="Przykład: odcinek podcastu"
+  rows={[
+    { percent: 70, label: "Host (Ty)" },
+    { percent: 20, label: "Producent" },
+    { percent: 10, label: "Montażysta" },
+  ]}
+  caption="Jeden zap, dzielony automatycznie między wszystkich, którzy pracowali nad odcinkiem."
+/>
 
 ### Konfiguracja Podziałów
 

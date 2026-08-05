@@ -51,15 +51,20 @@ Piensa en ellos como "me gusta con valor"—una forma de apoyar a las personas c
 
 ### El Modelo Valor-por-Valor
 
-```
-Redes Sociales Tradicionales:              Nostr:
-┌──────────────────┐                 ┌──────────────────┐
-│ Gratis publicar  │                 │ Gratis publicar│
-│ Gratis leer      │                 │ Gratis leer      │
-│ Atención = $$$   │                 │ Atención = ⚡    │
-│ (para plataforma)│                 │ (para creador)   │
-└──────────────────┘                 └──────────────────┘
-```
+<DiagramCompare
+  panels={[
+    {
+      title: "Redes sociales tradicionales",
+      lines: ["Gratis publicar", "Gratis leer", "La atención le paga a la plataforma"],
+    },
+    {
+      title: "Nostr",
+      tone: "positive",
+      lines: ["Gratis publicar", "Gratis leer", "La atención le paga al creador"],
+    },
+  ]}
+  caption="El mismo acceso gratuito en ambos lados — la diferencia es a quién le paga la atención."
+/>
 
 ### Cómo Aparecen los Zaps
 
@@ -70,17 +75,17 @@ En clientes soportados, los zaps se muestran como:
 - Totales acumulados en publicaciones
 - Notificaciones especiales cuando los recibes
 
-```
-┌────────────────────────────────────┐
-│ Ana                                │
-│ "¡Acabo de publicar mi nuevo artículo!"  │
-│                                    │
-│ [❤️ 12] [💬 3] [⚡ 5,420 sats]     │
-│                                    │
-│ ⚡ Bob zapped 1,000 sats           │
-│ ⚡ Carol zapped 500 sats            │
-└────────────────────────────────────┘
-```
+<MockPost
+  author="Ana"
+  content="¡Acabo de publicar mi nuevo artículo!"
+  reactions={[
+    { icon: "❤️", label: "12" },
+    { icon: "💬", label: "3" },
+    { icon: "⚡", label: "5,420 sats" },
+  ]}
+  zaps={["Bob zapeó 1,000 sats", "Carol zapeó 500 sats"]}
+  caption="Los zaps aparecen junto a las demás reacciones, con el nombre de quien los envía."
+/>
 
 ### ¡No Son Requeridos!
 
@@ -314,12 +319,15 @@ Los zaps son semi-públicos. Mientras que las cantidades pueden ser privadas en 
 
 Cuando alguien zap tu publicación, divide automáticamente el pago con colaboradores:
 
-```
-Ejemplo: Episodio de Podcast
-├── 70% → Host (tú)
-├── 20% → Productor
-└── 10% → Editor
-```
+<DiagramSplit
+  title="Ejemplo: episodio de podcast"
+  rows={[
+    { percent: 70, label: "Host (tú)" },
+    { percent: 20, label: "Productor" },
+    { percent: 10, label: "Editor" },
+  ]}
+  caption="Un solo zap, repartido automáticamente entre todos los que trabajaron en el episodio."
+/>
 
 ### Configurando Splits
 

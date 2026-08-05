@@ -109,22 +109,14 @@ Innerhalb des Gift Wraps befindet sich das Seal, das die eigentliche Nachricht e
 - Beinhaltet den Nachrichteninhalt
 - Hat einen eigenen Zeitstempel für Replay-Schutz
 
-```
-Visuelle Darstellung:
-┌─────────────────────────────────────┐
-│ Gift Wrap (Äußere Schicht)          │
-│ ┌─────────────────────────────────┐ │
-│ │ Seal (Innere Schicht)           │ │
-│ │ ┌─────────────────────────────┐ │ │
-│ │ │ Echter Nachrichteninhalt    │ │ │
-│ │ │ Sender: real_pubkey         │ │ │
-│ │ │ Timestamp: 1234567890       │ │ │
-│ │ └─────────────────────────────┘ │ │
-│ │ Verschlüsselt mit ephemerem Key │ │
-│ └─────────────────────────────────┘ │
-│ Zufälliger pubkey, Empfänger-Hinweis  │
-└─────────────────────────────────────┘
-```
+<DiagramLayers
+  layers={[
+    { label: "Gift Wrap (äußere Schicht)", note: "Zufälliger pubkey, Empfänger-Hinweis — mehr sieht ein Relay nicht" },
+    { label: "Seal (innere Schicht)", note: "Verschlüsselt mit einem ephemeren Schlüssel" },
+    { label: "Echter Nachrichteninhalt", note: "Absender: echter pubkey · Zeitstempel: 1234567890" },
+  ]}
+  caption="Jede Schicht verbirgt die darunterliegende, sodass ein Relay nur den Empfänger-Hinweis erfährt."
+/>
 
 ### Hauptvorteile
 

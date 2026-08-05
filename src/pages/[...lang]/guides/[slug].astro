@@ -37,6 +37,16 @@ import { NIP05Checker } from '../../../components/interactive/NIP05Checker';
 import { PostFlowSimulator } from '../../../components/ui/PostFlowSimulator';
 import { InteractiveChecklist, ChecklistProgress } from '../../../components/InteractiveChecklist';
 import { H2, H3 } from '../../../components/ReadingTimeHeading';
+// Diagram family replacing the box-drawing ASCII art. No client directive
+// anywhere they are used — they render to static HTML.
+import {
+  DiagramCompare,
+  DiagramLayers,
+  DiagramNodes,
+  DiagramSplit,
+  MockPost,
+  MockProfile,
+} from '../../../components/diagrams/Diagrams';
 import { MinimalProgressBar, GuidePositionIndicator } from '../../../components/progress/MinimalProgress';
 import { ProgressTracker } from '../../../components/progress/ProgressTracker';
 import { GuideNavigation } from '../../../components/navigation/GuideNavigation';
@@ -259,6 +269,12 @@ const nextGuide = nextGuideSlug ? {
 // they sit in prose below the fold. Use client:idle only for components that
 // may server-render nothing, or whose mount has a side effect.
 const components = {
+  DiagramCompare,
+  DiagramLayers,
+  DiagramNodes,
+  DiagramSplit,
+  MockPost,
+  MockProfile,
   FAQAccordion,
   RelatedQuestions,
   CTA,
