@@ -9,7 +9,9 @@ import {
   langParam,
   isLocale,
   hasLocalizedVersions,
+  localizedLocales,
 } from './paths';
+import { GLOSSARY_LOCALES } from '../data/glossary';
 
 // Regression tests for a live incident: English guides were only reachable at
 // /en/guides/<slug>/ while /guides/<slug>/ returned 404, which broke ~98
@@ -106,17 +108,50 @@ describe('isLocale', () => {
   });
 });
 
-describe('hasLocalizedVersions', () => {
+describe('localizedLocales', () => {
   // Emitting hreflang for pages with no translations advertised 404s and got
-  // the whole cluster discarded.
-  it('is true only for guide routes', () => {
+  // the whole cluster discarded. The list form exists so a route can ship in
+  // a SUBSET of locales without advertising the missing ones.
+  it('returns all seven locales for guide routes', () => {
+    for (const p of ['/guides/', '/guides/faq', '/pl/guides/faq']) {
+      expect(localizedLocales(p)).toEqual(['en', 'pl', 'es', 'de', 'zh', 'ar', 'hi']);
+    }
+  });
+
+  it('returns exactly the shipped glossary locales for /glossary', () => {
+    expect(localizedLocales('/glossary')).toEqual(['en', 'pl', 'es', 'de']);
+    expect(localizedLocales('/glossary/')).toEqual(GLOSSARY_LOCALES);
+    // prefix is stripped before matching, same as guides
+    expect(localizedLocales('/pl/glossary/')).toEqual(GLOSSARY_LOCALES);
+  });
+
+  it('never advertises unshipped glossary locales', () => {
+    for (const l of ['zh', 'ar', 'hi']) {
+      expect(localizedLocales('/glossary/')).not.toContain(l);
+    }
+  });
+
+  it('does not match deeper paths under /glossary (no such routes exist)', () => {
+    expect(localizedLocales('/glossary/npub')).toEqual([]);
+  });
+
+  it('is empty for English-only pages', () => {
+    for (const p of ['/about', '/tools', '/follow-pack', '/badges', '/']) {
+      expect(localizedLocales(p)).toEqual([]);
+    }
+  });
+});
+
+describe('hasLocalizedVersions', () => {
+  it('is true for guide and glossary routes', () => {
     expect(hasLocalizedVersions('/guides/')).toBe(true);
     expect(hasLocalizedVersions('/guides/faq')).toBe(true);
     expect(hasLocalizedVersions('/pl/guides/faq')).toBe(true);
+    expect(hasLocalizedVersions('/glossary/')).toBe(true);
   });
 
   it('is false for English-only pages', () => {
-    for (const p of ['/about', '/glossary', '/tools', '/follow-pack', '/badges', '/']) {
+    for (const p of ['/about', '/tools', '/follow-pack', '/badges', '/']) {
       expect(hasLocalizedVersions(p)).toBe(false);
     }
   });

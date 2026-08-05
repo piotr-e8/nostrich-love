@@ -101,7 +101,10 @@ export async function getStaticPaths(): Promise<StaticPath[]> {
 
 type PageProps = { guide: GuideEntry; locale: Locale };
 const { guide, locale } = Astro.props as PageProps;
-const title = `${guide.data.title} - Nostr Beginner Guide`;
+// seoTitle (frontmatter, optional) is the query-matched <title>/og:title; the
+// fallback keeps the legacy suffix for guides that have not opted in. The H1
+// below always renders guide.data.title — reader-facing voice is unchanged.
+const title = guide.data.seoTitle ?? `${guide.data.title} - Nostr Beginner Guide`;
 const description = guide.data.description ?? 'Learn how to use Nostr with our beginner-friendly guides.';
 const { Content } = await guide.render();
 const categoryLabel = guide.data.category ? guide.data.category.replace(/-/g, ' ') : undefined;

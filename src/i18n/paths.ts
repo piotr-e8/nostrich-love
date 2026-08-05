@@ -5,6 +5,9 @@
 //   en -> /guides/what-is-nostr
 //   pl -> /pl/guides/what-is-nostr
 import { locales, type Locale } from '../config/locales';
+// Deliberately imports only src/data/glossary/index.ts, which holds no term
+// data — this module rides in every client chunk via LanguageSwitcher.
+import { GLOSSARY_LOCALES } from '../data/glossary';
 
 export const DEFAULT_LOCALE: Locale = 'en';
 
@@ -73,18 +76,36 @@ export function langParam(locale: Locale): string | undefined {
   return locale === DEFAULT_LOCALE ? undefined : locale;
 }
 
+const NO_LOCALES: readonly Locale[] = [];
+
 /**
- * Whether a path actually exists in every locale.
+ * The exact set of locales a route is actually built in — the single source
+ * of truth for hreflang emission (SEO.astro) and language-switcher targets
+ * (LanguageSwitcher.tsx).
  *
- * Only the guides are translated — `src/pages/[...lang]/guides/**` is the
- * only locale-aware route. Everything else (/about, /glossary, /tools,
- * /follow-pack, /badges, ...) is English-only, so emitting hreflang for
- * those pages advertises alternates that return 404 and gets the whole
- * cluster discarded by search engines.
+ * The contract is unchanged from the original boolean gate: NEVER advertise
+ * an alternate that returns 404 — search engines discard the whole cluster.
+ * The list form exists because routes may ship in a subset of locales
+ * (the glossary ships en/pl/es/de; zh/ar/hi wait on native review).
+ *
+ * - `/guides…`  → all seven locales (src/pages/[...lang]/guides/**)
+ * - `/glossary` → GLOSSARY_LOCALES (src/pages/[...lang]/glossary.astro)
+ * - everything else (/about, /tools, /follow-pack, /badges, ...) → none
  *
  * Extend this when a new route gains locale variants.
  */
-export function hasLocalizedVersions(path: string): boolean {
+export function localizedLocales(path: string): readonly Locale[] {
   const bare = stripLocale(path);
-  return bare === '/guides' || bare === '/guides/' || bare.startsWith('/guides/');
+  if (bare === '/guides' || bare === '/guides/' || bare.startsWith('/guides/')) {
+    return locales;
+  }
+  if (bare === '/glossary' || bare === '/glossary/') {
+    return GLOSSARY_LOCALES;
+  }
+  return NO_LOCALES;
+}
+
+/** Whether a path exists in at least one non-default locale. */
+export function hasLocalizedVersions(path: string): boolean {
+  return localizedLocales(path).length > 0;
 }

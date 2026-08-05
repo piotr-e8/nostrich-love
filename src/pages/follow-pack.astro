@@ -16,7 +16,10 @@ const categoryCounts = getCategoryCounts();
 const groups = getCategoryGroupsWithCounts(categoryCounts, 'en');
 const categoryCount = groups.reduce((total, group) => total + group.categories.length, 0);
 
-const title = 'Find People to Follow';
+// Query-matched <title> (docs/audit-2026-07/market-research.md §6 row 11:
+// "how to find people to follow on nostr" — page 1 is a GitHub README).
+// The friendly on-page H1 below is independent of this.
+const title = 'How to Find People to Follow on Nostr';
 const description = `Start your Nostr feed with ${accountCount} curated accounts across ${categoryCount} categories. Pick the ones you like and import them into any client — paste the list, or publish it and scan a QR code.`;
 ---
 

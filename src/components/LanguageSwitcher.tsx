@@ -6,7 +6,7 @@ import {
   localePath,
   stripLocale,
   isLocale,
-  hasLocalizedVersions,
+  localizedLocales,
   DEFAULT_LOCALE,
 } from "../i18n/paths";
 
@@ -40,11 +40,17 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
     const { locale } = splitLocale(path);
     setCurrentLang(locale);
 
-    // Only the guides exist in every locale. On a guides page served in the
-    // default locale, honour a previously saved preference.
-    if (locale === DEFAULT_LOCALE && hasLocalizedVersions(path)) {
+    // On a localized route served in the default locale, honour a previously
+    // saved preference — but only when that locale is actually built for THIS
+    // route (the glossary ships in 4 locales, guides in 7; redirecting a zh
+    // reader to /zh/glossary/ would land on a 404).
+    if (locale === DEFAULT_LOCALE) {
       const savedLang = localStorage.getItem('preferredLanguage');
-      if (isLocale(savedLang) && savedLang !== DEFAULT_LOCALE) {
+      if (
+        isLocale(savedLang) &&
+        savedLang !== DEFAULT_LOCALE &&
+        localizedLocales(path).includes(savedLang)
+      ) {
         setCurrentLang(savedLang);
         window.location.href = localePath(path, savedLang);
       }
@@ -68,9 +74,10 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
     const currentPath = window.location.pathname;
     localStorage.setItem('preferredLanguage', langCode);
 
-    // Guides are the only translated content; everything else is English-only,
-    // so switching there just drops any stale locale prefix.
-    const newPath = hasLocalizedVersions(currentPath)
+    // Target the picked locale only when THIS route is built in it
+    // (guides: all seven; glossary: en/pl/es/de). Otherwise fall back to the
+    // English version by dropping any stale locale prefix — never link a 404.
+    const newPath = localizedLocales(currentPath).includes(langCode)
       ? localePath(currentPath, langCode)
       : stripLocale(currentPath);
 

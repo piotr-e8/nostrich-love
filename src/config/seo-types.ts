@@ -14,8 +14,10 @@ export interface SEOProps {
   noindex?: boolean;
   nofollow?: boolean;
   canonical?: string;
-  /** Structured data emitted as a JSON-LD script tag. */
-  jsonLd?: Record<string, unknown>;
+  /** Structured data emitted as a JSON-LD script tag. A page may pass several
+   *  schema objects (e.g. WebPage + FAQPage) — JSON.stringify serializes the
+   *  array form as-is, which Google accepts. */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 export interface PageSEO {

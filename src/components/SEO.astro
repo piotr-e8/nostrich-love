@@ -1,8 +1,8 @@
 ---
 import { siteConfig } from '../config/site';
 import type { SEOProps } from '../config/seo-types';
-import { type Locale, locales, getLocaleConfig } from '../config/locales';
-import { localePath, hasLocalizedVersions, DEFAULT_LOCALE } from '../i18n/paths';
+import { type Locale, getLocaleConfig } from '../config/locales';
+import { localePath, localizedLocales, DEFAULT_LOCALE } from '../i18n/paths';
 
 interface Props extends SEOProps {
   locale?: Locale;
@@ -37,21 +37,21 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, siteConfig.url).to
 const localeConfig = getLocaleConfig(locale);
 
 // Build alternate URLs for hreflang.
-// Only emit them for routes that genuinely exist in every locale — otherwise
-// we advertise 404s as alternates and search engines drop the whole cluster.
+// Only emit them for locales the route is genuinely built in — otherwise we
+// advertise 404s as alternates and search engines drop the whole cluster.
+// localizedLocales() returns the exact per-route set (guides: all seven,
+// glossary: en/pl/es/de, everything else: none).
 const currentPath = Astro.url.pathname;
-const localized = hasLocalizedVersions(currentPath);
+const routeLocales = localizedLocales(currentPath);
 
-const alternateUrls = localized
-  ? locales.map((l) => ({
-      locale: l,
-      hreflang: getLocaleConfig(l).htmlLang,
-      url: new URL(localePath(currentPath, l), siteConfig.url).toString(),
-    }))
-  : [];
+const alternateUrls = routeLocales.map((l) => ({
+  locale: l,
+  hreflang: getLocaleConfig(l).htmlLang,
+  url: new URL(localePath(currentPath, l), siteConfig.url).toString(),
+}));
 
 // x-default points at the un-prefixed English version
-const xDefaultUrl = localized
+const xDefaultUrl = routeLocales.length > 0
   ? new URL(localePath(currentPath, DEFAULT_LOCALE), siteConfig.url).toString()
   : null;
 ---
@@ -66,7 +66,7 @@ const xDefaultUrl = localized
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
 
-<!-- Hreflang tags for international SEO (guides only — see hasLocalizedVersions) -->
+<!-- Hreflang tags for international SEO (per-route locale set — see localizedLocales) -->
 {alternateUrls.map(({ hreflang, url }) => (
   <link rel="alternate" hreflang={hreflang} href={url} />
 ))}

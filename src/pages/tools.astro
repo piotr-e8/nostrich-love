@@ -8,13 +8,25 @@ import { KeyGenerator, NIP05Checker, RelayPlayground, FollowPackFinder } from '.
 const title = 'Interactive Tools';
 const description = 'Free browser-based tools for Nostr: key generator, client recommender, NIP-05 checker, follow pack finder, and relay explorer. Generate keys securely in your browser.';
 
-const tools = [
+interface ToolCard {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  component: unknown;
+  /** Optional dedicated SEO lander embedding the same component. */
+  page?: string;
+}
+
+const tools: ToolCard[] = [
   {
     id: 'key-generator',
     title: 'Key Generator',
     description: 'Generate secure Nostr keys (nsec/npub) directly in your browser. No data sent to servers.',
     icon: '🔐',
     component: KeyGenerator,
+    // SEO lander embedding the same component (market-research.md §6 row 13)
+    page: '/tools/key-generator',
   },
   {
     id: 'follow-pack-finder',
@@ -29,6 +41,8 @@ const tools = [
     description: 'Verify your NIP-05 identifier is set up correctly and troubleshoot issues.',
     icon: '✅',
     component: NIP05Checker,
+    // SEO lander embedding the same component (market-research.md §6 row 8)
+    page: '/tools/nip05-checker',
   },
   {
     id: 'relay-playground',
@@ -74,6 +88,15 @@ const tools = [
                 <div>
                   <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{tool.title}</h2>
                   <p class="text-gray-600 dark:text-gray-400">{tool.description}</p>
+                  {tool.page && (
+                    <a
+                      href={tool.page}
+                      class="inline-block mt-1 text-sm font-medium text-primary-600 dark:text-primary-400 hover:underline"
+                      aria-label={`Open the dedicated ${tool.title} page`}
+                    >
+                      Dedicated page →
+                    </a>
+                  )}
                 </div>
               </div>
               {tool.id === 'key-generator' && <div class="max-w-3xl mx-auto"><KeyGenerator client:idle /></div>}

@@ -1,0 +1,247 @@
+---
+/**
+ * /tools/nip05-checker/ — dedicated SEO lander for the NIP-05 checker
+ * (docs/audit-2026-07/market-research.md §6 row 8: the incumbent for this
+ * query is a bare PHP page). Embeds the SAME component as the /tools hub,
+ * so behavior is identical. English-only route, like /tools.
+ */
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import FAQAccordion from '../../components/ui/FAQAccordion.astro';
+import { BadgeEarnedModalListener } from '../../components/gamification/BadgeEarnedModalListener';
+import { NIP05Checker } from '../../components/interactive';
+
+const title = 'NIP-05 Checker: Verify Your Nostr Address';
+const description =
+  "Check that your NIP-05 identifier (name@domain) resolves to your npub, and get specific fixes when it doesn't. Free, runs in your browser.";
+
+// FAQ rendered below AND mirrored into FAQPage JSON-LD — keep the two in sync
+// by deriving both from this single array.
+const faqs = [
+  {
+    question: 'Why does my NIP-05 show as unverified in my client?',
+    answer:
+      'Almost always one of four things: the nostr.json file is missing or not at the required path (https://your-domain/.well-known/nostr.json); the server does not send the CORS header (Access-Control-Allow-Origin: *) that web-based clients need to read it; your name is missing from the "names" object in the file — NIP-05 names must be lowercase; or the file maps your name to an npub1... string instead of the 64-character hex public key the spec requires. Run the checker above to narrow it down, then follow the NIP-05 guide for the exact fix.',
+    category: 'troubleshooting' as const,
+  },
+  {
+    question: 'Does NIP-05 give me a checkmark like Twitter?',
+    answer:
+      'No — and this is the most common misunderstanding about it. Some clients do render a check-style icon next to a verified NIP-05, but all it proves is that whoever controls that domain agreed to map that name to your public key. It is identity, not endorsement: nobody reviews accounts, there is no central verifier, and anyone with a domain can issue identifiers under it. Treat NIP-05 as a human-readable address, like an email address, not as a badge of trustworthiness.',
+    category: 'basics' as const,
+  },
+  {
+    question: 'Do I need my own domain?',
+    answer:
+      'No. Plenty of services will host your identifier under their domain, often free or for a small fee, and some clients offer one during onboarding. Using your own domain is the more self-sovereign option — you control the mapping and can change hosting without changing your address — but a provider identifier verifies exactly the same way. The NIP-05 guide walks through both routes.',
+    category: 'basics' as const,
+  },
+];
+
+const pageUrl = 'https://nostrich.love/tools/nip05-checker/';
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'NIP-05 Checker',
+    url: pageUrl,
+    description,
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Any',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    publisher: { '@type': 'Organization', name: 'Nostrich.love', url: 'https://nostrich.love' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+
+// What the checker actually diagnoses — keep in sync with the error types in
+// src/components/interactive/NIP05Checker.tsx (format / network / not-found / json).
+const failures = [
+  {
+    icon: '📁',
+    title: 'File missing or at the wrong path',
+    detail:
+      'Clients look for the mapping at https://your-domain/.well-known/nostr.json. If the file lives anywhere else — or the server answers with a 404 or a redirect — verification fails everywhere.',
+  },
+  {
+    icon: '🚧',
+    title: 'Missing CORS header',
+    detail:
+      'The file must be served with Access-Control-Allow-Origin: * or browsers refuse to read it. Native apps often fetch it without that restriction — which is why an identifier can look fine in one client and unverified in a web client.',
+  },
+  {
+    icon: '🔤',
+    title: 'Name missing from the file',
+    detail:
+      'The "names" object must contain your exact name, and NIP-05 names are lowercase. A typo, a capital letter, or an entry that was never added all produce the same "not found" result.',
+  },
+  {
+    icon: '🔑',
+    title: 'npub where hex should be',
+    detail:
+      'The classic hand-editing mistake: the value must be your public key as 64 hexadecimal characters, not the npub1... form. The file can load perfectly and still fail verification in clients because of this.',
+  },
+  {
+    icon: '🧩',
+    title: 'Broken JSON',
+    detail:
+      'A trailing comma or a missing quote makes the whole file unparseable. If the checker reports a JSON error, run the file through any JSON validator to find the exact character.',
+  },
+];
+---
+
+<Layout title={title} description={description} jsonLd={jsonLd}>
+  <Header />
+
+  <main id="main-content">
+    <!-- Hero -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 dark:from-primary/5 dark:to-secondary/5" />
+
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 relative">
+        <div class="text-center max-w-3xl mx-auto">
+          <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
+            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              NIP-05 Checker
+            </span>
+          </h1>
+          <p class="text-xl text-gray-600 dark:text-gray-300 mb-6">
+            Check that a NIP-05 identifier — name@domain — actually resolves to the right
+            public key, and see what to fix when it does not.
+          </p>
+          <div class="flex flex-wrap justify-center gap-4 text-sm">
+            <span class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400">
+              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 flex items-center justify-center text-xs" aria-hidden="true">✓</span>
+              Runs in your browser
+            </span>
+            <span class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400">
+              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 flex items-center justify-center text-xs" aria-hidden="true">✓</span>
+              Free, no sign-up
+            </span>
+            <span class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400">
+              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 flex items-center justify-center text-xs" aria-hidden="true">✓</span>
+              Works for any name@domain
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The tool -->
+    <section class="py-12 bg-gray-50 dark:bg-gray-900/30">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <NIP05Checker client:idle />
+          <p class="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
+            Part of the free <a href="/tools" class="text-primary-600 dark:text-primary-400 hover:underline">Nostr tools</a> collection.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- What NIP-05 is -->
+    <section class="py-16 bg-white dark:bg-gray-800">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">What NIP-05 is</h2>
+          <div class="space-y-4 text-gray-600 dark:text-gray-300">
+            <p>
+              NIP-05 turns an unreadable Nostr public key into a human-readable address like
+              <code class="text-sm">alice@example.com</code>. It works through a small JSON file
+              published on the domain: clients fetch it, find your name in it, and confirm the
+              listed key matches your profile — at which point the identifier shows up as
+              verified next to your name. That is the whole mechanism: no registry, no
+              application process, just a file on a web server. The
+              <a href="/guides/nip05-identity" class="text-primary-600 dark:text-primary-400 hover:underline">NIP-05 identity guide</a>
+              explains it end to end.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Common failures -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            Common failures this catches
+          </h2>
+          <p class="text-gray-600 dark:text-gray-300 mb-6">
+            "Unverified" almost never means your key is wrong — it means the file serving your
+            mapping has one of a handful of well-known problems:
+          </p>
+          <ul class="space-y-4">
+            {failures.map((failure) => (
+              <li class="flex gap-4 p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+                <span class="text-2xl" aria-hidden="true">{failure.icon}</span>
+                <div>
+                  <h3 class="font-semibold text-gray-900 dark:text-white mb-1">{failure.title}</h3>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">{failure.detail}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Set one up -->
+    <section class="py-16 bg-white dark:bg-gray-800">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto text-center">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            Don't have a NIP-05 address yet?
+          </h2>
+          <p class="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+            Setting one up takes a few minutes with a provider, or one small file if you own a
+            domain. The guide covers both routes, the exact JSON format, and the hex-vs-npub
+            detail that trips most people.
+          </p>
+          <a
+            href="/guides/nip05-identity"
+            class="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition-colors"
+          >
+            Set up NIP-05 from scratch
+            <svg class="w-5 h-5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-8">
+            Frequently asked questions
+          </h2>
+          {faqs.map((faq) => (
+            <FAQAccordion question={faq.question} category={faq.category}>
+              <p>{faq.answer}</p>
+            </FAQAccordion>
+          ))}
+          <p class="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+            Want the full picture first? Read the{' '}
+            <a href="/guides/nip05-identity" class="text-primary-600 dark:text-primary-400 hover:underline">NIP-05 identity guide</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  <!-- Badge celebrations can fire from this page (same embeds as /tools) -->
+  <BadgeEarnedModalListener client:only="react" />
+</Layout>

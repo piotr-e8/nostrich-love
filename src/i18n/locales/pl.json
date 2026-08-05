@@ -3204,5 +3204,19 @@
         "description": "Wąskie zainteresowania i nietypowe perspektywy, których nie znajdziesz nigdzie indziej."
       }
     }
+  },
+  "glossary": {
+    "title": "Słownik pojęć Nostr",
+    "subtitle": "Poznaj terminologię i pojęcia potrzebne do poruszania się po ekosystemie Nostr.",
+    "searchPlaceholder": "Szukaj pojęć...",
+    "searchAriaLabel": "Szukaj pojęć w słowniku",
+    "noResults": "Nie znaleziono pojęć pasujących do wyszukiwania.",
+    "quickReference": {
+      "title": "Szybka ściąga",
+      "npub": "Klucz publiczny — możesz go udostępniać",
+      "nsec": "Klucz prywatny — trzymaj w tajemnicy!",
+      "nip01": "Podstawowy protokół",
+      "kind1": "Notatka tekstowa (post)"
+    }
   }
 }

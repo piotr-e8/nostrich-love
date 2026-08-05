@@ -3204,5 +3204,19 @@
         "description": "Intereses muy concretos y perspectivas poco comunes que no encontrarás en otro sitio."
       }
     }
+  },
+  "glossary": {
+    "title": "Glosario de Nostr",
+    "subtitle": "Aprende la terminología y los conceptos que necesitas para moverte por el ecosistema Nostr.",
+    "searchPlaceholder": "Buscar términos...",
+    "searchAriaLabel": "Buscar términos del glosario",
+    "noResults": "No se encontraron términos que coincidan con tu búsqueda.",
+    "quickReference": {
+      "title": "Referencia rápida",
+      "npub": "Clave pública: puedes compartirla",
+      "nsec": "Clave privada: ¡mantenla en secreto!",
+      "nip01": "Protocolo básico",
+      "kind1": "Nota de texto (publicación)"
+    }
   }
 }

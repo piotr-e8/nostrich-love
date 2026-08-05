@@ -1,0 +1,260 @@
+---
+/**
+ * /tools/key-generator/ — dedicated SEO lander for the key generator
+ * (docs/audit-2026-07/market-research.md §6 row 13: tool-intent queries need
+ * their own URL). Embeds the SAME component as the /tools hub, so behavior —
+ * badges, gamification events — is identical. English-only route, like /tools.
+ */
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import FAQAccordion from '../../components/ui/FAQAccordion.astro';
+import { BadgeEarnedModalListener } from '../../components/gamification/BadgeEarnedModalListener';
+import { KeyGenerator } from '../../components/interactive';
+
+const title = 'Nostr Key Generator — Free, In Your Browser';
+const description =
+  'Generate a Nostr key pair (npub + nsec) locally in your browser. Nothing is sent to any server. Includes how it works, how to store your nsec, and what to do next.';
+
+// FAQ rendered below AND mirrored into FAQPage JSON-LD — keep the two in sync
+// by deriving both from this single array.
+const faqs = [
+  {
+    question: 'Is it safe to generate keys in a browser?',
+    answer:
+      'Yes, for getting started. The keys are generated on your own device by nostr-tools, the same open-source cryptography library most Nostr clients use, and this page sends nothing to any server — you can even load it, go offline, and generate the pair. The practical risk is not the generation but the storage: anyone who sees your nsec owns the account, so save it somewhere private, not in a screenshot or a chat. For long-term use, many people later move their key into a signer extension or hardware signer.',
+  },
+  {
+    question: 'What is the difference between npub and nsec?',
+    answer:
+      'The npub is your public key — your identity and address on Nostr. Share it freely so people can find and follow you. The nsec is your secret key — it signs everything you publish and IS your account. Never share it, never paste it into websites you do not trust, and never post it anywhere. If the npub is your username, the nsec is a password that can never be changed.',
+  },
+  {
+    question: 'What happens if I lose my nsec?',
+    answer:
+      'The account is gone, permanently. Nostr has no company behind it, so there is no password reset, no recovery email, and no support desk that can restore access — that is the price of an identity nobody can take from you. Write the nsec down offline (on paper or in a password manager) the moment you generate it, and keep a second copy somewhere safe.',
+  },
+];
+
+const pageUrl = 'https://nostrich.love/tools/key-generator/';
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Nostr Key Generator',
+    url: pageUrl,
+    description,
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Any',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    publisher: { '@type': 'Organization', name: 'Nostrich.love', url: 'https://nostrich.love' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+
+const nextSteps = [
+  {
+    step: '1',
+    title: 'Understand your keys',
+    description: 'What npub and nsec really are, how to back them up, and the mistakes that lose accounts.',
+    href: '/guides/keys-and-security',
+    cta: 'Keys & security guide (8 min)',
+  },
+  {
+    step: '2',
+    title: 'Set up your first client',
+    description: 'Pick an app, import the keys you just generated, and publish your first note.',
+    href: '/guides/quickstart',
+    cta: 'Quickstart guide (5 min)',
+  },
+  {
+    step: '3',
+    title: 'Fill your feed',
+    description: 'A new account follows nobody. Pick from hundreds of curated accounts so your timeline is not empty.',
+    href: '/follow-pack',
+    cta: 'Find people to follow',
+  },
+];
+---
+
+<Layout title={title} description={description} jsonLd={jsonLd}>
+  <Header />
+
+  <main id="main-content">
+    <!-- Hero -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 dark:from-primary/5 dark:to-secondary/5" />
+
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 relative">
+        <div class="text-center max-w-3xl mx-auto">
+          <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
+            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Nostr Key Generator
+            </span>
+          </h1>
+          <p class="text-xl text-gray-600 dark:text-gray-300 mb-6">
+            Generate a Nostr identity — an npub + nsec key pair — right here in your browser.
+            Free, no sign-up, and nothing is sent to any server.
+          </p>
+          <div class="flex flex-wrap justify-center gap-4 text-sm">
+            <span class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400">
+              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 flex items-center justify-center text-xs" aria-hidden="true">✓</span>
+              Runs locally in your browser
+            </span>
+            <span class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400">
+              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 flex items-center justify-center text-xs" aria-hidden="true">✓</span>
+              No email, no phone number
+            </span>
+            <span class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400">
+              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 flex items-center justify-center text-xs" aria-hidden="true">✓</span>
+              Works with every Nostr client
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The tool -->
+    <section class="py-12 bg-gray-50 dark:bg-gray-900/30">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <KeyGenerator client:idle />
+          <p class="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
+            Part of the free <a href="/tools" class="text-primary-600 dark:text-primary-400 hover:underline">Nostr tools</a> collection.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="py-16 bg-white dark:bg-gray-800">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">How it works</h2>
+          <div class="space-y-4 text-gray-600 dark:text-gray-300">
+            <p>
+              The generator uses in-browser cryptography (the open-source
+              <code class="text-sm">nostr-tools</code> library, the same one most Nostr apps are
+              built on) to create a random secp256k1 key pair on your device. Two values come out:
+            </p>
+            <ul class="list-disc ps-6 space-y-2">
+              <li>
+                <strong class="text-gray-900 dark:text-white">npub</strong> — your public key.
+                This is your identity on Nostr: share it so people can find and follow you.
+              </li>
+              <li>
+                <strong class="text-gray-900 dark:text-white">nsec</strong> — your secret key.
+                It signs everything you publish and <em>is</em> your account. Whoever holds it
+                controls the identity — so nobody should ever see it but you.
+              </li>
+            </ul>
+            <p>
+              There is no registration step because Nostr has no central server to register with:
+              a key pair is the whole account. Import the nsec into any client — Damus, Amethyst,
+              Primal, Iris and the rest — and you are the same person in all of them.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Safety note -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Before you close this tab</h2>
+          <div class="p-6 rounded-2xl border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-900/20">
+            <ul class="space-y-3 text-gray-700 dark:text-gray-300">
+              <li class="flex gap-3">
+                <span aria-hidden="true">🔑</span>
+                <span>
+                  <strong class="text-gray-900 dark:text-white">Your keys never leave this page.</strong>{' '}
+                  They are generated and displayed locally — no data is sent to our servers, and we
+                  could not recover your key for you even if you asked.
+                </span>
+              </li>
+              <li class="flex gap-3">
+                <span aria-hidden="true">📝</span>
+                <span>
+                  <strong class="text-gray-900 dark:text-white">Save the nsec offline, now.</strong>{' '}
+                  Paper or a password manager both work. If the nsec is lost, the account is lost —
+                  there is no reset and no recovery, by design.
+                </span>
+              </li>
+              <li class="flex gap-3">
+                <span aria-hidden="true">🤫</span>
+                <span>
+                  <strong class="text-gray-900 dark:text-white">Never share or paste the nsec anywhere</strong>{' '}
+                  except into a Nostr client (or, better, a signer extension) that you trust.
+                  The npub, on the other hand, is made for sharing.
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What next -->
+    <section class="py-16 bg-white dark:bg-gray-800">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-10">
+            You have keys. Now what?
+          </h2>
+          <div class="grid md:grid-cols-3 gap-6">
+            {nextSteps.map((item) => (
+              <a
+                href={item.href}
+                class="group block p-6 bg-gray-50 dark:bg-gray-900/40 rounded-2xl border border-gray-200 dark:border-gray-700 hover:border-primary/60 hover:shadow-sm transition-all"
+              >
+                <div class="w-10 h-10 mb-4 rounded-xl bg-primary/10 flex items-center justify-center font-bold text-primary-600 dark:text-primary-400">
+                  {item.step}
+                </div>
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-primary-700 dark:group-hover:text-primary-300 transition-colors">
+                  {item.title}
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">{item.description}</p>
+                <span class="text-sm font-medium text-primary-600 dark:text-primary-400">
+                  {item.cta} →
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-8">
+            Frequently asked questions
+          </h2>
+          {faqs.map((faq) => (
+            <FAQAccordion question={faq.question} category="security">
+              <p>{faq.answer}</p>
+            </FAQAccordion>
+          ))}
+          <p class="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+            Want the full picture first? Read the{' '}
+            <a href="/guides/keys-and-security" class="text-primary-600 dark:text-primary-400 hover:underline">keys &amp; security guide</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  <!-- Badge celebrations can fire from this page (key generation) -->
+  <BadgeEarnedModalListener client:only="react" />
+</Layout>

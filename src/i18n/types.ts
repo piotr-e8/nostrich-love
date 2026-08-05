@@ -115,4 +115,18 @@ export interface Translations {
     startHere: string;
     complete: string;
   };
+  glossary?: {
+    title: string;
+    subtitle: string;
+    searchPlaceholder: string;
+    searchAriaLabel: string;
+    noResults: string;
+    quickReference: {
+      title: string;
+      npub: string;
+      nsec: string;
+      nip01: string;
+      kind1: string;
+    };
+  };
 }

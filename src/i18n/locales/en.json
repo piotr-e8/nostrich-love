@@ -3204,5 +3204,19 @@
         "description": "Very narrow interests and unusual perspectives you will not find elsewhere."
       }
     }
+  },
+  "glossary": {
+    "title": "Nostr Glossary",
+    "subtitle": "Learn the terminology and concepts you need to navigate the Nostr ecosystem.",
+    "searchPlaceholder": "Search terms...",
+    "searchAriaLabel": "Search glossary terms",
+    "noResults": "No terms found matching your search.",
+    "quickReference": {
+      "title": "Quick Reference",
+      "npub": "Public key - Safe to share",
+      "nsec": "Private key - Keep secret!",
+      "nip01": "Basic protocol",
+      "kind1": "Text note (post)"
+    }
   }
 }

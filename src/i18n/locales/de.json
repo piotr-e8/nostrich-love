@@ -3204,5 +3204,19 @@
         "description": "Enge Interessen und ungewöhnliche Perspektiven, die du sonst nirgends findest."
       }
     }
+  },
+  "glossary": {
+    "title": "Nostr-Glossar",
+    "subtitle": "Lerne die Begriffe und Konzepte, die du brauchst, um dich im Nostr-Ökosystem zurechtzufinden.",
+    "searchPlaceholder": "Begriffe suchen...",
+    "searchAriaLabel": "Glossarbegriffe durchsuchen",
+    "noResults": "Keine Begriffe gefunden, die zu deiner Suche passen.",
+    "quickReference": {
+      "title": "Schnellreferenz",
+      "npub": "Public Key — kann bedenkenlos geteilt werden",
+      "nsec": "Private Key — geheim halten!",
+      "nip01": "Basisprotokoll",
+      "kind1": "Textnotiz (Post)"
+    }
   }
 }

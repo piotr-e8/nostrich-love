@@ -3204,5 +3204,19 @@
         "description": "很窄的兴趣和不寻常的视角，别处找不到。"
       }
     }
+  },
+  "glossary": {
+    "title": "Nostr 术语表",
+    "subtitle": "了解在 Nostr 生态中畅行所需的术语和概念。",
+    "searchPlaceholder": "搜索术语...",
+    "searchAriaLabel": "搜索术语表中的术语",
+    "noResults": "没有找到与搜索匹配的术语。",
+    "quickReference": {
+      "title": "快速参考",
+      "npub": "公钥——可以安全分享",
+      "nsec": "私钥——务必保密！",
+      "nip01": "基础协议",
+      "kind1": "文本笔记（帖子）"
+    }
   }
 }

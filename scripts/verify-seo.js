@@ -82,7 +82,7 @@ for (const l of LOCALES) {
 }
 
 // --- 4. English-only pages must NOT advertise alternates -------------------
-for (const p of ["tools/index.html", "glossary/index.html"]) {
+for (const p of ["tools/index.html"]) {
   if (!existsSync(join(DIST, p))) {
     fail(`${p} missing`);
     continue;
@@ -90,6 +90,40 @@ for (const p of ["tools/index.html", "glossary/index.html"]) {
   const n = (read(p).match(/hreflang=/g) || []).length;
   if (n === 0) ok(`${p} has no hreflang (English-only route)`);
   else fail(`${p} advertises ${n} hreflang alternates for pages that may not exist`);
+}
+
+// --- 4b. Glossary ships in exactly en+pl+es+de -----------------------------
+// The route is partially localized: hreflang must list exactly the built
+// variants (a wrong alternate advertises a 404 — the audit's original sin),
+// and the unshipped locales must not exist on disk.
+const GLOSSARY_LOCALES = ["pl", "es", "de"]; // + un-prefixed en
+{
+  const expectedGlossary = ["en", ...GLOSSARY_LOCALES, "x-default"].sort();
+  const pages = [
+    { path: "glossary/index.html", canonical: `${SITE}/glossary/` },
+    ...GLOSSARY_LOCALES.map((l) => ({
+      path: `${l}/glossary/index.html`,
+      canonical: `${SITE}/${l}/glossary/`,
+    })),
+  ];
+  for (const { path, canonical } of pages) {
+    if (!existsSync(join(DIST, path))) {
+      fail(`${path} missing`);
+      continue;
+    }
+    const html = read(path);
+    const got = [...html.matchAll(/hreflang="([^"]+)"/g)].map((m) => m[1]).sort();
+    if (got.join(",") === expectedGlossary.join(","))
+      ok(`${path} hreflang is exactly {en,pl,es,de,x-default}`);
+    else fail(`${path} hreflang wrong — got [${got}], expected [${expectedGlossary}]`);
+
+    const c = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
+    if (c === canonical) ok(`${path} canonical correct`);
+    else fail(`${path} canonical is ${c}, expected ${canonical}`);
+  }
+  const unshipped = ["zh", "ar", "hi"].filter((l) => existsSync(join(DIST, l, "glossary")));
+  if (unshipped.length === 0) ok("no unshipped glossary locales on disk (zh/ar/hi)");
+  else for (const l of unshipped) fail(`dist/${l}/glossary exists but is not in the shipped locale set`);
 }
 
 // --- 5. Sitemap exists and agrees with the un-prefixed scheme --------------

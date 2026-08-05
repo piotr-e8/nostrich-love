@@ -11,9 +11,13 @@ const navItems = [
   { label: 'About', href: '/about' },
 ];
 
+// NOTE: "Client Recommender" was removed here — it pointed at /tools#client-recommender,
+// an anchor that has never existed on /tools (the ClientRecommender component is not
+// rendered anywhere; see docs/audit-2026-07/market-research.md §2.3). Restore it only
+// together with a page that actually hosts the component.
 const toolItems = [
-  { label: 'Client Recommender', href: '/tools#client-recommender' },
-  { label: 'Key Generator', href: '/tools#key-generator' },
+  { label: 'Key Generator', href: '/tools/key-generator' },
+  { label: 'NIP-05 Checker', href: '/tools/nip05-checker' },
   { label: 'Twitter Bridge', href: '/twitter-bridge' },
 ];
 ---
