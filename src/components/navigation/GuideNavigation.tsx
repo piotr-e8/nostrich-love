@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { SKILL_LEVELS, type SkillLevel, getGuideLevel } from '../../data/learning-paths';
@@ -15,123 +15,121 @@ interface GuideNavigationProps {
   guideTitles?: Record<string, string>;
   className?: string;
   locale?: Locale;
+  /**
+   * Slug of the guide being rendered. Required for the static render — with it
+   * this component is a pure function of its props and needs no JavaScript.
+   * Falls back to the URL so a client-side caller still works.
+   */
+  currentSlug?: string;
+}
+
+interface NavigationState {
+  prevGuide: GuideInfo | null;
+  nextGuide: GuideInfo | null;
+  isLevelComplete: boolean;
+  showOffLevelMessage: boolean;
+  currentLevel: SkillLevel;
+  nextLevel: SkillLevel | null;
+  nextLevelFirstGuide: string | null;
+}
+
+const LEVEL_ORDER: SkillLevel[] = ['beginner', 'intermediate', 'advanced'];
+
+function formatTitle(slug: string): string {
+  return slug
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+/**
+ * Where this guide sits in its level, as a pure function of the slug.
+ *
+ * This used to live in a useEffect that read window.location and drove nine
+ * useState hooks, so the server render was always a pulsing skeleton: 112 guide
+ * pages shipped no prev/next anchors at all, and readers without JS never got
+ * the "what do I read next" affordance. The effect stopped depending on
+ * anything asynchronous when level gating was removed — nothing here reads
+ * localStorage or the network, so it can simply be computed while rendering.
+ *
+ * Progress-dependent prompting still belongs on the client; that is
+ * ContinueLearning, which reads completion state and scroll position.
+ */
+function computeNavigation(
+  currentSlug: string,
+  guideTitles?: Record<string, string>
+): NavigationState {
+  const guideLevel = getGuideLevel(currentSlug);
+
+  const base: NavigationState = {
+    prevGuide: null,
+    nextGuide: null,
+    isLevelComplete: false,
+    showOffLevelMessage: false,
+    currentLevel: 'beginner',
+    nextLevel: null,
+    nextLevelFirstGuide: null,
+  };
+
+  // A slug in no level: the guide exists but is outside the curriculum.
+  if (!guideLevel) return { ...base, showOffLevelMessage: true };
+
+  const sequence = SKILL_LEVELS[guideLevel].sequence;
+  const currentIndex = sequence.indexOf(currentSlug);
+  const toGuideInfo = (slug: string): GuideInfo => ({
+    slug,
+    title: guideTitles?.[slug] || formatTitle(slug),
+  });
+
+  const prevGuide = currentIndex > 0 ? toGuideInfo(sequence[currentIndex - 1]) : null;
+  const isLevelComplete = currentIndex === sequence.length - 1;
+
+  if (!isLevelComplete) {
+    return {
+      ...base,
+      currentLevel: guideLevel,
+      prevGuide,
+      nextGuide: toGuideInfo(sequence[currentIndex + 1]),
+    };
+  }
+
+  // Last guide of the level — offer the next level's first guide instead.
+  const nextLevel = LEVEL_ORDER[LEVEL_ORDER.indexOf(guideLevel) + 1] ?? null;
+  return {
+    ...base,
+    currentLevel: guideLevel,
+    prevGuide,
+    isLevelComplete: true,
+    nextLevel,
+    nextLevelFirstGuide: nextLevel ? SKILL_LEVELS[nextLevel].sequence[0] : null,
+  };
 }
 
 export function GuideNavigation({
   guideTitles,
   className,
   locale = 'en',
+  currentSlug,
 }: GuideNavigationProps) {
   const { t } = useTranslation();
-  const [prevGuide, setPrevGuide] = useState<GuideInfo | null>(null);
-  const [nextGuide, setNextGuide] = useState<GuideInfo | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isLevelComplete, setIsLevelComplete] = useState(false);
-  const [showOffLevelMessage, setShowOffLevelMessage] = useState(false);
-  const [currentLevel, setCurrentLevel] = useState<SkillLevel>('beginner');
-  const [isNextLevelUnlocked, setIsNextLevelUnlocked] = useState(false);
-  const [nextLevelFirstGuide, setNextLevelFirstGuide] = useState<string | null>(null);
-  const [nextLevel, setNextLevel] = useState<SkillLevel | null>(null);
 
-  useEffect(() => {
-    try {
-      // Get current guide from URL
-      const pathParts = window.location.pathname.split('/');
-      const currentSlug = pathParts[pathParts.length - 1];
-      
-      // Determine which level this guide belongs to (not user's current level)
-      const guideLevel = getGuideLevel(currentSlug);
-      
-      if (!guideLevel) {
-        // Guide not found in any level
-        setShowOffLevelMessage(true);
-        setPrevGuide(null);
-        setNextGuide(null);
-        setIsLoading(false);
-        return;
-      }
-      
-      setCurrentLevel(guideLevel);
-      const levelConfig = SKILL_LEVELS[guideLevel];
-      
-      // Calculate navigation within this guide's level
-      const currentIndex = levelConfig.sequence.indexOf(currentSlug);
-      
-      // Check if this is the last guide in the level
-      if (currentIndex === levelConfig.sequence.length - 1) {
-        setIsLevelComplete(true);
-        
-        // Check if next level exists and is unlocked
-        const levels: SkillLevel[] = ['beginner', 'intermediate', 'advanced'];
-        const currentLevelIndex = levels.indexOf(guideLevel);
-        const nextLvl = levels[currentLevelIndex + 1];
-        
-        if (nextLvl) {
-          setNextLevel(nextLvl);
-          // Nothing is gated any more — the next level is always reachable.
-          setIsNextLevelUnlocked(true);
-          setNextLevelFirstGuide(SKILL_LEVELS[nextLvl].sequence[0]);
-        }
-        
-        // Previous guide (if not first)
-        if (currentIndex > 0) {
-          const prevSlug = levelConfig.sequence[currentIndex - 1];
-          setPrevGuide({
-            slug: prevSlug,
-            title: guideTitles?.[prevSlug] || formatTitle(prevSlug)
-          });
-        }
-        setNextGuide(null);
-      } else {
-        // Normal case - middle of level
-        setIsLevelComplete(false);
-        setNextLevel(null);
-        setIsNextLevelUnlocked(false);
-        setNextLevelFirstGuide(null);
-        
-        // Previous guide
-        if (currentIndex > 0) {
-          const prevSlug = levelConfig.sequence[currentIndex - 1];
-          setPrevGuide({
-            slug: prevSlug,
-            title: guideTitles?.[prevSlug] || formatTitle(prevSlug)
-          });
-        } else {
-          setPrevGuide(null); // First guide
-        }
-        
-        // Next guide
-        const nextSlug = levelConfig.sequence[currentIndex + 1];
-        setNextGuide({
-          slug: nextSlug,
-          title: guideTitles?.[nextSlug] || formatTitle(nextSlug)
-        });
-      }
-    } catch (error) {
-      console.error('[GuideNavigation] Error calculating navigation:', error);
-    }
-    
-    setIsLoading(false);
-  }, [guideTitles]);
+  // Prefer the build-time slug; fall back to the URL for a client-side caller.
+  // On the server with neither, there is nothing to navigate from.
+  const slug =
+    currentSlug ??
+    (typeof window === 'undefined'
+      ? ''
+      : window.location.pathname.replace(/\/$/, '').split('/').pop() || '');
 
-  // Format guide slug to title (fallback)
-  function formatTitle(slug: string): string {
-    return slug
-      .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
-  }
-
-  // Loading state
-  if (isLoading) {
-    return (
-      <div className={cn('border-t border-gray-200 dark:border-gray-800 pt-8 mt-12', className)}>
-        <div className="animate-pulse flex justify-center">
-          <div className="h-4 w-32 bg-gray-200 dark:bg-gray-800 rounded"></div>
-        </div>
-      </div>
-    );
-  }
+  const {
+    prevGuide,
+    nextGuide,
+    isLevelComplete,
+    showOffLevelMessage,
+    currentLevel,
+    nextLevel,
+    nextLevelFirstGuide,
+  } = computeNavigation(slug, guideTitles);
 
   const guidesPrefix = guidesIndexPath(locale).replace(/\/$/, '');
 
@@ -170,8 +168,9 @@ export function GuideNavigation({
             {t('guideNavigation.levelCompleteDescription').replace('{level}', t(`skillLevels.${currentLevel}.label`) || '')}
           </p>
           
-          {/* If next level is unlocked, show continue button */}
-          {isNextLevelUnlocked && nextLevelFirstGuide && nextLevel && (
+          {/* Level gating was removed wholesale, so the next level is always
+              reachable — there is no locked variant to render any more. */}
+          {nextLevelFirstGuide && nextLevel && (
             <a
               href={`${guidesPrefix}/${nextLevelFirstGuide}`}
               className="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors"
@@ -179,13 +178,6 @@ export function GuideNavigation({
               {t('guideNavigation.continueToLevel').replace('{level}', t(`skillLevels.${nextLevel}.label`) || '')}
               <ArrowRight className="w-4 h-4 ms-2 rtl:rotate-180" />
             </a>
-          )}
-          
-          {/* If next level is locked, show requirements */}
-          {!isNextLevelUnlocked && nextLevel && (
-            <div className="text-sm text-gray-500">
-              {t('guideNavigation.unlockRequirements').replace('{currentLevel}', t(`skillLevels.${currentLevel}.label`) || '').replace('{nextLevel}', t(`skillLevels.${nextLevel}.label`) || '')}
-            </div>
           )}
         </div>
         

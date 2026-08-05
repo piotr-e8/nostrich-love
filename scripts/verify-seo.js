@@ -195,6 +195,31 @@ if (existsSync(join(DIST, "sitemap-0.xml"))) {
     );
 }
 
+// --- 4e. Guide prev/next must be real anchors in the static HTML -----------
+// GuideNavigation used to derive the current slug from window.location inside
+// a useEffect, so all 112 guide pages served a pulsing skeleton and the
+// sequential path through the content — the site's core structure — carried no
+// anchor text at all. It is now a pure component rendered with no client
+// directive. Guard the output, not the implementation: any guide page that
+// stops emitting a prev/next link has regressed.
+{
+  const guidePages = [
+    "guides/keys-and-security/index.html", // mid-level: has both prev and next
+    "pl/guides/keys-and-security/index.html",
+    "ar/guides/keys-and-security/index.html",
+  ];
+  for (const path of guidePages) {
+    if (!existsSync(join(DIST, path))) {
+      fail(`${path} missing`);
+      continue;
+    }
+    const html = read(path);
+    const navLinks = [...html.matchAll(/href="([^"]*\/guides\/[a-z0-9-]+)"[^>]*class="group flex/g)];
+    if (navLinks.length >= 2) ok(`${path} ships ${navLinks.length} prev/next anchors statically`);
+    else fail(`${path} has ${navLinks.length} prev/next anchors — expected 2 (skeleton regression?)`);
+  }
+}
+
 // --- 5. Sitemap exists and agrees with the un-prefixed scheme --------------
 if (!existsSync(join(DIST, "sitemap-index.xml"))) fail("sitemap-index.xml missing");
 else ok("sitemap-index.xml present");

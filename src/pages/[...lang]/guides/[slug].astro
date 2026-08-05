@@ -366,8 +366,16 @@ const components = {
 
             <Content components={components} />
             
+            <!--
+              No client directive on purpose. GuideNavigation is a pure
+              function of (currentSlug, guideTitles, locale), all known here at
+              build time, so Astro renders it to static HTML and it ships zero
+              JavaScript. It was `client:idle` with the slug read from
+              window.location inside a useEffect, which meant every guide page
+              served a pulsing skeleton with no prev/next anchors in it at all.
+            -->
             <GuideNavigation
-              client:idle
+              currentSlug={guideSlug}
               guideTitles={guideTitles}
               locale={locale}
             />
