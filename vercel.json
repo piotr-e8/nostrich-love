@@ -48,18 +48,28 @@
     },
     {
       "source": "/simulators",
-      "destination": "/",
-      "permanent": false
+      "destination": "https://sandstr.app",
+      "permanent": true
+    },
+    {
+      "source": "/simulators/",
+      "destination": "https://sandstr.app",
+      "permanent": true
     },
     {
       "source": "/simulators/:slug*",
-      "destination": "/",
-      "permanent": false
+      "destination": "https://sandstr.app",
+      "permanent": true
+    },
+    {
+      "source": "/simulators/:slug*/",
+      "destination": "https://sandstr.app",
+      "permanent": true
     },
     {
       "source": "/damus-demo",
-      "destination": "/",
-      "permanent": false
+      "destination": "https://sandstr.app",
+      "permanent": true
     },
     {
       "source": "/nostr-for-:slug",
