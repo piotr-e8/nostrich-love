@@ -4,9 +4,23 @@ import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import { BadgeEarnedModalListener } from '../components/gamification/BadgeEarnedModalListener';
 import { KeyGenerator, NIP05Checker, RelayPlayground, FollowPackFinder } from '../components/interactive';
+import { breadcrumbList } from '../lib/breadcrumbs';
 
 const title = 'Interactive Tools';
 const description = 'Free browser-based tools for Nostr: key generator, client recommender, NIP-05 checker, follow pack finder, and relay explorer. Generate keys securely in your browser.';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Nostr Tools',
+    description,
+    url: 'https://nostrich.love/tools/',
+    inLanguage: 'en',
+    isPartOf: { '@id': 'https://nostrich.love/#website' },
+  },
+  breadcrumbList([{ name: 'Tools', path: '/tools/' }]),
+];
 
 interface ToolCard {
   id: string;
@@ -54,7 +68,7 @@ const tools: ToolCard[] = [
 ];
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} jsonLd={jsonLd}>
   <Header />
   
   <main id="main-content">

@@ -365,6 +365,12 @@ export function OfficialAccountWidget({
             <img
               src={displayPicture}
               alt={displayName}
+              // Matches w-12/h-12 (48px) so the row does not reflow when this
+              // remote avatar arrives. See AccountCard for the same reasoning.
+              width={48}
+              height={48}
+              loading="lazy"
+              decoding="async"
               className="w-12 h-12 rounded-full object-cover border-2 border-orange-200 dark:border-orange-900"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = "none";

@@ -9,6 +9,8 @@ import { getTranslations, type Locale } from '../../../i18n';
 import { locales } from '../../../config/locales';
 import { langParam, isLocale, DEFAULT_LOCALE, guidePath } from '../../../i18n/paths';
 import { COMPARISON_PAGES } from '../../../config/comparison-pages';
+import { breadcrumbList } from '../../../lib/breadcrumbs';
+import { getLocaleConfig } from '../../../config/locales';
 import { getCollection } from 'astro:content';
 
 // Generate static paths for all locales.
@@ -56,12 +58,41 @@ const skillLevelsData = Object.entries(SKILL_LEVELS).map(([levelId, levelConfig]
 
 const title = translations.guidesPage?.hero?.title || 'Learn Nostr';
 const description = translations.guidesPage?.hero?.description || 'Interactive step-by-step guides to understand Nostr';
+
+// The hub is the parent of 16 guides but declared itself to be nothing. A
+// CollectionPage listing them in reading order gives crawlers and answer
+// engines the parent-child map that a flat sitemap cannot express.
+const hubUrl = new URL(Astro.url.pathname, 'https://nostrich.love').toString();
+const orderedGuides = skillLevelsData.flatMap((level) => level.guides);
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: title,
+    description,
+    url: hubUrl,
+    inLanguage: getLocaleConfig(currentLocale).htmlLang,
+    isPartOf: { '@id': 'https://nostrich.love/#website' },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: orderedGuides.length,
+      itemListElement: orderedGuides.map((guide, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: guide.title,
+        url: new URL(guide.href, 'https://nostrich.love').toString(),
+      })),
+    },
+  },
+  breadcrumbList([{ name: title, path: Astro.url.pathname }]),
+];
 ---
 
 <Layout 
   title={title}
   description={description}
   locale={currentLocale}
+  jsonLd={jsonLd}
 >
   <Header />
   

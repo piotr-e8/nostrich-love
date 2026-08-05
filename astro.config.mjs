@@ -30,14 +30,22 @@ export default defineConfig({
     sitemap({
       i18n: {
         defaultLocale: 'en',
+        // Bare language codes, NOT region-qualified ones (en-US, pl-PL, ...).
+        // src/components/SEO.astro emits hreflang from localeConfig.htmlLang,
+        // which is bare, so region codes here made the sitemap and the HTML
+        // annotate the same URL cluster with two different sets of values.
+        // Bare codes are also the honest claim: the content is not written for
+        // US English or Saudi Arabic specifically. Keep these in lockstep with
+        // localeConfig.htmlLang in src/config/locales.ts —
+        // scripts/verify-seo.js asserts the two agree.
         locales: {
-          en: 'en-US',
-          pl: 'pl-PL',
-          es: 'es-ES',
-          de: 'de-DE',
-          zh: 'zh-CN',
-          ar: 'ar-SA',
-          hi: 'hi-IN',
+          en: 'en',
+          pl: 'pl',
+          es: 'es',
+          de: 'de',
+          zh: 'zh',
+          ar: 'ar',
+          hi: 'hi',
         },
       },
       // The i18n option emits one <xhtml:link> per locale but no x-default,
@@ -45,7 +53,7 @@ export default defineConfig({
       // Point it at the English (un-prefixed) version.
       serialize(item) {
         if (item.links && item.links.length > 1) {
-          const fallback = item.links.find((link) => link.lang === "en-US");
+          const fallback = item.links.find((link) => link.lang === "en");
           if (fallback && !item.links.some((link) => link.lang === "x-default")) {
             item.links.push({ lang: "x-default", url: fallback.url });
           }

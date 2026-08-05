@@ -49,10 +49,39 @@ if (import.meta.env.SSR) {
 }
 
 /**
- * Get current locale from URL path
- * Returns 'en', 'pl', 'es', 'de', 'zh', 'ar', or 'hi' based on URL prefix
+ * The locale of the page currently being rendered, during the build only.
+ *
+ * On the client the locale comes from the URL. On the server there is no URL:
+ * getCurrentLocale() used to receive '' and answer 'en' for every page, so every
+ * React island server-rendered ENGLISH into localized pages. The translations
+ * were there and correct — the islands simply could not see which page they were
+ * on, and the English text stayed in the static HTML that crawlers read first.
+ *
+ * Astro's static build renders pages one at a time (build.concurrency defaults
+ * to 1 and astro.config.mjs does not raise it), so a module-scoped value set by
+ * Layout.astro before its slot renders is correct for the whole page. IF THAT
+ * CONCURRENCY IS EVER RAISED, this must become an AsyncLocalStorage — pages
+ * would otherwise interleave and read each other's locale.
  */
-export function getCurrentLocale(path: string = typeof window !== 'undefined' ? window.location.pathname : ''): Locale {
+let serverLocale: Locale = FALLBACK_LOCALE;
+
+/** Called by Layout.astro, once per page render. Build-time only; a no-op cost in the browser. */
+export function setServerLocale(locale: Locale): void {
+  serverLocale = locale;
+}
+
+/**
+ * Get current locale from URL path.
+ * Returns 'en', 'pl', 'es', 'de', 'zh', 'ar', or 'hi' based on URL prefix.
+ *
+ * With no argument: the browser reads the URL, the server reports the page
+ * being rendered. An explicit path always wins, in both environments.
+ */
+export function getCurrentLocale(path?: string): Locale {
+  if (path === undefined) {
+    if (typeof window === 'undefined') return serverLocale;
+    path = window.location.pathname;
+  }
   if (path.startsWith('/pl/')) return 'pl';
   if (path.startsWith('/es/')) return 'es';
   if (path.startsWith('/de/')) return 'de';

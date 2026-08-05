@@ -438,7 +438,7 @@
       "title": "Wie Posts Reisen: Relays Erklärt",
       "description": "Verstehe, wie Nostr-Relays funktionieren mit einfachen Analogien und interaktiven Tools",
       "quiz": {
-        "title": "Relay Deep Dive Quiz",
+        "title": "Relay-Vertiefungs-Quiz",
         "questions": [
           {
             "id": "relay-definition",
@@ -698,7 +698,7 @@
       "title": "Zaps: Trinkgelder auf Nostr",
       "description": "Lerne, wie du Bitcoin-Trinkgelder (Zaps) auf Nostr über das Lightning Network sendest und empfängst",
       "quiz": {
-        "title": "Lightning & Zaps Quiz",
+        "title": "Lightning-&-Zaps-Quiz",
         "questions": [
           {
             "id": "what-are-zaps",
@@ -821,7 +821,7 @@
       "title": "Häufige Probleme & Lösungen",
       "description": "Schnelle Lösungen für die häufigsten Nostr-Probleme und Fragen",
       "quiz": {
-        "title": "Problem Solving Quiz",
+        "title": "Problemlösungs-Quiz",
         "questions": [
           {
             "id": "empty-feed",
@@ -962,7 +962,7 @@
       "title": "Multi-Client-Workflow",
       "description": "Maximiere deine Nostr-Erfahrung mit mehreren Clients. Desktop + Mobile Workflows, Synchronisierungsstrategien und Best Practices für Power-User.",
       "quiz": {
-        "title": "Multi-Client Usage Quiz",
+        "title": "Multi-Client-Nutzungs-Quiz",
         "questions": [
           {
             "id": "same-identity",
@@ -1200,7 +1200,7 @@
       "title": "Privacy & Security Deep Dive",
       "description": "Erweiterte Sicherheitspraktiken für Nostr. Schütze deine Identität, verhindere Metadaten-Lecks und bewahre deine Privatsphäre bei der Nutzung dezentraler sozialer Medien.",
       "quiz": {
-        "title": "Advanced Privacy & Security Quiz",
+        "title": "Quiz: Privatsphäre & Sicherheit für Fortgeschrittene",
         "questions": [
           {
             "id": "separate-personas",
@@ -1341,7 +1341,7 @@
       "title": "NIP-17: Private Direktnachrichten",
       "description": "Lerne über NIP-17, den sicheren Ersatz für NIP-04, und wie du deine privaten Nachrichten in Nostr migrierst",
       "quiz": {
-        "title": "NIP-17 Private Messages Quiz",
+        "title": "NIP-17-Quiz zu privaten Nachrichten",
         "questions": [
           {
             "id": "nip17-purpose",
@@ -1688,7 +1688,7 @@
               }
             ],
             "correctId": "a",
-            "explanation": "When you update your relay list (kind:10002), followers automatically start checking your new relays. No manual reconnection needed!",
+            "explanation": "Wenn du deine Relay-Liste (kind:10002) aktualisierst, prüfen deine Follower automatisch deine neuen Relays. Kein manuelles Neuverbinden nötig!",
             "severity": "critical"
           }
         ]
@@ -2467,7 +2467,7 @@
     "featureLabels": {
       "wallet": "Wallet",
       "media": "Medien",
-      "longform": "Long-form",
+      "longform": "Langform",
       "privacy": "Privatsphäre"
     },
     "clearFilters": "Alle Filter zurücksetzen",
@@ -2489,178 +2489,178 @@
     "clients": {
       "damus": {
         "name": "Damus",
-        "description": "The most popular iOS client with a polished UI and smooth experience.",
+        "description": "Der beliebteste iOS-Client mit ausgereifter Oberfläche und flüssiger Bedienung.",
         "pros": [
-          "Beautiful UI",
-          "Easy to use",
-          "Active development",
-          "Great onboarding",
-          "Zaps support"
+          "Schöne Oberfläche",
+          "Einfach zu bedienen",
+          "Aktive Entwicklung",
+          "Guter Einstieg",
+          "Zaps-Unterstützung"
         ],
         "cons": [
-          "iOS only",
-          "Limited desktop sync",
-          "No long-form content"
+          "Nur iOS",
+          "Eingeschränkte Desktop-Synchronisierung",
+          "Keine Langform-Inhalte"
         ]
       },
       "amethyst": {
         "name": "Amethyst",
-        "description": "A feature-rich Android client with excellent support for all Nostr features.",
+        "description": "Ein funktionsreicher Android-Client mit hervorragender Unterstützung für alle Nostr-Funktionen.",
         "pros": [
-          "Full-featured",
-          "Zaps support",
-          "Active community",
-          "Regular updates",
-          "Highly customizable"
+          "Voller Funktionsumfang",
+          "Zaps-Unterstützung",
+          "Aktive Community",
+          "Regelmäßige Updates",
+          "Sehr anpassbar"
         ],
         "cons": [
-          "Can be overwhelming for beginners",
-          "Android only",
-          "Complex settings"
+          "Kann Einsteiger überfordern",
+          "Nur Android",
+          "Komplexe Einstellungen"
         ]
       },
       "primal": {
         "name": "Primal",
-        "description": "A fast, modern client available on all platforms with excellent performance.",
+        "description": "Ein schneller, moderner Client für alle Plattformen mit hervorragender Performance.",
         "pros": [
-          "All platforms",
-          "Fast loading",
-          "Great search",
-          "Beautiful design",
-          "Regular updates"
+          "Alle Plattformen",
+          "Schnelles Laden",
+          "Starke Suche",
+          "Schönes Design",
+          "Regelmäßige Updates"
         ],
         "cons": [
-          "Privacy concerns for some",
-          "Newer app",
-          "Some features still in development"
+          "Für manche bedenklich beim Datenschutz",
+          "Neuere App",
+          "Einige Funktionen noch in Entwicklung"
         ]
       },
       "iris": {
         "name": "Iris",
-        "description": "A simple, no-signup web client perfect for getting started quickly.",
+        "description": "Ein einfacher Web-Client ohne Registrierung – ideal für den schnellen Einstieg.",
         "pros": [
-          "No download needed",
-          "Works instantly",
-          "Clean interface",
+          "Kein Download nötig",
+          "Sofort einsatzbereit",
+          "Aufgeräumte Oberfläche",
           "Open source",
-          "Private"
+          "Privat"
         ],
         "cons": [
-          "Web only",
-          "Limited advanced features",
-          "No wallet integration"
+          "Nur Web",
+          "Wenige fortgeschrittene Funktionen",
+          "Keine Wallet-Integration"
         ]
       },
       "snort": {
         "name": "Snort",
-        "description": "A web client focused on simplicity and performance.",
+        "description": "Ein Web-Client mit Fokus auf Einfachheit und Performance.",
         "pros": [
-          "Lightning fast",
-          "Minimal UI",
-          "No bloat",
-          "Great for reading",
-          "Privacy focused"
+          "Blitzschnell",
+          "Minimalistische Oberfläche",
+          "Kein Ballast",
+          "Gut zum Lesen",
+          "Auf Privatsphäre ausgerichtet"
         ],
         "cons": [
-          "Web only",
-          "Fewer social features",
-          "No wallet"
+          "Nur Web",
+          "Weniger soziale Funktionen",
+          "Keine Wallet"
         ]
       },
       "coracle": {
         "name": "Coracle",
-        "description": "A desktop client for power users with advanced features.",
+        "description": "Ein Desktop-Client für Power-User mit erweiterten Funktionen.",
         "pros": [
-          "Powerful features",
-          "Desktop optimized",
-          "Great for creators",
-          "Advanced filtering",
-          "Keyboard shortcuts"
+          "Mächtige Funktionen",
+          "Für Desktop optimiert",
+          "Gut für Kreative",
+          "Erweiterte Filter",
+          "Tastenkürzel"
         ],
         "cons": [
           "Desktop only",
-          "Steeper learning curve",
-          "Not mobile friendly"
+          "Steilere Lernkurve",
+          "Nicht für Mobilgeräte geeignet"
         ]
       },
       "current": {
         "name": "Current",
-        "description": "iOS client with excellent Nostr Wallet Connect integration.",
+        "description": "iOS-Client mit hervorragender Nostr-Wallet-Connect-Integration.",
         "pros": [
-          "Best wallet support",
-          "NWC integration",
-          "Power user features",
+          "Beste Wallet-Unterstützung",
+          "NWC-Integration",
+          "Funktionen für Power-User",
           "Clean UI"
         ],
         "cons": [
           "More complex",
-          "iOS only",
-          "Learning curve"
+          "Nur iOS",
+          "Lernkurve"
         ]
       },
       "habla": {
         "name": "Habla",
-        "description": "Long-form content focused client with newsletter support.",
+        "description": "Client für Langform-Inhalte mit Newsletter-Unterstützung.",
         "pros": [
-          "Great for articles",
-          "Newsletter support",
-          "Clean writing interface",
+          "Gut für Artikel",
+          "Newsletter-Unterstützung",
+          "Aufgeräumte Schreibumgebung",
           "Monetization"
         ],
         "cons": [
-          "Web only",
-          "Smaller user base",
-          "Limited social features"
+          "Nur Web",
+          "Kleinere Nutzerbasis",
+          "Eingeschränkte soziale Funktionen"
         ]
       },
       "nostur": {
         "name": "Nostur",
-        "description": "A feature-rich iOS client with a focus on usability.",
+        "description": "Ein funktionsreicher iOS-Client mit Fokus auf Bedienbarkeit.",
         "pros": [
           "Great UI",
           "Fast",
-          "Good relay management",
+          "Gute Relay-Verwaltung",
           "Active dev"
         ],
         "cons": [
-          "iOS only",
-          "Some learning required"
+          "Nur iOS",
+          "Etwas Einarbeitung nötig"
         ]
       },
       "plebstr": {
         "name": "Plebstr",
-        "description": "A simple Android client for beginners.",
+        "description": "Ein einfacher Android-Client für Einsteiger.",
         "pros": [
-          "Easy to use",
+          "Einfach zu bedienen",
           "Clean design",
-          "Good performance"
+          "Gute Performance"
         ],
         "cons": [
-          "Fewer features",
-          "Android only",
-          "No wallet"
+          "Weniger Funktionen",
+          "Nur Android",
+          "Keine Wallet"
         ]
       }
     },
     "tags": {
-      "beginnerFriendly": "Beginner Friendly",
-      "popular": "Popular",
-      "powerUser": "Power User",
-      "featureRich": "Feature Rich",
-      "crossPlatform": "Cross Platform",
-      "webOnly": "Web Only",
-      "minimal": "Minimal",
-      "privacy": "Privacy",
-      "walletFocused": "Wallet Focused",
-      "longForm": "Long Form",
-      "writers": "Writers",
+      "beginnerFriendly": "Einsteigerfreundlich",
+      "popular": "Beliebt",
+      "powerUser": "Power-User",
+      "featureRich": "Funktionsreich",
+      "crossPlatform": "Plattformübergreifend",
+      "webOnly": "Nur Web",
+      "minimal": "Minimalistisch",
+      "privacy": "Privatsphäre",
+      "walletFocused": "Wallet-orientiert",
+      "longForm": "Langform",
+      "writers": "Autoren",
       "ios": "iOS",
       "android": "Android",
       "desktop": "Desktop"
     }
   },
   "relayExplorer": {
-    "title": "Relay Explorer",
+    "title": "Relay-Explorer",
     "description": "Durchsuche und verbinde dich mit Nostr-Relays. Relays speichern und verteilen deine Beiträge. Verbinde dich mit mehreren Relays für bessere Zuverlässigkeit.",
     "testAll": "Alle testen",
     "checking": "Überprüfe...",

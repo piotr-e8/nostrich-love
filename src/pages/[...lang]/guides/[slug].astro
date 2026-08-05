@@ -48,7 +48,9 @@ import { BadgeEarnedModalListener } from '../../../components/gamification/Badge
 import type { Badge } from '../../../components/gamification/types';
 import { LEARNING_PATHS, getPreviousGuideInPath, getNextGuideInPath, getGuidePositionInPath, getPathLength } from '../../../data/learning-paths';
 import { locales, getLocaleConfig, type Locale } from '../../../config/locales';
-import { langParam, DEFAULT_LOCALE } from '../../../i18n/paths';
+import { langParam, DEFAULT_LOCALE, guidesIndexPath } from '../../../i18n/paths';
+import { breadcrumbList } from '../../../lib/breadcrumbs';
+import { faqPageSchema } from '../../../lib/faq-schema';
 import { t } from '../../../i18n';
 
 // Legacy GUIDE_ORDER for backward compatibility and general path
@@ -181,6 +183,25 @@ const jsonLd = {
   ...(guide.data.tags ? { keywords: guide.data.tags.join(', ') } : {}),
 };
 
+// Home > Guides > this guide, in this locale. The hub label is the guides
+// index's own localized H1, so the trail reads in the reader's language rather
+// than a hardcoded English "Guides".
+// Locale passed explicitly, never inferred: page frontmatter runs BEFORE
+// Layout.astro calls setServerLocale, so a bare t() here would resolve against
+// whichever page the build rendered previously.
+const guidesHubLabel = t('guidesPage.hero.title', locale as Locale) || 'Guides';
+const breadcrumbs = breadcrumbList([
+  { name: guidesHubLabel, path: guidesIndexPath(locale as Locale) },
+  { name: guide.data.title, path: Astro.url.pathname },
+]);
+
+// Guides authored as <FAQAccordion> blocks also describe themselves as an
+// FAQPage. Today that is the FAQ guide in each of the seven locales; the check
+// is on the content, not on the slug, so a future Q&A guide gets it for free.
+const faqSchema = guide.body ? faqPageSchema(guide.body, guideUrl, getLocaleConfig(locale as Locale).htmlLang) : null;
+
+const pageSchema = [jsonLd, breadcrumbs, ...(faqSchema ? [faqSchema] : [])];
+
 // Get guide titles for all guides (used by client-side navigation)
 const allGuides = await getCollection('guides');
 const guidesMap = new Map(allGuides.filter(g => g.slug.startsWith(`${locale}/`)).map(g => [g.slug.replace(`${locale}/`, ''), g]));
@@ -276,7 +297,7 @@ const components = {
 };
 ---
 
-<Layout title={title} description={description} locale={locale as Locale} type="article" author="Piotr Czarnoleski" publishedTime={publishedDate} modifiedTime={modifiedDate} jsonLd={jsonLd}>
+<Layout title={title} description={description} locale={locale as Locale} type="article" author="Piotr Czarnoleski" publishedTime={publishedDate} modifiedTime={modifiedDate} jsonLd={pageSchema}>
   <Header />
 
   <MinimalProgressBar client:idle guideId={guideSlug} estimatedTimeMinutes={estimatedTimeMinutes} />

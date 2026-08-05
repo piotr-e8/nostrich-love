@@ -66,13 +66,20 @@ if (!existsSync(join(DIST, SAMPLE))) {
     ok(`guide hreflang set complete (${hreflangs.length})`);
   else fail(`guide hreflang wrong — got [${hreflangs}], missing [${missing}]`);
 
+  // A page may emit one node or an array of them — guides now ship
+  // LearningResource + BreadcrumbList (+ FAQPage where the guide is Q&A).
+  // Assert the types we depend on rather than just "something parsed".
   const ld = html.match(/<script type="application\/ld\+json"[^>]*>(.*?)<\/script>/s)?.[1];
   if (!ld) fail("guide page has no JSON-LD");
   else {
     try {
       const parsed = JSON.parse(ld);
-      if (parsed["@type"]) ok(`JSON-LD parses (@type: ${parsed["@type"]})`);
-      else fail("JSON-LD has no @type");
+      const types = (Array.isArray(parsed) ? parsed : [parsed]).map((n) => n?.["@type"]);
+      const required = ["LearningResource", "BreadcrumbList"];
+      const missingTypes = required.filter((type) => !types.includes(type));
+      if (types.some((type) => !type)) fail(`a JSON-LD node has no @type (got [${types}])`);
+      else if (missingTypes.length === 0) ok(`JSON-LD parses (@type: ${types.join(", ")})`);
+      else fail(`guide JSON-LD is missing [${missingTypes}] — got [${types}]`);
     } catch {
       fail("JSON-LD does not parse");
     }
@@ -165,6 +172,27 @@ const GLOSSARY_LOCALES = ["pl", "es", "de"]; // + un-prefixed en
   if (glossary && wrong.length === 0)
     ok("glossary language row links no unshipped locale");
   else fail(`glossary language row links unshipped locales: ${wrong.join(", ")}`);
+}
+
+// --- 4d. HTML hreflang and sitemap hreflang must annotate the same cluster --
+// They are emitted by two independent code paths: SEO.astro reads
+// localeConfig.htmlLang (bare codes), @astrojs/sitemap reads the i18n.locales
+// map in astro.config.mjs. Those drifted — the HTML said hreflang="es" while
+// the sitemap said "es-ES" for the same URL pair, so the two annotations
+// described the same cluster with different values. Assert they agree.
+if (existsSync(join(DIST, "sitemap-0.xml"))) {
+  const sm = read("sitemap-0.xml");
+  const smLangs = new Set([...sm.matchAll(/hreflang="([^"]+)"/g)].map((m) => m[1]));
+  const htmlLangs = new Set(hreflangsOf(read(SAMPLE)));
+  const onlyInSitemap = [...smLangs].filter((l) => !htmlLangs.has(l));
+  const onlyInHtml = [...htmlLangs].filter((l) => !smLangs.has(l));
+  if (onlyInSitemap.length === 0 && onlyInHtml.length === 0)
+    ok(`hreflang codes agree between HTML and sitemap (${[...htmlLangs].sort().join(",")})`);
+  else
+    fail(
+      `hreflang code mismatch — sitemap-only [${onlyInSitemap}], HTML-only [${onlyInHtml}]. ` +
+        `Keep astro.config.mjs i18n.locales in lockstep with localeConfig.htmlLang.`
+    );
 }
 
 // --- 5. Sitemap exists and agrees with the un-prefixed scheme --------------

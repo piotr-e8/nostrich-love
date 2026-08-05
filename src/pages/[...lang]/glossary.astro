@@ -11,6 +11,7 @@ import glossaryDe, { meta as metaDe } from '../../data/glossary/de';
 import { getLocaleConfig } from '../../config/locales';
 import { langParam } from '../../i18n/paths';
 import { t } from '../../i18n';
+import { breadcrumbList } from '../../lib/breadcrumbs';
 
 // One page per shipped glossary locale. English gets `undefined` so the rest
 // param emits the un-prefixed /glossary (same pattern as the guides).
@@ -56,9 +57,13 @@ const jsonLd = {
     inDefinedTermSet: pageUrl,
   })),
 };
+
+const breadcrumbs = breadcrumbList([
+  { name: t('glossary.title', locale), path: Astro.url.pathname },
+]);
 ---
 
-<Layout title={meta.seoTitle} description={meta.description} locale={locale} jsonLd={jsonLd}>
+<Layout title={meta.seoTitle} description={meta.description} locale={locale} jsonLd={[jsonLd, breadcrumbs]}>
   <Header />
 
   <main id="main-content">

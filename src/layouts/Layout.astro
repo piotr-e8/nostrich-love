@@ -9,12 +9,21 @@ import { siteConfig } from "../config/site";
 import type { SEOProps } from "../config/seo-types";
 import { StreakBannerWrapper } from "../components/gamification/StreakBannerWrapper";
 import { type Locale, getLocaleConfig } from "../config/locales";
+import { setServerLocale } from "../i18n";
 
 interface Props extends SEOProps {
   locale?: Locale;
 }
 
 const { locale = 'en', ...props } = Astro.props;
+
+// Tell the i18n module which page is being rendered, BEFORE the slot below
+// renders any React island. Without this every island server-renders English,
+// because on the server there is no URL to read the locale from — see the
+// comment on setServerLocale. Astro runs a component's frontmatter before its
+// slot content, so this is in place for everything the page contains.
+setServerLocale(locale);
+
 const localeConfig = getLocaleConfig(locale);
 const htmlLang = localeConfig.htmlLang;
 const dir = localeConfig.direction;

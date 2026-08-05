@@ -68,6 +68,14 @@ export const AccountCard: React.FC<AccountCardProps> = ({
           <img
             src={account.picture}
             alt={`${account.name}'s avatar`}
+            // Intrinsic size matches w-12/h-12 (48px). Without it the browser
+            // reserves no space for a hotlinked avatar it has never seen, so
+            // every card jumps as images land — the whole list shifts on a
+            // page that renders dozens of them.
+            width={48}
+            height={48}
+            loading="lazy"
+            decoding="async"
             className="w-12 h-12 rounded-full object-cover flex-shrink-0 bg-gray-200 dark:bg-gray-700"
             onError={() => setImageError(true)}
           />
