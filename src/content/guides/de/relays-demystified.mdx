@@ -26,16 +26,22 @@ Stell dir Nostr als Netzwerk von Postämtern auf der ganzen Welt vor.
 
 Hier ist der Hauptunterschied zu traditionellen sozialen Medien: **Du wählst, wohin du deine Post sendest.**
 
-```
-Traditional Social Media:    Nostr:
-┌──────────────────┐        ┌──────────────────┐
-│ One Big Server   │        │ Many Post Offices│
-│ (Twitter/X)      │        │ (Relays)         │
-│                  │        │                  │
-│ Everyone in      │        │ You pick which   │
-│ one place        │        │ ones to use      │
-└──────────────────┘        └──────────────────┘
-```
+<DiagramCompare
+  panels={[
+    {
+      title: "Traditionelle soziale Medien",
+      subtitle: "Twitter/X",
+      lines: ["Ein großer Server", "Alle an einem Ort", "Das Unternehmen bestimmt die Regeln"],
+    },
+    {
+      title: "Nostr",
+      subtitle: "Relays",
+      tone: "positive",
+      lines: ["Viele Postämter", "Du wählst, welche du nutzt", "Kein einzelner Ort zum Abschalten"],
+    },
+  ]}
+  caption="Ein Server für alle gegenüber vielen Relays, zwischen denen du wählst."
+/>
 
 ### Die Macht der Wahl
 
@@ -56,33 +62,40 @@ Hier ist die häufigste Verwirrung, mit der neue Nutzer konfrontiert werden:
 
 ### Die Visuelle Erklärung
 
-```
-Deine Verbindung                    Freundes Verbindung
-     │                                  │
-     ▼                                  ▼
-┌──────────┐                     ┌──────────┐
-│ Relay A  │         ❌          │ Relay B  │
-│ (wss://...)│   Keine Verbindung │(wss://...)│
-└──────────┘                     └──────────┘
-     │                                  │
-  Deine Posts                        Freundes Posts
-```
+<DiagramNodes
+  rows={[
+    { nodes: [{ label: "Du", sub: "Nur Relay A" }, { label: "Dein Freund", sub: "Nur Relay B" }] },
+    {
+      connector: "Kein gemeinsames Relay",
+      nodes: [
+        { label: "Relay A", sub: "wss://relay-a.example" },
+        { label: "Relay B", sub: "wss://relay-b.example" },
+      ],
+    },
+    { nodes: [{ label: "Deine Posts bleiben hier" }, { label: "Seine Posts bleiben dort" }] },
+  ]}
+  caption="Ohne gemeinsames Relay sieht keiner von euch die Posts des anderen."
+/>
 
 **Wenn du auf Relay A postest und dein Freund nur Relay B nutzt, wird er deinen Post nicht sehen.**
 
 ### Die Lösung: Mit Mehreren Relays Verbinden
 
-```
-Deine Verbindung
-     │
-┌────┴────┐
-│ Relay A │
-│ Relay B │  ← Verbinde dich mit beiden!
-│ Relay C │
-└────┬────┘
-     │
-   Deine Posts → Erreichen mehr Menschen
-```
+<DiagramNodes
+  rows={[
+    { nodes: [{ label: "Du", sub: "Mit allen dreien verbunden", tone: "positive" }] },
+    {
+      connector: "An jeden veröffentlichen",
+      nodes: [
+        { label: "Relay A" },
+        { label: "Relay B" },
+        { label: "Relay C" },
+      ],
+    },
+    { nodes: [{ label: "Deine Posts erreichen alle, die eines davon lesen", tone: "positive" }] },
+  ]}
+  caption="Erst das Veröffentlichen auf mehreren Relays macht deine Posts auffindbar."
+/>
 
 Die meisten Nostr Clients verbinden dich automatisch mit mehreren Standard-Relays. Aber dieses Verständnis hilft dir, wenn du:
 

@@ -50,15 +50,20 @@ Zaps هي إكراميات Bitcoin تُرسل عبر شبكة Lightning. إنه�
 
 ### نموذج القيمة مقابل القيمة
 
-```
-Traditional Social Media:              Nostr:
-┌──────────────────┐                 ┌──────────────────┐
-│ Free to post     │                 │ Free to post     │
-│ Free to read     │                 │ Free to read     │
-│ Attention = $$$  │                 │ Attention = ⚡   │
-│ (for platform)   │                 │ (for creator)    │
-└──────────────────┘                 └──────────────────┘
-```
+<DiagramCompare
+  panels={[
+    {
+      title: "وسائل التواصل الاجتماعي التقليدية",
+      lines: ["النشر مجاني", "القراءة مجانية", "الانتباه يدفع للمنصة"],
+    },
+    {
+      title: "Nostr",
+      tone: "positive",
+      lines: ["النشر مجاني", "القراءة مجانية", "الانتباه يدفع للمبدع"],
+    },
+  ]}
+  caption="الوصول مجاني في الحالتين — الفرق هو لمن يذهب مقابل الانتباه."
+/>
 
 ### كيف تظهر Zaps
 
@@ -69,17 +74,17 @@ Traditional Social Media:              Nostr:
 - إجماليات متراكمة على المنشورات
 - إشعارات خاصة عند استلامها
 
-```
-┌────────────────────────────────────┐
-│ Alice                              │
-│ "Just published my new article!"   │
-│                                    │
-│ [❤️ 12] [💬 3] [⚡ 5,420 sats]     │
-│                                    │
-│ ⚡ Bob zapped 1,000 sats           │
-│ ⚡ Carol zapped 500 sats           │
-└────────────────────────────────────┘
-```
+<MockPost
+  author="Alice"
+  content="نشرت للتو مقالي الجديد!"
+  reactions={[
+    { icon: "❤️", label: "12" },
+    { icon: "💬", label: "3" },
+    { icon: "⚡", label: "5,420 sats" },
+  ]}
+  zaps={["Bob أرسل Zap بقيمة 1,000 sats", "Carol أرسلت Zap بقيمة 500 sats"]}
+  caption="تظهر Zaps بين بقية التفاعلات، مع ذكر اسم المُرسِل."
+/>
 
 ### ليست إلزامية!
 
@@ -313,12 +318,15 @@ Zaps شبه عامة. بينما يمكن إخفاء المبالغ في بعض 
 
 عندما يرسل شخص Zap لمنشورك، يُقسَّم المبلغ تلقائيًا مع المتعاونين:
 
-```
-Example: Podcast Episode
-├── 70% → Host (you)
-├── 20% → Producer
-└── 10% → Editor
-```
+<DiagramSplit
+  title="مثال: حلقة بودكاست"
+  rows={[
+    { percent: 70, label: "المُضيف (أنت)" },
+    { percent: 20, label: "المنتج" },
+    { percent: 10, label: "المحرِّر" },
+  ]}
+  caption="Zap واحد يُقسَّم تلقائيًا بين كل من عمل على الحلقة."
+/>
 
 ### إعداد التقسيم
 
@@ -510,3 +518,10 @@ Example: Podcast Episode
 هل أنت مستعد لاختبار ما تعلمته عن Zaps؟
 
 <ZapsAndLightningQuiz client:idle />
+
+---
+
+## تابع القراءة
+
+- [مفاتيحك، هويتك](/ar/guides/keys-and-security)
+- [أدوات Nostr الأساسية](/ar/guides/nostr-tools)

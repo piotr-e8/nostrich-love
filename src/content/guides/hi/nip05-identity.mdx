@@ -19,19 +19,20 @@ NIP-05 (Nostr Implementation Possibility #5) आपको एक मानव-�
 
 ### यह जो समस्या हल करता है
 
-```
-NIP-05 से पहले:
-┌──────────────────────────────────────────────┐
-│ Follow: npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  │
-│ "अरे, मुझे फॉलो करो! मैं npub1abc123...xyz789 हूं"   │
-└──────────────────────────────────────────────┘
-                 ↓
-NIP-05 के बाद:
-┌──────────────────────────────────────────────┐
-│ Follow: alice@example.com                    │
-│ "अरे, मुझे फॉलो करो! मैं alice@example.com हूं"      │
-└──────────────────────────────────────────────┘
-```
+<DiagramCompare
+  panels={[
+    {
+      title: "NIP-05 से पहले",
+      lines: ['Follow: npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', '"अरे, मुझे फॉलो करो! मैं npub1abc123…xyz789 हूं"'],
+    },
+    {
+      title: "NIP-05 के बाद",
+      tone: "positive",
+      lines: ['Follow: alice@example.com', '"अरे, मुझे फॉलो करो! मैं alice@example.com हूं"'],
+    },
+  ]}
+  caption="वही पहचान, ऐसे रूप में जिसे इंसान वाकई बोलकर दोहरा सके।"
+/>
 
 ### आपको क्या मिलता है
 
@@ -73,13 +74,13 @@ NIP-05 के साथ:
 
 कई क्लाइंट NIP-05 यूज़र्स के लिए ✓ बैज दिखाते हैं:
 
-```
-┌─────────────────────┐
-│ 👤 Alice ✓          │
-│ alice@example.com   │
-│ "Bitcoin शिक्षक"      │
-└─────────────────────┘
-```
+<MockProfile
+  name="Alice"
+  handle="alice@example.com"
+  bio="Bitcoin शिक्षक"
+  verified
+  caption="एक वेरिफाइड NIP-05 पता, जैसा ज़्यादातर क्लाइंट उसे दिखाते हैं।"
+/>
 
 यह लोगों को पता लगाने में मदद करता है कि वे असली आप को फॉलो कर रहे हैं, न कि धोखेबाज।
 
@@ -467,3 +468,10 @@ curl https://yourdomain.com/.well-known/nostr.json
 - [NostrPlebs](https://nostrplebs.com) - पेड NIP-05
 - [NostrCheck](https://nostrcheck.me) - मुफ्त NIP-05 + टूल्स
 - [NIP05 जेनरेटर](https://github.com/nostr-tools/nip05) - DIY टूल्स
+
+---
+
+## आगे पढ़ें
+
+- [त्वरित शुरुआत: 5 मिनट में लॉन्च करें](/hi/guides/quickstart)
+- [ज़रूरी Nostr टूल्स](/hi/guides/nostr-tools)

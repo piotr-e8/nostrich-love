@@ -7,9 +7,14 @@ import { SKILL_LEVELS } from '../data/learning-paths';
 const totalGuides = 15; // Total number of guides across all levels
 ---
 
+<!-- noindex: this page renders the visitor's own localStorage state, so it is
+       identical and near-empty for everyone who is not already using the site.
+       Nobody searches for it, and it was sitting in the sitemap next to real
+       content. Also excluded from the sitemap in astro.config.mjs. -->
 <Layout
   title="Your Progress - Nostr Beginner Guide"
   description="Track your learning progress through Beginner, Intermediate, and Advanced skill levels."
+  noindex
 >
   <Header />
 

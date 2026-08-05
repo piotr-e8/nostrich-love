@@ -4,11 +4,10 @@
 // (house URL scheme; other locales are prefixed alternates of the same
 // content, and a 7-locale feed would be 84% duplicates for any one reader).
 //
-// No <pubDate> on purpose: zero guides carry machine-readable dates today
-// (`updated:` exists in the schema but no EN guide sets it), and RSS 2.0
-// items are valid without one. Fabricating build-time dates would mark every
-// item "new" on every deploy. If `updated:` frontmatter lands later, map it
-// to pubDate conditionally here.
+// <pubDate> is emitted only for guides whose frontmatter carries a real date
+// (`published`, or `lastUpdated`/`updated` as the fallback). RSS 2.0 items are
+// valid without one, and a build-time or git-derived stand-in would mark every
+// item "new" on every deploy — so an undated guide still ships undated.
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
@@ -29,11 +28,17 @@ export async function GET(context: APIContext) {
     title: `${siteConfig.name} — Nostr Beginner Guides`,
     description: siteConfig.description,
     site: context.site ?? siteConfig.url,
-    items: guides.map((g) => ({
-      title: g.data.title,
-      description: g.data.description ?? '',
-      link: `/guides/${g.slug.replace('en/', '')}/`,
-    })),
+    items: guides.map((g) => {
+      const pubDate = g.data.published ?? g.data.lastUpdated ?? g.data.updated;
+      return {
+        title: g.data.title,
+        description: g.data.description ?? '',
+        link: `/guides/${g.slug.replace('en/', '')}/`,
+        // Number.isNaN guard: a malformed frontmatter date must not emit an
+        // "Invalid Date" pubDate, which breaks the whole feed for readers.
+        ...(pubDate && !Number.isNaN(pubDate.getTime()) ? { pubDate } : {}),
+      };
+    }),
     customData: '<language>en</language>',
   });
 }

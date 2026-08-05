@@ -49,7 +49,7 @@ const toolItems = [
 
       <!-- Right side actions -->
       <div class="flex items-center gap-1">
-        <LanguageSwitcher client:idle />
+        <LanguageSwitcher client:idle currentPath={Astro.url.pathname} />
         <DarkModeToggleSimple client:idle />
         
         <!-- User Menu with Progress/Badges -->

@@ -3024,6 +3024,12 @@
     "sharePage": "Udostępnij tę stronę",
     "linkCopied": "Skopiowano link"
   },
+  "footer": {
+    "languages": {
+      "thisPage": "Przeczytaj tę stronę po",
+      "guides": "Przeczytaj przewodniki po"
+    }
+  },
   "guidesPage": {
     "hero": {
       "title": "Ucz się Nostr Krok po Kroku",
@@ -3217,6 +3223,7 @@
       "nsec": "Klucz prywatny — trzymaj w tajemnicy!",
       "nip01": "Podstawowy protokół",
       "kind1": "Notatka tekstowa (post)"
-    }
+    },
+    "readGuide": "Przeczytaj przewodnik: {term}"
   }
 }

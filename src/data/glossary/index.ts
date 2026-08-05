@@ -65,6 +65,44 @@ export interface GlossaryEntry {
 
 export type GlossaryData = Record<TermId, GlossaryEntry>;
 
+/**
+ * Term id -> the guide that explains it properly.
+ *
+ * The glossary defined 26 terms and linked to nothing, so it was a leaf: real
+ * inbound interest with no route onward, and none of the guides gained a
+ * contextual link from the page most likely to be quoted for their vocabulary.
+ *
+ * Locale-independent by construction — term ids and guide slugs are the same in
+ * every locale, and guidePath() adds the prefix — so one map serves all four
+ * shipped glossary locales. Terms with no obvious home are simply absent;
+ * inventing a link for the sake of coverage would be worse than none.
+ */
+export const TERM_GUIDES: Partial<Record<TermId, string>> = {
+  nostr: 'what-is-nostr',
+  npub: 'keys-and-security',
+  nsec: 'keys-and-security',
+  pubkey: 'keys-and-security',
+  'npub-format': 'keys-and-security',
+  'nsec-format': 'keys-and-security',
+  relay: 'relays-demystified',
+  'relay-list': 'relay-guide',
+  client: 'multi-client',
+  nip: 'what-is-nostr',
+  event: 'what-is-nostr',
+  kind: 'what-is-nostr',
+  zap: 'zaps-and-lightning',
+  lnurl: 'zaps-and-lightning',
+  'lightning-address': 'zaps-and-lightning',
+  nip05: 'nip05-identity',
+  'nostr-address': 'nip05-identity',
+  dm: 'nip17-private-messages',
+  feed: 'outbox-model',
+  'follow-list': 'finding-community',
+  mention: 'finding-community',
+  hashtag: 'finding-community',
+  'censorship-resistance': 'what-is-nostr',
+};
+
 /** Per-locale <title> (SEO.astro appends " | Nostrich.love") and meta description. */
 export interface GlossaryMeta {
   seoTitle: string;

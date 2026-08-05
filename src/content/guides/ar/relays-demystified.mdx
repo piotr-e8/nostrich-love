@@ -25,16 +25,22 @@ import { RelaysDemystifiedQuiz } from "@components/interactive/RelaysDemystified
 
 إليك الفرق الرئيسي عن وسائل التواصل الاجتماعي التقليدية: **أنت تختار أين ترسل بريدك.**
 
-```
-Traditional Social Media:    Nostr:
-┌──────────────────┐        ┌──────────────────┐
-│ One Big Server   │        │ Many Post Offices│
-│ (Twitter/X)      │        │ (Relays)         │
-│                  │        │                  │
-│ Everyone in      │        │ You pick which   │
-│ one place        │        │ ones to use      │
-└──────────────────┘        └──────────────────┘
-```
+<DiagramCompare
+  panels={[
+    {
+      title: "وسائل التواصل الاجتماعي التقليدية",
+      subtitle: "Twitter/X",
+      lines: ["خادم واحد كبير", "الجميع في مكان واحد", "الشركة هي من تضع القواعد"],
+    },
+    {
+      title: "Nostr",
+      subtitle: "Relays",
+      tone: "positive",
+      lines: ["مكاتب بريد كثيرة", "أنت تختار أيها تستخدم", "لا مكان واحد يمكن إغلاقه"],
+    },
+  ]}
+  caption="خادم واحد يتشاركه الجميع، مقابل relays كثيرة تختار من بينها."
+/>
 
 ### قوة الاختيار
 
@@ -55,33 +61,40 @@ Traditional Social Media:    Nostr:
 
 ### الشرح المرئي
 
-```
-Your Connection                    Friend's Connection
-     │                                  │
-     ▼                                  ▼
-┌──────────┐                     ┌──────────┐
-│ Relay A  │         ❌          │ Relay B  │
-│ (wss://...)│      No link      │(wss://...)│
-└──────────┘                     └──────────┘
-     │                                  │
-   Your posts                         Friend's posts
-```
+<DiagramNodes
+  rows={[
+    { nodes: [{ label: "أنت", sub: "Relay A فقط" }, { label: "صديقك", sub: "Relay B فقط" }] },
+    {
+      connector: "لا يوجد relay مشترك",
+      nodes: [
+        { label: "Relay A", sub: "wss://relay-a.example" },
+        { label: "Relay B", sub: "wss://relay-b.example" },
+      ],
+    },
+    { nodes: [{ label: "منشوراتك تبقى هنا" }, { label: "منشوراته تبقى هناك" }] },
+  ]}
+  caption="بلا relay مشترك، لن يرى أيٌّ منكما منشورات الآخر أبدًا."
+/>
 
 **إذا نشرت إلى Relay A وكان صديقك يستخدم Relay B فقط، فلن يرى منشورك.**
 
 ### الحل: الاتصال بـ Relays متعددة
 
-```
-Your Connection
-     │
-┌────┴────┐
-│ Relay A │
-│ Relay B │  ← Connect to both!
-│ Relay C │
-└────┬────┘
-     │
-   Your posts → Reach more people
-```
+<DiagramNodes
+  rows={[
+    { nodes: [{ label: "أنت", sub: "متصل بالثلاثة جميعًا", tone: "positive" }] },
+    {
+      connector: "انشر إلى كل واحد منها",
+      nodes: [
+        { label: "Relay A" },
+        { label: "Relay B" },
+        { label: "Relay C" },
+      ],
+    },
+    { nodes: [{ label: "منشوراتك تصل إلى كل من يقرأ من أيٍّ منها", tone: "positive" }] },
+  ]}
+  caption="النشر إلى عدة relays هو ما يجعل منشوراتك قابلة للعثور عليها."
+/>
 
 معظم عملاء Nostr يوصلونك بعدة relays افتراضية. لكن فهم هذا يساعدك عندما:
 

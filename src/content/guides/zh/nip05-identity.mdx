@@ -19,19 +19,20 @@ NIP-05（Nostr 实现可能性 #5）让你拥有一个人类可读的标识符�
 
 ### 它解决的问题
 
-```
-NIP-05 之前：
-┌──────────────────────────────────────────────┐
-│ 关注：npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  │
-│ "嘿，关注我！我是 npub1abc123...xyz789"   │
-└──────────────────────────────────────────────┘
-                ↓
-NIP-05 之后：
-┌──────────────────────────────────────────────┐
-│ 关注：alice@example.com                    │
-│ "嘿，关注我！我是 alice@example.com"      │
-└──────────────────────────────────────────────┘
-```
+<DiagramCompare
+  panels={[
+    {
+      title: "NIP-05 之前",
+      lines: ['关注：npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', '"嘿，关注我！我是 npub1abc123…xyz789"'],
+    },
+    {
+      title: "NIP-05 之后",
+      tone: "positive",
+      lines: ['关注：alice@example.com', '"嘿，关注我！我是 alice@example.com"'],
+    },
+  ]}
+  caption="同一个身份，换成一个人真正念得出口的形式。"
+/>
 
 ### 你得到什么
 
@@ -73,13 +74,13 @@ NIP-05 标识符是一个**便利**，不是必需的。你的 `npub` 是你在 
 
 许多客户端为 NIP-05 用户显示 ✓ 徽章：
 
-```
-┌─────────────────────┐
-│ 👤 Alice ✓          │
-│ alice@example.com   │
-│ "比特币教育者"  │
-└─────────────────────┘
-```
+<MockProfile
+  name="Alice"
+  handle="alice@example.com"
+  bio="比特币教育者"
+  verified
+  caption="通过验证的 NIP-05 地址，在大多数客户端里就是这样显示的。"
+/>
 
 这帮助人们知道他们关注的是真实的你，而不是冒充者。
 
@@ -463,3 +464,10 @@ curl https://yourdomain.com/.well-known/nostr.json
 - [NostrPlebs](https://nostrplebs.com) - 付费 NIP-05
 - [NostrCheck](https://nostrcheck.me) - 免费 NIP-05 + 工具
 - [NIP05 生成器](https://github.com/nostr-tools/nip05) - DIY 工具
+
+---
+
+## 继续阅读
+
+- [快速开始：5 分钟启动](/zh/guides/quickstart)
+- [必备 Nostr 工具](/zh/guides/nostr-tools)

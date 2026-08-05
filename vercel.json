@@ -13,6 +13,17 @@
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
       ]
+    },
+    {
+      "//": "Unhashed public/ assets inherit the HTML cache policy (max-age=0, must-revalidate), so the share card was re-fetched from origin on every preview render. Its filename is stable and its content changes only when someone replaces the file, in which case the og:image URL should change too.",
+      "source": "/(preview_image.png|logo.png|logo-header.png|apple-touch-icon.png|android-chrome-:size.png|favicon-:size.png|favicon.svg)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "//": "Keep the preview hostnames out of the index. Every *.vercel.app alias serves the complete site with a canonical pointing at the apex, but canonical is a hint and Google discounts it from a host whose content visibly differs — nostr-beginner-guide.vercel.app still serves /simulators/ at 200 while the apex 308s it to sandstr.app. Removing the aliases in the Vercel dashboard is the real fix; this is the belt-and-braces half that lives in the repo.",
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": ".*\\.vercel\\.app" }],
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }]
     }
   ],
   "redirects": [
@@ -74,12 +85,12 @@
     {
       "source": "/nostr-for-:slug",
       "destination": "/follow-pack",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/nostr-for-:slug/",
       "destination": "/follow-pack/",
-      "permanent": false
+      "permanent": true
     }
   ]
 }

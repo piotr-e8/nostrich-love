@@ -51,15 +51,20 @@ Think of them as "likes with value"—a way to support people whose content you 
 
 ### The Value-for-Value Model
 
-```
-Traditional Social Media:              Nostr:
-┌──────────────────┐                 ┌──────────────────┐
-│ Free to post     │                 │ Free to post     │
-│ Free to read     │                 │ Free to read     │
-│ Attention = $$$  │                 │ Attention = ⚡   │
-│ (for platform)   │                 │ (for creator)    │
-└──────────────────┘                 └──────────────────┘
-```
+<DiagramCompare
+  panels={[
+    {
+      title: "Traditional social media",
+      lines: ["Free to post", "Free to read", "Attention pays the platform"],
+    },
+    {
+      title: "Nostr",
+      tone: "positive",
+      lines: ["Free to post", "Free to read", "Attention pays the creator"],
+    },
+  ]}
+  caption="Same free access on both sides — the difference is who the attention pays."
+/>
 
 ### How Zaps Appear
 
@@ -70,17 +75,17 @@ In supported clients, zaps show up as:
 - Running totals on posts
 - Special notifications when you receive them
 
-```
-┌────────────────────────────────────┐
-│ Alice                              │
-│ "Just published my new article!"   │
-│                                    │
-│ [❤️ 12] [💬 3] [⚡ 5,420 sats]     │
-│                                    │
-│ ⚡ Bob zapped 1,000 sats           │
-│ ⚡ Carol zapped 500 sats           │
-└────────────────────────────────────┘
-```
+<MockPost
+  author="Alice"
+  content="Just published my new article!"
+  reactions={[
+    { icon: "❤️", label: "12" },
+    { icon: "💬", label: "3" },
+    { icon: "⚡", label: "5,420 sats" },
+  ]}
+  zaps={["Bob zapped 1,000 sats", "Carol zapped 500 sats"]}
+  caption="Zaps appear inline with the other reactions, with the sender named."
+/>
 
 ### Not Required!
 
@@ -314,12 +319,15 @@ Zaps are semi-public. While amounts can be private in some setups, the fact that
 
 When someone zaps your post, automatically split the payment with collaborators:
 
-```
-Example: Podcast Episode
-├── 70% → Host (you)
-├── 20% → Producer
-└── 10% → Editor
-```
+<DiagramSplit
+  title="Example: podcast episode"
+  rows={[
+    { percent: 70, label: "Host (you)" },
+    { percent: 20, label: "Producer" },
+    { percent: 10, label: "Editor" },
+  ]}
+  caption="One zap, split automatically between everyone who worked on the episode."
+/>
 
 ### Setting Up Splits
 
@@ -511,3 +519,10 @@ Join the zapping community:
 Ready to test what you've learned about zaps?
 
 <ZapsAndLightningQuiz client:idle />
+
+---
+
+## Keep reading
+
+- [Your keys, your identity](/guides/keys-and-security) — zaps are tied to the key that signs them, so this is worth getting right first
+- [Nostr tools worth knowing](/guides/nostr-tools) — wallets and services that make zapping less fiddly

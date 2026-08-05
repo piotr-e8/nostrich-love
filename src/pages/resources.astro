@@ -2,9 +2,23 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import { breadcrumbList } from '../lib/breadcrumbs';
 
 const title = 'Nostr Resources';
 const description = 'Curated collection of the best Nostr resources: clients, relays, documentation, communities, and tools. Everything you need to dive deeper into the Nostr ecosystem.';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: title,
+    description,
+    url: 'https://nostrich.love/resources/',
+    inLanguage: 'en',
+    isPartOf: { '@id': 'https://nostrich.love/#website' },
+  },
+  breadcrumbList([{ name: title, path: '/resources/' }]),
+];
 
 const resourceCategories = [
   {
@@ -112,7 +126,7 @@ const resourceCategories = [
 ];
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} jsonLd={jsonLd}>
   <Header />
   
   <main id="main-content">

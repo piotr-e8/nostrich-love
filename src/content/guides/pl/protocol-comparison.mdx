@@ -41,6 +41,25 @@ Zrozumienie, jak każdy protokół działa technicznie, pomaga wyjaśnić ich r�
 
 Nostr jest elegancko prosty: to tylko klienci i relaye.
 
+<DiagramNodes
+  rows={[
+    {
+      nodes: [
+        { label: "Klient", sub: "Ty", tone: "positive" },
+        { label: "Klient", sub: "Twój znajomy", tone: "positive" },
+      ],
+    },
+    {
+      connector: "Oba czytają i piszą",
+      nodes: [
+        { label: "Relay 1", sub: "Publiczny" },
+        { label: "Relay 2", sub: "Prywatny" },
+      ],
+    },
+  ]}
+  caption="Klienci rozmawiają z relayami bezpośrednio. Nie ma serwera, który byłby właścicielem konta."
+/>
+
 **Jak To Działa:**
 
 1. **Twoja Tożsamość:** Para kluczy kryptograficznych (npub/nsec) generowana lokalnie na Twoim urządzeniu
@@ -59,6 +78,27 @@ Nostr jest elegancko prosty: to tylko klienci i relaye.
 
 ActivityPub tworzy federację połączonych serwerów, jak email, ale dla mediów społecznościowych.
 
+<DiagramNodes
+  rows={[
+    {
+      nodes: [
+        { label: "mastodon.social", sub: "Serwer A" },
+        { label: "fosstodon.org", sub: "Serwer B" },
+        { label: "infosec.exchange", sub: "Serwer C" },
+      ],
+    },
+    {
+      connector: "Serwery federują się ze sobą",
+      nodes: [
+        { label: "@alice", sub: "Mieszka na serwerze A" },
+        { label: "@bob", sub: "Mieszka na serwerze B" },
+        { label: "@carol", sub: "Mieszka na serwerze C" },
+      ],
+    },
+  ]}
+  caption="Każde konto należy do jednego serwera, a jego administrator ustala zasady."
+/>
+
 **Jak To Działa:**
 
 1. **Twoja Tożsamość:** Przypisana przez serwer, do którego dołączysz (np. @użytkownik@serwer.com)
@@ -76,6 +116,30 @@ ActivityPub tworzy federację połączonych serwerów, jak email, ale dla medió
 ### Bluesky AT Protocol: Model Osobistego Magazynu Danych
 
 Bluesky łączy pomysły z obu podejść z naciskiem na doświadczenie użytkownika i korporacyjne wsparcie.
+
+<DiagramNodes
+  rows={[
+    {
+      nodes: [
+        { label: "Aplikacja Bluesky" },
+        { label: "Graysky" },
+        { label: "Inne klienty" },
+      ],
+    },
+    {
+      connector: "Wszystkie czytają przez",
+      nodes: [{ label: "Relay / indekser", sub: "Agreguje sieć" }],
+    },
+    {
+      connector: "Który indeksuje",
+      nodes: [
+        { label: "Twój PDS", sub: "Osobisty magazyn danych" },
+        { label: "Ich PDS", sub: "Dziś zwykle hostowany przez Bluesky" },
+      ],
+    },
+  ]}
+  caption="Twoje dane leżą w osobistym magazynie, ale odkrywanie treści idzie przez centralny indekser."
+/>
 
 **Jak To Działa:**
 

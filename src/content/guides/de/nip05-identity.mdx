@@ -20,19 +20,20 @@ NIP-05 (Nostr Implementation Possibility #5) ermöglicht dir eine menschenlesbar
 
 ### Das Problem, Das Es Löst
 
-```
-Vor NIP-05:
-┌──────────────────────────────────────────────┐
-│ Follow: npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  │
-│ "Hey, folge mir! Ich bin npub1abc123...xyz789"│
-└──────────────────────────────────────────────┘
-                ↓
-Nach NIP-05:
-┌──────────────────────────────────────────────┐
-│ Follow: alice@example.com                    │
-│ "Hey, folge mir! Ich bin alice@example.com"  │
-└──────────────────────────────────────────────┘
-```
+<DiagramCompare
+  panels={[
+    {
+      title: "Vor NIP-05",
+      lines: ['Folgen: npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', '"Hey, folge mir! Ich bin npub1abc123…xyz789"'],
+    },
+    {
+      title: "Nach NIP-05",
+      tone: "positive",
+      lines: ['Follow: alice@example.com', '"Hey, folge mir! Ich bin alice@example.com"'],
+    },
+  ]}
+  caption="Dieselbe Identität, nur in einer Form, die ein Mensch tatsächlich laut vorlesen kann."
+/>
 
 ### Was Du Bekommst
 
@@ -74,13 +75,13 @@ Mit NIP-05:
 
 Viele Clients zeigen ein ✓ Badge für NIP-05 Nutzer:
 
-```
-┌─────────────────────┐
-│ 👤 Alice ✓          │
-│ alice@example.com   │
-│ "Bitcoin Educator"  │
-└─────────────────────┘
-```
+<MockProfile
+  name="Alice"
+  handle="alice@example.com"
+  bio="Bitcoin Educator"
+  verified
+  caption="Eine verifizierte NIP-05-Adresse, so wie die meisten Clients sie darstellen."
+/>
 
 Das hilft Menschen zu wissen, dass sie dem echten dir folgen, nicht einem Betrüger.
 
@@ -468,3 +469,10 @@ Glaubst du, du verstehst NIP-05? Mach das Quiz:
 - [NostrPlebs](https://nostrplebs.com) - Bezahltes NIP-05
 - [NostrCheck](https://nostrcheck.me) - Kostenloses NIP-05 + Tools
 - [NIP05 Generator](https://github.com/nostr-tools/nip05) - DIY Tools
+
+---
+
+## Weiterlesen
+
+- [Schnellstart: In 5 Minuten Loslegen](/de/guides/quickstart)
+- [Essentielle Nostr-Tools](/de/guides/nostr-tools)

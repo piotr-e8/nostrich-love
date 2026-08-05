@@ -51,15 +51,20 @@ Denk an sie als "Likes mit Wert"—eine Art, Menschen zu unterstützen, deren In
 
 ### Das Value-for-Value Modell
 
-```
-Traditionelle Soziale Medien:       Nostr:
-┌──────────────────┐                 ┌──────────────────┐
-│ Kostenlos posten │                 │ Kostenlos posten │
-│ Kostenlos lesen  │                 │ Kostenlos lesen  │
-│ Attention = $$$  │                 │ Attention = ⚡   │
-│ (für Plattform)  │                 │ (für Creator)    │
-└──────────────────┘                 └──────────────────┘
-```
+<DiagramCompare
+  panels={[
+    {
+      title: "Traditionelle soziale Medien",
+      lines: ["Kostenlos posten", "Kostenlos lesen", "Aufmerksamkeit bezahlt die Plattform"],
+    },
+    {
+      title: "Nostr",
+      tone: "positive",
+      lines: ["Kostenlos posten", "Kostenlos lesen", "Aufmerksamkeit bezahlt den Creator"],
+    },
+  ]}
+  caption="Auf beiden Seiten derselbe kostenlose Zugang — der Unterschied ist, wen die Aufmerksamkeit bezahlt."
+/>
 
 ### Wie Zaps Erscheinen
 
@@ -70,17 +75,17 @@ In unterstützten Clients zeigen sich Zaps als:
 - Laufende Summen auf Posts
 - Spezielle Benachrichtigungen, wenn du sie empfängst
 
-```
-┌────────────────────────────────────┐
-│ Alice                              │
-│ "Habe gerade meinen neuen Artikel  │
-│  veröffentlicht!"                  │
-│ [❤️ 12] [💬 3] [⚡ 5.420 Sats]     │
-│                                    │
-│ ⚡ Bob zappte 1.000 Sats           │
-│ ⚡ Carol zappte 500 Sats           │
-└────────────────────────────────────┘
-```
+<MockPost
+  author="Alice"
+  content="Habe gerade meinen neuen Artikel veröffentlicht!"
+  reactions={[
+    { icon: "❤️", label: "12" },
+    { icon: "💬", label: "3" },
+    { icon: "⚡", label: "5.420 Sats" },
+  ]}
+  zaps={["Bob zappte 1.000 Sats", "Carol zappte 500 Sats"]}
+  caption="Zaps erscheinen direkt neben den anderen Reaktionen, mit Namen des Absenders."
+/>
 
 ### Nicht Erforderlich!
 
@@ -319,12 +324,15 @@ Zaps sind semi-öffentlich. Während Beträge in manchen Setups privat sein kön
 
 Wenn jemand deinen Post zappt, teile die Zahlung automatisch mit Mitarbeitern:
 
-```
-Beispiel: Podcast-Episode
-├── 70% → Host (du)
-├── 20% → Producer
-└── 10% → Editor
-```
+<DiagramSplit
+  title="Beispiel: Podcast-Episode"
+  rows={[
+    { percent: 70, label: "Host (du)" },
+    { percent: 20, label: "Producer" },
+    { percent: 10, label: "Editor" },
+  ]}
+  caption="Ein Zap, automatisch aufgeteilt unter allen, die an der Episode mitgewirkt haben."
+/>
 
 ### Splits Einrichten
 
@@ -516,3 +524,10 @@ Tritt der Zapping-Community bei:
 Bereit zu testen, was du über Zaps gelernt hast?
 
 <ZapsAndLightningQuiz client:idle />
+
+---
+
+## Weiterlesen
+
+- [Deine Schlüssel, Deine Identität](/de/guides/keys-and-security)
+- [Essentielle Nostr-Tools](/de/guides/nostr-tools)

@@ -23,9 +23,11 @@ function subscribe(onStoreChange: () => void): () => void {
   };
 }
 
-// In the browser this reads the locale from the URL; during SSR
-// getCurrentLocale() has no window and falls back to 'en', matching what the
-// previous useState(getCurrentLocale()) initialiser did in both environments.
+// In the browser this reads the locale from the URL; during the build it reads
+// the locale Layout.astro set for the page being rendered (setServerLocale).
+// Before that existed the server snapshot was always 'en', so every island
+// server-rendered English text into localized pages — correct after hydration,
+// wrong in the static HTML a crawler reads first.
 const getSnapshot = (): Locale => getCurrentLocale();
 const getServerSnapshot = (): Locale => getCurrentLocale();
 

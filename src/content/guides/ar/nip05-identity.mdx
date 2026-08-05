@@ -19,19 +19,20 @@ NIP-05 (إمكانية تنفيذ Nostr #5) يتيح لك الحصول على م
 
 ### المشكلة التي يحلها
 
-```
-قبل NIP-05:
-┌──────────────────────────────────────────────┐
-│ Follow: npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  │
-│ "Hey, follow me! I'm npub1abc123...xyz789"   │
-└──────────────────────────────────────────────┘
-                ↓
-بعد NIP-05:
-┌──────────────────────────────────────────────┐
-│ Follow: alice@example.com                    │
-│ "Hey, follow me! I'm alice@example.com"      │
-└──────────────────────────────────────────────┘
-```
+<DiagramCompare
+  panels={[
+    {
+      title: "قبل NIP-05",
+      lines: ['متابعة: npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', '"مرحبًا، تابعني! أنا npub1abc123…xyz789"'],
+    },
+    {
+      title: "بعد NIP-05",
+      tone: "positive",
+      lines: ['متابعة: alice@example.com', '"مرحبًا، تابعني! أنا alice@example.com"'],
+    },
+  ]}
+  caption="الهوية نفسها، لكن بصيغة يستطيع الإنسان أن يرددها بصوته."
+/>
 
 ### ما تحصل عليه
 
@@ -73,13 +74,13 @@ NIP-05 (إمكانية تنفيذ Nostr #5) يتيح لك الحصول على م
 
 العديد من التطبيقات تعرض شارة ✓ للمستخدمين NIP-05:
 
-```
-┌─────────────────────┐
-│ 👤 Alice ✓          │
-│ alice@example.com   │
-│ "Bitcoin educator"  │
-└─────────────────────┘
-```
+<MockProfile
+  name="Alice"
+  handle="alice@example.com"
+  bio="مُعلِّم Bitcoin"
+  verified
+  caption="عنوان NIP-05 موثَّق كما تعرضه معظم التطبيقات."
+/>
 
 هذا يساعد الناس على معرفة أنهم يتابعونك الحقيقي، ليس محتالاً.
 
@@ -466,3 +467,10 @@ curl https://yourdomain.com/.well-known/nostr.json
 - [NostrPlebs](https://nostrplebs.com) - NIP-05 مدفوع
 - [NostrCheck](https://nostrcheck.me) - NIP-05 مجاني + أدوات
 - [مولد NIP05](https://github.com/nostr-tools/nip05) - أدوات DIY
+
+---
+
+## تابع القراءة
+
+- [البدء السريع: انطلق في 5 دقائق](/ar/guides/quickstart)
+- [أدوات Nostr الأساسية](/ar/guides/nostr-tools)

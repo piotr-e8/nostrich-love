@@ -19,7 +19,13 @@ const categoryCount = groups.reduce((total, group) => total + group.categories.l
 // Query-matched <title> (docs/audit-2026-07/market-research.md §6 row 11:
 // "how to find people to follow on nostr" — page 1 is a GitHub README).
 // The friendly on-page H1 below is independent of this.
-const title = 'How to Find People to Follow on Nostr';
+// Titled for the tool it is, not the question it used to duplicate. This read
+// "How to Find People to Follow on Nostr" against
+// /guides/finding-community's "How to Find People to Follow on Nostr (2026)" —
+// two URLs competing for one query while serving different intents: that guide
+// teaches strategies, this page hands you a vetted list to import.
+// accountCount is interpolated so the number can never drift from the data.
+const title = `Nostr Follow Pack: ${accountCount} Accounts to Start With`;
 const description = `Start your Nostr feed with ${accountCount} curated accounts across ${categoryCount} categories. Pick the ones you like and import them into any client — paste the list, or publish it and scan a QR code.`;
 ---
 

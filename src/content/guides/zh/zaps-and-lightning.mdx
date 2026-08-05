@@ -50,15 +50,20 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 
 ### 价值换价值模型
 
-```
-传统社交媒体：              Nostr：
-┌──────────────────┐                 ┌──────────────────┐
-│ 免费发帖     │                 │ 免费发帖     │
-│ 免费阅读     │                 │ 免费阅读     │
-│ 注意力 = $$$  │                 │ 注意力 = ⚡   │
-│ （给平台）   │                 │ （给创作者）  │
-└──────────────────┘                 └──────────────────┘
-```
+<DiagramCompare
+  panels={[
+    {
+      title: "传统社交媒体",
+      lines: ["免费发帖", "免费阅读", "注意力付给平台"],
+    },
+    {
+      title: "Nostr",
+      tone: "positive",
+      lines: ["免费发帖", "免费阅读", "注意力付给创作者"],
+    },
+  ]}
+  caption="两边一样免费，区别在于注意力最后付给了谁。"
+/>
 
 ### 闪电打赏如何显示
 
@@ -69,17 +74,17 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 - 帖子的累计总额
 - 收到时的特殊通知
 
-```
-┌────────────────────────────────────┐
-│ Alice                              │
-│ "刚发表了我的新文章！"   │
-│                                    │
-│ [❤️ 12] [💬 3] [⚡ 5,420 聪]     │
-│                                    │
-│ ⚡ Bob 打赏 1,000 聪           │
-│ ⚡ Carol 打赏 500 聪           │
-└────────────────────────────────────┘
-```
+<MockPost
+  author="Alice"
+  content="刚发表了我的新文章！"
+  reactions={[
+    { icon: "❤️", label: "12" },
+    { icon: "💬", label: "3" },
+    { icon: "⚡", label: "5,420 聪" },
+  ]}
+  zaps={["Bob 打赏了 1,000 聪", "Carol 打赏了 500 聪"]}
+  caption="闪电打赏和其他互动并排显示，还会标出是谁打赏的。"
+/>
 
 ### 不是必需的！
 
@@ -314,12 +319,15 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 
 当有人闪电打赏你的帖子时，自动与协作者分摊付款：
 
-```
-示例：播客集
-├── 70% → 主持人（你）
-├── 20% → 制作人
-└── 10% → 编辑
-```
+<DiagramSplit
+  title="示例：播客集"
+  rows={[
+    { percent: 70, label: "主持人（你）" },
+    { percent: 20, label: "制作人" },
+    { percent: 10, label: "编辑" },
+  ]}
+  caption="一笔闪电打赏，自动分给参与这一集制作的每个人。"
+/>
 
 ### 设置拆分
 
@@ -511,3 +519,10 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 准备好测试你学到的关于闪电打赏的知识了吗？
 
 <ZapsAndLightningQuiz client:idle />
+
+---
+
+## 继续阅读
+
+- [你的密钥，你的身份](/zh/guides/keys-and-security)
+- [必备 Nostr 工具](/zh/guides/nostr-tools)

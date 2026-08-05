@@ -6,9 +6,60 @@ import { ActivityFeed } from '../components/activity/ActivityFeed';
 import { ProgressTracker } from '../components/gamification/ProgressTracker';
 import { CyberpunkHeroAnimation } from '../components/CyberpunkAnimation';
 import { ResumeBanner } from '../components/navigation/ResumeBanner';
+import { siteConfig } from '../config/site';
+import { COMPARISON_PAGES } from '../config/comparison-pages';
 
-const title = 'Nostrich.love - Take Control of Your Social Media';
-const description = 'Your content, your followers, your control. Join the decentralized social media protocol that puts you in charge—not algorithms or corporations.';
+// The title template (src/config/site.ts) already appends "| Nostrich.love",
+// so the brand must NOT be repeated here — it was, producing
+// "Nostrich.love - … | Nostrich.love". Lead with the entity instead: this page
+// takes most of the site's inbound links and previously said "Nostr" nowhere
+// in its title, description or H1, so none of that authority carried a topic.
+const title = 'Learn Nostr: What It Is and How to Get Started';
+const description = 'What Nostr is, how it works, and how to join in five minutes. Free beginner guides to keys, relays, zaps and clients — in seven languages.';
+
+// Entity anchor. Every Organization reference elsewhere on the site is an
+// anonymous inline `publisher` stub inside a guide's LearningResource; this is
+// the one addressable node they can all be read against, and the only place
+// logo/sameAs/founder live.
+//
+// Deliberately no SearchAction on the WebSite node: the sitelinks searchbox was
+// retired, pagefind is never invoked by the build script, and dist/ has no
+// search endpoint — declaring one would describe a feature that does not exist.
+const ORG_ID = `${siteConfig.url}/#organization`;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': ORG_ID,
+    name: siteConfig.name,
+    url: siteConfig.url,
+    description:
+      'A free, open-source beginner guide to Nostr, the decentralized social protocol.',
+    email: siteConfig.author.email,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${siteConfig.url}/logo.png`,
+      width: 500,
+      height: 500,
+    },
+    founder: { '@id': `${siteConfig.url}/about/#person` },
+    sameAs: [
+      siteConfig.social.repo,
+      `https://njump.me/${siteConfig.social.npub}`,
+      'https://sandstr.app',
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${siteConfig.url}/#website`,
+    name: siteConfig.name,
+    url: siteConfig.url,
+    description,
+    publisher: { '@id': ORG_ID },
+    inLanguage: ['en', 'pl', 'es', 'de', 'zh', 'ar', 'hi'],
+  },
+];
 
 const valueProps = [
   { 
@@ -73,7 +124,7 @@ const comparisonPoints = [
 
 ---
 
-<Layout title={title} description={description} data-theme="friendly">
+<Layout title={title} description={description} jsonLd={jsonLd} data-theme="friendly">
   <Header />
   
   <ResumeBanner client:idle />
@@ -111,9 +162,9 @@ const comparisonPoints = [
             <!-- Main Headline -->
             <div class="text-center mb-8">
               <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-white">
-                <span class="block">Take Control of</span>
+                <span class="block">Take Control of Your Social Media</span>
                 <span class="bg-gradient-to-r from-friendly-purple-600 to-friendly-purple-400 bg-clip-text text-transparent">
-                  Your Social Media
+                  with Nostr
                 </span>
               </h1>
               
@@ -255,6 +306,60 @@ const comparisonPoints = [
       </div>
     </section>
 
+    <!-- Coming From Another Platform -->
+    <!--
+      The three /nostr-vs-* pages used to have exactly three in-content inbound
+      links each, all from /guides/protocol-comparison and from each other —
+      neither the homepage nor the /guides hub reached them. They are the site's
+      most winnable pages (comparison intent, low competition), so they get a
+      real entry point here with descriptive anchor text.
+    -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center mb-4 text-gray-900 dark:text-white">
+          Coming from another platform?
+        </h2>
+        <p class="text-gray-600 dark:text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+          See exactly how Nostr differs from the network you are leaving — and what carries over
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          {COMPARISON_PAGES.map((item) => (
+            <a
+              href={item.href}
+              class="group p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 hover:border-friendly-purple-400 dark:hover:border-friendly-purple-500 transition-all hover:shadow-lg"
+            >
+              <h3 class="font-bold text-lg text-gray-900 dark:text-white mb-2">{item.label}</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">{item.blurb}</p>
+              <div class="mt-4 flex items-center text-friendly-purple-700 dark:text-friendly-purple-400 text-sm font-medium">
+                Compare
+                <svg class="ms-2 w-4 h-4 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <!--
+          The three-way deep dive is the site's strongest asset for this audience
+          and had four in-content inbound links, none from here. Adjacent-topic
+          demand dwarfs Nostr's own (en.wikipedia monthly views: Bluesky 46k,
+          Fediverse 16k, Mastodon 15k, Nostr 6k), and protocol-level comparisons
+          are the slice of it a small site can realistically win — mainstream
+          publishers do not go below the app layer.
+        -->
+        <p class="mt-8 text-center text-gray-600 dark:text-gray-400">
+          <a
+            href="/guides/protocol-comparison"
+            class="font-medium text-friendly-purple-700 dark:text-friendly-purple-400 hover:underline"
+          >
+            Nostr vs ActivityPub vs Bluesky — all three protocols compared
+          </a>
+        </p>
+      </div>
+    </section>
+
     <!-- CTA Section -->
     <section class="py-20 bg-gradient-to-br from-friendly-purple-600 to-friendly-purple-400">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -274,8 +379,16 @@ const comparisonPoints = [
           </svg>
         </a>
         
+        <!--
+          /resources had zero in-content inbound links and /glossary exactly one,
+          from 404.html — both existed only in the global nav, which passes no
+          topical signal. Descriptive anchor text, from the page with the most
+          authority to spend.
+        -->
         <p class="mt-6 text-sm text-white/70">
-          Already know Nostr? <a href="/tools" class="text-white hover:underline font-medium">Jump to Tools</a> • 
+          Already know Nostr? <a href="/tools" class="text-white hover:underline font-medium">Jump to Tools</a> •
+          Browse <a href="/resources" class="text-white hover:underline font-medium">Nostr resources</a> •
+          Look up a term in the <a href="/glossary" class="text-white hover:underline font-medium">Nostr glossary</a> •
           Open source on <a href="https://github.com/ptrio42/nostrich-love" target="_blank" rel="noopener noreferrer" class="text-white hover:underline font-medium">GitHub</a>
         </p>
       </div>

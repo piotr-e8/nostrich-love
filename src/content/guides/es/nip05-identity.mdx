@@ -20,19 +20,20 @@ NIP-05 (Nostr Implementation Possibility #5) te permite tener un identificador l
 
 ### El Problema Que Resuelve
 
-```
-Antes de NIP-05:
-┌──────────────────────────────────────────────┐
-│ Sigue: npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  │
-│ "¡Oye, sígueme! Soy npub1abc123...xyz789"   │
-└──────────────────────────────────────────────┘
-                ↓
-Después de NIP-05:
-┌──────────────────────────────────────────────┐
-│ Sigue: ana@ejemplo.com                     │
-│ "¡Oye, sígueme! Soy ana@ejemplo.com"       │
-└──────────────────────────────────────────────┘
-```
+<DiagramCompare
+  panels={[
+    {
+      title: "Antes de NIP-05",
+      lines: ['Sigue: npub1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', '"¡Oye, sígueme! Soy npub1abc123…xyz789"'],
+    },
+    {
+      title: "Después de NIP-05",
+      tone: "positive",
+      lines: ['Sigue: ana@ejemplo.com', '"¡Oye, sígueme! Soy ana@ejemplo.com"'],
+    },
+  ]}
+  caption="La misma identidad, en una forma que una persona puede repetir en voz alta."
+/>
 
 ### Lo Que Obtienes
 
@@ -74,13 +75,13 @@ Con NIP-05:
 
 Muchos clientes muestran un badge ✓ para usuarios de NIP-05:
 
-```
-┌─────────────────────┐
-│ 👤 Ana ✓            │
-│ ana@ejemplo.com     │
-│ "Educadora de Bitcoin" │
-└─────────────────────┘
-```
+<MockProfile
+  name="Ana"
+  handle="ana@ejemplo.com"
+  bio="Educadora de Bitcoin"
+  verified
+  caption="Una dirección NIP-05 verificada, tal como la muestran la mayoría de los clientes."
+/>
 
 Esto ayuda a las personas a saber que están siguiendo a la verdadera tú, no a un impostor.
 
@@ -468,3 +469,10 @@ curl https://tudominio.com/.well-known/nostr.json
 - [NostrPlebs](https://nostrplebs.com) - NIP-05 de pago
 - [NostrCheck](https://nostrcheck.me) - NIP-05 gratis + herramientas
 - [NIP05 Generator](https://github.com/nostr-tools/nip05) - Herramientas DIY
+
+---
+
+## Sigue leyendo
+
+- [Inicio Rápido: Lánzate en 5 Minutos](/es/guides/quickstart)
+- [Herramientas Esenciales de Nostr](/es/guides/nostr-tools)

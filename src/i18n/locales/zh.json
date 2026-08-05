@@ -1904,6 +1904,12 @@
     "sharePage": "分享此页面",
     "linkCopied": "链接已复制"
   },
+  "footer": {
+    "languages": {
+      "thisPage": "阅读本页的其他语言版本",
+      "guides": "阅读其他语言的指南"
+    }
+  },
   "clientRecommender": {
     "title": "寻找最适合的客户端",
     "description": "根据你的偏好，以下是我们的推荐",
@@ -3217,6 +3223,7 @@
       "nsec": "私钥——务必保密！",
       "nip01": "基础协议",
       "kind1": "文本笔记（帖子）"
-    }
+    },
+    "readGuide": "阅读 {term} 指南"
   }
 }

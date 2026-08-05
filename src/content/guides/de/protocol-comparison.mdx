@@ -41,17 +41,24 @@ Zu verstehen, wie jedes Protokoll technisch funktioniert, hilft ihre unterschied
 
 Nostr ist elegant einfach: Es sind nur Clients und Relays.
 
-```
-┌─────────────┐         ┌─────────────┐         ┌─────────────┐
-│   Client    │◄───────►│   Relay 1   │◄───────►│   Client    │
-│   (Du)      │         │  (Public)   │         │  (Freund)   │
-└─────────────┘         └─────────────┘         └─────────────┘
-       │                       │
-       │                ┌─────────────┐
-       └───────────────►│   Relay 2   │
-                        │  (Private)  │
-                        └─────────────┘
-```
+<DiagramNodes
+  rows={[
+    {
+      nodes: [
+        { label: "Client", sub: "Du", tone: "positive" },
+        { label: "Client", sub: "Dein Freund", tone: "positive" },
+      ],
+    },
+    {
+      connector: "Beide lesen und schreiben",
+      nodes: [
+        { label: "Relay 1", sub: "Öffentlich" },
+        { label: "Relay 2", sub: "Privat" },
+      ],
+    },
+  ]}
+  caption="Clients sprechen direkt mit Relays. Es gibt keinen Server, dem ein Account gehört."
+/>
 
 **So funktioniert es:**
 
@@ -78,22 +85,26 @@ Nostr ist elegant einfach: Es sind nur Clients und Relays.
 
 ActivityPub erstellt eine Föderation miteinander verbundener Server, wie E-Mail aber für Social Media.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    FÖDERIERTES NETZWERK                      │
-├─────────────┐    ┌─────────────┐    ┌─────────────────────┐ │
-│  Server A   │◄──►│  Server B   │◄──►│     Server C        │ │
-│ (mastodon. │    │ (fosstodon. │    │ (infosec.exchange)  │ │
-│  social)    │    │  org)       │    │                     │ │
-└──────┬──────┘    └──────┬──────┘    └──────────┬──────────┘ │
-       │                  │                      │            │
-       ▼                  ▼                      ▼            │
-  ┌─────────┐        ┌─────────┐          ┌─────────┐         │
-  │ Nutzer  │        │ Nutzer  │          │ Nutzer  │         │
-  │ @alice  │        │ @bob    │          │ @carol  │         │
-  └─────────┘        └─────────┘          └─────────┘         │
-└─────────────────────────────────────────────────────────────┘
-```
+<DiagramNodes
+  rows={[
+    {
+      nodes: [
+        { label: "mastodon.social", sub: "Server A" },
+        { label: "fosstodon.org", sub: "Server B" },
+        { label: "infosec.exchange", sub: "Server C" },
+      ],
+    },
+    {
+      connector: "Server föderieren miteinander",
+      nodes: [
+        { label: "@alice", sub: "Liegt auf Server A" },
+        { label: "@bob", sub: "Liegt auf Server B" },
+        { label: "@carol", sub: "Liegt auf Server C" },
+      ],
+    },
+  ]}
+  caption="Jeder Account gehört zu einem Server, dessen Admin die Regeln festlegt."
+/>
 
 **So funktioniert es:**
 
@@ -113,33 +124,29 @@ ActivityPub erstellt eine Föderation miteinander verbundener Server, wie E-Mail
 
 Bluesky kombiniert Ideen aus beiden Ansätzen mit Fokus auf User Experience und Corporate Backing.
 
-```
-┌──────────────────────────────────────────────────────────────┐
-│                    BLUESKY-ARCHITEKTUR                        │
-├──────────────────────────────────────────────────────────────┤
-│                                                              │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────────┐  │
-│  │  Client App │    │  Client App │    │   Client App    │  │
-│  │  (Bluesky)  │    │  (Graysky)  │    │   (Andere)      │  │
-│  └──────┬──────┘    └──────┬──────┘    └────────┬────────┘  │
-│         │                  │                     │           │
-│         └──────────────────┼─────────────────────┘           │
-│                            │                                 │
-│         ┌──────────────────┼──────────────────┐              │
-│         │                  ▼                  │              │
-│         │         ┌─────────────┐             │              │
-│         │         │  Relay      │             │              │
-│         │         │  (Indexer)  │             │              │
-│         │         └──────┬──────┘             │              │
-│         │                │                    │              │
-│         ▼                ▼                    ▼              │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐       │
-│  │    PDS      │    │    PDS      │    │    PDS      │       │
-│  │(alice.com)  │    │(bob.host)   │    │(carol.net)  │       │
-│  └─────────────┘    └─────────────┘    └─────────────┘       │
-│  Personal Data Stores                                        │
-└──────────────────────────────────────────────────────────────┘
-```
+<DiagramNodes
+  rows={[
+    {
+      nodes: [
+        { label: "Bluesky-App" },
+        { label: "Graysky" },
+        { label: "Andere Clients" },
+      ],
+    },
+    {
+      connector: "Alle lesen über",
+      nodes: [{ label: "Relay / Indexer", sub: "Aggregiert das Netzwerk" }],
+    },
+    {
+      connector: "Der wiederum indexiert",
+      nodes: [
+        { label: "Dein PDS", sub: "Personal Data Store" },
+        { label: "PDS der anderen", sub: "Heute meist bei Bluesky gehostet" },
+      ],
+    },
+  ]}
+  caption="Deine Daten liegen in einem Personal Data Store, doch die Entdeckung läuft über einen zentralen Indexer."
+/>
 
 **So funktioniert es:**
 

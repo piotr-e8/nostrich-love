@@ -87,7 +87,9 @@ const MIRRORABLE_ALLOWLIST: Record<string, string> = {
   // tooltip caret. The visible edges come from the rotation, not from reading
   // order, so border-s/border-e would put the caret on the wrong diagonal.
   'components/gamification/BadgeDisplay.tsx:227': 'rotate-45 caret built from physical borders — points down, not inline-end',
-  'pages/badges.astro:200': 'rotate-45 caret built from physical borders — points down, not inline-end',
+  // 200 -> 205: the noindex comment above <Layout> shifted this line. The
+  // allowlist is keyed by line, so it needs re-pointing whenever the file moves.
+  'pages/badges.astro:205': 'rotate-45 caret built from physical borders — points down, not inline-end',
 };
 
 describe('mirrorable physical utilities (each has a logical drop-in)', () => {
@@ -133,8 +135,13 @@ const UNMIRRORABLE: Record<string, RegExp> = {
 // `left-0 right-0` pair to `inset-x-0`, or delete a decorative blob, subtract
 // the tokens you removed in the same commit. Raising a baseline means you added
 // a physical direction utility — say why in the commit message.
-const UNMIRRORABLE_SITES_BASELINE = 96;
-const UNMIRRORABLE_TOKENS_BASELINE = 178;
+// 2026-08-05, 96→97 / 178→180: the "Coming from another platform?" card grid
+// in src/pages/index.astro adds one arrow that nudges on hover, using the
+// mirrored pair the four Quick Start cards directly above it already use
+// (`group-hover:translate-x-1` + `rtl:group-hover:-translate-x-1`). Correct
+// under RTL; counted here only because translate-x has no logical form.
+const UNMIRRORABLE_SITES_BASELINE = 97;
+const UNMIRRORABLE_TOKENS_BASELINE = 180;
 
 describe('unmirrorable physical utilities (ratchet, must not grow)', () => {
   const sites = scan(UNMIRRORABLE);

@@ -92,9 +92,14 @@ const allBadges: Badge[] = [
 ];
 ---
 
+<!-- noindex: this page renders the visitor's own localStorage state, so it is
+       identical and near-empty for everyone who is not already using the site.
+       Nobody searches for it, and it was sitting in the sitemap next to real
+       content. Also excluded from the sitemap in astro.config.mjs. -->
 <Layout
   title="Your Badges - Nostr Beginner Guide"
   description="View and collect badges as you learn and explore Nostr. Each badge represents a milestone in your journey."
+  noindex
 >
   <Header />
 

@@ -21,9 +21,9 @@ import { getAccountCount } from '../data/follow-pack';
 const accountCount = getAccountCount();
 
 // The "8" in the title is load-bearing: it must equal rows.length below.
-const title = 'Nostr vs Bluesky (2026): 8 Differences That Matter';
+const title = 'Bluesky vs Nostr (2026): 8 Key Differences';
 const description =
-  'Bluesky feels like old Twitter; Nostr hands you the keys. An honest comparison of identity custody, portability claims vs reality, moderation, and payments — and a 5-minute way to try Nostr.';
+  'Bluesky feels like old Twitter; Nostr hands you the keys. Identity, portability, moderation and payments compared — plus a 5-minute way to try Nostr.';
 
 const pageUrl = new URL(Astro.url.pathname, siteConfig.url).toString();
 
@@ -147,8 +147,8 @@ const jsonLd = [
             Honest comparison · Updated July 2026
           </p>
           <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-6">
-            Nostr vs
-            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Bluesky</span>:
+            Bluesky vs
+            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Nostr</span>:
             8 differences that matter
           </h1>
           <p class="text-xl text-gray-600 dark:text-gray-300">

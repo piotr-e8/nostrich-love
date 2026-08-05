@@ -26,17 +26,22 @@ Imagina Nostr como una red de oficinas de correos alrededor del mundo.
 
 Aquí está la diferencia clave de las redes sociales tradicionales: **Tú eliges a dónde enviar tu correo.**
 
-```
-Redes Sociales Tradicionales:    Nostr:
-┌──────────────────┐        ┌──────────────────┐
-│ Un Servidor      │        │ Muchas Oficinas  │
-│ Grande           │        │ de Correos       │
-│ (Twitter/X)      │        │ (Relays)         │
-│                  │        │                  │
-│ Todos en         │        │ Tú eliges cuáles │
-│ un lugar         │        │ usar             │
-└──────────────────┘        └──────────────────┘
-```
+<DiagramCompare
+  panels={[
+    {
+      title: "Redes sociales tradicionales",
+      subtitle: "Twitter/X",
+      lines: ["Un servidor grande", "Todos en un mismo lugar", "La empresa decide las reglas"],
+    },
+    {
+      title: "Nostr",
+      subtitle: "Relays",
+      tone: "positive",
+      lines: ["Muchas oficinas de correos", "Tú eliges cuáles usar", "Ningún lugar único que cerrar"],
+    },
+  ]}
+  caption="Un servidor que todos comparten, frente a muchos relays entre los que eliges."
+/>
 
 ### El Poder de la Elección
 
@@ -57,33 +62,40 @@ Aquí está la confusión más común que enfrentan los nuevos usuarios:
 
 ### La Explicación Visual
 
-```
-Tu Conexión                    Conexión de Tu Amigo
-     │                                  │
-     ▼                                  ▼
-┌──────────┐                     ┌──────────┐
-│ Relay A  │         ❌          │ Relay B  │
-│ (wss://...│      Sin enlace     │(wss://...)│
-└──────────┘                     └──────────┘
-     │                                  │
-   Tus publicaciones                   Publicaciones de tu amigo
-```
+<DiagramNodes
+  rows={[
+    { nodes: [{ label: "Tú", sub: "Solo Relay A" }, { label: "Tu amigo", sub: "Solo Relay B" }] },
+    {
+      connector: "Ningún relay en común",
+      nodes: [
+        { label: "Relay A", sub: "wss://relay-a.example" },
+        { label: "Relay B", sub: "wss://relay-b.example" },
+      ],
+    },
+    { nodes: [{ label: "Tus publicaciones se quedan aquí" }, { label: "Las suyas se quedan allá" }] },
+  ]}
+  caption="Sin un relay en común, ninguno de los dos ve nunca las publicaciones del otro."
+/>
 
 **Si publicas al Relay A y tu amigo solo usa el Relay B, no verá tu publicación.**
 
 ### La Solución: Conecta a Múltiples Relays
 
-```
-Tu Conexión
-     │
-┌────┴────┐
-│ Relay A │
-│ Relay B │  ← ¡Conéctate a ambos!
-│ Relay C │
-└────┬────┘
-     │
-   Tus publicaciones → Llegan a más personas
-```
+<DiagramNodes
+  rows={[
+    { nodes: [{ label: "Tú", sub: "Conectado a los tres", tone: "positive" }] },
+    {
+      connector: "Publicas en cada uno",
+      nodes: [
+        { label: "Relay A" },
+        { label: "Relay B" },
+        { label: "Relay C" },
+      ],
+    },
+    { nodes: [{ label: "Tus publicaciones llegan a todo el que lea cualquiera de ellos", tone: "positive" }] },
+  ]}
+  caption="Publicar en varios relays es lo que hace que tus publicaciones se puedan encontrar."
+/>
 
 La mayoría de los clientes de Nostr te conectan a varios relays por defecto. Pero entender esto ayuda cuando:
 

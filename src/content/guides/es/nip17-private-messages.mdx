@@ -107,22 +107,14 @@ Dentro del gift wrap se encuentra el seal, que contiene el mensaje actual. Esta 
 - Incluye el contenido del mensaje
 - Tiene su propio timestamp para protección replay
 
-```
-Representación Visual:
-┌─────────────────────────────────────┐
-│ Gift Wrap (Capa Exterior)           │
-│ ┌─────────────────────────────────┐ │
-│ │ Seal (Capa Interior)            │ │
-│ │ ┌─────────────────────────────┐ │ │
-│ │ │ Contenido Real del Mensaje  │ │ │
-│ │ │ Remitente: real_pubkey      │ │ │
-│ │ │ Timestamp: 1234567890         │ │ │
-│ │ └─────────────────────────────┘ │ │
-│ │ Encriptado con clave efímera      │ │
-│ └─────────────────────────────────┘ │
-│ Pubkey aleatorio, hint destinatario   │
-└─────────────────────────────────────┘
-```
+<DiagramLayers
+  layers={[
+    { label: "Gift wrap (capa exterior)", note: "Pubkey aleatorio, pista del destinatario — esto es todo lo que ve un relay" },
+    { label: "Seal (capa interior)", note: "Encriptado con una clave efímera" },
+    { label: "Contenido real del mensaje", note: "Remitente: pubkey real · Timestamp: 1234567890" },
+  ]}
+  caption="Cada capa oculta a la que lleva dentro, así que un relay no ve más que la pista del destinatario."
+/>
 
 ### Beneficios Clave
 
@@ -408,3 +400,10 @@ Recuerda: La privacidad es una práctica, no un producto. NIP-17 te da las herra
 _Ultima actualización: 28 de julio de 2026_
 
 _¿Tienes preguntas? Únete a la discusión en Nostr o abre un issue en este repositorio de documentación._
+
+---
+
+## Sigue leyendo
+
+- [Inmersión Profunda en Privacidad y Seguridad](/es/guides/privacy-security)
+- [Tus Claves, Tu Identidad](/es/guides/keys-and-security)

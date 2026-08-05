@@ -23,6 +23,19 @@ const ok = (msg) => console.log(`✓ ${msg}`);
 
 const read = (p) => readFileSync(join(DIST, p), "utf8");
 
+/**
+ * The hreflang annotations of a page — and only those.
+ *
+ * An hreflang annotation is a `<link rel="alternate" hreflang="…">` in <head>
+ * (or the sitemap/HTTP-header equivalents); `hreflang` on an `<a>` merely
+ * describes the language of a link target and carries no international-targeting
+ * signal. The footer's crawlable language row is exactly such a set of anchors,
+ * so a bare /hreflang="([^"]+)"/ scan counted them as alternates and reported
+ * duplicated clusters on every page. Match the <link> elements themselves.
+ */
+const LINK_ALTERNATE = /<link\b[^>]*\brel="alternate"[^>]*\bhreflang="([^"]+)"[^>]*>/g;
+const hreflangsOf = (html) => [...html.matchAll(LINK_ALTERNATE)].map((m) => m[1]);
+
 if (!existsSync(DIST)) {
   console.error("dist/ does not exist — run `npm run build` first");
   process.exit(1);
@@ -46,20 +59,27 @@ if (!existsSync(join(DIST, SAMPLE))) {
   if (canonical === `${SITE}/guides/what-is-nostr/`) ok(`canonical: ${canonical}`);
   else fail(`canonical is ${canonical}, expected ${SITE}/guides/what-is-nostr/`);
 
-  const hreflangs = [...html.matchAll(/hreflang="([^"]+)"/g)].map((m) => m[1]);
+  const hreflangs = hreflangsOf(html);
   const expected = ["en", ...LOCALES, "x-default"];
   const missing = expected.filter((l) => !hreflangs.includes(l));
   if (missing.length === 0 && hreflangs.length === expected.length)
     ok(`guide hreflang set complete (${hreflangs.length})`);
   else fail(`guide hreflang wrong — got [${hreflangs}], missing [${missing}]`);
 
+  // A page may emit one node or an array of them — guides now ship
+  // LearningResource + BreadcrumbList (+ FAQPage where the guide is Q&A).
+  // Assert the types we depend on rather than just "something parsed".
   const ld = html.match(/<script type="application\/ld\+json"[^>]*>(.*?)<\/script>/s)?.[1];
   if (!ld) fail("guide page has no JSON-LD");
   else {
     try {
       const parsed = JSON.parse(ld);
-      if (parsed["@type"]) ok(`JSON-LD parses (@type: ${parsed["@type"]})`);
-      else fail("JSON-LD has no @type");
+      const types = (Array.isArray(parsed) ? parsed : [parsed]).map((n) => n?.["@type"]);
+      const required = ["LearningResource", "BreadcrumbList"];
+      const missingTypes = required.filter((type) => !types.includes(type));
+      if (types.some((type) => !type)) fail(`a JSON-LD node has no @type (got [${types}])`);
+      else if (missingTypes.length === 0) ok(`JSON-LD parses (@type: ${types.join(", ")})`);
+      else fail(`guide JSON-LD is missing [${missingTypes}] — got [${types}]`);
     } catch {
       fail("JSON-LD does not parse");
     }
@@ -87,7 +107,7 @@ for (const p of ["tools/index.html"]) {
     fail(`${p} missing`);
     continue;
   }
-  const n = (read(p).match(/hreflang=/g) || []).length;
+  const n = hreflangsOf(read(p)).length;
   if (n === 0) ok(`${p} has no hreflang (English-only route)`);
   else fail(`${p} advertises ${n} hreflang alternates for pages that may not exist`);
 }
@@ -112,7 +132,7 @@ const GLOSSARY_LOCALES = ["pl", "es", "de"]; // + un-prefixed en
       continue;
     }
     const html = read(path);
-    const got = [...html.matchAll(/hreflang="([^"]+)"/g)].map((m) => m[1]).sort();
+    const got = hreflangsOf(html).sort();
     if (got.join(",") === expectedGlossary.join(","))
       ok(`${path} hreflang is exactly {en,pl,es,de,x-default}`);
     else fail(`${path} hreflang wrong — got [${got}], expected [${expectedGlossary}]`);
@@ -124,6 +144,80 @@ const GLOSSARY_LOCALES = ["pl", "es", "de"]; // + un-prefixed en
   const unshipped = ["zh", "ar", "hi"].filter((l) => existsSync(join(DIST, l, "glossary")));
   if (unshipped.length === 0) ok("no unshipped glossary locales on disk (zh/ar/hi)");
   else for (const l of unshipped) fail(`dist/${l}/glossary exists but is not in the shipped locale set`);
+}
+
+// --- 4c. Every locale must be reachable by a crawlable <a>, not just hreflang
+// The language switcher is a React island whose options only exist after
+// hydration, so before the footer language row the static HTML contained no
+// anchor into any locale directory at all: 105 localized URLs were discoverable
+// only through the sitemap and hreflang, which are hints rather than links.
+// Guard the anchors, not the switcher — hreflang alternates are checked above.
+{
+  const home = existsSync(join(DIST, "index.html")) ? read("index.html") : "";
+  const unreachable = LOCALES.filter(
+    (l) => !new RegExp(`href="/${l}/guides/"`).test(home)
+  );
+  if (home && unreachable.length === 0)
+    ok(`homepage links to all ${LOCALES.length} locale hubs with real anchors`);
+  else fail(`homepage has no crawlable <a> into: ${unreachable.join(", ") || "(index.html missing)"}`);
+
+  // On a route that ships locale variants the row must mirror that exact set —
+  // same source of truth as the hreflang cluster, so it can never link a 404.
+  const glossary = existsSync(join(DIST, "glossary/index.html"))
+    ? read("glossary/index.html")
+    : "";
+  const wrong = ["zh", "ar", "hi"].filter((l) =>
+    new RegExp(`href="/${l}/glossary/"`).test(glossary)
+  );
+  if (glossary && wrong.length === 0)
+    ok("glossary language row links no unshipped locale");
+  else fail(`glossary language row links unshipped locales: ${wrong.join(", ")}`);
+}
+
+// --- 4d. HTML hreflang and sitemap hreflang must annotate the same cluster --
+// They are emitted by two independent code paths: SEO.astro reads
+// localeConfig.htmlLang (bare codes), @astrojs/sitemap reads the i18n.locales
+// map in astro.config.mjs. Those drifted — the HTML said hreflang="es" while
+// the sitemap said "es-ES" for the same URL pair, so the two annotations
+// described the same cluster with different values. Assert they agree.
+if (existsSync(join(DIST, "sitemap-0.xml"))) {
+  const sm = read("sitemap-0.xml");
+  const smLangs = new Set([...sm.matchAll(/hreflang="([^"]+)"/g)].map((m) => m[1]));
+  const htmlLangs = new Set(hreflangsOf(read(SAMPLE)));
+  const onlyInSitemap = [...smLangs].filter((l) => !htmlLangs.has(l));
+  const onlyInHtml = [...htmlLangs].filter((l) => !smLangs.has(l));
+  if (onlyInSitemap.length === 0 && onlyInHtml.length === 0)
+    ok(`hreflang codes agree between HTML and sitemap (${[...htmlLangs].sort().join(",")})`);
+  else
+    fail(
+      `hreflang code mismatch — sitemap-only [${onlyInSitemap}], HTML-only [${onlyInHtml}]. ` +
+        `Keep astro.config.mjs i18n.locales in lockstep with localeConfig.htmlLang.`
+    );
+}
+
+// --- 4e. Guide prev/next must be real anchors in the static HTML -----------
+// GuideNavigation used to derive the current slug from window.location inside
+// a useEffect, so all 112 guide pages served a pulsing skeleton and the
+// sequential path through the content — the site's core structure — carried no
+// anchor text at all. It is now a pure component rendered with no client
+// directive. Guard the output, not the implementation: any guide page that
+// stops emitting a prev/next link has regressed.
+{
+  const guidePages = [
+    "guides/keys-and-security/index.html", // mid-level: has both prev and next
+    "pl/guides/keys-and-security/index.html",
+    "ar/guides/keys-and-security/index.html",
+  ];
+  for (const path of guidePages) {
+    if (!existsSync(join(DIST, path))) {
+      fail(`${path} missing`);
+      continue;
+    }
+    const html = read(path);
+    const navLinks = [...html.matchAll(/href="([^"]*\/guides\/[a-z0-9-]+)"[^>]*class="group flex/g)];
+    if (navLinks.length >= 2) ok(`${path} ships ${navLinks.length} prev/next anchors statically`);
+    else fail(`${path} has ${navLinks.length} prev/next anchors — expected 2 (skeleton regression?)`);
+  }
 }
 
 // --- 5. Sitemap exists and agrees with the un-prefixed scheme --------------
