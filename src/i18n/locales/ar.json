@@ -3082,6 +3082,12 @@
     "sharePage": "مشاركة هذه الصفحة",
     "linkCopied": "تم نسخ الرابط"
   },
+  "footer": {
+    "languages": {
+      "thisPage": "اقرأ هذه الصفحة بلغة",
+      "guides": "اقرأ الأدلة بلغة"
+    }
+  },
   "officialAccount": {
     "followUs": "تابعنا على Nostr",
     "viewProfile": "عرض الملف الشخصي على Njump",

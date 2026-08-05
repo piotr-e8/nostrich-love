@@ -18,6 +18,12 @@ export const siteConfig = {
     defaultDescription:
       "A comprehensive beginner guide to Nostr - the decentralized social network protocol. Learn how to get started, generate keys, choose clients, and join the censorship-resistant social web at Nostrich.love",
     defaultImage: "/preview_image.png",
+    // Intrinsic size of defaultImage, emitted as og:image:width/height so a
+    // scraper can lay the card out before the bytes arrive. Update both if the
+    // file is replaced. Was 2880x1368 / 1.13 MB; resampled to 1200 wide, which
+    // is the width every major consumer targets.
+    defaultImageWidth: 1200,
+    defaultImageHeight: 570,
     language: "en",
   },
 

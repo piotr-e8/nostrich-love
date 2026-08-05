@@ -18,8 +18,25 @@ const {
   url = new URL(Astro.url.pathname, siteConfig.url).href,
 } = Astro.props;
 
-// Nostr note link (uses njump.me for sharing)
-const nostrShareUrl = `https://njump.me/?url=${encodeURIComponent(url)}`;
+// The Footer instance passes no title, so fall back to the brand rather than
+// sharing a bare URL with no context.
+const titlePropOrSite = titleProp ?? siteConfig.name;
+
+// Compose a note in a nostr client, pre-filled with this page.
+//
+// This used to point at `https://njump.me/?url=…`, which njump silently
+// ignores — it is an event viewer with no compose intent, so the button dumped
+// the reader on njump's landing page with no link and no way back. Verified:
+// that URL returns njump's generic `<title>njump - Jump on Board on Nostr</title>`
+// and the response body does not contain "nostrich" anywhere.
+//
+// nostter's /post route resolves to a compose screen (it answers with a
+// route-specific `<title>nostter - Post</title>` rather than an app shell).
+// Whether the client pre-fills `content` cannot be proven from a headless
+// fetch, which is why the copy-link button beside this one stays the universal
+// fallback — it needs no third party at all.
+const shareText = titlePropOrSite ? `${titlePropOrSite} ${url}` : url;
+const nostrShareUrl = `https://nostter.app/post?content=${encodeURIComponent(shareText)}`;
 
 const labels = {
   share: t('share.label', locale),

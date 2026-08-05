@@ -3024,6 +3024,12 @@
     "sharePage": "Diese Seite teilen",
     "linkCopied": "Link kopiert"
   },
+  "footer": {
+    "languages": {
+      "thisPage": "Diese Seite lesen auf",
+      "guides": "Die Anleitungen lesen auf"
+    }
+  },
   "guidesPage": {
     "hero": {
       "title": "Lerne Nostr Schritt für Schritt",

@@ -3024,6 +3024,12 @@
     "sharePage": "Compartir esta página",
     "linkCopied": "Enlace copiado"
   },
+  "footer": {
+    "languages": {
+      "thisPage": "Lee esta página en",
+      "guides": "Lee las guías en"
+    }
+  },
   "guidesPage": {
     "hero": {
       "title": "Aprende Nostr Paso a Paso",

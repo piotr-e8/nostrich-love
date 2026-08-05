@@ -4,6 +4,9 @@ import { siteConfig } from '../../config/site';
 import { LogoText } from '../ui/LogoText';
 import { locales, getLocaleConfig } from '../../config/locales';
 import { localizedLocales, localePath, guidesIndexPath, splitLocale } from '../../i18n/paths';
+// Locale passed explicitly to t(): Footer renders inside Layout's slot, but
+// relying on that ordering for a string this visible is not worth the coupling.
+import { t } from '../../i18n';
 
 const footerLinks = {
   learn: [
@@ -172,7 +175,7 @@ const languageLinks = (hasRouteVariants ? routeLocales : locales).map((code) => 
       aria-labelledby="footer-languages"
     >
       <h3 id="footer-languages" class="font-semibold text-gray-900 dark:text-white mb-4">
-        {hasRouteVariants ? 'Read this page in' : 'Read the guides in'}
+        {t(hasRouteVariants ? 'footer.languages.thisPage' : 'footer.languages.guides', currentLocale)}
       </h3>
       <ul class="flex flex-wrap gap-x-5 gap-y-2" role="list">
         {languageLinks.map((link) => (

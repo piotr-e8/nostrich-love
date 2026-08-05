@@ -18,6 +18,10 @@ import { WhatIsNostrQuiz } from "@components/interactive/WhatIsNostrQuiz";
   { /* <NostrSimulator client:idle /> */ }
 { /* </div> */ }
 
+**Nostr — short for Notes and Other Stuff Transmitted by Relays — is an open protocol for social media, not an app.** Your account is a cryptographic key pair, your posts are signed events, and relays are the servers that store and forward them. Any client can read them, so no company can ban you or lock in your followers.
+
+It was published anonymously by a developer known as fiatjaf in 2020, and it is defined by numbered specs called NIPs rather than by any company.
+
 ### The Problem (1 minute read)
 
 **You don't own your social media presence.**
@@ -167,6 +171,18 @@ That depends on what you value:
 - **If you want simplicity:** Traditional platforms are easier (for now)
 - **If you want freedom:** Nostr gives you control no platform can match
 - **If you're curious:** The best way to learn is to try
+
+## How Nostr Actually Works
+
+Five pieces make up the whole protocol. You do not need them to use Nostr, but they are what people mean when they say "Nostr is simple".
+
+- **Event** — every post, reaction, profile update and private message is one signed JSON object. That is the only data structure the protocol has.
+- **Kind** — an integer on each event saying what it is: `0` a profile, `1` a short note, `3` a contact list, `7` a reaction, `30023` a long-form article.
+- **Signature** — a Schnorr signature over secp256k1, made with your [private key](/guides/keys-and-security). It is what makes an event tamper-proof, and why no relay can forge a post in your name.
+- **NIP** — Nostr Implementation Possibility, the numbered specifications the protocol is made of. NIP-01 defines events and relays; [NIP-05](/guides/nip05-identity) maps a human-readable `name@domain` to your key; [NIP-57](/guides/zaps-and-lightning) defines zaps.
+- **Web of trust** — with no company algorithm, discovery runs on who your follows follow. That is why [finding your first people](/guides/finding-community) matters more here than on other networks.
+
+Payments are part of the culture rather than an add-on: a **zap** is a Bitcoin Lightning tip attached to a post, denominated in sats. See [Zaps & Lightning](/guides/zaps-and-lightning) for how that works.
 
 ### Coming From Somewhere Else?
 

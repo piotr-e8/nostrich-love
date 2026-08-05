@@ -3024,6 +3024,12 @@
     "sharePage": "यह पेज साझा करें",
     "linkCopied": "लिंक कॉपी हो गया"
   },
+  "footer": {
+    "languages": {
+      "thisPage": "यह पृष्ठ इस भाषा में पढ़ें",
+      "guides": "गाइड इस भाषा में पढ़ें"
+    }
+  },
   "guidesPage": {
     "hero": {
       "title": "Nostr सीखें",

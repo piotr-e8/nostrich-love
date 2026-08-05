@@ -31,6 +31,12 @@ const formattedTitle = title
 
 const metaDescription = description || siteConfig.seo.defaultDescription;
 const ogImage = new URL(image || siteConfig.seo.defaultImage, siteConfig.url).toString();
+// Dimensions are only known for the shared default card. A page passing its own
+// `image` gets no width/height rather than the wrong ones — a scraper handles a
+// missing hint fine, but a wrong one makes it lay out the card incorrectly.
+const ogImageSize = image
+  ? null
+  : { width: siteConfig.seo.defaultImageWidth, height: siteConfig.seo.defaultImageHeight };
 const canonicalURL = canonical || new URL(Astro.url.pathname, siteConfig.url).toString();
 
 // Get locale configuration
@@ -81,6 +87,8 @@ const xDefaultUrl = routeLocales.length > 0
 <meta property="og:title" content={formattedTitle} />
 <meta property="og:description" content={metaDescription} />
 <meta property="og:image" content={ogImage} />
+{ogImageSize && <meta property="og:image:width" content={String(ogImageSize.width)} />}
+{ogImageSize && <meta property="og:image:height" content={String(ogImageSize.height)} />}
 <meta property="og:site_name" content={siteConfig.name} />
 <meta property="og:locale" content={localeConfig.ogLocale} />
 
