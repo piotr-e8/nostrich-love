@@ -12,17 +12,27 @@ import FAQAccordion from '../../components/ui/FAQAccordion.astro';
 import { BadgeEarnedModalListener } from '../../components/gamification/BadgeEarnedModalListener';
 import { KeyGenerator } from '../../components/interactive';
 
-const title = 'Nostr Key Generator — Free, In Your Browser';
+// Framed as a demonstration, not as the place to mint an identity you intend to
+// keep. The page used to say "generate a Nostr identity right here in your
+// browser", which is the exact thing /guides/keys-and-security and the Nostr
+// long-form articles tell readers not to do — a key that has been displayed in
+// a browser tab has been somewhere a key held by a signer never goes.
+const title = 'Nostr Key Generator — See How Nostr Keys Work';
 const description =
-  'Generate a Nostr key pair (npub + nsec) locally in your browser. Nothing is sent to any server. Includes how it works, how to store your nsec, and what to do next.';
+  'Generate a real Nostr key pair (npub + nsec) locally, to see what one looks like. Nothing is sent to any server. Includes how keys work and the safer way to create an identity you plan to keep.';
 
 // FAQ rendered below AND mirrored into FAQPage JSON-LD — keep the two in sync
 // by deriving both from this single array.
 const faqs = [
   {
-    question: 'Is it safe to generate keys in a browser?',
+    question: 'Should I use this to create my real Nostr account?',
     answer:
-      'Yes, for getting started. The keys are generated on your own device by nostr-tools, the same open-source cryptography library most Nostr clients use, and this page sends nothing to any server — you can even load it, go offline, and generate the pair. The practical risk is not the generation but the storage: anyone who sees your nsec owns the account, so save it somewhere private, not in a screenshot or a chat. For long-term use, many people later move their key into a signer extension or hardware signer.',
+      'Use it to see what a key pair looks like. For an identity you intend to keep, let a client (Damus, Amethyst, Primal) or a signer extension (Alby, nos2x) generate the key instead. The reason is not that this page is unsafe — the keys are made on your device by nostr-tools, the same library most clients use, and nothing is sent anywhere; you can load the page, go offline, and it still works. The reason is that a key generated inside a signer never appears on a screen, never lands in a clipboard, and never sits in a browser tab. This one does all three, and each is a place it can be seen or captured.',
+  },
+  {
+    question: 'Are the keys this page makes real?',
+    answer:
+      'Completely. It is a genuine secp256k1 key pair and any Nostr client will accept it. That is the point of showing it rather than a fake example — but it also means the nsec on screen is a real secret from the moment it appears, not a sample. Treat it as one.',
   },
   {
     question: 'What is the difference between npub and nsec?',
@@ -71,7 +81,7 @@ const nextSteps = [
   {
     step: '2',
     title: 'Set up your first client',
-    description: 'Pick an app, import the keys you just generated, and publish your first note.',
+    description: 'Pick an app and let it generate the key you will actually keep, then publish your first note.',
     href: '/guides/quickstart',
     cta: 'Quickstart guide (5 min)',
   },
@@ -101,8 +111,13 @@ const nextSteps = [
             </span>
           </h1>
           <p class="text-xl text-gray-600 dark:text-gray-300 mb-6">
-            Generate a Nostr identity — an npub + nsec key pair — right here in your browser.
-            Free, no sign-up, and nothing is sent to any server.
+            See what a Nostr key pair actually is. This makes a real npub + nsec on your own
+            device — nothing is sent to any server — so you can look at one before you own one.
+          </p>
+          <p class="text-base text-gray-500 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
+            Making an identity you intend to keep? Let a client or a signer extension generate it
+            instead. Not because this page leaks anything — it does not — but a key that has been
+            shown in a browser tab has been somewhere a key held by a signer never goes.
           </p>
           <div class="flex flex-wrap justify-center gap-4 text-sm">
             <span class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400">
@@ -158,8 +173,10 @@ const nextSteps = [
             </ul>
             <p>
               There is no registration step because Nostr has no central server to register with:
-              a key pair is the whole account. Import the nsec into any client — Damus, Amethyst,
-              Primal, Iris and the rest — and you are the same person in all of them.
+              a key pair is the whole account. That is also why the safest key is one you never
+              see — a client or a signer extension can generate it, hold it, and sign with it
+              without ever putting it on a screen. This page puts it on a screen deliberately,
+              because that is the only way to show you what one is.
             </p>
           </div>
         </div>
