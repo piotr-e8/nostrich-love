@@ -1,0 +1,11 @@
+# Build products and captures — all regenerable, none versioned.
+#
+# shots/ in particular is deliberately NOT committed: it tracks how the site
+# currently looks, so a committed copy goes stale the moment a page changes and
+# then silently builds a teaser of the old design. capture-shots.sh reproduces
+# the whole directory from the preview server in about two minutes.
+.work/
+out/
+shots/
+*.mov
+*.mp4
