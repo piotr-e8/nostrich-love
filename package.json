@@ -2,7 +2,7 @@
   "name": "nostrich-love",
   "type": "module",
   "version": "1.0.0",
-  "description": "Multilingual, interactive beginner's guide to the nostr protocol — 16 guides in 7 languages with hands-on tools and client simulators",
+  "description": "Multilingual, interactive beginner's guide to the nostr protocol \u2014 16 guides in 7 languages with hands-on tools and client simulators",
   "license": "MIT",
   "author": "Piotr Czarnoleski (ptrio42) <piotr@entereighth.com>",
   "repository": {
@@ -16,6 +16,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "fetch-accounts": "node scripts/fetch-nostr-accounts.js",
+    "publish-nostr": "node scripts/publish-nostr-articles.mjs",
     "verify-seo": "node scripts/verify-seo.js",
     "test": "vitest run",
     "test:watch": "vitest",
