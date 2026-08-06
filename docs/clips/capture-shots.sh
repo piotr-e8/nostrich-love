@@ -53,12 +53,22 @@ grab lang-zh "$BASE/zh/guides/what-is-nostr/" 900 1600
 grab lang-ar "$BASE/ar/guides/what-is-nostr/" 900 1600
 grab lang-hi "$BASE/hi/guides/what-is-nostr/" 900 1600
 
-echo "Pages the teaser points at:"
-grab home        "$BASE/"                       900 1600
-grab guides      "$BASE/guides/"                900 1600
-grab keygen      "$BASE/tools/key-generator/"   900 1600
-grab followpack  "$BASE/follow-pack/"           900 1600
-grab glossary    "$BASE/glossary/"              900 1600
+# Content pages, captured tall. The material worth showing (the protocol table,
+# the diagram components, the follow-pack grid) sits well below the fold, and a
+# viewport-height shot cannot reach it — build-teaser.sh crops a window out of
+# these by y offset.
+#
+# NOT captured: /tools/key-generator. The page invites you to "generate a Nostr
+# identity right here in your browser", which is the exact thing
+# /guides/keys-and-security and the Nostr articles tell people not to do. It is
+# a demo, and putting it in a teaser would advertise the site contradicting
+# itself. See docs/clips/README.md.
+echo "Content pages (tall — the good material is below the fold):"
+grab proto      "$BASE/guides/protocol-comparison/"  900 5200
+grab compare    "$BASE/nostr-vs-twitter/"            900 5200
+grab relays     "$BASE/guides/relays-demystified/"   900 5200
+grab followpack "$BASE/follow-pack/"                 900 5200
+grab glossary   "$BASE/glossary/"                    900 5200
 
 # Language labels, rendered by Chrome rather than drawn by ffmpeg.
 #

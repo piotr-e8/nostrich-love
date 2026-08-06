@@ -42,11 +42,18 @@ high / yuv420p / `+faststart`, so they inline in every Nostr client.
 | beat | source | caption |
 |---|---|---|
 | 1 | 7 language stills, ~0.43s each | Seven languages. One guide. |
-| 2 | /guides | Sixteen guides, in order. |
-| 3 | /tools/key-generator | Make a key. It never leaves the browser. |
-| 4 | /follow-pack | Then fill the feed. |
-| 5 | /glossary | Every term, explained. |
-| 6 | end card | learn Nostr — in your language / nostrich.love |
+| 2 | /guides/protocol-comparison | Three protocols, compared. |
+| 3 | /nostr-vs-twitter | Including what you give up. |
+| 4 | /guides/relays-demystified | Diagrams, not walls of text. |
+| 5 | /follow-pack | 527 accounts to start with. |
+| 6 | /glossary | Every term, linked to its guide. |
+| 7 | end card | learn Nostr — in your language / nostrich.love |
+
+Every content beat is cropped to a window picked by eye, not to the top of the
+page: the protocol table, the diagram components and the follow-pack grid all
+sit well below the fold, and several guide tops carry a prerequisite banner that
+is interstitial rather than content. The `crop-y` column in `STILLS` is where
+that lives.
 
 The montage leads because it is the one claim no competitor page can make in a
 still. English is held roughly twice as long as the rest so the eye locks onto
@@ -80,6 +87,15 @@ shows as a box behind the logo on a dark frame. The repo asset is transparent.
 
 **The lockup capture needs a window ≥640px.** `LogoText` is `hidden sm:block`,
 so a narrower shot silently captures the bird without the wordmark.
+
+**Captions longer than 32 characters run off the frame** and ffmpeg clips them
+without complaining, so a broken caption ships looking deliberate. `CAP_MAX`
+fails the build instead — verified by feeding it a 49-character caption.
+
+**/tools/key-generator is deliberately not in the cut.** The page invites you to
+"generate a Nostr identity right here in your browser", which is precisely what
+/guides/keys-and-security and the Nostr articles tell people not to do. It is a
+demo. Advertising it would show the site contradicting its own security advice.
 
 **Captures include the streak banner.** It renders client-side on a fresh
 profile and overlaps the top of the page. The crop constants (`SX`/`SY`) start

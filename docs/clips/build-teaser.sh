@@ -50,8 +50,17 @@ mask() { # w h r out — rounded-rect alpha, generated once per size
     "$o"
 }
 
+# At fontsize 58 with a CARDX margin on both sides, a caption longer than this
+# runs off the right edge — and ffmpeg draws it clipped without complaining, so
+# it ships looking broken. Two captions did exactly that before this check.
+CAP_MAX=32
+
 chrome() { # caption -> shared filter fragment: caption, wordmark, footer line
   local cap=$1
+  if [ "${#cap}" -gt "$CAP_MAX" ]; then
+    echo "caption too long (${#cap} > ${CAP_MAX}): $cap" >&2
+    exit 1
+  fi
   echo "drawtext=fontfile='${BOLD}':text='${cap}':fontsize=58:fontcolor=white:x=${CARDX}:y=${CAPY}:shadowcolor=black@0.6:shadowx=0:shadowy=3,\
 drawtext=fontfile='${BOLD}':text='nostrich.love':fontsize=40:fontcolor=${ACCENT}:x=${CANW}-${CARDX}-tw:y=${FOOTY}+8:shadowcolor=black@0.6:shadowx=0:shadowy=2,\
 drawtext=fontfile='${REG}':text='${FOOTER}':fontsize=26:fontcolor=${MUTED}:x=${CARDX}:y=${DISCY}"
@@ -73,8 +82,8 @@ MASK_CARD="$WORK/mask_${CARDW}x${CARDH}r${CARDR}.png"; mask "$CARDW" "$CARDH" "$
 
 # One still -> one beat. Zoompan gives it a slow push so a static shot does not
 # read as a frozen video.
-still() { # name shot caption frames [label-code]
-  local name=$1 shot=$2 cap=$3 frames=$4 label=${5:-}
+still() { # name shot caption frames crop-y [label-code]
+  local name=$1 shot=$2 cap=$3 frames=$4 cy=$5 label=${6:-}
   # `last` names the final labelled output so the caption chain can attach to it
   # whether or not a language label was composited in.
   local lin="" lfc="" lov="" last="v2"
@@ -86,7 +95,7 @@ still() { # name shot caption frames [label-code]
   fi
   ffmpeg -v error -y -loop 1 -i "$SHOTS/${shot}.png" -i "$MASK_CARD" -i "$MARK" $lin \
     -filter_complex "\
-[0:v]crop=${SW}:${SH}:${SX}:${SY},scale=${CARDW}:${CARDH}:flags=lanczos,format=gbrp,\
+[0:v]crop=${SW}:${SH}:${SX}:${cy},scale=${CARDW}:${CARDH}:flags=lanczos,format=gbrp,\
 zoompan=z='1+0.045*on/${frames}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=${frames}:s=${CARDW}x${CARDH}:fps=30[card];\
 [card]split[k1][k2];\
 [k1]${AMBIENT}[bg];\
@@ -113,23 +122,28 @@ mi=0
 for code in "${LANGS[@]}"; do
   mi=$((mi+1))
   frames=13; [ $mi -eq 1 ] && frames=24
-  still "mont_${mi}" "lang-${code}" "Seven languages. One guide." "$frames" "$code"
+  still "mont_${mi}" "lang-${code}" "Seven languages. One guide." "$frames" "$SY" "$code"
   echo "file 'mont_${mi}.mp4'" >>"$WORK/montage.txt"
 done
 ffmpeg -v error -y -f concat -safe 0 -i "$WORK/montage.txt" -c copy "$WORK/01montage.mp4"
 
-# ---- beats 02-05: what is actually on the site -------------------------------
-# name | shot | frames | caption
+# ---- beats 02-06: the material that is actually worth showing ----------------
+# Each of these is cropped to a window chosen by eye, not to the top of the page
+# — the substance (the protocol table, the diagram components, the follow-pack
+# grid) all sits below the fold, and the tops carry prerequisite banners.
+#
+# name | shot | frames | crop-y | caption
 STILLS=(
-  "02guides|guides|75|Sixteen guides, in order."
-  "03keygen|keygen|75|Make a key. It never leaves the browser."
-  "04followpack|followpack|75|Then fill the feed."
-  "05glossary|glossary|66|Every term, explained."
+  "02proto|proto|84|1400|Three protocols, compared."
+  "03compare|compare|84|2200|Including what you give up."
+  "04relays|relays|78|1950|Diagrams, not walls of text."
+  "05follow|followpack|78|6200|527 accounts to start with."
+  "06glossary|glossary|66|4200|Every term, linked to its guide."
 )
 for s in "${STILLS[@]}"; do
-  IFS='|' read -r name shot frames cap <<<"$s"
+  IFS='|' read -r name shot frames cy cap <<<"$s"
   echo "· $name"
-  still "$name" "$shot" "$cap" "$frames"
+  still "$name" "$shot" "$cap" "$frames" "$cy"
 done
 
 # ---- optional live beats from a screen recording ----------------------------
