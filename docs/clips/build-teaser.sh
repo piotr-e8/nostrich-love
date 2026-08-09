@@ -110,6 +110,36 @@ ${lov}\
     -map "[v]" -frames:v "$frames" -c:v libx264 -crf 17 -preset medium -r 30 "$WORK/${name}.mp4"
 }
 
+# A beat built from a captured frame SEQUENCE rather than one still or a screen
+# recording — see record-quiz.mjs. The frames are already cropped to the card and
+# captured at the slot's aspect (0.553 against the slot's 0.555), so unlike
+# still() this neither crops nor zooms: the content changing IS the motion.
+sequence() { # name caption hold-seconds frame...
+  local name=$1 cap=$2 hold=$3; shift 3
+  local list="$WORK/${name}_frames.txt" f last
+  local files=("$@")
+  for f in "${files[@]}"; do [ -s "$f" ] || return 1; done
+  last="${files[${#files[@]}-1]}"
+
+  : >"$list"
+  for f in "${files[@]}"; do
+    printf "file '%s'\nduration %s\n" "$f" "$([ "$f" = "$last" ] && echo "$hold" || echo 0.42)" >>"$list"
+  done
+  printf "file '%s'\n" "$last" >>"$list"   # concat needs the tail repeated
+
+  ffmpeg -v error -y -f concat -safe 0 -i "$list" -i "$MASK_CARD" -i "$MARK" \
+    -filter_complex "\
+[0:v]scale=${CARDW}:${CARDH}:flags=lanczos,fps=30,format=gbrp[card];\
+[card]split[k1][k2];\
+[k1]${AMBIENT}[bg];\
+[k2]format=yuva444p[fgs];[1:v]format=gray[mk];[fgs][mk]alphamerge[fg];\
+[2:v]${LOCKUP}[lk];\
+[bg][fg]overlay=${CARDX}:${CARDY}:format=auto[v1];\
+[v1][lk]overlay=${CARDX}:${FOOTY}-3:format=auto[v2];\
+[v2]$(chrome "$cap"),format=yuv420p[v]" \
+    -map "[v]" -c:v libx264 -crf 17 -preset medium -r 30 "$WORK/${name}.mp4"
+}
+
 # ---- beat 01: the language montage ------------------------------------------
 # The site's one genuine differentiator. Same guide, same framing, seven scripts
 # — Arabic included precisely because it mirrors, which no still of an English
@@ -146,6 +176,23 @@ for s in "${STILLS[@]}"; do
   echo "· $name"
   still "$name" "$shot" "$cap" "$frames" "$cy"
 done
+
+# ---- the quiz, answered ------------------------------------------------------
+# The one thing no competing onboarding page has at all. Needs frames from
+# `node docs/clips/record-quiz.mjs`; skipped with a warning if they are absent,
+# because the rest of the teaser is still worth building without it.
+# Three frames, not all eight. The beat has to say "it asks you questions and
+# tells you whether you were right" — showing every question says it six times
+# and made this run 4.6s against 2.2-2.8s for every other beat. The rest of the
+# frames stay on disk for anyone who wants a longer cut.
+QUIZ_BEAT=""
+if sequence "02quiz" "Check you actually got it." 1.5 \
+     "$SHOTS/quiz-00-start.png" "$SHOTS/quiz-01-answered.png" "$SHOTS/quiz-99-results.png"; then
+  QUIZ_BEAT="02quiz"
+  echo "· 02quiz (frame sequence)"
+else
+  echo "  ! no shots/quiz-*.png — run record-quiz.mjs for the quiz beat" >&2
+fi
 
 # ---- optional live beats from a screen recording ----------------------------
 # Only spliced in when SRC points at a .mov. Adjust the table to match whatever
@@ -193,6 +240,9 @@ drawtext=fontfile='${REG}':text='${FOOTER}':fontsize=26:fontcolor=${MUTED}:x=(w-
 # ---- assemble ----------------------------------------------------------------
 {
   echo "file '01montage.mp4'"
+  # Straight after the montage on purpose: language coverage and assessment are
+  # the two claims no competitor can answer, so they lead together.
+  [ -n "$QUIZ_BEAT" ] && echo "file '${QUIZ_BEAT}.mp4'"
   for s in "${STILLS[@]}"; do echo "file '${s%%|*}.mp4'"; done
   for n in "${LIVE[@]:-}"; do [ -n "$n" ] && echo "file '${n}.mp4'"; done
   echo "file '99end.mp4'"

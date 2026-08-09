@@ -25,19 +25,32 @@ curl -sf -o /dev/null "$BASE/" || { echo "Nothing serving at $BASE — run 'npm 
 
 grab() { # name url width height [dpr]
   local name=$1 url=$2 w=$3 h=$4 dpr=${5:-2}
-  local prof; prof="$(mktemp -d)"
-  rm -f "$SHOTS/$name.png"
-  "$CHROME" --headless=new --disable-gpu --hide-scrollbars --no-first-run \
-    --no-default-browser-check --user-data-dir="$prof" \
-    --force-device-scale-factor="$dpr" --window-size="$w,$h" \
-    --virtual-time-budget=8000 --screenshot="$SHOTS/$name.png" "$url" >/dev/null 2>&1 &
-  local pid=$! i
-  for i in $(seq 1 60); do [ -s "$SHOTS/$name.png" ] && break; sleep 1; done
-  sleep 1; kill -9 "$pid" 2>/dev/null || true
-  pkill -9 -f "$prof" 2>/dev/null || true
-  rm -rf "$prof"
-  [ -s "$SHOTS/$name.png" ] || { echo "  ! $name FAILED" >&2; return 1; }
-  echo "  · $name (${i}s)"
+  local attempt
+  # Retried because it is genuinely flaky: a tall capture failed once mid-run
+  # against a page that served a perfectly good 200, then succeeded in 9s on a
+  # retry. Chrome instances from the previous shot are still being reaped, and
+  # with `set -e` one such miss killed the whole run and left half the shots
+  # stale from a previous build — which is worse than slow.
+  for attempt in 1 2 3; do
+    local prof; prof="$(mktemp -d)"
+    rm -f "$SHOTS/$name.png"
+    "$CHROME" --headless=new --disable-gpu --hide-scrollbars --no-first-run \
+      --no-default-browser-check --user-data-dir="$prof" \
+      --force-device-scale-factor="$dpr" --window-size="$w,$h" \
+      --virtual-time-budget=8000 --screenshot="$SHOTS/$name.png" "$url" >/dev/null 2>&1 &
+    local pid=$! i
+    for i in $(seq 1 60); do [ -s "$SHOTS/$name.png" ] && break; sleep 1; done
+    sleep 1; kill -9 "$pid" 2>/dev/null || true
+    pkill -9 -f "$prof" 2>/dev/null || true
+    rm -rf "$prof"
+    if [ -s "$SHOTS/$name.png" ]; then
+      echo "  · $name (${i}s${attempt:+$([ "$attempt" -gt 1 ] && echo ", attempt $attempt")})"
+      return 0
+    fi
+    [ "$attempt" -lt 3 ] && { echo "  ~ $name retrying" >&2; sleep 3; }
+  done
+  echo "  ! $name FAILED after 3 attempts" >&2
+  return 1
 }
 
 echo "Language montage — the same guide, seven times:"

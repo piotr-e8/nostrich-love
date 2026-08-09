@@ -226,12 +226,27 @@ export function MultiClientQuiz({ className }: MultiClientQuizProps) {
             {t("ui.quiz.questionCounter").replace("{{current}}", (currentIndex + 1).toString()).replace("{{total}}", total.toString())}
           </p>
         </div>
-        <div className="w-full rounded-full bg-gray-100 p-1 dark:bg-gray-800 sm:w-56">
-          <div
-            className="rounded-full bg-gradient-to-r from-primary to-secondary py-1 px-2 text-center text-xs font-semibold text-white min-w-[60px] transition-[width] duration-500 ease-out-quint motion-reduce:transition-none"
-            style={{ width: `${Math.max(15, (answeredCount / total) * 100)}%` }}
-          >
+        {/* The label used to live INSIDE the fill, which at 1 of 6 answered is
+            about 17% of a 224px track — so the text spilled out over the grey
+            and read as broken. `Math.max(15, …)` and `min-w-[60px]` were there
+            to paper over it, and they also made the bar overstate progress.
+            Label above, bar below: the fill is now the true fraction. */}
+        <div className="w-full sm:w-56">
+          <p className="mb-1 text-end text-xs font-semibold text-gray-600 dark:text-gray-300">
             {answeredCount}/{total} {t("ui.quiz.answered")}
+          </p>
+          <div
+            className="h-2 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800"
+            role="progressbar"
+            aria-valuenow={answeredCount}
+            aria-valuemin={0}
+            aria-valuemax={total}
+            aria-label={t("ui.quiz.answered")}
+          >
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-primary to-secondary transition-[width] duration-500 ease-out-quint motion-reduce:transition-none"
+              style={{ width: `${(answeredCount / total) * 100}%` }}
+            />
           </div>
         </div>
       </header>

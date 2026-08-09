@@ -21,7 +21,7 @@
 // No dependencies: Node 24 ships a global WebSocket, which is all CDP needs.
 
 import { spawn } from 'node:child_process';
-import { mkdirSync, rmSync, writeFileSync, readdirSync, readFileSync } from 'node:fs';
+import { mkdirSync, rmSync, writeFileSync, readdirSync, readFileSync, renameSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -35,6 +35,12 @@ const CHROME =
   process.env.CHROME ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const CDP_PORT = 9333;
 const SCALE = 2;
+// Narrow on purpose. The teaser's card slot is 860x1550 (aspect 0.55) and at a
+// desktop width the quiz card comes out at 0.75 — fitting that would mean
+// cropping the sides off the answer text. A phone-ish viewport makes the card
+// taller than it is wide, which is also how anyone actually reads this page.
+const VW = Number(process.env.VW ?? 620);
+const VH = Number(process.env.VH ?? 1600);
 
 // The correct answers, read from the same locale file the quiz renders from.
 //
@@ -153,11 +159,26 @@ async function shot(cdp, name, clip) {
   const { data } = await cdp.send('Page.captureScreenshot', {
     format: 'png',
     captureBeyondViewport: true,
-    ...(clip ? { clip: { ...clip, scale: SCALE } } : {}),
+    // scale: 1, NOT SCALE — Emulation.setDeviceMetricsOverride already applies
+    // deviceScaleFactor, and passing it again here multiplied out to 4x frames.
+    ...(clip ? { clip: { ...clip, scale: 1 } } : {}),
   });
   writeFileSync(join(SHOTS, `${name}.png`), Buffer.from(data, 'base64'));
   return name;
 }
+
+
+/** Card rect in PAGE coordinates, at whatever height the card currently is. */
+const rectExpr = () => `(() => {
+  const r = document.querySelector('[data-quiz]').getBoundingClientRect();
+  return {
+    x: Math.max(0, r.x + window.scrollX - 8),
+    y: Math.max(0, r.y + window.scrollY - 8),
+    width: r.width + 16,
+    height: r.height + 16,
+  };
+})()`;
+
 
 // ---------------------------------------------------------------------------
 // Main
@@ -172,7 +193,7 @@ const chrome = spawn(
     '--no-default-browser-check',
     `--remote-debugging-port=${CDP_PORT}`,
     '--user-data-dir=' + join(HERE, '.chrome-profile'),
-    '--window-size=900,1600',
+    `--window-size=${VW},${VH}`,
     `--force-device-scale-factor=${SCALE}`,
     'about:blank',
   ],
@@ -189,8 +210,8 @@ try {
   await cdp.send('Page.enable');
   await cdp.send('Runtime.enable');
   await cdp.send('Emulation.setDeviceMetricsOverride', {
-    width: 900,
-    height: 1600,
+    width: VW,
+    height: VH,
     deviceScaleFactor: SCALE,
     mobile: false,
   });
@@ -210,12 +231,14 @@ try {
   if (!found) throw new Error(`No [data-quiz] on ${url} — does this guide have a quiz?`);
   await sleep(600);
 
-  const clip = await cdp.eval(`(() => {
-    const r = document.querySelector('[data-quiz]').getBoundingClientRect();
-    return { x: Math.max(0, r.x + window.scrollX - 8), y: Math.max(0, r.y + window.scrollY - 8), width: r.width + 16, height: r.height + 16 };
-  })()`);
-
-  frames.push(await shot(cdp, 'quiz-00-start', clip));
+  // Each frame is clipped to the card at its CURRENT height. One fixed height
+  // does not work: the card grows when an answer reveals its explanation, and
+  // the results screen is shorter than every question — forcing the biggest
+  // height onto it dragged the page BELOW the card into frame, and the teaser
+  // beat rendered as white space and a "Want to dive deeper?" paragraph.
+  // Uniform size is still required by the concat demuxer, so it is imposed
+  // afterwards by padding with white, which is the card's own background.
+  frames.push(await shot(cdp, 'quiz-00-start', await cdp.eval(rectExpr())));
   console.log('  · start');
 
   // Answer every question, capturing the state after each click.
@@ -228,7 +251,7 @@ try {
     );
     if (option) {
       await click(cdp, option);
-      frames.push(await shot(cdp, `quiz-${String(q).padStart(2, '0')}-answered`, clip));
+      frames.push(await shot(cdp, `quiz-${String(q).padStart(2, '0')}-answered`, await cdp.eval(rectExpr())));
       console.log(`  · q${q} answered`);
     }
 
@@ -238,11 +261,7 @@ try {
     if (results) {
       await click(cdp, results);
       await sleep(700); // results screen animates in
-      const rclip = await cdp.eval(`(() => {
-        const r = document.querySelector('[data-quiz]').getBoundingClientRect();
-        return { x: Math.max(0, r.x + window.scrollX - 8), y: Math.max(0, r.y + window.scrollY - 8), width: r.width + 16, height: r.height + 16 };
-      })()`);
-      frames.push(await shot(cdp, 'quiz-99-results', rclip));
+      frames.push(await shot(cdp, 'quiz-99-results', await cdp.eval(rectExpr())));
       console.log('  · results');
       break;
     }
@@ -266,6 +285,45 @@ try {
   chrome.kill('SIGKILL');
   rmSync(join(HERE, '.chrome-profile'), { recursive: true, force: true });
 }
+
+// ---------------------------------------------------------------------------
+// Normalise frame sizes.
+//
+// The concat demuxer refuses a sequence whose frames differ in size, and every
+// consumer of these PNGs wants them uniform. Padding with white — the card's own
+// background — keeps a short state (the results screen) reading as a card with
+// generous margins, instead of dragging the page below it into shot.
+// ---------------------------------------------------------------------------
+const sizes = await Promise.all(
+  readdirSync(SHOTS)
+    .filter((f) => /^quiz-\d+.*\.png$/.test(f))
+    .sort()
+    .map(async (f) => {
+      const p = join(SHOTS, f);
+      const out = await new Promise((res) => {
+        const ff = spawn('ffprobe', ['-v', 'error', '-show_entries', 'stream=width,height',
+          '-of', 'csv=p=0', p]);
+        let buf = '';
+        ff.stdout.on('data', (d) => (buf += d));
+        ff.on('exit', () => res(buf.trim()));
+      });
+      const [w, h] = out.split(',').map(Number);
+      return { file: p, w, h };
+    })
+);
+const maxW = Math.max(...sizes.map((s) => s.w));
+const maxH = Math.max(...sizes.map((s) => s.h));
+for (const { file, w, h } of sizes) {
+  if (w === maxW && h === maxH) continue;
+  const tmp = `${file}.pad.png`;
+  await new Promise((res, rej) => {
+    spawn('ffmpeg', ['-v', 'error', '-y', '-i', file, '-vf',
+      `pad=${maxW}:${maxH}:(ow-iw)/2:(oh-ih)/2:color=white`, tmp], { stdio: 'inherit' })
+      .on('exit', (c) => (c === 0 ? res() : rej(new Error('pad failed'))));
+  });
+  renameSync(tmp, file);
+}
+console.log(`frames normalised to ${maxW}x${maxH}`);
 
 // ---------------------------------------------------------------------------
 // Frames -> clip. Held on the results screen, which is the point of the beat.
