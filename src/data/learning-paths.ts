@@ -1,12 +1,22 @@
 /**
- * Skill Levels Configuration
- * 
- * Progressive learning system with 3 levels:
- * - Beginner (6 guides) - Unlocked by default
- * - Intermediate (6 guides) - Unlock at 4/6 Beginner completion
- * - Advanced (4 guides) - Unlock at 4/6 Intermediate completion
- * 
- * Users can complete all guides across all levels.
+ * Skill Levels Configuration — the course spine.
+ *
+ * Three levels: Beginner (7 guides), Intermediate (6), Advanced (3).
+ *
+ * Nothing is locked. Every guide is reachable at any time; the levels describe a
+ * sensible reading order and nothing more. The unlock thresholds this comment
+ * used to document ("unlock at 4/6") were removed along with the whole gating
+ * layer — do not reintroduce them.
+ *
+ * This file is the SINGLE source of truth for which level a guide belongs to and
+ * in what order guides are read. It drives:
+ *   - the level sections on /guides            (pages/[...lang]/guides/index.astro)
+ *   - prev/next and "guide N of M"             (pages/[...lang]/guides/[slug].astro)
+ *   - the level badge on each guide page       (ditto)
+ *   - level progress and certificates          (utils/gamification.ts)
+ *
+ * The `category` field in guide frontmatter is NOT a level and must not be
+ * rendered as one; seven guides disagreed with this file before that was fixed.
  */
 
 export interface SkillLevelConfig {

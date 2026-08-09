@@ -180,4 +180,41 @@ describe('learning paths', () => {
     expect([...sequenced].sort()).toEqual([...onDisk].sort());
     expect(new Set(sequenced).size).toBe(sequenced.length); // no duplicates
   });
+
+  /**
+   * Three orderings used to disagree at once: the hand-written GUIDE_ORDER in
+   * [slug].astro, SKILL_LEVELS.sequence, and the `category` frontmatter field.
+   * The visible symptom was that `what-is-nostr` — the first guide of the course
+   * — offered "Previous → protocol-comparison", the hardest guide on the site.
+   * These three cases pin the spine down so it cannot drift apart again.
+   */
+  it('the guide page derives its reading order instead of restating it', () => {
+    const src = readFileSync(join(ROOT, 'src/pages/[...lang]/guides/[slug].astro'), 'utf-8');
+    const decl = src.match(/const GUIDE_ORDER = [\s\S]*?;/)?.[0] ?? '';
+
+    expect(decl).toContain('getAllGuidesOrdered()');
+    // A literal array here is how the drift started.
+    expect(decl).not.toMatch(/\[[\s\S]*'[a-z-]+'[\s\S]*\]/);
+  });
+
+  it('reading order starts at the first beginner guide, not an advanced one', async () => {
+    const { getAllGuidesOrdered, SKILL_LEVELS, getGuideLevel } = await import(
+      '../src/data/learning-paths'
+    );
+    const ordered = getAllGuidesOrdered();
+
+    expect(ordered[0]).toBe(SKILL_LEVELS.beginner.sequence[0]);
+    expect(getGuideLevel(ordered[0])).toBe('beginner');
+    expect(getGuideLevel(ordered[ordered.length - 1])).toBe('advanced');
+  });
+
+  it('the level badge comes from SKILL_LEVELS, not from frontmatter category', () => {
+    const src = readFileSync(join(ROOT, 'src/pages/[...lang]/guides/[slug].astro'), 'utf-8');
+
+    // `category` may stay in the schema, but it must not be what the reader is
+    // shown as their level: 7 of 16 guides disagreed with the hub when it was.
+    expect(src).toContain('getGuideLevel(');
+    expect(src).toMatch(/skillLevels\.\$\{guideLevel\}\.label/);
+    expect(src).not.toMatch(/\{categoryLabel\}/);
+  });
 });

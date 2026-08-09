@@ -56,33 +56,25 @@ import { EnhancedGuideCompletionIndicator } from '../../../components/navigation
 import { PrerequisiteWarning } from '../../../components/navigation/PrerequisiteWarning';
 import { BadgeEarnedModalListener } from '../../../components/gamification/BadgeEarnedModalListener';
 import type { Badge } from '../../../components/gamification/types';
-import { LEARNING_PATHS, getPreviousGuideInPath, getNextGuideInPath, getGuidePositionInPath, getPathLength } from '../../../data/learning-paths';
+import { LEARNING_PATHS, getPreviousGuideInPath, getNextGuideInPath, getGuidePositionInPath, getPathLength, getAllGuidesOrdered, getGuideLevel } from '../../../data/learning-paths';
 import { locales, getLocaleConfig, type Locale } from '../../../config/locales';
 import { langParam, DEFAULT_LOCALE, guidesIndexPath } from '../../../i18n/paths';
 import { breadcrumbList } from '../../../lib/breadcrumbs';
 import { faqPageSchema } from '../../../lib/faq-schema';
 import { t } from '../../../i18n';
 
-// Legacy GUIDE_ORDER for backward compatibility and general path
-const GUIDE_ORDER = [
-  'protocol-comparison',
-  'what-is-nostr',
-  'keys-and-security',
-  'quickstart',
-  'relays-demystified',
-  // Placed here to match LEARNING_PATHS.beginner.sequence in data/learning-paths.ts
-  'outbox-model',
-  'nip05-identity',
-  'zaps-and-lightning',
-  'finding-community',
-  'nostr-tools',
-  'troubleshooting',
-  'relay-guide',
-  'privacy-security',
-  'nip17-private-messages',
-  'multi-client',
-  'faq'
-];
+// Reading order for prev/next and the "guide N of M" indicator.
+//
+// This was a hand-maintained literal that had drifted out of agreement with the
+// curriculum: it opened with `protocol-comparison`, so the first guide of the
+// course (`what-is-nostr`) offered "Previous → Nostr vs ActivityPub vs Bluesky"
+// — the hardest guide on the site — to a reader on their first page. Three
+// orderings disagreed at once (this list, SKILL_LEVELS.sequence, and the
+// `category` frontmatter field).
+//
+// SKILL_LEVELS is now the single spine. Derive from it rather than restating it,
+// so adding a guide to a level cannot leave navigation behind.
+const GUIDE_ORDER = getAllGuidesOrdered();
 
 type GuideEntry = CollectionEntry<'guides'>;
 type StaticPath = {
@@ -128,11 +120,18 @@ const title =
     : guide.data.title);
 const description = guide.data.description ?? 'Learn how to use Nostr with our beginner-friendly guides.';
 const { Content } = await guide.render();
-const categoryLabel = guide.data.category ? guide.data.category.replace(/-/g, ' ') : undefined;
-
 // Get user's active path from localStorage (default to 'general' if not set)
 // This runs on server, so we'll pass the path ID to client components
 const guideSlug = guide.slug.replace(`${locale}/`, '');
+
+// The level badge reads from SKILL_LEVELS, not from the `category` frontmatter
+// field. Seven of sixteen guides disagreed between the two: `multi-client` sat
+// under Intermediate on the hub while its own page announced "advanced", and
+// `faq`/`troubleshooting` claimed "reference", which is not a level at all.
+// `category` is still in the schema for non-level uses; it is no longer rendered
+// as if it were the course level. Translated per locale via skillLevels.*.label.
+const guideLevel = getGuideLevel(guideSlug);
+const levelLabel = guideLevel ? t(`skillLevels.${guideLevel}.label`, locale) : undefined;
 
 // Calculate position for both global order and path-based
 const currentGuideNumGlobal = GUIDE_ORDER.indexOf(guideSlug) + 1;
@@ -244,8 +243,9 @@ const prerequisiteData = prerequisites.map(prereqSlug => {
 // Fail loudly at build time instead of shipping backwards navigation.
 if (currentGuideNumGlobal === 0) {
   throw new Error(
-    `Guide "${guideSlug}" is missing from GUIDE_ORDER in [slug].astro. ` +
-    `Add it there (and to LEARNING_PATHS) or its prev/next navigation will be wrong.`
+    `Guide "${guideSlug}" belongs to no skill level. ` +
+    `Add it to a level's \`sequence\` in src/data/learning-paths.ts — that list is ` +
+    `the course spine and now drives prev/next, the position indicator and the level badge.`
   );
 }
 
@@ -355,9 +355,9 @@ const components = {
                 </span>
               )}
 
-              {guide.data.category && (
+              {levelLabel && (
                 <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary-600 dark:text-primary-400">
-                  {categoryLabel}
+                  {levelLabel}
                 </span>
               )}
 
