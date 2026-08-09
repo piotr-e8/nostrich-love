@@ -97,6 +97,9 @@ fails the build instead — verified by feeding it a 49-character caption.
 /guides/keys-and-security and the Nostr articles tell people not to do. It is a
 demo. Advertising it would show the site contradicting its own security advice.
 
-**Captures include the streak banner.** It renders client-side on a fresh
-profile and overlaps the top of the page. The crop constants (`SX`/`SY`) start
-below it deliberately — if you change the capture size, re-check that.
+**`SY=400` is not guarding anything any more.** It was chosen to clear the daily
+streak banner, which mounted site-wide and overlapped the top of every page. That
+banner is gone. Because it was `position: fixed` it never pushed content down, so
+removing it did not move anything and the crop still lands 6 CSS px below the top
+of the article card — verified, not assumed. There is now nothing stopping you
+raising the window if you want the card's top edge in frame.

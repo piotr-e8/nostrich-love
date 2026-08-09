@@ -37,8 +37,9 @@ ACCENT="0x8B5CF6"            # primary-500, the site's own purple
 MUTED="0x8A8A96"
 BG="0x0F0A1A"                # background-dark
 
-# The article card inside a 1800x3200 capture, below the streak banner. The crop
-# is 1440x2596 = exactly the card's 860:1550 aspect, so nothing is squashed.
+# The article card inside a 1800x3200 capture. The crop is 1440x2596 = exactly
+# the card's 860:1550 aspect, so nothing is squashed. SY used to clear the streak
+# banner; that banner is gone and this still lands on the card — see README.
 SW=1440; SH=2596; SX=176; SY=400
 
 # ---- helpers -----------------------------------------------------------------
