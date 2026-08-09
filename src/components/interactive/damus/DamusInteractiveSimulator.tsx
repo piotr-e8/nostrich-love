@@ -115,7 +115,7 @@ const MODAL_EXIT_DURATION_MS = 300;
 
 function ComposeModal({ isOpen, onClose, onPost }: { isOpen: boolean; onClose: () => void; onPost: (content: string) => void }) {
   const [content, setContent] = useState("");
-  // Timed-exit modal state (StreakBanner idiom)
+  // Timed-exit modal state (double-rAF mount idiom)
   const [entered, setEntered] = useState(false);
   const [exiting, setExiting] = useState(false);
   const exitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);

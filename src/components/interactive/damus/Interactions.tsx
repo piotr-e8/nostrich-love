@@ -629,7 +629,7 @@ interface SheetProps {
 }
 
 export function Sheet({ isOpen, onClose, children, title }: SheetProps) {
-  // Timed-exit modal state (StreakBanner idiom)
+  // Timed-exit modal state (double-rAF mount idiom)
   const [entered, setEntered] = useState(false);
   const [exiting, setExiting] = useState(false);
   const exitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);

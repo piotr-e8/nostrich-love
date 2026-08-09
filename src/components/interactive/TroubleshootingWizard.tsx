@@ -362,7 +362,7 @@ export function TroubleshootingWizard({
   const [history, setHistory] = useState<string[]>([]);
   const [solution, setSolution] = useState<Solution | null>(null);
   const [showDiagnosticInfo, setShowDiagnosticInfo] = useState(false);
-  // Timed-exit modal state (StreakBanner idiom)
+  // Timed-exit modal state (double-rAF mount idiom)
   const [modalEntered, setModalEntered] = useState(false);
   const [modalExiting, setModalExiting] = useState(false);
   const modalExitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);

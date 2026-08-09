@@ -7,21 +7,40 @@
 
 import React, { useState, useEffect } from 'react';
 import { GamificationExplainer } from './GamificationExplainer';
+import { getPassedQuizzes, getCompletedGuides, QUIZ_COMPLETED_EVENT } from '../../utils/gamification';
+import { getAllGuidesOrdered } from '../../data/learning-paths';
 
 interface GamificationExplainerWrapperProps {
   buttonId?: string;
   currentProgress?: number;
   totalGuides?: number;
-  currentStreak?: number;
+  quizzesPassed?: number;
 }
 
 export function GamificationExplainerWrapper({
   buttonId = 'how-does-this-work-btn',
-  currentProgress = 0,
-  totalGuides = 15,
-  currentStreak = 0,
+  currentProgress,
+  totalGuides = getAllGuidesOrdered().length,
+  quizzesPassed,
 }: GamificationExplainerWrapperProps) {
   const [isOpen, setIsOpen] = useState(false);
+
+  // The page renders this island with no props, so anything not read here shows
+  // as zero. Read on open rather than on mount: the reader may have finished a
+  // quiz further up the page since this island hydrated.
+  const [live, setLive] = useState({ guides: 0, quizzes: 0 });
+
+  useEffect(() => {
+    if (!isOpen) return;
+    setLive({ guides: getCompletedGuides().length, quizzes: getPassedQuizzes().length });
+  }, [isOpen]);
+
+  useEffect(() => {
+    const refresh = () =>
+      setLive({ guides: getCompletedGuides().length, quizzes: getPassedQuizzes().length });
+    window.addEventListener(QUIZ_COMPLETED_EVENT, refresh);
+    return () => window.removeEventListener(QUIZ_COMPLETED_EVENT, refresh);
+  }, []);
 
   useEffect(() => {
     // Find the button by ID and attach click handler
@@ -50,9 +69,9 @@ export function GamificationExplainerWrapper({
     <GamificationExplainer
       isOpen={isOpen}
       onClose={() => setIsOpen(false)}
-      currentProgress={currentProgress}
+      currentProgress={currentProgress ?? live.guides}
       totalGuides={totalGuides}
-      currentStreak={currentStreak}
+      quizzesPassed={quizzesPassed ?? live.quizzes}
     />
   );
 }

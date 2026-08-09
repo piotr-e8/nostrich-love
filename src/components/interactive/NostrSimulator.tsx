@@ -101,7 +101,7 @@ export function NostrSimulator({ className }: { className?: string }) {
 
   // Drives the envelope transit: letters mount at their origin, then
   // `phaseEntered` flips on the next frame and CSS transitions them to the
-  // destination (double-rAF idiom from StreakBanner). "complete" keeps the
+  // destination (double-rAF mount idiom). "complete" keeps the
   // delivering positions so the letters stay parked at the recipients.
   const [phaseEntered, setPhaseEntered] = useState(false);
   useEffect(() => {

@@ -90,7 +90,7 @@ export function KeyGenerator({
   const [entropyProgress, setEntropyProgress] = useState(0);
   const [showWarningModal, setShowWarningModal] = useState(false);
   const [pendingAction, setPendingAction] = useState<(() => void) | null>(null);
-  // Timed-exit modal state (StreakBanner idiom)
+  // Timed-exit modal state (double-rAF mount idiom)
   const [modalEntered, setModalEntered] = useState(false);
   const [modalExiting, setModalExiting] = useState(false);
   const modalExitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);

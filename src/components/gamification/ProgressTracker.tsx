@@ -2,13 +2,13 @@
  * ProgressTracker Component
  * 
  * Progress bar showing overall completion with stats
- * Displays guides completed, streak days, badges earned, and next milestone
+ * Displays guides completed, quizzes passed, badges earned, and next milestone
  */
 
 import React, { useState, useEffect } from 'react';
 import {
   BookOpen,
-  Flame,
+  CheckCircle2,
   Award,
   Target,
   TrendingUp,
@@ -24,7 +24,7 @@ export function ProgressTracker({
   compact = false,
 }: ProgressTrackerProps) {
   // Progress indicators mount in their zero state, then `entered` flips on
-  // the next frame and CSS transitions them to the real value (StreakBanner idiom).
+  // the next frame and CSS transitions them to the real value (double-rAF mount idiom).
   const [entered, setEntered] = useState(false);
 
   useEffect(() => {
@@ -56,12 +56,14 @@ export function ProgressTracker({
       bgColor: 'bg-blue-100 dark:bg-blue-900/30',
     },
     {
-      icon: Flame,
-      value: progress.streakDays,
-      label: 'Day Streak',
-      color: 'text-orange-600 dark:text-orange-400',
-      bgColor: 'bg-orange-100 dark:bg-orange-900/30',
-      suffix: progress.streakDays === 1 ? '' : 's',
+      // Was "Day Streak". A streak counts visits; this counts what the reader
+      // demonstrably understood, which is the distinction the course turns on.
+      icon: CheckCircle2,
+      value: progress.quizzesPassed,
+      total: progress.totalQuizzes,
+      label: 'Quizzes',
+      color: 'text-emerald-600 dark:text-emerald-400',
+      bgColor: 'bg-emerald-100 dark:bg-emerald-900/30',
     },
     {
       icon: Award,
@@ -116,7 +118,6 @@ export function ProgressTracker({
               <div key={index} className="text-center">
                 <p className="text-lg font-bold text-gray-900 dark:text-white">
                   {stat.value}
-                  {stat.suffix && <span className="text-xs">{stat.suffix}</span>}
                 </p>
                 <p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase">
                   {stat.label}
@@ -198,11 +199,6 @@ export function ProgressTracker({
               {stat.total && (
                 <span className="text-sm text-gray-400 font-normal">
                   /{stat.total}
-                </span>
-              )}
-              {stat.suffix && (
-                <span className="text-sm text-gray-400 font-normal">
-                  {stat.suffix}
                 </span>
               )}
             </p>

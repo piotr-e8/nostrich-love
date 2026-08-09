@@ -20,7 +20,8 @@ export interface Badge {
 export interface UserProgress {
   guidesCompleted: number;
   totalGuides: number;
-  streakDays: number;
+  quizzesPassed: number;
+  totalQuizzes: number;
   badgesEarned: number;
   totalBadges: number;
   lastActive: Date;
@@ -57,14 +58,6 @@ export interface ProgressTrackerProps {
   className?: string;
   showMilestone?: boolean;
   compact?: boolean;
-}
-
-export interface StreakBannerProps {
-  streakDays: number;
-  isVisible: boolean;
-  onDismiss?: () => void;
-  className?: string;
-  position?: 'top' | 'bottom';
 }
 
 export interface BadgeEarnedModalProps {

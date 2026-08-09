@@ -7,7 +7,6 @@ import "../styles/globals.css";
 import SEO from "../components/SEO.astro";
 import { siteConfig } from "../config/site";
 import type { SEOProps } from "../config/seo-types";
-import { StreakBannerWrapper } from "../components/gamification/StreakBannerWrapper";
 import { type Locale, getLocaleConfig } from "../config/locales";
 import { setServerLocale } from "../i18n";
 
@@ -160,9 +159,15 @@ const dir = localeConfig.direction;
       Skip to content
     </a>
     
-    <!-- Streak Banner - Shows when user has an active streak -->
-    <StreakBannerWrapper client:only="react" />
-    
+    <!-- The daily-streak banner used to mount here, site-wide. It was removed:
+         a streak rewards coming back, and this is a course with an end, so it
+         measured the wrong thing. It was also the one piece of UI that shipped
+         hard-coded English ("You're on fire!") onto pages in all seven
+         languages, and it overlapped the top of the page on a fresh profile.
+         Progress is shown by the course map instead: ResumeBanner on the home
+         page and the level sections on /guides. `streakDays` stays in stored
+         data for compatibility with profiles that already have it. -->
+
     <slot />
     
     <!-- Gamification Scripts -->

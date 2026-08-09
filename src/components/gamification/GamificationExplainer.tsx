@@ -1,8 +1,9 @@
 /**
  * GamificationExplainer Component
  * 
- * Educational modal that explains the gamification system to users
- * Features badges, progress tracking, streaks, and getting started guide
+ * Educational modal that explains how progress works on the site.
+ * Covers badges, progress tracking and quizzes. The streak section it used to
+ * carry was removed with the streak itself — see Layout.astro.
  */
 
 import React, { useEffect, useState, useRef } from 'react';
@@ -17,7 +18,7 @@ export interface GamificationExplainerProps {
   onClose: () => void;
   currentProgress?: number;
   totalGuides?: number;
-  currentStreak?: number;
+  quizzesPassed?: number;
 }
 
 interface FeatureCardProps {
@@ -51,10 +52,12 @@ export function GamificationExplainer({
   isOpen,
   onClose,
   currentProgress = 0,
-  totalGuides = 15,
-  currentStreak = 0,
+  // 16 is the course length; the wrapper passes the real count from SKILL_LEVELS,
+  // so this default only matters if someone mounts the modal directly.
+  totalGuides = 16,
+  quizzesPassed = 0,
 }: GamificationExplainerProps) {
-  // Timed-exit idiom (StreakBanner): content mounts in its hidden state,
+  // Timed-exit idiom: content mounts in its hidden state,
   // `entered` flips on the next frame and CSS transitions it in; closing
   // plays the exit transition before telling the parent to unmount us.
   const [entered, setEntered] = useState(false);
@@ -120,7 +123,7 @@ export function GamificationExplainer({
   const steps = [
     { num: 1, text: 'Pick a guide from the list', icon: <BookOpen className="w-4 h-4" /> },
     { num: 2, text: 'Read and scroll through it', icon: <Target className="w-4 h-4" /> },
-    { num: 3, text: 'Earn badges automatically!', icon: <Award className="w-4 h-4" /> },
+    { num: 3, text: 'Take the quiz at the end', icon: <CheckCircle2 className="w-4 h-4" /> },
   ];
 
   return (
@@ -316,33 +319,37 @@ export function GamificationExplainer({
                   </div>
                 </section>
 
-                {/* 3. Streak System */}
+                {/* 3. Quizzes.
+                    This slot used to explain a daily streak. The streak was
+                    removed: it rewarded coming back, and a course has an end.
+                    What belongs here is the one mechanism that measures whether
+                    a reader understood something rather than merely visited. */}
                 <section
                   className="animate-slide-in-left motion-reduce:animate-none"
                   style={{ animationDelay: '600ms' }}
                 >
                   <div className="flex items-center gap-2 mb-3">
-                    <div className="w-8 h-8 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center">
-                      <Flame className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+                    <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                     </div>
                     <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                      Streak System
+                      Quizzes
                     </h3>
                   </div>
                   <p className="text-gray-600 dark:text-gray-400 mb-3">
-                    Build daily learning streaks! Come back every day to maintain your streak and stay motivated.
+                    Most guides end in a short quiz. Nothing is graded and nothing is locked — it is there so you leave knowing which parts you understood and which are worth rereading.
                   </p>
-                  
-                  <div className="flex items-center gap-4 bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-900/20 dark:to-amber-900/20 rounded-xl p-4 border border-orange-200 dark:border-orange-800">
-                    <div className="text-4xl">🔥</div>
+
+                  <div className="flex items-center gap-4 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-xl p-4 border border-emerald-200 dark:border-emerald-800">
+                    <div className="text-4xl">✅</div>
                     <div>
                       <p className="font-semibold text-gray-900 dark:text-white">
-                        Current Streak: {currentStreak > 0 ? `${currentStreak} day${currentStreak !== 1 ? 's' : ''}` : 'Start today!'}
+                        {quizzesPassed > 0
+                          ? `${quizzesPassed} quiz${quizzesPassed === 1 ? '' : 'zes'} passed`
+                          : 'No quizzes passed yet'}
                       </p>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
-                        {currentStreak > 0 
-                          ? "Keep it up! You're building great habits." 
-                          : "Visit a guide today to start your streak!"}
+                        Retaking one can only improve your result, so a second attempt costs you nothing.
                       </p>
                     </div>
                   </div>

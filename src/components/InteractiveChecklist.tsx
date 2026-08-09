@@ -215,7 +215,7 @@ export function ChecklistProgress({
   const [completed, setCompleted] = useState(0);
   const [mounted, setMounted] = useState(false);
   // Drives the width transition: bar mounts at 0%, then `entered` flips on
-  // the next frame and CSS transitions the width in (StreakBanner idiom).
+  // the next frame and CSS transitions the width in (double-rAF mount idiom).
   const [entered, setEntered] = useState(false);
 
   useEffect(() => {

@@ -21,7 +21,7 @@ export function ScreenshotGallery({
 }: ScreenshotGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  // Timed-exit idiom (StreakBanner): fade in via double-rAF, fade out on a timer.
+  // Timed-exit idiom: fade in via double-rAF, fade out on a timer.
   const [entered, setEntered] = useState(false);
   const [exiting, setExiting] = useState(false);
   const exitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);

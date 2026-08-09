@@ -210,7 +210,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
   const [activeStep, setActiveStep] = useState(1);
   const [isComplete, setIsComplete] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  // Timed-exit modal state (StreakBanner idiom)
+  // Timed-exit modal state (double-rAF mount idiom)
   const [successEntered, setSuccessEntered] = useState(false);
   const [successExiting, setSuccessExiting] = useState(false);
   const successExitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);

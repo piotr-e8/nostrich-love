@@ -23,8 +23,8 @@ import { useFocusTrap } from "../../hooks/useFocusTrap";
 const MODAL_EXIT_DURATION_MS = 300;
 
 /**
- * Timed-exit modal transition (StreakBanner idiom): double-rAF drives the
- * enter transition, close() plays the exit transition then flips the flag.
+ * Timed-exit modal transition: a double-rAF drives the enter transition,
+ * close() plays the exit transition then flips the flag.
  */
 function useTimedModalExit(
   isOpen: boolean,

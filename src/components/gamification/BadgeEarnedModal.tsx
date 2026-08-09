@@ -95,7 +95,7 @@ export function BadgeEarnedModal({
 }: BadgeEarnedModalProps) {
   const [isCopied, setIsCopied] = useState(false);
 
-  // Timed-exit idiom (StreakBanner): content mounts in its hidden state,
+  // Timed-exit idiom: content mounts in its hidden state,
   // `entered` flips on the next frame and CSS transitions it in; closing
   // plays the exit transition before telling the parent to unmount us.
   const [entered, setEntered] = useState(false);
