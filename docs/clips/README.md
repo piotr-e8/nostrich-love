@@ -59,6 +59,38 @@ The montage leads because it is the one claim no competitor page can make in a
 still. English is held roughly twice as long as the rest so the eye locks onto
 the layout before the script starts changing underneath it.
 
+## The quiz beat, recorded without filming anything
+
+```bash
+node docs/clips/record-quiz.mjs            # GUIDE=relays-demystified to pick another
+```
+
+Drives headless Chrome over the DevTools protocol, dispatches real mouse events
+through the quiz, and captures one frame per state — `shots/quiz-*.png` plus
+`out/quiz-beat.mp4` (1080 wide, ~5s, ends held on the results screen). No
+dependencies: Node 24 ships a global `WebSocket`, which is all CDP needs.
+
+It reads the correct answers out of `src/i18n/locales/en.json`, the same file the
+quiz renders from, so the beat ends on 6/6 rather than on whichever option
+happened to come first. The score on the final frame is genuinely what the
+component computed — the run is real, it just knows the answers.
+
+Two things this ran into:
+
+- **`clip` is in page coordinates, `getBoundingClientRect()` is not.** The quiz
+  sits ~7000px down the document, so passing the rect straight through aimed the
+  camera at blank space and wrote eight identical white PNGs — while the run
+  logged a real "6 / 6" read from the DOM. The logs looked perfect. Add
+  `window.scrollY` and set `captureBeyondViewport: true`. Check the images, not
+  the console.
+- **Frames of equal byte size mean identical frames.** That is the cheapest smoke
+  test there is, and it is what caught the above.
+
+Preferred over a screen recording for this beat: deterministic, so it can be
+rebuilt after a design change instead of re-filmed; 2x and clipped to the card,
+so no cursor or OS chrome; and re-runnable per locale. What it cannot give you is
+the feel of a hand moving.
+
 ## Adding live beats
 
 Record a walkthrough, drop it in here, and point `SRC` at it:
