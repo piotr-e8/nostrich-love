@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
+import { useQuizCompletion } from "../../hooks/useQuizCompletion";
 import { recordActivity, awardBadge, recordPrivacyQuizPerfectScore } from "../../utils/gamification";
 import { guidePath } from "../../i18n/paths";
 
@@ -71,6 +72,10 @@ export function PrivacySecurityQuiz({ className }: PrivacySecurityQuizProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
+
+  // Records the result once the reader reaches the results screen. Must stay
+  // above the early return below — see useQuizCompletion for why.
+  useQuizCompletion("privacy-security", showResults, questions, answers);
   const [badgeAwarded, setBadgeAwarded] = useState(false);
 
   // Handle case where translations haven't loaded yet

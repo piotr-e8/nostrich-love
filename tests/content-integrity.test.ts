@@ -208,6 +208,77 @@ describe('learning paths', () => {
     expect(getGuideLevel(ordered[ordered.length - 1])).toBe('advanced');
   });
 
+  /**
+   * Twelve of the thirteen quizzes used to record nothing at all. These pin the
+   * wiring down: a new quiz that forgets the hook, or names a slug that belongs
+   * to no level, silently goes back to measuring nothing.
+   */
+  describe('quiz wiring', () => {
+    const QUIZ_DIR = join(ROOT, 'src/components/interactive');
+    const quizFiles = readdirSync(QUIZ_DIR).filter((f) => /Quiz\.tsx$/.test(f));
+
+    it('GUIDES_WITH_QUIZ matches the guides that actually render a quiz', async () => {
+      const { GUIDES_WITH_QUIZ } = await import('../src/data/learning-paths');
+
+      const onDisk = readdirSync(join(GUIDES_DIR, 'en'))
+        .filter((f) => f.endsWith('.mdx'))
+        .filter((f) => /<[A-Za-z0-9]*Quiz/.test(readFileSync(join(GUIDES_DIR, 'en', f), 'utf-8')))
+        .map((f) => f.replace(/\.mdx$/, ''));
+
+      expect([...GUIDES_WITH_QUIZ].sort()).toEqual(onDisk.sort());
+    });
+
+    it('every quiz component records its result against a real guide slug', async () => {
+      const { getGuideLevel } = await import('../src/data/learning-paths');
+
+      for (const file of quizFiles) {
+        const src = readFileSync(join(QUIZ_DIR, file), 'utf-8');
+        const slug = src.match(/useQuizCompletion\(\s*["']([a-z0-9-]+)["']/)?.[1];
+
+        expect(slug, `${file} does not call useQuizCompletion`).toBeTruthy();
+        expect(getGuideLevel(slug!), `${file} records against unknown slug "${slug}"`).toBeTruthy();
+      }
+    });
+
+    it('each quiz records for the guide that embeds it', () => {
+      for (const file of quizFiles) {
+        const component = file.replace(/\.tsx$/, '');
+        const slug = readFileSync(join(QUIZ_DIR, file), 'utf-8').match(
+          /useQuizCompletion\(\s*["']([a-z0-9-]+)["']/
+        )?.[1];
+
+        const host = readdirSync(join(GUIDES_DIR, 'en'))
+          .filter((f) => f.endsWith('.mdx'))
+          .find((f) =>
+            new RegExp(`<${component}[\\s/>]`).test(
+              readFileSync(join(GUIDES_DIR, 'en', f), 'utf-8')
+            )
+          );
+
+        expect(host, `${component} is embedded in no guide`).toBeTruthy();
+        // SecurityQuiz lives in keys-and-security — the names do not match, which
+        // is exactly why this is asserted rather than assumed.
+        expect(host!.replace(/\.mdx$/, '')).toBe(slug);
+      }
+    });
+
+    it('the hook is called above the early return, so hook order cannot change', () => {
+      for (const file of quizFiles) {
+        const src = readFileSync(join(QUIZ_DIR, file), 'utf-8');
+        const hookAt = src.indexOf('useQuizCompletion(');
+        const guardAt = src.indexOf('questions.length === 0');
+
+        expect(hookAt, `${file}: no hook call`).toBeGreaterThan(0);
+        expect(guardAt, `${file}: no loading guard`).toBeGreaterThan(0);
+        // A locale missing this quiz's questions takes the early return. If the
+        // hook sat below it, the render would use a different number of hooks
+        // and React would throw on the next locale change.
+        expect(hookAt, `${file}: hook sits below the early return`).toBeLessThan(guardAt);
+      }
+    });
+  });
+
+
   it('the level badge comes from SKILL_LEVELS, not from frontmatter category', () => {
     const src = readFileSync(join(ROOT, 'src/pages/[...lang]/guides/[slug].astro'), 'utf-8');
 

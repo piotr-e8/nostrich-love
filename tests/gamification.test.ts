@@ -69,6 +69,13 @@ const {
   completeGuideInLevel,
   getLevelUnlockThreshold,
   getLevelProgress,
+  recordQuizResult,
+  getQuizResult,
+  hasPassedQuiz,
+  getPassedQuizzes,
+  getLevelCompletion,
+  getActiveLevel,
+  QUIZ_PASS_RATIO,
 } = await import('../src/utils/gamification');
 
 const engine = await import('../src/utils/gamificationEngine');
@@ -331,6 +338,8 @@ describe('#52 export/import round-trips the full state', () => {
     updateConnectedRelays(3); // relay-explorer badge + stat
     engine.markGuideComplete('quickstart'); // first-post badge + per-level progress
     engine.markGuideComplete('what-is-nostr');
+    recordQuizResult('what-is-nostr', 5, 5); // a passed quiz
+    recordQuizResult('outbox-model', 1, 5); // an attempted-but-failed quiz
     recordActivity(); // streak 1 + lastActive
   }
 
@@ -348,6 +357,11 @@ describe('#52 export/import round-trips the full state', () => {
     expect(exported.gamification.progress.streakDays).toBe(1);
     expect(exported.gamification.stats.relaysConnected).toBe(3);
     expect(exported.gamification.version).toBe(1);
+    // Quiz results are the only record of understanding, so an export that drops
+    // them loses the reader's levels while looking complete.
+    expect(exported.gamification.progress.quizResults['what-is-nostr'].score).toBe(5);
+    expect(exported.gamification.progress.quizResults['what-is-nostr'].passedAt).toBeGreaterThan(0);
+    expect(exported.gamification.progress.quizResults['outbox-model'].passedAt).toBe(0);
   });
 
   it('a full export round-trips onto a fresh browser', () => {
@@ -370,6 +384,9 @@ describe('#52 export/import round-trips the full state', () => {
     expect(after.progress.streakDays).toBe(before.progress.streakDays);
     expect(after.stats.keysGenerated).toBe(true);
     expect(after.stats.relaysConnected).toBe(3);
+    expect(after.progress.quizResults).toEqual(before.progress.quizResults);
+    expect(hasPassedQuiz('what-is-nostr')).toBe(true);
+    expect(hasPassedQuiz('outbox-model')).toBe(false);
   });
 
   it('the old partial export shape still imports the completed guides', () => {
@@ -612,6 +629,21 @@ describe('review: no phantom celebration when tracking is disabled', () => {
     expect(storedState()).toBeNull();
   });
 
+  it('recordQuizResult with tracking off neither persists nor announces a pass', () => {
+    setPrivacySettings({ trackingEnabled: false });
+    const events: Event[] = [];
+    const listener = (e: Event) => events.push(e);
+    windowMock.addEventListener('quiz-completed', listener);
+
+    // A perfect score, which would otherwise pass and could complete a level.
+    const result = recordQuizResult('what-is-nostr', 5, 5);
+
+    windowMock.removeEventListener('quiz-completed', listener);
+    expect(result).toBe(false);
+    expect(events).toHaveLength(0);
+    expect(storedState()).toBeNull();
+  });
+
   it('checkAndAwardBadges with tracking off reports no awards and stays silent', () => {
     recordKeysGenerated();
     setPrivacySettings({ trackingEnabled: false });
@@ -698,5 +730,109 @@ describe('review: threshold counters persist for badge progress display', () => 
   it('followAccounts stores accountsFollowed', () => {
     engine.recordActivity('followAccounts', { count: 4 });
     expect(storedState()?.stats?.accountsFollowed).toBe(4);
+  });
+});
+// ---------------------------------------------------------------------------
+// Quiz results — the site's only record of comprehension
+// ---------------------------------------------------------------------------
+
+describe('quiz results record understanding, not attendance', () => {
+  it('a passing score is stored and marked passed', () => {
+    expect(recordQuizResult('what-is-nostr', 4, 5)).toBe(true);
+
+    const result = getQuizResult('what-is-nostr');
+    expect(result).toMatchObject({ score: 4, total: 5, attempts: 1 });
+    expect(result!.passedAt).toBeGreaterThan(0);
+    expect(hasPassedQuiz('what-is-nostr')).toBe(true);
+  });
+
+  it('a failing score is stored but does not count as passed', () => {
+    expect(recordQuizResult('what-is-nostr', 1, 5)).toBe(false);
+    expect(hasPassedQuiz('what-is-nostr')).toBe(false);
+    expect(getQuizResult('what-is-nostr')?.passedAt).toBe(0);
+  });
+
+  it('the pass mark is the shared constant, not a hard-coded number', () => {
+    const total = 10;
+    const justBelow = Math.ceil(QUIZ_PASS_RATIO * total) - 1;
+
+    expect(recordQuizResult('outbox-model', justBelow, total)).toBe(false);
+    expect(recordQuizResult('outbox-model', Math.ceil(QUIZ_PASS_RATIO * total), total)).toBe(true);
+  });
+
+  it('retaking a quiz can only improve the stored result', () => {
+    recordQuizResult('relay-guide', 5, 5);
+    recordQuizResult('relay-guide', 1, 5); // a careless retake
+
+    const result = getQuizResult('relay-guide');
+    expect(result).toMatchObject({ score: 5, total: 5, attempts: 2 });
+    expect(hasPassedQuiz('relay-guide')).toBe(true);
+  });
+
+  it('a pass, once earned, is never revoked by a later attempt', () => {
+    recordQuizResult('nip05-identity', 5, 5);
+    const passedAt = getQuizResult('nip05-identity')!.passedAt;
+
+    recordQuizResult('nip05-identity', 0, 5);
+    expect(getQuizResult('nip05-identity')!.passedAt).toBe(passedAt);
+  });
+
+  it('getPassedQuizzes lists only quizzes actually passed', () => {
+    recordQuizResult('what-is-nostr', 5, 5);
+    recordQuizResult('outbox-model', 0, 5);
+
+    expect(getPassedQuizzes()).toEqual(['what-is-nostr']);
+  });
+
+  it('nonsense input is refused rather than persisted', () => {
+    expect(recordQuizResult('', 1, 1)).toBe(false);
+    expect(recordQuizResult('what-is-nostr', 0, 0)).toBe(false);
+    expect(getQuizResult('what-is-nostr')).toBeNull();
+  });
+});
+
+describe('level completion needs guides read AND quizzes passed', () => {
+  it('reading every guide is not enough on its own', async () => {
+    const { SKILL_LEVELS: levels, getLevelQuizzes } = await import(
+      '../src/data/learning-paths'
+    );
+    for (const slug of levels.beginner.sequence) completeGuideInLevel(slug, 'beginner');
+
+    const completion = getLevelCompletion('beginner');
+    expect(completion.guidesRead).toBe(levels.beginner.sequence.length);
+    expect(completion.quizzesPassed).toBe(0);
+    expect(completion.complete).toBe(false);
+    expect(getLevelQuizzes('beginner').length).toBeGreaterThan(0);
+  });
+
+  it('reading everything and passing every quiz completes the level', async () => {
+    const { SKILL_LEVELS: levels, getLevelQuizzes } = await import(
+      '../src/data/learning-paths'
+    );
+    for (const slug of levels.beginner.sequence) completeGuideInLevel(slug, 'beginner');
+    for (const slug of getLevelQuizzes('beginner')) recordQuizResult(slug, 5, 5);
+
+    const completion = getLevelCompletion('beginner');
+    expect(completion.complete).toBe(true);
+    expect(completion.percent).toBe(100);
+  });
+
+  it('the active level is the first unfinished one, derived not stored', async () => {
+    const { SKILL_LEVELS: levels, getLevelQuizzes } = await import(
+      '../src/data/learning-paths'
+    );
+    expect(getActiveLevel()).toBe('beginner');
+
+    for (const slug of levels.beginner.sequence) completeGuideInLevel(slug, 'beginner');
+    for (const slug of getLevelQuizzes('beginner')) recordQuizResult(slug, 5, 5);
+
+    expect(getActiveLevel()).toBe('intermediate');
+  });
+
+  it('a quiz passed in one level does not count toward another', () => {
+    recordQuizResult('privacy-security', 5, 5); // an advanced-level quiz
+
+    expect(getLevelCompletion('beginner').quizzesPassed).toBe(0);
+    expect(getLevelCompletion('advanced').quizzesPassed).toBe(1);
   });
 });

@@ -79,6 +79,7 @@ function getGamificationData(): GamificationData {
       progress: {
         completedGuides: [],
         completedGuidesWithTimestamps: [],
+        quizResults: {},
         streakDays: 0,
         lastActive: null,
         currentLevel: 'beginner',
@@ -214,6 +215,7 @@ export function setLastViewedGuide(
     data.progress = {
       completedGuides: [],
       completedGuidesWithTimestamps: [],
+      quizResults: {},
       streakDays: 0,
       lastActive: Date.now(),
       currentLevel: 'beginner',

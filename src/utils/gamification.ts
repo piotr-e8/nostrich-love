@@ -10,11 +10,12 @@
  * Features:
  * - 9 achievement badges with auto-award logic
  * - Progress tracking (guides, streaks, activity)
+ * - Quiz results: the only record here of understanding rather than attendance
  * - Optional NIP-58 badge publishing to Nostr network
  */
 
 import { generateSecretKey, getPublicKey, finalizeEvent, nip19 } from 'nostr-tools';
-import { SKILL_LEVELS } from '../data/learning-paths';
+import { SKILL_LEVELS, getLevelQuizzes, type SkillLevel } from '../data/learning-paths';
 
 // =============================================================================
 // TYPES
@@ -57,11 +58,33 @@ export interface BadgeStatus {
   earnedAt: number; // Unix timestamp in milliseconds
 }
 
+/**
+ * Best result a reader has reached on one guide's quiz.
+ *
+ * Best-of, not last-of: retaking a quiz can only improve the record, so a reader
+ * revisiting a guide months later cannot lose a level they already earned.
+ */
+export interface QuizResult {
+  score: number;
+  total: number;
+  attempts: number;
+  /** Timestamp of the first passing attempt; 0 while still unpassed. */
+  passedAt: number;
+}
+
+/** A quiz counts as passed at this share of correct answers. */
+export const QUIZ_PASS_RATIO = 0.7;
+
 /** User progress tracking */
 export interface GamificationProgress {
   // EXISTING FIELDS (keep these)
   completedGuides: string[]; // Array of guide IDs
   completedGuidesWithTimestamps?: { id: string; completedAt: string }[]; // Track when guides were completed
+  /**
+   * Quiz outcomes keyed by guide slug. This is the site's only record of
+   * comprehension as opposed to attendance — everything else here counts visits.
+   */
+  quizResults: Record<string, QuizResult>;
   streakDays: number; // Consecutive days active
   lastActive: number | null; // Unix timestamp of last activity
 
@@ -149,6 +172,28 @@ const CURRENT_VERSION = 1;
  * dispatcher and the listener can never drift apart again (#49).
  */
 export const BADGE_EARNED_EVENT = 'badge-earned';
+
+/**
+ * Fired when a quiz is completed, carrying the result. Progress UI listens for
+ * this so a reader who finishes a quiz sees their level move without a reload.
+ * Same dispatcher/listener discipline as BADGE_EARNED_EVENT.
+ */
+export const QUIZ_COMPLETED_EVENT = 'quiz-completed';
+
+export interface QuizCompletedDetail {
+  guideSlug: string;
+  /** This attempt's result — not necessarily the reader's best. */
+  score: number;
+  total: number;
+  /** Did THIS attempt reach the pass mark? */
+  attemptPassed: boolean;
+  /**
+   * Has the reader passed this quiz at all? Best-of, so it stays true after a
+   * careless retake. Kept separate from `attemptPassed` because a listener that
+   * conflated the two would announce a pass next to a failing score.
+   */
+  hasPassed: boolean;
+}
 
 /** Same key progressService uses for the privacy toggle (read-only here). */
 const PRIVACY_SETTINGS_KEY = 'nostrich-privacy-settings';
@@ -291,6 +336,7 @@ function getDefaultData(): GamificationData {
       // Existing
       completedGuides: [],
       completedGuidesWithTimestamps: [],
+      quizResults: {},
       streakDays: 0,
       lastActive: null,
 
@@ -453,6 +499,10 @@ export function loadGamificationData(): GamificationData {
       if (!parsed.stats) parsed.stats = defaultData.stats;
       if (!Array.isArray(parsed.progress.completedGuides)) parsed.progress.completedGuides = [];
       if (!Array.isArray(parsed.progress.completedGuidesWithTimestamps)) parsed.progress.completedGuidesWithTimestamps = [];
+      // Readers who were here before quizzes recorded anything have no such key.
+      if (!parsed.progress.quizResults || typeof parsed.progress.quizResults !== 'object' || Array.isArray(parsed.progress.quizResults)) {
+        parsed.progress.quizResults = {};
+      }
       if (typeof parsed.progress.streakDays !== 'number') parsed.progress.streakDays = 0;
       if (parsed.progress.lastActive === undefined) parsed.progress.lastActive = null;
 
@@ -652,10 +702,47 @@ export function mergeImportedGamificationData(imported: GamificationData): void 
   (imported.progress?.completedGuidesWithTimestamps || []).forEach((g) => timestamps.set(g.id, g));
   (existing.progress.completedGuidesWithTimestamps || []).forEach((g) => timestamps.set(g.id, g));
 
+  // Quiz results: best attempt wins per guide, whichever side it came from.
+  // Merging by "local wins" would let importing an older export erase a level a
+  // reader had already earned on this device.
+  const quizResults: Record<string, QuizResult> = {};
+  // The imported half is a user-supplied file, so entries are validated rather
+  // than trusted: a total of 0 or a non-numeric field would make every ratio NaN,
+  // and NaN comparisons are all false, which would freeze the quiz as unpassable.
+  const usable = (r: QuizResult | undefined): r is QuizResult =>
+    !!r &&
+    Number.isFinite(r.score) &&
+    Number.isFinite(r.total) &&
+    r.total > 0 &&
+    r.score >= 0;
+
+  for (const source of [imported.progress?.quizResults, existing.progress.quizResults]) {
+    for (const [slug, entry] of Object.entries(source || {})) {
+      if (!usable(entry)) continue;
+      const result: QuizResult = {
+        ...entry,
+        attempts: Number.isFinite(entry.attempts) ? entry.attempts : 1,
+        passedAt: Number.isFinite(entry.passedAt) ? entry.passedAt : 0,
+      };
+      const best = quizResults[slug];
+      const isBetter =
+        !best ||
+        result.score / result.total > best.score / best.total ||
+        (best.passedAt === 0 && result.passedAt > 0);
+      quizResults[slug] = isBetter
+        ? { ...result, attempts: (best?.attempts || 0) + result.attempts }
+        : { ...best, attempts: best.attempts + result.attempts };
+      // A pass is never undone by a later merge.
+      const passes = [best?.passedAt || 0, result.passedAt].filter((t) => t > 0);
+      quizResults[slug].passedAt = passes.length ? Math.min(...passes) : 0;
+    }
+  }
+
   merged.progress = {
     ...existing.progress,
     completedGuides: union(existing.progress.completedGuides, imported.progress?.completedGuides),
     completedGuidesWithTimestamps: [...timestamps.values()],
+    quizResults,
     streakDays: Math.max(existing.progress.streakDays || 0, imported.progress?.streakDays || 0),
     lastActive: lastActiveCandidates.length > 0 ? Math.max(...lastActiveCandidates) : null,
     currentLevel: imported.progress?.currentLevel || existing.progress.currentLevel,
@@ -853,6 +940,150 @@ export function getCompletedGuides(): string[] {
 export function isGuideCompleted(guideId: string): boolean {
   const data = loadGamificationData();
   return data.progress.completedGuides.includes(guideId);
+}
+
+// ============================================================================
+// QUIZ RESULTS
+// ============================================================================
+//
+// Until this existed, twelve of the site's thirteen quizzes recorded nothing at
+// all — a reader could answer every question in the course correctly and the
+// site would know only that some pages had been opened. Quizzes are the only
+// measure of understanding here; guide completion measures attendance.
+
+/**
+ * Record an attempt at a guide's quiz. Safe to call on every completion —
+ * only an improvement is persisted, so retakes cannot lower a stored result.
+ *
+ * @returns true if the stored best result now counts as a pass
+ */
+export function recordQuizResult(guideSlug: string, score: number, total: number): boolean {
+  if (!guideSlug || !Number.isFinite(score) || !Number.isFinite(total) || total <= 0) return false;
+
+  const data = loadGamificationData();
+  const stored = data.progress.quizResults[guideSlug];
+  // A previous entry with total <= 0 can only come from a hand-edited or corrupt
+  // import. Left in place its ratio is NaN, every comparison against it is false,
+  // and the quiz could never be passed again. Treat it as absent.
+  const previous = stored && stored.total > 0 ? stored : undefined;
+  const improved = !previous || score / total > previous.score / previous.total;
+
+  const result: QuizResult = {
+    score: improved ? score : previous.score,
+    total: improved ? total : previous.total,
+    attempts: (stored?.attempts || 0) + 1,
+    passedAt: previous?.passedAt || 0,
+  };
+
+  const hasPassed = result.score / result.total >= QUIZ_PASS_RATIO;
+  if (hasPassed && result.passedAt === 0) {
+    result.passedAt = Date.now();
+  }
+
+  data.progress.quizResults[guideSlug] = result;
+
+  // Report and celebrate only when the write actually landed. With the privacy
+  // toggle off the gate drops it, and answering anyway would announce a pass the
+  // site has not recorded — the same phantom celebration awardBadge guards
+  // against just above.
+  if (!saveGamificationData(data)) return false;
+
+  if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
+    const detail: QuizCompletedDetail = {
+      guideSlug,
+      score,
+      total,
+      attemptPassed: score / total >= QUIZ_PASS_RATIO,
+      hasPassed,
+    };
+    window.dispatchEvent(new CustomEvent(QUIZ_COMPLETED_EVENT, { detail }));
+  }
+
+  return hasPassed;
+}
+
+/** Best stored result for a guide's quiz, or null if never attempted. */
+export function getQuizResult(guideSlug: string): QuizResult | null {
+  const data = loadGamificationData();
+  return data.progress.quizResults[guideSlug] || null;
+}
+
+/** Has the reader reached the pass mark on this guide's quiz? */
+export function hasPassedQuiz(guideSlug: string): boolean {
+  const result = getQuizResult(guideSlug);
+  return result !== null && result.passedAt > 0;
+}
+
+/** Every guide whose quiz the reader has passed. */
+export function getPassedQuizzes(): string[] {
+  const data = loadGamificationData();
+  return Object.entries(data.progress.quizResults)
+    .filter(([, result]) => result.passedAt > 0)
+    .map(([slug]) => slug);
+}
+
+// ============================================================================
+// LEVEL COMPLETION
+// ============================================================================
+
+export interface LevelCompletion {
+  level: SkillLevel;
+  guidesRead: number;
+  guidesTotal: number;
+  quizzesPassed: number;
+  quizzesTotal: number;
+  /** 0–100, guides and quizzes weighted equally by count. */
+  percent: number;
+  /** Every guide read AND every quiz in the level passed. */
+  complete: boolean;
+}
+
+/**
+ * How far through a level the reader is.
+ *
+ * A level is finished when its guides have been read and its quizzes passed —
+ * reading alone is attendance, and this is the distinction the whole reframe
+ * turns on. Levels are never locked; this measures progress, it does not gate.
+ */
+export function getLevelCompletion(level: SkillLevel): LevelCompletion {
+  const data = loadGamificationData();
+  const sequence = SKILL_LEVELS[level]?.sequence || [];
+  const quizzes = getLevelQuizzes(level);
+
+  const guidesRead = sequence.filter((slug) =>
+    data.progress.completedGuides.includes(slug)
+  ).length;
+  const quizzesPassed = quizzes.filter(
+    (slug) => (data.progress.quizResults[slug]?.passedAt || 0) > 0
+  ).length;
+
+  const done = guidesRead + quizzesPassed;
+  const required = sequence.length + quizzes.length;
+
+  return {
+    level,
+    guidesRead,
+    guidesTotal: sequence.length,
+    quizzesPassed,
+    quizzesTotal: quizzes.length,
+    percent: required === 0 ? 0 : Math.round((done / required) * 100),
+    complete: guidesRead === sequence.length && quizzesPassed === quizzes.length,
+  };
+}
+
+/** Progress across all three levels, in course order. */
+export function getAllLevelCompletion(): LevelCompletion[] {
+  return (['beginner', 'intermediate', 'advanced'] as SkillLevel[]).map(getLevelCompletion);
+}
+
+/**
+ * The level the reader is currently working through: the first unfinished one,
+ * or 'advanced' once everything is done. Derived, never stored — a stored
+ * `currentLevel` is what let the old data drift away from what was actually read.
+ */
+export function getActiveLevel(): SkillLevel {
+  const levels = getAllLevelCompletion();
+  return (levels.find((l) => !l.complete) || levels[levels.length - 1]).level;
 }
 
 /**

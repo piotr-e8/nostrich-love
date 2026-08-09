@@ -79,6 +79,45 @@ export const SKILL_LEVELS: Record<SkillLevel, SkillLevelConfig> = {
 export type SkillLevel = 'beginner' | 'intermediate' | 'advanced';
 
 /**
+ * Guides that end in a quiz — 13 of the 16.
+ *
+ * `quickstart`, `nostr-tools` and `faq` deliberately have none: the first two are
+ * do-this-now pages and the third is a lookup table, so there is nothing to
+ * assess. Levels therefore cannot require a quiz per guide; they require the
+ * quizzes that exist.
+ *
+ * Kept as data rather than inferred from the MDX so that progress can be
+ * computed on the client without parsing content. `tests/content-integrity.test.ts`
+ * checks this list against the guides that actually render a *Quiz component.
+ */
+export const GUIDES_WITH_QUIZ: readonly string[] = [
+  'what-is-nostr',
+  'keys-and-security',
+  'finding-community',
+  'relays-demystified',
+  'outbox-model',
+  'nip05-identity',
+  'zaps-and-lightning',
+  'troubleshooting',
+  'multi-client',
+  'relay-guide',
+  'privacy-security',
+  'nip17-private-messages',
+  'protocol-comparison',
+] as const;
+
+/** Does this guide end in a quiz? */
+export function guideHasQuiz(guideSlug: string): boolean {
+  return GUIDES_WITH_QUIZ.includes(guideSlug);
+}
+
+/** The quizzes belonging to one level, in reading order. */
+export function getLevelQuizzes(levelId: SkillLevel): string[] {
+  const level = SKILL_LEVELS[levelId];
+  return level ? level.sequence.filter(guideHasQuiz) : [];
+}
+
+/**
  * Get all available skill level IDs
  */
 export function getSkillLevelIds(): SkillLevel[] {

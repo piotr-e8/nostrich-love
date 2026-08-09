@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
+import { useQuizCompletion } from "../../hooks/useQuizCompletion";
 import { guidePath } from "../../i18n/paths";
 
 type Severity = "critical" | "warning" | "info";
@@ -49,6 +50,10 @@ export function SecurityQuiz({ className }: SecurityQuizProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
+
+  // Records the result once the reader reaches the results screen. Must stay
+  // above the early return below — see useQuizCompletion for why.
+  useQuizCompletion("keys-and-security", showResults, questions, answers);
 
   // Handle case where translations haven't loaded yet
   if (!questions || questions.length === 0) {
