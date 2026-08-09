@@ -4,92 +4,25 @@ import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import { BadgeDisplay } from '../components/gamification/BadgeDisplay';
 import type { Badge } from '../components/gamification/types';
+import { BADGE_DEFINITIONS } from '../utils/gamification';
+import { BADGE_CATEGORY } from '../config/badge-categories';
 
-// Define all 9 badges — descriptions and requirements must match the award
-// logic in src/utils/gamification.ts (checkBadgeRequirement)
-const allBadges: Badge[] = [
-  {
-    id: 'key-master',
-    name: 'Key Master',
-    description: 'Generated your first Nostr key pair and secured them properly',
-    emoji: '🔑',
-    category: 'beginner',
-    rarity: 'common',
-    requirement: 'Generate and save your keys',
-  },
-  {
-    id: 'first-post',
-    name: 'First Post',
-    description: 'Learned how to make your first post on Nostr',
-    emoji: '📝',
-    category: 'beginner',
-    rarity: 'common',
-    requirement: 'Complete the Quickstart guide',
-  },
-  {
-    id: 'zap-receiver',
-    name: 'Zap Receiver',
-    description: 'Learned how Lightning zaps work',
-    emoji: '⚡',
-    category: 'intermediate',
-    rarity: 'rare',
-    requirement: 'Complete the Zaps guide',
-  },
-  {
-    id: 'community-builder',
-    name: 'Community Builder',
-    description: 'Selected 10+ accounts to follow',
-    emoji: '🤝',
-    category: 'intermediate',
-    rarity: 'common',
-    requirement: 'Select 10+ accounts in the Follow Pack Finder',
-  },
-  {
-    id: 'knowledge-seeker',
-    name: 'Knowledge Seeker',
-    description: 'Completed 3 learning guides',
-    emoji: '📚',
-    category: 'intermediate',
-    rarity: 'rare',
-    requirement: 'Complete any 3 guides',
-  },
-  {
-    id: 'nostr-graduate',
-    name: 'Nostr Graduate',
-    description: 'Completed 9 learning guides',
-    emoji: '🎓',
-    category: 'advanced',
-    rarity: 'epic',
-    requirement: 'Complete any 9 guides',
-  },
-  {
-    id: 'security-conscious',
-    name: 'Security Conscious',
-    description: 'Backed up your keys and enabled enhanced security',
-    emoji: '🛡️',
-    category: 'intermediate',
-    rarity: 'rare',
-    requirement: 'Backup your keys securely',
-  },
-  {
-    id: 'relay-explorer',
-    name: 'Relay Explorer',
-    description: 'Connected to 3+ different relays',
-    emoji: '🌐',
-    category: 'intermediate',
-    rarity: 'common',
-    requirement: 'Select 3+ relays in the Relay Explorer',
-  },
-  {
-    id: 'privacy-expert',
-    name: 'Privacy Expert',
-    description: 'Scored 100% on the Privacy & Security quiz',
-    emoji: '🕵️',
-    category: 'advanced',
-    rarity: 'epic',
-    requirement: 'Complete the Privacy & Security quiz with a perfect score',
-  },
-];
+// Badge cards are derived from BADGE_DEFINITIONS, the same list the award logic
+// reads. This page used to restate all nine badges here AND a second time in the
+// inline script below, each under a "keep in sync" comment — three copies of one
+// fact, which is how the level metadata drifted apart elsewhere in this repo.
+// `category` is presentation-only (which shelf a badge sits on) and is the one
+// thing BADGE_DEFINITIONS does not carry, so it lives in config/badge-categories.
+
+const allBadges: Badge[] = BADGE_DEFINITIONS.map((badge) => ({
+  id: badge.id,
+  name: badge.name,
+  description: badge.description,
+  emoji: badge.icon,
+  category: BADGE_CATEGORY[badge.id],
+  rarity: badge.rarity,
+  requirement: badge.requirement,
+}));
 ---
 
 <!-- noindex: this page renders the visitor's own localStorage state, so it is
@@ -299,21 +232,29 @@ const allBadges: Badge[] = [
 </Layout>
 
 <script>
+  import { BADGE_DEFINITIONS } from '../utils/gamification';
+  import { BADGE_CATEGORY } from '../config/badge-categories';
+
   const GAMIFICATION_KEY = 'nostrich-gamification-v1';
 
-  // Badge metadata — keep in sync with the frontmatter list above and with
-  // BADGE_DEFINITIONS in src/utils/gamification.ts
-  const badgeMetadata: Record<string, { name: string; description: string; emoji: string; rarity: string; category: string; requirement: string }> = {
-    'key-master': { name: 'Key Master', description: 'Generated your first Nostr key pair and secured them properly', emoji: '🔑', rarity: 'common', category: 'beginner', requirement: 'Generate and save your keys' },
-    'first-post': { name: 'First Post', description: 'Learned how to make your first post on Nostr', emoji: '📝', rarity: 'common', category: 'beginner', requirement: 'Complete the Quickstart guide' },
-    'zap-receiver': { name: 'Zap Receiver', description: 'Learned how Lightning zaps work', emoji: '⚡', rarity: 'rare', category: 'intermediate', requirement: 'Complete the Zaps guide' },
-    'community-builder': { name: 'Community Builder', description: 'Selected 10+ accounts to follow', emoji: '🤝', rarity: 'common', category: 'intermediate', requirement: 'Select 10+ accounts in the Follow Pack Finder' },
-    'knowledge-seeker': { name: 'Knowledge Seeker', description: 'Completed 3 learning guides', emoji: '📚', rarity: 'rare', category: 'intermediate', requirement: 'Complete any 3 guides' },
-    'nostr-graduate': { name: 'Nostr Graduate', description: 'Completed 9 learning guides', emoji: '🎓', rarity: 'epic', category: 'advanced', requirement: 'Complete any 9 guides' },
-    'security-conscious': { name: 'Security Conscious', description: 'Backed up your keys and enabled enhanced security', emoji: '🛡️', rarity: 'rare', category: 'intermediate', requirement: 'Backup your keys securely' },
-    'relay-explorer': { name: 'Relay Explorer', description: 'Connected to 3+ different relays', emoji: '🌐', rarity: 'common', category: 'intermediate', requirement: 'Select 3+ relays in the Relay Explorer' },
-    'privacy-expert': { name: 'Privacy Expert', description: 'Scored 100% on the Privacy & Security quiz', emoji: '🕵️', rarity: 'epic', category: 'advanced', requirement: 'Complete the Privacy & Security quiz with a perfect score' },
-  };
+  // Derived from the same BADGE_DEFINITIONS the award logic uses. This was a
+  // hand-maintained second copy of the nine badges, kept in step with the
+  // frontmatter list by comment alone — so a badge added in one place appeared
+  // on the page unlocked but nameless, or not at all.
+  const badgeMetadata: Record<string, { name: string; description: string; emoji: string; rarity: string; category: string; requirement: string }> =
+    Object.fromEntries(
+      BADGE_DEFINITIONS.map((badge) => [
+        badge.id,
+        {
+          name: badge.name,
+          description: badge.description,
+          emoji: badge.icon,
+          rarity: badge.rarity,
+          category: BADGE_CATEGORY[badge.id] ?? 'special',
+          requirement: badge.requirement,
+        },
+      ])
+    );
 
   // Rarity styles
   const rarityStyles: Record<string, { border: string; glow: string; text: string }> = {

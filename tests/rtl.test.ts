@@ -87,9 +87,10 @@ const MIRRORABLE_ALLOWLIST: Record<string, string> = {
   // tooltip caret. The visible edges come from the rotation, not from reading
   // order, so border-s/border-e would put the caret on the wrong diagonal.
   'components/gamification/BadgeDisplay.tsx:227': 'rotate-45 caret built from physical borders — points down, not inline-end',
-  // 200 -> 205: the noindex comment above <Layout> shifted this line. The
-  // allowlist is keyed by line, so it needs re-pointing whenever the file moves.
-  'pages/badges.astro:205': 'rotate-45 caret built from physical borders — points down, not inline-end',
+  // 200 -> 205 -> 138: the noindex comment, then deriving the badge cards from
+  // BADGE_DEFINITIONS instead of restating ~80 lines of them, shifted this line.
+  // The allowlist is keyed by line, so it needs re-pointing whenever the file moves.
+  'pages/badges.astro:138': 'rotate-45 caret built from physical borders — points down, not inline-end',
 };
 
 describe('mirrorable physical utilities (each has a logical drop-in)', () => {

@@ -10,6 +10,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { X, Award, Trophy, Star, Flame, Target, BookOpen, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
+import { BADGE_DEFINITIONS } from '../../utils/gamification';
 
 const EXIT_DURATION_MS = 300;
 
@@ -114,11 +115,27 @@ export function GamificationExplainer({
 
   const progressPercentage = totalGuides > 0 ? Math.round((currentProgress / totalGuides) * 100) : 0;
 
-  const badgeExamples = [
-    { emoji: '👤', name: 'First Steps', desc: 'Complete your first guide', color: 'bg-blue-100 text-blue-600 dark:bg-blue-900/30' },
-    { emoji: '🏆', name: 'Knowledge Seeker', desc: 'Complete 5 guides', color: 'bg-purple-100 text-purple-600 dark:bg-purple-900/30' },
-    { emoji: '⭐', name: 'Nostr Expert', desc: 'Collect all 8 badges', color: 'bg-amber-100 text-amber-600 dark:bg-amber-900/30' },
+  // Real badges, pulled from the list the award logic reads. These were three
+  // invented examples: "First Steps" and "Nostr Expert" are not badges at all,
+  // "Knowledge Seeker" asked for 5 guides when the requirement is 3, and
+  // "Collect all 8 badges" was already wrong before the level certificates took
+  // the total to twelve. A modal explaining the system must not describe a
+  // different one.
+  const EXAMPLE_BADGE_IDS = ['knowledge-seeker', 'level-beginner', 'nostr-graduate'] as const;
+  const EXAMPLE_COLORS = [
+    'bg-purple-100 text-purple-600 dark:bg-purple-900/30',
+    'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30',
+    'bg-amber-100 text-amber-600 dark:bg-amber-900/30',
   ];
+  const badgeExamples = EXAMPLE_BADGE_IDS.map((id, i) => {
+    const badge = BADGE_DEFINITIONS.find((b) => b.id === id);
+    return {
+      emoji: badge?.icon ?? '🏅',
+      name: badge?.name ?? id,
+      desc: badge?.requirement ?? '',
+      color: EXAMPLE_COLORS[i],
+    };
+  });
 
   const steps = [
     { num: 1, text: 'Pick a guide from the list', icon: <BookOpen className="w-4 h-4" /> },
@@ -280,7 +297,12 @@ export function GamificationExplainer({
                   
                   <div className="mt-3 flex items-center gap-2 text-sm text-friendly-purple font-medium">
                     <Star className="w-4 h-4" />
-                    <span>Collect all 8 badges to become a Nostr Expert!</span>
+                    {/* The count was hard-coded as 8 and named a "Nostr Expert"
+                        badge that does not exist. Both were wrong before the
+                        level certificates; now it counts the real list. */}
+                    <span>
+                      {BADGE_DEFINITIONS.length} badges in all — three of them close a level.
+                    </span>
                   </div>
                 </section>
 

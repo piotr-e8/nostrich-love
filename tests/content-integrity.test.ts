@@ -278,7 +278,6 @@ describe('learning paths', () => {
     });
   });
 
-
   it('the level badge comes from SKILL_LEVELS, not from frontmatter category', () => {
     const src = readFileSync(join(ROOT, 'src/pages/[...lang]/guides/[slug].astro'), 'utf-8');
 
@@ -287,5 +286,68 @@ describe('learning paths', () => {
     expect(src).toContain('getGuideLevel(');
     expect(src).toMatch(/skillLevels\.\$\{guideLevel\}\.label/);
     expect(src).not.toMatch(/\{categoryLabel\}/);
+  });
+});
+
+/**
+ * /badges once held two hand-maintained copies of every badge — one in the page
+ * frontmatter, one in its inline script — each labelled "keep in sync" by
+ * comment alone. Both are now derived from BADGE_DEFINITIONS.
+ */
+describe('badge metadata has one source', () => {
+  const BADGES_PAGE = join(ROOT, 'src/pages/badges.astro');
+
+  it('the badges page derives its cards rather than restating them', () => {
+    const src = readFileSync(BADGES_PAGE, 'utf-8');
+
+    expect(src).toContain('BADGE_DEFINITIONS');
+    // A restated table reintroduces the drift. Two of the old copies keyed
+    // entries by badge id with an inline name, e.g. `'key-master': { name: ...`.
+    expect(src).not.toMatch(/'[a-z-]+':\s*\{\s*name:\s*'/);
+  });
+
+  it('every badge has a display category, including the level certificates', async () => {
+    const { BADGE_DEFINITIONS } = await import('../src/utils/gamification');
+    const { BADGE_CATEGORY } = await import('../src/config/badge-categories');
+
+    for (const badge of BADGE_DEFINITIONS) {
+      expect(BADGE_CATEGORY[badge.id], `no category for ${badge.id}`).toBeTruthy();
+    }
+  });
+
+  it('the explainer modal describes the badges that exist', async () => {
+    const { BADGE_DEFINITIONS } = await import('../src/utils/gamification');
+    const src = readFileSync(
+      join(ROOT, 'src/components/gamification/GamificationExplainer.tsx'),
+      'utf-8'
+    );
+    const names = new Set(BADGE_DEFINITIONS.map((b) => b.name));
+
+    // The modal invented "First Steps" and "Nostr Expert", and told readers to
+    // "collect all 8 badges" — a count that was wrong before the certificates
+    // pushed the total to twelve. It must read the real list, not restate it.
+    expect(src).toContain('BADGE_DEFINITIONS');
+    expect(names.has('First Steps')).toBe(false);
+    expect(names.has('Nostr Expert')).toBe(false);
+
+    // Comments are stripped first: they deliberately quote the wording that was
+    // removed, and this checks what ships, not what the file says about itself.
+    const code = src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+    for (const dead of ['First Steps', 'Nostr Expert']) {
+      expect(code.includes(dead), `${dead} is not a badge but appears in the copy`).toBe(false);
+    }
+    // No hard-coded badge tally in the copy.
+    expect(code).not.toMatch(/all \d+ badges/);
+  });
+
+  it('each level has exactly one certificate', async () => {
+    const { LEVEL_CERTIFICATES, BADGE_DEFINITIONS } = await import('../src/utils/gamification');
+    const { SKILL_LEVELS } = await import('../src/data/learning-paths');
+
+    const ids = BADGE_DEFINITIONS.map((b) => b.id);
+    for (const level of Object.keys(SKILL_LEVELS)) {
+      expect(ids).toContain(LEVEL_CERTIFICATES[level as keyof typeof LEVEL_CERTIFICATES]);
+    }
+    expect(new Set(Object.values(LEVEL_CERTIFICATES)).size).toBe(3);
   });
 });

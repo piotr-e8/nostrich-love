@@ -81,7 +81,7 @@ const {
 const engine = await import('../src/utils/gamificationEngine');
 const progressService = await import('../src/lib/progressService');
 const progressLib = await import('../src/lib/progress');
-const { SKILL_LEVELS } = await import('../src/data/learning-paths');
+const { SKILL_LEVELS, GUIDES_WITH_QUIZ } = await import('../src/data/learning-paths');
 
 const STORAGE_KEY = GAMIFICATION_STORAGE_KEY;
 const PRIVACY_KEY = 'nostrich-privacy-settings';
@@ -278,18 +278,41 @@ describe('#54 first-post and zap-receiver are earnable again', () => {
     updateConnectedRelays(3); // relay-explorer
     recordPrivacyQuizPerfectScore(); // privacy-expert (via check below)
 
-    const nineGuides = [
-      ...SKILL_LEVELS.beginner.sequence, // 7 guides, includes quickstart
-      'nip05-identity',
-      'zaps-and-lightning',
-    ];
-    nineGuides.forEach((slug) => engine.markGuideComplete(slug));
+    // The whole course, not just nine guides: the three level certificates are
+    // only reachable by finishing every level, and they are badges too. This
+    // assertion is the guarantee that no badge is decorative.
+    for (const [level, config] of Object.entries(SKILL_LEVELS) as [
+      keyof typeof SKILL_LEVELS,
+      { sequence: string[] }
+    ][]) {
+      for (const slug of config.sequence) {
+        engine.markGuideComplete(slug);
+        completeGuideInLevel(slug, level);
+      }
+    }
+    // Passing every quiz is what separates a finished level from a read one.
+    for (const slug of GUIDES_WITH_QUIZ) recordQuizResult(slug, 10, 10);
 
     checkAndAwardBadges();
 
     const data = loadGamificationData();
     const unearned = BADGE_DEFINITIONS.filter((b) => !data.badges[b.id].earned).map((b) => b.id);
     expect(unearned).toEqual([]);
+  });
+
+  it('a level certificate is not awarded on reading alone', () => {
+    for (const slug of SKILL_LEVELS.beginner.sequence) {
+      completeGuideInLevel(slug, 'beginner');
+    }
+    expect(hasBadge('level-beginner')).toBe(false);
+
+    for (const slug of SKILL_LEVELS.beginner.sequence.filter((s: string) =>
+      GUIDES_WITH_QUIZ.includes(s)
+    )) {
+      recordQuizResult(slug, 10, 10);
+    }
+    expect(hasBadge('level-beginner')).toBe(true);
+    expect(hasBadge('level-advanced')).toBe(false);
   });
 });
 
@@ -642,6 +665,7 @@ describe('review: no phantom celebration when tracking is disabled', () => {
     expect(result).toBe(false);
     expect(events).toHaveLength(0);
     expect(storedState()).toBeNull();
+    expect(hasBadge('level-beginner')).toBe(false);
   });
 
   it('checkAndAwardBadges with tracking off reports no awards and stays silent', () => {
@@ -732,6 +756,7 @@ describe('review: threshold counters persist for badge progress display', () => 
     expect(storedState()?.stats?.accountsFollowed).toBe(4);
   });
 });
+
 // ---------------------------------------------------------------------------
 // Quiz results — the site's only record of comprehension
 // ---------------------------------------------------------------------------

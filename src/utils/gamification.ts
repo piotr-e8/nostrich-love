@@ -9,12 +9,13 @@
  * 
  * Features:
  * - 9 achievement badges with auto-award logic
- * - Progress tracking (guides, streaks, activity)
+ * - Level certificates earned by reading a level AND passing its quizzes
  * - Quiz results: the only record here of understanding rather than attendance
- * - Optional NIP-58 badge publishing to Nostr network
  */
 
-import { generateSecretKey, getPublicKey, finalizeEvent, nip19 } from 'nostr-tools';
+// No nostr-tools import here any more: it existed solely for the NIP-58 publish
+// path removed above. (Rollup was already tree-shaking it out of the built
+// chunks — no guide page loaded it — so this is a clarity fix, not a size win.)
 import { SKILL_LEVELS, getLevelQuizzes, type SkillLevel } from '../data/learning-paths';
 
 // =============================================================================
@@ -31,7 +32,20 @@ export type BadgeId =
   | 'nostr-graduate'
   | 'security-conscious'
   | 'relay-explorer'
-  | 'privacy-expert';
+  | 'privacy-expert'
+  // Level certificates. These are the course's own unit of progress: everything
+  // above rewards using a tool or opening pages, these three are the only ones
+  // that require having demonstrated understanding of a whole level.
+  | 'level-beginner'
+  | 'level-intermediate'
+  | 'level-advanced';
+
+/** The three certificates, in course order, keyed by the level they close. */
+export const LEVEL_CERTIFICATES: Record<SkillLevel, BadgeId> = {
+  beginner: 'level-beginner',
+  intermediate: 'level-intermediate',
+  advanced: 'level-advanced',
+};
 
 /** Badge rarity level for UI display */
 export type BadgeRarity = 'common' | 'rare' | 'epic' | 'legendary';
@@ -131,16 +145,11 @@ export interface GamificationData {
   version: number;
 }
 
-/** NIP-58 badge award event (Kind 8) */
-export interface NIP58BadgeAward {
-  kind: 8;
-  pubkey: string;
-  created_at: number;
-  tags: string[][];
-  content: string;
-  id: string;
-  sig: string;
-}
+// The NIP-58 badge-award type was removed with the code that built it: nothing
+// on the site published badges to Nostr, and the builder was wrong anyway — it
+// signed a kind 8 with the reader's OWN key and pointed its `a` tag at a kind
+// 30009 definition that nostrich.love never published. A self-issued award
+// referencing nothing renders as nothing in any NIP-58-aware client.
 
 /** Result of badge check operation */
 export interface BadgeCheckResult {
@@ -207,7 +216,7 @@ const PRIVACY_SETTINGS_KEY = 'nostrich-privacy-settings';
 const FIRST_POST_GUIDE = 'quickstart';
 const ZAP_GUIDE = 'zaps-and-lightning';
 
-/** All 9 badge definitions */
+/** All badge definitions: 9 achievements plus the 3 level certificates. */
 export const BADGE_DEFINITIONS: Badge[] = [
   {
     id: 'key-master',
@@ -280,6 +289,30 @@ export const BADGE_DEFINITIONS: Badge[] = [
     icon: '🕵️',
     rarity: 'epic',
     requirement: 'Complete the Privacy & Security quiz with a perfect score',
+  },
+  {
+    id: 'level-beginner',
+    name: 'Beginner Level Complete',
+    description: 'Read every beginner guide and passed each of their quizzes',
+    icon: '🌱',
+    rarity: 'rare',
+    requirement: 'Finish all 7 beginner guides and pass their quizzes',
+  },
+  {
+    id: 'level-intermediate',
+    name: 'Intermediate Level Complete',
+    description: 'Read every intermediate guide and passed each of their quizzes',
+    icon: '🚀',
+    rarity: 'epic',
+    requirement: 'Finish all 6 intermediate guides and pass their quizzes',
+  },
+  {
+    id: 'level-advanced',
+    name: 'Advanced Level Complete',
+    description: 'Read every advanced guide and passed each of their quizzes',
+    icon: '⚡',
+    rarity: 'legendary',
+    requirement: 'Finish all 3 advanced guides and pass their quizzes',
   },
 ];
 
@@ -988,6 +1021,9 @@ export function recordQuizResult(guideSlug: string, score: number, total: number
   // against just above.
   if (!saveGamificationData(data)) return false;
 
+  // A pass can be the last thing a level was waiting on.
+  if (hasPassed) checkLevelCertificates();
+
   if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
     const detail: QuizCompletedDetail = {
       guideSlug,
@@ -1084,6 +1120,28 @@ export function getAllLevelCompletion(): LevelCompletion[] {
 export function getActiveLevel(): SkillLevel {
   const levels = getAllLevelCompletion();
   return (levels.find((l) => !l.complete) || levels[levels.length - 1]).level;
+}
+
+/**
+ * Award the certificate for any level that is now finished.
+ *
+ * Called after each of the two things that can complete a level — reading its
+ * last guide, or passing its last quiz — so the certificate arrives at the
+ * moment it is earned rather than on the next page load. awardBadge is
+ * idempotent and dispatches BADGE_EARNED_EVENT itself, so re-checking is free
+ * and the modal fires exactly once.
+ */
+export function checkLevelCertificates(): BadgeId[] {
+  const earned: BadgeId[] = [];
+
+  for (const { level, complete } of getAllLevelCompletion()) {
+    const badgeId = LEVEL_CERTIFICATES[level];
+    if (complete && !hasBadge(badgeId) && awardBadge(badgeId)) {
+      earned.push(badgeId);
+    }
+  }
+
+  return earned;
 }
 
 /**
@@ -1317,106 +1375,8 @@ function checkBadgeRequirement(badgeId: BadgeId, data: GamificationData): boolea
 // NIP-58 BADGE PUBLISHING (OPTIONAL)
 // =============================================================================
 
-/**
- * NIP-58 Badge Definition URI
- * These are example URIs - in production, these would point to actual badge definitions
- * hosted on a Nostr relay or external service
- */
-const NIP58_BADGE_URIS: Record<BadgeId, string> = {
-  'key-master': 'nostr:badges:key-master:nostrich-love',
-  'first-post': 'nostr:badges:first-post:nostrich-love',
-  'zap-receiver': 'nostr:badges:zap-receiver:nostrich-love',
-  'community-builder': 'nostr:badges:community-builder:nostrich-love',
-  'knowledge-seeker': 'nostr:badges:knowledge-seeker:nostrich-love',
-  'nostr-graduate': 'nostr:badges:nostr-graduate:nostrich-love',
-  'security-conscious': 'nostr:badges:security-conscious:nostrich-love',
-  'relay-explorer': 'nostr:badges:relay-explorer:nostrich-love',
-  'privacy-expert': 'nostr:badges:privacy-expert:nostrich-love',
-};
 
-/**
- * Create a NIP-58 badge award event (Kind 8)
- * 
- * IMPORTANT: This is OPTIONAL functionality. Users can choose to publish
- * their badges to the Nostr network, but it's not required for the badges
- * to function in the local gamification system.
- * 
- * NIP-58 defines:
- * - Kind 30009: Badge Definition (created by badge issuer)
- * - Kind 8: Badge Award (issued to recipients)
- * 
- * This function creates a Kind 8 event that awards a badge to the user's pubkey.
- * 
- * @param badgeId - Badge to publish
- * @param npub - User's npub (public key in bech32 format)
- * @param privateKeyHex - User's private key in hex format (needed for signing)
- * @returns Signed Nostr event ready to publish, or null if error
- */
-export function publishBadgeToNostr(
-  badgeId: BadgeId,
-  npub: string,
-  privateKeyHex: string
-): NIP58BadgeAward | null {
-  try {
-    // Verify the badge is earned
-    if (!hasBadge(badgeId)) {
-      console.warn(`Cannot publish unearned badge: ${badgeId}`);
-      return null;
-    }
-    
-    // Decode npub to get hex pubkey
-    const decoded = nip19.decode(npub);
-    if (decoded.type !== 'npub') {
-      throw new Error('Invalid npub format');
-    }
-    const pubkey = decoded.data as string;
-    
-    // Convert private key from hex to Uint8Array
-    const privateKey = hexToBytes(privateKeyHex);
-    
-    // Get badge URI
-    const badgeUri = NIP58_BADGE_URIS[badgeId];
-    
-    // Create Kind 8 event (Badge Award)
-    const event = {
-      kind: 8,
-      pubkey,
-      created_at: Math.floor(Date.now() / 1000),
-      tags: [
-        ['a', `30009:${pubkey}:${badgeId}`], // Badge definition reference
-        ['p', pubkey], // Awarded to
-        ['u', badgeUri], // Badge URI
-      ],
-      content: '', // Badge awards typically have empty content
-    };
-    
-    // Sign the event
-    const signedEvent = finalizeEvent(event, privateKey) as NIP58BadgeAward;
-    
-    return signedEvent;
-  } catch (error) {
-    console.error('Error creating NIP-58 badge award:', error);
-    return null;
-  }
-}
 
-/**
- * Publish multiple badges to Nostr at once
- * 
- * @param badgeIds - Array of badge IDs to publish
- * @param npub - User's npub
- * @param privateKeyHex - User's private key in hex
- * @returns Array of signed events
- */
-export function publishMultipleBadgesToNostr(
-  badgeIds: BadgeId[],
-  npub: string,
-  privateKeyHex: string
-): NIP58BadgeAward[] {
-  return badgeIds
-    .map((id) => publishBadgeToNostr(id, npub, privateKeyHex))
-    .filter((event): event is NIP58BadgeAward => event !== null);
-}
 
 /**
  * Helper function to convert hex string to Uint8Array
@@ -1607,6 +1567,10 @@ export function completeGuideInLevel(
 
   // Trigger badge check
   checkAndAwardBadges();
+
+  // Reading the last guide of a level can complete it, the same way passing its
+  // last quiz can — both paths have to check.
+  checkLevelCertificates();
 }
 
 
@@ -1698,8 +1662,6 @@ export function useGamification() {
     awardBadge,
     
     // NIP-58 publishing (optional)
-    publishBadgeToNostr,
-    publishMultipleBadgesToNostr,
     
     // Storage functions
     exportGamificationData,
@@ -1752,8 +1714,6 @@ export default {
   recordKeysBackedUp,
   updateConnectedRelays,
   checkAndAwardBadges,
-  publishBadgeToNostr,
-  publishMultipleBadgesToNostr,
   exportGamificationData,
   importGamificationData,
   clearGamificationData,
