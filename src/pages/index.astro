@@ -2,8 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
-import { ActivityFeed } from '../components/activity/ActivityFeed';
-import { ProgressTracker } from '../components/gamification/ProgressTracker';
 import { CyberpunkHeroAnimation } from '../components/CyberpunkAnimation';
 import { ResumeBanner } from '../components/navigation/ResumeBanner';
 import { siteConfig } from '../config/site';
@@ -14,8 +12,13 @@ import { COMPARISON_PAGES } from '../config/comparison-pages';
 // "Nostrich.love - … | Nostrich.love". Lead with the entity instead: this page
 // takes most of the site's inbound links and previously said "Nostr" nowhere
 // in its title, description or H1, so none of that authority carried a topic.
-const title = 'Learn Nostr: What It Is and How to Get Started';
-const description = 'What Nostr is, how it works, and how to join in five minutes. Free beginner guides to keys, relays, zaps and clients — in seven languages.';
+// The frame is the course, not the five-minute signup. /guides has described
+// itself as "Learn Nostr Step by Step — progressive skill levels" for months
+// while this page, which takes most of the inbound links, sold a quick start;
+// a reader arriving here had no way to know a structured course existed one
+// click away. Still leads with "Learn Nostr" for the reasons in the note above.
+const title = 'Learn Nostr: A Free Course, Beginner to Advanced';
+const description = 'A structured course in Nostr: 16 guides across three levels, most ending in a quiz. Keys, relays, zaps and clients — free, no account, in seven languages.';
 
 // Entity anchor. Every Organization reference elsewhere on the site is an
 // anonymous inline `publisher` stub inside a guide's LearningResource; this is
@@ -62,20 +65,20 @@ const jsonLd = [
 ];
 
 const valueProps = [
-  { 
-    icon: '🎮', 
-    title: 'Learn at Your Pace', 
-    description: 'Track your progress with clear milestones from first steps to power user' 
+  {
+    icon: '📚',
+    title: 'Three levels, in order',
+    description: 'Beginner, intermediate, advanced. Nothing is locked — the levels just show where to start and what comes next.'
   },
-  { 
-    icon: '🔐', 
-    title: 'You Own Everything', 
-    description: 'Your account, your followers, your content. No platform can delete you.' 
+  {
+    icon: '✅',
+    title: 'Quizzes, not just reading',
+    description: 'Most guides end in a quiz, so you leave knowing which parts you understood and which to reread.'
   },
-  { 
-    icon: '⚡', 
-    title: 'Earn From Day One', 
-    description: 'Built-in micropayments let supporters tip you directly—no ads needed' 
+  {
+    icon: '🌍',
+    title: 'Seven languages',
+    description: 'Every guide, fully translated — including Arabic with the whole layout mirrored, and Hindi.'
   },
 ];
 
@@ -162,18 +165,21 @@ const comparisonPoints = [
             <!-- Main Headline -->
             <div class="text-center mb-8">
               <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-white">
-                <span class="block">Take Control of Your Social Media</span>
+                <span class="block">Learn Nostr, Step by Step</span>
                 <span class="bg-gradient-to-r from-friendly-purple-600 to-friendly-purple-400 bg-clip-text text-transparent">
-                  with Nostr
+                  from your first key to the protocol itself
                 </span>
               </h1>
-              
+
               <p class="text-xl sm:text-2xl text-gray-600 dark:text-gray-400 mb-4 max-w-3xl mx-auto leading-relaxed">
-                Welcome to Nostr—a protocol that puts you in charge. Your content, your followers, your rules. No gatekeepers, no algorithms, no account deletions.
+                Sixteen guides across three levels — beginner, intermediate, advanced — and most of them end in a quiz, so you find out what you actually understood. Nothing is locked: the levels only show a sensible order to read in.
               </p>
-              
+
+              <!-- This line used to read "Join thousands discovering…". There is no
+                   traffic measurement behind any such number, so it made a claim the
+                   site cannot support. What replaces it is checkable in one click. -->
               <p class="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
-                Join thousands discovering a <span class="font-semibold text-friendly-purple-700 dark:text-friendly-purple-400">decentralized</span> way to connect.
+                Free and open source, in <span class="font-semibold text-friendly-purple-700 dark:text-friendly-purple-400">seven languages</span> — including Arabic and Hindi, which almost nothing else in Nostr covers.
               </p>
             </div>
             
@@ -183,17 +189,45 @@ const comparisonPoints = [
                 href="/guides/what-is-nostr"
                 class="inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-white bg-friendly-purple-700 rounded-2xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 hover:bg-friendly-purple-800"
               >
-                Start Your Journey
+                Start the course
                 <svg class="ms-3 w-6 h-6 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </a>
             </div>
-            
+
             <p class="mt-4 text-center text-gray-500 dark:text-gray-400">
-              Free • No account required • 2 minutes to get started
+              Free • No account required • <a href="/guides" class="underline underline-offset-2 hover:text-friendly-purple-700 dark:hover:text-friendly-purple-400">see the whole course first</a>
             </p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How the course works.
+         `valueProps` was declared in the frontmatter of this page and rendered
+         nowhere, so the home page described the protocol at length and the course
+         not at all. This is the section that makes the shape of it visible before
+         a reader has to click anything. -->
+    <section class="py-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            How the course works
+          </h2>
+          <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Read in order or jump straight to what you need — both work
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {valueProps.map((prop) => (
+            <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
+              <span class="text-3xl" aria-hidden="true">{prop.icon}</span>
+              <h3 class="mt-4 font-semibold text-lg text-gray-900 dark:text-white">{prop.title}</h3>
+              <p class="mt-2 text-gray-600 dark:text-gray-400">{prop.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
