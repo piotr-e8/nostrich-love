@@ -30,7 +30,7 @@ Wymagają mojego „tak": deploy, publikacja zdarzenia na nostr z konta **ptrio4
 
 ## Gdzie reszta
 
-Szczegóły w `docs/internal/` (~6300 linii) — ładowane na żądanie, nigdy hurtem. Do konkretnych zadań są skille w `.claude/skills/`: `nowy-jezyk`, `nowy-poradnik`, `komponent-interaktywny`, `uzupelnij-tlumaczenia`, `sprawdz-seo`, `przed-wypchnieciem`, `nostr-relay`, `domkniecie-sesji`.
+Szczegóły w `docs/internal/` (~6300 linii) — ładowane na żądanie, nigdy hurtem. Do konkretnych zadań są skille: `nowy-jezyk`, `nowy-poradnik`, `komponent-interaktywny`, `uzupelnij-tlumaczenia`, `sprawdz-seo`, `przed-wypchnieciem`, `nostr-relay`, `domkniecie-sesji`. Leżą w `.agents/skills/` i są symlinkowane do `.claude/skills/` — obie strony w repo, patrz `.agents/skills/README.md`.
 
 `docs/internal/AGENTS_LEGACY.md` to poprzednia, 754-linijkowa wersja tego pliku — trzymana dla historii, zawiera lekcje 1–16. Nie jest ładowana i częściowo jest nieaktualna.
 

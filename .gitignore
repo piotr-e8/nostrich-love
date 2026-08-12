@@ -30,6 +30,11 @@ ai-docs
 ai-scripts
 learning
 
-# Agent tooling — local config and a 65 MB worktree copy, not project source
-.claude/
+# Agent tooling. The 65 MB worktree copy stays out. Skills live in
+# .agents/skills/ (tracked); .claude/skills/ holds symlinks into it, and those
+# are tracked too — Claude Code only reads .claude/skills/, so without them a
+# fresh clone sees none of the skills CLAUDE.md names.
+.claude/*
+!.claude/launch.json
+!.claude/skills/
 .opencode/
