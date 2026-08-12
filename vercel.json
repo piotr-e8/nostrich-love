@@ -27,7 +27,7 @@
       ]
     },
     {
-      "source": "/(preview_image.png|logo.png|logo-header.png|apple-touch-icon.png|android-chrome-:size.png|favicon-:size.png|favicon.svg)",
+      "source": "/(preview_image.png|logo.png|logo-header.png|apple-touch-icon.png|android-chrome-:size.png|favicon-:size.png)",
       "headers": [
         {
           "key": "Cache-Control",
