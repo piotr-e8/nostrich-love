@@ -156,6 +156,19 @@ type RelayFeature =
 
 ## Community Campaign: Topical Relay Discovery
 
+> **Status: NOT LAUNCHED — this section is a proposal, not a description of anything that exists.**
+>
+> Nothing below is built. There is no submission form, no Nostr DM intake, no
+> verification script, and no zap/reward mechanism. The reward amount is still
+> `[TBD]`. The `addedBy` field on `TopicalRelay` exists for future campaign
+> attribution but is unused on every current entry.
+>
+> This marker is load bearing. The FAQ on `/relay-feed-browser/` was written
+> from this section as though it had shipped, and told readers they could
+> "earn sats for verified submissions" for two weeks after the copy was fixed
+> on a branch that never landed. Do not write user-facing copy from anything
+> under this heading until the status line says otherwise.
+
 ### Goal
 Crowdsource the best topical relays with community verification.
 
