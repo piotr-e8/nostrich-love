@@ -53,6 +53,17 @@
   ],
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "^www\\.nostrich\\.love$"
+        }
+      ],
+      "destination": "https://nostrich.love/:path*",
+      "permanent": true
+    },
+    {
       "source": "/en/guides",
       "destination": "/guides",
       "permanent": true
