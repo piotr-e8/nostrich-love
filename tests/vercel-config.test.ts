@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
+import { locales } from '../src/config/locales';
 
 // vercel.json reached production unvalidated and failed the deploy: two header
 // entries carried a "//" key used as a comment, and Vercel's schema rejects
@@ -89,5 +90,63 @@ describe('vercel.json', () => {
     );
     expect(rule, 'the *.vercel.app noindex rule is gone').toBeDefined();
     expect(rule.headers).toContainEqual({ key: 'X-Robots-Tag', value: 'noindex' });
+  });
+
+  // --- host and locale-landing redirects -------------------------------------
+
+  it('sends www to the apex, and does so before any other redirect', () => {
+    // www answered 200 for every path instead of redirecting, so the whole site
+    // existed on two hosts. Both emit a canonical pointing at the apex, but
+    // canonical is a hint; a 308 is not.
+    //
+    // Order matters and is the reason this asserts index 0. Vercel stops at the
+    // first matching redirect, and a relative destination keeps the request on
+    // the host it arrived on — so if /en/guides matched first, a www reader
+    // would be sent to www.nostrich.love/guides and only then bounced here.
+    const rule = config.redirects[0];
+    expect(rule.has).toContainEqual({ type: 'host', value: '^www\\.nostrich\\.love$' });
+    expect(rule.destination).toBe('https://nostrich.love/:path*');
+    expect(rule.permanent).toBe(true);
+
+    // The host value is a regex, so the anchors and the escaped dots are load
+    // bearing: a bare "www.nostrich.love" would also match a host that merely
+    // contains it, e.g. www-nostrich.love.example.com.
+    const host = new RegExp(rule.has[0].value);
+    expect(host.test('www.nostrich.love')).toBe(true);
+    expect(host.test('nostrich.love')).toBe(false);
+    expect(host.test('evil-www.nostrich.love.example.com')).toBe(false);
+  });
+
+  it('lands every prefixed locale on its guides hub instead of a 404', () => {
+    // /pl/, /es/, /de/, /zh/, /ar/ and /hi/ all returned 404: the homepage is an
+    // English-only route, so the locale prefixes exist for /guides and /glossary
+    // but not for the root. localeEntryPath() in src/i18n/paths.ts already sends
+    // a reader who switches language on the homepage to that locale's guides
+    // hub; this makes the bare URL agree with it.
+    //
+    // This is NOT the hreflang fix. An hreflang alternate has to be a canonical
+    // URL that answers 200, and it has to be reciprocal — /pl/guides/ already
+    // names /guides/ as its English alternate and cannot also name /. Annotating
+    // the homepage cluster needs real localized homepages.
+    const landing = config.redirects.filter(
+      (entry: { destination: string }) => entry.destination === '/:lang/guides/'
+    );
+    expect(landing).toHaveLength(2);
+
+    // Both spellings are needed: Vercel matches the source literally, which is
+    // why /en/guides and /en/guides/ are two separate entries further down.
+    expect(landing.map((entry: { source: string }) => entry.source).sort()).toEqual([
+      '/:lang(pl|es|de|zh|ar|hi)',
+      '/:lang(pl|es|de|zh|ar|hi)/',
+    ]);
+    for (const entry of landing) expect(entry.permanent).toBe(true);
+
+    // vercel.json is static JSON and cannot import src/config/locales.ts, so the
+    // locale list is duplicated here the same way astro.config.mjs duplicates it
+    // for the sitemap. This is the assertion that keeps the copy honest: adding
+    // a locale without touching vercel.json fails here rather than shipping a
+    // 404 on the new /{locale}/.
+    const declared = landing[0].source.match(/\(([^)]+)\)/)?.[1].split('|');
+    expect(declared).toEqual(locales.filter((locale) => locale !== 'en'));
   });
 });
