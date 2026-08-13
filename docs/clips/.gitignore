@@ -5,6 +5,8 @@
 # then silently builds a teaser of the old design. capture-shots.sh reproduces
 # the whole directory from the preview server in about two minutes.
 .work/
+.work-walkthrough/
+.chrome-profile*/
 out/
 shots/
 *.mov

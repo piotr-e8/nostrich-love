@@ -49,7 +49,7 @@ three together do not.
 > most ending in a quiz — and it reads properly in Arabic and Hindi. Not a
 > translated landing page: the whole thing, layout mirrored, quizzes included.
 >
-> Free, open source, no account, no tracking.
+> Free, open source, no account needed.
 >
 > https://nostrich.love
 
@@ -89,6 +89,41 @@ Good as a follow-up or a reply to "what changed?", weaker as the opening post.
 
 ---
 
+---
+
+## D — the method (goes with the walkthrough cut)
+
+For the second video, the one that walks through `/guides/relays-demystified/`
+end to end — see `walkthrough-cut.md`. This note argues method rather than
+coverage, so it does not compete with A/B/C and can go out weeks later.
+
+> Most Nostr explainers are one long page. You scroll to the bottom, nod, and by
+> tomorrow you could not say what a relay is.
+>
+> The relay guide on nostrich.love is about 550 words. Inside it there is a
+> simulator you press play on and watch a post travel out to two relays and reach
+> your followers; a diagram of why you and a friend on different relays cannot
+> see each other; a wizard for the empty feed everyone hits on day one. Then six
+> questions, right there on the page, that tell you which part you actually got.
+>
+> Sixteen guides like that, thirteen of them ending in a quiz, in seven
+> languages. Finish the seven beginner ones and the level closes.
+>
+> Free, open source, no account. https://nostrich.love
+
+Every number in it is current as of 2026-08-12: 16 guides, 13 quizzes, 71
+questions per language, ~550 prose words in that guide, 7 beginner guides of
+which 5 have quizzes. The site's *median* guide is ~1,240 words and `faq` is
+3,462 — so do not extend this into "nothing here is long".
+
+Shorter, if the video carries the argument on its own:
+
+> A relay guide you can press play on, with six questions at the end that tell
+> you what stuck. Not a wall of text you forget by tomorrow.
+>
+> Sixteen guides, thirteen quizzes, seven languages, no account.
+> https://nostrich.love
+
 ## Do not claim
 
 Each of these is either false or unmeasured. They are listed because the first
@@ -106,6 +141,17 @@ two were in an earlier draft of this file.
 - ❌ anything about the key generator. It is a demonstration, deliberately kept
   out of the teaser: advertising "generate a Nostr identity here" contradicts
   what the site's own security guide tells people to do.
+- ❌ **"no tracking"** — the site loads a third-party analytics beacon.
+  `src/config/site.ts:32-35` enables it and `src/layouts/Layout.astro:149`
+  injects `static.cloudflareinsights.com/beacon.min.js`; it is in the built
+  pages. "No account" is true — progress is `localStorage` only — but this
+  audience reads view-source. Draft A carried "no tracking" until 2026-08-12.
+- ❌ "unlocks the next guide", "locked", "gated". Nothing on the site is gated
+  and its own explainer says "Nothing is graded and nothing is locked"
+  (`GamificationExplainer.tsx:362`). Levels are a reading order.
+- ❌ "certificate". Finishing a level is real, but what a reader sees is a badge
+  modal saying "Beginner Level Complete" — there is no document, page or
+  download. "Certificate" is internal vocabulary only.
 
 ## Notes on posting
 

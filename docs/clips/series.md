@@ -70,13 +70,16 @@ of posts aimed at those readers.
 The July audit's blunt version: *stop producing content, start distributing.*
 Posting is one channel and the weakest of the three available.
 
-- **A PR to nostr.how with ar/hi translations.** They have 11 locales and neither
-  of those. It is maintained by an OpenSats grantee, so the PR is simultaneously
-  distribution and the relationship a reference letter comes from — and letters
-  are what currently block HRF.
+- ~~A PR to nostr.how with ar/hi translations.~~ **Decided against, 2026-08-13.**
+  It was the strongest item here — distribution plus the relationship a reference
+  letter comes from — but it is off the table. Do not re-propose it.
 - **awesome-nostr** (2.9k★) — an entry is a quarter of a day.
 - **nostr-resources** — the existing entry links to `uselessshit.co/nostr/nip-05/`
   rather than to the guides, and sits in the paid-services category. That is a
   correction, not a submission.
 
-None of these need a video.
+Neither of the remaining two needs a video.
+
+Note on the videos themselves: a note and its clip are **one post**, not two. The
+text does not stand on its own — the argument it makes is visual — so do not
+plan them on separate dates.
