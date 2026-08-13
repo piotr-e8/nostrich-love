@@ -91,40 +91,28 @@ Good as a follow-up or a reply to "what changed?", weaker as the opening post.
 
 ---
 
-## D — learning as play (goes with the play cut)
+## D — learning as play (goes with the play cut) — CHOSEN, Piotr's words
 
 For the second video — see `walkthrough-cut.md`. **The note and the clip are one
 post**: the note makes the "boring" claim, the clip is the evidence, so nothing
-boring ever has to appear on screen. The note also carries the one thing the
-video deliberately does not stop for: that the quiz *explains* a miss.
+boring ever has to appear on screen.
 
-> Reading a 2,500-word tutorial in one long block is how you forget it by
-> tomorrow. The way that works is play: try the thing, then immediately check
-> what stuck.
+> Reading a 2,500-word tutorial in one block is how you forget it by tomorrow.
+> Instead, try the thing, then immediately check what stuck.
+> That is how nostrich.love teaches Nostr.
+> The right way is the fun way.
 >
-> That is how nostrich.love teaches Nostr. Press play and watch your post fan
-> out to your relays — and see exactly why a friend on different relays never
-> gets it. Then a short quiz: green when you are right, and when you miss, it
-> shows the right answer and tells you why. Finish a level and there is
-> confetti. (You do not need a perfect score — the clip below passes with one
-> miss.)
->
-> Sixteen guides, thirteen quizzes, seven languages, no account.
->
-> https://nostrich.love
+> Check out our guides at https://nostrich.love/guides
 
-Every number is current as of 2026-08-13: 16 guides, 13 quizzes, 71 questions
-per language. The "2,500-word tutorial" is the hook's rhetorical target, not a
-claim about competitors by name — and do not invert it into "nothing here is
-long": the site's median guide is ~1,240 words and `faq` is 3,462.
+Final, 2026-08-13. An earlier, longer draft narrated what the clip shows and
+listed the counts — cut deliberately. The facts it carried ("free · open source ·
+no account · 7 languages") ride in the video's standing footer on every frame,
+so the note does not repeat them, and the link lands on the guides hub rather
+than the homepage because the hub is what the film just showed.
 
-Shorter, if the clip should carry it alone:
-
-> Learning Nostr here is a game: press play, answer, get it wrong, get told
-> why, win the level. Confetti included.
->
-> Sixteen guides, thirteen quizzes, seven languages, no account.
-> https://nostrich.love
+The "2,500-word tutorial" is the hook's rhetorical target, not a claim about
+competitors by name — and do not invert it into "nothing here is long": the
+site's median guide is ~1,240 words and `faq` is 3,462.
 
 ## Do not claim
 
