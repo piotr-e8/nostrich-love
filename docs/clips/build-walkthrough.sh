@@ -146,9 +146,13 @@ clipbeat() { # name file in dur [zoom]
 #
 # The win beat is the result screen and the confetti modal from the
 # beginner-level take — its 83% matches the one miss the quiz beat showed.
+# The header beat answers "what am I even looking at": two seconds of the
+# guide's title and Beginner badge — the front door, not the prose — before
+# anything moves. It reuses the first (still) stretch of the relays-open take.
 BEATS=(
+  "05head|relays-open|0|2.0|zoom"
   "10sim|relays-simulator|2.0|5.0|"
-  "20quiz|relays-quiz|0|5.7|"
+  "20quiz|relays-quiz|0|6.2|"
   "30win|beginner-level|1.2|4.2|"
 )
 

@@ -103,10 +103,18 @@ this state already, rather than hand-writing the JSON.
 
 | # | beat | source | ~s | what is on screen |
 |---|---|---|---|---|
-| 1 | **it moves** | `BEAT=relays-simulator`, in-point 2.0 | 5.0 | `PostFlowSimulator` already MID-cycle — no page, no title, motion from frame zero. Runs to its payoff: the reader on Relay C, "Never sees it" |
-| 2 | **it's a game** | `BEAT=relays-quiz` | 5.7 | Click → green "Nice!" slides in → next → click wrong → red flash, green lights beside it → next question, progress bar advancing. Game pace; nobody stops to read |
-| 3 | **you win** | `BEAT=beginner-level`, in-point 1.2 | 4.2 | The 83% result screen, then the confetti modal: gold `BADGE EARNED!`, 🌱, "Beginner Level Complete" |
-| 4 | end card | lockup | 2.6 | learn Nostr / by doing it / nostrich.love |
+| 1 | **where we are** | `BEAT=relays-open`, in-point 0 | 2.0 | The guide's front door: title, `Beginner` badge, a slow push. Context, not prose — without it the video started from nowhere |
+| 2 | **it moves** | `BEAT=relays-simulator`, in-point 2.0 | 5.0 | `PostFlowSimulator` already MID-cycle. Runs to its payoff: the reader on Relay C, "Never sees it" |
+| 3 | **it's a game** | `BEAT=relays-quiz` | 6.2 | Click → green "Nice!" slides in → next → click wrong → **shake + red**, green lights beside it → next question, progress advancing. Game pace; nobody stops to read |
+| 4 | **you win** | `BEAT=beginner-level`, in-point 1.2 | 4.2 | The 83% result screen, then the confetti modal: gold `BADGE EARNED!`, 🌱, "Beginner Level Complete" |
+| 5 | end card | lockup | 2.6 | learn Nostr / by doing it / nostrich.love |
+
+The wrong answer being visibly wrong required a PRODUCT fix, found while cutting
+this: the Tailwind palette never defined `error`, so all 153 `error-*` usages —
+every quiz's wrong pick, the error toasts, NIP05Checker's failure card — compiled
+to nothing and rendered white. Filming the quiz is what surfaced it. The fix
+(palette entry + a shake animation on the wrong pick) lives in the site, not in
+the video.
 
 The quiz take answers all six questions (four with the camera off) so the 83%
 behind the modal is real and matches the one miss shown on camera.
@@ -233,7 +241,7 @@ Beats are recorded longer than they are cut. The in-points and durations live in
 the `BEATS` table in `build-walkthrough.sh`, so re-timing the video does not mean
 re-recording it.
 
-The result is 1080×1920, **16.6s, ~1.6MB** — no captions (the note above the
+The result is 1080×1920, **18.8s, ~2.3MB** — no captions (the note above the
 video is the caption), 0.3s dissolves between beats.
 
 ## Known rough edges
