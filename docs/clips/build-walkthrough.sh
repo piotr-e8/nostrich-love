@@ -126,22 +126,30 @@ clipbeat() { # name file in dur [zoom]
 #
 # name|file|in|dur|zoom
 #
-# Five beats, not six. TroubleshootingWizard came out: the cut was showing five
-# separate components in half a minute and none of them got long enough to land.
-# The wizard was the one to drop — it answers a support question rather than
-# teaching the guide's idea, and its solution card is the one shot that had to be
-# cropped to fit. beats/relays-wizard.mjs stays; it records fine on its own and
-# is a good standalone post.
+# Three beats and an end card. The thesis is "learning here feels like play",
+# so the shape is click -> feedback -> win, and everything static went:
 #
-# The simulator keeps its full 7s. Its four steps run 1.8s apart and the last one
-# — the reader on a relay you never publish to — is the whole point, so trimming
-# it would cut the argument, not the padding.
+#   - the page-open scroll: a video against walls of text must never open on
+#     one. The "nuuuda" contrast is carried by the note text sitting directly
+#     above the video in the post — they publish as one — not by footage of
+#     our own prose.
+#   - the diagram and the wizard: strong content, wrong genre. Both storyboards
+#     stay in beats/ — they are standalone posts per series.md's formats.
+#
+# The simulator opens MID-cycle (in-point after the first step lights) so the
+# frame is moving from second zero, and runs to its payoff — the reader on a
+# relay you never publish to.
+#
+# The quiz is a game loop at game pace: one right (green "Nice!"), one wrong
+# (red flash, green lights beside it), next question. Nobody on camera stops
+# to read; "it explains your misses" is a sentence for the note.
+#
+# The win beat is the result screen and the confetti modal from the
+# beginner-level take — its 83% matches the one miss the quiz beat showed.
 BEATS=(
-  "10open|relays-open|0.8|3.4|"
-  "20diagram|relays-diagram|0|2.2|zoom"
-  "30sim|relays-simulator|0.6|7.0|"
-  "50quiz|relays-quiz|0|10.4|"
-  "60level|beginner-level|1.4|3.6|"
+  "10sim|relays-simulator|2.0|5.0|"
+  "20quiz|relays-quiz|0|5.7|"
+  "30win|beginner-level|1.2|4.2|"
 )
 
 for row in "${BEATS[@]}"; do

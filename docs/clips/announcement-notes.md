@@ -91,35 +91,37 @@ Good as a follow-up or a reply to "what changed?", weaker as the opening post.
 
 ---
 
-## D — the method (goes with the walkthrough cut)
+## D — learning as play (goes with the play cut)
 
-For the second video, the one that walks through `/guides/relays-demystified/`
-end to end — see `walkthrough-cut.md`. This note argues method rather than
-coverage, so it does not compete with A/B/C and can go out weeks later.
+For the second video — see `walkthrough-cut.md`. **The note and the clip are one
+post**: the note makes the "boring" claim, the clip is the evidence, so nothing
+boring ever has to appear on screen. The note also carries the one thing the
+video deliberately does not stop for: that the quiz *explains* a miss.
 
-> Most Nostr explainers are one long page. You scroll to the bottom, nod, and by
-> tomorrow you could not say what a relay is.
+> Reading a 2,500-word tutorial in one long block is how you forget it by
+> tomorrow. The way that works is play: try the thing, then immediately check
+> what stuck.
 >
-> The relay guide on nostrich.love is about 550 words. Inside it there is a
-> simulator you press play on and watch a post travel out to two relays and reach
-> your followers; a diagram of why you and a friend on different relays cannot
-> see each other; a wizard for the empty feed everyone hits on day one. Then six
-> questions, right there on the page, that tell you which part you actually got.
+> That is how nostrich.love teaches Nostr. Press play and watch your post fan
+> out to your relays — and see exactly why a friend on different relays never
+> gets it. Then a short quiz: green when you are right, and when you miss, it
+> shows the right answer and tells you why. Finish a level and there is
+> confetti. (You do not need a perfect score — the clip below passes with one
+> miss.)
 >
-> Sixteen guides like that, thirteen of them ending in a quiz, in seven
-> languages. Finish the seven beginner ones and the level closes.
+> Sixteen guides, thirteen quizzes, seven languages, no account.
 >
-> Free, open source, no account. https://nostrich.love
+> https://nostrich.love
 
-Every number in it is current as of 2026-08-12: 16 guides, 13 quizzes, 71
-questions per language, ~550 prose words in that guide, 7 beginner guides of
-which 5 have quizzes. The site's *median* guide is ~1,240 words and `faq` is
-3,462 — so do not extend this into "nothing here is long".
+Every number is current as of 2026-08-13: 16 guides, 13 quizzes, 71 questions
+per language. The "2,500-word tutorial" is the hook's rhetorical target, not a
+claim about competitors by name — and do not invert it into "nothing here is
+long": the site's median guide is ~1,240 words and `faq` is 3,462.
 
-Shorter, if the video carries the argument on its own:
+Shorter, if the clip should carry it alone:
 
-> A relay guide you can press play on, with six questions at the end that tell
-> you what stuck. Not a wall of text you forget by tomorrow.
+> Learning Nostr here is a game: press play, answer, get it wrong, get told
+> why, win the level. Confetti included.
 >
 > Sixteen guides, thirteen quizzes, seven languages, no account.
 > https://nostrich.love

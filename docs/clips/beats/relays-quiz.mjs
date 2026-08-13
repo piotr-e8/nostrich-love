@@ -1,20 +1,21 @@
-// The quiz beat on /guides/relays-demystified/.
+// The quiz beat on /guides/relays-demystified/ — a game loop, not an exam.
 //
-// Two rewrites got this here, both worth knowing before changing it again.
+// The cut this feeds argues one thing: learning here feels like play. So the
+// quiz is filmed as click -> feedback -> click -> feedback, at game pace:
 //
-// First it was shot state by state: two questions appeared, four were silently
-// skipped, and it cut hard to the result. The jump read as a bug.
+//   Q1 answered RIGHT  -> green "Nice!" slides in        (the hit)
+//   Q2 answered WRONG  -> red flash, green lights beside  (missing is fine too)
+//   Next question      -> progress advances, Q3 lands     (and so on...)
 //
-// Then it was filmed straight through all six. No jump, but nobody can read six
-// questions in six seconds, and a flawless run hides the only thing that makes
-// this quiz worth showing — it does not just mark you, it tells you what you got
-// wrong and why.
+// Nobody on camera stops to read. The "it explains what you got wrong" claim
+// lives in the note text above the video, not in a four-second hold — three
+// earlier versions of this beat died on exactly that: shot state-by-state it
+// jump-cut, filmed straight through it was unreadable, and paced for reading
+// it was the slowest beat of a video about fun.
 //
-// So: ONE question, answered WRONG, held long enough to read the correction.
-// Then one answered right, briefly. Then the rest are cleared off camera and the
-// result comes back on. Final score 5/6 = 83%, which still passes (the mark is
-// 70%, gamification.ts:90) — that is the honest picture of using this thing, and
-// a better one than a perfect score.
+// The remaining questions are cleared with the camera off, so the take still
+// ends on a real 5/6 = 83% — consistent with the result screen the win beat
+// (beats/beginner-level.mjs) shows behind its confetti modal.
 
 export default {
   guide: 'relays-demystified',
@@ -34,22 +35,15 @@ export default {
 
   steps: [
     { record: 'start' },
-    // Q1 "What is a Nostr relay?" — long enough to read the question and the
-    // three options before anything is clicked.
-    { wait: 1600 },
-    // The wrong pick lights red with an XCircle, the right one goes green beside
-    // it, and a red "Not quite" panel slides down with the explanation. That
-    // panel is the beat; it gets the longest hold in the whole video.
-    { answer: 'wrong', after: 2800 },
-    { click: 'text:Next question', after: 400 },
-    // Q2, answered correctly — the green "Nice!" for contrast, shorter.
-    { wait: 1000 },
-    { answer: true, after: 1500 },
-    { record: 'stop', name: 'two-questions', hold: 0.3 },
+    { wait: 900 },
+    { answer: true, after: 1400 },
+    { click: 'text:Next question', after: 500 },
+    { wait: 700 },
+    { answer: 'wrong', after: 1400 },
+    { click: 'text:Next question', after: 700 },
+    { record: 'stop', name: 'game-loop', hold: 0.4 },
 
-    // The remaining four are cleared with the camera off. Nobody needs to watch
-    // them and filming them was what made the last cut unreadable.
-    { click: 'text:Next question', after: 300 },
+    // Off camera: finish the run so the score is real.
     { answer: true, after: 300 },
     { click: 'text:Next question', after: 300 },
     { answer: true, after: 300 },
@@ -57,13 +51,10 @@ export default {
     { answer: true, after: 300 },
     { click: 'text:Next question', after: 300 },
     { answer: true, after: 300 },
-
-    { record: 'start' },
-    { click: 'text:See results', after: 1400 },
-    { record: 'stop', name: 'score', hold: 1.5 },
+    { click: 'text:See results', after: 800 },
   ],
 
-  // 5 of 6 — one deliberate miss, and still a pass.
+  // One miss on camera, five right — 83%, and still a pass.
   assert: {
     expr: `document.querySelector('[data-quiz]').textContent.includes('5 / 6')`,
     equals: true,

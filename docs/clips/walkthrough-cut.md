@@ -1,11 +1,24 @@
-# The walkthrough cut — one guide, end to end
+# The play cut — click, feedback, win
 
 The first teaser (`build-teaser.sh`) argues *breadth*: the same guide in seven
-scripts. This one argues *method*: you do not read this site, you work through
-it. One guide, opened and finished on camera, in about thirty seconds.
+scripts. This one argues **fun**: learning here feels like play, not like
+reading. Every beat must pass one test — *does this frame make learning look
+fun?* Motion from the first frame, a game loop in the middle, confetti at the
+end, ~17 seconds, done.
 
-Everything below is checked against the code, because the obvious version of
-this video depicts a mechanic the site does not have. See "The unlock is
+Two disciplines that took five re-cuts to learn:
+
+- **The boring thing never goes on screen.** An earlier cut opened on the
+  guide's own prose to argue "not a wall of text" — footage of the thing the
+  video is against. The "nuuuda" contrast belongs to the NOTE, which publishes
+  as one post with the clip and sits directly above it in every client. Text
+  makes the claim; the clip is the evidence.
+- **This is not a product tour.** A faithful walkthrough (open page → diagram →
+  wizard → quiz → level) is documentation, and documentation is the genre the
+  thesis says we are not. Completeness is not a virtue here; pace is.
+
+Everything below is still checked against the code, because the obvious version
+of this video depicts a mechanic the site does not have. See "The unlock is
 fiction".
 
 ## The guide: `/guides/relays-demystified/`
@@ -86,22 +99,23 @@ this state already, rather than hand-writing the JSON.
 
 ## The cut
 
-Target 32s at 1080×1920. Beats 2 and 5 are the ones to shorten if it runs long.
+~17s at 1080×1920. Three beats and an end card; 0.3s dissolves.
 
 | # | beat | source | ~s | what is on screen |
 |---|---|---|---|---|
-| 1 | opens | top of the guide | 3 | Title, `Beginner` badge, "Guide 6 of 7", the 2px reading bar starting to travel |
-| 2 | it is cards, not prose | scroll to mdx:29 | 3 | `DiagramCompare` — "One big server" vs "Many post offices" |
-| 3 | **you use it** | mdx:106 | 7 | `PostFlowSimulator`: tap Play, one full cycle — your device signs, two arrows leave *at the same time* for Relay A and Relay B, both readers get it, and the reader on Relay C (which you never publish to) is left with "Never sees it". 4 steps × 1800ms |
-| 4 | it explains | mdx:84 | 3 | `DiagramNodes` — "no shared relay → your posts stay here / their posts stay there" |
-| 5 | you apply it | mdx:234 | 5 | `TroubleshootingWizard`: click **"Empty feed / No posts"** (the button label, not the prose heading), bar 20% → 40%, land on the solution card with its severity chip and five numbered steps |
-| 6 | **it checks you** | mdx:242 | 6 | Two questions of six: option click → green border + `CheckCircle2` + a green "Nice!" explanation sliding down; the `1/6 answered` label above the gradient track advancing. `BEAT=relays-quiz` |
-| 7 | the score | results screen | 3 | "Relay Deep Dive Quiz: 100%" / "6 / 6 correct answers" / "Critical concepts mastered 6 of 6". Same take as beat 6 |
-| 8 | **the level closes** | `BadgeEarnedModal` | 4 | Confetti, gold `BADGE EARNED!` pill, 🌱, "Beginner Level Complete", "Read every beginner guide and passed each of their quizzes". `BEAT=beginner-level` |
-| 9 | end card | lockup | 2 | nostrich.love |
+| 1 | **it moves** | `BEAT=relays-simulator`, in-point 2.0 | 5.0 | `PostFlowSimulator` already MID-cycle — no page, no title, motion from frame zero. Runs to its payoff: the reader on Relay C, "Never sees it" |
+| 2 | **it's a game** | `BEAT=relays-quiz` | 5.7 | Click → green "Nice!" slides in → next → click wrong → red flash, green lights beside it → next question, progress bar advancing. Game pace; nobody stops to read |
+| 3 | **you win** | `BEAT=beginner-level`, in-point 1.2 | 4.2 | The 83% result screen, then the confetti modal: gold `BADGE EARNED!`, 🌱, "Beginner Level Complete" |
+| 4 | end card | lockup | 2.6 | learn Nostr / by doing it / nostrich.love |
 
-The quiz must be answered in full (all six) for beats 7 and 8 to be real; only
-two questions are cut into the video.
+The quiz take answers all six questions (four with the camera off) so the 83%
+behind the modal is real and matches the one miss shown on camera.
+
+An earlier nine-beat version of this table walked the whole guide — open, scroll,
+diagram, wizard, quiz, level. It was accurate and it was a product tour; see the
+top of this file for why that was the wrong genre. The recorded beats it used
+still exist under `beats/` and `out/` — `relays-open`, `relays-diagram`,
+`relays-wizard` — and are standalone-post material per `series.md`.
 
 ## Not in frame
 
@@ -193,56 +207,34 @@ frames without any extra work.
 
 ```bash
 npm run build && npm run preview
-for b in relays-open relays-diagram relays-simulator relays-wizard relays-quiz beginner-level; do
+for b in relays-simulator relays-quiz beginner-level; do
   BEAT=$b node docs/clips/record-beat.mjs
 done
 ./docs/clips/build-walkthrough.sh    # -> out/nostrich-walkthrough.mp4
 ```
 
-| beat | storyboard | in the cut | take |
-|---|---|---|---|
-| open + scroll | `relays-open` | 4.0s | 7.7s, 48 frames; eased rAF scroll to the first diagram |
-| diagram | `relays-diagram` | 2.6s | one frame, given a slow push at assembly |
-| simulator | `relays-simulator` | 7.0s | 8.0s, 29 frames — kept whole, see below |
-| quiz + score | `relays-quiz` | 10.4s | one question answered **wrong** and held on the correction, one right, the rest cleared off camera; asserts `5 / 6` |
-| level closes | `beginner-level` | 3.6s | 7.8s, 80 frames over 5.0s, asserts `Beginner Level Complete` |
-| ~~wizard~~ | `relays-wizard` | **cut** | records fine; good as a standalone post |
+**The quiz shows one wrong answer, at game pace.** Its history is the history of
+this whole video, compressed: shot state-by-state it jump-cut over four
+questions; filmed straight through, six questions passed faster than anyone can
+read; paced for reading the correction, it was a four-second hold in a video
+about fun. Now it is a loop — one right (green "Nice!"), one wrong (red flash,
+green lights beside it), next — and "it explains what you missed" is a sentence
+for the note, not a beat. The take still finishes all six off camera, so the
+score is a real **83% — 5 of 6**, above the 70% pass mark (`QUIZ_PASS_RATIO`,
+`gamification.ts:90`).
 
-**The wizard came out.** Five components in half a minute meant none of them got
-long enough to land, and the wizard was the one to lose: it answers a support
-question rather than teaching the guide's idea, and its solution card was the one
-shot that had to be cropped to fit the slot.
-
-**The simulator keeps its full seven seconds.** Its four steps run 1.8s apart and
-the last of them — the reader on a relay you never publish to — is the argument.
-Trimming it would cut the point, not the padding.
-
-**The quiz gets a wrong answer, on purpose, and it is now the longest beat.** Two
-earlier versions failed for the same underlying reason. Shot state by state, it
-showed two questions and skipped four. Filmed straight through, all six went past
-faster than anyone can read. Both also showed a flawless run — which hides the
-only thing worth showing, that the quiz explains rather than just marks. So one
-question is answered wrong and held on the red "Not quite" panel, one is answered
-right for contrast, the other four are cleared with the camera off, and the score
-comes back **83% — 5 of 6, "Review the sections you missed below."**
-
-That score then carries into the level beat, which also misses one: the pass mark
-is 70% (`QUIZ_PASS_RATIO`, `gamification.ts:90`), so the level genuinely closes
-without a perfect run — and the result screen blurred behind the badge modal says
-83% rather than contradicting the beat before it.
-
-The seeded profile works, and the badge modal fires off a genuine pass rather
-than being staged: the seed leaves the relays quiz as the only outstanding item
-in Beginner, so `recordQuizResult → checkLevelCertificates → BADGE_EARNED_EVENT`
-runs for real.
+**The win is genuine.** The level beat's seed leaves the relays quiz as the only
+outstanding item in Beginner and misses the same one question, so
+`recordQuizResult → checkLevelCertificates → BADGE_EARNED_EVENT` fires off a real
+pass, and the result screen blurred behind the modal says 83% rather than
+contradicting the beat before it.
 
 Beats are recorded longer than they are cut. The in-points and durations live in
 the `BEATS` table in `build-walkthrough.sh`, so re-timing the video does not mean
 re-recording it.
 
-The result is 1080×1920, **27.7s, ~3.3MB** — no captions, 0.3s dissolves between
-beats. The caption table the first assembly carried is gone: this cut is one
-continuous walkthrough and the screen says what is happening without being told.
+The result is 1080×1920, **16.6s, ~1.6MB** — no captions (the note above the
+video is the caption), 0.3s dissolves between beats.
 
 ## Known rough edges
 
@@ -253,9 +245,10 @@ continuous walkthrough and the screen says what is happening without being told.
 
 ## What is left over
 
-`beats/relays-wizard.mjs` and `beats/zaps-simulator.mjs` both record cleanly and
-are in neither cut. Each is a usable standalone post on the two-a-week cadence in
-`series.md` — one interaction, one screen, no assembly needed.
+Four storyboards record cleanly and are in no cut: `relays-open`,
+`relays-diagram`, `relays-wizard`, `zaps-simulator`. Each is a usable standalone
+post on the two-a-week cadence in `series.md` — one interaction or one figure,
+one screen, no assembly needed.
 
 Frames of equal byte size mean identical frames — the same cheap smoke test that
 caught the blank-PNG bug in `record-quiz.mjs`. Check the images, not the console.
