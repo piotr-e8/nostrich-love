@@ -44,15 +44,34 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
   const fetched = step >= 2;
   const gapShown = step >= 3;
 
+  // Nothing here may change size. The first version scaled the active tile to
+  // 105% and mounted/unmounted the little status lines, so every step nudged
+  // the whole grid — activation read as a glitch, not a highlight. Active state
+  // is now a ring (drawn outside the layout) and the status lines keep their
+  // slot at all times, fading rather than appearing.
   const tile = (active: boolean, tone: "primary" | "muted" | "gap") =>
     cn(
       "flex flex-col items-center gap-1.5 rounded-xl p-3 text-center transition-all duration-500 motion-reduce:transition-none",
       tone === "muted" && "border border-dashed border-gray-300 dark:border-gray-600",
-      active && tone === "primary" && "bg-primary-500/20 scale-105",
-      active && tone === "gap" && "bg-amber-500/10",
+      active && tone === "primary" && "bg-primary-500/20 ring-2 ring-primary-400 dark:ring-primary-500",
+      active && tone === "gap" && "bg-amber-500/10 ring-2 ring-amber-400 dark:ring-amber-500",
       !active && tone !== "muted" && "bg-white dark:bg-gray-800 opacity-60",
       !active && tone === "muted" && "opacity-60",
     );
+
+  /** A status line that always occupies its row, visible or not. */
+  const status = (visible: boolean, tone: "primary" | "gap", text: string) => (
+    <span
+      className={cn(
+        "text-xs h-4 leading-4 transition-opacity duration-300 motion-reduce:transition-none",
+        tone === "primary" ? "text-primary-500" : "text-amber-600 dark:text-amber-500",
+        visible ? "opacity-100" : "opacity-0",
+      )}
+      aria-hidden={!visible}
+    >
+      {text}
+    </span>
+  );
 
   const icon = (active: boolean, tone: "primary" | "muted" | "gap") =>
     cn(
@@ -99,7 +118,7 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
       </div>
 
       {/* Your device, spanning the whole width: one client, many relays. */}
-      <div className="max-w-[10rem] mx-auto mb-2">
+      <div className="max-w-[10rem] mx-auto mb-3">
         <div className={tile(true, "primary")}>
           <div className={icon(true, "primary")}>
             <User className="w-5 h-5" />
@@ -107,16 +126,12 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
           <span className="text-xs font-medium text-gray-900 dark:text-white">
             {t("postFlowSimulator.labels.yourDevice")}
           </span>
-          {step === 0 && (
-            <span className="animate-slide-down motion-reduce:animate-none text-xs text-primary-500">
-              {t("postFlowSimulator.stages.sign")}
-            </span>
-          )}
+          {status(step === 0, "primary", t("postFlowSimulator.stages.sign"))}
         </div>
       </div>
 
       {/* Three arrows at once — the same event going to every relay in parallel. */}
-      <div className="grid grid-cols-3 gap-2 mb-2">
+      <div className="grid grid-cols-3 gap-3 mb-3">
         {relays.map((r) => (
           <div key={r.id}>{arrow(r.used, published)}</div>
         ))}
@@ -124,7 +139,7 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
 
       {/* No connector is drawn between relays, and none should be: they do not
           talk to each other. That absence is the correction. */}
-      <div className="grid grid-cols-3 gap-2 mb-1">
+      <div className="grid grid-cols-3 gap-3 mb-2">
         {relays.map((r) => (
           <div key={r.id} className={tile(published && r.used, r.used ? "primary" : "muted")}>
             <div className={icon(published && r.used, r.used ? "primary" : "muted")}>
@@ -134,17 +149,17 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
           </div>
         ))}
       </div>
-      <p className="text-[0.7rem] text-center text-gray-500 dark:text-gray-400 mb-2">
+      <p className="text-[0.7rem] text-center text-gray-500 dark:text-gray-400 mb-3">
         {t("postFlowSimulator.labels.noSync")}
       </p>
 
-      <div className="grid grid-cols-3 gap-2 mb-2">
+      <div className="grid grid-cols-3 gap-3 mb-3">
         {relays.map((r) => (
           <div key={r.id}>{arrow(r.used, fetched)}</div>
         ))}
       </div>
 
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-3 gap-3">
         {relays.map((r) => (
           <div
             key={r.id}
@@ -157,16 +172,8 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
               {t("postFlowSimulator.labels.reader")}
             </span>
             {r.used
-              ? fetched && (
-                  <span className="animate-slide-down motion-reduce:animate-none text-xs text-primary-500">
-                    {t("postFlowSimulator.stages.receive")}
-                  </span>
-                )
-              : gapShown && (
-                  <span className="animate-slide-down motion-reduce:animate-none text-xs text-amber-600 dark:text-amber-500">
-                    {t("postFlowSimulator.stages.missed")}
-                  </span>
-                )}
+              ? status(fetched, "primary", t("postFlowSimulator.stages.receive"))
+              : status(gapShown, "gap", t("postFlowSimulator.stages.missed"))}
           </div>
         ))}
       </div>
