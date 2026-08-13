@@ -277,7 +277,7 @@ export function TroubleshootingQuiz({ className }: TroubleshootingQuizProps) {
                 if (isAnswer) {
                   buttonClasses += "border-success-500 bg-success-500/10 shadow-md ";
                 } else if (isSelected) {
-                  buttonClasses += "border-error-500 bg-error-500/10 shadow-md ";
+                  buttonClasses += "border-error-500 bg-error-500/15 shadow-md animate-shake motion-reduce:animate-none ";
                 } else {
                   buttonClasses += "border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800/50 ";
                 }

@@ -286,7 +286,7 @@ export function RelayGuideQuiz({ className }: RelayGuideQuizProps) {
                     showState &&
                       isSelected &&
                       !isAnswer &&
-                      "border-error-500 bg-error-500/10 shadow-md",
+                      "border-error-500 bg-error-500/15 shadow-md animate-shake motion-reduce:animate-none",
                     !isSelected &&
                       !showState &&
                       "border-gray-200 bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800/50 dark:hover:bg-gray-800 hover:shadow-sm",

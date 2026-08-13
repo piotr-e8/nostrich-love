@@ -48,6 +48,14 @@ export default {
         // The DEFAULTs below are the previous flat values, so nothing shifts.
         success: { ...colors.green, DEFAULT: colors.green[500] },
         danger: { ...colors.red, DEFAULT: colors.red[500] },
+        // `error` was missed when the flat colours above became full scales, and
+        // it was never flat either — it simply did not exist. 153 usages of
+        // error-* across the components (every quiz's wrong answer, the error
+        // toasts, NIP05Checker's failure card, RelayExplorer's offline dot)
+        // compiled to nothing, so a wrong quiz pick rendered as a white card
+        // with a gray icon — indistinguishable at a glance from the correct
+        // one. Same colour as danger on purpose: two names, one red.
+        error: { ...colors.red, DEFAULT: colors.red[500] },
         warning: { ...colors.amber, DEFAULT: colors.amber[500] },
         // Friendly theme colors based on nostrich logo
         friendly: {
@@ -142,6 +150,14 @@ export default {
           "0%, 100%": { transform: "scale(1)" },
           "50%": { transform: "scale(1.2)" },
         },
+        // The "no" signal on a wrong quiz pick. Without it the wrong option was
+        // a red-bordered card next to a green-bordered card — at a glance, two
+        // highlighted answers. Color alone does not read as failure; motion does.
+        shake: {
+          "0%, 100%": { transform: "translateX(0)" },
+          "20%, 60%": { transform: "translateX(-0.3rem)" },
+          "40%, 80%": { transform: "translateX(0.3rem)" },
+        },
       },
       animation: {
         // "both" fill-mode is load-bearing: staggered items set an inline
@@ -159,6 +175,7 @@ export default {
         "pulse-scale": "pulse-scale 1.5s ease-in-out infinite",
         "streak-wiggle": "streak-wiggle 2s ease-in-out infinite",
         "streak-beat": "streak-beat 1s ease-in-out infinite",
+        shake: "shake 0.4s ease-in-out both",
       },
       transitionTimingFunction: {
         // The easing framer-motion usages passed as [0.22, 1, 0.36, 1].
