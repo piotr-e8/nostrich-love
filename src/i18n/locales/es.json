@@ -2925,16 +2925,17 @@
   },
   "postFlowSimulator": {
     "title": "Simulador de Flujo de Posts",
-    "description": "Ve cómo una publicación viaja desde tu dispositivo a otros usuarios a través de la red Nostr.",
+    "description": "Una publicación, enviada a la vez a todos los relays que usas. Los relays nunca se la pasan entre sí.",
     "stages": {
-      "create": "Crear Publicación",
-      "send": "Enviar al Relay",
-      "receive": "Otros Reciben"
+      "sign": "Firmada",
+      "receive": "La recibe",
+      "missed": "Nunca la ve"
     },
     "labels": {
       "yourDevice": "Tu Dispositivo",
       "relay": "Relay",
-      "followers": "Seguidores"
+      "reader": "Lector",
+      "noSync": "Los relays no se sincronizan entre sí"
     },
     "buttons": {
       "play": "Reproducir",
@@ -2943,10 +2944,10 @@
     },
     "currentStepLabel": "Paso Actual",
     "stepDescriptions": {
-      "0": "Creas una publicación en tu dispositivo y la firmas con tu clave privada.",
-      "1": "Tu publicación se publica en el Relay 1, que la almacena y valida.",
-      "2": "Tu publicación también se publica en el Relay 2 (y cualquier otro relay que uses).",
-      "3": "Tus seguidores reciben la publicación de los relays a los que están conectados."
+      "0": "Escribes una publicación en tu dispositivo y la firmas con tu clave privada.",
+      "1": "Tu cliente envía la misma publicación firmada a todos los relays que usas, a la vez y no uno tras otro.",
+      "2": "Cualquiera conectado a uno de esos relays puede obtenerla desde allí.",
+      "3": "Quien no comparta ningún relay contigo nunca la verá. Ningún relay la reenvía."
     }
   },
   "zapSimulator": {

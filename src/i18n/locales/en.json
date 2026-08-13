@@ -2925,16 +2925,17 @@
   },
   "postFlowSimulator": {
     "title": "Post Flow Simulator",
-    "description": "See how a post travels from your device to other users through the Nostr network.",
+    "description": "One post, sent to every relay you use at the same time. Relays never pass it to each other.",
     "stages": {
-      "create": "Create Post",
-      "send": "Send to Relay",
-      "receive": "Others Receive"
+      "sign": "Signed",
+      "receive": "Gets it",
+      "missed": "Never sees it"
     },
     "labels": {
       "yourDevice": "Your Device",
       "relay": "Relay",
-      "followers": "Followers"
+      "reader": "Reader",
+      "noSync": "Relays don't sync with each other"
     },
     "buttons": {
       "play": "Play",
@@ -2943,10 +2944,10 @@
     },
     "currentStepLabel": "Current Step",
     "stepDescriptions": {
-      "0": "You create a post on your device and sign it with your private key.",
-      "1": "Your post is published to Relay 1, which stores and validates it.",
-      "2": "Your post is also published to Relay 2 (and any other relays you use).",
-      "3": "Your followers receive the post from the relays they are connected to."
+      "0": "You write a post on your device and sign it with your private key.",
+      "1": "Your client sends the same signed post to every relay you use — all at once, not one after another.",
+      "2": "Anyone connected to one of those relays can fetch it from there.",
+      "3": "Someone whose relays don't overlap with yours never sees it. No relay forwards it onward."
     }
   },
   "zapSimulator": {

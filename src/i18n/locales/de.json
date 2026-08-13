@@ -2925,16 +2925,17 @@
   },
   "postFlowSimulator": {
     "title": "Beitragsablauf-Simulator",
-    "description": "Sieh, wie ein Beitrag von deinem Gerät zu anderen Nutzern durch das Nostr-Netzwerk reist.",
+    "description": "Ein Beitrag, gleichzeitig an jeden Relay gesendet, den du nutzt. Relays reichen ihn nie aneinander weiter.",
     "stages": {
-      "create": "Beitrag erstellen",
-      "send": "An Relay senden",
-      "receive": "Andere empfangen"
+      "sign": "Signiert",
+      "receive": "Bekommt ihn",
+      "missed": "Sieht ihn nie"
     },
     "labels": {
       "yourDevice": "Dein Gerät",
       "relay": "Relay",
-      "followers": "Follower"
+      "reader": "Leser",
+      "noSync": "Relays synchronisieren sich nicht untereinander"
     },
     "buttons": {
       "play": "Abspielen",
@@ -2943,10 +2944,10 @@
     },
     "currentStepLabel": "Aktueller Schritt",
     "stepDescriptions": {
-      "0": "Du erstellst einen Beitrag auf deinem Gerät und signierst ihn mit deinem privaten Schlüssel.",
-      "1": "Dein Beitrag wird an Relay 1 veröffentlicht, der ihn speichert und validiert.",
-      "2": "Dein Beitrag wird auch an Relay 2 veröffentlicht (und alle anderen Relays, die du nutzt).",
-      "3": "Deine Follower erhalten den Beitrag von den Relays, mit denen sie verbunden sind."
+      "0": "Du schreibst einen Beitrag auf deinem Gerät und signierst ihn mit deinem privaten Schlüssel.",
+      "1": "Dein Client sendet denselben signierten Beitrag an jeden Relay, den du nutzt — gleichzeitig, nicht nacheinander.",
+      "2": "Wer mit einem dieser Relays verbunden ist, kann ihn dort abrufen.",
+      "3": "Wer keinen Relay mit dir gemeinsam hat, sieht ihn nie. Kein Relay leitet ihn weiter."
     }
   },
   "zapSimulator": {

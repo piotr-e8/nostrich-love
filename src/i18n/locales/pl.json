@@ -2925,16 +2925,17 @@
   },
   "postFlowSimulator": {
     "title": "Symulator Przepływu Postów",
-    "description": "Zobacz jak post podróżuje z Twojego urządzenia do innych użytkowników przez sieć Nostr.",
+    "description": "Jeden post trafia naraz do każdego relay, którego używasz. Relaye nigdy nie przekazują go sobie nawzajem.",
     "stages": {
-      "create": "Utwórz Post",
-      "send": "Wyślij do Relay",
-      "receive": "Inni Otrzymują"
+      "sign": "Podpisany",
+      "receive": "Dostaje post",
+      "missed": "Nigdy go nie zobaczy"
     },
     "labels": {
       "yourDevice": "Twoje Urządzenie",
       "relay": "Relay",
-      "followers": "Obserwujący"
+      "reader": "Czytelnik",
+      "noSync": "Relaye nie synchronizują się między sobą"
     },
     "buttons": {
       "play": "Odtwórz",
@@ -2943,10 +2944,10 @@
     },
     "currentStepLabel": "Aktualny Krok",
     "stepDescriptions": {
-      "0": "Tworzysz post na swoim urządzeniu i podpisujesz go swoim kluczem prywatnym.",
-      "1": "Twój post jest publikowany do Relay 1, który przechowuje i waliduje go.",
-      "2": "Twój post jest również publikowany do Relay 2 (i innych relay których używasz).",
-      "3": "Twoi obserwujący otrzymują post z relay do których są podłączeni."
+      "0": "Piszesz post na swoim urządzeniu i podpisujesz go kluczem prywatnym.",
+      "1": "Twój klient wysyła ten sam podpisany post do każdego relay, którego używasz — naraz, a nie jeden po drugim.",
+      "2": "Każdy, kto jest podłączony do jednego z tych relayów, może go stamtąd pobrać.",
+      "3": "Kto nie ma z Tobą wspólnego relay, nigdy tego posta nie zobaczy. Żaden relay nie przekazuje go dalej."
     }
   },
   "zapSimulator": {

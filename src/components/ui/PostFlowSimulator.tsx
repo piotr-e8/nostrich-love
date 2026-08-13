@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Send, Server, User, ArrowRight } from "lucide-react";
+import { Send, Server, User, ArrowDown } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
 
@@ -7,6 +7,21 @@ interface PostFlowSimulatorProps {
   className?: string;
 }
 
+/**
+ * How a post actually travels: one client, several relays, in parallel.
+ *
+ * This used to animate a chain — Your Device -> Relay 1 -> Relay 2 -> Followers,
+ * with an arrow between the two relays — which taught the exact misconception
+ * the surrounding guide exists to correct. Two sections above this component,
+ * "Why Posts Don't Sync" explains that relays do not talk to each other and that
+ * this is why your friend cannot see your post; the picture underneath it showed
+ * a post being handed from one relay to the next.
+ *
+ * So: the client publishes the SAME signed event to every relay it uses at the
+ * same time, there is deliberately no link drawn between relays, and the third
+ * column is a relay you do not publish to — whose reader therefore never sees
+ * the post. That last beat is the guide's actual lesson.
+ */
 export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
   const { t } = useTranslation();
   const [step, setStep] = useState(0);
@@ -14,35 +29,58 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
 
   useEffect(() => {
     if (!isPlaying) return;
-
-    const interval = setInterval(() => {
-      setStep((prev) => (prev + 1) % 4);
-    }, 1500);
-
+    const interval = setInterval(() => setStep((prev) => (prev + 1) % 4), 1800);
     return () => clearInterval(interval);
   }, [isPlaying]);
 
-  const steps = [
-    { id: "user", label: t("postFlowSimulator.labels.yourDevice"), icon: User, description: t("postFlowSimulator.stages.create") },
-    {
-      id: "relay1",
-      label: `${t("postFlowSimulator.labels.relay")} 1`,
-      icon: Server,
-      description: t("postFlowSimulator.stages.send"),
-    },
-    {
-      id: "relay2",
-      label: `${t("postFlowSimulator.labels.relay")} 2`,
-      icon: Server,
-      description: t("postFlowSimulator.stages.send"),
-    },
-    {
-      id: "followers",
-      label: t("postFlowSimulator.labels.followers"),
-      icon: User,
-      description: t("postFlowSimulator.stages.receive"),
-    },
+  // Two relays you publish to, and one you do not. The third column is the point.
+  const relays = [
+    { id: "a", label: `${t("postFlowSimulator.labels.relay")} A`, used: true },
+    { id: "b", label: `${t("postFlowSimulator.labels.relay")} B`, used: true },
+    { id: "c", label: `${t("postFlowSimulator.labels.relay")} C`, used: false },
   ];
+
+  const published = step >= 1;
+  const fetched = step >= 2;
+  const gapShown = step >= 3;
+
+  const tile = (active: boolean, tone: "primary" | "muted" | "gap") =>
+    cn(
+      "flex flex-col items-center gap-1.5 rounded-xl p-3 text-center transition-all duration-500 motion-reduce:transition-none",
+      tone === "muted" && "border border-dashed border-gray-300 dark:border-gray-600",
+      active && tone === "primary" && "bg-primary-500/20 scale-105",
+      active && tone === "gap" && "bg-amber-500/10",
+      !active && tone !== "muted" && "bg-white dark:bg-gray-800 opacity-60",
+      !active && tone === "muted" && "opacity-60",
+    );
+
+  const icon = (active: boolean, tone: "primary" | "muted" | "gap") =>
+    cn(
+      "w-10 h-10 rounded-xl flex items-center justify-center transition-colors duration-500 motion-reduce:transition-none",
+      active && tone === "primary" && "bg-primary-500 text-white",
+      active && tone === "gap" && "bg-amber-500 text-white",
+      (!active || tone === "muted") && "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400",
+    );
+
+  /**
+   * One arrow per column you publish to, so the fan-out is two arrows leaving at
+   * the same moment rather than a baton being passed along a line.
+   *
+   * The unused column gets no arrow at all — not even a faint one. A dimmed
+   * arrow pointing at the reader who never sees the post still draws a path to
+   * them, which is the opposite of what this column is here to say.
+   */
+  const arrow = (used: boolean, active: boolean) =>
+    used ? (
+      <ArrowDown
+        className={cn(
+          "w-5 h-5 mx-auto text-primary-500 transition-opacity duration-500 motion-reduce:transition-none",
+          active ? "opacity-100" : "opacity-20",
+        )}
+      />
+    ) : (
+      <div className="w-5 h-5 mx-auto" aria-hidden="true" />
+    );
 
   return (
     <div
@@ -60,56 +98,80 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
         </p>
       </div>
 
-      <div className="flex items-center justify-center gap-4 mb-8">
-        {steps.map((s, index) => {
-          const Icon = s.icon;
-          const isActive = step >= index;
-          const isCurrent = step === index;
-
-          return (
-            <React.Fragment key={s.id}>
-              <div
-                className={cn(
-                  "flex flex-col items-center gap-2 p-4 rounded-xl transition-all motion-reduce:transition-none",
-                  isCurrent ? "scale-110" : "scale-100",
-                  isActive ? "opacity-100" : "opacity-50",
-                  isActive ? "bg-primary-500/20" : "bg-white dark:bg-gray-800",
-                )}
-              >
-                <div
-                  className={cn(
-                    "w-12 h-12 rounded-xl flex items-center justify-center",
-                    isActive
-                      ? "bg-primary-500 text-white"
-                      : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400",
-                  )}
-                >
-                  <Icon className="w-6 h-6" />
-                </div>
-                <span className="text-xs text-gray-900 dark:text-white">{s.label}</span>
-                {isCurrent && (
-                  <span className="animate-slide-down motion-reduce:animate-none text-xs text-primary-400">
-                    {s.description}
-                  </span>
-                )}
-              </div>
-
-              {index < steps.length - 1 && (
-                <div
-                  className={cn(
-                    "transition-opacity motion-reduce:transition-none",
-                    isActive && step > index ? "opacity-100" : "opacity-30",
-                  )}
-                >
-                  <ArrowRight className="w-5 h-5 text-gray-500 rtl:rotate-180" />
-                </div>
-              )}
-            </React.Fragment>
-          );
-        })}
+      {/* Your device, spanning the whole width: one client, many relays. */}
+      <div className="max-w-[10rem] mx-auto mb-2">
+        <div className={tile(true, "primary")}>
+          <div className={icon(true, "primary")}>
+            <User className="w-5 h-5" />
+          </div>
+          <span className="text-xs font-medium text-gray-900 dark:text-white">
+            {t("postFlowSimulator.labels.yourDevice")}
+          </span>
+          {step === 0 && (
+            <span className="animate-slide-down motion-reduce:animate-none text-xs text-primary-500">
+              {t("postFlowSimulator.stages.sign")}
+            </span>
+          )}
+        </div>
       </div>
 
-      <div className="flex justify-center gap-3">
+      {/* Three arrows at once — the same event going to every relay in parallel. */}
+      <div className="grid grid-cols-3 gap-2 mb-2">
+        {relays.map((r) => (
+          <div key={r.id}>{arrow(r.used, published)}</div>
+        ))}
+      </div>
+
+      {/* No connector is drawn between relays, and none should be: they do not
+          talk to each other. That absence is the correction. */}
+      <div className="grid grid-cols-3 gap-2 mb-1">
+        {relays.map((r) => (
+          <div key={r.id} className={tile(published && r.used, r.used ? "primary" : "muted")}>
+            <div className={icon(published && r.used, r.used ? "primary" : "muted")}>
+              <Server className="w-5 h-5" />
+            </div>
+            <span className="text-xs font-medium text-gray-900 dark:text-white">{r.label}</span>
+          </div>
+        ))}
+      </div>
+      <p className="text-[0.7rem] text-center text-gray-500 dark:text-gray-400 mb-2">
+        {t("postFlowSimulator.labels.noSync")}
+      </p>
+
+      <div className="grid grid-cols-3 gap-2 mb-2">
+        {relays.map((r) => (
+          <div key={r.id}>{arrow(r.used, fetched)}</div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-3 gap-2">
+        {relays.map((r) => (
+          <div
+            key={r.id}
+            className={tile(r.used ? fetched : gapShown, r.used ? "primary" : "gap")}
+          >
+            <div className={icon(r.used ? fetched : gapShown, r.used ? "primary" : "gap")}>
+              <User className="w-5 h-5" />
+            </div>
+            <span className="text-xs font-medium text-gray-900 dark:text-white">
+              {t("postFlowSimulator.labels.reader")}
+            </span>
+            {r.used
+              ? fetched && (
+                  <span className="animate-slide-down motion-reduce:animate-none text-xs text-primary-500">
+                    {t("postFlowSimulator.stages.receive")}
+                  </span>
+                )
+              : gapShown && (
+                  <span className="animate-slide-down motion-reduce:animate-none text-xs text-amber-600 dark:text-amber-500">
+                    {t("postFlowSimulator.stages.missed")}
+                  </span>
+                )}
+          </div>
+        ))}
+      </div>
+
+      <div className="flex justify-center gap-3 mt-6">
         <button
           onClick={() => setIsPlaying(!isPlaying)}
           className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-sm font-medium transition-all"
@@ -121,7 +183,7 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
             setIsPlaying(false);
             setStep(0);
           }}
-          className="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm font-medium transition-all"
+          className="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white rounded-lg text-sm font-medium transition-all"
         >
           {t("postFlowSimulator.buttons.reset")}
         </button>
@@ -130,13 +192,12 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
       <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-900/50 rounded-xl">
         <div className="flex items-center gap-3 mb-3">
           <Send className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-          <span className="text-sm font-medium text-gray-900 dark:text-white">{t("postFlowSimulator.currentStepLabel")}</span>
+          <span className="text-sm font-medium text-gray-900 dark:text-white">
+            {t("postFlowSimulator.currentStepLabel")}
+          </span>
         </div>
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          {step === 0 && t("postFlowSimulator.stepDescriptions.0")}
-          {step === 1 && t("postFlowSimulator.stepDescriptions.1")}
-          {step === 2 && t("postFlowSimulator.stepDescriptions.2")}
-          {step === 3 && t("postFlowSimulator.stepDescriptions.3")}
+          {t(`postFlowSimulator.stepDescriptions.${step}`)}
         </p>
       </div>
     </div>
