@@ -2,18 +2,14 @@
 title: "Używanie Wielu Klientów"
 seoTitle: "Wiele klientów Nostr: jedno konto, wiele aplikacji"
 description: "Maksymalizuj swoje doświadczenie z Nostr używając wielu klientów. Workflows desktop + mobile, strategie synchronizacji i najlepsze praktyki dla zaawansowanych użytkowników."
-estimatedTime: "8 minut"
+estimatedTime: "12 minut"
 priority: 11
 category: "advanced"
 prerequisites: ["keys-and-security", "quickstart"]
 ---
 
-import { CTAButton } from "@components/CTAButton";
 import { Callout } from "@components/ui/Callout";
 import { MultiClientQuiz } from "@components/interactive/MultiClientQuiz";
-
-{/* ProgressIndicator temporarily disabled - will be implemented with actual tracking later */}
-{/* <ProgressIndicator current={6} total={6} estimatedTime="8 minutes" /> */}
 
 ## Dlaczego Używać Wielu Klientów? (2 minuty)
 
@@ -26,18 +22,27 @@ Największą supermocą Nostr jest to, że Twoja tożsamość działa wszędzie.
 **Mobile + Desktop:**
 
 - **Telefon (Damus/Amethyst):** Szybkie sprawdzenia, postowanie w drodze, powiadomienia
-- **Desktop (Iris/Snort):** Długie teksty, intensywne przeglądanie, godziny pracy
+- **Desktop (Iris/Snort):** Dłuższe notki i wątki, intensywne przeglądanie, godziny pracy
 
-**Publiczny + Prywatny:**
+Dłuższe artykuły to zupełnie inna robota. Iris i Snort są zrobione pod krótkie
+notki, więc jeśli piszesz eseje, weź klienta przystosowanego do długich form.
+Zwykle wybiera się [YakiHonne](https://yakihonne.com), który działa w
+przeglądarce, a także na iOS i Androidzie.
 
-- **Publiczny klient:** Profesjonalna tożsamość, publiczne posty
-- **Prywatny klient:** Osobista tożsamość, różne kręgi
+**Dwie osobne tożsamości:**
 
-**Różne Funkcje:**
+- Część osób trzyma drugą parę kluczy na konto prywatne i każdej parze przypisuje
+  osobnego klienta
+- Rozdział bierze się z dwóch zestawów kluczy, nie z aplikacji. Jedna para kluczy
+  używana w dwóch klientach to nadal jedna publiczna tożsamość: ten sam npub i te
+  same publiczne posty wszędzie
 
-- **Klient A:** Świetny dla mediów
-- **Klient B:** Lepszy dla DM-ów
-- **Klient C:** Najlepszy dla odkrywania
+**Różne funkcje:**
+
+Klient potrafi zasłużyć na miejsce jedną rzeczą, którą robi naprawdę dobrze:
+Amethyst kontrolkami relayów i mediów, 0xchat prywatnymi wiadomościami, Coracle
+przeglądaniem pojedynczych relayów. Cała reszta Twojego konta zachowuje się w
+każdym z nich tak samo.
 
 **Backup & Redundancja:**
 
@@ -47,23 +52,11 @@ Największą supermocą Nostr jest to, że Twoja tożsamość działa wszędzie.
 
 ### Korzyści
 
-✅ **Optymalizacja**
-
-- Używaj najlepszego narzędzia do każdego zadania
-- Różne UI dla różnych kontekstów
-- Przewagi specyficzne dla funkcji
-
-✅ **Elastyczność**
-
-- Nie jesteś zablokowany w jednym interfejsie
-- Łatwo przełączać się gdy pojawiają się problemy
-- Eksperymentuj swobodnie
-
-✅ **Produktywność**
-
-- Desktop do pisania
-- Mobile do konsumpcji
-- Osobne konteksty = lepsza koncentracja
+Zysk polega na tym, że przestajesz naginać swoje przyzwyczajenia do jednej
+aplikacji. Pisz tam, gdzie pisze się wygodnie, czytaj tam, gdzie czyta się
+wygodnie, i trzymaj te dwa konteksty osobno świadomie, a nie przypadkiem.
+W przełączeniu niewiele ryzykujesz, bo Twoja tożsamość, posty i obserwacje leżą
+na relayach, a nie w środku któregokolwiek klienta.
 
 <Callout variant="info">
   **Nie potrzebujesz wielu klientów.** Ale jeśli jesteś poważnie nastawiony do
@@ -83,7 +76,13 @@ Największą supermocą Nostr jest to, że Twoja tożsamość działa wszędzie.
 - ✓ Lista obserwacji
 - ✓ Informacje profilowe
 - ✓ Reakcje (lajki, reposty)
-- ✓ DM-y (jeśli poprawnie zaszyfrowane)
+
+Wyjątkiem są DM-y. Prywatne wiadomości pojawią się w drugim kliencie tylko wtedy,
+gdy mówi on tym samym standardem DM (nowocześniejszy to NIP-17) i jest połączony
+z Twoimi relayami do wiadomości. Klient został przy starszym standardzie? Pokaże
+Ci inną, osobną historię rozmów. W poradniku o
+[prywatnych wiadomościach](/pl/guides/nip17-private-messages) sprawdzisz, który
+klient jest gdzie.
 
 ### Co Nie Synchronizuje Się
 
@@ -91,7 +90,7 @@ Największą supermocą Nostr jest to, że Twoja tożsamość działa wszędzie.
 
 - ✗ Ustawienia aplikacji (motywy, czcionki)
 - ✗ Preferencje powiadomień
-- ✗ Listy wyciszeń/blokad (czasami)
+- ✗ Blokady lokalne w aplikacji i jej własne ukrywanie treści (standardowa lista wyciszeń synchronizuje się normalnie)
 - ✗ Wersje robocze postów
 - ✗ Lokalne zakładki
 - ✗ Niestandardowe feedy/algorytmy
@@ -105,7 +104,13 @@ Największą supermocą Nostr jest to, że Twoja tożsamość działa wszędzie.
 2. Klient A wysyła do relayów
 3. Klient B łączy się z tymi samymi relayami
 4. Klient B widzi Twój post
-5. Wszystko pozostaje zsynchronizowane
+5. Twoje posty i obserwacje pozostają zsynchronizowane
+
+Cały trik siedzi w kroku trzecim. Obaj klienci szukają Twoich postów na relayach
+z Twojej opublikowanej listy relayów, więc jeśli jeden z nich celuje tam, gdzie
+Twoje posty nigdy nie trafiły, pokaże Ci chudszą wersję Twojego własnego konta.
+Trzymaj tę samą listę relayów w każdym używanym kliencie. Jak klienci znajdują tę
+listę, tłumaczy [model outbox](/pl/guides/outbox-model).
 
 **Opóźnienie czasowe:**
 
@@ -123,9 +128,11 @@ Największą supermocą Nostr jest to, że Twoja tożsamość działa wszędzie.
 
 **Wyciszenia/Blokady:**
 
-- Niektórzy klienci eksportują/importują listy
-- NIP-51 standaryzuje to
-- Może wymagać ręcznej synchronizacji na razie
+- Twoja lista wyciszeń jest częścią protokołu (NIP-51), więc podróżuje razem z
+  kontem: wycisz kogoś w jednym kliencie, a pozostałe to podchwycą
+- W tyle zostaje to, co lokalne dla aplikacji: przełącznik „ukryj to" działający
+  tylko w niej albo jej własne ustawienia filtrów
+- Żadnego eksportu ani importu nie trzeba
 
 **Wersje Robocze:**
 
@@ -188,7 +195,7 @@ Największą supermocą Nostr jest to, że Twoja tożsamość działa wszędzie.
 
 - **Przeglądaj na mobile** (dowolny) - Podczas przestojów
 - **Postuj z dowolnego** - Co jest wygodniejsze
-- **Bez ścisłego workflow** - Po prostu używaj co czujesz
+- **Bez ścisłego workflow** - Po prostu używaj tego, co Ci pasuje
 
 ### Śledzenie
 
@@ -248,32 +255,19 @@ Największą supermocą Nostr jest to, że Twoja tożsamość działa wszędzie.
 
 **Coracle (Web):**
 
-- Integracja z Matrix
-- Unikalne funkcje
-- Dobra wydajność
-- Aktywny rozwój
+- Relay przede wszystkim: wybierasz relaye i przeglądasz je pojedynczo
+- Moderacja oparta na Twojej sieci zaufania
+- Społeczności, wydarzenia w kalendarzu i ogłoszenia
+- Kilka kont naraz w jednej przeglądarce
 
 ### Wybieranie Według Zadania
 
-**Najlepszy do postowania:**
-
-- Klienci web na desktop (większy ekran, łatwiejsze pisanie)
-- Mobile dla szybkich myśli
-
-**Najlepszy do czytania:**
-
-- Mobile (wygoda)
-- Desktop (lepszy dla długich treści)
-
-**Najlepszy dla mediów:**
-
-- Klienci z dobrą obsługą obrazów
-- Sprawdź który obsługuje zdjęcia/filmy dobrze
-
-**Najlepszy dla DM-ów:**
-
-- Mobile (zawsze dostępny)
-- Desktop (lepszy dla długich rozmów)
+Desktop wygrywa wszędzie tam, gdzie trzeba dużo pisać; telefon wygrywa przy
+czytaniu i przy krótkiej odpowiedzi rzuconej z dala od biurka. Media i prywatne
+wiadomości różnią się bardziej między klientami niż między urządzeniami, więc
+jeśli zdjęcia są sednem tego, co publikujesz, albo zależy Ci na nowoczesnych
+prywatnych wiadomościach, sprawdź, czy dany klient radzi sobie z tym porządnie,
+zanim uczynisz go swoim głównym.
 
 <Callout variant="success">
   **Eksperymentuj:** Spróbuj różnych klientów do różnych zadań. Szybko
@@ -286,12 +280,39 @@ Największą supermocą Nostr jest to, że Twoja tożsamość działa wszędzie.
 
 ### Przenoszenie Między Klientami
 
-**Łatwe (automatyczne):**
+Dodanie klienta jest proste. Warto za to dobrze rozegrać sposób logowania, bo
+nsec-a nie da się zmienić ani unieważnić: każda aplikacja, do której go wkleisz,
+zostaje z nim na zawsze.
 
 1. Zainstaluj nowego klienta
-2. Zaimportuj swój nsec
-3. Poczekaj na synchronizację (obserwacje, profil)
+2. Zaloguj się w sposób właściwy dla danej platformy (poniżej)
+3. Poczekaj, aż pobierze Twój profil i obserwacje
 4. Zacznij używać
+
+**Klienci web (Iris, Snort, Coracle, Primal web):** podłącz rozszerzenie
+podpisujące, [Alby](https://getalby.com) albo
+[nos2x](https://github.com/fiatjaf/nos2x), lub zdalny podpisywacz w rodzaju
+[nsec.app](https://nsec.app). Strona prosi podpisywacz o zatwierdzenie każdej
+akcji i nigdy nie widzi Twojego klucza. Nie wklejaj nsec-a na stronę
+internetową, choćby była nie wiadomo jak znana.
+
+**Android:** użyj [Ambera](https://github.com/greenart7c3/Amber). Klient
+przekazuje każde żądanie podpisu do Ambera, Ty zatwierdzasz je tam, a nsec w
+ogóle nie trafia do klienta. Ambera nie ma w Google Play; pobierzesz go z
+F-Droida, Zap Store albo ze strony wydań na GitHubie.
+
+**iOS:** aplikacja z App Store działa w piaskownicy, więc typową drogą jest
+wklejenie nsec-a do klienta, któremu ufasz. Jeśli wolisz nie oddawać go wcale,
+Primal potrafi zatwierdzać aktywność w innych aplikacjach Nostr przez funkcję
+Remote Login, a [Nostash](https://apps.apple.com/us/app/nostash/id6744309333) to
+rozszerzenie podpisujące do Safari na iPhone'a, iPada i Maca.
+
+<Callout variant="warning">
+  Ta sama zasada, co w [szybkim starcie](/pl/guides/quickstart): strona, która
+  każe Ci wpisać klucz prywatny w formularz, to czerwona flaga, a lekarstwem jest
+  podpisywacz. Jak go uruchomić, opisuje
+  [prywatność i bezpieczeństwo](/pl/guides/privacy-security).
+</Callout>
 
 **Co się przenosi:**
 
@@ -306,35 +327,29 @@ Największą supermocą Nostr jest to, że Twoja tożsamość działa wszędzie.
 - Wersje robocze
 - Dane lokalne
 
-### Eksport/Import Gdy Dostępne
+### Eksport i import
 
-**Niektórzy klienci wspierają:**
-
-- Eksport listy obserwacji (NIP-02)
-- Eksport listy wyciszeń (NIP-51)
-- Eksport ustawień (własny format)
-
-**Jak to zrobić:**
-
-1. Idź do Ustawienia → Eksport
-2. Zapisz plik
-3. Zaimportuj w nowym kliencie
-4. Zweryfikuj czy dane się przeniosły
+Do eksportowania jest mniej, niż mogłoby się wydawać. Twoje obserwacje i lista
+wyciszeń są publikowane na relayach jako podpisane przez Ciebie listy, więc nowy
+klient sam je podchwyci, gdy tylko połączy się z właściwymi relayami, i żaden
+plik nie zmienia rąk. Zakładki jadą tą samą drogą w klientach, które trzymają je
+jako listę Nostr, a nie na urządzeniu. W tyle zostaje konfiguracja samej
+aplikacji, a możliwość jej zapisania oferuje tylko część klientów.
 
 ### Testowanie Nowych Klientów
 
 **Bezpieczne podejście:**
 
-1. Najpierw stwórz testowe klucze
-2. Wypróbuj klienta z testowym kontem
-3. Jeśli Ci się podoba, zaimportuj prawdziwe klucze
-4. Zachowaj starego klienta jako backup
+1. Najpierw stwórz parę kluczy na jeden raz
+2. Wypróbuj klienta na tym testowym koncie
+3. Jeśli Ci się podoba, podłącz prawdziwą tożsamość przez podpisywacz
+4. Zachowaj starego klienta jako zapas
 
-**Nie Rób:**
+**Czego nie robić:**
 
-- Importuj nsec do podejrzanych klientów
-- Testuj ze swoją główną tożsamością
-- Spieszyć się z migracją
+- Nie wklejaj nsec-a na stronę internetową, nigdy
+- Nie testuj na swojej głównej tożsamości
+- Nie spiesz się z migracją
 
 ---
 
@@ -344,40 +359,22 @@ Największą supermocą Nostr jest to, że Twoja tożsamość działa wszędzie.
 
 **Twórca Treści:**
 
-- **Planowanie:** Notion/zewnętrzne narzędzie
-- **Pisanie:** Klient desktop (pełny ekran)
-- **Planowanie:** Jeśli klient wspiera
-- **Analityka:** Narzędzia zewnętrzne
-- **Zaangażowanie:** Mobile przez cały dzień
-
-**Deweloper:**
-
-- **Testowanie:** Wielu klientów jednocześnie
-- **Debugowanie:** Narzędzia deweloperskie
-- **Dokumentacja:** Platformy długiej formy
-- **Społeczność:** Mix klientów
+- **Planowanie:** aplikacja do notatek, której i tak używasz
+- **Pisanie:** klient na desktopie, pełny ekran
+- **Zaangażowanie:** mobile przez cały dzień
+- **Liczby:** statystyki zapów i zasięgu mieszkają w osobnych narzędziach, patrz
+  [narzędzia Nostr, które warto znać](/pl/guides/nostr-tools)
 
 **Menedżer Społeczności:**
 
-- **Monitorowanie:** Mobile zawsze włączone
-- **Odpowiedzi:** Desktop dla szczegółowych odpowiedzi
-- **Eventy:** Specjalizowani klienci
-- **Analityka:** Narzędzia zewnętrzne
+- **Monitorowanie:** mobile, zawsze włączone
+- **Odpowiedzi:** desktop do długich odpowiedzi
+- **Eventy:** klient z obsługą kalendarza, na przykład Coracle
+- **Liczby:** te same narzędzia co wyżej
 
-### Automatyzacja [ADVANCED]
-
-**Narzędzia:**
-
-- Boty Nostr
-- Usługi cross-posting
-- Narzędzia do planowania
-- Platformy analityczne
-
-**Ostrzeżenie:**
-
-- Nie przesadzaj z automatyzacją
-- Autentyczność ma znaczenie
-- Używaj oszczędnie
+Mostki do cross-postingu i boty do planowania istnieją, i są też najszybszym
+sposobem, żeby konto zaczęło brzmieć jak taśma produkcyjna zamiast jak człowiek.
+Używaj ich oszczędnie.
 
 ---
 
@@ -398,17 +395,26 @@ Największą supermocą Nostr jest to, że Twoja tożsamość działa wszędzie.
 - Różne zestawy relayów
 - Poczekaj i odśwież
 
+### Obserwacje Zniknęły po Otwarciu Starego Klienta
+
+Klient, którego nie ruszałeś od miesięcy, może wciąż trzymać sprzed miesięcy
+kopię Twojej listy obserwacji. Jeśli zaobserwujesz albo odobserwujesz kogoś,
+zanim zdąży się doczytać, opublikuje tamtą starą kopię na miejsce aktualnej i
+osoby dodane od tego czasu przepadną. Otwórz go, daj mu się załadować, sprawdź,
+czy liczba obserwowanych wygląda sensownie, i dopiero potem kogokolwiek
+obserwuj.
+
 ### Przeładowanie Powiadomień
 
 **Za dużo alertów:**
 
 - Wyłącz na mniej używanych klientach
 - Zachowaj tylko powiadomienia mobile
-- Używaj strategicznie Nie Przeszkadzać
+- Strategicznie korzystaj z trybu Nie przeszkadzać
 
 ### Dezorientacja
 
-**Straciłeś kontrolę:**
+**Pogubiłeś się:**
 
 - Wybierz głównego i drugorzędnego
 - Używaj spójnych nazw użytkowników
@@ -432,7 +438,8 @@ Największą supermocą Nostr jest to, że Twoja tożsamość działa wszędzie.
 **Najlepsze Praktyki:**
 
 - Używaj różnych klientów do różnych zadań
-- Nie myśl za dużo o synchronizacji
+- W przeglądarce loguj się podpisywaczem; nigdy nie wklejaj nsec-a na stronę
+- Trzymaj wszędzie tę samą listę relayów
 - Wybierz głównego + drugorzędnego
 - Backupuj swoje klucze (zawsze!)
 
@@ -450,5 +457,5 @@ Gotowy zoptymalizować swój workflow na wielu klientach?
 
 ## Czytaj dalej
 
-- [Niezbędne Narzędzia Nostr](/pl/guides/nostr-tools)
-- [Powszechne Problemy i Rozwiązania](/pl/guides/troubleshooting)
+- [Niezbędne Narzędzia Nostr](/pl/guides/nostr-tools). Narzędzia, dzięki którym kilku klientów naraz da się znieść.
+- [Powszechne Problemy i Rozwiązania](/pl/guides/troubleshooting). Co sprawdzić, gdy jeden klient pokazuje inne posty niż drugi.

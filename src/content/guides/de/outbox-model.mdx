@@ -2,9 +2,9 @@
 title: "Das Outbox-Modell verstehen"
 seoTitle: "Das Nostr-Outbox-Modell (NIP-65) einfach erklärt"
 description: "Erfahre, wie Nostr sicherstellt, dass deine Posts alle erreichen, die dir folgen"
-estimatedTime: "15 min"
+estimatedTime: "10-15 Minuten"
 priority: 2
-category: "beginner"
+category: "intermediate"
 prerequisites: ["relays-demystified", "keys-and-security"]
 ---
 
@@ -20,7 +20,7 @@ Hast du schon mal etwas auf Nostr gepostet, aber deine Freunde konnten es nicht 
 Du postest → Relay A → ❌ Dein Freund nutzt nur Relay B
 
 Sicht deines Freundes:
-❌ "Wo ist @alice's Post hin?"
+❌ "Wo ist der Post von @alice hin?"
 ```
 
 Du hast zu deinem Lieblings-Relay gepostet, aber deine Follower nutzen vielleicht ganz andere Relays. Sie würden deinen Content nie sehen!
@@ -33,7 +33,7 @@ Das Outbox-Modell löst das, indem es **bekannt gibt, wo du postest**. Stell dir
 Du: "Ich poste zu Relay A, Relay B und Relay C"
 (Gespeichert in deinem kind:10002 Event)
 
-Follower: "Verstanden! Ich prüfe diese Relays für @alice's Posts"
+Follower: "Verstanden! Ich prüfe diese Relays auf Posts von @alice"
 ```
 
 ---
@@ -51,7 +51,7 @@ Erinnerst du dich, dass Relays wie Postämter sind? Das Outbox-Modell fügt ein 
 - Wenn du umziehst, schicken Leute Post an die falsche Adresse
 
 **Nostr Outbox-Modell:**
-- Du hast eine **öffentliche Liste** von Postämtern, an die du Post erhältst
+- Du hast eine **öffentliche Liste** von Postämtern, bei denen du Post empfängst
 - Wenn du "umziehst" (Relays wechselst), aktualisierst du deine öffentliche Liste
 - Jeder weiß, wo er dich finden kann
 
@@ -69,7 +69,7 @@ Dein Nostr-Client erstellt automatisch eine **Relay-Liste**, die anderen sagt:
     
     // Relays, auf denen du Erwähnungen liest (dein "Posteingang")
     ["r", "wss://nos.lol", "read"],
-    ["r", "wss://relay.snort.social", "read"]
+    ["r", "wss://relay.primal.net", "read"]
   ]
 }
 ```
@@ -86,14 +86,15 @@ Dein Nostr-Client erstellt automatisch eine **Relay-Liste**, die anderen sagt:
 ### Szenario 1: Alice postet, Bob folgt
 
 ```
-Alice's Relay-Liste (kind:10002):
+Alices Relay-Liste (kind:10002):
   - wss://relay.a.com [write]
   - wss://relay.b.com [write]
+  - wss://relay.inbox.com [read]
 
 Bob folgt Alice. Bobs Client sieht:
-  "Prüfe wss://relay.a.com und wss://relay.b.com für Alice's Posts"
+  "Prüfe wss://relay.a.com und wss://relay.b.com auf Posts von Alice"
 
-Ergebnis: Bob verbindet sich mit beiden Relays und sieht Alice's Content! ✅
+Ergebnis: Bob verbindet sich mit beiden Write-Relays und sieht Alices Content! ✅
 ```
 
 ### Szenario 2: Charlie erwähnt Alice
@@ -101,11 +102,11 @@ Ergebnis: Bob verbindet sich mit beiden Relays und sieht Alice's Content! ✅
 ```
 Charlie erwähnt @alice in einem Post
 
-Charlies Client prüft Alice's Relay-Liste:
-  - wss://relay.a.com [read]
-  - wss://relay.b.com [read]
+Charlies Client prüft dieselbe Relay-Liste und sucht den
+[read]-Eintrag, also Alices Posteingang:
+  - wss://relay.inbox.com [read]
 
-Charlies Client sendet die Erwähnung zu Alice's READ-Relays
+Charlies Client schickt die Erwähnung dorthin
 
 Ergebnis: Alice sieht die Erwähnung, auch wenn sie offline ist! ✅
 ```
@@ -116,7 +117,7 @@ Ergebnis: Alice sieht die Erwähnung, auch wenn sie offline ist! ✅
 Alice nutzt relay.a.com nicht mehr, beginnt mit relay.c.com
 
 1. Alice aktualisiert ihre kind:10002 Relay-Liste
-2. Wird an alle verbundenen Relays weitergegeben
+2. Ihr Client veröffentlicht die aktualisierte Liste auf ihren Relays
 3. Follower prüfen automatisch relay.c.com
 
 Ergebnis: Keine verlorenen Posts, keine manuelle Neuanbindung nötig! ✅
@@ -128,7 +129,7 @@ Ergebnis: Keine verlorenen Posts, keine manuelle Neuanbindung nötig! ✅
 
 ### 1. Discovery ohne Zentralisierung
 
-Traditionelle Social Media hat einen zentralen Server, der alle kennt. Nostr ist dezentralisiert, also braucht es einen anderen Weg, Leute zu finden.
+Klassische Social-Media-Plattformen haben einen zentralen Server, der alle kennt. Nostr ist dezentralisiert, also braucht es einen anderen Weg, Leute zu finden.
 
 **Outbox-Modell = verteilte Discovery**
 
@@ -150,12 +151,12 @@ Clients verbinden sich nur mit den Relays, die du nutzt, nicht mit jedem Relay, 
 
 ### Halte deine Liste klein
 
-**Empfohlen:** 2-4 Relays insgesamt
+**Empfohlen:** eine kurze Liste. NIP-65 selbst schlägt 2 bis 4 Write-Relays und 2 bis 4 Read-Relays vor, die meisten landen also bei insgesamt vier bis acht.
 
 Warum?
 - Mehr Relays = mehr Verbindungen = mehr Akkuverbrauch
-- Abnehmende Erträge nach 4 Relays
-- Die meisten Inhalte werden sowieso zu populären Relays weitergegeben
+- Der Nutzen wird gering, sobald deine Follower dich ohnehin erreichen
+- Die Clients deiner Follower lesen direkt die Relays auf deiner Liste, zusätzliche Einträge bringen also nichts
 
 ### Mische Lesen und Schreiben
 
@@ -172,9 +173,9 @@ Lesen von: Populäres Relay B (für Erwähnungen)
 ### Wähle zuverlässige Relays
 
 Nutze bekannte, zuverlässige Relays, die:
-- Gute Verfügbarkeit haben
-- Content dauerhaft speichern (nicht flüchtig)
-- Geografisch nah sind (geringere Latenz)
+- Online sind, wenn du sie brauchst, und selten ausfallen
+- Deine Posts langfristig aufbewahren (manche Relays löschen ältere Posts stillschweigend, um Platz zu sparen)
+- In deiner Nähe gehostet werden, damit sich die App schneller anfühlt
 
 ---
 
@@ -182,7 +183,7 @@ Nutze bekannte, zuverlässige Relays, die:
 
 ### "Ich muss auf jedem Relay sein"
 
-**Falsch:** Auf 20+ Relays zu sein hilft nicht. Deine Posts werden durch das Netzwerk weitergegeben. Bleib bei 2-4 Qualitäts-Relays.
+**Falsch:** Auf 20+ Relays zu sein hilft nicht. Relays kopieren Posts nicht untereinander, ein Relay, von dem niemand liest, ist also nur eine zusätzliche Verbindung. Deine Relay-Liste schickt die Clients deiner Follower ohnehin an die richtige Stelle, eine Handvoll guter Relays genügt.
 
 ### "Wenn ich ein Relay verlasse, verliere ich meine Follower"
 
@@ -190,7 +191,7 @@ Nutze bekannte, zuverlässige Relays, die:
 
 ### "Private DMs gehen auch durch das Outbox-Modell"
 
-**Teilweise wahr:** NIP-17 (private Nachrichten) nutzt das Outbox-Modell für die Zustellung, aber mit zusätzlicher Verschlüsselung.
+**Nicht ganz:** Private Nachrichten (NIP-17) laufen über eine eigene DM-Relay-Liste (kind:10050), nicht über die kind:10002-Liste, um die es in diesem Guide geht, und sie sind Ende-zu-Ende verschlüsselt. Dein Client pflegt beide Listen. Wenn DMs nicht ankommen, ist die DM-Relay-Liste die Stelle, die du prüfen solltest.
 
 ### "Ich muss Leuten manuell meine Relays sagen"
 
@@ -209,10 +210,7 @@ Nutze bekannte, zuverlässige Relays, die:
 
 ### Ersetzbare Events
 
-kind:10002 ist **ersetzbar** - nur die neueste Version wird gespeichert. Das bedeutet:
-- Kein historischer Ballast
-- Einfach zu aktualisieren
-- Einfach für Clients zu verwalten
+kind:10002 ist **ersetzbar**: Gespeichert wird nur die neueste Version. Alte Relay-Listen sammeln sich also nicht an, und ein Update ist schlicht ein neues Event mit demselben Kind. Clients müssen dafür nichts aufräumen.
 
 ### Datenschutz-Überlegung
 
@@ -227,13 +225,13 @@ Deine Relay-Liste ist **öffentlich**. Jeder kann sehen, welche Relays du nutzt.
 Schau in deinen Nostr-Client-Einstellungen:
 - Mit welchen Relays bist du verbunden?
 - Sind sie als "read" oder "write" markiert?
-- Hast du 2-4 insgesamt?
+- Ist die Liste kurz, ungefähr vier bis acht Einträge?
 
 ### Optimiere dein Setup
 
-**Wenn du 5+ Relays hast:**
-- Entferne die mit schlechter Verfügbarkeit
-- Behalt deine 3-4 Favoriten
+**Wenn du 10+ Relays hast:**
+- Entferne die, die häufig ausfallen
+- Behalte eine Handvoll Favoriten, ein paar zum Schreiben und ein, zwei zum Lesen
 - Stelle sicher, dass mindestens eines "read" für Erwähnungen ist
 
 ### Verbreite das Wort
@@ -251,5 +249,5 @@ Hilf anderen zu verstehen:
 
 ## Weiterlesen
 
-- [Wie Posts Reisen: Relays Erklärt](/de/guides/relays-demystified)
-- [Relay-Management-Guide](/de/guides/relay-guide)
+- [Wie Posts Reisen: Relays Erklärt](/de/guides/relays-demystified): was ein Relay überhaupt ist, bevor du daran drehst, welche du nutzt
+- [Relay-Management-Guide](/de/guides/relay-guide): wie du ein Read- und Write-Set zusammenstellst, mit dem das Outbox-Modell für dich funktioniert

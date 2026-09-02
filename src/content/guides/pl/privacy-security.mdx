@@ -1,8 +1,8 @@
 ---
 title: "Prywatność i Bezpieczeństwo: Dogłębna Analiza"
 seoTitle: "Czy Nostr jest bezpieczny? Prywatność i anonimowość"
-description: "Zaawansowane praktyki prywatności i bezpieczeństwa dla zaawansowanych użytkowników Nostr"
-estimatedTime: "15 minut"
+description: "Zaawansowane praktyki bezpieczeństwa na Nostr. Chroń swoją tożsamość, zapobiegaj wyciekom metadanych i zachowaj prywatność w zdecentralizowanych mediach społecznościowych."
+estimatedTime: "20 minut"
 priority: 9
 category: "advanced"
 prerequisites: ["keys-and-security", "quickstart"]
@@ -10,121 +10,61 @@ prerequisites: ["keys-and-security", "quickstart"]
 
 import { Callout } from "@components/ui/Callout";
 import { PrivacySecurityQuiz } from "@components/interactive/PrivacySecurityQuiz";
-import { CTAButton } from "@components/CTAButton";
 
-## Model Zagrożeń (3 minuty)
+## Model zagrożeń (3 minuty)
 
-### Przed Czym Się Chronisz?
+### Przed czym się chronisz?
 
-Zanim zagłębisz się w praktyki bezpieczeństwa, zrozummy, jakie zagrożenia istnieją na Nostr:
+Porady o bezpieczeństwie mają sens dopiero wtedy, gdy wiesz, przed kim się chowasz. Ilustratorka, która wolałaby, żeby praca na etacie nigdy nie znalazła jej konta ze szkicami, ma zupełnie inny problem niż reporterka pisząca o rządzie, który zamyka dziennikarzy, a środki ostrożności tej drugiej uprzykrzyłyby życie tej pierwszej zupełnie bez powodu. Zacznij więc stąd.
 
-**Poziom Zagrożenia 1: Przypadkowa Prywatność**
+Na najłagodniejszym poziomie po prostu nie chcesz, żeby pracodawca, krewny albo przyszły klient przewijał wszystko, co kiedykolwiek opublikowałeś. Ekspozycja jest zwyczajna: Twoje posty są publiczne, a profil zszywa je w jedną czytelną opowieść. Osobna tożsamość na pracę, której wolisz nie wiązać z nazwiskiem, załatwia większość sprawy.
 
-- **Obawa:** Nie chcesz, aby pracodawcy/rodzina widzieli wszystko
-- **Zagrożenia:** Publiczne posty, powiązanie profilu
-- **Rozwiązanie:** Osobne tożsamości
+Poziom wyżej unikasz konkretnych osób. Kogoś, kto już raz Cię zdoxował, byłego partnera, nagonki, która ciągnie się za Tobą z platformy na platformę. Teraz konto musi być anonimowe od pierwszego posta i musi takie zostać dzięki nawykom. Ludzie od bezpieczeństwa mówią na te nawyki OPSEC, od operational security: drobne codzienne rutyny, które nie pozwalają jednej tożsamości przeciekać do drugiej.
 
-**Poziom Zagrożenia 2: Aktywne Unikanie**
-
-- **Obawa:** Unikanie konkretnych ludzi/platform
-- **Zagrożenia:** Doxxing, nękanie, stalking
-- **Rozwiązanie:** Anonimowe konto, OPSEC
-
-**Poziom Zagrożenia 3: Wysokie Bezpieczeństwo**
-
-- **Obawa:** Sygnaliści, aktywiści, osoby o wysokim profilu
-- **Zagrożenia:** Aktorzy państwowi, wyrafinowane ataki
-- **Rozwiązanie:** Zaawansowany OPSEC, klucze air-gapped
+Na samej górze są sygnaliści, aktywiści działający pod wrogim państwem i wszyscy, których fizyczne bezpieczeństwo zależy od tego, żeby nigdy nie zostać zidentyfikowanym. Przeciwnik ma tam budżet i cierpliwość. To oznacza poważny OPSEC, klucze generowane na urządzeniu, które nigdy nie dotyka internetu (air-gapped), i szczerze mówiąc dużo więcej lektury, niż zmieści jeden przewodnik.
 
 ### Co Nostr Chroni
 
-✅ **Odporność na Cenzurę**
+✅ **Odporność na cenzurę.** Żadna firma nie może Cię zbanować, bo żadna firma nie trzyma tego konta. Twoja tożsamość to para kluczy, którą kontrolujesz, więc nie da się jej zawiesić ani skonfiskować, a Twoje posty leżą na tych relayach, które zdecydowały się zachować kopię, a nie w bazie danych jednej spółki.
 
-- Żadna platforma nie może Cię zbanować
-- Twoja tożsamość nie może być skonfiskowana
-- Posty rozproszone przez sieć
+✅ **Własność tego, co tworzysz.** Klucz jest Twój. Profil, posty i lista obserwujących wędrują z Tobą do dowolnego klienta, który mówi tym protokołem, i żadna platforma nie jest właścicielem grafu tego, z kim rozmawiasz.
 
-✅ **Własność Danych**
+### Czego Nostr nie chroni
 
-- Ty kontrolujesz swoje klucze
-- Przenośne między klientami
-- Żadna firma nie jest właścicielem Twojego grafu
+❌ **Domyślnie wszystko jest publiczne.** Jeśli to nie jest zaszyfrowana wiadomość bezpośrednia, każdy może to przeczytać, a dotyczy to również wszystkiego, co posta otacza: z których relayów korzystasz, o której godzinie publikujesz, z jakiego klienta. Wszystko to może zebrać i przeanalizować każdy, komu się zechce.
 
-### Czego Nostr Nie Chroni
-
-❌ **Publiczne Domyślnie**
-
-- Wszystkie posty są publiczne (chyba że zaszyfrowane DM-y)
-- Możliwe wycieki metadanych
-- Możliwa analiza treści
-
-❌ **Brak Gwarancji Anonimowości**
-
-- Twój npub jest pseudonimowy, nie anonimowy
-- Wzorce mogą ujawnić tożsamość
-- Adresy IP widoczne dla relayów
+❌ **Pseudonimowość to nie to samo co anonimowość.** Twój npub ukrywa Twoje nazwisko. Nie ukrywa Ciebie. Wzorce zdradzają ludzi, a każdy relay, z którym się łączysz, widzi Twój adres IP.
 
 <Callout variant="info">
-  **Realistyczne oczekiwania:** Nostr zapewnia odporność na cenzurę, nie idealną
-  anonimowość. Zrozum różnicę.
+  **Realistyczne oczekiwania:** Nostr daje odporność na cenzurę. Anonimowości nie
+  daje i nigdy jej nie obiecywał, więc nie planuj niczego przy założeniu, że daje.
 </Callout>
 
 ---
 
-## Separacja Tożsamości (3 minuty)
+## Separacja tożsamości (3 minuty)
 
-### Dlaczego Wiele Tożsamości?
+### Dlaczego wiele tożsamości?
 
-Większość ludzi powinna mieć **przynajmniej dwie** tożsamości Nostr:
+Większość twórców prędzej czy później chce mieć **przynajmniej dwie** tożsamości Nostr, a dużo łatwiej zacząć od dwóch, niż później próbować rozdzielić jedną.
 
-**1. Tożsamość Publiczna**
+Pierwsza to Twoja tożsamość publiczna. Prawdziwe nazwisko albo nazwa, pod którą pracujesz, ta z okładki książki albo ze ściany w galerii. Zbiera reputację powoli, latami, więc obchodzisz się z nią ostrożnie.
 
-- Powiązana z prawdziwym imieniem
-- Użycie profesjonalne
-- Obecność osoby publicznej
-- Długoterminowa reputacja
+Druga jest pseudonimowa. Nic w niej nie prowadzi do Twojego nazwiska z dowodu. Tam mieszkają niedokończone opinie, konto fanowskie, polityczna kłótnia, której wolisz nie pokazywać klientowi, i jednorazówka, na której sprawdzasz nieznaną aplikację, zanim powierzysz jej cokolwiek cennego.
 
-**2. Tożsamość Prywatna/Pseudonimowa**
+### Kiedy separować
 
-- Niepowiązana z prawdziwym imieniem
-- Osobiste zainteresowania
-- Kontrowersyjne opinie
-- Testowanie/eksperymentowanie
+Trzymaj tożsamości osobno zawsze wtedy, gdy jedna połowa Twojego życia zawstydziłaby drugą: osobiste kontra zawodowe, hobby kontra praca, polityka kontra klienci. Rozdzielaj też, kiedy testujesz oprogramowanie, którego nie sprawdziłeś. I rozdzielaj, kiedy w grę wchodzą pieniądze, bo adres Lightning doczepiony do pseudonimowego konta potrafi po cichu połączyć je z nazwiskiem.
 
-### Kiedy Separować
+Jedno konto wystarczy, jeśli ludzie wokół Ciebie i tak wiedzą wszystko, jeśli stawka jest naprawdę niska albo jeśli jesteś osobą publiczną, której cała praca polega na byciu rozpoznawaną.
 
-**Zdecydowanie separuj:**
+### Zarządzanie wieloma kluczami
 
-- Życie osobiste vs profesjonalne
-- Różne zainteresowania (praca, hobby, polityka)
-- Testowanie nowych klientów/aplikacji
-- Finansowe (napiwki) vs społeczne
+Najprostszy układ to jeden klient na jedną tożsamość. Damus dla konta publicznego, Amethyst dla prywatnego. Konfiguracja nic nie kosztuje i przestaje działać w chwili, gdy chcesz mieć oba na tym samym telefonie.
 
-**Możesz łączyć:**
+Lepsza jest aplikacja signer, którą opisuje następna sekcja. Amber na Androidzie trzyma naraz kilka kluczy i daje każdemu klientowi wyłącznie ten podpis, o który poprosił.
 
-- Bliscy przyjaciele, którzy wiedzą wszystko
-- Beztroskie przypadkowe użycie
-- Już publiczna persona
-
-### Zarządzanie Wieloma Kluczami
-
-**Opcja 1: Różni Klienci**
-
-- Używaj Damus dla tożsamości publicznej
-- Używaj Amethyst dla tożsamości prywatnej
-- Proste, ale ograniczone do urządzenia
-
-**Opcja 2: Aplikacje Podpisujące (Signer)**
-
-- Używaj Amber (Android) lub podobnego
-- Wiele kluczy w jednej aplikacji
-- Bardziej elastyczne
-
-**Opcja 3: Osobne Urządzenia**
-
-- Telefon dla publicznego
-- Tablet dla prywatnego
-- Maksymalna izolacja
+Najostrzejsza wersja to osobny sprzęt: telefon dla jednej tożsamości, stary tablet albo laptop dla drugiej, bez żadnego przenikania. Męczące w utrzymaniu i jako jedyne trzyma się jeszcze wtedy, gdy urządzenie zostanie skradzione.
 
 <Callout variant="success">
   **Zacznij prosto:** Utwórz najpierw jedno konto pseudonimowe. Dodaj publiczne
@@ -133,84 +73,44 @@ Większość ludzi powinna mieć **przynajmniej dwie** tożsamości Nostr:
 
 ---
 
-## Aplikacje Podpisujące (3 minuty)
+## Aplikacje podpisujące (3 minuty)
 
-### Czym Są Signery?
+### Czym są signery?
 
-**Aplikacje podpisujące** przechowują Twoje klucze prywatne bezpiecznie i podpisują wiadomości dla innych aplikacji.
-
-**Jak to działa:**
-
-1. Aplikacja signer trzyma Twój nsec
-2. Aplikacja klienta prosi "podpisz tę wiadomość"
-3. Aplikacja signer akceptuje i podpisuje
-4. Aplikacja klienta nigdy nie widzi Twojego nsec
+**Aplikacja signer** to mała aplikacja, której jedynym zadaniem jest trzymać Twój nsec i podpisywać w jego imieniu. Klient, z którego publikujesz, nigdy nie dostaje klucza. Przekazuje signerowi szkic, signer pokazuje Ci, co za chwilę zostanie podpisane, Ty zatwierdzasz, a gotowy podpisany event wraca do klienta.
 
 ### Korzyści
 
-✅ **Izolacja Kluczy**
+✅ **Izolacja klucza.** Twój nsec zostaje w jednej aplikacji, którą wybrałeś świadomie. Klient zainstalowany pod wpływem chwili nigdy go nie widzi, a klient, który okaże się złośliwy albo zostanie później zhakowany, nie wyda czegoś, czego nigdy nie miał.
 
-- Nsec nigdy nie opuszcza signera
-- Klienci nie mogą ukraść kluczy
-- Skompromitowany klient = bezpieczne klucze
+✅ **Chwila, żeby spojrzeć.** Każda prośba o podpis pojawia się na ekranie, zanim cokolwiek zostanie opublikowane. To wyłapuje przypadkowy post i wyłapuje klienta, który próbuje po cichu zrobić coś w Twoim imieniu.
 
-✅ **Wymagana Akceptacja**
+✅ **Jedna tożsamość, wiele aplikacji.** Skoro klucz żyje poza klientami, możesz używać tego samego konta w pięciu różnych aplikacjach bez kopiowania nsec w pięć różnych miejsc.
 
-- Widzisz, co podpisujesz
-- Zapobiegaj przypadkowym postom
-- Kontrola nad działaniami
+### Popularne aplikacje podpisujące
 
-✅ **Wielu Klientów**
+**Amber (Android)** to wybór, jeśli jesteś na Androidzie. Open source, aktywnie rozwijany, trzyma tyle kluczy, ile zechcesz, i jest tak blisko standardowego signera, jak tylko Nostr ma coś takiego.
 
-- Używaj tych samych kluczy między aplikacjami
-- Spójna tożsamość
-- Łatwe przełączanie
+**Primal (iOS)** działa inaczej i ta różnica ma znaczenie. Na iOS nie ma Ambera, więc Primal trzyma klucz w keychainie urządzenia, wewnątrz samego klienta. To rozsądny układ na iOS i daje słabszą izolację niż dedykowany signer, bo klient i posiadacz klucza to ta sama aplikacja. Miejsce w tej sekcji Primal zawdzięcza funkcji Remote Login: Primal potrafi autoryzować Twoją aktywność w innych zgodnych aplikacjach Nostr bez przekazywania im klucza, więc te aplikacje dostają traktowanie jak od signera, nawet jeśli sam Primal nim nie jest.
 
-### Popularne Aplikacje Podpisujące
+Inne opcje:
 
-**Amber (Android)**
-
-- Najlepszy signer na mobile
-- Open source
-- Aktywny rozwój
-- Wspiera wiele kluczy
-
-**Primal (iOS)**
-
-- Wbudowane bezpieczne przechowywanie
-- Nie potrzeba osobnej aplikacji signer
-- Klucze pozostają na urządzeniu
-- Proste i intuicyjne
-
-**Inne Opcje:**
-
-- **Nostr Connect** (protokół międzyplatformowy)
-- **Rozszerzenia przeglądarki** (Alby może podpisywać)
-- **Portfele sprzętowe** [ZAAWANSOWANE]
+- **Zdalne podpisywanie przez NIP-46**, nazywane czasem Nostr Connect. To raczej możliwość niż produkt. Implementują ją usługi takie jak nsec.app, a także Remote Login w Primalu.
+- **Rozszerzenia przeglądarki.** Alby i nos2x podpisują dla klientów webowych na komputerze.
+- **Portfele sprzętowe** (zaawansowane, rzadko potrzebne).
 
 ### Konfiguracja Amber
 
-1. **Pobierz** z Play Store
-2. **Utwórz lub zaimportuj** klucze
-3. **Ustaw jako domyślny signer** w ustawieniach Androida
-4. **Otwórz klienta Nostr** - poprosi o podpisanie
-5. **Zatwierdzaj prośby** w Amber
+1. **Pobierz go z właściwego miejsca.** Amber jest dystrybuowany przez zap.store, F-Droida i wydania na GitHubie (Obtainium będzie go stamtąd aktualizował). **Nie ma go w Google Play.** Cokolwiek znajdziesz tam pod tą nazwą, należy do kogoś innego, a oddanie tej aplikacji swojego nsec to sposób, w jaki kończy się konto.
+2. **Utwórz lub zaimportuj klucze** w Amberze i zrób backup słów odzyskiwania, zanim pójdziesz dalej.
+3. **Otwórz swojego klienta Nostr** i wybierz „Login with Amber" albo „external signer" zamiast wklejać gdziekolwiek klucz.
+4. **Zatwierdź prośbę**, kiedy wyskoczy Amber. Android może raz zapytać, która aplikacja ma obsługiwać takie żądania. Wskaż Amber.
 
-### Kiedy Używać Signerów
+### Kiedy używać signerów
 
-**Silnie zalecane:**
+Weź signera, gdy konto zaczyna dla Ciebie coś znaczyć: publikujesz regularnie, ludzie obserwują Cię właśnie dla tego albo zaczynają przychodzić zapy. Tak samo, jeśli poruszasz się między kilkoma klientami, bo to signer sprawia, że jest to bezpieczne, a nie lekkomyślne.
 
-- Poważni użytkownicy Nostr
-- Konta o wysokiej wartości
-- Wielu klientów
-- Użytkownicy świadomi bezpieczeństwa
-
-**Nie konieczne:**
-
-- Przypadkowe testowanie
-- Konta o niskiej wartości
-- Użycie pojedynczego klienta
-- Początkujący (dodaj później)
+Możesz go sobie darować, dopóki tylko rozglądasz się po Nostr. Jednorazowe konto w jednym kliencie nie potrzebuje dodatkowego kroku, a początkujący ma i tak sporo do nauki. Dodasz go później, kiedy konto urośnie w coś, czego szkoda byłoby stracić.
 
 <Callout variant="warning">
   **Krytyczne:** Twoja aplikacja signer staje się pojedynczym punktem awarii. Zrób backup
@@ -219,28 +119,19 @@ Większość ludzi powinna mieć **przynajmniej dwie** tożsamości Nostr:
 
 ---
 
-## Rotacja Kluczy (2 minuty)
+## Rotacja kluczy (2 minuty)
 
-### Czym Jest Rotacja Kluczy?
+### Czym jest rotacja kluczy?
 
-**Rotacja kluczy** oznacza tworzenie nowych kluczy i migrację obserwujących do nich.
+To słowo znaczy tu coś innego niż w pracy. Nostr nie ma rotacji wbudowanej w protokół: nie da się wycofać klucza i przenieść tożsamości na nowy. Twoja para kluczy **jest** Twoją tożsamością. „Rotacja" oznacza więc w praktyce założenie nowego konta i przekonanie wszystkich, żeby przeszli razem z Tobą, obserwujący po obserwującym.
 
-### Kiedy Rotować
+### Kiedy rotować
 
-**Rotuj:**
+Rotuj, jeśli sądzisz, że Twój nsec wyciekł. Wkleiłeś go na stronę, która okazała się phishingiem, ktoś ukradł urządzenie z kluczem, ktoś publikuje jako Ty. Rotuj też, kiedy odchodzisz z usługi custodial, czyli takiej, która wygenerowała i trzymała klucz za Ciebie, zamiast pozwolić Ci trzymać go samemu, bo nie wiesz, kto jeszcze ma kopię.
 
-- Podejrzenie kompromitacji
-- Klucz prywatny przypadkowo ujawniony
-- Przejście od depozytowego do samodzielnego
-- Okresowa praktyka bezpieczeństwa
+Nie rotuj według kalendarza. Coroczna rotacja to dobra rada dla hasła w pracy i zła rada dla klucza Nostr, bo pod spodem nie ma żadnej ścieżki migracji. Każda rotacja kosztuje Cię historię publikacji, rozprasza obserwujących i zrywa link NIP-05, który zapisali sobie inni. Rotuj wtedy, gdy naprawdę coś poszło nie tak.
 
-**Nie rotuj przypadkowo:**
-
-- Strata całej historii
-- Dezorientacja obserwujących
-- Zerwanie połączeń NIP-05
-
-### Jak Rotować
+### Jak rotować
 
 **Krok 1: Przygotowanie**
 
@@ -259,7 +150,7 @@ Większość ludzi powinna mieć **przynajmniej dwie** tożsamości Nostr:
 
 1. Obserwuj swoich starych obserwowanych na nowym koncie
 2. Zaktualizuj NIP-05, jeśli masz
-3. Powiedz bliskim kontaktom bezpośrednio
+3. Powiedz bliskim kontaktom bezpośrednio, bo to ten krok naprawdę przenosi ludzi
 
 **Krok 4: Zakończenie**
 
@@ -267,93 +158,54 @@ Większość ludzi powinna mieć **przynajmniej dwie** tożsamości Nostr:
 2. Zachowaj stare konto jako przekierowanie
 3. W końcu porzuć stare konto
 
-<Callout variant="success">
-  **Wskazówka profesjonalna:** Jeśli masz NIP-05, możesz go zaktualizować, aby wskazywał na Twój nowy
-  npub. Ludzie używający Twojego NIP-05 automatycznie będą obserwować Twoje nowe konto.
+<Callout variant="warning" title="NIP-05 nie przenosi Twoich obserwujących">
+  Możesz i powinieneś przestawić swój NIP-05 na nowy npub, żeby każdy, kto szuka
+  Cię po nazwie, trafiał na właściwe konto. To nie zmigruje ludzi, którzy już Cię
+  obserwują. NIP-05 wymaga od klientów, żeby dalej obserwowały ten klucz publiczny,
+  który pierwotnie zapisały, i żeby go nie podmieniały nawet wtedy, gdy adres zaczyna
+  odpowiadać innym kluczem. Twoi dotychczasowi obserwujący zostają przy starym koncie,
+  dopóki sami nie zaobserwują nowego, i właśnie dlatego powiedzenie im wprost jest
+  krokiem, który faktycznie działa.
 </Callout>
 
 ---
 
-## Wycieki Metadanych (5 minut)
+## Wycieki metadanych (5 minut)
 
-### Jakie Metadane Wyciekają?
+### Jakie metadane wyciekają?
 
-Nawet "anonimowe" posty mogą ujawnić tożsamość poprzez:
+Ludzi da się rozpoznać. Nie po nazwiskach, tylko po całej reszcie.
 
-**1. Styl Pisania**
+Najpierw styl pisania, a twórcy lekceważą go bardziej niż ktokolwiek inny. Twoje słownictwo, nawyki w stawianiu przecinków, to, czy piszesz wielką literą po dwukropku, te trzy emoji, których naprawdę używasz z tysiąca dostępnych: ktoś, kto przeczytał dość Twojej publicznej pracy, wyczuje podobieństwo w anonimowym poście, a oprogramowanie znajdzie je szybciej niż człowiek. To ten wyciek, którego same osobne konta nie łatają.
 
-- Wybór słownictwa
-- Wzorce gramatyczne
-- Użycie emoji
-- Nawyki kapitalizacji
+Potem jest to, co piszesz. Ulica wspomniana mimochodem. Koncert, na którym byłeś. Wewnętrzny żart, który należy do jednej grupy na czacie. Fakt z Twojego fachu, który zna może czterdzieści osób na świecie. Żaden z osobna Cię nie identyfikuje. Trzy razem już mogą.
 
-**2. Wskazówki Treści**
+Czas mówi ludziom, gdzie mieszkasz. Publikuj przez miesiąc, a Twoje godziny aktywności naszkicują strefę czasową, potem grafik pracy, czasem odwożenie dziecka do szkoły.
 
-- Wzmianki o lokalizacjach
-- Konkretne wydarzenia
-- Prywatne żarty
-- Unikalna wiedza
+Warstwa techniczna przecieka po cichu, bez Twojego udziału. Każdy relay, z którym się łączysz, widzi Twój adres IP. Niektórzy klienci stemplują eventy nazwą i wersją oprogramowania, które je wyprodukowało. Klienci webowi ujawniają dodatkowo odcisk urządzenia, czyli tę konkretną kombinację rozmiaru ekranu, czcionek, języka i ustawień, która pozwala odróżnić jedną przeglądarkę od drugiej nawet wtedy, gdy nikt nie jest zalogowany.
 
-**3. Wzorce Czasowe**
+Najgłośniejszym sygnałem ze wszystkich jest graf społeczny. Kogo obserwujesz, kto obserwuje Ciebie, komu odpowiadasz w ciągu minuty. Dwa konta z tymi samymi znajomymi to zwykle ta sama osoba, a wystarczy zaskakująco mało pokrywających się nazwisk, żeby to przestało być zgadywaniem.
 
-- Kiedy publikujesz (strefa czasowa)
-- Czasy odpowiedzi
-- Godziny aktywności
+### Strategie zapobiegania
 
-**4. Wycieki Techniczne**
+- **Pisz inaczej na każdym koncie.** Inne słownictwo, inny rytm zdań, inne nawyki interpunkcyjne. Przez tydzień czy dwa wydaje się to sztuczne, a potem przestaje cokolwiek znaczyć.
+- **Zostań ogólny.** Żadnych dokładnych dat, żadnych unikalnych szczegółów, uogólniaj miejsca. „W tym tygodniu" zamiast wtorku, „miasto na północy" zamiast nazwy dzielnicy.
+- **Ukryj swoje IP.** VPN nie pozwala relayom zobaczyć, skąd się łączysz, a Tor jest mocniejszą wersją, gdy tego potrzebujesz. Używaj innego łącza dla każdej tożsamości zamiast tego samego dla obu.
+- **Sprawdź, co wysyła Twój klient.** Niektóre oznaczają eventy informacją o wersji. Klienci nastawieni na prywatność mówią o Tobie mniej.
+- **Trzymaj grafy obserwowanych osobno.** Inni ludzie, inne kręgi i możliwie najmniej kontaktu między Twoimi własnymi tożsamościami.
 
-- Adresy IP (widoczne dla relayów)
-- Wersja oprogramowania klienta
-- Odciski palców urządzenia
+### Przenikanie między tożsamościami
 
-**5. Graf Społeczny**
-
-- Kogo obserwujesz
-- Kto Cię obserwuje
-- Wzorce interakcji
-
-### Strategie Zapobiegania
-
-**1. Osobne Style Pisania**
-
-- Używaj różnego słownictwa
-- Zmieniaj strukturę zdań
-- Inne nawyki emoji
-
-**2. Bądź Niejasny**
-
-- Nie wspominaj konkretnych dat
-- Unikaj unikalnych identyfikatorów
-- Uogólniaj lokalizacje
-
-**3. Używaj Tor/VPN**
-
-- Ukryj IP przed relayami
-- Używaj różnych IP na tożsamość
-- Rozważ Tor dla maksymalnej prywatności
-
-**4. Ogranicz Informacje o Kliencie**
-
-- Niektórzy klienci wyciekają informacje o wersji
-- Sprawdź, co wysyła Twój klient
-- Używaj klientów nastawionych na prywatność
-
-**5. Kontroluj Graf Społeczny**
-
-- Nie obserwuj tych samych ludzi
-- Różne kręgi
-- Ograniczaj interakcje między tożsamościami
-
-### Zanieczyszczenie Między-Tożsamościowe
+Większość ludzi, którym zdejmuje się maskę, nie przegrywa przez sprytną analizę. Sami, raz, przez przypadek łączą oba konta.
 
 **Czego NIE robić:**
 
-- ❌ Wspominaj o swoim drugim koncie
-- ❌ Publikuj tę samą treść jednocześnie
-- ❌ Obserwuj dokładnie tych samych ludzi
-- ❌ Używaj tych samych fraz/slangu
-- ❌ Odpowiadaj na te same wątki
-- ❌ Publikuj z obu w tej samej konwersacji
+- ❌ Wspominanie o swoim drugim koncie
+- ❌ Publikowanie tej samej treści jednocześnie
+- ❌ Obserwowanie dokładnie tych samych osób
+- ❌ Używanie tych samych fraz i slangu
+- ❌ Odpowiadanie w tych samych wątkach
+- ❌ Publikowanie z obu kont w jednej rozmowie
 
 **Bezpieczne praktyki:**
 
@@ -372,7 +224,7 @@ Nawet "anonimowe" posty mogą ujawnić tożsamość poprzez:
 
 ## Checklista OPSEC (2 minuty)
 
-### Podstawowe Bezpieczeństwo (Wszyscy)
+### Podstawowe bezpieczeństwo (wszyscy)
 
 - [ ] Backup kluczy w 3+ miejscach
 - [ ] Używaj menedżera haseł
@@ -381,77 +233,82 @@ Nawet "anonimowe" posty mogą ujawnić tożsamość poprzez:
 - [ ] Utrzymuj oprogramowanie klienta aktualne
 - [ ] Używaj unikalnych kluczy na tożsamość
 
-### Wzmocnione Bezpieczeństwo (Aktywni Użytkownicy)
+### Wzmocnione bezpieczeństwo (aktywni użytkownicy)
 
 - [ ] Używaj aplikacji signer
 - [ ] Osobne urządzenia/konta
 - [ ] VPN/Tor dla wrażliwych postów
-- [ ] Regularna rotacja kluczy (rocznie)
-- [ ] Monitorowanie dla podszywaczy
+- [ ] Rotuj klucze tylko przy podejrzeniu wycieku, nigdy według kalendarza
+- [ ] Wypatruj kont podszywających się pod Ciebie
 - [ ] Dokumentacja procedur odzyskiwania
 
-### Maksymalne Bezpieczeństwo (Wysokie Ryzyko)
+### Maksymalne bezpieczeństwo (wysokie ryzyko)
 
-- [ ] Air-gapped generowanie kluczy
-- [ ] Moduły bezpieczeństwa sprzętowego
+- [ ] Generowanie kluczy air-gapped (na urządzeniu, które nigdy nie łączy się z internetem)
+- [ ] Sprzętowe moduły bezpieczeństwa (dedykowany układ lub urządzenie, które trzyma klucz i nigdy go nie ujawnia)
 - [ ] Samodzielny relay
 - [ ] Połączenia tylko przez Tor
 - [ ] Wiele warstw tożsamości
 - [ ] Regularne audyty OPSEC
 - [ ] Konsultacje prawne
 
-### Audytuj Siebie
+### Audytuj sam siebie
 
 **Pytania do zadania:**
 
 1. Jeśli ktoś chciałby mnie doxować, co by znalazł?
 2. Czy moje wielokrotne tożsamości są faktycznie osobne?
 3. Co się stanie, jeśli mój telefon zostanie skradziony?
-4. Komu powiedziałbym, jeśli zostałbym skompromitowany?
+4. Komu powiedziałbym, gdyby moje konto zostało przejęte?
 5. Jaki jest mój plan odzyskiwania?
 
 ---
 
-## Planowanie Odzyskiwania (2 minuty)
+## Planowanie odzyskiwania (2 minuty)
 
-### Jeśli Podejrzewasz Kompromitację
+### Jeśli podejrzewasz przejęcie konta
 
 **Natychmiastowe działania:**
 
-1. **Przestań publikować** z skompromitowanego konta
+1. **Przestań publikować** ze skompromitowanego konta
 2. **Dokumentuj** co się stało
 3. **Generuj nowe klucze** na bezpiecznym urządzeniu
 4. **Ogłoś** kompromitację (jeśli publiczne)
 5. **Rotuj** do nowych kluczy
 6. **Zbadaj** jak to się stało
 
-### Budowanie Planu Odzyskiwania
+### Budowanie planu odzyskiwania
 
 **Zanim będziesz go potrzebować:**
 
-1. **Zaufane kontakty** - Kto może zweryfikować Twoją nową tożsamość?
-2. **Dowód tożsamości** - Jak udowodnisz, że to Ty?
-3. **Komunikacja out-of-band** - Jak dotrzeć do obserwujących, jeśli Nostr jest skompromitowany?
-4. **Kontrola NIP-05** - Czy możesz zaktualizować swój identyfikator?
-5. **Strategia backupu** - Jak są backupowane klucze?
+1. **Zaufane kontakty.** Kto może zweryfikować Twoją nową tożsamość?
+2. **Dowód tożsamości.** Jak udowodnisz, że to Ty?
+3. **Komunikacja out-of-band.** Jak dotrzeć do obserwujących, jeśli Nostr jest skompromitowany?
+4. **Kontrola NIP-05.** Czy możesz zaktualizować swój identyfikator?
+5. **Strategia backupu.** Jak są backupowane klucze?
 
-### Szablon Komunikacji
+### Szablon komunikatu
 
-Jeśli skompromitowany, opublikuj coś takiego:
+Opublikuj to z nowego konta:
 
 ```
 ⚠️ ALERT BEZPIECZEŃSTWA ⚠️
 
-Moje konto [stary npub] zostało skompromitowane.
+Moje stare konto [stary npub] zostało przejęte. Wszystko,
+co pojawi się na nim od dzisiaj, to nie ja.
 
-Moje nowe konto to: [nowy npub]
+To jest moje nowe konto: [nowy npub]
 
-Ta wiadomość jest podpisana oboma kluczami, aby udowodnić przejście.
+Przestań obserwować stare konto i zaobserwuj to nowe.
 
-[Podpisana wiadomość z nowego klucza]
-
-Proszę przestań obserwować stare konto i obserwuj to.
+Możesz sprawdzić, że to naprawdę ja, tutaj: [Twoja strona,
+Twoje inne konta społecznościowe albo po prostu zapytaj
+mnie gdzie indziej].
 ```
+
+Potem opublikuj lustrzaną wiadomość ze starego konta, podając nowy npub, dopóki jeszcze możesz. Przestaw NIP-05 na domenie, którą kontrolujesz, bo to jedyne potwierdzenie, którego napastnik nie podrobi za Ciebie. I powiedz ważnym dla siebie ludziom kanałem spoza Nostr, bo to właśnie przekonuje kogokolwiek.
+
+Jedna rzecz, której nie robić: nie próbuj podpisywać ogłoszenia „obydwoma kluczami". Event Nostr niesie dokładnie jeden podpis, żaden klient nie pozwoli dołączyć drugiego, a gdy stary klucz jest już skompromitowany, napastnik też może nim podpisać, więc niczego by to nie dowodziło, nawet gdyby było możliwe.
 
 <Callout variant="info">
   **Miej nadzieję na najlepsze, przygotuj się na najgorsze.** Posiadanie planu odzyskiwania redukuje
@@ -460,39 +317,39 @@ Proszę przestań obserwować stare konto i obserwuj to.
 
 ---
 
-## Przetestuj Swoją Wiedzę
+## Przetestuj swoją wiedzę
 
 <PrivacySecurityQuiz client:idle />
 
 ---
 
-## Szybkie Odniesienie
+## Szybkie odniesienie
 
-**Minimalne Bezpieczeństwo:**
+**Minimalne bezpieczeństwo:**
 
 - 3 backupy kluczy
 - Menedżer haseł
 - Nigdy nie udostępniaj nsec
 
-**Wzmocnione Bezpieczeństwo:**
+**Wzmocnione bezpieczeństwo:**
 
 - Używaj aplikacji signer
 - Osobne tożsamości
 - VPN dla prywatności
 - Regularne audyty
 
-**Maksymalne Bezpieczeństwo:**
+**Maksymalne bezpieczeństwo:**
 
 - Klucze air-gapped
 - Portfele sprzętowe
 - Tylko Tor
 - Profesjonalny OPSEC
 
-**Pamiętaj:** Bezpieczeństwo to podróż, nie cel. Zacznij od podstaw, doskonal się z czasem.
+**Pamiętaj:** żadnej z tych list nie odhaczysz raz na zawsze. Zacznij od podstaw, a resztę dokładaj wtedy, kiedy konto zacznie tego wymagać.
 
 ---
 
 ## Czytaj dalej
 
-- [Twoje Klucze, Twoja Tożsamość](/pl/guides/keys-and-security)
-- [NIP-17: Prywatne Wiadomości Bezpośrednie - Kompletny Przewodnik](/pl/guides/nip17-private-messages)
+- [Twoje Klucze, Twoja Tożsamość](/pl/guides/keys-and-security), czyli fundament, na którym opiera się każda decyzja o prywatności na Nostr
+- [NIP-17: Prywatne Wiadomości Bezpośrednie - Kompletny Przewodnik](/pl/guides/nip17-private-messages), czyli jak naprawdę działają szyfrowane DM-y i co mimo to wycieka

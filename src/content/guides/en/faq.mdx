@@ -2,7 +2,7 @@
 title: "Frequently Asked Questions"
 seoTitle: "Nostr FAQ: 29 Beginner Questions Answered (2026)"
 description: "Answers to top questions about Nostr. Learn about keys, clients, relays, zaps, and more. Quick answers for beginners."
-estimatedTime: "10 minutes"
+estimatedTime: "20 minutes"
 priority: 5
 category: "reference"
 prerequisites: []
@@ -17,7 +17,7 @@ import { Callout } from "@components/ui/Callout";
 
 ### What is Nostr, actually?
 
-Nostr is a **protocol**—like email or the web. It defines how messages move between relays and clients. That means:
+Nostr is a **protocol**, like email or the web. It defines how messages move between relays and clients. That means:
 
 - No single company owns or controls it
 - You can switch apps without losing your identity
@@ -76,7 +76,7 @@ This is by design. Nostr is decentralized, which means there's no central author
 
 **Real talk:** People lose access to accounts every day. Don't be one of them. Back up your keys NOW.
 
-[Learn more: The 3-2-1 Backup Rule →](/guides/keys-and-security#the-3-2-1-backup-rule)
+[Learn more: The 3-2-1 Backup Rule →](/guides/keys-and-security#the-3-2-1-backup-rule-2-minutes)
 
 </FAQAccordion>
 
@@ -86,7 +86,7 @@ This is by design. Nostr is decentralized, which means there's no central author
 >
   Those "long strings" are cryptographic keys. Here's why they look like gibberish:
 
-**256-bit security:** Each key has more possible combinations than atoms in the observable universe. This makes it impossible to guess.
+**256-bit security:** The number of possible keys is 77 digits long, roughly in the same league as the count of atoms in the observable universe. Nobody guesses their way to one.
 
 **One-way math:** You can't figure out the private key from the public key. It's mathematically impossible.
 
@@ -96,11 +96,11 @@ This is by design. Nostr is decentralized, which means there's no central author
 
 - Simple passwords get hacked
 - Centralized databases get breached
-- Your identity needs to be truly yours—and that requires serious cryptography
+- Your identity needs to be truly yours, and that requires serious cryptography
 
 **The good news:** You don't type these often. Most clients store them securely. You just need to back them up safely.
 
-[Learn more: Understanding Keys →](/guides/keys-and-security#understanding-keys)
+[Learn more: Understanding Keys →](/guides/keys-and-security#understanding-keys-2-minutes)
 
 </FAQAccordion>
 
@@ -112,7 +112,7 @@ This is by design. Nostr is decentralized, which means there's no central author
 
 **Without NIP-05:** You're identified by your npub
 
-- `npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq`
+- `npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq`
 
 **With NIP-05:** You're identified by something readable
 
@@ -122,7 +122,7 @@ This is by design. Nostr is decentralized, which means there's no central author
 
 - Easy to remember and share
 - Looks more professional
-- Can be verified (proves you control that domain)
+- Can be checked automatically (the owner of the domain vouches that this name points to your key, which counts for most when the domain is your own)
 - Some clients prioritize NIP-05 users in search
 
 **Do you need one?**
@@ -133,7 +133,7 @@ This is by design. Nostr is decentralized, which means there's no central author
 
 **How to get one:**
 
-1. Buy from providers (nostrplebs.com, nostrname.com) - $5-15/year
+1. Buy from providers (nostrplebs.com, nostrcheck.me) - $5-15/year
 2. Set up your own domain (if you own one) - Free
 3. Free options from some services
 
@@ -161,9 +161,9 @@ This is by design. Nostr is decentralized, which means there's no central author
 
 **Specialized Clients:**
 
-- **Nostrudel** - Focused on long-form content
-- **Plebstr** - Built for communities and groups
-- **Current** - Focuses on music and media
+- **YakiHonne** (Web/iOS/Android) - long-form articles, for writing pieces rather than short posts
+- **0xchat** - built around encrypted private messaging
+- **noStrudel** (Web) - a sandbox for the protocol itself; it shows you the raw events behind every post
 
 **How to choose:**
 
@@ -174,7 +174,7 @@ This is by design. Nostr is decentralized, which means there's no central author
 
 **Pro tip:** Start with Iris or Primal. They work everywhere and are beginner-friendly.
 
-[Try our Client Recommender →](/guides/quickstart#choose-your-first-client)
+[Pick a client →](/guides/quickstart#step-2)
 
 </FAQAccordion>
 
@@ -202,13 +202,15 @@ Your identity (keys) works across all clients. When you switch:
 
 **How to switch:**
 
-1. Export your nsec from your current client (or use your backup)
+1. Get your nsec out of your current client, or take it from your backup
 2. Install the new client
-3. Import/enter your nsec
+3. Log in. How you do this matters: in a web client, use a signer browser extension (Alby, nos2x) so the website never receives your nsec at all. On Android, a signer app like Amber does the same job. Type the nsec straight into an app only when it is an installed app you trust and it offers no signer option
 4. Wait a moment for data to sync from relays
 5. You're back in business!
 
-This is why Nostr is powerful—you're never trapped in one app.
+This is why Nostr is powerful: you're never trapped in one app.
+
+[Learn more: Keys & Security →](/guides/keys-and-security)
 
 </FAQAccordion>
 
@@ -241,7 +243,7 @@ Unlike traditional social media where Twitter, Instagram, and TikTok are complet
 - Same emails everywhere
 - Nostr works the same way
 
-This is one of Nostr's superpowers—true portability.
+That portability is one of Nostr's superpowers.
 
 </FAQAccordion>
 
@@ -261,7 +263,7 @@ They store and forward your messages. Here's the simple version:
 - Keep your data available
 
 **Why you choose them:**
-Nostr is decentralized—no central server. You pick which post offices to use. Different relays have different:
+Nostr is decentralized. There is no central server, so you pick which post offices to use. Different relays have different:
 
 - Speed
 - Reliability
@@ -300,16 +302,15 @@ Nostr is decentralized—no central server. You pick which post offices to use. 
 
 **But here's the good news:**
 
-- Most clients connect to multiple relays by default
-- Popular content spreads through the network naturally
-- Your followers can connect to the same relays as you
+- Most clients publish every post to all your relays at once, not just one
+- Relays never copy posts to each other, but the people who reply to you or repost you push your note out to their relays as well
+- Anyone can add the relays you post to
 
 **How to maximize reach:**
 
 1. Connect to popular relays (more people see your posts)
-2. Encourage followers to use the same relays
-3. Use NIP-65 (relay recommendations) [ADVANCED]
-4. Cross-post to multiple relays
+2. Publish a relay list, so other people's apps know where to come looking for your posts. This is NIP-65, the outbox model [ADVANCED]
+3. Cross-post to multiple relays
 
 **The trade-off:**
 
@@ -318,6 +319,8 @@ Nostr is decentralized—no central server. You pick which post offices to use. 
 - Find your balance
 
 **Bottom line:** Start with the default relays. As you grow, you can optimize.
+
+[Learn more: The Outbox Model →](/guides/outbox-model)
 
 </FAQAccordion>
 
@@ -345,7 +348,7 @@ Nostr is decentralized—no central server. You pick which post offices to use. 
    - Search for topics you like (#bitcoin, #photography)
    - Check "Suggested Users" in your client
    - Look at who popular accounts follow
-   - Post: "New here—who should I follow?"
+   - Post: "New here, who should I follow?"
 
 3. **Wait 30-60 seconds** for content to load
 
@@ -377,8 +380,8 @@ wss://nos.lol                 (Fast, well-maintained)
 
 ```
 wss://relay.snort.social      (Popular, good uptime)
-wss://nostr.wine              (Quality relay)
-wss://relay.current.fyi       (Fast, minimal)
+wss://relay.primal.net        (Fast, widely connected)
+wss://nostr.mom               (Reliable, lightly filtered)
 ```
 
 **How to choose:**
@@ -391,7 +394,7 @@ wss://relay.current.fyi       (Fast, minimal)
 **[ADVANCED] Specialized relays:**
 
 - Some focus on specific topics (Bitcoin, nostr development)
-- Some require payment (often higher quality)
+- Some require payment before they will accept your posts. nostr.wine, for instance, charges a one-time admission fee of 18,888 sats, so don't add it expecting a free relay
 - Some are regional (better for local content)
 
 **Pro tip:** Don't add too many. 5-10 quality relays is better than 50 random ones.
@@ -426,7 +429,7 @@ wss://relay.current.fyi       (Fast, minimal)
 
 **Method 4: Engage Publicly**
 
-- Post: "New to Nostr—who should I follow?"
+- Post: "New to Nostr, who should I follow?"
 - Use hashtags relevant to your interests
 - Reply to posts you find interesting
 - People will find you
@@ -446,7 +449,7 @@ wss://relay.current.fyi       (Fast, minimal)
 >
   **Zaps are Bitcoin tips sent over the Lightning Network.**
 
-Think of them as "likes with value"—they're a way to support creators you enjoy.
+Think of them as "likes with value", a way to support creators you enjoy.
 
 **How zaps work:**
 
@@ -466,7 +469,7 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 **How to receive zaps:**
 
 1. **Get a Lightning wallet:**
-   - Your client's built-in wallet (e.g., Primal—easiest)
+   - Your client's built-in wallet, e.g. Primal (easiest)
    - Coinos (hosted web wallet)
    - Phoenix (mobile, more control)
 
@@ -525,7 +528,7 @@ Think of them as "likes with value"—they're a way to support creators you enjo
 
 - Different clients
 - Different relays
-- Nostr explorers (nostr.guru)
+- Nostr explorers (njump.me, nostr.band)
 
 **Data permanence in Nostr:**
 
@@ -563,13 +566,13 @@ Think of them as "likes with value"—they're a way to support creators you enjo
   question="How do I verify someone's identity?"
   category="security"
 >
-  Look for NIP-05 identifiers (human-readable names like alice@domain.com). Check if their profile has a verification badge. Cross-reference their npub on multiple platforms. For important contacts, verify through another communication channel. Be wary of accounts with slight spelling variations of popular names.
+  Nostr has no identity verification, only clues you weigh up. A NIP-05 name (alice@domain.com) with a checkmark beside it means exactly one thing: whoever runs domain.com says that name belongs to that key. That is worth a lot when the domain is the person's own site or their employer's. It is worth close to nothing when the name came from a public NIP-05 provider, because anyone can buy famousname@ from those. So read the domain, not the checkmark. Then cross-reference the npub somewhere you already trust the person, and for anything that matters, ask them on another channel.
 
 **Verification methods:**
 
-1. **NIP-05 identifier** - Look for the checkmark badge
-2. **Cross-platform check** - Verify same npub on multiple clients
-3. **External confirmation** - Ask on another platform you trust
+1. **NIP-05 identifier** - Look at which domain the name sits on, not just at the checkmark
+2. **Cross-platform check** - Find the same npub on their own site, their bio elsewhere, their newsletter
+3. **External confirmation** - Ask them somewhere you already know it is them
 4. **Web of trust** - See if people you trust follow them
 
 <Callout variant="warning">
@@ -645,20 +648,14 @@ Think of them as "likes with value"—they're a way to support creators you enjo
   question="How do I backup my entire Nostr history?"
   category="security"
 >
-  Use tools like nostr-fetch or nak to export your events. Back up your nsec (private key) securely - this is critical. Your npub events are stored on relays, but having a local backup is wise. Consider using a personal relay to store your complete history.
+  Your nsec is the only irreplaceable piece, so back that up first and in more than one place. Your posts themselves already sit on relays. For a local copy, check your client's settings: several offer an export or backup option, and that is the easiest route for most people. Past that point the tooling gets technical fast.
 
 **Backup steps:**
 
 1. **Private key** - Most important! Back up your nsec
-2. **Event export** - Use nostr-fetch CLI tool
-3. **Relay backup** - Some services archive your posts
-4. **Personal relay** - Run your own for complete control
-
-**Tools:**
-
-- `nostr-fetch` - Export all your events
-- `nak` - Nostr army knife for various tasks
-- Personal relay - strfry, nostream, khatru
+2. **Client export** - Look in settings for an export or backup option
+3. **Relay backup** - Some paid relays keep everything you post
+4. **[ADVANCED] Command line** - `nak`, the "nostr army knife", can pull your events down from relays, and running your own relay (strfry, nostream, khatru) keeps a full archive
 
 <Callout variant="info">
   Your posts exist on relays, but keys are irreplaceable. The 3-2-1 backup rule
@@ -671,20 +668,23 @@ Think of them as "likes with value"—they're a way to support creators you enjo
   question="What's the difference between NIP-04 and NIP-17 DMs?"
   category="advanced"
 >
-  NIP-04 (deprecated) uses shared secret encryption with known vulnerabilities. NIP-17 (recommended) uses sealed sender and gift-wrap for better privacy. NIP-17 hides metadata about who is messaging whom. Migrate to clients supporting NIP-17 for secure private messaging.
+  NIP-04 (deprecated) uses shared secret encryption with known vulnerabilities. NIP-17 (recommended) wraps each message so the sender is hidden from the relay. The recipient is not hidden: their public key travels in a plain tag so the relay knows who to deliver to. Migrate to a client that supports NIP-17, and read the [NIP-17 guide](/guides/nip17-private-messages) before you rely on it for anything sensitive.
 
 **Comparison:**
 
-| Feature             | NIP-04 (Old)  | NIP-17 (New) |
-| ------------------- | ------------- | ------------ |
-| Content encryption  | ✅ Yes        | ✅ Yes       |
-| Metadata protection | ❌ No         | ✅ Yes       |
-| Security            | ⚠️ Vulnerable | ✅ Secure    |
-| Status              | Deprecated    | Recommended  |
+| Feature             | NIP-04 (Old)  | NIP-17 (New)          |
+| ------------------- | ------------- | --------------------- |
+| Content encryption  | ✅ Yes        | ✅ Yes                |
+| Sender hidden       | ❌ No         | ✅ Yes                |
+| Recipient hidden    | ❌ No         | ❌ No                 |
+| Security            | ⚠️ Vulnerable | ✅ Current standard   |
+| Status              | Deprecated    | Recommended           |
 
-<Callout variant="success">
-  Check your client settings and upgrade to NIP-17. Modern clients like
-  Amethyst, Damus, and Primal support it.
+<Callout variant="info">
+  Amethyst, 0xchat and Coracle implement NIP-17 today. Damus still uses the old
+  NIP-04 for DMs, so a NIP-17 message sent to someone on Damus may never show up
+  for them. Check what your client and your correspondent's client actually
+  support before you switch.
 </Callout>
 
 </FAQAccordion>
@@ -693,11 +693,11 @@ Think of them as "likes with value"—they're a way to support creators you enjo
   question="How do I run my own relay?"
   category="advanced"
 >
-  Popular options: strfry (Rust, high performance), nostream (TypeScript, easy setup), or khatru (Go). Requirements: server (VPS ~$5-20/month), domain name, basic CLI knowledge. Benefits: data sovereignty, custom policies, learning experience. See our Relay Guide for detailed setup instructions.
+  Popular options: strfry (C++, high performance), nostream (TypeScript, easy setup), or khatru (Go). Requirements: server (VPS ~$5-20/month), domain name, basic CLI knowledge. Benefits: data sovereignty, custom policies, learning experience. See our Relay Guide for detailed setup instructions.
 
 **Relay software options:**
 
-- **strfry** - Rust, high performance, efficient
+- **strfry** - C++, high performance, efficient
 - **nostream** - TypeScript, easiest setup
 - **khatru** - Go, well-maintained
 - **nostr-rs-relay** - Rust, battle-tested
@@ -723,26 +723,29 @@ Think of them as "likes with value"—they're a way to support creators you enjo
   question="Are my DMs actually private?"
   category="security"
 >
-  With NIP-17 (recommended): Yes, content is encrypted and metadata is minimized. With old NIP-04: Content is encrypted but metadata leaks are possible. Relay operators can see you're messaging but not content or exact recipient with NIP-17. For maximum privacy, also use VPN/Tor.
+  The content is encrypted either way. What differs is how much the relay can tell about the conversation around it. With NIP-17, each message is wrapped and signed by a throwaway key, so the relay cannot see who sent it. It can see who it is addressed to: the recipient's public key sits in a plain, unencrypted tag, because that is how the relay knows where to deliver it. With old NIP-04, both ends are visible. Neither hides your IP address from the relay you connect to, so add a VPN or Tor if that matters to you.
 
 **Privacy levels:**
 
 **NIP-17 (Use this!):**
 
-- ✅ Content encrypted end-to-end
-- ✅ Metadata minimized (sealed sender)
-- ⚠️ Relay sees encrypted activity
+- ✅ Content encrypted end to end
+- ✅ Sender hidden from the relay
+- ⚠️ Recipient's key sits in the clear, so the relay knows who is being written to, and when
 
 **NIP-04 (Deprecated):**
 
 - ✅ Content encrypted
-- ❌ Metadata leaks possible
+- ❌ Both ends of the conversation visible to the relay
 - ❌ Known vulnerabilities
 
 <Callout variant="info">
-  For maximum privacy, combine NIP-17 with VPN or Tor. This hides your IP from
-  relays.
+  A VPN or Tor hides your IP address from the relays you connect to. It does not
+  hide the recipient's key, which travels in the clear under both NIP-04 and
+  NIP-17.
 </Callout>
+
+[Learn more: NIP-17 Private Messages →](/guides/nip17-private-messages)
 
 </FAQAccordion>
 
@@ -859,7 +862,7 @@ Unlike Twitter's chronological feed, Nostr aggregates from many sources. Content
   question="How do zaps work technically?"
   category="advanced"
 >
-  Zaps use the Bitcoin Lightning Network, standardized by NIP-57. Process: 1) Your client sends a signed zap request (kind 9734) to the recipient's wallet server—the LNURL service behind the Lightning address in their profile, 2) that server returns a Lightning invoice, 3) you pay it, 4) the recipient's wallet server signs and publishes the zap receipt (kind 9735) to relays, 5) clients display the zap. No Nostr platform sits in the middle—the payment goes straight to whatever wallet the recipient's Lightning address points at.
+  Zaps use the Bitcoin Lightning Network, standardized by NIP-57. Process: 1) Your client sends a signed zap request (kind 9734) to the recipient's wallet server, which is the LNURL service behind the Lightning address in their profile, 2) that server returns a Lightning invoice, 3) you pay it, 4) the recipient's wallet server signs and publishes the zap receipt (kind 9735) to relays, 5) clients display the zap. No Nostr platform sits in the middle. The payment goes straight to whatever wallet the recipient's Lightning address points at.
 
 **Technical flow:**
 
@@ -880,8 +883,8 @@ Unlike Twitter's chronological feed, Nostr aggregates from many sources. Content
 <Callout variant="info">
   Zaps are only non-custodial end-to-end if the recipient runs self-custodial
   Lightning. Most users' Lightning addresses point at a hosted wallet provider,
-  which receives and holds the sats for them—and is also the party that signs
-  the zap receipt.
+  which receives and holds the sats for them. That provider is also the party
+  that signs the zap receipt.
 </Callout>
 
 </FAQAccordion>
@@ -901,8 +904,8 @@ The Nostr community is helpful and welcoming:
 
 ### Found an Error?
 
-This guide is constantly improving. If something is unclear or incorrect, submit improvements on GitHub.
+This guide is constantly improving. If something is unclear or incorrect, open an issue or a pull request on [GitHub](https://github.com/ptrio42/nostrich-love).
 
 ---
 
-_Last updated: July 2026_
+_Last updated: September 2026_

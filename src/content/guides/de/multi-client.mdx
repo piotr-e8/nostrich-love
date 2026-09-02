@@ -2,18 +2,14 @@
 title: "Multi-Client-Workflow"
 seoTitle: "Mehrere Nostr-Clients: ein Konto, viele Apps"
 description: "Maximiere deine Nostr-Erfahrung mit mehreren Clients. Desktop + Mobile Workflows, Synchronisierungsstrategien und Best Practices für Power-User."
-estimatedTime: "8 Minuten"
+estimatedTime: "12 Minuten"
 priority: 11
 category: "advanced"
 prerequisites: ["keys-and-security", "quickstart"]
 ---
 
-import { CTAButton } from "@components/CTAButton";
 import { Callout } from "@components/ui/Callout";
 import { MultiClientQuiz } from "@components/interactive/MultiClientQuiz";
-
-{/* ProgressIndicator vorübergehend deaktiviert - wird später mit tatsächlichem Tracking implementiert */}
-{/* <ProgressIndicator current={6} total={6} estimatedTime="8 Minuten" /> */}
 
 ## Warum mehrere Clients? (2 Minuten)
 
@@ -26,18 +22,27 @@ Nostrs Superkraft ist, dass deine Identität überall funktioniert. Clevere Nutz
 **Mobile + Desktop:**
 
 - **Smartphone (Damus/Amethyst):** Schnelle Checks, unterwegs posten, Benachrichtigungen
-- **Desktop (Iris/Snort):** Lange Texte schreiben, intensives Browsen, während der Arbeitszeit
+- **Desktop (Iris/Snort):** Längere Beiträge und Threads, intensives Browsen, während der Arbeitszeit
 
-**Öffentlich + Privat:**
+Ganze Artikel sind eine andere Aufgabe. Iris und Snort sind für kurze Notizen
+gebaut. Wer Essays schreibt, nimmt dafür einen Client für Langtexte.
+[YakiHonne](https://yakihonne.com) ist die übliche Wahl und läuft im Browser
+ebenso wie auf iOS und Android.
 
-- **Öffentlicher Client:** Professionelle Identität, öffentliche Posts
-- **Privater Client:** Persönliche Identität, andere Kreise
+**Zwei getrennte Identitäten:**
+
+- Manche Leute legen sich ein zweites Schlüsselpaar für das Private zu und geben
+  jedem Schlüsselpaar seinen eigenen Client
+- Die Trennung kommt von den zwei Schlüsselsätzen, nicht von der App. Ein
+  Schlüsselpaar in zwei Clients bleibt eine einzige öffentliche Identität, mit
+  demselben npub und denselben öffentlichen Posts überall
 
 **Verschiedene Features:**
 
-- **Client A:** Großartig für Medien
-- **Client B:** Besser für DMs
-- **Client C:** Am besten für Entdeckungen
+Ein Client verdient sich seinen Platz, wenn er eine Sache richtig gut kann:
+Amethyst mit seinen Relay- und Medieneinstellungen, 0xchat für private
+Nachrichten, Coracle zum Stöbern in einzelnen Relays. Alles andere an deinem
+Konto verhält sich in allen gleich.
 
 **Backup & Redundanz:**
 
@@ -47,23 +52,11 @@ Nostrs Superkraft ist, dass deine Identität überall funktioniert. Clevere Nutz
 
 ### Vorteile
 
-✅ **Optimierung**
-
-- Nutze das beste Tool für jede Aufgabe
-- Verschiedene UIs für verschiedene Kontexte
-- Feature-spezifische Vorteile
-
-✅ **Flexibilität**
-
-- Nicht an eine Oberfläche gebunden
-- Einfacher Wechsel bei Problemen
-- Frei experimentieren
-
-✅ **Produktivität**
-
-- Desktop zum Schreiben
-- Mobile zum Konsumieren
-- Getrennte Kontexte = besserer Fokus
+Der Gewinn: Du biegst deine Gewohnheiten nicht mehr um eine einzige App herum.
+Geschrieben wird da, wo dir das Schreiben leichtfällt, gelesen da, wo es sich
+angenehm liest. Die beiden Kontexte hältst du dann bewusst auseinander. Beim
+Wechsel steht wenig auf dem Spiel, denn Identität, Posts und Follows liegen auf
+Relays und nicht in irgendeinem Client.
 
 <Callout variant="info">
   **Du brauchst nicht mehrere Clients.** Aber wenn du es mit Nostr ernst meinst,
@@ -83,7 +76,13 @@ Nostrs Superkraft ist, dass deine Identität überall funktioniert. Clevere Nutz
 - ✓ Follows-Liste
 - ✓ Profilinformationen
 - ✓ Reaktionen (Likes, Reposts)
-- ✓ DMs (wenn richtig verschlüsselt)
+
+DMs sind die Ausnahme. Private Nachrichten tauchen in einem zweiten Client nur
+dann auf, wenn er denselben DM-Standard spricht (aktuell ist das NIP-17) und mit
+deinen DM-Relays verbunden ist. Ein Client, der noch beim älteren Standard
+geblieben ist, zeigt dir einen anderen, davon getrennten Gesprächsverlauf. Wer
+wo steht, steht bei den
+[privaten Nachrichten](/de/guides/nip17-private-messages).
 
 ### Was nicht synchronisiert wird
 
@@ -91,7 +90,7 @@ Nostrs Superkraft ist, dass deine Identität überall funktioniert. Clevere Nutz
 
 - ✗ App-Einstellungen (Themes, Schriftarten)
 - ✗ Benachrichtigungseinstellungen
-- ✗ Mute/Block-Listen (manchmal)
+- ✗ App-eigene Blocks und lokales Ausblenden (deine normale Mute-Liste synchronisiert schon)
 - ✗ Entwürfe
 - ✗ Lokale Lesezeichen
 - ✗ Custom Feeds/Algorithmen
@@ -105,7 +104,14 @@ Nostrs Superkraft ist, dass deine Identität überall funktioniert. Clevere Nutz
 2. Client A sendet an Relays
 3. Client B verbindet sich mit denselben Relays
 4. Client B sieht deinen Post
-5. Alles bleibt synchron
+5. Posts und Follows bleiben synchron
+
+Schritt drei ist der ganze Trick. Beide Clients suchen deine Posts auf den
+Relays aus deiner veröffentlichten Relay-Liste. Zeigt ein Client woandershin,
+als deine Posts je gegangen sind, bekommst du eine ausgedünnte Version deines
+eigenen Kontos zu sehen. Halte in jedem Client dieselbe Relay-Liste. Wie Clients
+diese Liste finden, erklärt das
+[Outbox-Modell](/de/guides/outbox-model).
 
 **Zeitverzögerung:**
 
@@ -123,9 +129,11 @@ Nostrs Superkraft ist, dass deine Identität überall funktioniert. Clevere Nutz
 
 **Mutes/Blocks:**
 
-- Einige Clients exportieren/importieren Listen
-- NIP-51 standardisiert dies
-- Möglicherweise manuelle Synchronisierung nötig
+- Deine Mute-Liste ist Teil des Protokolls (NIP-51) und reist deshalb mit deinem
+  Konto mit: Wen du in einem Client stummschaltest, übernehmen die anderen
+- Zurück bleibt nur App-Lokales, etwa ein „hier ausblenden“-Schalter oder die
+  eigenen Filtereinstellungen eines Clients
+- Kein Export, kein Import
 
 **Entwürfe:**
 
@@ -173,23 +181,23 @@ Nostrs Superkraft ist, dass deine Identität überall funktioniert. Clevere Nutz
 
 **Content Creator:**
 
-- **Entwurf auf Desktop** (Iris) - Schreiben, bearbeiten, formatieren
-- **Post vom Desktop** - Veröffentlichen
-- **Engagement auf Mobile checken** (Damus) - Antworten, Zaps
-- **Schnelle Antworten auf Mobile** - Während du unterwegs bist
+- **Entwurf auf Desktop** (Iris): Schreiben, bearbeiten, formatieren
+- **Poste vom Desktop**: Veröffentlichen
+- **Engagement auf Mobile checken** (Damus): Antworten, Zaps
+- **Schnelle Antworten auf Mobile**: Während du unterwegs bist
 
 **Community Manager:**
 
-- **Monitoring auf Mobile** (Amethyst) - Benachrichtigungen, Alerts
-- **Tiefes Engagement auf Desktop** (Snort) - Lange Antworten, Threads
-- **DMs auf Mobile** - Schnelle Gespräche
-- **Event-Planung auf Desktop** - Detaillierte Posts
+- **Monitoring auf Mobile** (Amethyst): Benachrichtigungen, Alerts
+- **Tiefes Engagement auf Desktop** (Snort): Lange Antworten, Threads
+- **DMs auf Mobile**: Schnelle Gespräche
+- **Event-Planung auf Desktop**: Detaillierte Posts
 
 **Gelegentlicher Nutzer:**
 
-- **Browsen auf Mobile** (beliebig) - Während Pausen
-- **Post von beiden** - Was gerade praktisch ist
-- **Kein strikter Workflow** - Nutze einfach, was sich richtig anfühlt
+- **Browsen auf Mobile** (beliebig): Während Pausen
+- **Poste von beidem**: Was gerade praktisch ist
+- **Kein strikter Workflow**: Nutze einfach, was sich richtig anfühlt
 
 ### Den Überblick behalten
 
@@ -249,32 +257,19 @@ Nostrs Superkraft ist, dass deine Identität überall funktioniert. Clevere Nutz
 
 **Coracle (Web):**
 
-- Matrix-Integration
-- Einzigartige Features
-- Gute Performance
-- Aktive Entwicklung
+- Relay-zentriert: Relays auswählen und einzeln durchstöbern
+- Moderation auf Basis deines Web of Trust
+- Communities, Kalender-Events und Kleinanzeigen
+- Mehrere Konten in einem Browser
 
 ### Auswahl basierend auf Aufgabe
 
-**Am besten zum Posten:**
-
-- Desktop-Web-Clients (größerer Bildschirm, einfacheres Tippen)
-- Mobile für schnelle Gedanken
-
-**Am besten zum Lesen:**
-
-- Mobile (Bequemlichkeit)
-- Desktop (besser für lange Inhalte)
-
-**Am besten für Medien:**
-
-- Clients mit gutem Bild-Support
-- Prüfe, welcher Fotos/Videos gut handhabt
-
-**Am besten für DMs:**
-
-- Mobile (immer verfügbar)
-- Desktop (besser für lange Gespräche)
+Der Desktop gewinnt überall dort, wo längere Texte zu tippen sind. Beim Lesen und
+bei der kurzen Antwort unterwegs liegt das Handy vorn.
+Medien und private Nachrichten hängen stärker vom Client ab als vom Gerät. Wenn
+also Fotos im Zentrum dessen stehen, was du veröffentlichst, oder du die modernen
+privaten Nachrichten willst, prüfe erst, ob ein Client damit sauber umgeht, bevor
+du ihn zu deinem Hauptclient machst.
 
 <Callout variant="success">
   **Experimentiere:** Probiere verschiedene Clients für verschiedene Aufgaben
@@ -287,12 +282,41 @@ Nostrs Superkraft ist, dass deine Identität überall funktioniert. Clevere Nutz
 
 ### Wechsel zwischen Clients
 
-**Einfach (automatisch):**
+Einen Client dazuzunehmen ist leicht. Worauf es ankommt, ist die Art, wie du dich
+darin anmeldest, denn dein nsec lässt sich weder wechseln noch zurückziehen: Jede
+App, in die du ihn einfügst, behält ihn für immer.
 
-1. Installiere neuen Client
-2. Importiere deinen nsec
-3. Warte auf Synchronisierung (Follows, Profil)
-4. Fang an zu nutzen
+1. Installiere den neuen Client
+2. Melde dich so an, wie es zur Plattform passt (siehe unten)
+3. Warte, bis er Profil und Follows geladen hat
+4. Leg los
+
+**Web-Clients (Iris, Snort, Coracle, Primal im Browser):** Verbinde eine
+Signer-Erweiterung, [Alby](https://getalby.com) oder
+[nos2x](https://github.com/fiatjaf/nos2x), oder einen Remote-Signer wie
+[nsec.app](https://nsec.app). Die Seite lässt jede Aktion vom Signer bestätigen
+und bekommt deinen Schlüssel nie zu sehen. Füge deinen nsec in keine Website ein,
+egal wie bekannt sie ist.
+
+**Android:** Nimm [Amber](https://github.com/greenart7c3/Amber). Der Client
+reicht jede Signaturanfrage an Amber weiter, du bestätigst sie dort, und dein
+nsec landet nie im Client selbst. Amber gibt es nicht bei Google Play, sondern
+über F-Droid, den Zap Store oder die GitHub-Releases.
+
+**iOS:** App-Store-Apps laufen in einer Sandbox, deshalb ist es hier üblich, den
+nsec in einen Client einzufügen, dem du vertraust. Wenn du ihn lieber gar nicht
+aus der Hand geben willst: Primal kann Aktivität in anderen Nostr-Apps über seine
+Funktion „Remote Login“ freigeben, und
+[Nostash](https://apps.apple.com/us/app/nostash/id6744309333) ist eine
+Signer-Erweiterung für Safari auf iPhone, iPad und Mac.
+
+<Callout variant="warning">
+  Es gilt dieselbe Regel wie im [Schnellstart](/de/guides/quickstart): Eine
+  Website, die dich auffordert, deinen privaten Schlüssel in ein Formular zu
+  tippen, ist ein Warnsignal, und die Lösung heißt Signer.
+  [Privatsphäre und Sicherheit](/de/guides/privacy-security) zeigt Schritt für
+  Schritt, wie du einen einrichtest.
+</Callout>
 
 **Was übertragen wird:**
 
@@ -307,33 +331,27 @@ Nostrs Superkraft ist, dass deine Identität überall funktioniert. Clevere Nutz
 - Entwürfe
 - Lokale Daten
 
-### Export/Import falls verfügbar
+### Export und Import
 
-**Einige Clients unterstützen:**
-
-- Follow-Listen-Export (NIP-02)
-- Mute-Listen-Export (NIP-51)
-- Einstellungs-Export (proprietär)
-
-**Wie:**
-
-1. Gehe zu Einstellungen → Exportieren
-2. Speichere Datei
-3. Importiere in neuen Client
-4. Verifiziere übertragene Daten
+Es gibt weniger zu exportieren, als man denkt. Deine Follows und deine Mute-Liste
+liegen als von dir signierte Listen auf Relays. Ein neuer Client holt sie sich
+von allein, sobald er mit den richtigen Relays verbunden ist, und keine Datei
+wechselt den Besitzer. Lesezeichen kommen genauso mit, sofern der Client sie als
+Nostr-Liste führt und nicht auf dem Gerät. Zurück bleibt die App-Konfiguration,
+und nur manche Clients bieten überhaupt eine Möglichkeit, die zu sichern.
 
 ### Neue Clients testen
 
 **Sicherer Ansatz:**
 
-1. Erstelle zuerst Test-Keys
-2. Probiere Client mit Test-Account
-3. Wenn es dir gefällt, importiere echte Keys
-4. Behalte alten Client als Backup
+1. Erstelle zuerst ein Wegwerf-Schlüsselpaar
+2. Probiere den Client mit diesem Test-Konto aus
+3. Wenn er dir gefällt, verbinde deine echte Identität über deinen Signer
+4. Behalte den alten Client als Backup
 
 **Nicht:**
 
-- nsec in zweifelhafte Clients importieren
+- Deinen nsec in eine Website einfügen, niemals
 - Mit deiner Hauptidentität testen
 - Die Migration überstürzen
 
@@ -345,40 +363,22 @@ Nostrs Superkraft ist, dass deine Identität überall funktioniert. Clevere Nutz
 
 **Content Creator:**
 
-- **Planung:** Notion/externes Tool
-- **Schreiben:** Desktop-Client (Vollbild)
-- **Scheduling:** Falls Client unterstützt
-- **Analytics:** Third-Party-Tools
-- **Engagement:** Mobile den ganzen Tag
-
-**Entwickler:**
-
-- **Testing:** Mehrere Clients gleichzeitig
-- **Debugging:** Developer-Tools
-- **Dokumentation:** Langform-Plattformen
-- **Community:** Mix aus Clients
+- **Planung:** die Notiz-App, die du sowieso schon nutzt
+- **Schreiben:** Desktop-Client im Vollbild
+- **Engagement:** mobil über den Tag verteilt
+- **Zahlen:** Zap- und Reichweitenstatistiken stehen in eigenen Werkzeugen, siehe
+  [Nostr-Tools, die sich lohnen](/de/guides/nostr-tools)
 
 **Community Manager:**
 
-- **Monitoring:** Mobile immer an
-- **Response:** Desktop für detaillierte Antworten
-- **Events:** Spezialisierte Clients
-- **Analytics:** Third-Party-Tools
+- **Monitoring:** mobil, immer an
+- **Response:** Desktop für die langen Antworten
+- **Events:** ein Client mit Kalenderfunktion, etwa Coracle
+- **Zahlen:** dieselben Werkzeuge wie oben
 
-### Automation [ERWEITERT]
-
-**Tools:**
-
-- Nostr-Bots
-- Cross-Posting-Services
-- Scheduling-Tools
-- Analytics-Plattformen
-
-**Warnung:**
-
-- Nicht über-automatisieren
-- Authentizität zählt
-- Sparsam einsetzen
+Cross-Posting-Brücken und Scheduling-Bots gibt es, und sie sind zugleich der
+schnellste Weg, ein Konto wie einen Feed statt wie einen Menschen klingen zu
+lassen. Setz sie sparsam ein.
 
 ---
 
@@ -398,6 +398,14 @@ Nostrs Superkraft ist, dass deine Identität überall funktioniert. Clevere Nutz
 - Ein Client nicht vollständig synchronisiert
 - Verschiedene Relay-Sets
 - Warte und aktualisiere
+
+### Follows verschwunden, nachdem du einen alten Client geöffnet hast
+
+Ein Client, den du seit Monaten nicht angefasst hast, hält womöglich noch eine
+monatealte Kopie deiner Follow-Liste. Folgst oder entfolgst du jemandem, bevor er
+aufgeholt hat, veröffentlicht er diese alte Kopie über deine aktuelle, und alle
+seither hinzugekommenen Leute sind weg. Öffnen, laden lassen, prüfen, ob die Zahl
+der Follows stimmt, und erst dann jemandem folgen.
 
 ### Benachrichtigungs-Überflutung
 
@@ -433,7 +441,8 @@ Nostrs Superkraft ist, dass deine Identität überall funktioniert. Clevere Nutz
 **Best Practices:**
 
 - Nutze verschiedene Clients für verschiedene Aufgaben
-- Denk nicht zu viel über Synchronisierung nach
+- Melde dich im Web über einen Signer an, nie per nsec auf einer Website
+- Halte überall dieselbe Relay-Liste
 - Wähle primären + sekundären Client
 - Sichere deine Keys (immer!)
 
@@ -451,5 +460,5 @@ Bereit, deinen Workflow über mehrere Clients zu optimieren?
 
 ## Weiterlesen
 
-- [Essentielle Nostr-Tools](/de/guides/nostr-tools)
-- [Häufige Probleme & Lösungen](/de/guides/troubleshooting)
+- [Nostr-Tools, die sich lohnen](/de/guides/nostr-tools): die Werkzeuge, die den Alltag mit mehreren Clients erträglich machen
+- [Nostr-Troubleshooting](/de/guides/troubleshooting): was zu prüfen ist, wenn ein Client andere Posts zeigt als der andere

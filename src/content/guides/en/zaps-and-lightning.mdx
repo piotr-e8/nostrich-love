@@ -14,40 +14,25 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 
 ## What are Zaps? ⚡
 
-Zaps are Bitcoin tips sent over the Lightning Network. They're the native value layer of Nostr—allowing users to reward content they love with real money.
+Zaps are Bitcoin tips sent over the Lightning Network. They're the native value layer of Nostr, and they let readers reward content they love with real money.
 
-Think of them as "likes with value"—a way to support people whose content you enjoy.
+Think of them as "likes with value": a way to support people whose content you enjoy.
 
 ### How Zaps Work
 
 1. **You create good content** → A post, thread, or reply
 2. **Someone enjoys it** → They click the ⚡ zap button
-3. **They send satoshis** → Tiny amounts of Bitcoin (1000 sats = ~$0.30)
+3. **They send satoshis** → Tiny amounts of Bitcoin (1000 sats is well under a dollar)
 4. **You receive instantly** → Money appears in your wallet
 5. **Everyone sees it** → Zaps are public and create social proof
 
 ### Why Zaps Are Revolutionary
 
-**Traditional Social Media:**
-
-- Likes are free and worthless
-- Platform keeps all ad revenue
-- Creators get nothing
-- Engagement is hollow
-
-**Nostr with Zaps:**
-
-- Every like can have real value
-- No platform takes a cut
-- Direct creator support
-- Meaningful engagement
+On the usual platforms a like costs nothing, so it is worth nothing. Your work sells ads and the platform banks the money. Zaps change what the gesture is: when someone taps the bolt, real Bitcoin leaves their wallet and arrives in yours, with no company in the middle taking a percentage. Appreciation that costs the sender something tends to mean more.
 
 ### Real Examples
 
-- Developer receives 100,000 sats ($30) for fixing a bug
-- Artist gets zapped for sharing their work
-- Writer earns Bitcoin for insightful threads
-- Meme creator gets tips for viral content
+An illustrator posts a sketch and wakes up to a few thousand sats from people she has never met. A writer's long thread keeps circulating for a week and keeps earning tips the whole time. A musician shares a rough demo and covers the studio hour. Developers get zapped too, sometimes 100,000 sats (tens of dollars) for an afternoon spent fixing somebody's bug.
 
 ### The Value-for-Value Model
 
@@ -63,17 +48,12 @@ Think of them as "likes with value"—a way to support people whose content you 
       lines: ["Free to post", "Free to read", "Attention pays the creator"],
     },
   ]}
-  caption="Same free access on both sides — the difference is who the attention pays."
+  caption="Same free access on both sides. What differs is who the attention pays."
 />
 
 ### How Zaps Appear
 
-In supported clients, zaps show up as:
-
-- ⚡ Lightning bolt icons
-- Amount zapped (e.g., "21 sats")
-- Running totals on posts
-- Special notifications when you receive them
+In supported clients you see a lightning bolt with an amount beside it ("21 sats"), a running total on the post itself, and a notification of your own whenever one lands.
 
 <MockPost
   author="Alice"
@@ -103,7 +83,7 @@ Before you can send or receive zaps, you need a Lightning wallet.
 
 **Primal Wallet** (Built into the Primal app)
 
-- Zero setup—activate it inside the client
+- Zero setup: you activate it inside the client
 - Self-custodial (Spark-based) since Primal 3.0
 - Web, iOS, and Android
 - [primal.net](https://primal.net)
@@ -112,7 +92,7 @@ Before you can send or receive zaps, you need a Lightning wallet.
 
 - Hosted wallet that runs in any browser
 - Gives you a `you@coinos.io` Lightning address
-- Custodial—keep only small amounts
+- Custodial, so keep only small amounts
 - [coinos.io](https://coinos.io)
 
 **Phoenix** (Mobile)
@@ -162,7 +142,7 @@ Before you can send or receive zaps, you need a Lightning wallet.
 Older Nostr guides recommend these two. That advice is out of date:
 
 - **Mutiny Wallet shut down.** The team announced the shutdown in August 2024 and ended all apps, hosted services, and support by December 31, 2024. Don't send funds there.
-- **Wallet of Satoshi is no longer the zero-setup custodial app it was famous for.** Its classic custodial service left the US market in November 2023 and was discontinued across the EU in early 2026. It has since relaunched around a Spark-based wallet marketed as self-custodial—a different product from the one older guides describe.
+- **Wallet of Satoshi is no longer the zero-setup custodial app it was famous for.** Its classic custodial service left the US market in November 2023 and was discontinued across the EU in early 2026. It has since relaunched around a Spark-based wallet marketed as self-custodial. It's a different product from the one older guides describe.
 
 For the easiest start today, use your client's built-in wallet (like Primal's) or a hosted web wallet like Coinos instead.
 
@@ -173,7 +153,7 @@ For the easiest start today, use your client's built-in wallet (like Primal's) o
 #### Step-by-Step: Alby Hub + Web Client
 
 1. **Set Up Alby Hub**
-   - Start a hub at [getalby.com](https://getalby.com)—in the cloud or self-hosted
+   - Start a hub at [getalby.com](https://getalby.com), in the cloud or self-hosted
    - Alby Hub is a self-custodial Lightning node; Alby no longer offers a hosted custodial balance
    - Optionally install the Alby browser extension and link it to your hub for one-click zaps in web clients
 
@@ -227,7 +207,7 @@ For the easiest start today, use your client's built-in wallet (like Primal's) o
 4. **Verify It Works**
    - Look for ⚡ icon on your profile
    - Ask a friend to send you a test zap (100 sats)
-   - Check your wallet—should receive instantly
+   - Check your wallet, the sats should arrive instantly
    - You should see zap notification in your client
 
 <Callout variant="warning">
@@ -277,11 +257,11 @@ This personalizes the interaction and helps creators know what content resonates
 
 ## Receiving Zaps 💰
 
-### Setting Up LNURL
+### Setting Up Your Lightning Address
 
 To receive zaps, you need to configure where they go:
 
-1. **Get your Lightning Address or LNURL**
+1. **Get your Lightning address**
    - From your wallet (your client's built-in wallet, Coinos, Alby Hub, etc.)
    - Format: `yourname@provider.com`
 
@@ -293,19 +273,15 @@ To receive zaps, you need to configure where they go:
    ```
 
 3. **Verify it works**
-   - Ask a friend to send you 10 sats
-   - Or use a testnet faucet
+   - Send a few sats to your own Lightning address from your wallet's send screen
+   - Or ask a friend for a 10 sat test zap
 
 ### Zap Notifications
 
-**In most clients:**
-
-- Push notification when zapped
-- Notification tab shows zap history
-- Can see who zapped you
+Most clients push a notification the second a zap lands, and keep a zap tab in your notifications so you can scroll back through who sent what.
 
 **Privacy note:**
-Zaps are semi-public. While amounts can be private in some setups, the fact that you zapped (or were zapped) is visible.
+Zaps are public. Anyone can look at a post and see that it was zapped and for how much, because the amount is baked into the zap receipt that gets published to relays. Some clients offer an anonymous zap, which leaves the sender's name off that receipt. The amount stays visible either way.
 
 ---
 
@@ -331,10 +307,12 @@ When someone zaps your post, automatically split the payment with collaborators:
 
 ### Setting Up Splits
 
-1. **In your client**: Look for "Zap Splits" or "Recipients"
-2. **Add collaborators**: Enter their Lightning addresses
-3. **Set percentages**: Must total 100%
-4. **Save**: Future zaps auto-split
+Splits belong to the post, not to your account. You set them up while you are writing the post, in a client that supports the feature (Amethyst is the one most people use), and they apply to that one note. There is no setting that quietly splits everything you publish from then on.
+
+1. **While composing the post**: look for "Zap Splits", "Recipients" or something similar in the compose screen
+2. **Add collaborators by their Nostr profile**: you pick people by npub or by searching for them, and the client reads each person's Lightning address off their profile. Somebody with no Lightning address on their profile has nowhere to receive their share.
+3. **Give each person a share** (optional): these are relative weights rather than percentages, so 3 and 1 means one collaborator takes three quarters. Leave the weights out and the zap is divided equally.
+4. **Publish**: every zap on that note is divided the way you set it.
 
 ### Common Use Cases
 
@@ -345,27 +323,11 @@ When someone zaps your post, automatically split the payment with collaborators:
 
 ---
 
-## Zap Analytics 📊
+## Keeping Track of Zaps 📊
 
-Tracking your zap activity:
+Your client already holds most of what you would want to know. Every post carries its own zap total, and the zap tab in your notifications lists who sent what and when. If you use a client with a built-in wallet, like Primal, the wallet screen keeps your full history of sats in and sats out in one place.
 
-### For Creators
-
-- **Total zaps received**: Lifetime and time period
-- **Top zapped content**: Which posts earn most
-- **Zap velocity**: Rate of incoming zaps
-
-**Tools:**
-
-- Most clients show basic stats
-- [zaplife.lol](https://zaplife.lol) - Detailed analytics
-- [nostrudel.ninja](https://nostrudel.ninja) - Advanced stats
-
-### For Supporters
-
-- **Total zapped**: How much you've given
-- **Zap leaderboard**: Who you've supported most
-- **Impact tracking**: See your contribution
+What does not exist yet is a real analytics dashboard for zaps, so don't go hunting for top-post charts or supporter leaderboards. [zaplife.lol](https://zaplife.lol) is worth a look anyway: it is a live feed of zaps happening across Nostr right now, more fun to watch than useful to measure.
 
 ---
 
@@ -478,8 +440,7 @@ Tracking your zap activity:
 
 - [Lightning Network Info](https://lightning.network)
 - [Alby Documentation](https://guides.getalby.com)
-- [Zaplife - Zap Analytics](https://zaplife.lol)
-- [ZapSplits Tool](https://github.com/nostr-protocol/zaps)
+- [Zaplife - a live feed of zaps across Nostr](https://zaplife.lol)
 
 ---
 
@@ -505,12 +466,12 @@ Join the zapping community:
 
 **Zap Amounts:**
 
-- 21 sats = Minimum viable zap
+- 21 sats = a classic small zap (a Bitcoin in-joke)
 - 100 sats = Standard "thank you"
 - 1000 sats = "This was valuable"
 - 10000+ sats = Exceptional content
 
-**Remember:** Every sat counts. Don't worry about amounts—support good content generously!
+**Remember:** Every sat counts. Don't overthink the amount. Support good content generously!
 
 ---
 
@@ -524,5 +485,5 @@ Ready to test what you've learned about zaps?
 
 ## Keep reading
 
-- [Your keys, your identity](/guides/keys-and-security) — zaps are tied to the key that signs them, so this is worth getting right first
-- [Nostr tools worth knowing](/guides/nostr-tools) — wallets and services that make zapping less fiddly
+- [Your keys, your identity](/guides/keys-and-security): zaps are tied to the key that signs them, so this is worth getting right first
+- [Nostr tools worth knowing](/guides/nostr-tools): wallets and services that make zapping less fiddly

@@ -2,18 +2,14 @@
 title: "Multi-Client Workflow"
 seoTitle: "Using Multiple Nostr Clients: One Identity, Many Apps"
 description: "Maximize your Nostr experience with multiple clients. Desktop + mobile workflows, syncing strategies, and best practices for power users."
-estimatedTime: "8 minutes"
+estimatedTime: "12 minutes"
 priority: 11
 category: "advanced"
 prerequisites: ["keys-and-security", "quickstart"]
 ---
 
-import { CTAButton } from "@components/CTAButton";
 import { Callout } from "@components/ui/Callout";
 import { MultiClientQuiz } from "@components/interactive/MultiClientQuiz";
-
-{/* ProgressIndicator temporarily disabled - will be implemented with actual tracking later */}
-{/* <ProgressIndicator current={6} total={6} estimatedTime="8 minutes" /> */}
 
 ## Why Multiple Clients? (2 minutes)
 
@@ -26,18 +22,25 @@ Nostr's superpower is that your identity works everywhere. Smart users take adva
 **Mobile + Desktop:**
 
 - **Phone (Damus/Amethyst):** Quick checks, on-the-go posting, notifications
-- **Desktop (Iris/Snort):** Long-form writing, heavy browsing, work hours
+- **Desktop (Iris/Snort):** Longer posts and threads, heavy browsing, work hours
 
-**Public + Private:**
+Full articles are a different job. Iris and Snort compose short notes, so if you
+write essays, use a client built for long-form posts. [YakiHonne](https://yakihonne.com)
+is the usual choice and runs in the browser as well as on iOS and Android.
 
-- **Public client:** Professional identity, public posts
-- **Private client:** Personal identity, different circles
+**Two separate identities:**
 
-**Different Features:**
+- Some people keep a second keypair for a personal account and give each keypair
+  its own client
+- The separation comes from the two sets of keys, not from the app. One keypair
+  used in two clients is still one public identity, with the same npub and the
+  same public posts everywhere
 
-- **Client A:** Great for media
-- **Client B:** Better for DMs
-- **Client C:** Best for discovery
+**Different features:**
+
+A client can earn its place by doing one thing well: Amethyst for its relay and
+media controls, 0xchat for private messages, Coracle for browsing individual
+relays. Everything else about your account behaves the same in all of them.
 
 **Backup & Redundancy:**
 
@@ -47,23 +50,10 @@ Nostr's superpower is that your identity works everywhere. Smart users take adva
 
 ### Benefits
 
-✅ **Optimization**
-
-- Use best tool for each task
-- Different UIs for different contexts
-- Feature-specific advantages
-
-✅ **Flexibility**
-
-- Not locked into one interface
-- Easy to switch if issues arise
-- Experiment freely
-
-✅ **Productivity**
-
-- Desktop for writing
-- Mobile for consuming
-- Separate contexts = better focus
+The gain is that you stop bending your habits to fit one app. Write where writing
+is comfortable, read where reading is comfortable, and keep the two contexts
+apart on purpose instead of by accident. Little is at stake in a switch, because
+your identity, posts and follows live on relays rather than inside any client.
 
 <Callout variant="info">
   **You don't need multiple clients.** But if you're serious about Nostr, it
@@ -83,7 +73,12 @@ Nostr's superpower is that your identity works everywhere. Smart users take adva
 - ✓ Follows list
 - ✓ Profile information
 - ✓ Reactions (likes, reposts)
-- ✓ DMs (if properly encrypted)
+
+DMs are the exception. Private messages show up in a second client only if that
+client speaks the same DM standard (the modern one is NIP-17) and is connected to
+your DM relays. A client still on the older standard shows you a different,
+separate conversation history. See
+[private messages](/guides/nip17-private-messages) for which clients are where.
 
 ### What Doesn't Sync
 
@@ -91,7 +86,7 @@ Nostr's superpower is that your identity works everywhere. Smart users take adva
 
 - ✗ App settings (themes, fonts)
 - ✗ Notification preferences
-- ✗ Mute/block lists (sometimes)
+- ✗ App-local blocks and per-app hides (your standard mute list does sync)
 - ✗ Draft posts
 - ✗ Local bookmarks
 - ✗ Custom feeds/algorithms
@@ -105,7 +100,13 @@ Nostr's superpower is that your identity works everywhere. Smart users take adva
 2. Client A sends to relays
 3. Client B connects to same relays
 4. Client B sees your post
-5. Everything stays in sync
+5. Your posts and follows stay in sync
+
+That third step is the whole trick. Both clients look for your posts on the
+relays in your published relay list, so if one client is pointed somewhere your
+posts never went, it will show you a thinner version of your own account. Keep
+the same relay list in every client you use. The
+[outbox model](/guides/outbox-model) explains how clients find that list.
 
 **Time delay:**
 
@@ -123,9 +124,11 @@ Nostr's superpower is that your identity works everywhere. Smart users take adva
 
 **Mutes/Blocks:**
 
-- Some clients export/import lists
-- NIP-51 standardizing this
-- May need manual sync for now
+- Your mute list is part of the protocol (NIP-51), so it travels with your
+  account: mute someone in one client and the others pick it up
+- What stays behind is app-local stuff, a per-app "hide this" toggle or a
+  client's own filter settings
+- No export or import needed
 
 **Drafts:**
 
@@ -248,32 +251,18 @@ Nostr's superpower is that your identity works everywhere. Smart users take adva
 
 **Coracle (Web):**
 
-- Matrix integration
-- Unique features
-- Good performance
-- Active development
+- Relay-first: pick relays and browse them individually
+- Moderation built on your web of trust
+- Communities, calendar events and classifieds
+- Multiple accounts in one browser
 
 ### Choosing Based on Task
 
-**Best for posting:**
-
-- Desktop web clients (bigger screen, easier typing)
-- Mobile for quick thoughts
-
-**Best for reading:**
-
-- Mobile (convenience)
-- Desktop (better for long content)
-
-**Best for media:**
-
-- Clients with good image support
-- Check which handles photos/videos well
-
-**Best for DMs:**
-
-- Mobile (always available)
-- Desktop (better for long conversations)
+Desktop wins for anything you have to type at length; the phone wins for reading
+and for the short reply you fire off while away from a desk. Media and private
+messages vary more by client than by device, so if photos are central to what you
+publish, or you want the modern private messages, check that a client handles
+them properly before you make it your main one.
 
 <Callout variant="success">
   **Experiment:** Try different clients for different tasks. You'll quickly find
@@ -286,12 +275,38 @@ Nostr's superpower is that your identity works everywhere. Smart users take adva
 
 ### Moving Between Clients
 
-**Easy (automatic):**
+Adding a client is easy. How you sign in to it is the part worth getting right,
+because your nsec cannot be rotated or revoked: every app you paste it into keeps
+it forever.
 
-1. Install new client
-2. Import your nsec
-3. Wait for sync (follows, profile)
-4. Start using
+1. Install the new client
+2. Sign in the way that fits the platform (below)
+3. Wait for it to pull your profile and follows
+4. Start using it
+
+**Web clients (Iris, Snort, Coracle, Primal web):** connect a signer extension,
+[Alby](https://getalby.com) or [nos2x](https://github.com/fiatjaf/nos2x), or a
+remote signer such as [nsec.app](https://nsec.app). The site asks the signer to
+approve each action and never sees your key. Do not paste your nsec into a
+website, no matter how well known it is.
+
+**Android:** use [Amber](https://github.com/greenart7c3/Amber). The client hands
+each signing request to Amber, you approve it there, and your nsec never enters
+the client itself. Amber is not on Google Play; get it from F-Droid, the Zap
+Store or its GitHub releases page.
+
+**iOS:** an App Store app is sandboxed, so pasting your nsec into a client you
+trust is the common route. If you would rather not hand it over at all, Primal
+can approve activity in other Nostr apps through its Remote Login feature, and
+[Nostash](https://apps.apple.com/us/app/nostash/id6744309333) is a signer
+extension for Safari on iPhone, iPad and Mac.
+
+<Callout variant="warning">
+  This is the same rule as in the [quickstart](/guides/quickstart): a website
+  that asks you to type your private key into a form is a red flag, and the fix
+  is a signer.
+  [Privacy and security](/guides/privacy-security) walks through setting one up.
+</Callout>
 
 **What transfers:**
 
@@ -306,33 +321,27 @@ Nostr's superpower is that your identity works everywhere. Smart users take adva
 - Drafts
 - Local data
 
-### Export/Import When Available
+### Export and Import
 
-**Some clients support:**
-
-- Follow lists export (NIP-02)
-- Mute lists export (NIP-51)
-- Settings export (proprietary)
-
-**How to:**
-
-1. Go to Settings → Export
-2. Save file
-3. Import in new client
-4. Verify data transferred
+There is less to export than you would expect. Your follows and your mute list
+are published to relays as lists signed by you, so a new client picks them up on
+its own once it connects to the right relays, and no file changes hands.
+Bookmarks come along the same way in clients that keep them as a Nostr list
+instead of on the device. What stays behind is per-app configuration, and only
+some clients offer any way to save that.
 
 ### Testing New Clients
 
 **Safe approach:**
 
-1. Create test keys first
-2. Try client with test account
-3. If you like it, import real keys
-4. Keep old client as backup
+1. Create a throwaway keypair first
+2. Try the client with that test account
+3. If you like it, connect your real identity through your signer
+4. Keep the old client as a backup
 
 **Don't:**
 
-- Import nsec into sketchy clients
+- Paste your nsec into a website, ever
 - Test with your main identity
 - Rush the migration
 
@@ -344,40 +353,21 @@ Nostr's superpower is that your identity works everywhere. Smart users take adva
 
 **Content Creator:**
 
-- **Planning:** Notion/external tool
-- **Writing:** Desktop client (full screen)
-- **Scheduling:** If client supports
-- **Analytics:** Third-party tools
-- **Engagement:** Mobile throughout day
-
-**Developer:**
-
-- **Testing:** Multiple clients simultaneously
-- **Debugging:** Developer tools
-- **Documentation:** Long-form platforms
-- **Community:** Mix of clients
+- **Planning:** whatever notes app you already use
+- **Writing:** desktop client, full screen
+- **Engagement:** mobile through the day
+- **Numbers:** zap and reach stats live in separate tools, see
+  [Nostr tools worth knowing](/guides/nostr-tools)
 
 **Community Manager:**
 
-- **Monitoring:** Mobile always-on
-- **Response:** Desktop for detailed replies
-- **Events:** Specialized clients
-- **Analytics:** Third-party tools
+- **Monitoring:** mobile, always on
+- **Response:** desktop for the long replies
+- **Events:** a client with calendar support, such as Coracle
+- **Numbers:** the same tools as above
 
-### Automation [ADVANCED]
-
-**Tools:**
-
-- Nostr bots
-- Cross-posting services
-- Scheduling tools
-- Analytics platforms
-
-**Warning:**
-
-- Don't over-automate
-- Authenticity matters
-- Use sparingly
+Cross-posting bridges and scheduling bots exist, and they are also the fastest
+way to make an account read like a feed instead of a person. Use them sparingly.
 
 ---
 
@@ -397,6 +387,14 @@ Nostr's superpower is that your identity works everywhere. Smart users take adva
 - One client not fully synced
 - Different relay sets
 - Wait and refresh
+
+### Follows Vanished After Opening an Old Client
+
+A client you have not touched in months can still be holding a months-old copy of
+your follow list. If you follow or unfollow someone before it finishes catching
+up, it publishes that old copy over your current one and the people you added
+since are gone. Open it, let it load, check that the follow count looks right,
+and only then follow anyone.
 
 ### Notification Overload
 
@@ -432,7 +430,8 @@ Nostr's superpower is that your identity works everywhere. Smart users take adva
 **Best Practices:**
 
 - Use different clients for different tasks
-- Don't overthink syncing
+- On the web, sign in with a signer; never paste your nsec into a site
+- Keep the same relay list everywhere
 - Pick primary + secondary
 - Backup your keys (always!)
 
@@ -450,5 +449,5 @@ Ready to optimize your workflow across multiple clients?
 
 ## Keep reading
 
-- [Nostr tools worth knowing](/guides/nostr-tools) — the utilities that make running several clients bearable
-- [Troubleshooting Nostr](/guides/troubleshooting) — what to check when one client shows different posts than another
+- [Nostr tools worth knowing](/guides/nostr-tools): the utilities that make running several clients bearable
+- [Troubleshooting Nostr](/guides/troubleshooting): what to check when one client shows different posts than another

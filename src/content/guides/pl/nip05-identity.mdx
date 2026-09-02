@@ -9,7 +9,6 @@ prerequisites: ["keys-and-security", "quickstart"]
 ---
 
 import { NIP05Checker } from "@components/interactive/NIP05Checker";
-import { CTA } from "@components/ui/CTA";
 import { Note } from "@components/ui/Note";
 import { Callout } from "@components/ui/Callout";
 import { NIP05IdentityQuiz } from "@components/interactive/NIP05IdentityQuiz";
@@ -37,10 +36,12 @@ NIP-05 (Nostr Implementation Possibility #5) pozwala Ci mieć czytelny identyfik
 
 ### Co Otrzymujesz
 
-- ✅ **Łatwe do udostępniania**: "Znajdź mnie pod bob@nostrplebs.com"
-- ✅ **Wygląda profesjonalnie**: Czysty, zapadający w pamięć identyfikator
-- ✅ **Sygnał zaufania**: Odznaka NIP-05 w wielu klientach
-- ✅ **Łatwiejsze do znalezienia**: Szukaj według swojego identyfikatora
+Adres, który da się komuś przekazać. "Znajdź mnie pod bob@nostrplebs.com"
+przetrwa powiedzenie na głos na koncercie, wydrukowanie na wizytówce albo
+przeczytanie na koniec odcinka podcastu. Wygląda na wybrany, a nie wygenerowany,
+większość klientów pozwala Cię po nim wyszukać, a wiele z nich stawia obok
+niego mały ptaszek. Warto rozumieć ten ptaszek, zanim się na nim oprzesz:
+sekcja o zaufaniu niżej mówi dokładnie, co on dowodzi, a czego nie.
 
 ### Ale Pamiętaj...
 
@@ -83,9 +84,20 @@ Wiele klientów pokazuje odznakę ✓ dla użytkowników NIP-05:
   caption="Zweryfikowany adres NIP-05 pokazany tak, jak renderuje go większość klientów."
 />
 
-To pomaga ludziom wiedzieć, że obserwują prawdziwą Ciebie, a nie oszusta.
+Ta odznaka dowodzi mniej, niż się wydaje. Mówi tylko tyle, że domena z adresu
+wydaje ten konkretny klucz dla tej konkretnej nazwy. Cała reszta zależy od
+domeny. `alicja@alicja.dev` waży sporo, bo alicja.dev należy do Alicji i nikt
+inny nic tam nie opublikuje. `alicja@` u otwartego darmowego dostawcy oznacza
+tylko tyle, że nazwa była wolna, kiedy ktoś o nią poprosił, a oszust, który
+zarejestruje `alicjja@` u tego samego dostawcy, dostanie identycznego ptaszka
+przy swojej nazwie.
 
-### Czy Potrzebujesz Jeden?
+Pytanie brzmi więc: na jaką domenę wskazuje ta odznaka? Jeśli rozpoznajesz
+domenę jako własną domenę tej osoby, ptaszek potwierdza, że klucz należy do
+niej. Jeśli domena nic Ci nie mówi, ptaszek nie mówi Ci nic o tym, kto stoi za
+kontem.
+
+### Czy go potrzebujesz?
 
 **Nie.** Możesz doskonale używać Nostr bez tego.
 
@@ -97,24 +109,27 @@ To pomaga ludziom wiedzieć, że obserwują prawdziwą Ciebie, a nie oszusta.
 - Jesteś poważnie nastawiony do Nostr na dłuższą metę
 - Masz dość czytania 63-znakowych ciągów
 
-### Nie To Centralizacja!
+### To nie centralizacja!
 
-Niektórzy obawiają się, że NIP-05 oznacza "scentralizowaną tożsamość". Nie oznacza:
-
-- Możesz mieć **wiele** identyfikatorów NIP-05
-- Możesz je **zmieniać** w dowolnym momencie
-- Twój **npub** to wciąż Twoja prawdziwa tożsamość
-- NIP-05 to tylko **wskaźnik** do Twojego npub
+Obawa jest uczciwa. Skoro Twoja nazwa mieszka na cudzej domenie, to czy nie
+oddałeś komuś swojej tożsamości? Nie. Adres jest wskaźnikiem, a tym, co ludzie
+naprawdę obserwują, jest npub. Możesz mieć kilka adresów naraz, pozwolić
+któremuś wygasnąć albo później przenieść się na własną domenę, a Twoi
+obserwujący zostaną tam, gdzie są, bo obserwowali klucz. Stracisz adres w
+całości? Stracisz wygodę. Konto, posty i obserwujący pozostają nietknięci.
 
 ---
 
 ## Darmowe Opcje 🎁
 
-Kilka usług oferuje darmowe identyfikatory NIP-05. Świetne do wypróbowania!
+Kilka usług rozdaje adresy NIP-05 za darmo i to sensowne miejsce na start.
+Pożyczasz cudzą domenę, więc adres należy do kogoś innego i ten ktoś może go
+wycofać, ale nic w Twoim koncie od niego nie zależy.
 
 ### NostrCheck
 
-Kolejna świetna darmowa opcja.
+Darmowa opcja prowadzona przez społeczność, która obok adresu daje Ci też
+hosting mediów i garść innych narzędzi do Nostr.
 
 **Jak zdobyć:**
 
@@ -125,15 +140,14 @@ Kolejna świetna darmowa opcja.
 
 **Zalety:**
 
-- Również darmowe
+- Za darmo
 - Dodatkowe narzędzia w zestawie
 
 ### Inni Darmowi Dostawcy
 
 - **bitcoiner.social**: Społeczność skupiona na Bitcoinie
 - **getalby.com**: Jeśli używasz portfela Alby
-- **stacker.news**: Dla użytkowników SN
-- **NostrCheck.me** - Dodatkowe narzędzia w zestawie
+- **stacker.news**: Jeśli już publikujesz na Stacker News
 
 <Note variant="info">
   Darmowi dostawcy mogą mieć listy oczekujących lub wymagania weryfikacji. Bądź
@@ -151,18 +165,18 @@ Kolejna świetna darmowa opcja.
 
 ### NostrPlebs
 
-Jeden z najpopularniejszych płatnych dostawców NIP-05. Cenny jest uzależniony od długości nazwy użytkownika i płatny w satoshi Bitcoina (sats).
+Jeden z najpopularniejszych płatnych dostawców NIP-05. Cennik jest uzależniony od długości nazwy użytkownika i płatny w satoshi Bitcoina (sats).
 
 **Koszt:**
 
 | Długość Nazwy Użytkownika | Cena (sats/rok) |
 |-----------------|-------------------|
-| 2 znaki   | 65,000 sats (~$40) |
-| 3 znaki   | 45,000 sats (~$28) |
-| 4 znaki   | 22,500 sats (~$14) |
-| 5+ znaków  | 12,500 sats (~$8)  |
+| 2 znaki   | 65,000 sats |
+| 3 znaki   | 45,000 sats |
+| 4 znaki   | 22,500 sats |
+| 5+ znaków  | 12,500 sats |
 
-*Uwaga: Niektóre specjalne nazwy mogą mieć zwiększone ceny. Ceny w USD są przybliżone na podstawie aktualnych kursów Bitcoina.*
+*Uwaga: Niektóre specjalne nazwy mogą mieć zwiększone ceny. Sats przeliczają się na tyle, ile akurat wart jest Bitcoin, więc aktualną kwotę sprawdź w przeliczniku. W chwili pisania 12 500 sats wychodziło mniej więcej dziesięć dolarów.*
 
 **Dostępne Domeny:**
 
@@ -190,11 +204,10 @@ Jeden z najpopularniejszych płatnych dostawców NIP-05. Cenny jest uzależniony
 5. Dodaj swój npub przez portal zarządzania
 6. Gotowe!
 
-### Inni Płatni Dostawcy
+### Inni Dostawcy
 
-- **NostrName.com** - Różne poziomy cenowe
-- **NostrID.com** - Pakiety domena + NIP-05
-- **Rejestratory domen niestandardowych** - Wiele teraz oferuje konfigurację NIP-05
+- **Primal** - zweryfikowany adres `@primal.net` wchodzi w skład płatnego planu Premium w Primalu, wygodne, jeśli i tak publikujesz z tej aplikacji
+- **iris.to** - rejestracja nazwy użytkownika daje Ci `nazwa@iris.to`; aktualne warunki sprawdź na stronie
 
 **Co otrzymujesz:**
 
@@ -206,7 +219,7 @@ Jeden z najpopularniejszych płatnych dostawców NIP-05. Cenny jest uzależniony
 | Metoda | Koszt | Trudność | Kontrola | Najlepszy Dla |
 |--------|------|------------|---------|----------|
 | Darmowy Dostawca | $0 | Łatwe | Niska | Początkujący |
-| Płatny Dostawca | ~$15/rok | Łatwe | Średnia | Powązani Użytkownicy |
+| Płatny Dostawca | ~$15/rok | Łatwe | Średnia | Poważni użytkownicy |
 | Samodzielny | Koszt domeny | Zaawansowane | Wysoka | Zaawansowani |
 
 ---
@@ -225,6 +238,14 @@ Każdy rejestrator domen działa:
 
 Koszt: Zazwyczaj $10-15/rok
 
+Sama domena to jednak dopiero połowa. Potrzebujesz jeszcze miejsca, które
+serwuje pliki dla tej domeny, czyli w praktyce hostingu, na którym już stoi
+Twoja strona. Część kreatorów stron (Squarespace, Wix, Substack i podobne) nie
+pozwoli Ci umieścić pliku w katalogu o nazwie `.well-known` i z poziomu ich
+edytora nie da się tego obejść. Jeśli masz taki przypadek, weź zamiast tego
+dostawcę darmowego albo płatnego; dla Twoich czytelników adres działa dokładnie
+tak samo.
+
 ### Krok 2: Utwórz plik nostr.json
 
 Hostuj plik pod `https://twojadomena.pl/.well-known/nostr.json`:
@@ -239,18 +260,28 @@ Hostuj plik pod `https://twojadomena.pl/.well-known/nostr.json`:
 
 <Callout variant="warning" title="Użyj klucza publicznego w formacie hex, nie npub">
   NIP-05 wymaga klucza publicznego w postaci surowego hex małymi literami.
-  Jeśli wkleisz `npub1...` do `nostr.json`, klienci nie zweryfikują Cię — i zrobią
+  Jeśli wkleisz `npub1...` do `nostr.json`, klienci Cię nie zweryfikują. Zrobią
   to po cichu, bez żadnego komunikatu wyjaśniającego dlaczego.
 
-Większość klientów pokazuje postać hex w Ustawienia → Klucze, podpisaną
-"public key (hex)". Możesz też wkleić swój npub do narzędzia niżej na tej
-stronie, które pokazuje obie postacie obok siebie.
+Część klientów pokazuje gdzieś w ustawieniach kluczy postać hex. Jeśli Twój
+pokazuje wyłącznie `npub1...`, wklej go do narzędzia niżej na tej stronie, które
+wyświetla obie postacie obok siebie.
 
 </Callout>
 
 **Nie ma tu żadnych rekordów DNS.** Weryfikacja NIP-05 to zwykłe zapytanie
 HTTPS do `/.well-known/nostr.json`. Nie potrzebujesz rekordu TXT, CNAME ani
 żadnego innego wpisu DNS poza tym, który już kieruje Twoją domenę na serwer.
+
+O tym, czy klienci webowi w ogóle odczytają ten plik, decydują dwa ustawienia
+serwera i oba psują się po cichu. Plik musi być wysyłany z nagłówkiem
+`Access-Control-Allow-Origin: *`, bo tylko dzięki niemu klient działający w
+przeglądarce może go przeczytać; na większości hostingów to jedna linijka
+konfiguracji, a pomoc techniczna doda ją, jeśli poprosisz dokładnie tymi
+słowami. Adres musi też odpowiadać sam za siebie. Jeśli `twojadomena.pl`
+odsyła odwiedzających na `www.twojadomena.pl`, weryfikacja się wysypie, bo
+klienci mają obowiązek ignorować przekierowania na tym pliku. Ta z dwóch nazw,
+którą wstawisz do adresu NIP-05, musi serwować plik bezpośrednio.
 
 Twój identyfikator staje się: `alicja@twojadomena.pl`
 
@@ -306,10 +337,14 @@ Większość klientów pokazuje status NIP-05:
 
 ### Rozwiązywanie Powszechnych Problemów
 
+Zacznij od narzędzia wyżej. Wklej do niego `ty@twojadomena.pl`, a powie Ci, co
+widzi klient, który Cię wyszukuje. Listy poniżej mówią, co zrobić z każdą z
+odpowiedzi.
+
 **"NIP-05 nie działa"**
 
-- Sprawdź dwukrotnie, czy Twój npub jest poprawny w nostr.json
-- Upewnij się, że JSON jest ważny (użyj walidatora JSON)
+- **Najpierw sprawdź format klucza.** `nostr.json` musi zawierać Twój klucz publiczny w postaci hex małymi literami: 64 znaki, bez prefiksu `npub1`. Wklejony tam `npub` to zdecydowanie najczęstsza przyczyna NIP-05, który nigdy się nie weryfikuje.
+- Upewnij się, że JSON jest poprawny (użyj walidatora JSON)
 - Sprawdź, czy plik jest dostępny pod dokładnym URL
 
 **"Plik nie znaleziony"**
@@ -322,7 +357,7 @@ Większość klientów pokazuje status NIP-05:
 
 - Zmiany DNS mogą zająć do 24 godzin
 - Wyczyść pamięć podręczną DNS
-- Sprawdź poleceniem `dig` lub `nslookup`
+- Opcjonalnie, jeśli czujesz się swobodnie w terminalu: `dig twojadomena.pl` pokaże, czy nazwa już się rozwiązuje
 
 **"Klient nie rozpoznaje"**
 
@@ -338,6 +373,8 @@ Większość klientów pokazuje status NIP-05:
 2. **Zła lokalizacja pliku** - Musi być w `/.well-known/nostr.json`
 3. **Cache'owanie** - Poczekaj 10-15 minut i spróbuj ponownie
 4. **Wymagane HTTPS** - Musi być serwowane przez HTTPS
+5. **Brak nagłówka CORS** - Bez `Access-Control-Allow-Origin: *` na tym pliku klienci działający w przeglądarce nie odczytają go, choć Tobie plik otwiera się bez problemu
+6. **Przekierowanie na drodze** - Jeśli adres odbija z `twojadomena.pl` na `www.twojadomena.pl` albo odwrotnie, klienci zignorują przekierowanie i się poddadzą
 
 **Rozwiązanie:**
 
@@ -345,6 +382,8 @@ Większość klientów pokazuje status NIP-05:
 - Sprawdź czy plik jest w dokładnej ścieżce
 - Wyczyść cache klienta
 - Upewnij się, że certyfikat SSL jest ważny
+- Poproś hosting, żeby wysyłał `Access-Control-Allow-Origin: *` dla tego pliku
+- Do adresu NIP-05 wstaw tę nazwę hosta, która serwuje plik bez przekierowania
 
 **Błąd "Nie Znaleziono"**
 
@@ -364,15 +403,15 @@ Większość klientów pokazuje status NIP-05:
 
 **NostrPlebs:**
 
-- Sprawdź folder spam dla emaila weryfikacyjnego
+- Zaloguj się do portalu zarządzania i sprawdź, czy zapisany tam npub zgadza się co do znaku z Twoim
 - Upewnij się, że npub jest poprawny (nie nsec!)
 - Skontaktuj się z pomocą techniczną, jeśli utkniesz
 
 **Samodzielny:**
 
-- Zweryfikuj propagację DNS: `dig twojadomena.pl`
-- Sprawdź logi serwera pod kątem błędów
+- Uruchom narzędzie wyżej; powie Ci, czy plik jest osiągalny i czy klucz w środku jest Twój
 - Upewnij się, że uprawnienia plików pozwalają na odczyt
+- Zajrzyj do logów serwera, jeśli masz do nich dostęp
 
 <Callout variant="warning">
   Nigdy nie udostępniaj swojego nsec (klucza prywatnego) podczas konfiguracji NIP-05. Tylko Twój npub
@@ -425,15 +464,14 @@ Możesz hostować wiele identyfikatorów NIP-05 na jednej domenie:
 1. Dodaj NIP-05 do profilu
 2. Zapisz zmiany
 3. Szukaj znaczka ✓ lub odznaki "zweryfikowano"
-4. Może zająć kilka minut propagacji
+4. Propagacja może zająć kilka minut
 
 **Metoda 2: Eksplorator Nostr**
 
-1. Odwiedź eksplorator Nostr jak nostr.guru
-2. Wyszukaj swój NIP-05
-3. Sprawdź czy rozwiązuje się do Twojego npub
+1. Otwórz w przeglądarce `njump.me/twojanazwa@twojadomena.pl`
+2. Jeśli wyskoczy Twój profil, NIP-05 rozwiązuje się do Twojego klucza
 
-**Metoda 3: Test Bezpośredni (Command Line)**
+**Metoda 3: Test Bezpośredni (wiersz poleceń, opcjonalnie)**
 
 ```bash
 curl https://twojadomena.pl/.well-known/nostr.json
@@ -447,10 +485,12 @@ curl https://twojadomena.pl/.well-known/nostr.json
 
 ### Zagadnienia Prywatności
 
-- NIP-05 łączy Twój npub z domeną
-- To może Cię zdeanonimizować, jeśli domena ma Twoje prawdziwe dane
-- Używaj darmowych dostawców dla kont pseudonimowych
-- Używaj własnej domeny, gdy chcesz być zidentyfikowany
+Adres NIP-05 wiąże Twój klucz z domeną, a domenę każdy może sobie sprawdzić.
+Jeśli jest zarejestrowana na Twoje nazwisko albo stojąca na niej strona nosi już
+Twoje bio i Twoje zdjęcia, adres po cichu łączy pseudonimowe konto z resztą
+Twojego życia. Czasem właśnie o to chodzi. A kiedy nie, trzymaj pseudonimowe
+konto na domenie darmowego dostawcy, a własną domenę zostaw dla pracy, pod
+którą chętnie się podpisujesz.
 
 ---
 
@@ -467,11 +507,11 @@ Myślisz, że rozumiesz NIP-05? Rozwiąż quiz:
 - [Specyfikacja NIP-05](https://github.com/nostr-protocol/nips/blob/master/05.md)
 - [NostrPlebs](https://nostrplebs.com) - Płatny NIP-05
 - [NostrCheck](https://nostrcheck.me) - Darmowy NIP-05 + narzędzia
-- [Generator NIP05](https://github.com/nostr-tools/nip05) - Narzędzia DIY
+- [njump.me](https://njump.me) - podejrzyj dowolny profil albo adres NIP-05 prosto z przeglądarki
 
 ---
 
 ## Czytaj dalej
 
-- [Szybki Start: Start w 5 Minut](/pl/guides/quickstart)
-- [Niezbędne Narzędzia Nostr](/pl/guides/nostr-tools)
+- [Sprawdź dowolny adres NIP-05](/tools/nip05-checker). Zweryfikuj, czy `nazwa@domena` wskazuje na deklarowany klucz.
+- [Szybki Start: Start w 5 Minut](/pl/guides/quickstart). Jeśli nie masz jeszcze konta, zacznij tutaj.

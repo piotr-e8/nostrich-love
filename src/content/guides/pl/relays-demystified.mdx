@@ -14,7 +14,7 @@ import { RelayExplorer } from "@components/interactive/RelayExplorer";
 import { TroubleshootingWizard } from "@components/interactive/TroubleshootingWizard";
 import { RelaysDemystifiedQuiz } from "@components/interactive/RelaysDemystifiedQuiz";
 
-Relaye to poczty Nostr. To tam mieszkają Twoje wiadomości i jak podróżują, aby dotrzeć do innych użytkowników.
+Relaye to poczty Nostr. To w nich mieszkają Twoje wiadomości i to dzięki nim docierają one do innych użytkowników.
 
 ## Analogia Pocztowa 🏤
 
@@ -52,11 +52,11 @@ W Nostr nie jesteś zamknięty w jednym dostawcy usług. Możesz:
 - Przełączać relaye w dowolnym momencie
 - Uruchomić własny relay
 
-<RelayWorldMap client:idle />
+<RelayWorldMap />
 
 ## Dlaczego Posty Nie Synchronizują Się 🔄
 
-Oto najczęstsza konfuzja, z jaką borykają się nowi użytkownicy:
+Oto nieporozumienie, na które nowi użytkownicy trafiają najczęściej:
 
 > "Wysłałem coś, ale mój przyjaciel nie może tego zobaczyć!"
 
@@ -111,19 +111,17 @@ Większość klientów Nostr łączy Cię z kilkoma domyślnymi relayami. Ale zr
 
 Jeśli dopiero zaczynasz, trzymaj się tych popularnych, niezawodnych relayów:
 
-| Relay                      | Opis             | Niezawodność |
-| -------------------------- | ---------------- | ------------ |
-| `wss://relay.damus.io`     | Główny relay Damusa | ⭐⭐⭐⭐⭐  |
-| `wss://nostr.wine`         | Relay ogólny     | ⭐⭐⭐⭐    |
-| `wss://relay.snort.social` | Społeczność Snort | ⭐⭐⭐⭐    |
+| Relay                    | Opis                     | Koszt   |
+| ------------------------ | ------------------------ | ------- |
+| `wss://relay.damus.io`   | Główny relay Damusa      | Darmowy |
+| `wss://nos.lol`          | Popularny relay ogólny   | Darmowy |
+| `wss://relay.primal.net` | Publiczny relay Primala  | Darmowy |
 
 ### Odkrywanie na Podstawie Zainteresowań
 
-Społeczności często prowadzą własne relaye dla skupionych dyskusji:
+Społeczności często prowadzą własne relaye dla skupionych dyskusji. `wss://nostr.bitcoiner.social` to działający od lat przykład, zbudowany wokół Bitcoina.
 
-- **Bitcoin**: `wss://nostr.bitcoiner.social`
-- **Development**: `wss://relay.nostrdevs.com`
-- **Art**: `wss://relay.nostrich.art`
+Relaye tematyczne pojawiają się i znikają, więc lista wydrukowana w poradniku szybko się starzeje. Skorzystaj zamiast tego z eksploratora poniżej: sprawdza on każdy relay w chwili, gdy na niego patrzysz, więc przepiszesz sobie tylko te adresy, które naprawdę teraz odpowiadają.
 
 <RelayExplorer client:idle />
 
@@ -138,7 +136,8 @@ Społeczności często prowadzą własne relaye dla skupionych dyskusji:
 
 **Płatne Relaye**
 
-- Zazwyczaj wymagają małej opłaty (często 1000-5000 sats/miesiąc)
+- Proszą o niewielką płatność w bitcoinie: jedne pobierają ją raz, przy zapisie, inne co miesiąc
+- Ceny bardzo się różnią, od kilku tysięcy satoshi do mniej więcej 20 000
 - Lepsza wydajność
 - Mniej spamu
 - Wspierają operatorów relayów
@@ -147,7 +146,7 @@ Społeczności często prowadzą własne relaye dla skupionych dyskusji:
 
 ---
 
-## Zaawansowane: Model Outbox (NIP-65) [ZAAWANSOWANE]
+## Model Outbox (NIP-65) [ZAAWANSOWANE]
 
 <Note type="advanced">
   Ta sekcja jest opcjonalna. Możesz doskonale używać Nostr bez
@@ -158,35 +157,34 @@ Społeczności często prowadzą własne relaye dla skupionych dyskusji:
 
 NIP-65 wprowadza mądrzejszy sposób obsługi relayów zwany "modelem outbox".
 
-**Zamiast**: Ty ręcznie łączysz się z 10+ relayami
-**Robisz**: Publikujesz swoją listę preferowanych relayów raz, pozwól klientom to rozwiązać
+**Zamiast**: ręcznie łączyć się z 10+ relayami
+**Ty**: publikujesz raz listę preferowanych relayów, a klienci zajmują się resztą
 
 ### Jak To Działa
 
-```
-1. Publikujesz listę relayów:
-   {
-     "read": ["wss://relay-a.com"],
-     "write": ["wss://relay-b.com"]
-   }
+Twój klient publikuje jedną krótką listę, a każdy relay na niej jest oznaczony jako miejsce, do którego piszesz, z którego czytasz, albo jedno i drugie naraz. Klienci innych ludzi pobierają tę listę, zanim ruszą Cię szukać.
 
-2. Inni klienci czytają to i wiedzą:
-    - Gdzie znaleźć Twoje posty (relaye do czytania)
-    - Gdzie wysyłać Ci wiadomości (relaye do pisania)
-```
+- Relaye **do pisania** to te, na których publikujesz. Kiedy ktoś zaczyna Cię obserwować, jego klient idzie po Twoje posty właśnie tam.
+- Relaye **do czytania** to te, na które trafia wszystko skierowane do Ciebie: odpowiedzi, wzmianki, powiadomienia. Twój klient ich pilnuje, żebyś to zobaczył.
+
+Jeśli pomylisz te dwie rzeczy, Twoje posty wylądują tam, gdzie nikomu nie przyjdzie do głowy zaglądać. Większość klientów ustawia te oznaczenia za Ciebie, kiedy edytujesz listę relayów w ustawieniach, więc rzadko dotykasz tego ręcznie.
+
+> 📚 Pełne omówienie, razem z tym, jak taka lista naprawdę wygląda, znajdziesz w [poradniku o modelu outbox](/pl/guides/outbox-model).
 
 ### Konfiguracja Osobistych Relayów
 
 Dla zaawansowanych użytkowników, prowadzenie własnego relaya daje Ci:
 
 - **Całkowitą kontrolę** nad swoimi danymi
-- **Doskonałą niezawodność** (brak zależności od innych)
-- **Prywatność** (tylko Twoje dane na relayu)
+- **Trwałą kopię** wszystkiego, co publikujesz, trzymaną przez Ciebie
+- **Niezależność** od decyzji pojedynczego operatora relaya
+
+Czego natomiast nie daje, to niezawodności ani prywatności. Relay na Twoim własnym serwerze jest tak pewny, jak ten serwer, a duży operator zwykle utrzymuje lepszą dostępność, niż zrobisz to Ty. Z prywatnością nieporozumienie jest jeszcze większe: wszystko, co publikujesz, i tak wyrusza na Twoje pozostałe relaye i pozostaje tam publicznie czytelne. Osobisty relay zmienia tylko to, gdzie leży jedna z kopii Twoich postów. Przeczytać je nadal może każdy.
 
 Popularne oprogramowanie dla osobistych relayów:
 
-- [strfry](https://github.com/hoytech/strfry) - Szybka implementacja w C++
-- [nostr-rs-relay](https://gitlab.com/soapbox-pub/nostr-rs-relay) - Implementacja w Rust
+- [strfry](https://github.com/hoytech/strfry), szybka implementacja w C++
+- [nostr-rs-relay](https://github.com/scsibug/nostr-rs-relay), implementacja w Ruście
 
 > 📚 Zobacz nasz [Przewodnik po Relayach](/pl/guides/relay-guide) dla szczegółowych instrukcji konfiguracji.
 
@@ -222,14 +220,14 @@ W większości klientów możesz:
 ### "Moje posty znikają"
 
 - Niektóre relaye usuwają stare treści, aby zaoszczędzić miejsce
-- Połącz się z większą liczbą relayów dla redundancji
-- Rozważ płatny relay dla stałego przechowywania
+- Połącz się z większą liczbą relayów, żeby żaden z nich nie trzymał Twojej jedynej kopii
+- Płatne relaye zwykle przechowują posty znacznie dłużej, ale nic w Nostr nie jest zagwarantowane na zawsze: relaye czyszczą zasoby, zmieniają zasady albo zamykają się
 
 ### "Relay nie łączy się"
 
 - Sprawdź swoje połączenie internetowe
-- Spróbuj URL relaya w przeglądarce (powinien pokazać błąd/stronę ws)
-- Relay może być wyłączony - spróbuj innego
+- Zamień `wss://` na początku adresu na `https://` i otwórz to w przeglądarce: działający relay odpowie stroną informacyjną albo krótkim blokiem tekstu, martwy nie odda nic
+- Relay może być po prostu wyłączony. Spróbuj innego
 
 <TroubleshootingWizard client:idle />
 

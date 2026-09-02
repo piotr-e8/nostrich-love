@@ -8,9 +8,12 @@ category: "reference"
 prerequisites: ["keys-and-security", "quickstart"]
 ---
 
-## Ein schneller Referenz-Guide für die häufigsten Probleme, auf die Nostr-Nutzer stoßen.
+Ein schneller Referenz-Guide für die häufigsten Probleme, auf die Nostr-Nutzer stoßen.
+
+Fast alles hier unten geht auf eine einzige Tatsache zurück: Deine Posts, dein Profil und deine Follow-Liste liegen auf Relays, nicht in der App. Ein leerer Feed oder ein Post, der verschwunden scheint, heißt meistens, dass die App mit den falschen Servern spricht, und nicht, dass deine Arbeit weg ist.
 
 import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz";
+import { TroubleshootingWizard } from "@components/interactive/TroubleshootingWizard";
 
 ## Problem: "Mein Feed ist leer" 📭
 
@@ -26,13 +29,13 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - **Ursache**: Neuer Account ohne Follows
 - **Lösung**: Suche nach Nutzern oder Interessen, folge 10-20 Accounts
-- **Schnell-Fix**: Folge beliebten Accounts aus dem [Finding Community](/de/guides/finding-community)-Guide
+- **Schnell-Fix**: Folge beliebten Accounts aus dem Guide [Deine Community auf Nostr finden](/de/guides/finding-community)
 
 **2. Relay-Verbindungsprobleme**
 
 - **Ursache**: Mit keinen Relays verbunden
 - **Lösung**: Prüfe Einstellungen → Relays, stelle sicher, dass du mit 3-5 Relays verbunden bist
-- **Schnell-Fix**: Füge beliebte Relays hinzu: `wss://relay.damus.io`, `wss://nostr.wine`
+- **Schnell-Fix**: Füge beliebte kostenlose Relays hinzu: `wss://relay.damus.io`, `wss://nos.lol`
 
 **3. Client-Cache ist leer**
 
@@ -74,7 +77,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - **Ursache**: Client hat nicht an alle Relays gepostet
 - **Lösung**: Prüfe, welche Relays deinen Post erhalten haben
-- **Hinweis**: Einmal gepostet, kann nicht nachträglich an neue Relays gesendet werden
+- **Gute Nachricht**: Deine Posts sind signiert und portabel, sie lassen sich also später erneut verschicken. Viele Clients verstecken im Menü einer Notiz einen "Broadcast"-Eintrag, der sie an die Relays neu veröffentlicht, die du heute nutzt, auch an die später hinzugefügten.
 
 ### Was synchronisiert vs. was nicht
 
@@ -116,7 +119,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - **Ursache**: Rate-Limits erreicht
 - **Lösung**: Verlangsame, warte ein paar Minuten
-- **Hinweis**: Die meisten Relays limitieren auf 1-5 Posts pro Sekunde
+- **Hinweis**: Relays bremsen schnelles Posten aus, um Spam klein zu halten. Die Limits sind von Relay zu Relay verschieden, eine kurze Pause räumt das meistens weg.
 
 ---
 
@@ -125,15 +128,15 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 ### Symptome
 
 - Fake-Account mit deinem Namen/Bild
-- Jemand behauptet, du zu sein
+- Jemand gibt sich als du aus
 - Verwirrte Follower fragen, welcher Account echt ist
 
 ### Ursachen & Lösungen
 
-**1. NIP-05-Verifizierung holen**
+**1. Hol dir eine NIP-05-Adresse**
 
 - **Lösung**: Richte NIP-05-Identität ein (siehe [Guide](/de/guides/nip05-identity))
-- **Warum**: Verifiziertes Badge unterscheidet echt von fake
+- **Warum**: Eine Adresse auf einer Domain, die dir gehört, etwa du@deineseite.de, bindet den Account an deine eigene Seite. Irgendeine NIP-05-Adresse bekommt jeder, ein Betrüger eingeschlossen, sag den Leuten also, sie sollen auf die Domain schauen und nicht auf das Häkchen.
 
 **2. Teile deinen npub weit**
 
@@ -207,12 +210,13 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - **Ursache**: Verbindung zu 20+ Relays überfordert den Client
 - **Lösung**: Reduziere auf 4-8 aktive Relays
-- **Optimiere**: Nutze NIP-65 Outbox-Modell
+- **Optimiere**: Lass die App die Relays für dich wählen, siehe den [Guide zum Outbox-Modell](/de/guides/outbox-model)
 
 **3. Korrupter Cache**
 
-- **Lösung**: Lösche App-Daten (du verlierst keine Posts/Follows)
-- **Nukleare Option**: Installiere App neu, importiere Keys erneut
+- **Zuerst**: Prüfe, ob dein nsec irgendwo außerhalb der App gesichert ist. Das Löschen der Daten wischt den auf dem Gerät gespeicherten Schlüssel mit weg, und ohne Backup kann niemand den Account wiederherstellen.
+- **Danach**: Lösche die App-Daten. Posts, Follows und Profil bleiben auf den Relays und sind nach dem erneuten Anmelden wieder da.
+- **Nukleare Option**: Installiere die App neu und melde dich mit deinem gesicherten Schlüssel wieder an, oder mit deiner Signer-App, falls du eine nutzt.
 
 ### Probiere einen anderen Client
 
@@ -220,8 +224,8 @@ Falls ein Client durchgehend Probleme hat, probiere einen anderen:
 
 | Plattform          | Alternative          |
 | ------------------ | -------------------- |
-| iOS (Damus)        | Nos, Nostur          |
-| Android (Amethyst) | Primal web, Nostros  |
+| iOS (Damus)        | Nostur, Primal       |
+| Android (Amethyst) | Primal, YakiHonne    |
 | Web (Primal)       | Iris, Snort, Coracle |
 
 ---
@@ -238,7 +242,7 @@ Falls ein Client durchgehend Probleme hat, probiere einen anderen:
 
 > ⚠️ **Wenn du kein Backup deiner Keys hast, ist dein Account nicht wiederherstellbar.**
 
-Das ist absichtlich so – Nostr hat kein "Passwort vergessen", weil es keinen zentralen Server gibt, der deine Keys hält.
+Das ist absichtlich so. Nostr hat kein "Passwort vergessen", weil es keinen zentralen Server gibt, der deine Keys hält.
 
 ### Was du tun KANNST
 
@@ -246,7 +250,7 @@ Das ist absichtlich so – Nostr hat kein "Passwort vergessen", weil es keinen z
 
 - Prüfe Passwort-Manager
 - Suche nach Screenshots
-- Prüfe E-Mails auf Willkommensnachrichten
+- Prüfe Notiz-Apps und Cloud-Backups alter Geräte
 - Prüfe andere Geräte mit installiertem Client
 
 **2. Prüfe, ob Client Keys gespeichert hat**
@@ -263,7 +267,7 @@ Das ist absichtlich so – Nostr hat kein "Passwort vergessen", weil es keinen z
 
 ### Prävention (Tu dies JETZT)
 
-1. **Schreibe deinen nsec auf** auf Papier
+1. **Notiere deinen nsec auf Papier**
 2. **Speichere in Passwort-Manager** (1Password, Bitwarden)
 3. **Nutze eine Signer-App** (Amber, Nos2x), um nsec-Eingabe zu vermeiden
 4. **Erstelle mehrere Backups** an verschiedenen Orten
@@ -275,14 +279,14 @@ Das ist absichtlich so – Nostr hat kein "Passwort vergessen", weil es keinen z
 ### Symptome
 
 - "Verbindung fehlgeschlagen"-Fehler
-- Relay zeigt als offline
+- Relay wird als offline angezeigt
 - Posts synchronisieren nicht
 
 ### Ursachen & Lösungen
 
 **1. Relay ist down**
 
-- **Test**: Öffne Relay-URL im Browser (sollte Fehler oder ws-Seite zeigen)
+- **Test**: Tausche das `wss://` am Anfang gegen `https://` und öffne diese Adresse im Browser. Ein Relay, das normal läuft, antwortet mit einer kurzen Infoseite oder einem Hinweis, dass du einen Nostr-Client nutzen sollst. Kommt gar nichts, spricht das dafür, dass es down ist.
 - **Lösung**: Prüfe Relay-Statusseite oder Social Media
 - **Fix**: Entferne temporär, füge hinzu, wenn zurück
 
@@ -325,18 +329,18 @@ Das ist absichtlich so – Nostr hat kein "Passwort vergessen", weil es keinen z
 
 - **Prüfe**: Wallet-Guthaben
 - **Lösung**: Füge Guthaben zu deiner Wallet hinzu
-- **Minimum**: Normalerweise 100+ Sats für Gebühren nötig
+- **Hinweis**: Auch ein Zap über 1 Sat geht durch. Eine bis auf null geleerte Wallet kann trotzdem an Routing-Gebühren oder am eigenen Minimum der Wallet scheitern, halte also einen kleinen Puffer darin.
 
 **3. Wallet offline**
 
 - **Ursache**: Non-Custodial-Wallets müssen online sein
 - **Lösung**: Öffne deine Wallet-App, stelle sicher, dass sie läuft
-- **Alternative**: Nutze Custodial-Wallet wie Alby
+- **Alternative**: Nutze eine gehostete Wallet wie Coinos oder die in deinen Client eingebaute Wallet (Primal hat eine). Die sind erreichbar, egal ob dein Telefon gerade wach ist. Die Abwägungen dazu stehen im [Zaps-Guide](/de/guides/zaps-and-lightning).
 
 **4. Falsche Lightning-Adresse**
 
 - **Prüfe**: Ist deine Lightning-Adresse im Profil korrekt?
-- **Test**: Versuche dir selbst 10 Sats zu senden
+- **Test**: Bitte jemanden, dir 10 Sats zu zappen, oder zahle aus einer zweiten Wallet. Die meisten Wallets weigern sich, eine selbst ausgestellte Rechnung zu bezahlen, an dich selbst zu zahlen beweist also weder das eine noch das andere.
 - **Fix**: Aktualisiere Adresse in Profil-Einstellungen
 
 ---
@@ -378,38 +382,33 @@ Das ist absichtlich so – Nostr hat kein "Passwort vergessen", weil es keinen z
 
 ## Schneller Entscheidungsbaum 🌳
 
-<TroubleshootingWizard />
+<TroubleshootingWizard client:idle />
 
-**Probleme? Folge diesem:**
+**Probleme? Geh diese Schritte durch:**
 
 1. **Kannst nichts sehen?** → Prüfe Relays, füge mehr hinzu
 2. **Kannst nicht posten?** → Prüfe Schreib-Relays, Rate-Limits
 3. **Account-Probleme?** → Verifiziere, dass Keys korrekt sind
 4. **App stürzt ab?** → Aktualisiere, lösche Cache oder probiere anderen Client
-5. **Immer noch fest?** → Siehe unten
+5. **Kommst du nicht weiter?** → Siehe unten
 
 ---
 
-## Immer noch fest? 🆘
+## Kommst du nicht weiter? 🆘
 
 ### Community-Hilfe
 
-**Telegram:**
-
-- [Nostr Protocol](https://t.me/nostr_protocol) - Allgemeine Hilfe
-- [Damus](https://t.me/damusios) - iOS-spezifisch
-- [Amethyst](https://t.me/AmethystNostr) - Android-spezifisch
-
-**Andere Plattformen:**
-
-- [r/nostr](https://reddit.com/r/nostr) - Reddit-Community
-- [Stacker News](https://stacker.news) - Bitcoin/Nostr-Forum
-- Nostr selbst - Poste mit #help-Tag
+- [Damus auf Telegram](https://t.me/damusios): für alles rund um iOS
+- [Amethyst-Issue-Tracker](https://github.com/vitorpamplona/amethyst/issues): hier werden Android-Probleme beantwortet, denn Amethyst betreibt keine öffentliche Telegram-Gruppe
+- [r/nostr](https://reddit.com/r/nostr): die Reddit-Community
+- [Stacker News](https://stacker.news): Forum für Bitcoin und Nostr
+- Nostr selbst. Stell deine Frage mit dem Tag #asknostr, dann antworten dir Leute
 
 ### Ressourcen
 
-- [Nostr Wiki](https://wiki.nostr.com)
-- [Client-spezifische Docs](https://github.com/damus-io/damus#documentation)
+- [Nostr.how](https://nostr.how): Guides in einfacher Sprache zu Clients, Relays und Zaps
+- [Nostr-Apps-Verzeichnis](https://nostrapps.com): finde einen Client für deine Plattform
+- [Damus-Docs](https://github.com/damus-io/damus#documentation)
 - [NIP-Spezifikationen](https://github.com/nostr-protocol/nips)
 
 ### Bugs melden
@@ -441,7 +440,7 @@ Denkst du, du weißt, wie man häufige Nostr-Probleme löst?
 
 ## Verwandte Guides
 
-- [Relays erklärt](/de/guides/relays-demystified) - Verbindungsprobleme beheben
-- [Quickstart-Guide](/de/guides/quickstart) - Clients wechseln
-- [Zaps-Guide](/de/guides/zaps-and-lightning) - Zahlungsprobleme beheben
-- [Keys & Security](/de/guides/keys-and-security) - Lockouts verhindern
+- [Relays erklärt](/de/guides/relays-demystified): Verbindungsprobleme beheben
+- [Quickstart-Guide](/de/guides/quickstart): Clients wechseln
+- [Zaps-Guide](/de/guides/zaps-and-lightning): Zahlungsprobleme beheben
+- [Deine Schlüssel, deine Identität](/de/guides/keys-and-security): nicht ausgesperrt werden

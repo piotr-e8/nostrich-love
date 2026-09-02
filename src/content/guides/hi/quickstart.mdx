@@ -1,5 +1,6 @@
 ---
 title: "त्वरित शुरुआत: 5 मिनट में लॉन्च करें"
+seoTitle: "5 मिनट में Nostr कैसे शुरू करें (2026)"
 description: "Nostr का आपका फास्ट ट्रैक। अपनी कुंजियाँ चेक करें, क्लाइंट चुनें, और लॉन्च करें। कोई झंझट नहीं, बस काम।"
 estimatedTime: "5 मिनट"
 priority: 4
@@ -41,12 +42,12 @@ prerequisites: ["what-is-nostr", "keys-and-security"]
       <svg className="w-5 h-5 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
       </svg>
-      पहले कुंजियाँ बनाएं (2 मिनट)
+      पहले कुंजियाँ बनाएं (10 मिनट)
     </a>
   </div>
   
   <p className="mt-4 text-sm text-gray-600 dark:text-gray-400 text-center">
-    जारी रखने के लिए आपको अपने <code>npub</code> (सार्वजनिक कुंजी) और <code>nsec</code> (निजी कुंजी) की आवश्यकता होगी।
+    जारी रखने के लिए आपको अपनी <code>nsec</code> (निजी कुंजी) चाहिए। आपकी <code>npub</code> (सार्वजनिक कुंजी) उसी से अपने आप बन जाती है, इसलिए दोनों साथ रखने की जरूरत नहीं।
   </p>
 </div>
 
@@ -56,13 +57,13 @@ prerequisites: ["what-is-nostr", "keys-and-security"]
 
 ## कदम 2: अपना क्लाइंट चुनें
 
-Nostr में दर्जनों क्लाइंट हैं—उन्हें ईमेल ऐप्स की तरह समझें। शुरू करने के लिए एक चुनें।
+Nostr में दर्जनों क्लाइंट हैं। उन्हें ईमेल ऐप्स की तरह समझें, और शुरू करने के लिए कोई एक चुन लें।
 
 <a href="https://sandstr.app" target="_blank" rel="noopener noreferrer" className="not-prose my-6 flex items-start gap-4 p-5 rounded-xl border-2 border-primary/30 bg-primary/5 dark:bg-primary/10 hover:border-primary/60 transition-colors">
   <span className="text-3xl" aria-hidden="true">🏖️</span>
   <span>
     <span className="block font-bold text-gray-900 dark:text-white mb-1">अभी तय नहीं किया? पहले ब्राउज़र में क्लाइंट आज़माएं</span>
-    <span className="block text-sm text-gray-600 dark:text-gray-400">Sandstr में आप Damus, Amethyst, Primal और अन्य क्लाइंट क्लिक करके देख सकते हैं — न कोई keys, न इंस्टॉल, कुछ भी असली नहीं। जो पसंद आए, तब वापस आएं।</span>
+    <span className="block text-sm text-gray-600 dark:text-gray-400">Sandstr में आप Damus, Amethyst, Primal और दूसरे क्लाइंट क्लिक करके देख सकते हैं, बिना keys, बिना इंस्टॉल, कुछ भी असली नहीं। जो पसंद आए, तब वापस आएं।</span>
   </span>
 </a>
 
@@ -173,24 +174,27 @@ Nostr में दर्जनों क्लाइंट हैं—उन�
 अपना चुना हुआ क्लाइंट खोलें और लॉग इन करें। आप **कैसे** लॉग इन करते हैं, यह
 ज़्यादातर गाइड जितना मानती हैं उससे कहीं ज़्यादा मायने रखता है।
 
-**फ़ोन पर** अपना nsec ऐप में एक बार पेस्ट कर दें। मोबाइल ऐप एक सैंडबॉक्स है — आप
-जो उसमें पेस्ट करते हैं, उसे सिर्फ़ वही ऐप पढ़ सकता है।
+**फ़ोन पर** अपना nsec ऐप में एक बार पेस्ट कर दें। जो चीज़ आप किसी ऐप के भीतर रखते
+हैं, वह उसी ऐप के भीतर रहती है, पर क्लिपबोर्ड साझा ज़मीन है: जब तक आपकी कुंजी वहाँ
+पड़ी है, दूसरे ऐप्स उसे पढ़ सकते हैं, और क्लिपबोर्ड को क्लाउड से सिंक करने वाला
+कीबोर्ड उसे फ़ोन से बाहर भी ले जा सकता है। पेस्ट करने से पहले वह सिंक बंद करें, और
+लॉग इन होते ही कुंजी के ऊपर कुछ बेकार सा टेक्स्ट कॉपी कर दें।
 
 **ब्राउज़र में अपना nsec वेबसाइट में मत पेस्ट कीजिए।** इसके बजाय एक साइनर एक्सटेंशन
-इंस्टॉल करें — [Alby](https://getalby.com),
-[nos2x](https://github.com/fiatjaf/nos2x), या Safari पर
-[Nostore](https://apps.apple.com/app/nostore/id1666553677)। कुंजी एक्सटेंशन में
+इंस्टॉल करें: [Alby](https://getalby.com),
+[nos2x](https://chromewebstore.google.com/detail/nos2x/kpgefcfmnafjgpblomihpgmejjdanjjp),
+या Safari पर [Nostash](https://apps.apple.com/us/app/nostash/id6744309333)। कुंजी एक्सटेंशन में
 रहती है; वेबसाइट हर क्रिया पर एक्सटेंशन से हस्ताक्षर माँगती है और कुंजी को कभी
 नहीं देखती। हर गंभीर वेब क्लाइंट यह सपोर्ट करता है (इसे NIP-07 कहते हैं), और यह
 "एक ख़राब वेबसाइट आपकी पहचान छीन लेती है" को "एक ख़राब वेबसाइट को कुछ नहीं मिलता"
 में बदल देता है।
 
 अगर आप कुंजी को अपने डिवाइस पर रखना ही नहीं चाहते, तो
-[nsec.app](https://nsec.app) (NIP-46) जैसा रिमोट साइनर उसे रखता है और अलग ऐप से
+[nsec.app](https://use.nsec.app) (NIP-46) जैसा रिमोट साइनर उसे रखता है और अलग ऐप से
 क्रियाओं को मंज़ूरी देता है।
 
 <Callout variant="warning" title="जो साइट आपका nsec माँगे, वह ख़तरे का संकेत है">
-  किसी साइट के पास आपका nsec आ जाने पर उसके पास हमेशा के लिए आपकी पहचान आ जाती है —
+  किसी साइट के पास आपका nsec आ जाने पर उसके पास हमेशा के लिए आपकी पहचान आ जाती है।
   Nostr कुंजी न बदली जा सकती है, न उसकी पहुँच रद्द की जा सकती है। न पासवर्ड रीसेट है,
   न कोई सपोर्ट डेस्क।
 
@@ -251,7 +255,7 @@ Nostr में दर्जनों क्लाइंट हैं—उन�
       <h3 className="font-bold text-green-800 dark:text-green-400">सीखते रहें</h3>
     </div>
     <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
-      हमारे चरणबद्ध गाइड से Nostr में महारत हासिल करें। Zaps से लेकर प्राइवेसी तक—हमने सब कवर किया है।
+      हमारे चरणबद्ध गाइड से Nostr में महारत हासिल करें। Zaps से लेकर प्राइवेसी तक, सब कवर किया है।
     </p>
     <a 
       href="/hi/guides" 

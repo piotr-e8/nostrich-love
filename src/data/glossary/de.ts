@@ -14,7 +14,7 @@ const de: GlossaryData = {
   nostr: {
     term: 'Nostr',
     definition:
-      'Notes and Other Stuff Transmitted by Relays — Notizen und anderes, übertragen durch Relays. Ein dezentrales Protokoll für soziale Medien und andere Anwendungen.',
+      'Notes and Other Stuff Transmitted by Relays: Notizen und anderes, übertragen durch Relays. Ein dezentrales Protokoll für soziale Medien und andere Anwendungen.',
   },
   npub: {
     term: 'npub',
@@ -34,7 +34,7 @@ const de: GlossaryData = {
   client: {
     term: 'Client',
     definition:
-      'Eine Anwendung, die sich mit Nostr-Relays verbindet und dich Notizen lesen und veröffentlichen lässt. Beispiele: Damus, Iris, Amethyst.',
+      'Eine Anwendung, die sich mit Nostr-Relays verbindet und dich Notizen lesen und veröffentlichen lässt. Beispiele: Primal, Damus, Amethyst, Iris.',
   },
   nip: {
     term: 'NIP',
@@ -44,7 +44,7 @@ const de: GlossaryData = {
   zap: {
     term: 'Zap',
     definition:
-      'Eine Zahlung über das Bitcoin-Lightning-Netzwerk, gesendet über Nostr. Dient dazu, anderen Nutzern Trinkgeld zu geben oder sie zu unterstützen.',
+      'Eine Bitcoin-Lightning-Zahlung, verknüpft mit einer Nostr-Notiz oder einem Profil. Das Geld fließt über das Lightning-Netzwerk, und Nostr speichert eine öffentliche Quittung. Dient dazu, anderen Nutzern Trinkgeld zu geben oder sie zu unterstützen.',
   },
   nip05: {
     term: 'NIP-05',
@@ -67,12 +67,12 @@ const de: GlossaryData = {
       'Kurzform von Public Key. Dein Identifikator im Nostr-Netzwerk, abgeleitet aus deinem Private Key.',
   },
   'nsec-format': {
-    term: '_nsec',
+    term: 'nsec (Format)',
     definition:
       'Bech32-kodiertes Format des Private Key. Beginnt mit "nsec1" und muss geheim bleiben.',
   },
   'npub-format': {
-    term: '_npub',
+    term: 'npub (Format)',
     definition:
       'Bech32-kodiertes Format des Public Key. Beginnt mit "npub1" und kann bedenkenlos öffentlich geteilt werden.',
   },
@@ -94,7 +94,7 @@ const de: GlossaryData = {
   dm: {
     term: 'DM',
     definition:
-      'Direct Message — Direktnachricht. Verschlüsselte private Nachrichten zwischen Nostr-Nutzern (NIP-04 oder NIP-17).',
+      'Direktnachricht (Direct Message). Verschlüsselte private Nachrichten zwischen Nostr-Nutzern. Moderne Clients nutzen NIP-17; das ältere NIP-04 gilt als veraltet, weil es verrät, wer mit wem schreibt.',
   },
   mention: {
     term: 'Erwähnung',

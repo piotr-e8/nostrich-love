@@ -1,14 +1,14 @@
 {
   "guides": {
     "whatIsNostr": {
-      "title": "Nostr Wyjaśniony Prosto",
+      "title": "Nostr w prostych słowach",
       "description": "Zrozum Nostr w 5 minut. Dowiedz się, jak działa zdecentralizowane social media, dlaczego to ważne i czym różni się od tradycyjnych platform.",
       "quiz": {
-        "title": "Quiz: Podstawy Nostr",
+        "title": "Quiz: podstawy Nostr",
         "questions": [
           {
             "id": "protocol-vs-platform",
-            "title": "Protokół vs Platforma",
+            "title": "Protokół vs platforma",
             "prompt": "Czym jest Nostr?",
             "options": [
               {
@@ -30,7 +30,7 @@
           },
           {
             "id": "key-types",
-            "title": "Twoje Klucze",
+            "title": "Twoje klucze",
             "prompt": "Do czego służą klucze w Nostr?",
             "options": [
               {
@@ -52,7 +52,7 @@
           },
           {
             "id": "censorship",
-            "title": "Odporność na Cenzurę",
+            "title": "Odporność na cenzurę",
             "prompt": "Dlaczego Nostr jest odporne na cenzurę?",
             "options": [
               {
@@ -74,7 +74,7 @@
           },
           {
             "id": "relays",
-            "title": "Relaye Wyjaśnione",
+            "title": "Relaye wyjaśnione",
             "prompt": "Co to są relaye w Nostr?",
             "options": [
               {
@@ -96,7 +96,7 @@
           },
           {
             "id": "portability",
-            "title": "Przenośność Danych",
+            "title": "Przenośność danych",
             "prompt": "Co się stanie, gdy zmienisz klienta w Nostr?",
             "options": [
               {
@@ -118,7 +118,7 @@
           },
           {
             "id": "responsibility",
-            "title": "Odpowiedzialność za Klucz",
+            "title": "Odpowiedzialność za klucz",
             "prompt": "Co się stanie, jeśli stracisz swój klucz prywatny (nsec)?",
             "options": [
               {
@@ -142,14 +142,14 @@
       }
     },
     "keysAndSecurity": {
-      "title": "Klucze i Bezpieczeństwo",
+      "title": "Klucze i bezpieczeństwo",
       "description": "Dowiedz się, jak generować, zapisywać i chronić swoje klucze Nostr. Kompletny przewodnik po bezpieczeństwie dla początkujących.",
       "quiz": {
-        "title": "Quiz: Bezpieczeństwo",
+        "title": "Quiz: bezpieczeństwo",
         "questions": [
           {
             "id": "sharing-keys",
-            "title": "Bezpieczeństwo Kluczy",
+            "title": "Bezpieczeństwo kluczy",
             "prompt": "Który klucz możesz bezpiecznie udostępniać innym?",
             "options": [
               {
@@ -174,7 +174,7 @@
           },
           {
             "id": "backup-rule",
-            "title": "Kopie Zapasowe",
+            "title": "Kopie zapasowe",
             "prompt": "Jaka jest najlepsza praktyka przy tworzeniu kopii zapasowej klucza?",
             "options": [
               {
@@ -196,29 +196,29 @@
           },
           {
             "id": "suspicious-client",
-            "title": "Test Nowego Klienta",
-            "prompt": "Jak bezpiecznie przetestować nowy klient Nostr?",
+            "title": "Test nowego klienta",
+            "prompt": "Zupełnie nowa aplikacja Nostr prosi o wklejenie klucza prywatnego przy logowaniu. Co zrobić?",
             "options": [
               {
                 "id": "a",
-                "label": "Użyć rozszerzenia z tymczasowymi uprawnieniami"
+                "label": "Zalogować się przez podpisywacz: Amber na Androidzie, rozszerzenie w przeglądarce albo zdalny podpisywacz NIP-46"
               },
               {
                 "id": "b",
-                "label": "Wprowadzić prawdziwy nsec i sprawdzić"
+                "label": "Wkleić nsec, jeśli aplikacja ma już ponad stu użytkowników"
               },
               {
                 "id": "c",
-                "label": "Utworzyć osobne konto testowe"
+                "label": "Wygenerować klucz na próbę i przenieść się później na główny"
               }
             ],
-            "correctId": "c",
-            "explanation": "Zawsze testuj nowe klienty na osobnym koncie. Utwórz nową parę kluczy tylko do testów. Jeśli klient jest złośliwy, stracisz tylko testowe konto, a nie główne.",
+            "correctId": "a",
+            "explanation": "Nigdy nie wklejaj głównego klucza prywatnego do aplikacji, której nie sprawdziłeś. Zaloguj się przez podpisywacz (Amber na Androidzie, rozszerzenie w przeglądarce, zdalny podpisywacz NIP-46), wtedy aplikacja dostaje same podpisy i nigdy nie widzi Twojego nsec. Klucz na próbę wystarczy, żeby się rozejrzeć, ale w Nostr nie ma przeprowadzki: obserwujący i reputacja zostają przy kluczu, który je zdobył.",
             "severity": "warning"
           },
           {
             "id": "metadata",
-            "title": "Higiena Metadanych",
+            "title": "Higiena metadanych",
             "prompt": "Których informacji NIE powinieneś ujawniać w profilu?",
             "options": [
               {
@@ -240,7 +240,7 @@
           },
           {
             "id": "relay-strategy",
-            "title": "Strategia Relayów",
+            "title": "Strategia relayów",
             "prompt": "Dlaczego warto używać wielu relayów?",
             "options": [
               {
@@ -253,7 +253,7 @@
               },
               {
                 "id": "c",
-                "label": "Aby otrzymywać więcej zap"
+                "label": "Aby dostawać więcej zapów"
               }
             ],
             "correctId": "b",
@@ -262,8 +262,8 @@
           },
           {
             "id": "zaps",
-            "title": "Bezpieczeństwo Zap",
-            "prompt": "Jak bezpiecznie konfigurować zaps?",
+            "title": "Bezpieczeństwo zapów",
+            "prompt": "Konfigurujesz zapy po raz pierwszy. Co najlepiej ochroni Twoje środki?",
             "options": [
               {
                 "id": "a",
@@ -271,33 +271,33 @@
               },
               {
                 "id": "b",
-                "label": "Użyć osobnego portfela Lightning"
+                "label": "Podłączyć portfel Lightning, który należy do Ciebie, i potwierdzać każde żądanie zapa"
               },
               {
                 "id": "c",
-                "label": "Udostępnić adres Lightning publicznie"
+                "label": "Wysłać frazę seed portfela na relay, żeby sam wypłacał środki"
               }
             ],
             "correctId": "b",
-            "explanation": "Zawsze używaj osobnego portfela Lightning do zaps. To izoluje Twoje finanse od aktywności na Nostr. Jeśli ktoś prześledzi transakcje, nie połączy ich z głównym kontem.",
+            "explanation": "Podłącz portfel, nad którym masz kontrolę, i potwierdzaj każde żądanie, zanim je podpiszesz. Adres Lightning w profilu jest publiczny z założenia, bo bez niego nikt Ci nie wyśle zapa. Fraza seed to zupełnie inna sprawa: nie trafia nigdzie poza Twoją kopię zapasową.",
             "severity": "critical"
           }
         ]
       }
     },
     "quickstart": {
-      "title": "Szybki Start",
-      "description": "Zacznij korzystać z Nostr w ciągu kilku minut."
+      "title": "Szybki start",
+      "description": "Praktyczny przewodnik, dzięki któremu uruchomisz Nostr w kilka minut."
     },
     "findingCommunity": {
-      "title": "Znajdowanie Społeczności",
+      "title": "Znajdowanie społeczności",
       "description": "Odkryj, jak znaleźć i dołączyć do społeczności na Nostr.",
       "quiz": {
-        "title": "Quiz: Społeczność",
+        "title": "Quiz: społeczność",
         "questions": [
           {
             "id": "finding-people",
-            "title": "Znajdowanie Ludzi",
+            "title": "Znajdowanie ludzi",
             "prompt": "Jak najlepiej znaleźć interesujących ludzi na Nostr?",
             "options": [
               {
@@ -319,7 +319,7 @@
           },
           {
             "id": "npub-sharing",
-            "title": "Udostępnianie NPub",
+            "title": "Udostępnianie npub",
             "prompt": "Gdzie bezpiecznie udostępniać swój klucz publiczny (npub)?",
             "options": [
               {
@@ -341,7 +341,7 @@
           },
           {
             "id": "follow-lists",
-            "title": "Listy Obserwowanych",
+            "title": "Listy obserwowanych",
             "prompt": "Co to są 'follow lists'?",
             "options": [
               {
@@ -407,7 +407,7 @@
           },
           {
             "id": "community-building",
-            "title": "Tworzenie Społeczności",
+            "title": "Tworzenie społeczności",
             "prompt": "Jak możesz założyć własną społeczność w Nostr?",
             "options": [
               {
@@ -432,17 +432,17 @@
     },
     "faq": {
       "title": "FAQ",
-      "description": "Często zadawane pytania o Nostr."
+      "description": "Często zadawane pytania o Nostr, z odpowiedziami bez żargonu."
     },
     "relaysDemystified": {
-      "title": "Relaye Rozwiane",
-      "description": "Dogłębne spojrzenie na działanie relayów.",
+      "title": "Relaye bez tajemnic",
+      "description": "Dogłębne spojrzenie na działanie relayów, z prostymi analogiami i interaktywnymi narzędziami.",
       "quiz": {
-        "title": "Quiz: Relaye",
+        "title": "Quiz: relaye",
         "questions": [
           {
             "id": "relay-purpose",
-            "title": "Cel Relaya",
+            "title": "Cel relaya",
             "prompt": "Do czego służy relay w Nostr?",
             "options": [
               {
@@ -464,7 +464,7 @@
           },
           {
             "id": "relay-choice",
-            "title": "Wybór Relaya",
+            "title": "Wybór relaya",
             "prompt": "Jak wybrać odpowiednie relaye?",
             "options": [
               {
@@ -486,7 +486,7 @@
           },
           {
             "id": "how-many",
-            "title": "Ile Relayów?",
+            "title": "Ile relayów?",
             "prompt": "Ile relayów powinieneś używać?",
             "options": [
               {
@@ -495,7 +495,7 @@
               },
               {
                 "id": "b",
-                "label": "5-15 relayów"
+                "label": "3-10 relayów"
               },
               {
                 "id": "c",
@@ -503,12 +503,12 @@
               }
             ],
             "correctId": "b",
-            "explanation": "Optymalna liczba to 5-15 relayów. Za mało - ryzykujesz utratę danych. Za dużo - spowalniasz aplikację. To jak kontakty w kilku sieciach.",
+            "explanation": "Rozsądny zakres to 3-10 relayów. Przy jednym ryzykujesz, że treść nigdzie nie dotrze. Przy kilkudziesięciu aplikacja zwalnia, a każdy kolejny relay daje coraz mniej.",
             "severity": "info"
           },
           {
             "id": "relay-url",
-            "title": "URL Relaya",
+            "title": "URL relaya",
             "prompt": "Czym jest URL relaya?",
             "options": [
               {
@@ -530,7 +530,7 @@
           },
           {
             "id": "relay-reliability",
-            "title": "Niezawodność Relaya",
+            "title": "Niezawodność relaya",
             "prompt": "Co zrobić, jeśli ulubiony relay przestanie działać?",
             "options": [
               {
@@ -577,7 +577,7 @@
     },
     "nip05Identity": {
       "title": "Tożsamość NIP-05",
-      "description": "Skonfiguruj swój identyfikator NIP-05.",
+      "description": "Skonfiguruj identyfikator NIP-05 i zamień npub na czytelną nazwę w rodzaju ty@twojadomena.pl.",
       "quiz": {
         "title": "Quiz: NIP-05",
         "questions": [
@@ -588,7 +588,7 @@
             "options": [
               {
                 "id": "a",
-                "label": "Zastępuje npub czytelnym adresem"
+                "label": "Dodaje czytelny adres powiązany z Twoim npub"
               },
               {
                 "id": "b",
@@ -600,7 +600,7 @@
               }
             ],
             "correctId": "a",
-            "explanation": "NIP-05 to opcjonalny czytelny identyfikator. Zamiast npub1abc...123 masz jan@example.com. Łatwiej zapamiętać i podać znajomym.",
+            "explanation": "NIP-05 to opcjonalny czytelny identyfikator powiązany z Twoim npub. Zamiast npub1abc...123 podajesz jan@example.com, a npub zostaje tam, gdzie był. Łatwiej zapamiętać i łatwiej podać znajomym.",
             "severity": "info"
           },
           {
@@ -627,7 +627,7 @@
           },
           {
             "id": "required",
-            "title": "Czy Wymagany?",
+            "title": "Czy wymagany?",
             "prompt": "Czy musisz mieć NIP-05?",
             "options": [
               {
@@ -649,7 +649,7 @@
           },
           {
             "id": "setup-location",
-            "title": "Gdzie Skonfigurować?",
+            "title": "Gdzie skonfigurować?",
             "prompt": "Gdzie konfiguruje się NIP-05?",
             "options": [
               {
@@ -696,14 +696,14 @@
     },
     "zapsAndLightning": {
       "title": "Zaps i Lightning",
-      "description": "Opanuj sztukę wysyłania i odbierania płatności Bitcoin.",
+      "description": "Opanuj wysyłanie i odbieranie płatności Bitcoin (zapów) przez Lightning Network.",
       "quiz": {
-        "title": "Quiz: Zaps",
+        "title": "Quiz: zapy",
         "questions": [
           {
             "id": "what-are-zaps",
-            "title": "Co to Zaps?",
-            "prompt": "Czym są zaps w Nostr?",
+            "title": "Co to są zapy?",
+            "prompt": "Czym są zapy w Nostr?",
             "options": [
               {
                 "id": "a",
@@ -715,17 +715,17 @@
               },
               {
                 "id": "c",
-                "label": "Tokeny Nagrody"
+                "label": "Tokeny nagrody"
               }
             ],
             "correctId": "a",
-            "explanation": "Zaps to płatności Bitcoin przez Lightning Network. Pozwalają wysyłać małe kwoty natychmiast, bez pośredników. To jak polubienie z dodatkiem finansowym!",
+            "explanation": "Zapy to płatności Bitcoin przez Lightning Network. Pozwalają wysyłać drobne kwoty natychmiast, bez pośredników. Coś jak polubienie, tylko z pieniędzmi.",
             "severity": "info"
           },
           {
             "id": "wallet-types",
-            "title": "Rodzaje Portfeli",
-            "prompt": "Jaki portfel najlepiej użyć do zaps?",
+            "title": "Rodzaje portfeli",
+            "prompt": "Jaki portfel najlepiej nadaje się do zapów?",
             "options": [
               {
                 "id": "a",
@@ -733,7 +733,7 @@
               },
               {
                 "id": "b",
-                "label": "Samodzielny portfel Lightning"
+                "label": "Własny (niepowierniczy) portfel Lightning"
               },
               {
                 "id": "c",
@@ -741,13 +741,13 @@
               }
             ],
             "correctId": "b",
-            "explanation": "Najlepiej użyć samodzielnego portfela Lightning, nad którym masz pełną kontrolę. Custodial portfele wymagają zaufania do operatora.",
+            "explanation": "Portfele powiernicze (custodial, na przykład Coinos) są wygodne, ale to operator trzyma Twoje środki. Niepowiernicze, jak Phoenix czy Zeus, dają pełną kontrolę i pełną odpowiedzialność.",
             "severity": "warning"
           },
           {
             "id": "required",
-            "title": "Czy Wymagane?",
-            "prompt": "Czy potrzebujesz zaps do korzystania z Nostr?",
+            "title": "Czy wymagane?",
+            "prompt": "Czy zapy są potrzebne do korzystania z Nostr?",
             "options": [
               {
                 "id": "a",
@@ -763,13 +763,13 @@
               }
             ],
             "correctId": "b",
-            "explanation": "Zaps są całkowicie opcjonalne! Możesz używać Nostr bez płatności. To tylko sposób na wspieranie innych i otrzymywanie wsparcia.",
+            "explanation": "Zapy są całkowicie opcjonalne. Możesz używać Nostr bez żadnych płatności. To po prostu sposób na wspieranie innych i na przyjmowanie wsparcia.",
             "severity": "info"
           },
           {
             "id": "receiving",
-            "title": "Odbieranie Zaps",
-            "prompt": "Jak odebrać pierwszego zapsa?",
+            "title": "Odbieranie zapów",
+            "prompt": "Jak odebrać pierwszego zapa?",
             "options": [
               {
                 "id": "a",
@@ -785,13 +785,13 @@
               }
             ],
             "correctId": "a",
-            "explanation": "Wystarczy dodać adres Lightning do profilu. Możesz użyć LNURL lub Lightning Address. Inni użytkownicy będą mogli wtedy wysyłać Ci zaps.",
+            "explanation": "Potrzebujesz portfela Lightning, który daje Ci adres Lightning, i ten adres wpisujesz w profilu Nostr. Coinos działa w przeglądarce i niczego nie trzeba instalować, ale to on trzyma Twoje środki. Wbudowany portfel Primala oraz Zeus zostawiają kontrolę nad pieniędzmi po Twojej stronie.",
             "severity": "info"
           },
           {
             "id": "fees",
             "title": "Opłaty",
-            "prompt": "Ile kosztują zaps?",
+            "prompt": "Ile kosztują zapy?",
             "options": [
               {
                 "id": "a",
@@ -815,17 +815,17 @@
     },
     "nostrTools": {
       "title": "Narzędzia Nostr",
-      "description": "Przydatne narzędzia i usługi."
+      "description": "Wybrany katalog najprzydatniejszych narzędzi i usług Nostr: zarządzanie kluczami, hosting mediów, statystyki i nie tylko."
     },
     "troubleshooting": {
-      "title": "Rozwiązywanie Problemów",
-      "description": "Typowe problemy i sposoby ich rozwiązania.",
+      "title": "Rozwiązywanie problemów",
+      "description": "Typowe problemy i sposoby ich rozwiązania. Od pustego feedu po kłopoty z relayami.",
       "quiz": {
-        "title": "Quiz: Problemy",
+        "title": "Quiz: problemy",
         "questions": [
           {
             "id": "empty-feed",
-            "title": "Pusty Feed",
+            "title": "Pusty feed",
             "prompt": "Dlaczego Twój feed może być pusty?",
             "options": [
               {
@@ -847,7 +847,7 @@
           },
           {
             "id": "missing-posts",
-            "title": "Brakujące Posty",
+            "title": "Brakujące posty",
             "prompt": "Dlaczego nie widzisz starych postów?",
             "options": [
               {
@@ -869,7 +869,7 @@
           },
           {
             "id": "lost-keys",
-            "title": "Utracone Klucze",
+            "title": "Utracone klucze",
             "prompt": "Co zrobić, jeśli stracisz klucz prywatny?",
             "options": [
               {
@@ -891,7 +891,7 @@
           },
           {
             "id": "relay-connection",
-            "title": "Połączenie z Relayem",
+            "title": "Połączenie z relayem",
             "prompt": "Co zrobić, gdy nie możesz połączyć się z relayem?",
             "options": [
               {
@@ -935,8 +935,8 @@
           },
           {
             "id": "zap-issues",
-            "title": "Problemy z Zapami",
-            "prompt": "Dlaczego zaps mogą nie dochodzić?",
+            "title": "Problemy z zapami",
+            "prompt": "Dlaczego zapy mogą nie dochodzić?",
             "options": [
               {
                 "id": "a",
@@ -948,25 +948,25 @@
               },
               {
                 "id": "c",
-                "label": "Odbiorca wyłączył zaps"
+                "label": "Relay pobiera prowizję od zapów"
               }
             ],
             "correctId": "a",
-            "explanation": "Problemy z zapsami zazwyczaj wynikają z problemów z połączeniem Lightning. Sprawdź, czy masz otwarte kanały i czy adres Lightning odbiorcy jest prawidłowy.",
+            "explanation": "Zapy najczęściej rozbijają się o Lightning, nie o Nostr. Sprawdź, czy masz środki i otwarte kanały oraz czy adres Lightning odbiorcy jest prawidłowy. Relaye nie biorą prowizji od zapów, bo pieniądze w ogóle przez nie nie przechodzą.",
             "severity": "info"
           }
         ]
       }
     },
     "multiClient": {
-      "title": "Wielu Klientów",
-      "description": "Jak używać wielu klientów jednocześnie.",
+      "title": "Korzystanie z wielu klientów",
+      "description": "Jak używać wielu klientów jednocześnie i trzymać dane w synchronizacji.",
       "quiz": {
-        "title": "Quiz: Klienci",
+        "title": "Quiz: klienci",
         "questions": [
           {
             "id": "why-multiple",
-            "title": "Dlaczego Wielu?",
+            "title": "Dlaczego wielu?",
             "prompt": "Dlaczego warto używać wielu klientów?",
             "options": [
               {
@@ -988,12 +988,12 @@
           },
           {
             "id": "what-syncs",
-            "title": "Co się Synchronizuje?",
+            "title": "Co się synchronizuje?",
             "prompt": "Jakie dane są synchronizowane między klientami?",
             "options": [
               {
                 "id": "a",
-                "label": "Wszystko - posty, kontakty, ustawienia"
+                "label": "Posty, kontakty i profil, czyli wszystko, co jest zapisane na relayach"
               },
               {
                 "id": "b",
@@ -1037,7 +1037,7 @@
             "options": [
               {
                 "id": "a",
-                "label": "Użyć tego samego klucza"
+                "label": "Zalogować się tą samą tożsamością, najlepiej przez podpisywacz"
               },
               {
                 "id": "b",
@@ -1049,7 +1049,7 @@
               }
             ],
             "correctId": "a",
-            "explanation": "Wystarczy zalogować się tym samym kluczem w nowym kliencie. Wszystkie Twoje dane są tam automatycznie. To jak logowanie się do Gmaila na różnych urządzeniach.",
+            "explanation": "Wystarczy zalogować się tą samą tożsamością w nowym kliencie, a wszystkie dane już tam są. Najlepiej przez podpisywacz (Amber na Androidzie, rozszerzenie w przeglądarce, zdalny podpisywacz NIP-46), żeby nsec został w jednym miejscu, a każdy klient dostawał wyłącznie podpisy.",
             "severity": "info"
           },
           {
@@ -1078,14 +1078,14 @@
       }
     },
     "relayGuide": {
-      "title": "Przewodnik po Relayach",
-      "description": "Wszystko o wyborze i zarządzaniu relayami.",
+      "title": "Przewodnik po relayach",
+      "description": "Wszystko, co trzeba wiedzieć o wybieraniu relayów, łączeniu się z nimi i zarządzaniu nimi.",
       "quiz": {
-        "title": "Quiz: Relaye",
+        "title": "Quiz: relaye",
         "questions": [
           {
             "id": "relay-types",
-            "title": "Rodzaje Relayów",
+            "title": "Rodzaje relayów",
             "prompt": "Jakie są główne rodzaje relayów?",
             "options": [
               {
@@ -1107,7 +1107,7 @@
           },
           {
             "id": "how-many",
-            "title": "Ile Używać?",
+            "title": "Ile używać?",
             "prompt": "Ile relayów powinieneś mieć?",
             "options": [
               {
@@ -1116,7 +1116,7 @@
               },
               {
                 "id": "b",
-                "label": "5-15"
+                "label": "3-10"
               },
               {
                 "id": "c",
@@ -1124,12 +1124,12 @@
               }
             ],
             "correctId": "b",
-            "explanation": "5-15 relayów to złoty środek. Za mało - ryzykujesz utratę danych. Za dużo - spowalniasz aplikację i marnujesz zasoby.",
+            "explanation": "3-10 relayów to złoty środek. Za mało i tracisz zasięg, za dużo i aplikacja zwalnia, a korzyść z każdego kolejnego maleje.",
             "severity": "info"
           },
           {
             "id": "why-pay",
-            "title": "Dlaczego Płacić?",
+            "title": "Dlaczego płacić?",
             "prompt": "Dlaczego warto używać płatnych relayów?",
             "options": [
               {
@@ -1151,16 +1151,16 @@
           },
           {
             "id": "own-relay",
-            "title": "Własny Relay",
+            "title": "Własny relay",
             "prompt": "Czy warto uruchomić własny relay?",
             "options": [
               {
                 "id": "a",
-                "label": "Tak, dla pełnej kontroli"
+                "label": "Można, ale to opcja dla osób technicznych; większości wystarczą publiczne relaye"
               },
               {
                 "id": "b",
-                "label": "Nie, to za trudne"
+                "label": "Tak, każdy powinien mieć własny relay"
               },
               {
                 "id": "c",
@@ -1168,7 +1168,7 @@
               }
             ],
             "correctId": "a",
-            "explanation": "Własny relay daje pełną kontrolę nad Twoimi danymi. To też świetna nauka i wkład w decentralizację sieci.",
+            "explanation": "Własny relay daje pełną kontrolę nad danymi, ale trzeba go postawić, opłacić i pilnować, a to praca administracyjna. Na start spokojnie wystarczy kilka dobrych publicznych relayów; własny odłóż na później, jeśli w ogóle Cię skusi.",
             "severity": "info"
           },
           {
@@ -1197,14 +1197,14 @@
       }
     },
     "privacySecurity": {
-      "title": "Prywatność i Bezpieczeństwo",
-      "description": "Zaawansowane praktyki dla zaawansowanych użytkowników.",
+      "title": "Prywatność i bezpieczeństwo",
+      "description": "Zaawansowane praktyki prywatności i bezpieczeństwa dla wymagających użytkowników.",
       "quiz": {
-        "title": "Quiz: Prywatność",
+        "title": "Quiz: prywatność",
         "questions": [
           {
             "id": "threat-model",
-            "title": "Model Zagrożeń",
+            "title": "Model zagrożeń",
             "prompt": "Jaki jest główny model zagrożeń w Nostr?",
             "options": [
               {
@@ -1226,7 +1226,7 @@
           },
           {
             "id": "identity-separation",
-            "title": "Separacja Tożsamości",
+            "title": "Separacja tożsamości",
             "prompt": "Dlaczego warto mieć kilka tożsamości?",
             "options": [
               {
@@ -1248,7 +1248,7 @@
           },
           {
             "id": "signer-apps",
-            "title": "Aplikacje Podpisujące",
+            "title": "Aplikacje podpisujące",
             "prompt": "Co to są signer apps (np. Amber)?",
             "options": [
               {
@@ -1270,7 +1270,7 @@
           },
           {
             "id": "metadata-leaks",
-            "title": "Wycieki Metadanych",
+            "title": "Wycieki metadanych",
             "prompt": "Jakie metadane mogą Cię zdradzić?",
             "options": [
               {
@@ -1279,20 +1279,20 @@
               },
               {
                 "id": "b",
-                "label": "Wszystkie powyższe"
+                "label": "EXIF w zdjęciach"
               },
               {
                 "id": "c",
-                "label": "EXIF w zdjęciach"
+                "label": "Wszystkie powyższe"
               }
             ],
-            "correctId": "b",
+            "correctId": "c",
             "explanation": "Metadane to więcej niż GPS. To czas postów, typ urządzenia, wzorce aktywności, EXIF w zdjęciach. Wszystko może pomóc Cię zidentyfikować.",
             "severity": "warning"
           },
           {
             "id": "key-rotation",
-            "title": "Rotacja Kluczy",
+            "title": "Rotacja kluczy",
             "prompt": "Kiedy powinieneś zmienić klucz?",
             "options": [
               {
@@ -1314,7 +1314,7 @@
           },
           {
             "id": "recovery-planning",
-            "title": "Plan Odzyskiwania",
+            "title": "Plan odzyskiwania",
             "prompt": "Co zrobić w przypadku incydentu bezpieczeństwa?",
             "options": [
               {
@@ -1338,8 +1338,8 @@
       }
     },
     "nip17PrivateMessages": {
-      "title": "NIP-17: Prywatne Wiadomości",
-      "description": "Dowiedz się o NIP-17, bezpiecznej alternatywie dla NIP-04.",
+      "title": "NIP-17: Prywatne wiadomości",
+      "description": "Poznaj NIP-17, bezpiecznego następcę NIP-04, i dowiedz się, jak przenieść tam swoje prywatne wiadomości.",
       "quiz": {
         "title": "Quiz: NIP-17",
         "questions": [
@@ -1457,14 +1457,14 @@
       }
     },
     "protocolComparison": {
-      "title": "Porównanie Protokołów",
-      "description": "Techniczne porównanie protokołów zdecentralizowanych mediów.",
+      "title": "Porównanie protokołów",
+      "description": "Pełne techniczne porównanie trzech największych protokołów zdecentralizowanych mediów. Architektura, kompromisy i to, który protokół pasuje do Twoich potrzeb.",
       "quiz": {
-        "title": "Quiz: Protokoły",
+        "title": "Quiz: protokoły",
         "questions": [
           {
             "id": "identity-model",
-            "title": "Model Tożsamości",
+            "title": "Model tożsamości",
             "prompt": "Jak działa tożsamość w Nostr vs ActivityPub vs Bluesky?",
             "options": [
               {
@@ -1486,7 +1486,7 @@
           },
           {
             "id": "censorship-resistance",
-            "title": "Odporność na Cenzurę",
+            "title": "Odporność na cenzurę",
             "prompt": "Który protokół jest najbardziej odporny na cenzurę?",
             "options": [
               {
@@ -1530,7 +1530,7 @@
           },
           {
             "id": "network-type",
-            "title": "Architektura Sieci",
+            "title": "Architektura sieci",
             "prompt": "Jaka jest architektura każdego protokołu?",
             "options": [
               {
@@ -1552,7 +1552,7 @@
           },
           {
             "id": "best-use-case",
-            "title": "Najlepsze Zastosowanie",
+            "title": "Najlepsze zastosowanie",
             "prompt": "Który protokół wybrać?",
             "options": [
               {
@@ -1569,7 +1569,7 @@
               }
             ],
             "correctId": "a",
-            "explanation": "Każdy protokół ma zalety. Nostr dla maksymalnej decentralizacji, ActivityPub dla znajomych na Mastodonzie, Bluesky dla UX podobnego do Twittera.",
+            "explanation": "Każdy protokół ma swoje zalety. Nostr dla maksymalnej decentralizacji, ActivityPub jeśli Twoi znajomi siedzą na Mastodonie, Bluesky dla wrażeń zbliżonych do Twittera.",
             "severity": "info"
           }
         ]
@@ -1579,11 +1579,11 @@
       "title": "Rozumienie modelu skrzynki nadawczej",
       "description": "Dowiedz się, jak Nostr zapewnia, że Twoje posty docierają do wszystkich, którzy Cię obserwują",
       "quiz": {
-        "title": "Quiz o Modelu Skrzynki Nadawczej",
+        "title": "Quiz o modelu skrzynki nadawczej",
         "questions": [
           {
             "id": "outbox-purpose",
-            "title": "Cel Skrzynki Nadawczej",
+            "title": "Cel skrzynki nadawczej",
             "prompt": "Jaki problem rozwiązuje model skrzynki nadawczej?",
             "options": [
               {
@@ -1605,7 +1605,7 @@
           },
           {
             "id": "relay-list-kind",
-            "title": "Rodzaj Zdarzenia",
+            "title": "Rodzaj zdarzenia",
             "prompt": "Jaki rodzaj zdarzenia jest używany dla metadanych listy relay?",
             "options": [
               {
@@ -1627,7 +1627,7 @@
           },
           {
             "id": "read-write-markers",
-            "title": "Markery Relay",
+            "title": "Markery relayów",
             "prompt": "Co oznacza marker 'write' (zapis) w Twojej liście relay?",
             "options": [
               {
@@ -1649,16 +1649,16 @@
           },
           {
             "id": "optimal-relay-count",
-            "title": "Najlepsza Praktyka",
-            "prompt": "Ile relay powinieneś mieć na liście?",
+            "title": "Najlepsza praktyka",
+            "prompt": "Ile relayów powinieneś mieć na liście?",
             "options": [
               {
                 "id": "a",
-                "label": "2-4 relay"
+                "label": "2-4 relaye"
               },
               {
                 "id": "b",
-                "label": "10-15 relay"
+                "label": "10-15 relayów"
               },
               {
                 "id": "c",
@@ -1666,17 +1666,17 @@
               }
             ],
             "correctId": "a",
-            "explanation": "2-4 relay to optimum. Więcej relay zużywa baterię i daje malejące zwroty, ponieważ treść rozprzestrzenia się naturalnie.",
+            "explanation": "2-4 relaye to liczba, o jaką prosi NIP-65 w publikowanej przez Ciebie liście relayów (kind 10002). To co innego niż liczba relayów, z którymi klient rozmawia w trakcie pracy. Długa opublikowana lista zjada baterię i niewiele daje, bo treść i tak rozchodzi się między relayami.",
             "severity": "warning"
           },
           {
             "id": "switching-relays",
-            "title": "Migracja Relay",
-            "prompt": "Jeśli przestaniesz używać relay i przełączysz się na nowe, co stanie się z Twoimi obserwującymi?",
+            "title": "Zmiana relayów",
+            "prompt": "Jeśli przestaniesz używać dotychczasowych relayów i przełączysz się na nowe, co stanie się z Twoimi obserwującymi?",
             "options": [
               {
                 "id": "a",
-                "label": "Automatycznie znajdą Cię na nowym relay"
+                "label": "Automatycznie znajdą Cię na nowych relayach"
               },
               {
                 "id": "b",
@@ -1688,7 +1688,7 @@
               }
             ],
             "correctId": "a",
-            "explanation": "When you update your relay list (kind:10002), followers automatically start checking your new relays. No manual reconnection needed!",
+            "explanation": "Gdy zaktualizujesz swoją listę relayów (kind:10002), obserwujący automatycznie zaczną sprawdzać nowe relaye. Niczego nie trzeba podłączać ręcznie.",
             "severity": "critical"
           }
         ]
@@ -1706,7 +1706,7 @@
       "scoreDisplay": "{{score}} / {{total}} poprawnych odpowiedzi",
       "conceptsMastered": "Opanowane kluczowe zagadnienia",
       "nextSteps": "Następne kroki",
-      "perfectScore": "Podziel się swoją wiedzą – pomóż innym zacząć.",
+      "perfectScore": "Podziel się swoją wiedzą. Pomóż innym zacząć.",
       "reviewSections": "Przejrzyj sekcje, które Cię zmyliły.",
       "retakeQuiz": "Powtórz quiz",
       "questionCounter": "Pytanie {{current}} z {{total}}",
@@ -1728,15 +1728,15 @@
       "badgeEarned": "Odznaka zdobyta",
       "findWalletTools": "Znajdź narzędzia portfela",
       "fixConnectionIssues": "Napraw problemy z połączeniem",
-      "fixZapIssues": "Napraw problemy z zaps",
+      "fixZapIssues": "Napraw problemy z zapami",
       "getFreeNIP05": "Zdobądź darmowy NIP-05",
       "getStartedNostr": "Rozpocznij przygodę z Nostr",
       "keySecurityGuide": "Poradnik: Klucze i bezpieczeństwo",
       "learnMoreRelays": "Dowiedz się więcej o relayach",
-      "learnZaps": "Poznaj zaps",
+      "learnZaps": "Poznaj zapy",
       "nostrBasics": "Podstawy Nostr",
       "perfectScoreTitle": "Komplet punktów",
-      "privacyExpert": "Ekspert Prywatności",
+      "privacyExpert": "Ekspert prywatności",
       "privacySecurity": "Poradnik: Prywatność i bezpieczeństwo",
       "relayBasics": "Podstawy relayów",
       "reviewKeys": "Przejrzyj klucze i bezpieczeństwo",
@@ -1745,13 +1745,13 @@
       "securityBestPractices": "Najlepsze praktyki bezpieczeństwa",
       "startUsingNostr": "Zacznij korzystać z Nostr",
       "tryDifferentClients": "Wypróbuj różnych klientów",
-      "tryQuickstart": "Wypróbuj Szybki Start"
+      "tryQuickstart": "Wypróbuj szybki start"
     }
   },
   "clientRecommender": {
-    "title": "Twój Idealny Klient",
+    "title": "Twój idealny klient",
     "description": "Na podstawie Twoich preferencji, oto nasze najlepsze rekomendacje",
-    "retakeQuiz": "Powtórz Quiz",
+    "retakeQuiz": "Powtórz quiz",
     "steps": {
       "device": {
         "title": "Z jakiego urządzenia korzystasz?",
@@ -1764,7 +1764,7 @@
       "features": {
         "title": "Przydatne funkcje?",
         "description": "Wybierz funkcje, które Cię interesują (opcjonalnie)",
-        "seeRecommendations": "Zobacz Rekomendacje"
+        "seeRecommendations": "Zobacz rekomendacje"
       }
     },
     "deviceOptions": {
@@ -1795,47 +1795,47 @@
         "description": "Maksymalna prywatność i bezpieczeństwo"
       },
       "webOnly": {
-        "label": "Tylko Web",
+        "label": "Tylko web",
         "description": "Bez pobierania aplikacji"
       }
     },
     "featureOptions": {
       "wallet": {
-        "label": "WBudowany Portfel"
+        "label": "Wbudowany portfel"
       },
       "images": {
-        "label": "Udostępnianie Obrazów"
+        "label": "Udostępnianie obrazów"
       },
       "longform": {
-        "label": "Długie Posty"
+        "label": "Długie posty"
       }
     },
     "results": {
-      "beginnerFriendly": "Przyjazny dla Początkujących",
+      "beginnerFriendly": "Przyjazny dla początkujących",
       "pros": "Zalety",
       "cons": "Wady",
       "getApp": "Pobierz {clientName}",
-      "tryWeb": "Wypróbuj Wersję Web"
+      "tryWeb": "Wypróbuj wersję web"
     }
   },
   "keyGenerator": {
-    "title": "Wygeneruj Swoje Klucze Nostr",
+    "title": "Wygeneruj swoje klucze Nostr",
     "description": "Utwórz bezpieczną parę kluczy, aby uzyskać dostęp do Nostr. Twoje klucze są generowane lokalnie w przeglądarce i nigdy nie są wysyłane na żaden serwer.",
     "buttons": {
-      "generate": "Wygeneruj Nową Parę Kluczy",
+      "generate": "Wygeneruj nową parę kluczy",
       "generating": "Generowanie...",
       "regenerate": "Wygeneruj nową parę kluczy"
     },
     "progress": {
       "collectingEntropy": "Zbieranie entropii...",
-      "securityAcknowledgment": "Potwierdzenie Bezpieczeństwa"
+      "securityAcknowledgment": "Potwierdzenie bezpieczeństwa"
     },
     "securityWarning": {
-      "title": "Krytyczne Ostrzeżenie Bezpieczeństwa",
+      "title": "Krytyczne ostrzeżenie bezpieczeństwa",
       "description": "Twój klucz prywatny (nsec) jest jak hasło. Każdy, kto ma do niego dostęp, może przejąć kontrolę nad Twoim kontem. Uzupełnij poniższą listę kontrolną bezpieczeństwa przed kopiowaniem lub pobieraniem kluczy."
     },
     "securityChecklist": {
-      "title": "Lista Kontrolna Bezpieczeństwa",
+      "title": "Lista kontrolna bezpieczeństwa",
       "items": {
         "understand": {
           "label": "Rozumiem, że to moje jedyne hasło - jeśli je zgubię, nie można go odzyskać"
@@ -1850,28 +1850,28 @@
     },
     "keys": {
       "public": {
-        "title": "Klucz Publiczny (npub)",
+        "title": "Klucz publiczny (npub)",
         "badge": "Bezpieczny do udostępniania",
         "description": "To Twój publiczny identyfikator. Udostępnij go innym, aby mogli Cię znaleźć i obserwować.",
         "copy": "Kopiuj",
         "qrCode": "Kod QR"
       },
       "private": {
-        "title": "Klucz Prywatny (nsec)",
+        "title": "Klucz prywatny (nsec)",
         "badge": "NIGDY NIE UDOSTĘPNIAJ",
         "description": "To Twoje hasło. Każdy, kto je posiada, może przejąć kontrolę nad Twoim kontem. Zachowaj je w tajemnicy i bezpieczeństwie.",
         "copy": "Kopiuj",
-        "download": "Pobierz Kopię Zapasową",
+        "download": "Pobierz kopię zapasową",
         "qrCode": "Kod QR",
         "show": "Pokaż klucz prywatny",
         "hide": "Ukryj klucz prywatny"
       }
     },
     "modal": {
-      "title": "Ostrzeżenie Bezpieczeństwa",
+      "title": "Ostrzeżenie bezpieczeństwa",
       "description": "Nie uzupełniłeś wszystkich potwierdzeń bezpieczeństwa. Kopiowanie kluczy bez zrozumienia ryzyka może skutkować trwałą utratą dostępu.",
       "goBack": "Wróć",
-      "copyAnyway": "Kopiuj Mimo To"
+      "copyAnyway": "Kopiuj mimo to"
     },
     "toast": {
       "success": "Klucze wygenerowane pomyślnie!",
@@ -1882,10 +1882,10 @@
     "backupFile": {
       "title": "KOPIA ZAPASOWA KLUCZY NOSTR",
       "generated": "Wygenerowano",
-      "publicKey": "KLUCZ PUBLICZNY (npub) - Bezpieczny do udostępniania",
+      "publicKey": "KLUCZ PUBLICZNY (npub) - bezpieczny do udostępniania",
       "privateKey": "KLUCZ PRYWATNY (nsec) - NIGDY NIE UDOSTĘPNIAJ",
-      "hexPrivate": "Klucz Prywatny Hex",
-      "hexPublic": "Klucz Publiczny Hex",
+      "hexPrivate": "Klucz prywatny hex",
+      "hexPublic": "Klucz publiczny hex",
       "warnings": {
         "title": "WAŻNE OSTRZEŻENIA BEZPIECZEŃSTWA",
         "keepSecret": "Zachowaj klucz prywatny (nsec) w tajemnicy",
@@ -1896,7 +1896,7 @@
     }
   },
   "troubleshootingWizard": {
-    "title": "Kreator Rozwiązywania Problemów",
+    "title": "Kreator rozwiązywania problemów",
     "description": "Zdiagnozujmy i naprawmy Twój problem z Nostr krok po kroku",
     "step": "Krok",
     "back": "Wstecz",
@@ -1957,7 +1957,7 @@
         }
       },
       "zapCheck": {
-        "text": "Co się dzieje gdy próbujesz zapy?",
+        "text": "Co się dzieje, gdy próbujesz wysłać zapa?",
         "options": {
           "nothing": "Nic się nie dzieje",
           "error": "Pojawia się komunikat o błędzie",
@@ -1989,7 +1989,7 @@
         "title": "Zgubione klucze - fokus na zapobieganiu",
         "description": "Niestety, zgubionych kluczy nie można odzyskać. Możemy jednak pomóc Ci zapobiec temu w przyszłości.",
         "steps": [
-          "Utwórz nową parę kluczy używając Generatora Kluczy",
+          "Utwórz nową parę kluczy w generatorze kluczy",
           "Natychmiast zapisz swój nsec w 3+ bezpiecznych miejscach",
           "Rozważ użycie menedżera haseł (1Password, Bitwarden)",
           "Zapisz go na papierze i przechowuj w bezpiecznym miejscu",
@@ -2005,7 +2005,7 @@
         "title": "Witaj! Twój feed jest pusty",
         "description": "Jako nowy użytkownik, Twój feed jest pusty, ponieważ musisz najpierw obserwować ludzi.",
         "steps": [
-          "Przejdź do narzędzia Napraw Pusty Feed poniżej",
+          "Przejdź do narzędzia Napraw pusty feed poniżej",
           "Wybierz pakiet startowy kont do obserwowania",
           "Podłącz się do 3-5 rekomendowanych relay",
           "Poczekaj kilka minut na załadowanie treści",
@@ -2022,7 +2022,7 @@
         "description": "Częściowa zawartość zazwyczaj oznacza problemy z połączeniem do relay.",
         "steps": [
           "Sprawdź do których relay jesteś podłączony",
-          "Dodaj więcej relay (celuj w 5-10 różnych relay)",
+          "Dodaj więcej relayów (celuj w 3-10 różnych)",
           "Poczekaj kilka minut na zakończenie synchronizacji",
           "Spróbuj odświeżyć feed",
           "Sprawdź czy brakujący użytkownicy używają innych relay"
@@ -2066,7 +2066,7 @@
         "steps": [
           "Sprawdź swoje połączenie internetowe",
           "Zweryfikuj czy adresy URL relay są poprawne (wss://...)",
-          "Spróbuj innych relay z Eksploratora Relay",
+          "Spróbuj innych relayów z eksploratora relayów",
           "Sprawdź czy klient nie jest blokowany przez firewall",
           "Zrestartuj aplikację i spróbuj ponownie"
         ],
@@ -2089,7 +2089,7 @@
       },
       "notPublishing": {
         "title": "Posty się nie publikują",
-        "description": "Twoje posty nie udają się wysłać.",
+        "description": "Nie udaje się wysłać Twoich postów.",
         "steps": [
           "Sprawdź czy masz relay z włączonym zapisem",
           "Zweryfikuj czy masz wystarczająco relay (przynajmniej 1)",
@@ -2104,7 +2104,7 @@
         "steps": [
           "Zmniejsz liczbę podłączonych relay",
           "Przełącz się na szybsze relay (niższe opóźnienie)",
-          "Użyj Eksploratora Relay aby znaleźć szybkie relay",
+          "Użyj eksploratora relayów, żeby znaleźć szybkie relaye",
           "Sprawdź prędkość swojego internetu",
           "Zamknij inne aplikacje używające pasma"
         ]
@@ -2133,12 +2133,12 @@
       },
       "zapError": {
         "title": "Komunikat błędu zap",
-        "description": "Wystąpił konkretny błąd z Twoim zap.",
+        "description": "Przy Twoim zapie pojawił się konkretny błąd.",
         "steps": [
           "Zanotuj dokładny komunikat błędu",
           "Sprawdź czy portfel ma wystarczające saldo",
           "Zweryfikuj czy połączenie NWC jest ważne",
-          "Spróbuj zapy mniejszą kwotę",
+          "Spróbuj wysłać zapa na mniejszą kwotę",
           "Zrestartuj aplikacje portfela i klienta"
         ]
       },
@@ -2157,7 +2157,7 @@
         "title": "Brak podłączonego portfela",
         "description": "Potrzebujesz portfela Bitcoin Lightning aby wysyłać zapy.",
         "steps": [
-          "Pobierz portfel lightning (Alby, Zeus, Phoenix)",
+          "Weź portfel lightning, który mówi po Nostr Wallet Connect (Zeus, Coinos albo Alby Hub z Alby Go)",
           "Zasil portfel Bitcoinem",
           "Połącz portfel ze swoim klientem Nostr przez NWC",
           "Spróbuj wysłać mały testowy zap",
@@ -2316,32 +2316,32 @@
     }
   },
   "emptyFeedFixer": {
-    "title": "Napraw Pusty Feed",
+    "title": "Napraw pusty feed",
     "description": "Nowy w Nostr? Zacznij od obserwowania kont i łączenia się z relay, aby zobaczyć treści w swoim feedzie.",
-    "setupProgress": "Postęp Konfiguracji",
+    "setupProgress": "Postęp konfiguracji",
     "step1": {
-      "title": "Krok 1: Obserwuj Konta",
+      "title": "Krok 1: Obserwuj konta",
       "description": "Wybierz pakiet startowy lub dodaj własne konta",
       "following": "Obserwujesz",
-      "followAll": "Obserwuj Wszystkich",
+      "followAll": "Obserwuj wszystkich",
       "follow": "Obserwuj",
       "addCustom": "Dodaj",
-      "continue": "Przejdź do Relay"
+      "continue": "Przejdź do relay"
     },
     "step2": {
-      "title": "Krok 2: Połącz się z Relay",
+      "title": "Krok 2: Połącz się z relayami",
       "description": "Połącz się z relay, aby zobaczyć treści",
       "connected": "Połączony",
       "connect": "Połącz",
-      "connectAll": "Połącz się ze Wszystkimi Rekomendowanymi Relay",
+      "connectAll": "Połącz się ze wszystkimi rekomendowanymi relay",
       "continue": "Kontynuuj",
       "info": "Relay to serwery przechowujące i dystrybuujące treści Nostr. Połączenie z wieloma relay zapewnia lepszą dostępność treści.",
       "recommended": "Rekomendowane"
     },
     "step3": {
-      "title": "Krok 3: Zacznij Używać Nostr!",
+      "title": "Krok 3: Zacznij używać Nostr!",
       "description": "Jesteś gotowy do eksploracji. Wybierz klienta, aby zacząć.",
-      "completed": "Wszystko Gotowe!",
+      "completed": "Wszystko gotowe!",
       "successMessage": "Obserwujesz {accounts} kont i połączyłeś się z {relays} relay. Twój feed Nostr powinien teraz mieć treści!",
       "awesome": "Świetnie!"
     },
@@ -2355,7 +2355,7 @@
         "description": "Entuzjaści Bitcoina i Lightning Network"
       },
       "art": {
-        "name": "Sztuka i Design",
+        "name": "Sztuka i design",
         "description": "Artyści, projektanci i twórcy"
       },
       "general": {
@@ -2374,14 +2374,14 @@
       },
       "wssPurplePages": {
         "name": "Purple Pages",
-        "description": "Relay metadanych"
+        "description": "Tylko profile i listy, bez postów"
       }
     }
   },
   "backupChecklist": {
-    "title": "Zrób Kopię Zapasową Swoich Kluczy",
+    "title": "Zrób kopię zapasową swoich kluczy",
     "description": "Przed kontynuowaniem uzupełnij tę listę kontrolną, aby upewnić się, że Twoje klucze są bezpiecznie zapisane. To krytyczne - zgubionych kluczy nie można odzyskać.",
-    "progress": "Postęp Kopii Zapasowej",
+    "progress": "Postęp kopii zapasowej",
     "checklist": {
       "copiedNpub": {
         "label": "Skopiowano npub (klucz publiczny)",
@@ -2409,23 +2409,23 @@
     "buttons": {
       "copyNpub": "Kopiuj npub",
       "copyNsec": "Kopiuj nsec",
-      "completeAll": "Ukończyłem Wszystkie Kopie",
-      "completeRequired": "Najpierw Uzupełnij Wszystkie Pozycje",
+      "completeAll": "Ukończyłem wszystkie kopie",
+      "completeRequired": "Najpierw uzupełnij wszystkie pozycje",
       "skip": "Pomiń na razie (niezalecane)"
     },
     "securityTips": {
-      "title": "Wskazówki Bezpieczeństwa",
+      "title": "Wskazówki bezpieczeństwa",
       "items": [
         "Nigdy nie przechowuj swojego nsec w zwykłych plikach tekstowych ani zrzutach ekranu",
-        "Nie dziel się swoimi kluczami z nikim, w tym z obsługą",
+        "Nie udostępniaj kluczy nikomu, także osobom podającym się za \"pomoc techniczną\"",
         "Przetestuj swoją kopię zapasową, przywracając z niej dane przed usunięciem oryginałów",
         "Rozważ portfel sprzętowy dla maksymalnego bezpieczeństwa"
       ]
     },
     "completion": {
-      "title": "Kopia Zapasowa Ukończona!",
+      "title": "Kopia zapasowa gotowa!",
       "description": "Pomyślnie wykonałeś kopię zapasową swoich kluczy Nostr w wielu bezpiecznych miejscach. Twoje klucze są bezpieczne!",
-      "reset": "Zresetuj Listę Kontrolną"
+      "reset": "Zresetuj listę kontrolną"
     },
     "skipModal": {
       "title": "Jesteś pewien?",
@@ -2436,10 +2436,10 @@
         "Nie ma sposobu na odzyskanie lub zresetowanie kluczy"
       ],
       "goBack": "Wróć",
-      "skipAnyway": "Pomiń Mimo To"
+      "skipAnyway": "Pomiń mimo to"
     },
     "confirmModal": {
-      "title": "Potwierdź Kopię Zapasową",
+      "title": "Potwierdź kopię zapasową",
       "description": "Proszę potwierdzić, że ukończyłeś wszystkie kroki kopii zapasowej. Rozumiesz, że zgubionych kluczy nie można odzyskać.",
       "review": "Przejrzyj",
       "confirm": "Potwierdź"
@@ -2450,8 +2450,8 @@
     "filters": {
       "button": "Filtry",
       "platform": "Platforma",
-      "features": "Kluczowe Funkcje",
-      "difficulty": "Poziom Trudności"
+      "features": "Kluczowe funkcje",
+      "difficulty": "Poziom trudności"
     },
     "platformLabels": {
       "ios": "iOS",
@@ -2467,7 +2467,7 @@
     "featureLabels": {
       "wallet": "Portfel",
       "media": "Media",
-      "longform": "Długie Posty",
+      "longform": "Długie posty",
       "privacy": "Prywatność"
     },
     "clearFilters": "Wyczyść wszystkie filtry",
@@ -2524,15 +2524,15 @@
         "description": "Szybki, nowoczesny klient dostępny na wszystkich platformach, o świetnej wydajności.",
         "pros": [
           "Wszystkie platformy",
+          "Wbudowany portfel Lightning",
           "Szybkie ładowanie",
           "Świetna wyszukiwarka",
-          "Piękny design",
           "Regularne aktualizacje"
         ],
         "cons": [
           "Część osób ma obawy o prywatność",
-          "Nowsza aplikacja",
-          "Część funkcji wciąż w rozwoju"
+          "Czyta przez własne serwery buforujące Primala",
+          "Mniejsza kontrola nad relayami niż w klientach dla zaawansowanych"
         ]
       },
       "iris": {
@@ -2569,48 +2569,48 @@
       },
       "coracle": {
         "name": "Coracle",
-        "description": "Klient desktopowy dla zaawansowanych użytkowników z rozbudowanymi funkcjami.",
+        "description": "Klient webowy dla zaawansowanych, z rozbudowaną kontrolą nad relayami i społecznościami.",
         "pros": [
           "Potężne funkcje",
-          "Zoptymalizowany pod desktop",
+          "Działa w każdej przeglądarce, można zainstalować jako aplikację webową",
           "Świetny dla twórców",
           "Zaawansowane filtrowanie",
           "Skróty klawiszowe"
         ],
         "cons": [
-          "Tylko desktop",
+          "Brak natywnej aplikacji mobilnej",
           "Wyższy próg wejścia",
-          "Nieprzyjazny dla urządzeń mobilnych"
+          "Sporo ustawień do przebrnięcia"
         ]
       },
       "current": {
-        "name": "Current",
-        "description": "Klient na iOS ze świetną integracją Nostr Wallet Connect.",
+        "name": "Current (zamknięty)",
+        "description": "Projekt zamknięty. Był klientem na iOS zbudowanym wokół Nostr Wallet Connect, ale prace stanęły w 2023 roku, a aplikacja zniknęła z App Store, więc link do pobrania donikąd już nie prowadzi. Jeśli szukasz na iOS czegoś z portfelem na pierwszym planie, zerknij na Primala.",
         "pros": [
-          "Najlepsza obsługa portfela",
-          "Integracja NWC",
-          "Funkcje dla zaawansowanych",
-          "Przejrzysty interfejs"
+          "Był jednym z pierwszych klientów z Nostr Wallet Connect",
+          "Projekt skupiony na zapach",
+          "Przejrzysty interfejs",
+          "Kod źródłowy nadal jest na GitHubie"
         ],
         "cons": [
-          "Bardziej złożony",
-          "Tylko iOS",
-          "Wymaga nauki"
+          "Rozwój zatrzymał się w 2023 roku",
+          "Zdjęty z App Store, link do pobrania nie działa",
+          "Nie jest wyborem dla nowych użytkowników"
         ]
       },
       "habla": {
         "name": "Habla",
-        "description": "Klient skupiony na długich formach, z obsługą newsletterów.",
+        "description": "Klient do pisania długich artykułów. Uwaga: habla.news zwraca 404 co najmniej od września 2026, więc do dłuższych form używaj na razie YakiHonne.",
         "pros": [
           "Świetny do artykułów",
-          "Obsługa newsletterów",
+          "Zbudowany wokół długich form (NIP-23)",
           "Przejrzysty edytor tekstu",
-          "Monetyzacja"
+          "Czytelnicy mogą zapować to, co opublikujesz"
         ],
         "cons": [
+          "Strona obecnie nie działa (404)",
           "Tylko web",
-          "Mniejsza baza użytkowników",
-          "Ograniczone funkcje społecznościowe"
+          "Mniejsza baza użytkowników"
         ]
       },
       "nostur": {
@@ -2628,55 +2628,55 @@
         ]
       },
       "plebstr": {
-        "name": "Plebstr",
-        "description": "Prosty klient na Androida dla początkujących.",
+        "name": "Openvibe (dawniej Plebstr)",
+        "description": "Plebstr stał się Openvibe: ta sama aplikacja, ale teraz z jednym feedem łączącym Nostr, Bluesky, Mastodona i Threads. Nadal łatwy start na Androidzie, tylko nie licz na doświadczenie wyłącznie nostrowe.",
         "pros": [
           "Łatwy w obsłudze",
-          "Przejrzysty design",
-          "Dobra wydajność"
+          "Jedna aplikacja do kilku sieci",
+          "Przejrzysty design"
         ],
         "cons": [
-          "Mniej funkcji",
-          "Tylko Android",
+          "Nostr to tylko część tego, co robi",
+          "Mniej funkcji specyficznych dla Nostr",
           "Brak portfela"
         ]
       }
     },
     "tags": {
-      "beginnerFriendly": "Przyjazny dla Początkujących",
+      "beginnerFriendly": "Przyjazny dla początkujących",
       "popular": "Popularny",
-      "powerUser": "Dla Zaawansowanych",
-      "featureRich": "Bogaty w Funkcje",
+      "powerUser": "Dla zaawansowanych",
+      "featureRich": "Bogaty w funkcje",
       "crossPlatform": "Wieloplatformowy",
-      "webOnly": "Tylko Web",
+      "webOnly": "Tylko web",
       "minimal": "Minimalistyczny",
       "privacy": "Prywatność",
-      "walletFocused": "Nastawiony na Portfel",
-      "longForm": "Długie Formy",
-      "writers": "Dla Piszących",
+      "walletFocused": "Nastawiony na portfel",
+      "longForm": "Długie formy",
+      "writers": "Dla piszących",
       "ios": "iOS",
       "android": "Android",
       "desktop": "Desktop"
     }
   },
   "relayExplorer": {
-    "title": "Eksplorator Relay",
+    "title": "Eksplorator relay",
     "description": "Przeglądaj i łącz się z relay Nostr. Relay przechowują i dystrybuują Twoje posty. Połącz się z wieloma relay dla lepszej niezawodności.",
-    "testAll": "Testuj Wszystkie",
+    "testAll": "Testuj wszystkie",
     "checking": "Sprawdzanie...",
     "search": {
       "placeholder": "Szukaj relay..."
     },
     "filters": {
       "topic": {
-        "label": "Wszystkie Tematy",
+        "label": "Wszystkie tematy",
         "bitcoin": "Bitcoin",
         "technology": "Technologia",
         "general": "Ogólne",
-        "art": "Sztuka i Design"
+        "art": "Sztuka i design"
       },
       "type": {
-        "label": "Wszystkie Typy",
+        "label": "Wszystkie typy",
         "free": "Darmowe",
         "paid": "Płatne"
       }
@@ -2709,18 +2709,18 @@
       }
     },
     "stats": {
-      "popularRelays": "Popularne Relay",
-      "onlineNow": "Online Teraz",
-      "freeRelays": "Darmowe Relay",
+      "popularRelays": "Popularne relay",
+      "onlineNow": "Online teraz",
+      "freeRelays": "Darmowe relay",
       "selected": "Wybrane"
     }
   },
   "relayPlayground": {
-    "title": "Plac Zabaw Relay",
+    "title": "Poligon relayów",
     "description": "Testuj i eksploruj relay Nostr w czasie rzeczywistym. Sprawdź łączność, zbadaj informacje o relay i analizuj zdarzenia.",
     "tabs": {
       "connection": "Połączenie",
-      "health": "Zdrowie",
+      "health": "Stan",
       "nips": "NIP-y",
       "events": "Zdarzenia",
       "query": "Zapytanie"
@@ -2729,7 +2729,7 @@
       "placeholder": "Szukaj relay..."
     },
     "buttons": {
-      "checkAll": "Sprawdź Wszystkie Relay",
+      "checkAll": "Sprawdź wszystkie relay",
       "checking": "Sprawdzanie...",
       "connect": "Połącz",
       "disconnect": "Rozłącz",
@@ -2747,16 +2747,16 @@
     },
     "connectionTab": {
       "selectRelay": "Wybierz relay do przetestowania połączenia",
-      "connectionState": "Stan Połączenia",
+      "connectionState": "Stan połączenia",
       "latency": "Opóźnienie",
       "unknown": "Nieznane",
       "connected": "Połączono z relay",
       "error": "Błąd połączenia"
     },
     "healthTab": {
-      "responseTime": "Czas Odpowiedzi",
-      "lastChecked": "Ostatnio Sprawdzane",
-      "noData": "Brak dostępnych danych o zdrowiu"
+      "responseTime": "Czas odpowiedzi",
+      "lastChecked": "Ostatnio sprawdzane",
+      "noData": "Brak danych o stanie relaya"
     },
     "nipsTab": {
       "title": "Wspierane NIP-y",
@@ -2764,18 +2764,18 @@
       "supported": "{{count}} NIP-ów wspieranych"
     },
     "eventsTab": {
-      "title": "Zdarzenia na Żywo",
+      "title": "Zdarzenia na żywo",
       "description": "Zdarzenia w czasie rzeczywistym z połączonych relay",
       "noEvents": "Nie otrzymano jeszcze żadnych zdarzeń",
       "kind": "Typ",
       "author": "Autor"
     },
     "queryTab": {
-      "title": "Kreator Zapytań",
+      "title": "Kreator zapytań",
       "description": "Twórz niestandardowe zapytania Nostr, aby pobrać konkretne zdarzenia",
       "kinds": "Typy",
       "limit": "Limit",
-      "execute": "Wykonaj Zapytanie",
+      "execute": "Wykonaj zapytanie",
       "results": "Wyniki",
       "noResults": "Nie znaleziono wyników"
     },
@@ -2827,20 +2827,20 @@
   },
   "quickstartSimulator": {
     "steps": {
-      "createKeys": "Stwórz Swoje Klucze",
+      "createKeys": "Stwórz swoje klucze",
       "connectRelay": "Połącz się z Relay",
-      "makePost": "Napisz Swój Pierwszy Post",
-      "followPeople": "Obserwuj Ludzi",
-      "interact": "Reaguj na Posty",
-      "receiveZap": "Odbierz Zapa"
+      "makePost": "Napisz swój pierwszy post",
+      "followPeople": "Obserwuj ludzi",
+      "interact": "Reaguj na posty",
+      "receiveZap": "Odbierz zapa"
     },
     "buttons": {
       "tryIt": "Wypróbuj",
-      "generateKeys": "Wygeneruj Klucze",
+      "generateKeys": "Wygeneruj klucze",
       "generating": "Generowanie...",
-      "generateNewKeys": "Wygeneruj Nowe Klucze",
-      "copyPublic": "Kopiuj Klucz Publiczny",
-      "copyPrivate": "Kopiuj Klucz Prywatny",
+      "generateNewKeys": "Wygeneruj nowe klucze",
+      "copyPublic": "Kopiuj klucz publiczny",
+      "copyPrivate": "Kopiuj klucz prywatny",
       "copied": "Skopiowano",
       "show": "Pokaż",
       "hide": "Ukryj",
@@ -2854,30 +2854,30 @@
       "awesome": "Świetnie!"
     },
     "keyGen": {
-      "description": "Każde konto Nostr to po prostu para kluczy — wygeneruj testową parę, aby zobaczyć, jak wyglądają.",
-      "publicKeyTitle": "Klucz Publiczny (npub)",
+      "description": "Każde konto Nostr to po prostu para kluczy. Wygeneruj testową parę, aby zobaczyć, jak wyglądają.",
+      "publicKeyTitle": "Klucz publiczny (npub)",
       "publicKeyDesc": "Bezpieczny do udostępniania każdemu",
-      "privateKeyTitle": "Klucz Prywatny (nsec)",
+      "privateKeyTitle": "Klucz prywatny (nsec)",
       "privateKeyDesc": "Nigdy nikomu go nie udostępniaj",
-      "important": "Te testowe klucze działają tylko tutaj — nie są prawdziwe. Przy prawdziwych kluczach możesz swobodnie udostępniać swój npub, ale nsec trzymaj w menedżerze haseł lub aplikacji signer i nigdy nie wklejaj go na żadnej stronie ani nikomu nie wysyłaj."
+      "important": "Te testowe klucze nie są prawdziwe i działają tylko tutaj. Przy prawdziwych kluczach możesz swobodnie udostępniać swój npub, ale nsec trzymaj w menedżerze haseł lub aplikacji signer i nigdy nie wklejaj go na żadnej stronie ani nikomu nie wysyłaj."
     },
     "simulator": "Symulator",
-    "simulationMode": "Tryb Symulacji",
-    "simulationNote": "To tylko symulacja do ćwiczeń — zainstaluj prawdziwą aplikację, gdy będziesz gotowy dołączyć do Nostr.",
+    "simulationMode": "Tryb symulacji",
+    "simulationNote": "To tylko symulacja do ćwiczeń. Zainstaluj prawdziwą aplikację, gdy będziesz gotowy dołączyć do Nostr.",
     "relayStep": {
-      "description": "Relay to serwery, które przechowują i przekazują dalej Twoje posty — połącz się z kilkoma, aby więcej osób mogło zobaczyć, co piszesz.",
+      "description": "Relay to serwery, które przechowują i przekazują dalej Twoje posty. Połącz się z kilkoma, aby więcej osób mogło zobaczyć, co piszesz.",
       "connected": "Połączony",
-      "connectOne": "Najpierw Połącz się z Relay"
+      "connectOne": "Najpierw połącz się z relay"
     },
     "postStep": {
-      "title": "Napisz Swój Pierwszy Post",
+      "title": "Napisz swój pierwszy post",
       "description": "Napisz krótką notatkę i opublikuj ją na relay, z którymi się właśnie połączyłeś.",
       "placeholder": "O czym myślisz?",
-      "tip": "Pierwszy post to dobre miejsce, aby się przedstawić — wiele osób dodaje #introductions, żeby inni mogli je znaleźć."
+      "tip": "Pierwszy post to dobre miejsce, aby się przedstawić. Wiele osób dodaje #introductions, żeby inni mogli je znaleźć."
     },
     "followStep": {
-      "title": "Obserwuj Ludzi",
-      "description": "Twój feed będzie pusty, dopóki nikogo nie obserwujesz — zacznij obserwować przynajmniej trzy osoby, aby go wypełnić.",
+      "title": "Obserwuj ludzi",
+      "description": "Twój feed będzie pusty, dopóki nikogo nie obserwujesz. Zacznij obserwować przynajmniej trzy osoby, aby go wypełnić.",
       "following": "Obserwujesz"
     },
     "interactStep": {
@@ -2885,20 +2885,20 @@
       "instruction": "Kliknij ikonę serca, aby polubić post i ukończyć ten krok."
     },
     "zapStep": {
-      "title": "Odbierz Zapa",
+      "title": "Odbierz zapa",
       "description": "Zapy to niewielkie płatności w Bitcoinie wysyłane za posty, które komuś się spodobały.",
       "invitation": "Twój pierwszy post spodobał się komuś na tyle, że wysłał Ci kilka sats.",
-      "receive": "Odbierz Zapa",
+      "receive": "Odbierz zapa",
       "received": "Otrzymałeś 1000 sats!",
       "earnInfo": "Sats to niewielkie ilości prawdziwego Bitcoina, wysyłane prosto do portfela Lightning powiązanego z Twoim profilem."
     },
     "completion": {
-      "title": "Pierwszy Dzień Ukończony!",
-      "description": "Połączyłeś się z relay, opublikowałeś post, zacząłeś obserwować ludzi i odebrałeś swojego pierwszego zapa — jesteś gotowy, aby zrobić to wszystko w prawdziwym kliencie."
+      "title": "Pierwszy dzień za Tobą!",
+      "description": "Połączyłeś się z relay, opublikowałeś post, zacząłeś obserwować ludzi i odebrałeś swojego pierwszego zapa. Jesteś gotowy, aby zrobić to wszystko w prawdziwym kliencie."
     }
   },
   "protocolComparisonUI": {
-    "centralizedLabel": "Tradycyjne Media Społecznościowe",
+    "centralizedLabel": "Tradycyjne media społecznościowe",
     "nostrLabel": "Nostr",
     "items": {
       "identity": {
@@ -2917,14 +2917,14 @@
         "nostr": "Używaj dowolnego klienta. Twoja tożsamość i obserwujący podążają za Tobą wszędzie."
       },
       "censorship": {
-        "title": "Odporność na Cenzurę",
+        "title": "Odporność na cenzurę",
         "centralized": "Platformy decydują co możesz powiedzieć. Mogą Cię cenzurować lub shadowbanować.",
         "nostr": "Żadna centralna władza nie kontroluje wypowiedzi. Zawsze znajdziesz relay które przekażą Twoje treści."
       }
     }
   },
   "postFlowSimulator": {
-    "title": "Symulator Przepływu Postów",
+    "title": "Symulator przepływu postów",
     "description": "Jeden post trafia naraz do każdego relay, którego używasz. Relaye nigdy nie przekazują go sobie nawzajem.",
     "stages": {
       "sign": "Podpisany",
@@ -2932,7 +2932,7 @@
       "missed": "Nigdy go nie zobaczy"
     },
     "labels": {
-      "yourDevice": "Twoje Urządzenie",
+      "yourDevice": "Twoje urządzenie",
       "relay": "Relay",
       "reader": "Czytelnik",
       "noSync": "Relaye nie synchronizują się między sobą"
@@ -2942,31 +2942,31 @@
       "pause": "Pauza",
       "reset": "Resetuj"
     },
-    "currentStepLabel": "Aktualny Krok",
+    "currentStepLabel": "Aktualny krok",
     "stepDescriptions": {
       "0": "Piszesz post na swoim urządzeniu i podpisujesz go kluczem prywatnym.",
-      "1": "Twój klient wysyła ten sam podpisany post do każdego relay, którego używasz — naraz, a nie jeden po drugim.",
+      "1": "Twój klient wysyła ten sam podpisany post do każdego relay, którego używasz. Do wszystkich naraz, nie jeden po drugim.",
       "2": "Każdy, kto jest podłączony do jednego z tych relayów, może go stamtąd pobrać.",
       "3": "Kto nie ma z Tobą wspólnego relay, nigdy tego posta nie zobaczy. Żaden relay nie przekazuje go dalej."
     }
   },
   "zapSimulator": {
-    "title": "Symulator Zapów",
+    "title": "Symulator zapów",
     "description": "Symuluj wysyłanie i otrzymywanie płatności Bitcoin (zapów) na Nostr za pomocą Lightning Network.",
     "steps": {
-      "confirm": "Potwierdź Otrzymanie"
+      "confirm": "Potwierdź otrzymanie"
     },
     "labels": {
       "amount": "Kwota (sats)",
       "invoice": "Faktura Lightning"
     },
     "buttons": {
-      "pay": "Zapłać Zapa",
+      "pay": "Zapłać zapa",
       "copy": "Kopiuj"
     }
   },
   "relayVisualizer": {
-    "title": "Wizualizator Relay",
+    "title": "Wizualizator relay",
     "controls": {
       "connect": "Połącz",
       "disconnect": "Rozłącz"
@@ -2977,44 +2977,44 @@
     }
   },
   "relayWorldMap": {
-    "title": "Mapa Świata Relay",
+    "title": "Mapa świata relay",
     "regions": {
       "northAmerica": "Ameryka Północna",
       "europe": "Europa",
       "asia": "Azja"
     },
     "stats": {
-      "totalRelays": "Wszystkich Relay"
+      "totalRelays": "Wszystkich relay"
     }
   },
   "guideNavigation": {
     "previous": "Poprzedni",
     "next": "Następny",
-    "backToAllGuides": "Wróć do Wszystkich Przewodników",
-    "exploreAllGuides": "Przeglądaj Wszystkie Przewodniki",
+    "backToAllGuides": "Wróć do wszystkich przewodników",
+    "exploreAllGuides": "Przeglądaj wszystkie przewodniki",
     "startOfLevel": "Początek poziomu {level}",
-    "levelComplete": "{level} Ukończony!",
+    "levelComplete": "{level} ukończony!",
     "levelCompleteDescription": "Ukończyłeś wszystkie przewodniki z poziomu {level}",
     "continueToLevel": "Kontynuuj do {level}",
     "unlockRequirements": "Ukończ więcej przewodników z {currentLevel}, aby odblokować {nextLevel}",
     "offLevelMessage": "Ten przewodnik nie jest częścią Twojego obecnego poziomu {level}"
   },
   "continueLearning": {
-    "allLevelsComplete": "Wszystkie Poziomy Ukończone!",
+    "allLevelsComplete": "Wszystkie poziomy ukończone!",
     "allLevelsCompleteDescription": "Gratulacje! Ukończyłeś wszystkie przewodniki z poziomu {level} i opanowałeś Nostr!",
-    "levelComplete": "Poziom Ukończony!",
+    "levelComplete": "Poziom ukończony!",
     "levelCompleteDescription": "Ukończyłeś wszystkie przewodniki z poziomu {level}!",
     "continueToLevel": "Kontynuuj do {level}",
-    "locked": "{level} jest Zablokowany",
+    "locked": "{level} jest zablokowany",
     "unlockRequirements": "Ukończ jeszcze {count} przewodnik(ów) z poziomu {currentLevel}, aby odblokować {nextLevel}",
-    "browseAllGuides": "Przeglądaj Wszystkie Przewodniki",
-    "guideComplete": "Przewodnik Ukończony!",
+    "browseAllGuides": "Przeglądaj wszystkie przewodniki",
+    "guideComplete": "Przewodnik ukończony!",
     "testKnowledge": "Sprawdź swoją wiedzę?",
     "nextGuide": "Gotowy na następny przewodnik?",
     "quizDescription": "Rozwiąż quiz, aby utrwalić to, czego się nauczyłeś.",
     "continueDescription": "Kontynuuj swoją podróż z Nostr z przewodnikiem {title}",
-    "takeQuiz": "Rozwiąż Quiz",
-    "continueLearning": "Kontynuuj Naukę",
+    "takeQuiz": "Rozwiąż quiz",
+    "continueLearning": "Kontynuuj naukę",
     "dismiss": "Zamknij",
     "upNext": "Dalej"
   },
@@ -3033,8 +3033,8 @@
   },
   "guidesPage": {
     "hero": {
-      "title": "Ucz się Nostr Krok po Kroku",
-      "description": "Stopniowe poziomy od początkującego do zaawansowanego. Wszystko jest dostępne — poziomy pokazują tylko sensowną kolejność czytania."
+      "title": "Ucz się Nostr krok po kroku",
+      "description": "Stopniowe poziomy od początkującego do zaawansowanego. Wszystko jest dostępne, a poziomy pokazują tylko sensowną kolejność czytania."
     },
     "filter": {
       "filterByInterest": "Filtruj według zainteresowań"
@@ -3043,7 +3043,7 @@
   "skillLevels": {
     "beginner": {
       "label": "Początkujący",
-      "title": "Pierwsze Kroki",
+      "title": "Pierwsze kroki",
       "subtitle": "Zacznij swoją przygodę z Nostr tutaj",
       "description": "Rozpocznij swoją przygodę z Nostr od podstaw. Nie wymaga wcześniejszej wiedzy."
     },
@@ -3051,7 +3051,7 @@
       "label": "Średniozaawansowany",
       "title": "Średniozaawansowany",
       "subtitle": "Podnieś swoje umiejętności Nostr",
-      "description": "Podnieś poziom dzięki głębszym tematom, takim jak NIP-05, Zapy i niezbędne narzędzia."
+      "description": "Podnieś poziom dzięki głębszym tematom: NIP-05, zapy i niezbędne narzędzia."
     },
     "advanced": {
       "label": "Zaawansowany",
@@ -3061,7 +3061,7 @@
     }
   },
   "interestFilter": {
-    "allGuides": "Wszystkie Przewodniki",
+    "allGuides": "Wszystkie przewodniki",
     "bitcoin": "Bitcoin",
     "privacy": "Prywatność",
     "security": "Bezpieczeństwo",
@@ -3077,26 +3077,26 @@
     },
     "status": {
       "completed": "Ukończony",
-      "continueReading": "Kontynuuj Czytanie",
-      "startLearning": "Rozpocznij Naukę"
+      "continueReading": "Kontynuuj czytanie",
+      "startLearning": "Rozpocznij naukę"
     }
   },
   "guideSection": {
-    "startHere": "Zacznij Tutaj",
+    "startHere": "Zacznij tutaj",
     "complete": "Ukończony"
   },
   "relayFeedBrowser": {
-    "title": "Przeglądaj Feedy Relay",
+    "title": "Przeglądaj feedy relay",
     "subtitle": "Odkrywaj społeczności Nostr, przeglądając feedy relay"
   },
   "officialAccount": {
     "followUs": "Śledź nas na Nostr",
     "viewProfile": "Zobacz profil na Njump",
-    "recentPosts": "Ostatnie Posty",
-    "showMore": "Pokaż Więcej",
-    "showLess": "Pokaż Mniej",
+    "recentPosts": "Ostatnie posty",
+    "showMore": "Pokaż więcej",
+    "showLess": "Pokaż mniej",
     "noPosts": "Brak ostatnich postów",
-    "tryAgain": "Spróbuj Ponownie",
+    "tryAgain": "Spróbuj ponownie",
     "errors": {
       "nip05Failed": "Nie udało się rozwiązać NIP-05",
       "loadFailed": "Nie udało się załadować danych konta"
@@ -3126,7 +3126,7 @@
     "groups": {
       "starter": {
         "name": "Od czego zacząć",
-        "description": "Jeśli masz wybierać tylko z jednej grupy — wybierz z tej."
+        "description": "Jeśli masz wybierać tylko z jednej grupy, wybierz z tej."
       },
       "creative": {
         "name": "Twórczość",
@@ -3148,7 +3148,7 @@
     "categories": {
       "jumpstart": {
         "name": "Zacznij tutaj",
-        "description": "Ręcznie wybrany zestaw na start — jeśli nie zaobserwujesz nikogo innego, zaobserwuj ich."
+        "description": "Ręcznie wybrany zestaw na start. Jeśli nie zaobserwujesz nikogo innego, zaobserwuj ich."
       },
       "legit": {
         "name": "Znane twarze",
@@ -3156,7 +3156,7 @@
       },
       "cool_people": {
         "name": "Polecani przez społeczność",
-        "description": "Konta, które użytkownicy nostr polecają najczęściej. Bez jednego tematu — po prostu dobre towarzystwo."
+        "description": "Konta, które użytkownicy nostr polecają najczęściej. Bez jednego tematu, po prostu dobre towarzystwo."
       },
       "artists": {
         "name": "Artyści i ilustratorzy",
@@ -3164,7 +3164,7 @@
       },
       "photography": {
         "name": "Fotografowie",
-        "description": "Pejzaż, ulica, dzika przyroda i portret — zwykle w pełnej rozdzielczości."
+        "description": "Pejzaż, ulica, dzika przyroda i portret. Zwykle w pełnej rozdzielczości."
       },
       "musicians": {
         "name": "Muzycy",
@@ -3220,8 +3220,8 @@
     "noResults": "Nie znaleziono pojęć pasujących do wyszukiwania.",
     "quickReference": {
       "title": "Szybka ściąga",
-      "npub": "Klucz publiczny — możesz go udostępniać",
-      "nsec": "Klucz prywatny — trzymaj w tajemnicy!",
+      "npub": "Klucz publiczny: możesz go udostępniać",
+      "nsec": "Klucz prywatny: trzymaj w tajemnicy!",
       "nip01": "Podstawowy protokół",
       "kind1": "Notatka tekstowa (post)"
     },

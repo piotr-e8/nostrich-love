@@ -2,24 +2,18 @@
 title: "Your Keys, Your Identity"
 seoTitle: "Nostr Keys Explained: npub, nsec & Staying Safe"
 description: "Learn how to generate, save, and protect your Nostr keys. The complete security guide for beginners. Follow the 3-2-1 backup rule."
-estimatedTime: "8 minutes"
+estimatedTime: "10 minutes"
 priority: 3
 category: "getting-started"
 ---
 
-import { AlertBanner } from "@components/AlertBanner";
-import { KeyVisualizer } from "@components/KeyVisualizer";
 import { KeyGenerator } from "@components/KeyGenerator";
 import { BackupChecklist } from "@components/BackupChecklist";
 import { SecurityQuiz } from "@components/interactive/SecurityQuiz";
 
-{/* ProgressIndicator temporarily disabled - will be implemented with actual tracking later */}
-{/* <ProgressIndicator current={2} total={4} estimatedTime="8 minutes" /> */}
-
-
 ## Why This Matters
 
-Unlike Twitter or Instagram, Nostr puts **you** in charge of your identity. There are no companies to ban you, no algorithms to suppress your content, and no customer service to lose your data. This freedom comes with responsibility—you own your keys, you control your account.
+Unlike Twitter or Instagram, Nostr puts **you** in charge of your identity. No single company can take your account away from you or lock you out of the network. Any one app or relay can still refuse to carry your posts, but your keys, your posts and your followers are not theirs to hold, so you can simply move somewhere else and carry on. That freedom comes with responsibility: you own your keys, you control your account.
 
 The good news? Securing your keys is straightforward. Follow this guide and you'll be safer than 99% of users.
 
@@ -27,13 +21,11 @@ The good news? Securing your keys is straightforward. Follow this guide and you'
 
 ## Understanding Keys (2 minutes)
 
-Nostr uses cryptography to secure your identity. Don't worry—you don't need to understand the math. Just think of it like a lock and key system.
+Nostr uses cryptography to secure your identity. You don't need to understand the math, though. Think of it like a lock and key system.
 
 ### What Is a Key Pair?
 
-Every Nostr user has two keys that work together:
-
-<KeyVisualizer />
+Every Nostr user has two keys that work together. One is public and starts with `npub1`, the other is private and starts with `nsec1`. Here is what each one is for.
 
 ### Your Public Key (npub1...)
 
@@ -45,7 +37,7 @@ Every Nostr user has two keys that work together:
     </span>
   </div>
   <code className="text-sm break-all bg-white dark:bg-gray-800 p-2 rounded block text-gray-900 dark:text-gray-100">
-    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   </code>
   <p className="mt-2 text-sm text-green-700 dark:text-green-400">
     This is your username. Share it everywhere. Post it publicly. This is how
@@ -70,7 +62,7 @@ Every Nostr user has two keys that work together:
     </span>
   </div>
   <code className="text-sm break-all bg-white dark:bg-gray-800 p-2 rounded block text-gray-900 dark:text-gray-100">
-    nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+    nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   </code>
   <p className="mt-2 text-sm text-red-700 dark:text-red-400">
     This is your password. Anyone with this can post as you. Lose it = lose your
@@ -100,7 +92,7 @@ Think of it like this: There are more possible private keys than grains of sand 
 
 ## Generate Your Keys (3 minutes)
 
-> 💡 **Tip:** While this key generator creates keys safely in your browser, you can also generate keys directly in most Nostr clients (like Damus, Amethyst, or Iris). Think of this tool as a "simulator" to practice with before using a real client.
+> 💡 **Tip:** This generator makes a real, valid key pair inside your browser. Nothing is sent anywhere. You can keep it as your actual Nostr identity, or treat it as practice and let your app create a fresh one later. If you keep it, back up the nsec now. If you treat it as practice, never reuse it for your real account.
 
 <KeyGenerator client:idle />
 
@@ -110,35 +102,36 @@ Think of it like this: There are more possible private keys than grains of sand 
    - This creates a random key pair
    - Watch the animation to understand what's happening
 
-2. **Save Both Keys Immediately**
+2. **If You're Keeping This Pair, Save Both Keys Now**
    - Copy your **npub** (green) to a safe place
    - Copy your **nsec** (red) to a SECURE place
-   - Do this NOW before doing anything else
+   - Do it before you do anything else with the key
+   - Only practising? Save nothing, and never use this pair for a real account
 
 3. **Verify You Saved Them**
-   - Close the generator
-   - Reopen it
-   - Can you still access your keys?
+   - The generator keeps nothing: close this page and the keys are gone from it
+   - So go to the place you saved them and read both keys back
+   - If you can't read them back, you don't have a backup yet
 
 ### Example Format (Not Real Keys)
 
-Below is what Nostr keys look like. These are examples only—not valid keys:
+Below is the shape of a Nostr key. These are examples only, not valid keys:
 
 <div className="test-keys bg-gray-100 dark:bg-gray-800 p-4 rounded-lg my-4">
   <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Example Public Key (npub) format:</p>
   <code className="text-xs break-all block mb-4 text-gray-900 dark:text-gray-100">
-    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   </code>
 
 <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
   Example Private Key (nsec) format:
 </p>
 <code className="text-xs break-all block text-red-600 dark:text-red-400">
-  nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+  nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
 </code>
 
   <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 italic">
-    These are example formats only—not valid keys. Use the Key Generator above for real test keys.
+    These are example formats only, not valid keys. Use the Key Generator above to make a working key pair.
   </p>
 </div>
 
@@ -194,9 +187,9 @@ This rule comes from professional data management. Follow it religiously.
 
 **This is why the 3-2-1 backup rule matters.**
 
-Unlike centralized platforms, Nostr has no "forgot password" button or customer support to recover your account. But don't worry—following the simple backup steps below will keep you safe.
+Unlike centralized platforms, Nostr has no "forgot password" button or customer support to recover your account. But don't worry: following the backup steps above will keep you safe.
 
-**Think of it like this:** You wouldn't carry your life savings as cash in your pocket. You'd keep most of it in a bank (multiple backups) and only carry what you need. Your nsec is similar—store it securely, not just on your phone.
+**Think of it like this:** You wouldn't carry your life savings as cash in your pocket. You'd keep most of it in a bank (multiple backups) and only carry what you need. Your nsec is similar. Store it securely, and not just on your phone.
 
 ---
 
@@ -212,9 +205,9 @@ Unlike centralized platforms, Nostr has no "forgot password" button or customer 
 
 **DON'T Save in Unencrypted Notes**
 
-- Apple Notes, Google Keep, etc. aren't encrypted
-- Anyone with your phone/computer can read them
-- Syncs to cloud by default
+- Default notes in Apple Notes, Google Keep and the like aren't end-to-end encrypted
+- They sync to the cloud automatically, so anyone who gets into your account can read them
+- So can anyone holding your unlocked phone or computer
 
 **DON'T Share With Anyone**
 
@@ -229,7 +222,7 @@ Unlike centralized platforms, Nostr has no "forgot password" button or customer 
 
 - 1Password, Bitwarden, KeePass
 - Encrypted, backed up, accessible
-- Generate strong passwords for clients too
+- It's also the right home for a strong password on the manager itself and on your email
 
 **DO Write on Paper**
 
@@ -250,21 +243,21 @@ Unlike centralized platforms, Nostr has no "forgot password" button or customer 
 
 <SecurityQuiz client:idle />
 
-### Horror Stories (Optional Reading)
+### Three Ways People Lose an Account (Optional Reading)
 
-These are real. Learn from them:
+These are not quotes from anyone. They are composites of the mistakes that come up again and again, written out so you can recognise them before you make one.
 
 **"I thought I backed it up"**
 
-> "I saved my nsec in my password manager, but I forgot to sync it. Phone died. 2,000 followers gone. Had to start over." — @nostruser123
+The nsec goes into a password manager that was never actually syncing. The phone dies, the vault on the laptop has no entry, and the account and its followers are unreachable.
 
 **"The screenshot that wasn't deleted"**
 
-> "I screenshotted my keys, then deleted the photo. Forgot about Recently Deleted folder. Someone restored it from my iCloud. Lost everything." — Anonymous
+Keys get screenshotted, then the photo gets deleted. The Recently Deleted folder keeps it for a month and the cloud backup keeps it longer. Whoever gets into that cloud account gets the nsec.
 
 **"The 'helpful' stranger"**
 
-> "Someone DM'd me offering to 'verify my account.' Asked for my nsec to 'link it properly.' I gave it to them. They stole my account and started posting scams." — @learnedthehardway
+A message arrives offering to "verify" or "link" your account, and it asks for your nsec to do it. Nobody legitimate ever needs your nsec. There is no verification service, no support desk, and no reason to hand it over.
 
 ---
 
@@ -296,23 +289,23 @@ These are real. Learn from them:
 
 ---
 
-## Advanced: Real-World Cautionary Tales
+## Advanced: What Losing Your Keys Costs
 
 <details>
-<summary>⚠️ Click to read: What happens without proper backups (optional)</summary>
+<summary>⚠️ Click to read: what happens without proper backups (optional)</summary>
 
-While the 3-2-1 backup rule keeps you safe, here are real examples of what happened when people didn't follow it:
+The 3-2-1 rule keeps you safe. Skip it and the loss usually takes one of these shapes:
 
-**Case Study 1: The Bitcoin Tips**  
-A content creator received $50,000 worth of Bitcoin tips (zaps) over 6 months. Their phone was stolen—they had no backup. The tips were gone forever because the nsec was only on that device.
+**The creator earning zaps**  
+Months of building an audience and getting paid in zaps, then the phone is stolen and the nsec was only on that phone. The identity is gone: no way to post as yourself again, no way to show that the account was ever yours. Worth knowing: zaps are paid straight to your Lightning wallet, not held by your Nostr key, so that money is only as safe as your wallet's own backup. Two things to back up, not one.
 
-**Case Study 2: The Influencer**  
-A Nostr personality with 10,000 followers dropped their phone in a pool. No backup = starting from zero. Years of community building, lost.
+**The account with years behind it**  
+A phone goes into a pool. Without a backup, the posts, the replies and the audience stay on the relays under a key nobody can use any more, and you start again from zero.
 
-**Case Study 3: The Developer**  
-A Nostr app developer with years of code contributions and technical discussions lost everything when their laptop crashed. No cloud backup, no second device, no recovery.
+**The laptop that died**  
+A single copy on one machine is not a backup. When the drive fails, there is no reset link and nobody to appeal to.
 
-**The common thread:** All of these were preventable with a simple backup to a password manager or encrypted USB drive.
+**The common thread:** every one of these is prevented by a copy in a password manager or on paper, made the day you generate the key.
 
 </details>
 

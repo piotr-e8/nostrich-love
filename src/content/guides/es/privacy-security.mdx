@@ -2,7 +2,7 @@
 title: "Inmersión Profunda en Privacidad y Seguridad"
 seoTitle: "¿Es seguro Nostr? Privacidad y anonimato"
 description: "Prácticas avanzadas de seguridad para Nostr. Protege tu identidad, previene fugas de metadatos y mantén tu privacidad mientras usas redes sociales descentralizadas."
-estimatedTime: "15 minutos"
+estimatedTime: "20 minutos"
 priority: 9
 category: "advanced"
 prerequisites: ["keys-and-security", "quickstart"]
@@ -10,7 +10,6 @@ prerequisites: ["keys-and-security", "quickstart"]
 
 import { Callout } from "@components/ui/Callout";
 import { PrivacySecurityQuiz } from "@components/interactive/PrivacySecurityQuiz";
-import { CTAButton } from "@components/CTAButton";
 
 {/* ProgressIndicator temporarily disabled - will be implemented with actual tracking later */}
 {/* <ProgressIndicator current={4} total={6} estimatedTime="15 minutos" /> */}
@@ -19,53 +18,25 @@ import { CTAButton } from "@components/CTAButton";
 
 ### ¿Contra Qué te Estás Protegiendo?
 
-Antes de sumergirnos en prácticas de seguridad, entendamos qué amenazas existen en Nostr:
+Los consejos de seguridad solo tienen sentido cuando sabes de quién te estás escondiendo. Una ilustradora que preferiría que en su trabajo nunca encontraran su cuenta de bocetos tiene un problema completamente distinto al de un periodista que escribe sobre un gobierno que encarcela periodistas, y las precauciones del periodista le harían la vida imposible a la ilustradora sin ninguna razón. Así que empieza por aquí.
 
-**Nivel de Amenaza 1: Privacidad Casual**
+En el nivel más suave, simplemente no quieres que un jefe, un familiar o un futuro cliente se pongan a leer todo lo que has publicado en tu vida. La exposición es de lo más corriente: tus publicaciones son públicas y tu perfil las hila en una sola historia legible. Mantener una segunda identidad para el trabajo que preferirías no tener pegado a tu nombre resuelve casi todo esto.
 
-- **Preocupación:** No quieres que empleadores/familia vean todo
-- **Amenazas:** Publicaciones públicas, asociación de perfiles
-- **Solución:** Identidades separadas
+Un escalón más arriba, estás evitando a personas concretas. Alguien que ya te doxxeó, una ex pareja, una turba que te persigue de plataforma en plataforma. Ahora la cuenta tiene que ser anónima desde la primera publicación y seguir siéndolo a base de costumbre. A esas costumbres la gente de seguridad las llama OPSEC, abreviatura de seguridad operacional: la rutina diaria que impide que una identidad se filtre en la otra.
 
-**Nivel de Amenaza 2: Evitación Activa**
-
-- **Preocupación:** Evitar personas/plataformas específicas
-- **Amenazas:** Doxxing, acoso, stalking
-- **Solución:** Cuenta anónima, OPSEC
-
-**Nivel de Amenaza 3: Alta Seguridad**
-
-- **Preocupación:** Denunciantes, activistas, personas de alto perfil
-- **Amenazas:** Actores estatales, ataques sofisticados
-- **Solución:** OPSEC avanzado, claves air-gapped
+Arriba del todo están los denunciantes, los activistas que trabajan bajo un estado hostil y cualquiera cuya seguridad física dependa de no ser identificado nunca. Ahí el adversario tiene presupuesto y paciencia. Eso significa OPSEC en serio, claves generadas en un dispositivo que nunca toca internet (lo que se llama air-gapped) y, siendo honestos, mucha más lectura de la que cabe en una guía.
 
 ### Qué Protege Nostr
 
-✅ **Resistencia a la Censura**
+✅ **Resistencia a la censura.** Ninguna empresa puede banearte, porque ninguna empresa tiene tu cuenta. Tu identidad es un par de claves que controlas tú, así que no se puede suspender ni confiscar, y tus publicaciones viven en los relays que decidieron guardar una copia, no en la base de datos de una compañía.
 
-- Ninguna plataforma puede banearte
-- Tu identidad no puede ser confiscada
-- Las publicaciones se distribuyen a través de la red
-
-✅ **Propiedad de Datos**
-
-- Tú controlas tus claves
-- Portable entre clientes
-- Ninguna compañía posee tu grafo
+✅ **Propiedad de tu obra.** La clave es tuya. Tu perfil, tus publicaciones y tu lista de seguidores viajan contigo a cualquier cliente que hable el protocolo, y ninguna plataforma es dueña del grafo de con quién hablas.
 
 ### Qué Nostr No Protege
 
-❌ **Público Por Defecto**
+❌ **Todo es público por defecto.** Salvo que sea un mensaje directo encriptado, cualquiera puede leerlo, y eso incluye todo lo que envuelve a la publicación: qué relays usas, a qué hora publicaste, desde qué cliente. Todo eso lo puede recopilar y analizar quien tenga ganas.
 
-- Todas las publicaciones son públicas (a menos que sean DMs encriptados)
-- Posibles fugas de metadatos
-- Análisis de contenido posible
-
-❌ **Sin Garantías de Anonimato**
-
-- Tu npub es pseudónimo, no anónimo
-- Los patrones pueden revelar identidad
-- Las direcciones IP son visibles para los relays
+❌ **Pseudónimo no es lo mismo que anónimo.** Tu npub oculta tu nombre. No te oculta a ti. Los patrones delatan a la gente, y cada relay al que te conectas ve tu dirección IP.
 
 <Callout variant="info">
   **Expectativas realistas:** Nostr proporciona resistencia a la censura, no anonimato
@@ -78,56 +49,25 @@ Antes de sumergirnos en prácticas de seguridad, entendamos qué amenazas existe
 
 ### ¿Por Qué Múltiples Identidades?
 
-La mayoría de las personas deberían tener **al menos dos** identidades Nostr:
+La mayoría de los creadores acaban queriendo **al menos dos** identidades en Nostr, y es mucho más fácil empezar con dos que intentar partir una en dos más adelante.
 
-**1. Identidad Pública**
+La primera es tu identidad pública. Nombre real o nombre artístico, el que va en la portada de un libro o en la pared de una galería. Acumula reputación despacio, durante años, así que la tratas con cuidado.
 
-- Vinculada a nombre real
-- Uso profesional
-- Presencia de figura pública
-- Reputación a largo plazo
-
-**2. Identidad Privada/Pseudónima**
-
-- No vinculada a nombre real
-- Intereses personales
-- Opiniones controvertidas
-- Pruebas/experimentación
+La segunda es pseudónima. Nada en ella apunta a tu nombre legal. Ahí viven las opiniones a medio formar, la cuenta de fandom, la discusión política que preferirías que ningún cliente leyera y la cuenta desechable con la que pruebas una app desconocida antes de confiarle nada valioso.
 
 ### Cuándo Separar
 
-**Definitivamente separa:**
+Mantén dos identidades aparte siempre que una mitad de tu vida pueda avergonzar a la otra: lo personal frente a lo profesional, los hobbies frente al trabajo, la política frente a tus clientes. Separa también cuando estés probando software que no has revisado. Y separa cuando hay dinero de por medio, porque una dirección Lightning enganchada a una cuenta pseudónima puede conectarla discretamente con un nombre.
 
-- Vida personal vs profesional
-- Diferentes intereses (trabajo, hobbies, política)
-- Probando nuevos clientes/apps
-- Financiera (propinas) vs social
-
-**Puedes combinar:**
-
-- Amigos cercanos que saben todo
-- Uso casual de bajo riesgo
-- Persona ya pública
+Puedes vivir con una sola cuenta si la gente de tu entorno ya lo sabe todo de todos modos, si lo que está en juego es de verdad poco, o si eres una figura pública cuyo trabajo consiste precisamente en que te reconozcan.
 
 ### Gestionando Múltiples Claves
 
-**Opción 1: Diferentes Clientes**
+El montaje más simple es un cliente por identidad. Damus para la cuenta pública, Amethyst para la privada. No cuesta nada montarlo, y deja de funcionar en cuanto quieres las dos en el mismo teléfono.
 
-- Usa Damus para identidad pública
-- Usa Amethyst para identidad privada
-- Simple, pero limitado a dispositivo
+Mejor es una app firmadora, de la que habla la siguiente sección. Amber, en Android, guarda varias claves a la vez y le da a cada cliente solo la firma que pidió.
 
-**Opción 2: Apps Firmadoras Nostr**
-
-- Usa Amber (Android) o similar
-- Múltiples claves en una app
-- Más flexible
-
-**Opción 3: Dispositivos Separados**
-
-- Teléfono para lo público
-- Tablet para lo privado
-- Máxima aislamiento
+La versión más estricta es hardware separado: el teléfono para una identidad, una tablet o un portátil viejo para la otra, sin cruces jamás. Es incómodo de mantener, y es el único montaje que aguanta cuando te roban un dispositivo.
 
 <Callout variant="success">
   **Empieza simple:** Crea una cuenta pseudónima primero. Agrega una pública
@@ -140,80 +80,40 @@ La mayoría de las personas deberían tener **al menos dos** identidades Nostr:
 
 ### ¿Qué Son los Firmadores?
 
-**Las apps firmadoras** almacenan tus claves privadas de forma segura y firman mensajes para otras apps.
-
-**Cómo funciona:**
-
-1. La app firmadora mantiene tu nsec
-2. El cliente pide "firma este mensaje"
-3. La app firmadora aprueba y firma
-4. El cliente nunca ve tu nsec
+Una **app firmadora** es una app pequeña cuyo único trabajo es guardar tu nsec y firmar en su nombre. El cliente desde el que publicas nunca recibe la clave. Le pasa un borrador al firmador, el firmador te enseña qué está a punto de firmarse, tú apruebas, y el evento ya firmado vuelve al cliente.
 
 ### Beneficios
 
-✅ **Aislamiento de Claves**
+✅ **Aislamiento de claves.** Tu nsec se queda dentro de una sola app que elegiste a conciencia. Un cliente que instalaste por capricho nunca la ve, y un cliente que resulte ser malicioso, o al que le entren más adelante, no puede entregar algo que nunca tuvo.
 
-- Nsec nunca deja el firmador
-- Los clientes no pueden robar claves
-- Cliente comprometido = claves seguras
+✅ **Un momento para mirar antes.** Cada petición de firma aparece en pantalla antes de que se publique nada. Eso caza la publicación accidental, y caza también al cliente que intenta hacer algo a tu nombre sin avisar.
 
-✅ **Aprobación Requerida**
-
-- Ves lo que estás firmando
-- Previene publicaciones accidentales
-- Control sobre acciones
-
-✅ **Múltiples Clientes**
-
-- Usa las mismas claves entre apps
-- Identidad consistente
-- Cambio fácil
+✅ **Una identidad, muchas apps.** Como la clave vive fuera de los clientes, puedes usar la misma cuenta en cinco apps distintas sin copiar tu nsec en cinco sitios distintos.
 
 ### Apps Firmadoras Populares
 
-**Amber (Android)**
+**Amber (Android)** es la que hay que usar si estás en Android. Código abierto, desarrollo activo, guarda tantas claves como quieras, y es lo más parecido a un firmador estándar que tiene Nostr.
 
-- Mejor firmador en móvil
-- Código abierto
-- Desarrollo activo
-- Soporta múltiples claves
+**Primal (iOS)** funciona de otra manera, y la diferencia importa. En iOS no existe Amber, así que Primal guarda tu clave en el llavero del dispositivo, dentro del propio cliente. Es un montaje razonable para iOS y te da menos aislamiento que un firmador dedicado, porque el cliente y el guardián de la clave son la misma app. Lo que le gana a Primal un sitio en esta sección es su función de Inicio de Sesión Remoto (Remote Login): Primal puede autorizar tu actividad en otras apps Nostr compatibles sin darles la clave, así que esas apps sí reciben el trato de firmador aunque Primal en sí no lo sea.
 
-**Primal (iOS)**
+Otras opciones:
 
-- Almacenamiento seguro integrado
-- No necesita app firmadora separada
-- Las claves se quedan en el dispositivo
-- Simple e intuitivo
-
-**Otras Opciones:**
-
-- **Nostr Connect** (protocolo multiplataforma)
-- **Extensiones de navegador** (Alby puede firmar)
-- **Wallets de hardware** [AVANZADO]
+- **Firma remota con NIP-46**, a veces llamada Nostr Connect. Es una capacidad, no un producto. Servicios como nsec.app la implementan, y también el Inicio de Sesión Remoto de Primal.
+- **Extensiones de navegador.** Alby y nos2x firman para clientes web en el escritorio.
+- **Wallets de hardware** (avanzado, rara vez necesario).
 
 ### Configurando Amber
 
-1. **Descarga** desde Play Store
-2. **Crea o importa** claves
-3. **Configura como firmador por defecto** en ajustes de Android
-4. **Abre cliente Nostr** - solicitará firma
-5. **Aprueba peticiones** en Amber
+1. **Instálala desde donde toca.** Amber se distribuye por zap.store, F-Droid y las releases de GitHub (con Obtainium se mantiene actualizada desde ahí). **No está en Google Play.** Cualquier cosa que encuentres allí con ese nombre es la app de otra persona, y darle tu nsec a esa app es como se pierde una cuenta.
+2. **Crea o importa tus claves** dentro de Amber, y haz backup de las palabras de recuperación antes de seguir.
+3. **Abre tu cliente Nostr** y elige "Iniciar sesión con Amber", o "firmador externo", en vez de pegar la clave en ninguna parte.
+4. **Aprueba la petición** cuando Amber salte. Android puede preguntarte una vez qué app debe encargarse de estas peticiones. Elige Amber.
 
 ### Cuándo Usar Firmadores
 
-**Altamente recomendado:**
+Consigue un firmador en cuanto la cuenta te importe: publicas con regularidad, hay gente que te sigue por eso, o empiezan a llegarte zaps. Lo mismo si te mueves entre varios clientes, porque el firmador es lo que hace que eso sea seguro en lugar de temerario.
 
-- Usuarios serios de Nostr
-- Cuentas de alto valor
-- Múltiples clientes
-- Usuarios conscientes de seguridad
-
-**No necesario:**
-
-- Pruebas casuales
-- Cuentas de bajo valor
-- Uso de cliente único
-- Principiantes (agrega más tarde)
+Puedes saltártelo mientras solo estás curioseando. Una cuenta desechable en un único cliente no necesita el paso extra, y quien empieza ya tiene bastante que aprender. Añádelo más tarde, cuando la cuenta se haya convertido en algo que odiarías perder.
 
 <Callout variant="warning">
   **Crítico:** Tu app firmadora se convierte en un punto único de falla. ¡Hazle
@@ -226,22 +126,13 @@ La mayoría de las personas deberían tener **al menos dos** identidades Nostr:
 
 ### ¿Qué es la Rotación de Claves?
 
-**La rotación de claves** significa crear nuevas claves y migrar tus seguidos a ellas.
+Aquí la palabra significa algo distinto de lo que significa en el trabajo. Nostr no tiene rotación dentro del protocolo: no hay forma de jubilar una clave y llevarte tu identidad a otra. Tu par de claves **es** tu identidad. Así que "rotar" quiere decir en realidad empezar una cuenta nueva y convencer a todo el mundo de que se venga contigo, seguidor a seguidor.
 
 ### Cuándo Rotar
 
-**Rota:**
+Rota si crees que tu nsec se ha escapado. La pegaste en una web que resultó ser una página de phishing, te robaron un dispositivo que tenía la clave, alguien lleva un rato publicando haciéndose pasar por ti. Rota también cuando abandones un servicio custodial, es decir, uno que generó y guardó la clave por ti en vez de dejar que la tuvieras tú, porque no puedes saber quién más tiene una copia.
 
-- Sospechas compromiso
-- Clave privada expuesta accidentalmente
-- Moviendo de custodial a auto-custodial
-- Práctica de seguridad periódica
-
-**No rotes casualmente:**
-
-- Pierdes todo el historial
-- Confundes a seguidores
-- Rompes conexiones NIP-05
+No rotes por calendario. Rotar una vez al año es un buen consejo para una contraseña de trabajo y un mal consejo para una clave Nostr, porque debajo no hay ningún camino de migración. Cada rotación te cuesta tu historial de publicaciones, dispersa a tus seguidores y rompe el enlace NIP-05 que otra gente había guardado. Rota cuando algo haya salido mal de verdad.
 
 ### Cómo Rotar
 
@@ -253,26 +144,31 @@ La mayoría de las personas deberían tener **al menos dos** identidades Nostr:
 
 **Paso 2: Anuncia**
 
-1. Publica desde cuenta antigua: "Moviendo a [nuevo npub]"
+1. Publica desde la cuenta antigua: "Me mudo a [nuevo npub]"
 2. Fija la publicación
-3. Actualiza bio con nuevo npub
+3. Actualiza la bio con el nuevo npub
 4. Espera unos días
 
 **Paso 3: Migra**
 
 1. Sigue a tus antiguos seguidos en la nueva cuenta
-2. Actualiza NIP-05 si tienes uno
-3. Dile a contactos cercanos directamente
+2. Actualiza el NIP-05 si tienes uno
+3. Díselo directamente a tus contactos cercanos, porque ese es el paso que de verdad mueve a la gente
 
-**Paso 4: Atardecer**
+**Paso 4: Retiro gradual**
 
-1. Publica desde cuenta antigua periódicamente: "Movido a [nuevo]"
-2. Mantén cuenta antigua como redirección
-3. Eventualmente abandona cuenta antigua
+1. Publica de vez en cuando desde la cuenta antigua: "Me mudé a [nuevo npub]"
+2. Mantén la cuenta antigua como redirección
+3. Con el tiempo, abandónala
 
-<Callout variant="success">
-  **Pro tip:** Si tienes un NIP-05, puedes actualizarlo para apuntar a tu nuevo
-  npub. La gente usando tu NIP-05 automáticamente seguirá tu nueva cuenta.
+<Callout variant="warning" title="Un NIP-05 no se lleva a tus seguidores">
+  Puedes y debes reapuntar tu NIP-05 al npub nuevo, para que quien te busque por
+  nombre aterrice en la cuenta correcta. Lo que no hará es migrar a la gente que
+  ya te sigue. NIP-05 obliga a los clientes a seguir con la clave pública que
+  guardaron al principio y a no tocarla aunque la dirección empiece a responder
+  con otra distinta. Tus seguidores actuales se quedan apuntando a la cuenta
+  antigua hasta que sigan la nueva por su cuenta, y por eso decírselo
+  directamente es el paso que sí funciona.
 </Callout>
 
 ---
@@ -281,87 +177,43 @@ La mayoría de las personas deberían tener **al menos dos** identidades Nostr:
 
 ### ¿Qué Metadatos Se Filtran?
 
-Incluso publicaciones "anónimas" pueden revelar identidad a través de:
+A la gente se la reconoce. No por el nombre, por todo lo demás.
 
-**1. Estilo de Escritura**
+El estilo de escritura va primero, y los creadores lo subestiman más que nadie. Tu vocabulario, tu manía con las comas, si escribes mayúscula después de los dos puntos, los tres emojis que de verdad usas de los mil disponibles: quien haya leído bastante de tu obra pública notará el parecido en una publicación anónima, y un programa lo encontrará más rápido que una persona. Esta es la fuga que no arregla el tener cuentas separadas.
 
-- Elecciones de vocabulario
-- Patrones de gramática
-- Uso de emojis
-- Hábitos de capitalización
+Luego está lo que cuentas. Una calle que mencionaste de pasada. Un concierto al que fuiste. Un chiste interno que pertenece a un solo grupo de chat. Un dato de tu oficio que quizá conozcan cuarenta personas en el mundo. Ninguno te identifica por sí solo. Tres juntos puede que sí.
 
-**2. Pistas de Contenido**
+Los horarios dicen dónde vives. Publica durante un mes y tus horas activas dibujan una zona horaria, luego una jornada laboral, a veces hasta la hora de recoger a los niños del colegio.
 
-- Ubicaciones mencionadas
-- Eventos específicos
-- Chistes internos
-- Conocimiento único
+La capa técnica se filtra en silencio, sin que hagas nada. Cada relay al que te conectas ve tu dirección IP. Algunos clientes sellan sus eventos con el software y la versión que los produjo. Los clientes web además exponen una huella de dispositivo, que es la combinación concreta de tamaño de pantalla, tipografías, idioma y ajustes que hace distinguible a un navegador aunque nadie haya iniciado sesión.
 
-**3. Patrones de Timing**
-
-- Cuándo publicas (zona horaria)
-- Tiempos de respuesta
-- Horas activas
-
-**4. Filtraciones Técnicas**
-
-- Direcciones IP (visibles para relays)
-- Versión de software del cliente
-- Huellas digitales de dispositivo
-
-**5. Grafo Social**
-
-- A quién sigues
-- Quién te sigue
-- Patrones de interacción
+El grafo social es la señal más ruidosa de todas. A quién sigues, quién te devuelve el seguimiento, a quién le respondes en menos de un minuto. Dos cuentas con los mismos amigos suelen ser la misma persona, y hacen falta sorprendentemente pocas coincidencias para que esa suposición deje de ser una suposición.
 
 ### Estrategias de Prevención
 
-**1. Estilos de Escritura Separados**
-
-- Usa vocabulario diferente
-- Varía la estructura de oraciones
-- Diferentes hábitos de emojis
-
-**2. Sé Vago**
-
-- No menciones fechas específicas
-- Evita identificadores únicos
-- Generaliza ubicaciones
-
-**3. Usa Tor/VPN**
-
-- Oculta IP de los relays
-- Usa diferentes IPs por identidad
-- Considera Tor para máxima privacidad
-
-**4. Limita Info del Cliente**
-
-- Algunos clientes filtran info de versión
-- Revisa qué envía tu cliente
-- Usa clientes enfocados en privacidad
-
-**5. Controla el Grafo Social**
-
-- No sigas a las mismas personas
-- Círculos diferentes
-- Limita interacciones entre identidades
+- **Escribe distinto en cada cuenta.** Otro vocabulario, otro ritmo de frase, otras costumbres de puntuación. Se siente artificial una semana o dos y después deja de sentirse.
+- **Quédate en lo vago.** Nada de fechas exactas, nada de detalles únicos, generaliza los lugares. "Esta semana" en vez de el martes, "una ciudad del norte" en vez del barrio.
+- **Oculta tu IP.** Una VPN evita que los relays vean desde dónde te conectas, y Tor es la versión fuerte para cuando hace falta. Usa una conexión distinta por identidad en lugar de la misma para las dos.
+- **Revisa qué envía tu cliente.** Algunos etiquetan los eventos con información de versión. Los clientes enfocados en privacidad cuentan menos sobre ti.
+- **Mantén los grafos de seguidos separados.** Otra gente, otros círculos, y el menor contacto posible entre tus propias identidades.
 
 ### Contaminación Cruzada de Identidades
 
+A casi nadie lo desenmascaran con análisis ingeniosos. Son ellos mismos los que conectan las dos cuentas, una vez, sin querer.
+
 **Qué NO hacer:**
 
-- ❌ Menciona tu otra cuenta
-- ❌ Publica el mismo contenido simultáneamente
-- ❌ Siga exactamente a las mismas personas
-- ❌ Usa las mismas frases/jerga
-- ❌ Responde a los mismos hilos
-- ❌ Publica desde ambos en la misma conversación
+- ❌ Mencionar tu otra cuenta
+- ❌ Publicar el mismo contenido a la vez en las dos
+- ❌ Seguir exactamente a las mismas personas
+- ❌ Usar las mismas frases y la misma jerga
+- ❌ Responder en los mismos hilos
+- ❌ Publicar desde ambas en la misma conversación
 
 **Prácticas seguras:**
 
 - ✅ Contenido completamente separado
-- ✅ Diferentes temas/intereses
+- ✅ Diferentes temas e intereses
 - ✅ Diferentes horas activas
 - ✅ Sin referencias cruzadas
 - ✅ Asume que están mirando
@@ -389,14 +241,14 @@ Incluso publicaciones "anónimas" pueden revelar identidad a través de:
 - [ ] Usa app firmadora
 - [ ] Dispositivos/cuentas separadas
 - [ ] VPN/Tor para publicaciones sensibles
-- [ ] Rotación regular de claves (anual)
-- [ ] Monitorea por impersonadores
+- [ ] Rota las claves solo si sospechas exposición, nunca por calendario
+- [ ] Vigila posibles suplantadores (cuentas que se hagan pasar por ti)
 - [ ] Documenta procedimientos de recuperación
 
 ### Seguridad Máxima (Alto Riesgo)
 
-- [ ] Generación de claves air-gapped
-- [ ] Módulos de seguridad de hardware
+- [ ] Generación de claves air-gapped (en un dispositivo que nunca se conecta a internet)
+- [ ] Módulos de seguridad de hardware (un chip o dispositivo dedicado que guarda la clave y nunca la revela)
 - [ ] Relay auto-hospedado
 - [ ] Conexiones solo Tor
 - [ ] Múltiples capas de identidad
@@ -407,7 +259,7 @@ Incluso publicaciones "anónimas" pueden revelar identidad a través de:
 
 **Preguntas para hacerte:**
 
-1. Si alguien quisiera doxxearme, ¿qué encontrarían?
+1. Si alguien quisiera doxxearme, ¿qué encontraría?
 2. ¿Mis múltiples identidades son realmente separadas?
 3. ¿Qué pasa si me roban el teléfono?
 4. ¿A quién le diría si me comprometieron?
@@ -440,21 +292,25 @@ Incluso publicaciones "anónimas" pueden revelar identidad a través de:
 
 ### Plantilla de Comunicación
 
-Si estás comprometido, publica algo como:
+Publica esto desde la cuenta nueva:
 
 ```
 ⚠️ ALERTA DE SEGURIDAD ⚠️
 
-Mi cuenta [npub antiguo] ha sido comprometida.
+Mi cuenta antigua [npub antiguo] ha sido comprometida. Nada
+de lo que se publique desde ella a partir de hoy soy yo.
 
-Mi nueva cuenta es: [nuevo npub]
+Esta es mi cuenta nueva: [nuevo npub]
 
-Este mensaje está firmado por ambas claves para probar la transición.
+Por favor, deja de seguir la antigua y sigue esta.
 
-[Mensaje firmado desde nueva clave]
-
-Por favor deja de seguir la cuenta antigua y sigue esta.
+Puedes comprobar que soy yo aquí: [tu web, tus otras redes,
+o simplemente pregúntame en otro sitio].
 ```
+
+Después publica la imagen especular desde la cuenta antigua, nombrando el npub nuevo, mientras todavía puedas. Reapunta tu NIP-05 en un dominio que controles tú, ya que esa es la única afirmación que un atacante no puede falsificar en tu lugar. Y avisa a la gente que importa por un canal que no sea Nostr, porque eso es lo que de verdad convence a alguien.
+
+Una cosa que no debes hacer: no intentes firmar el anuncio "con ambas claves". Un evento Nostr lleva exactamente una firma, ningún cliente te dejará añadir una segunda, y una vez que la clave antigua está comprometida el atacante también puede firmar con ella, así que no probaría nada aunque fuera posible.
 
 <Callout variant="info">
   **Espera lo mejor, planifica lo peor.** Tener un plan de recuperación reduce
@@ -497,5 +353,5 @@ Por favor deja de seguir la cuenta antigua y sigue esta.
 
 ## Sigue leyendo
 
-- [Tus Claves, Tu Identidad](/es/guides/keys-and-security)
-- [NIP-17: Mensajes Privados Directos - Una Guía Completa](/es/guides/nip17-private-messages)
+- [Tus claves, tu identidad](/es/guides/keys-and-security): la base sobre la que se apoya cada decisión de privacidad en Nostr
+- [Mensajes privados con NIP-17](/es/guides/nip17-private-messages): cómo funcionan de verdad los DMs encriptados y qué se sigue filtrando

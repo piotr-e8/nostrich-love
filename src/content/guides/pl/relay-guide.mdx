@@ -2,20 +2,19 @@
 title: "Przewodnik po Zarządzaniu Relayami"
 seoTitle: "Relaye Nostr: jak wybrać i zarządzać listą"
 description: "Opanuj relaye Nostr. Dowiedz się, jak wybierać, konfigurować i optymalizować połączenia z relayami dla lepszej wydajności i zasięgu."
-estimatedTime: "12 minut"
+estimatedTime: "20-25 minut"
 priority: 8
 category: "advanced"
 prerequisites: ["keys-and-security", "quickstart", "relays-demystified"]
 ---
 
-import { CTAButton } from "@components/CTAButton";
 import { Callout } from "@components/ui/Callout";
 import { RelayVisualizer } from "@components/ui/RelayVisualizer";
 import { RelayGuideQuiz } from "@components/interactive/RelayGuideQuiz";
 import { RelayPlayground } from "@components/interactive/RelayPlayground";
 
 {/* Wskaźnik postępu tymczasowo wyłączony - zostanie zaimplementowany z rzeczywistym śledzeniem później */}
-{/* <ProgressIndicator current={3} total={6} estimatedTime="12 minutes" /> */}
+{/* <ProgressIndicator current={3} total={6} estimatedTime="20-25 minutes" /> */}
 
 ## Jak Działają Relaye (3 minuty)
 
@@ -23,8 +22,8 @@ import { RelayPlayground } from "@components/interactive/RelayPlayground";
 
 <Callout variant="info">
   **Opierając się na wcześniejszej wiedzy:** Ta sekcja krótko przegląda analogię pocztową
-  z [Relaye Rozszyfrowane](/pl/guides/relays-demystified). Jeśli pamiętasz,
-  jak działają relaye, możesz śmiało przejść do [Rodzaje Relayów](#rodzaje-relayów).
+  z [Relaye Wyjaśnione](/pl/guides/relays-demystified). Jeśli pamiętasz,
+  jak działają relaye, możesz śmiało przejść do [Rodzajów Relayów](#rodzaje-relayow).
 </Callout>
 
 ### Proste Wyjaśnienie
@@ -34,115 +33,75 @@ import { RelayPlayground } from "@components/interactive/RelayPlayground";
 Pomyśl o nich jak o skrytkach pocztowych:
 
 - Zostawiasz kopię listu (swojego posta) w kilku pocztach
-- Każda poczta trzyma własną kopię—nie przekazują listów sobie nawzajem
+- Każda poczta trzyma własną kopię, listów sobie nawzajem nie przekazują
 - Odbiorcy odbierają go z poczty, z której korzystacie oboje
 
 W Nostr:
 
 - **Ty** piszesz notatkę (post)
 - **Klient** wysyła kopię do każdego relaya, z którym jesteś połączony
-- **Relaye** przechowują ją i udostępniają każdemu, kto o nią poprosi—ale domyślnie nie przekazują jej innym relayom
-- **Obserwujący** odbierają ją z relayów, z którymi są połączeni, więc Wasze listy relayów muszą się pokrywać
+- **Relaye** przechowują ją i udostępniają każdemu, kto o nią poprosi, ale domyślnie nie przekazują jej innym relayom
+- **Obserwujący** dostają ją z relayów, na które publikujesz. Twój klient ogłasza tę listę relayów publicznie (to NIP-65), więc aplikacje innych ludzi wiedzą, gdzie Cię szukać. Starsze aplikacje, które listę ignorują, zobaczą Twoje posty tylko wtedy, gdy akurat macie wspólny relay
 
 ### Dlaczego To Ma Znaczenie
 
-**Brak pojedynczego punktu awarii:**
+Skoro Twoje posty leżą naraz na kilku relayach, awaria jednego z nich nie wypycha Cię z sieci i nikt nie wymaże Twojego pisania ze wszystkich w tym samym momencie. Kiedy relay zaczyna odrzucać to, co publikujesz, przenosisz się na inny, a czytelnicy idą za Tobą. Ta sama otwartość sprawia, że relaye tak się między sobą różnią: jedne są darmowe, inne płatne, jedne filtrują ostro, inne prawie wcale. Mieszankę, z którą chcesz żyć, dobierasz sam.
 
-- Jeśli jeden relay padnie, inne wciąż działają
-- Twoje posty istnieją w wielu miejscach
-- Ty kontrolujesz, gdzie żyją Twoje dane
+### Przegląd Techniczny [ZAAWANSOWANE]
 
-**Odporność na cenzurę:**
+Pod maską relaye korzystają z połączeń WebSocket:
 
-- Nikt nie może usunąć Twoich postów ze wszystkich relayów
-- Zawsze możesz przełączyć się na inne relaye
-- Sieć omija blokady
+```
+Klient ←→ WebSocket ←→ Serwer relaya ←→ Baza danych
+```
 
-**Wybór i konkurencja:**
+Kiedy publikujesz:
 
-- Różne relaye oferują różne funkcje
-- Darmowe i płatne opcje
-- Wyspecjalizowane vs ogólnego przeznaczenia
+1. Klient podpisuje wiadomość Twoim kluczem prywatnym
+2. Klient wysyła ją przez WebSocket do połączonych relayów
+3. Relay weryfikuje podpis
+4. Relay zapisuje ją w bazie danych
+5. Relay rozsyła ją subskrybentom
+
+<Callout variant="info">
+  Nie musisz rozumieć szczegółów technicznych. Wystarczy wiedzieć, że to relaye
+  sprawiają, że Nostr działa bez centralnej kontroli.
+</Callout>
 
 ---
+
+<span id="rodzaje-relayow"></span>
 
 ## Rodzaje Relayów (2 minuty)
 
 ### Darmowe Relaye Publiczne
 
-**Czym są:**
-
-- Prowadzone przez wolontariuszy lub członków społeczności
-- Bez kosztów użycia
-- Otwarte dla wszystkich
-
-**Zalety:**
-
-- ✅ Darmowe
-- ✅ Łatwy start
-- ✅ Duże sieci
-
-**Wady:**
-
-- ❌ Mogą być wolne lub niezawodne
-- ❌ Mogą mieć przerwy
-- ❌ Mniejsza zachęta do utrzymywania
+Prowadzą je wolontariusze i członkowie społeczności, a pisać na nie może każdy. Nic nie kosztują, od nich zwykle się zaczyna, a te największe przenoszą sporą część ruchu w sieci. Cena jest taka, że darmowy relay jest dokładnie tak pewny, jak dobra wola, która go utrzymuje: licz się z okazjonalnym spowolnieniem albo przerwą w działaniu.
 
 **Przykłady:**
 
 - `wss://relay.damus.io` (najpopularniejszy)
 - `wss://nos.lol`
 - `wss://relay.snort.social`
+- `wss://nostr.mom`
 
 <Callout variant="warning">
-  **Unikaj relay.nostr.band:** Ten relay był offline/niezawodny przez dłuższy czas.
-  Wiele przewodników nadal go poleca, ale powinieneś używać alternatyw wymienionych powyżej.
+  **Unikaj relay.nostr.band:** Ten relay przez dłuższy czas był offline i działał zawodnie.
+  Wiele przewodników nadal go poleca, ale lepiej sięgnij po alternatywy wymienione powyżej.
 </Callout>
 
 ### Płatne Relaye
 
-**Czym są:**
-
-- Wymagają płatności do użycia
-- Zazwyczaj wyższa jakość
-- Lepsza wydajność
-
-**Zalety:**
-
-- ✅ Bardziej niezawodne
-- ✅ Lepsza wydajność
-- ✅ Finansowa zachęta do utrzymywania
-- ✅ Często lepsza moderacja
-
-**Wady:**
-
-- ❌ Kosztują pieniądze
-- ❌ Mogą mieć limity użycia
-- ❌ Nie konieczne dla przypadkowych użytkowników
+Za pisanie na nie płacisz, zwykle bitcoinem przez Lightning. Pieniądze kupują operatora, który ma powód, żeby trzymać maszynę szybką, pilnować spamu i odpowiedzieć, kiedy coś się zepsuje. Do zwykłego publikowania nic z tego nie jest potrzebne, a część płatnych relayów ogranicza, ile możesz u nich przechować. Traktuj taki relay jak krok w górę, na który decydujesz się wtedy, gdy darmowy przestaje wystarczać.
 
 **Przykłady:**
 
-- `wss://nostr.wine` (płatny)
+- `wss://nostr.wine` (jednorazowa opłata wstępna)
 - Różne prywatne relaye
 
 ### Wyspecjalizowane Relaye
 
-**Czym są:**
-
-- Skupione na konkretnych tematach
-- Relaye regionalne
-- Specyficzne dla aplikacji
-
-**Zalety:**
-
-- ✅ Treści skupione na temacie
-- ✅ Społeczności o podobnych poglądach
-- ✅ Regionalna relewantność
-
-**Wady:**
-
-- ❌ Mniejszy zasięg
-- ❌ Mogą być niszowe
+Niektóre relaye istnieją dla jednego tematu, jednego regionu albo jednej aplikacji. Mniejsza sala oznacza, że siedzą w niej ludzie, których łatwiej obchodzi to, co robisz, a dorzucenie takiego relaya obok ogólnych nic nie kosztuje. Tylko nie opieraj się na niszowym relayu w pojedynkę, bo zobaczą Cię tam wyłącznie ci, którzy o nim wiedzą.
 
 **Przykłady:**
 
@@ -157,65 +116,52 @@ W Nostr:
 
 ---
 
-## Wybór Relayów (5 minuty)
+## Wybór Relayów (5 minut)
 
 ### Zalecany Zestaw Startowy
 
-Połącz się z tymi 5 relayami dla dobrego pokrycia:
+Połącz się z tymi czterema darmowymi relayami dla dobrego pokrycia:
 
 ```
 wss://relay.damus.io          (Podstawowy - najpopularniejszy)
 wss://nos.lol                 (Szybki, niezawodny)
-wss://relay.snort.social      (Popularny klient)
-wss://nostr.wine              (Jakościowa opcja płatna - opcjonalnie)
+wss://relay.snort.social      (Stoi za klientem Snort)
+wss://nostr.mom               (Mniejszy, prowadzony przez społeczność)
 ```
+
+Jeśli później zechcesz dorzucić do tego płatny relay, `wss://nostr.wine` jest najbardziej znaną opcją. Piszemy o nim niżej.
 
 <Callout variant="info">
   **Uwaga o Decentralizacji:** Podczas gdy popularne relaye powyżej są świetne do
   rozpoczęcia, poleganie tylko na kilku dużych relayach koncentruje władzę i
-  jest sprzeczne z duchem decentralizacji Nostr. W miarę jak stajesz się bardziej komfortowy,
+  jest sprzeczne z duchem decentralizacji Nostr. Gdy poczujesz się pewniej,
   rozważ dodanie mniejszych, prowadzonych przez społeczność relayów i płatnych relayów, aby wspierać
-  różnorodność sieci.
+  różnorodność sieci. Celem jest zdrowa mieszanka dużych i małych relayów, coś w rodzaju
+  niewkładania wszystkich jajek do jednego koszyka.
 </Callout>
+
+### Relaye do Czytania i do Pisania
+
+Ustawienia relayów zwykle mają dwie kolumny. Relaye do pisania trzymają Twoje własne posty, więc to tam aplikacja nowego obserwującego pójdzie Cię szukać. Relaye do czytania to te, z których odbierasz wracające odpowiedzi i wzmianki. Kiedy zapiszesz ustawienia relayów, Twój klient publikuje tę listę jako jawną notatkę, którą może odczytać każda inna aplikacja. Właśnie dzięki temu ludzie znajdują Twoje posty, choć nic im nie mówisz, i nie ma tu nic do rozdawania z ręki. [Poradnik o modelu outbox](/pl/guides/outbox-model) opisuje mechanikę, jeśli Cię ciekawi.
 
 ### Kryteria Wyboru
 
-**1. Czas Działania/Niezawodność**
+**1. Czas działania.** Relay, który połowę czasu leży, to relay, do którego Twoi czytelnicy nie dotrą. Jeśli chcesz sprawdzić go przed dodaniem, dostępność śledzi nostr.watch.
 
-- Szukaj relayów z >99% czasem działania
-- Sprawdź nostr.watch dla statystyk
-- Unikaj relayów często offline
+**2. Lokalizacja.** Relay fizycznie blisko Ciebie działa odczuwalnie szybciej, więc trzymaj jeden czy dwa niedaleko i parę dalszych dla zasięgu.
 
-**2. Lokalizacja Geograficzna**
+**3. Polityka treści.** Jedne relaye ostro filtrują spam, inne przyjmują prawie wszystko. Przeczytaj, co operator deklaruje, i wybierz to, z czym da się żyć.
 
-- Bliżej = niższe opóźnienie
-- Wybieraj relaye blisko Ciebie
-- Mieszanka regionów dla globalnego zasięgu
+**4. Szybkość.** Relay, który przy każdym otwarciu aplikacji potrzebuje kilku sekund na połączenie, kosztuje Cię więcej, niż daje.
 
-**3. Polityka Treści**
-
-- Niektóre filtrują spam
-- Niektóre pozwalają na wszystko
-- Wybierz na podstawie swoich preferencji
-
-**4. Wydajność**
-
-- Szybkie czasy połączenia
-- Niskie opóźnienie
-- Dobra przepustowość
-
-**5. Społeczność**
-
-- Aktywny operator
-- Reagowanie na problemy
-- Przejrzystość co do polityk
+**5. Operator.** Ktoś, kto odpowiada na pytania i publicznie mówi, co jego relay robi, jest wart więcej niż sama specyfikacja.
 
 ### Gdzie Znaleźć Relaye
 
-- **nostr.watch** - Monitor czasu działania relayów
-- **nostr.info** - Katalog relayów
-- **Rekomendacje klientów** - Wielu sugeruje domyślne relaye
-- **Listy społeczności** - Dzielone w postach Nostr
+- **nostr.watch** monitoruje czas działania relayów
+- **nostr.info** prowadzi katalog
+- **Rekomendacje klientów.** Wiele aplikacji podpowiada własne domyślne relaye
+- **Listy społeczności**, krążące w postach na Nostr
 
 ### Ile Relayów?
 
@@ -266,45 +212,17 @@ Wypróbuj zanim się zdecydujesz! Testuj prędkości relayów i zobacz, które d
    - Powinien pokazać zieloną kropkę lub "połączony"
    - Może zająć kilka sekund
 
-### Instrukcje Specyficzne dla Klientów
+### Gdzie Szukać Tego Ustawienia w Poszczególnych Aplikacjach
 
-**Damus (iOS):**
+Aplikacje przestawiają swoje menu między wydaniami, więc potraktuj to jako kierunek, a nie instrukcję krok po kroku. W **Damus** i **Amethyst** otwórz Ustawienia i poszukaj pozycji "Relays". W **Primal** siedzi to w Ustawieniach, w sekcji Network. W klientach webowych, takich jak **Iris** czy **Coracle**, znajdziesz to w menu ustawień pod Twoim awatarem. Jeśli nic z tego nie pasuje do tego, co widzisz, wpisz "relay" w wyszukiwarkę ustawień samej aplikacji.
 
-1. Zakładka Profil → Ustawienia (ikona koła zębatego)
-2. "Relaye"
-3. Stuknij "+"
-4. Wpisz URL
-5. Stuknij "Dodaj"
-
-**Amethyst (Android):**
-
-1. Menu boczne → Ustawienia
-2. "Relaye"
-3. Stuknij "+"
-4. Wpisz URL
-5. Zapisz
-
-**Iris (Web):**
-
-1. Kliknij zdjęcie profilowe → Ustawienia
-2. Zakładka "Relaye"
-3. Kliknij "Dodaj Relay"
-4. Wpisz URL
-5. Dodaj
-
-**Primal (Web/Mobilne):**
-
-1. Ustawienia → Sieć
-2. "Dodaj Relay"
-3. Wpisz URL
-4. Zapisz
+Całe klikanie możesz przećwiczyć, nie dotykając prawdziwego konta, w symulatorach klientów na [sandstr.app](https://sandstr.app).
 
 ### Rozwiązywanie Problemów z Połączeniem
 
 **"Nie udało się połączyć"**
 
-- Sprawdź, czy URL jest poprawny (zaczyna się od wss://)
-- Spróbuj http vs https (powinno być wss://)
+- Upewnij się, że adres zaczyna się od `wss://`, a nie od `https://`, `http://` czy `ws://`
 - Relay może być wyłączony
 - Spróbuj ponownie za kilka minut
 
@@ -326,34 +244,13 @@ Wypróbuj zanim się zdecydujesz! Testuj prędkości relayów i zobacz, które d
 
 ### Dlaczego Płacić?
 
-**Korzyści:**
-
-- Gwarantowany czas działania
-- Lepsza wydajność
-- Bezpośrednie wsparcie
-- Finansowa zrównoważoność
-- Często lepsze funkcje
-
-**Kiedy uaktualnić:**
-
-- Jesteś poważny co do Nostr
-- Darmowe relaye nie spełniają potrzeb
-- Chcesz wspierać infrastrukturę
-- Potrzebujesz specyficznych funkcji
+Płatny relay ma operatora, którego stać na to, żeby mu zależało. Zwykle widać to jako mniej przerw w działaniu, mniej spamu w odpowiedziach i kogoś, kto naprawdę reaguje na zgłoszony problem. Moment na rozważenie takiego relaya przychodzi wtedy, gdy darmowe zaczynają Cię zawodzić albo gdy Twoje archiwum znaczy dla Ciebie na tyle dużo, że wolisz je trzymać tam, gdzie ktoś płaci rachunki.
 
 ### Popularne Opcje Płatne
 
-**nostr.wine**
+**nostr.wine** pobiera jednorazową opłatę wstępną w bitcoinie przez Lightning (w chwili pisania było to około 19 000 satoshi, więc aktualną cenę sprawdź na stronie). W zamian dostajesz szybki, dobrze utrzymany relay ogólnego przeznaczenia.
 
-- Koszt: ~$5-10/miesiąc
-- Funkcje: Wysoka wydajność, dobry czas działania
-- Rejestracja: Płatność przez stronę
-
-**Prywatne Relaye**
-
-- Koszt: Różny
-- Funkcje: Niestandardowe polityki, prywatne społeczności
-- Dostęp: Zaproszenie lub płatność
+**Prywatne relaye** działają dla konkretnej grupy: magazynu, społeczności, rodziny. Ceny bywają różne, a wejście idzie zwykle przez zaproszenie. Warto o to zapytać, jeśli należysz już do kręgu, który taki relay ma.
 
 ### Konfiguracja Płatnych Relayów
 
@@ -364,99 +261,21 @@ Wypróbuj zanim się zdecydujesz! Testuj prędkości relayów i zobacz, które d
 5. **Ciesz się lepszą wydajnością**
 
 <Callout variant="success">
-  **Podejście hybrydowe:** Używaj 3-5 darmowych relayów + 1-2 płatne relaye. Najlepsze z obu
-  światów.
+  **Podejście hybrydowe:** 3-5 darmowych relayów plus 1-2 płatne. Darmowe dają Ci
+  zasięg, płatny daje operatora, który odpowiada, kiedy coś nie działa.
 </Callout>
 
 ---
 
-## Własny Relay [ZAAWANSOWANE] (10 minut)
+## Własny Relay [ZAAWANSOWANE] (2 minuty)
 
-### Dlaczego Prowadzić Własny?
+Prowadzenie własnego relaya oznacza, że jedna kopia Twojej twórczości leży na maszynie, nad którą nikt poza Tobą nie ma władzy, i na zasadach, które sam ustalasz. Oznacza też wynajem serwera (mniej więcej 5 do 20 dolarów miesięcznie), skierowanie na niego domeny i swobodę w pracy z terminalem. Większość twórców nigdy tego nie potrzebuje, a pominięcie tego kroku nic nie kosztuje: publikowanie na relayach prowadzonych przez innych to normalny sposób korzystania z Nostr.
 
-**Korzyści:**
-
-- Całkowita kontrola
-- Prywatność (Twoje dane pozostają z Tobą)
-- Niestandardowe polityki
-- Doświadczenie edukacyjne
-- Wsparcie sieci
-
-**Wymagania:**
-
-- Serwer (VPS ~$5-20/miesiąc)
-- Wiedza techniczna
-- Czas na utrzymywanie
-
-### Popularne Oprogramowanie Relaya
-
-**strfry**
-
-- Język: C++
-- Zalety: Szybki, lekki
-- Wady: Wymaga kompilacji
-
-**nostr-rs-relay**
-
-- Język: Rust
-- Zalety: Nowoczesny, aktywnie rozwijany
-- Wady: Krzywa uczenia
-
-**nostream**
-
-- Język: TypeScript
-- Zalety: Łatwa konfiguracja, dobra dokumentacja
-- Wady: Wymaga Node.js
-
-### Szybka Konfiguracja (nostream)
-
-**Wymagania wstępne:**
-
-- Serwer Ubuntu/Debian
-- Node.js 18+
-- PostgreSQL
-
-**Kroki:**
-
-```bash
-# Zainstaluj zależności
-sudo apt update
-sudo apt install nodejs npm postgresql
-
-# Sklonuj repozytorium
-git clone https://github.com/Cameri/nostream.git
-cd nostream
-
-# Zainstaluj pakiety
-npm install
-
-# Skonfiguruj
-cp .env.sample .env
-nano .env  # Edytuj ustawienia
-
-# Zbuduj
-npm run build
-
-# Uruchom
-npm start
-```
-
-**Podłącz domenę:**
-
-1. Skieruj domenę na IP serwera
-2. Skonfiguruj SSL (Let's Encrypt)
-3. Skonfiguruj reverse proxy (nginx)
-
-**Utrzymywanie:**
-
-- Monitoruj miejsce na dysku
-- Regularnie aktualizuj oprogramowanie
-- Rób backup bazy danych
-- Monitoruj logi
+Jeśli mimo wszystko chcesz spróbować, w rozmowach wracają trzy programy. **strfry** jest napisany w C++ i to opcja szybka oraz oszczędna. **nostr-rs-relay** to ten w Ruście, aktywnie rozwijany. **nostream** powstał w TypeScripcie i z całej trójki ma najłagodniejszą konfigurację. Każdy z tych projektów trzyma instrukcję instalacji we własnym repozytorium i tam jest ona aktualna w sposób, w jaki poradnik taki jak ten być nie może. Zacznij więc stamtąd, a nie od przepisanej listy komend.
 
 <Callout variant="warning">
-  Prowadzenie relaya wymaga ciągłego utrzymywania. Nie zaczynaj, chyba że jesteś
-  zdecydowany utrzymywać go w działaniu.
+  Relay wymaga stałej opieki. Dyski się zapełniają, oprogramowanie trzeba
+  aktualizować, kopie zapasowe sprawdzać. Nie zaczynaj, jeśli nie chcesz tej roboty.
 </Callout>
 
 ---
@@ -515,9 +334,9 @@ npm start
 
 ### Narzędzia Monitorowania
 
-- **nostr.watch** - Czas działania i statystyki relayów
-- **nostr.info** - Katalog i informacje o relayach
-- **Status relaya w kliencie** - Większość klientów pokazuje status połączenia
+- **nostr.watch**: czas działania i statystyki relayów
+- **nostr.info**: katalog i informacje o relayach
+- **Status w samej aplikacji.** Większość klientów pokazuje, z czym akurat jest połączona
 
 ### Kiedy Przełączać Relaye
 
@@ -536,13 +355,14 @@ npm start
 
 ---
 
-## Szybkie Odniesienie
+## Szybka Ściągawka
 
 **Niezbędne Darmowe Relaye:**
 
 - `wss://relay.damus.io`
 - `wss://nos.lol`
 - `wss://relay.snort.social`
+- `wss://nostr.mom`
 
 **Zalecana Liczba:** 5-10 relayów
 
@@ -550,7 +370,7 @@ npm start
 
 **Monitorowanie:** nostr.watch dla statystyk czasu działania
 
-**Wsparcie:** Dodaj 1-2 płatne relaye, jeśli jesteś poważny co do Nostr
+**Wsparcie:** Dodaj 1-2 płatne relaye, jeśli poważnie podchodzisz do Nostr
 
 ---
 

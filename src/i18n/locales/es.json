@@ -7,280 +7,280 @@
         "title": "Quiz: Fundamentos de Nostr",
         "questions": [
           {
-            "id": "protocol-vs-platform",
-            "title": "Protocolo vs Plataforma",
-            "prompt": "¿Qué es Nostr?",
+            "id": "nostr-acronym",
+            "title": "Nombre del protocolo",
+            "prompt": "¿Qué significa NOSTR?",
             "options": [
               {
                 "id": "a",
-                "label": "Una nueva plataforma de redes sociales corporativa"
+                "label": "Notes and Other Stuff Transmitted by Relays"
               },
               {
                 "id": "b",
-                "label": "Un protocolo de comunicación similar al email"
+                "label": "Network of Secure Transmission Resources"
               },
               {
                 "id": "c",
-                "label": "Una blockchain con criptomoneda propia"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "Nostr es un protocolo - un conjunto de reglas, no una plataforma. Funciona como el email: puedes usar diferentes aplicaciones y comunicarte con todos. No hay empresa central controlando la red.",
-            "severity": "info"
-          },
-          {
-            "id": "key-types",
-            "title": "Tus Llaves",
-            "prompt": "¿Para qué sirven las llaves en Nostr?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Solo para iniciar sesión en sitios web"
-              },
-              {
-                "id": "b",
-                "label": "La llave pública (npub) es tu dirección, la privada (nsec) es tu contraseña"
-              },
-              {
-                "id": "c",
-                "label": "Solo para enviar pagos Bitcoin"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "En Nostr la llave pública (npub) es tu identificador - puedes compartirla. La llave privada (nsec) es un secreto que te permite escribir posts. Es como dirección de email y contraseña en uno.",
-            "severity": "critical"
-          },
-          {
-            "id": "censorship",
-            "title": "Resistencia a la Censura",
-            "prompt": "¿Por qué Nostr es resistente a la censura?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Porque pertenece a una ONG de libertad de expresión"
-              },
-              {
-                "id": "b",
-                "label": "Porque no hay servidor central que cerrar"
-              },
-              {
-                "id": "c",
-                "label": "Porque usa cifrado militar AES-256"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "Nostr no tiene servidor central que puedan cerrar. Los datos están dispersos en miles de relays. Incluso si un relay te bloquea, tus posts permanecen en otros.",
-            "severity": "info"
-          },
-          {
-            "id": "relays",
-            "title": "Relays Explicados",
-            "prompt": "¿Qué son los relays en Nostr?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Computadoras que almacenan y distribuyen posts"
-              },
-              {
-                "id": "b",
-                "label": "Moderadores que revisan contenido"
-              },
-              {
-                "id": "c",
-                "label": "Tokens requeridos para escribir"
+                "label": "New Online Social Technology Resource"
               }
             ],
             "correctId": "a",
-            "explanation": "Los relays son servidores que guardan tus posts y los comparten con otros. Puedes usar múltiples relays simultáneamente. Cualquiera puede ejecutar su propio relay.",
+            "explanation": "NOSTR significa 'Notes and Other Stuff Transmitted by Relays', o sea, notas y otras cosas transmitidas por relays: un protocolo abierto y sencillo para redes sociales descentralizadas.",
             "severity": "info"
           },
           {
-            "id": "portability",
-            "title": "Portabilidad de Datos",
-            "prompt": "¿Qué pasa cuando cambias de cliente en Nostr?",
+            "id": "decentralized-nature",
+            "title": "Descentralización",
+            "prompt": "¿Qué hace que Nostr sea descentralizado?",
             "options": [
               {
                 "id": "a",
-                "label": "Pierdes todos los posts y empiezas de cero"
+                "label": "Usa tecnología blockchain"
               },
               {
                 "id": "b",
-                "label": "Tus posts están disponibles en la nueva app"
+                "label": "Cualquiera puede montar un relay, y cada persona controla sus propias claves"
               },
               {
                 "id": "c",
-                "label": "Debes pedir al admin que migre tu cuenta"
+                "label": "Lo gestiona una fundación sin ánimo de lucro"
               }
             ],
             "correctId": "b",
-            "explanation": "En Nostr tus datos no están atados a una aplicación específica. Usando la misma llave en otra app, ves todos tus posts y contactos. Es como iniciar sesión en diferentes apps de email.",
-            "severity": "info"
-          },
-          {
-            "id": "responsibility",
-            "title": "Responsabilidad de la Llave",
-            "prompt": "¿Qué pasa si pierdes tu llave privada (nsec)?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Puedes pedir a soporte que restaure acceso"
-              },
-              {
-                "id": "b",
-                "label": "Pierdes acceso a la cuenta para siempre"
-              },
-              {
-                "id": "c",
-                "label": "Puedes crear nueva llave conectada a la vieja"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "En Nostr no hay 'recordar contraseña'. La llave privada es la única forma de acceder. Si la pierdes, pierdes la cuenta para siempre. ¡Por eso son tan importantes las copias de seguridad!",
+            "explanation": "Nostr es descentralizado porque cualquiera puede levantar un relay y porque tus claves criptográficas son tuyas. No hay ninguna autoridad ni empresa al mando de la red.",
             "severity": "critical"
+          },
+          {
+            "id": "censorship-resistance",
+            "title": "Resistencia a la censura",
+            "prompt": "¿Cómo resiste Nostr la censura?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Usando IA para detectar contenido prohibido"
+              },
+              {
+                "id": "b",
+                "label": "Repartiendo los datos entre muchos relays que cualquiera puede operar"
+              },
+              {
+                "id": "c",
+                "label": "Exigiendo permiso del gobierno para operar un relay"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "La resistencia a la censura viene de repartir el contenido entre muchos relays independientes. Si uno te bloquea, los demás siguen distribuyendo lo que publicas.",
+            "severity": "critical"
+          },
+          {
+            "id": "keys-vs-accounts",
+            "title": "Sistema de identidad",
+            "prompt": "¿Cuál es la diferencia principal entre una cuenta de Nostr y una de Twitter o Facebook?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Nostr usa claves criptográficas en lugar de correo y contraseña"
+              },
+              {
+                "id": "b",
+                "label": "Nostr es más rápido"
+              },
+              {
+                "id": "c",
+                "label": "Nostr tiene mejores fotos de perfil"
+              }
+            ],
+            "correctId": "a",
+            "explanation": "En Nostr tu identidad es un par de claves. La pública (npub) te identifica y la privada (nsec) demuestra que es tuya. Sin correo, sin teléfono y sin base de datos central.",
+            "severity": "critical"
+          },
+          {
+            "id": "relay-function",
+            "title": "Función de los relays",
+            "prompt": "¿Qué hacen los relays en la red Nostr?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Minan criptomonedas"
+              },
+              {
+                "id": "b",
+                "label": "Guardan los mensajes y los reenvían entre usuarios"
+              },
+              {
+                "id": "c",
+                "label": "Verifican tu documento de identidad"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "Los relays son servidores que almacenan tus publicaciones y las ponen a disposición de los demás. Reenvían mensajes, pero no deciden quién publica ni qué contenido se permite.",
+            "severity": "warning"
+          },
+          {
+            "id": "nostr-vs-mastodon",
+            "title": "Nostr frente al Fediverso",
+            "prompt": "¿En qué se diferencia Nostr de Mastodon y el Fediverso?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Nostr tiene mejores emojis"
+              },
+              {
+                "id": "b",
+                "label": "En Nostr no hace falta elegir un servidor o instancia para entrar"
+              },
+              {
+                "id": "c",
+                "label": "Nostr pertenece a Elon Musk"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "En Mastodon te registras en una instancia concreta. En Nostr puedes usar cualquier relay sin abrir una cuenta en él: tu identidad funciona en todas partes desde el primer momento.",
+            "severity": "info"
           }
         ]
       }
     },
     "keysAndSecurity": {
       "title": "Llaves y Seguridad",
-      "description": "Aprende a generar, guardar y proteger tus llaves de Nostr. Guía completa de seguridad para principiantes.",
+      "description": "Aprende a generar, guardar y proteger tus claves de Nostr. Guía completa de seguridad para principiantes.",
       "quiz": {
         "title": "Quiz: Seguridad",
         "questions": [
           {
             "id": "sharing-keys",
-            "title": "Seguridad de Llaves",
-            "prompt": "¿Qué llave puedes compartir con otros?",
+            "title": "Seguridad de las claves",
+            "prompt": "¿Qué puedes compartir con cualquiera sin riesgo?",
             "options": [
               {
-                "id": "a",
-                "label": "La llave privada (nsec)",
-                "description": "Da acceso completo a tu cuenta"
+                "id": "npub",
+                "label": "Tu npub (clave pública)",
+                "description": "Permite que otros te sigan o te escriban"
               },
               {
-                "id": "b",
-                "label": "La llave pública (npub)",
-                "description": "Es tu dirección en Nostr"
+                "id": "nsec",
+                "label": "Tu nsec (clave privada)",
+                "description": "Se usa para firmar tus publicaciones"
               },
               {
-                "id": "c",
-                "label": "Ambas son seguras",
-                "description": "No hay diferencia en Nostr"
+                "id": "seed",
+                "label": "Tu frase semilla de 12 o 24 palabras",
+                "description": "Copia de seguridad de las billeteras Lightning"
               }
             ],
-            "correctId": "b",
-            "explanation": "La llave pública (npub) es tu dirección en Nostr - puedes compartirla. La llave privada (nsec) es como la contraseña del banco - ¡nunca la muestres!",
+            "correctId": "npub",
+            "explanation": "El npub es tu identidad pública. Todo lo que empiece por nsec, y cualquier frase semilla, tiene que quedarse fuera de internet.",
             "severity": "critical"
           },
           {
             "id": "backup-rule",
-            "title": "Copias de Seguridad",
-            "prompt": "¿Cuál es la mejor práctica para respaldar tu llave?",
+            "title": "Copias de seguridad",
+            "prompt": "¿Cuál es la estrategia de respaldo más segura a largo plazo para tus claves?",
             "options": [
               {
-                "id": "a",
-                "label": "Guardar en notas del teléfono"
+                "id": "photo",
+                "label": "Hacer una captura de pantalla y guardarla en iCloud o Google Fotos"
               },
               {
-                "id": "b",
-                "label": "Múltiples copias offline en lugares seguros"
+                "id": "note",
+                "label": "Pegar las claves en una app de notas protegida con FaceID"
               },
               {
-                "id": "c",
-                "label": "Guardar en el navegador"
+                "id": "321",
+                "label": "Aplicar la regla 3-2-1: 3 copias, 2 soportes distintos, 1 fuera de línea"
               }
             ],
-            "correctId": "b",
-            "explanation": "El método más seguro son copias físicas offline. Escribe la llave en papel, guárdala en una caja fuerte, haz varias copias. Evita almacenar online - los hackers pueden robarla.",
-            "severity": "warning"
+            "correctId": "321",
+            "explanation": "Al menos tres copias, en dos tipos de soporte, con una fuera de línea (papel o metal). Una captura en la nube es un único punto de fallo.",
+            "severity": "critical"
           },
           {
             "id": "suspicious-client",
-            "title": "Probar Nuevos Clientes",
-            "prompt": "¿Cómo probar un cliente Nostr de forma segura?",
+            "title": "Probar un cliente nuevo",
+            "prompt": "Una app de Nostr recién salida te pide pegar tu clave privada para iniciar sesión. ¿Qué conviene hacer?",
             "options": [
               {
-                "id": "a",
-                "label": "Usar extensión con permisos temporales"
+                "id": "paste",
+                "label": "Pegar la clave si la app ya tiene más de 100 usuarios"
               },
               {
-                "id": "b",
-                "label": "Introducir tu nsec real y probar"
+                "id": "signer",
+                "label": "Usar un signer o un dispositivo de firma por hardware, o esperar a que el cliente admita firma delegada"
               },
               {
-                "id": "c",
-                "label": "Crear cuenta de prueba separada"
+                "id": "temp",
+                "label": "Generar una clave desechable y migrar más adelante"
               }
             ],
-            "correctId": "c",
-            "explanation": "Siempre prueba nuevos clientes con cuenta separada. Si el cliente es malicioso, solo pierdes la cuenta de prueba, no tu cuenta principal.",
+            "correctId": "signer",
+            "explanation": "Nunca pegues tu clave privada principal en un cliente que no hayas revisado. Usa un signer (Amber en Android, una extensión de navegador en la web o un signer remoto NIP-46): así la app obtiene firmas sin llegar a ver tu nsec. Una clave desechable sirve para echar un vistazo, pero en Nostr no existe la migración: los seguidores y la reputación se quedan con la clave que los ganó.",
             "severity": "warning"
           },
           {
             "id": "metadata",
-            "title": "Higiene de Metadatos",
-            "prompt": "¿Qué información NO debes revelar en tu perfil?",
+            "title": "Higiene de metadatos",
+            "prompt": "¿Cómo se reducen las fugas de metadatos en Nostr?",
             "options": [
               {
-                "id": "a",
-                "label": "Foto de perfil y nombre"
+                "id": "gps",
+                "label": "Dejando activadas las etiquetas de ubicación, que ayudan a que te descubran"
               },
               {
-                "id": "b",
-                "label": "Nombre real, ubicación exacta, dirección"
+                "id": "personas",
+                "label": "Separando identidades, quitando los datos EXIF y no enlazando facturas Lightning entre identidades"
               },
               {
-                "id": "c",
-                "label": "Sitio web y NIP-05"
+                "id": "follow",
+                "label": "Conectándote a todos los relays posibles desde un único perfil"
               }
             ],
-            "correctId": "b",
-            "explanation": "Todo en Nostr es público y permanente. No pongas datos que te identifiquen. Tu jefe o gobierno pueden leerlo. ¡Cuida tu privacidad!",
-            "severity": "warning"
-          },
-          {
-            "id": "relay-strategy",
-            "title": "Estrategia de Relays",
-            "prompt": "¿Por qué usar múltiples relays?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Para publicar más rápido"
-              },
-              {
-                "id": "b",
-                "label": "Para mayor resistencia a fallos"
-              },
-              {
-                "id": "c",
-                "label": "Para recibir más zaps"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "Usar múltiples relays es estrategia de redundancia. Si uno falla o te bloquea, tus posts permanecen en otros. Es como guardar copias de documentos importantes.",
+            "correctId": "personas",
+            "explanation": "Usa perfiles separados, desactiva los metadatos de ubicación y mantén aislada la información de Lightning y de los zaps cuando el anonimato importe.",
             "severity": "info"
           },
           {
-            "id": "zaps",
-            "title": "Seguridad de Zaps",
-            "prompt": "¿Cómo configurar zaps de forma segura?",
+            "id": "relay-strategy",
+            "title": "Estrategia de relays",
+            "prompt": "¿Qué planteamiento de relays equilibra mejor fiabilidad y privacidad?",
             "options": [
               {
-                "id": "a",
-                "label": "Usar la misma llave que para iniciar sesión"
+                "id": "single",
+                "label": "Usar un único megarrelay para centralizarlo todo"
               },
               {
-                "id": "b",
-                "label": "Usar wallet Lightning separado"
+                "id": "mix",
+                "label": "Combinar un grupo pequeño de relays de pago de confianza con otros que vas rotando para descubrir contenido"
               },
               {
-                "id": "c",
-                "label": "Compartir tu dirección Lightning públicamente"
+                "id": "public",
+                "label": "Usar solo relays públicos gratuitos y no revisarlos nunca"
               }
             ],
-            "correctId": "b",
-            "explanation": "Siempre usa wallet Lightning separado para zaps. Aísla tus finanzas de tu actividad en Nostr. Si alguien traza transacciones, no las conectará con tu cuenta principal.",
-            "severity": "critical"
+            "correctId": "mix",
+            "explanation": "Mezclar relays de pago con buena reputación y unos cuantos públicos que vas rotando equilibra redundancia, resistencia al spam y privacidad.",
+            "severity": "warning"
+          },
+          {
+            "id": "zaps",
+            "title": "Zaps seguros",
+            "prompt": "Vas a configurar los zaps por primera vez. ¿Qué paso protege mejor tus fondos?",
+            "options": [
+              {
+                "id": "custodial",
+                "label": "Reutilizar la misma billetera custodial en todas tus identidades"
+              },
+              {
+                "id": "link",
+                "label": "Conectar una billetera Lightning que controles tú y confirmar cada solicitud de zap antes de firmar"
+              },
+              {
+                "id": "email",
+                "label": "Enviar tu frase semilla a un relay para que retire fondos automáticamente"
+              }
+            ],
+            "correctId": "link",
+            "explanation": "Conecta una billetera que controles tú, confirma cada solicitud y no compartas cuentas custodiales entre identidades.",
+            "severity": "info"
           }
         ]
       }
@@ -296,135 +296,135 @@
         "title": "Quiz: Comunidad",
         "questions": [
           {
-            "id": "finding-people",
-            "title": "Encontrar Gente",
-            "prompt": "¿Cómo mejorar encontrar gente interesante en Nostr?",
+            "id": "finding-npubs",
+            "title": "Compartir tu identidad",
+            "prompt": "¿Cómo compartes tu perfil de Nostr con alguien?",
             "options": [
               {
                 "id": "a",
-                "label": "Revisar posts aleatorios"
+                "label": "Le das tu dirección de correo"
               },
               {
                 "id": "b",
-                "label": "Ver quién siguen personas que conoces"
+                "label": "Compartes tu npub (clave pública)"
               },
               {
                 "id": "c",
-                "label": "Usar Google 'Nostr users'"
+                "label": "Tiene que buscar tu nombre real"
               }
             ],
             "correctId": "b",
-            "explanation": "La mejor forma es seguir la red de contactos. Encuentra algunas personas de tu área, ve a quién siguen y construye tu feed. Es como conocer amigos de amigos.",
-            "severity": "info"
+            "explanation": "Tu npub, esa cadena que empieza por 'npub1...', es lo que la gente usa para encontrarte y seguirte. Compártelo como compartirías un nombre de usuario.",
+            "severity": "critical"
           },
           {
-            "id": "npub-sharing",
-            "title": "Compartir NPub",
-            "prompt": "¿Dónde puedes compartir tu llave pública (npub)?",
+            "id": "community-search",
+            "title": "Encontrar grupos",
+            "prompt": "¿Cuál es la mejor manera de encontrar comunidades en Nostr?",
             "options": [
               {
                 "id": "a",
-                "label": "Solo en mensajes privados"
+                "label": "Buscar hashtags como #bitcoin, #nostr o #fotografia"
               },
               {
                 "id": "b",
-                "label": "En todas partes - es tu dirección pública"
+                "label": "Escribir al equipo de soporte de Nostr"
               },
               {
                 "id": "c",
-                "label": "Solo en tu bio de Nostr"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "Npub es tu dirección pública - ¡compártela en todas partes! Mientras más la conozcan, más fácil será encontrarte. Es como tu dirección de email.",
-            "severity": "info"
-          },
-          {
-            "id": "follow-lists",
-            "title": "Listas de Seguimiento",
-            "prompt": "¿Qué son las 'follow lists'?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Listas recomendadas de usuarios para seguir"
-              },
-              {
-                "id": "b",
-                "label": "Suscripciones pagas VIP"
-              },
-              {
-                "id": "c",
-                "label": "Listas generadas automáticamente por algoritmo"
+                "label": "Esperar a que te inviten"
               }
             ],
             "correctId": "a",
-            "explanation": "Follow lists son recomendaciones de usuarios. Alguien de tu área comparte lista de cuentas interesantes. Es excelente forma de encontrar gente valiosa.",
-            "severity": "info"
+            "explanation": "Las comunidades se forman alrededor de hashtags y temas. Busca las etiquetas que te interesen, sigue a quien publique con frecuencia y participa en las conversaciones hasta dar con tu gente.",
+            "severity": "warning"
           },
           {
-            "id": "hashtags",
-            "title": "Hashtags",
-            "prompt": "¿Cómo usar mejor los hashtags en Nostr?",
+            "id": "twitter-import",
+            "title": "Migrar desde Twitter",
+            "prompt": "¿Puedes encontrar en Nostr a tus contactos de Twitter?",
             "options": [
               {
                 "id": "a",
-                "label": "Agregar tantos como sea posible"
+                "label": "No, Nostr está completamente separado"
               },
               {
                 "id": "b",
-                "label": "Usar pocos hashtags específicos"
+                "label": "Sí, pero solo a quienes se hayan pasado a Nostr y hayan publicado su npub en algún sitio donde puedas consultarlo"
               },
               {
                 "id": "c",
-                "label": "Evitar hashtags - son poco profesionales"
+                "label": "Solo si pagas una función premium"
               }
             ],
             "correctId": "b",
-            "explanation": "Los hashtags ayudan a encontrar contenido. Usa tags específicos relacionados con el tema. No exageres - 2-3 hashtags es el óptimo.",
+            "explanation": "Ningún cliente conocido importa tus seguidos de Twitter. Existe un directorio aparte, nostr.directory, que te propone iniciar sesión con X y cruzar las cuentas que sigues, pero solo conoce a quienes se registraron allí por su cuenta. Lo que sí funciona: buscar por nombre o por dirección NIP-05, seguir los paquetes iniciales que ofrecen algunos clientes y pedir el npub a tus amistades.",
             "severity": "info"
           },
           {
-            "id": "communities",
-            "title": "Comunidades",
-            "prompt": "¿Qué son las 'communities' en Nostr?",
+            "id": "dm-etiquette",
+            "title": "Mensajes directos",
+            "prompt": "¿Qué etiqueta conviene seguir al escribir un mensaje directo a alguien que no te conoce?",
             "options": [
               {
                 "id": "a",
-                "label": "Grupos temáticos para seguir"
+                "label": "Enviar mensajes promocionales a todo el mundo"
               },
               {
                 "id": "b",
-                "label": "Grupos privados con moderación"
+                "label": "Presentarte en pocas líneas y tener un motivo claro para escribir"
               },
               {
                 "id": "c",
-                "label": "Suscripciones pagas"
+                "label": "Escribir solo a cuentas verificadas"
               }
             ],
-            "correctId": "a",
-            "explanation": "Communities son grupos temáticos públicos. Puedes seguirlos para ver posts de ese tema. Es forma adicional de organizar contenido.",
+            "correctId": "b",
+            "explanation": "Como en cualquier red social, sé respetuoso. Preséntate, explica por qué escribes y evita la promoción no solicitada.",
+            "severity": "warning"
+          },
+          {
+            "id": "blocking",
+            "title": "Control del contenido",
+            "prompt": "¿Qué haces con el contenido o las cuentas que no quieres ver?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Los denuncias a la central de Nostr"
+              },
+              {
+                "id": "b",
+                "label": "Los silencias o los bloqueas, la decisión es tuya"
+              },
+              {
+                "id": "c",
+                "label": "No se puede hacer nada"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "Los clientes de Nostr traen funciones de silencio y bloqueo. Como no hay autoridad central, mandas tú sobre lo que ves: bloquea el spam, silencia temas y ajusta tu experiencia a tu gusto.",
             "severity": "info"
           },
           {
             "id": "community-building",
-            "title": "Crear Comunidad",
-            "prompt": "¿Cómo puedes iniciar tu propia comunidad en Nostr?",
+            "title": "Crear comunidad",
+            "prompt": "¿Cómo puedes crear tu propia comunidad en Nostr?",
             "options": [
               {
                 "id": "a",
-                "label": "Solicitar una licencia de comunidad"
+                "label": "Solicitando una licencia de comunidad"
               },
               {
                 "id": "b",
-                "label": "Crear un hashtag, compartir buen contenido y participar con constancia"
+                "label": "Creando un hashtag, publicando buen contenido y participando con constancia"
               },
               {
                 "id": "c",
-                "label": "Pagar por hosting de comunidad"
+                "label": "Pagando un alojamiento para comunidades"
               }
             ],
             "correctId": "b",
-            "explanation": "Las comunidades surgen orgánicamente alrededor de temas. Crea un hashtag único, publica contenido de calidad con regularidad, responde a otros y ten paciencia. Las comunidades crecen con la participación.",
+            "explanation": "Las comunidades surgen solas alrededor de un tema. Crea un hashtag propio, publica con regularidad, responde a otras personas y ten paciencia. Crecen con la participación.",
             "severity": "info"
           }
         ]
@@ -441,127 +441,127 @@
         "title": "Quiz: Relays",
         "questions": [
           {
-            "id": "relay-purpose",
-            "title": "Propósito del Relay",
-            "prompt": "¿Para qué sirve un relay en Nostr?",
+            "id": "relay-definition",
+            "title": "¿Qué es un relay?",
+            "prompt": "¿Qué es un relay de Nostr?",
             "options": [
               {
                 "id": "a",
-                "label": "Verifica identidad"
+                "label": "Un aparato que amplifica la señal WiFi"
               },
               {
                 "id": "b",
-                "label": "Almacena y retransmite posts"
+                "label": "Un servidor que almacena y reenvía los mensajes de Nostr"
               },
               {
                 "id": "c",
-                "label": "Gana con publicidad"
+                "label": "Un equipo de minería de criptomonedas"
               }
             ],
             "correctId": "b",
-            "explanation": "Un relay es servidor que recibe tu post, lo guarda y lo distribuye a otros. Es como un buzón. El relay solo verifica la firma criptográfica.",
-            "severity": "info"
+            "explanation": "Los relays son servidores que reciben, guardan y difunden los eventos de Nostr: publicaciones, reacciones, seguimientos. Son la capa de infraestructura de la red.",
+            "severity": "critical"
           },
           {
             "id": "relay-choice",
-            "title": "Elección de Relays",
-            "prompt": "¿Cómo elegir los mejores relays?",
+            "title": "Quién decide",
+            "prompt": "¿Quién decide qué relays usas?",
             "options": [
               {
                 "id": "a",
-                "label": "Usar solo uno muy grande"
+                "label": "El equipo de desarrollo de Nostr"
               },
               {
                 "id": "b",
-                "label": "Conectar a varios de diferentes tipos"
+                "label": "Tú eliges a qué relays te conectas"
               },
               {
                 "id": "c",
-                "label": "Crear tu propio relay inmediatamente"
+                "label": "Se asignan al azar"
               }
             ],
             "correctId": "b",
-            "explanation": "La mejor estrategia es diversidad. Usa relays públicos grandes para alcance, añade temáticos de tu área. Es como suscribirte a diferentes newsletters.",
-            "severity": "info"
+            "explanation": "Tienes control total sobre los relays que usas. Puedes añadirlos, quitarlos o cambiarlos cuando quieras desde la configuración de tu cliente.",
+            "severity": "critical"
           },
           {
-            "id": "how-many",
-            "title": "¿Cuántos Usar?",
-            "prompt": "¿Cuántos relays deberías usar?",
+            "id": "paid-vs-free",
+            "title": "Tipos de relay",
+            "prompt": "¿Qué diferencia hay entre los relays de pago y los gratuitos?",
             "options": [
               {
                 "id": "a",
-                "label": "Solo uno"
+                "label": "Los de pago suelen rendir mejor y tener menos spam"
               },
               {
                 "id": "b",
-                "label": "5-15 relays"
+                "label": "Los gratuitos son más rápidos"
               },
               {
                 "id": "c",
-                "label": "Todos los disponibles"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "El número óptimo es 5-15 relays. Muy pocos - riesgo de pérdida. Demasiados - ralentizas la app. Es como tener contactos en varias redes.",
-            "severity": "info"
-          },
-          {
-            "id": "relay-url",
-            "title": "URL del Relay",
-            "prompt": "¿Qué es la URL de un relay?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Dirección en formato wss://"
-              },
-              {
-                "id": "b",
-                "label": "Nombre del propietario"
-              },
-              {
-                "id": "c",
-                "label": "Contraseña de acceso"
+                "label": "No hay ninguna diferencia"
               }
             ],
             "correctId": "a",
-            "explanation": "La URL de relay es dirección WebSocket que empieza con wss://. Se ve como wss://relay.damus.io. La pegas en configuración del cliente.",
-            "severity": "info"
+            "explanation": "Los relays de pago suelen ofrecer mejor disponibilidad, sincronización más rápida y menos spam, porque tienen recursos para mantener la calidad y pueden expulsar a quien abuse.",
+            "severity": "warning"
           },
           {
-            "id": "relay-reliability",
-            "title": "Confiabilidad del Relay",
-            "prompt": "¿Qué hacer si tu relay favorito deja de funcionar?",
+            "id": "relay-data",
+            "title": "Almacenamiento",
+            "prompt": "¿Cuánto tiempo conserva un relay tus publicaciones?",
             "options": [
               {
                 "id": "a",
-                "label": "Esperar a que lo reparen"
+                "label": "Para siempre, garantizado"
               },
               {
                 "id": "b",
-                "label": "Cambiar a otros relays"
+                "label": "Depende del relay: unos lo guardan todo y otros borran lo antiguo"
               },
               {
                 "id": "c",
-                "label": "Crear cuenta nueva"
+                "label": "Solo 30 días"
               }
             ],
             "correctId": "b",
-            "explanation": "Si usas múltiples relays, la falla de uno no es problema. Tus posts están en otros relays. Es como cambiar de proveedor de internet.",
+            "explanation": "Cada relay fija su propia política de almacenamiento. Algunos archivan todo indefinidamente y otros borran publicaciones pasado cierto tiempo o tamaño. Usa varios relays para tener redundancia.",
+            "severity": "warning"
+          },
+          {
+            "id": "relay-count",
+            "title": "Configuración óptima",
+            "prompt": "¿A cuántos relays conviene conectarse normalmente?",
+            "options": [
+              {
+                "id": "a",
+                "label": "A uno exactamente"
+              },
+              {
+                "id": "b",
+                "label": "Entre 3 y 10, según lo que necesites"
+              },
+              {
+                "id": "c",
+                "label": "A todos los disponibles, más de 100"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "Para la mayoría, entre 3 y 10 relays dan buena cobertura sin ahogar al cliente. Muy pocos te dejan expuesto a un único punto de fallo; demasiados hacen que todo vaya lento.",
             "severity": "info"
           },
           {
             "id": "relay-ban",
             "title": "Censura",
-            "prompt": "¿Puede un relay bloquearte?",
+            "prompt": "¿Puede un relay vetarte?",
             "options": [
               {
                 "id": "a",
-                "label": "No, Nostr no se puede censurar"
+                "label": "No, Nostr es incensurable"
               },
               {
                 "id": "b",
-                "label": "Sí, el operador de un relay puede negarse a almacenar tus posts, pero puedes usar otros relays"
+                "label": "Sí, quien lo opera puede negarse a guardar tus publicaciones, pero tú puedes usar otros"
               },
               {
                 "id": "c",
@@ -569,7 +569,7 @@
               }
             ],
             "correctId": "b",
-            "explanation": "Los relays individuales pueden bloquear usuarios o contenido. Sin embargo, la descentralización de Nostr significa que simplemente puedes usar otros relays. Tu identidad no está atada a ningún relay específico.",
+            "explanation": "Un relay concreto puede vetar cuentas o contenidos. Pero como la red está descentralizada, basta con usar otros: tu identidad no está atada a ningún relay.",
             "severity": "critical"
           }
         ]
@@ -582,114 +582,114 @@
         "title": "Quiz: NIP-05",
         "questions": [
           {
-            "id": "purpose",
-            "title": "¿Qué es NIP-05?",
-            "prompt": "¿Para qué sirve NIP-05?",
+            "id": "nip05-purpose",
+            "title": "Para qué sirve NIP-05",
+            "prompt": "¿Qué aporta NIP-05?",
             "options": [
               {
                 "id": "a",
-                "label": "Reemplaza npub con dirección legible"
+                "label": "Mensajería cifrada"
               },
               {
                 "id": "b",
-                "label": "Añade cifrado"
+                "label": "Un identificador legible, del tipo tunombre@dominio.com, asociado a tu npub"
               },
               {
                 "id": "c",
-                "label": "Es requerido para usar Nostr"
+                "label": "Conexiones más rápidas con los relays"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "NIP-05 asocia un identificador con formato de correo (tunombre@dominio.com) a tu npub, para que sea más fácil encontrarte y comprobar que eres tú.",
+            "severity": "critical"
+          },
+          {
+            "id": "nip05-verification",
+            "title": "Verificación",
+            "prompt": "¿Cómo se verifica un NIP-05?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Subiendo tu documento de identidad a un servidor central"
+              },
+              {
+                "id": "b",
+                "label": "Colocando un archivo JSON en un servidor web que controlas"
+              },
+              {
+                "id": "c",
+                "label": "Pagando una cuota de verificación"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "NIP-05 funciona alojando un archivo .well-known/nostr.json en tu dominio que asocia tu identificador con tu clave pública en formato hexadecimal, lo que demuestra que controlas ese dominio.",
+            "severity": "critical"
+          },
+          {
+            "id": "nip05-benefits",
+            "title": "Ventajas",
+            "prompt": "¿Cuál es la ventaja principal de tener un identificador NIP-05?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Oculta tu npub a todo el mundo"
+              },
+              {
+                "id": "b",
+                "label": "Te hace más fácil de encontrar y aporta credibilidad"
+              },
+              {
+                "id": "c",
+                "label": "Te regala bitcoin"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "NIP-05 hace que tu perfil se encuentre con un nombre fácil de recordar. Además muestra una marca de verificación que indica que controlas ese dominio.",
+            "severity": "warning"
+          },
+          {
+            "id": "nip05-providers",
+            "title": "Cómo conseguirlo",
+            "prompt": "¿Cómo puedes conseguir un identificador NIP-05?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Solo si tienes un dominio propio"
+              },
+              {
+                "id": "b",
+                "label": "Usando un servicio proveedor de NIP-05 o alojándolo en tu propio dominio"
+              },
+              {
+                "id": "c",
+                "label": "Minándolo como el bitcoin"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "Puedes alojar el NIP-05 en tu propio dominio, si tienes web, o usar servicios como nostrplebs.com o nostrcheck.me, que te dan un identificador.",
+            "severity": "info"
+          },
+          {
+            "id": "nip05-security",
+            "title": "Consideración de seguridad",
+            "prompt": "¿Qué conviene saber sobre NIP-05 y la privacidad?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Vincula tu identidad a un dominio que controlas, lo que puede quitarte el anonimato"
+              },
+              {
+                "id": "b",
+                "label": "Hace tu cuenta completamente anónima"
+              },
+              {
+                "id": "c",
+                "label": "Cifra todos tus mensajes"
               }
             ],
             "correctId": "a",
-            "explanation": "NIP-05 es identificador legible opcional. En lugar de npub1abc...123 tienes juan@ejemplo.com. Más fácil de recordar y compartir.",
-            "severity": "info"
-          },
-          {
-            "id": "benefits",
-            "title": "Beneficios",
-            "prompt": "¿Cuáles son los beneficios de NIP-05?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Acceso gratis a premium"
-              },
-              {
-                "id": "b",
-                "label": "Más fácil encontrarte y verificación"
-              },
-              {
-                "id": "c",
-                "label": "Protección automática contra spam"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "NIP-05 facilita que otros te encuentren, permite verificar tu identidad y da dirección predecible. Es como tu propio dominio de email.",
-            "severity": "info"
-          },
-          {
-            "id": "required",
-            "title": "¿Es Requerido?",
-            "prompt": "¿Necesitas tener NIP-05?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Sí, es requerido"
-              },
-              {
-                "id": "b",
-                "label": "No, es opcional"
-              },
-              {
-                "id": "c",
-                "label": "Depende del país"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "NIP-05 es completamente opcional. Puedes usar Nostr sin él. Es solo un complemento para facilitar identificación.",
-            "severity": "info"
-          },
-          {
-            "id": "setup-location",
-            "title": "¿Dónde Configurar?",
-            "prompt": "¿Dónde se configura NIP-05?",
-            "options": [
-              {
-                "id": "a",
-                "label": "En el perfil de cada cliente"
-              },
-              {
-                "id": "b",
-                "label": "En el servidor bajo tu dominio"
-              },
-              {
-                "id": "c",
-                "label": "En registro central de Nostr"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "NIP-05 requiere archivo JSON en tu servidor en .well-known/nostr.json. Los clientes verifican este archivo para mapear nombre@dominio → npub.",
-            "severity": "info"
-          },
-          {
-            "id": "centralization",
-            "title": "Centralización",
-            "prompt": "¿NIP-05 centraliza Nostr?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Sí, requiere dominio"
-              },
-              {
-                "id": "b",
-                "label": "Es complemento opcional"
-              },
-              {
-                "id": "c",
-                "label": "No, porque puedes tener varios"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "NIP-05 no centraliza Nostr porque es opcional. La identidad base usa llaves, no dominios. Puedes usar Nostr sin NIP-05.",
-            "severity": "info"
+            "explanation": "NIP-05 ata tu npub a un dominio real, y eso puede revelar quién eres. Si el anonimato te importa, piénsatelo antes de enlazarlo con un dominio personal.",
+            "severity": "warning"
           }
         ]
       }
@@ -702,113 +702,113 @@
         "questions": [
           {
             "id": "what-are-zaps",
-            "title": "¿Qué son Zaps?",
-            "prompt": "¿Qué son los zaps en Nostr?",
+            "title": "Qué es un zap",
+            "prompt": "¿Qué son los 'zaps' en Nostr?",
             "options": [
               {
                 "id": "a",
-                "label": "Pagos Bitcoin por Lightning"
+                "label": "Reacciones con emoji de rayo"
               },
               {
                 "id": "b",
-                "label": "Tipos especiales de posts"
+                "label": "Pagos en bitcoin enviados por la red Lightning"
               },
               {
                 "id": "c",
-                "label": "Tokens de recompensa"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "Los zaps son pagos Bitcoin a través de Lightning Network. Permiten enviar pequeñas cantidades instantáneamente, sin intermediarios. Es como un 'me gusta' con valor financiero.",
-            "severity": "info"
-          },
-          {
-            "id": "wallet-types",
-            "title": "Tipos de Wallets",
-            "prompt": "¿Qué wallet usar para zaps?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Wallet de exchange centralizado"
-              },
-              {
-                "id": "b",
-                "label": "Wallet Lightning auto-custodial"
-              },
-              {
-                "id": "c",
-                "label": "El mismo que para iniciar sesión"
+                "label": "Un tipo de relay"
               }
             ],
             "correctId": "b",
-            "explanation": "Mejor usar wallet Lightning auto-custodial donde tienes control total. Los wallets custodiales requieren confiar en el operador.",
+            "explanation": "Los zaps son micropagos en bitcoin enviados a través de la red Lightning. Sirven para dar propina o apoyar a quien crea contenido, al instante y con dinero de verdad.",
+            "severity": "critical"
+          },
+          {
+            "id": "lightning-vs-bitcoin",
+            "title": "Red Lightning",
+            "prompt": "¿En qué se diferencia la red Lightning del bitcoin normal?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Es más rápida y más barata para pagos pequeños"
+              },
+              {
+                "id": "b",
+                "label": "Es una criptomoneda completamente distinta"
+              },
+              {
+                "id": "c",
+                "label": "Solo sirve para transacciones grandes"
+              }
+            ],
+            "correctId": "a",
+            "explanation": "Lightning es un protocolo de pagos de segunda capa sobre Bitcoin. Permite transacciones instantáneas y muy baratas, ideales para micropagos como los zaps.",
+            "severity": "critical"
+          },
+          {
+            "id": "wallet-setup",
+            "title": "Configurar la billetera",
+            "prompt": "¿Qué necesitas para recibir zaps?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Una billetera Lightning conectada a tu perfil de Nostr"
+              },
+              {
+                "id": "b",
+                "label": "Una cuenta bancaria"
+              },
+              {
+                "id": "c",
+                "label": "Una cuenta de PayPal"
+              }
+            ],
+            "correctId": "a",
+            "explanation": "Para recibir zaps necesitas una billetera Lightning que te dé una dirección Lightning, y esa dirección va en tu perfil de Nostr. Coinos funciona en el navegador y no hay nada que instalar, aunque guarda los fondos por ti. La billetera integrada de Primal y Zeus te dejan el control del dinero.",
+            "severity": "critical"
+          },
+          {
+            "id": "zap-privacy",
+            "title": "Privacidad de los zaps",
+            "prompt": "¿Son privados los zaps?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Sí, son completamente anónimos"
+              },
+              {
+                "id": "b",
+                "label": "Quién envía y cuánto acaban en un recibo público en Nostr, aunque puedes usar billeteras distintas para identidades distintas"
+              },
+              {
+                "id": "c",
+                "label": "No, exigen verificación KYC"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "Cada zap deja un recibo en los relays (NIP-57) que dice quién zapeó, cuánto y a qué publicación. Lightning en sí no tiene un libro público, así que el recibo es la parte que todo el mundo lee. Algunos clientes permiten zapear de forma anónima, y si te importa que no se relacionen dos de tus identidades, mantén sus billeteras separadas.",
             "severity": "warning"
           },
           {
-            "id": "required",
-            "title": "¿Es Requerido?",
-            "prompt": "¿Necesitas zaps para usar Nostr?",
+            "id": "custodial-vs-self",
+            "title": "Tipos de billetera",
+            "prompt": "¿Qué diferencia hay entre una billetera Lightning custodial y una autocustodiada?",
             "options": [
               {
                 "id": "a",
-                "label": "Sí, sin eso no funciona"
+                "label": "La custodial guarda tus fondos y es más cómoda; en la autocustodiada las claves las controlas tú, y es más segura"
               },
               {
                 "id": "b",
-                "label": "No, es opcional"
+                "label": "No hay diferencia"
               },
               {
                 "id": "c",
-                "label": "Solo para publicar"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "Los zaps son completamente opcionales. Puedes usar Nostr sin pagos. Es solo una forma de apoyar a otros y recibir apoyo.",
-            "severity": "info"
-          },
-          {
-            "id": "receiving",
-            "title": "Recibir Zaps",
-            "prompt": "¿Cómo recibir tu primer zap?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Compartir dirección Lightning en perfil"
-              },
-              {
-                "id": "b",
-                "label": "Registrarte en lista de espera"
-              },
-              {
-                "id": "c",
-                "label": "Comprar suscripción premium"
+                "label": "Las custodiales son solo para bitcoin y las Lightning van aparte"
               }
             ],
             "correctId": "a",
-            "explanation": "Solo añade tu dirección Lightning al perfil. Puedes usar LNURL o Lightning Address. Otros usuarios podrán enviarte zaps.",
-            "severity": "info"
-          },
-          {
-            "id": "fees",
-            "title": "Comisiones",
-            "prompt": "¿Cuánto cuestan los zaps?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Comisión 10% al operador"
-              },
-              {
-                "id": "b",
-                "label": "Comisiones de red casi cero"
-              },
-              {
-                "id": "c",
-                "label": "Tarifa fija de $1 cada uno"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "Lightning Network tiene comisiones mínimas - a menudo fracciones de centavo. Puedes enviar incluso 1 satoshi más barato que transferencias tradicionales.",
-            "severity": "info"
+            "explanation": "Las billeteras custodiales (como Coinos) son fáciles de usar, pero el proveedor controla tus fondos. Las autocustodiadas (como Phoenix o Zeus) te dan el control completo y también toda la responsabilidad.",
+            "severity": "warning"
           }
         ]
       }
@@ -825,134 +825,134 @@
         "questions": [
           {
             "id": "empty-feed",
-            "title": "Feed Vacío",
-            "prompt": "¿Por qué tu feed puede estar vacío?",
+            "title": "Feed vacío",
+            "prompt": "Tu feed está vacío. ¿Cuál es la causa más probable?",
             "options": [
               {
                 "id": "a",
-                "label": "No conectado a ningún relay"
+                "label": "Nostr se ha caído"
               },
               {
                 "id": "b",
-                "label": "Cuenta baneada"
+                "label": "No estás conectado a ningún relay, o los relays que usas no tienen contenido"
               },
               {
                 "id": "c",
-                "label": "Nostr no funciona hoy"
+                "label": "Tu teléfono está roto"
               }
             ],
-            "correctId": "a",
-            "explanation": "La causa más común de feed vacío es no estar conectado a relays. Verifica configuración y añade algunos relays populares.",
-            "severity": "info"
-          },
-          {
-            "id": "missing-posts",
-            "title": "Posts Faltantes",
-            "prompt": "¿Por qué no ves posts antiguos?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Relays borran datos antiguos"
-              },
-              {
-                "id": "b",
-                "label": "Posts expirados"
-              },
-              {
-                "id": "c",
-                "label": "Cliente mal configurado"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "Los relays pueden borrar posts antiguos para hacer espacio. Algunos guardan datos solo 30 días. Usa múltiples relays para redundancia.",
+            "correctId": "b",
+            "explanation": "Un feed vacío casi siempre apunta a los relays. Comprueba en la configuración de tu cliente que estás conectado a relays activos y añade alguno público conocido.",
             "severity": "warning"
           },
           {
-            "id": "lost-keys",
-            "title": "Llaves Perdidas",
-            "prompt": "¿Qué hacer si pierdes tu llave privada?",
+            "id": "posts-not-appearing",
+            "title": "Visibilidad de tus publicaciones",
+            "prompt": "Has publicado algo pero tus amistades no lo ven. ¿Por qué?",
             "options": [
               {
                 "id": "a",
-                "label": "Contactar soporte"
+                "label": "Hay que pagar para publicar en modo premium"
               },
               {
                 "id": "b",
-                "label": "Crear cuenta nueva"
+                "label": "Tú y ellas estáis usando relays distintos"
               },
               {
                 "id": "c",
-                "label": "Usar seed phrase de respaldo"
+                "label": "Las publicaciones tardan 24 horas en aparecer"
               }
             ],
             "correctId": "b",
-            "explanation": "Sin llave privada no hay recuperación de cuenta. Por eso son tan importantes las copias de seguridad. Si no tienes backup, debes crear cuenta nueva.",
-            "severity": "critical"
-          },
-          {
-            "id": "relay-connection",
-            "title": "Conexión al Relay",
-            "prompt": "¿Qué hacer cuando no puedes conectar a un relay?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Intentar más tarde"
-              },
-              {
-                "id": "b",
-                "label": "Usar otros relays"
-              },
-              {
-                "id": "c",
-                "label": "Reiniciar computadora"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "Si un relay no funciona, simplemente usa otros. Esa es la ventaja de la descentralización - tienes muchas alternativas.",
-            "severity": "info"
-          },
-          {
-            "id": "impersonation",
-            "title": "Suplantación",
-            "prompt": "¿Qué hacer si alguien se hace pasar por ti?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Reportar a administración"
-              },
-              {
-                "id": "b",
-                "label": "Usar NIP-05 para verificación"
-              },
-              {
-                "id": "c",
-                "label": "Cambiar seudónimo"
-              }
-            ],
-            "correctId": "b",
-            "explanation": "NIP-05 permite verificar identidad mediante dominio. Los usuarios pueden verificar quién es real. Es como el check azul, pero mejor.",
+            "explanation": "Si usas relays distintos a los suyos, no verán lo que publicas. Comparte qué relays usas o añadid alguno en común.",
             "severity": "warning"
           },
           {
-            "id": "zap-issues",
-            "title": "Problemas con Zaps",
-            "prompt": "¿Por qué los zaps pueden no llegar?",
+            "id": "connection-issues",
+            "title": "Problemas de conexión",
+            "prompt": "Tu cliente se desconecta constantemente de los relays. ¿Qué deberías revisar?",
             "options": [
               {
                 "id": "a",
-                "label": "Mala conexión Lightning"
+                "label": "Tu conexión a internet y si las URLs de los relays son correctas"
               },
               {
                 "id": "b",
-                "label": "Nostr sobrecargado"
+                "label": "Tu signo del zodiaco"
               },
               {
                 "id": "c",
-                "label": "Receptor desactivó zaps"
+                "label": "Nada, es lo normal"
               }
             ],
             "correctId": "a",
-            "explanation": "Problemas con zaps generalmente vienen de problemas de conexión Lightning. Verifica que tengas canales abiertos y que la dirección del receptor sea correcta.",
+            "explanation": "Empieza por la conexión a internet. Después comprueba que las URLs de los relays estén bien escritas, en formato wss://. A veces un relay está caído un rato: prueba con otros.",
+            "severity": "info"
+          },
+          {
+            "id": "missing-history",
+            "title": "Historial perdido",
+            "prompt": "Tus publicaciones antiguas han desaparecido. ¿Qué ha pasado?",
+            "options": [
+              {
+                "id": "a",
+                "label": "El relay donde publicaste borró el contenido antiguo"
+              },
+              {
+                "id": "b",
+                "label": "Nostr borra las publicaciones automáticamente a los 30 días"
+              },
+              {
+                "id": "c",
+                "label": "Necesitas pasarte a la versión premium"
+              }
+            ],
+            "correctId": "a",
+            "explanation": "Cada relay tiene su política de almacenamiento y algunos borran lo antiguo para ahorrar espacio. Usa varios relays y herramientas de copia para conservar tu historial.",
+            "severity": "warning"
+          },
+          {
+            "id": "dm-not-working",
+            "title": "Problemas con los mensajes",
+            "prompt": "Tus mensajes directos no llegan. ¿Qué puede estar fallando?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Ni tú ni la otra persona compartís ningún relay en común"
+              },
+              {
+                "id": "b",
+                "label": "Los mensajes directos solo funcionan los martes"
+              },
+              {
+                "id": "c",
+                "label": "Tienes que verificar tu número de teléfono"
+              }
+            ],
+            "correctId": "a",
+            "explanation": "Los mensajes directos necesitan que las dos partes estéis conectadas a relays que guarden y reenvíen el mensaje cifrado. Asegúrate de compartir al menos un relay con quien escribes.",
+            "severity": "warning"
+          },
+          {
+            "id": "slow-performance",
+            "title": "Rendimiento",
+            "prompt": "Tu cliente de Nostr va muy lento. ¿Cómo puedes mejorarlo?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Conectándote a menos relays, pero de buena calidad, en vez de a muchos lentos"
+              },
+              {
+                "id": "b",
+                "label": "Comprando un ordenador más rápido"
+              },
+              {
+                "id": "c",
+                "label": "Publicando con menos frecuencia"
+              }
+            ],
+            "correctId": "a",
+            "explanation": "Demasiados relays, o relays lentos, atascan el cliente. Mantén la lista corta, entre 3 y 10 relays rápidos y fiables, para que todo vaya fino.",
             "severity": "info"
           }
         ]
@@ -965,114 +965,114 @@
         "title": "Quiz: Clientes",
         "questions": [
           {
-            "id": "why-multiple",
-            "title": "¿Por qué Varios?",
-            "prompt": "¿Por qué usar múltiples clientes?",
+            "id": "same-identity",
+            "title": "Identidad portátil",
+            "prompt": "¿Puedes usar la misma identidad de Nostr en varios clientes?",
             "options": [
               {
                 "id": "a",
-                "label": "Para redundancia y diferentes funciones"
+                "label": "No, cada cliente necesita una cuenta distinta"
               },
               {
                 "id": "b",
-                "label": "Es requerido por el protocolo"
+                "label": "Sí, una sola identidad vale para todos: conecta cada cliente a través de un signer en vez de pegarle tu nsec"
               },
               {
                 "id": "c",
-                "label": "Para tener más followers"
+                "label": "Solo si pagas un extra"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "Tu identidad es portátil: el mismo perfil, los mismos seguidores y las mismas publicaciones aparecen en Damus, Amethyst, Iris y los demás. Inicia sesión con un signer (Amber en Android, una extensión de navegador en la web, un signer remoto NIP-46 en cualquier sitio) para que tu nsec se quede en un único lugar y cada cliente reciba solo firmas.",
+            "severity": "critical"
+          },
+          {
+            "id": "data-sync",
+            "title": "Sincronización de datos",
+            "prompt": "¿Cómo se mantienen sincronizados los datos entre clientes?",
+            "options": [
+              {
+                "id": "a",
+                "label": "A través de un servidor central de sincronización"
+              },
+              {
+                "id": "b",
+                "label": "A través de los relays: todos los clientes leen y escriben en la misma red de relays"
+              },
+              {
+                "id": "c",
+                "label": "Hay que copiar los datos a mano entre dispositivos"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "Los relays hacen de capa de sincronización. Cuando publicas desde un cliente, el evento va a los relays, y los demás clientes leen de esos mismos relays.",
+            "severity": "critical"
+          },
+          {
+            "id": "client-differences",
+            "title": "Funciones de cada cliente",
+            "prompt": "¿Por qué te puede interesar usar varios clientes?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Cada cliente tiene funciones, interfaz y soporte de dispositivos distintos"
+              },
+              {
+                "id": "b",
+                "label": "Es obligatorio usar al menos tres clientes"
+              },
+              {
+                "id": "c",
+                "label": "Cada cliente tiene sus propias reglas"
               }
             ],
             "correctId": "a",
-            "explanation": "Diferentes clientes ofrecen funciones e interfaces distintas. Uno puede ser mejor en móvil, otro en computadora. Tus datos se sincronizan entre ellos.",
+            "explanation": "Los clientes son interfaces sobre la misma red. Unos brillan en el móvil y otros tienen mejores funciones de escritorio. Usa el que mejor te venga para el dispositivo o la tarea del momento.",
             "severity": "info"
           },
           {
-            "id": "what-syncs",
-            "title": "¿Qué se Sincroniza?",
-            "prompt": "¿Qué datos se sincronizan entre clientes?",
+            "id": "security-multiple",
+            "title": "Seguridad entre clientes",
+            "prompt": "¿Cómo conviene gestionar la seguridad si usas varios clientes?",
             "options": [
               {
                 "id": "a",
-                "label": "Todo - posts, contactos, ajustes"
+                "label": "Con una app de firma (signer), para no pegar tu nsec en cada cliente"
               },
               {
                 "id": "b",
-                "label": "Solo posts públicos"
+                "label": "Enviándote tu nsec por correo para tenerlo a mano"
               },
               {
                 "id": "c",
-                "label": "Nada - cada cliente es separado"
+                "label": "Usando la misma contraseña en todas partes"
               }
             ],
             "correctId": "a",
-            "explanation": "En Nostr tus datos (posts, contactos, metadatos) están en relays. Cada cliente obtiene los mismos datos usando tu llave.",
-            "severity": "info"
+            "explanation": "Usa signers NIP-46 (como Amber) o extensiones de navegador para no pegar tu clave privada en varias apps. Así, si un cliente se ve comprometido, la exposición es mucho menor.",
+            "severity": "critical"
           },
           {
-            "id": "workflow",
-            "title": "Flujo de Trabajo",
-            "prompt": "¿Cuál es el flujo típico con múltiples clientes?",
+            "id": "relay-consistency",
+            "title": "Configuración de relays",
+            "prompt": "¿Deberías usar los mismos relays en todos los clientes?",
             "options": [
               {
                 "id": "a",
-                "label": "Teléfono para leer, computadora para escribir"
+                "label": "Es recomendable por coherencia, aunque no es obligatorio"
               },
               {
                 "id": "b",
-                "label": "Usar aleatoriamente"
+                "label": "No, cada cliente debe usar relays diferentes"
               },
               {
                 "id": "c",
-                "label": "Un cliente a la vez"
+                "label": "Sí, es obligatorio"
               }
             ],
             "correctId": "a",
-            "explanation": "A menudo se usa cliente ligero en teléfono para navegar, y completo en computadora para escribir más. Elige lo que funcione para ti.",
+            "explanation": "Tener una configuración de relays parecida en todos los clientes te da una experiencia coherente, pero puedes ajustarla en cada uno según lo que necesites en ese dispositivo.",
             "severity": "info"
-          },
-          {
-            "id": "switching",
-            "title": "Cambiar",
-            "prompt": "¿Cómo cambiar fácilmente entre clientes?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Usar la misma llave"
-              },
-              {
-                "id": "b",
-                "label": "Migrar datos manualmente"
-              },
-              {
-                "id": "c",
-                "label": "Usar cuenta central"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "Solo inicia sesión con la misma llave en el nuevo cliente. Todos tus datos están ahí automáticamente. Es como iniciar sesión en Gmail en diferentes dispositivos.",
-            "severity": "info"
-          },
-          {
-            "id": "testing",
-            "title": "Probar",
-            "prompt": "¿Cómo probar nuevos clientes de forma segura?",
-            "options": [
-              {
-                "id": "a",
-                "label": "En cuenta de prueba separada"
-              },
-              {
-                "id": "b",
-                "label": "En tu cuenta principal"
-              },
-              {
-                "id": "c",
-                "label": "No probar"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "Siempre prueba nuevos clientes en cuenta separada. Si el cliente es malicioso o tiene errores, no perderás tu cuenta principal ni contactos.",
-            "severity": "warning"
           }
         ]
       }
@@ -1084,113 +1084,113 @@
         "title": "Quiz: Relays",
         "questions": [
           {
-            "id": "relay-types",
-            "title": "Tipos de Relays",
-            "prompt": "¿Cuáles son los tipos principales de relays?",
+            "id": "choosing-relays",
+            "title": "Criterios de selección",
+            "prompt": "¿Qué deberías tener en cuenta al elegir relays?",
             "options": [
               {
                 "id": "a",
-                "label": "Públicos, privados, pagos"
+                "label": "Solo la combinación de colores del relay"
               },
               {
                 "id": "b",
-                "label": "Rápidos y lentos"
+                "label": "Fiabilidad, velocidad, coste y cuánta gente que te interesa lo usa"
               },
               {
                 "id": "c",
-                "label": "Grandes y pequeños"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "Hay públicos (gratis, abiertos), privados (requieren invitación) y pagos (suscripción). Cada tipo tiene sus ventajas.",
-            "severity": "info"
-          },
-          {
-            "id": "how-many",
-            "title": "¿Cuántos Usar?",
-            "prompt": "¿Cuántos relays deberías tener?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Solo uno"
-              },
-              {
-                "id": "b",
-                "label": "5-15"
-              },
-              {
-                "id": "c",
-                "label": "100+"
+                "label": "Cuántas celebridades lo usan"
               }
             ],
             "correctId": "b",
-            "explanation": "5-15 relays es el punto ideal. Muy pocos - riesgo de pérdida de datos. Demasiados - ralentizas la app.",
-            "severity": "info"
+            "explanation": "Elegir bien un relay pasa por mirar su disponibilidad, su velocidad de respuesta, si es gratuito o de pago, y si la gente con la que quieres hablar está ahí.",
+            "severity": "warning"
           },
           {
-            "id": "why-pay",
-            "title": "¿Por qué Pagar?",
-            "prompt": "¿Por qué usar relays pagos?",
+            "id": "relay-discovery",
+            "title": "Encontrar relays",
+            "prompt": "¿Cómo puedes descubrir buenos relays?",
             "options": [
               {
                 "id": "a",
-                "label": "Mejor calidad y confiabilidad"
+                "label": "Mirando las listas que comparte gente de confianza de la comunidad"
               },
               {
                 "id": "b",
-                "label": "Es obligatorio"
+                "label": "Adivinando URLs al azar"
               },
               {
                 "id": "c",
-                "label": "Por estatus"
+                "label": "Usando solo el primer relay que encuentres"
               }
             ],
             "correctId": "a",
-            "explanation": "Relays pagos ofrecen mejor calidad, más espacio, menos spam y mejor disponibilidad. Es inversión en tu experiencia.",
+            "explanation": "Busca recomendaciones en la comunidad, en directorios de relays, o mira cuáles usan tus amistades. Importa más la calidad que la cantidad.",
             "severity": "info"
           },
           {
-            "id": "own-relay",
-            "title": "Tu Propio Relay",
-            "prompt": "¿Vale la pena ejecutar tu propio relay?",
+            "id": "paid-relay-benefits",
+            "title": "Relays de pago",
+            "prompt": "¿Por qué pagarías por un relay?",
             "options": [
               {
                 "id": "a",
-                "label": "Sí, para control total"
+                "label": "Para conseguir colores especiales"
               },
               {
                 "id": "b",
-                "label": "No, es muy difícil"
+                "label": "Por mejor disponibilidad, soporte y menos spam"
               },
               {
                 "id": "c",
-                "label": "No importa"
+                "label": "Porque lo exige la ley"
               }
             ],
-            "correctId": "a",
-            "explanation": "Tu propio relay te da control total sobre tus datos. También es excelente aprendizaje y aporte a la descentralización.",
+            "correctId": "b",
+            "explanation": "Los relays de pago suelen dar mejor rendimiento, soporte, filtrado de spam y continuidad, porque tienen recursos para mantener una infraestructura decente.",
             "severity": "info"
           },
           {
-            "id": "decentralization",
-            "title": "Descentralización",
-            "prompt": "¿Cómo los relays aseguran descentralización?",
+            "id": "relay-migration",
+            "title": "Cambiar de relay",
+            "prompt": "¿Qué pasa cuando te cambias a un relay nuevo?",
             "options": [
               {
                 "id": "a",
-                "label": "No hay un solo dueño"
+                "label": "Pierdes todos tus seguidores y publicaciones"
               },
               {
                 "id": "b",
-                "label": "Usan blockchain"
+                "label": "Tus publicaciones futuras van al relay nuevo, pero las antiguas se quedan donde estaban"
               },
               {
                 "id": "c",
-                "label": "Son open source"
+                "label": "Se borra tu cuenta"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "Lo nuevo se publica en los relays que tengas configurados ahora. Lo antiguo sigue en los relays donde se publicó en su día. Tu identidad y tus seguidores viajan contigo.",
+            "severity": "warning"
+          },
+          {
+            "id": "relay-health",
+            "title": "Vigilancia",
+            "prompt": "¿Cómo sabes si un relay funciona bien?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Mirando el estado de la conexión en tu cliente y vigilando los tiempos de espera"
+              },
+              {
+                "id": "b",
+                "label": "Llamando cada día a quien lo opera"
+              },
+              {
+                "id": "c",
+                "label": "No hay forma de saberlo"
               }
             ],
             "correctId": "a",
-            "explanation": "La descentralización significa que nadie controla toda la red. Miles de relays independientes crean red resistente sin punto central.",
+            "explanation": "Casi todos los clientes muestran el estado de conexión de cada relay. Si ves errores, tiempos de espera agotados o el feed deja de actualizarse, plantéate cambiarlo por otro más fiable.",
             "severity": "info"
           }
         ]
@@ -1203,136 +1203,136 @@
         "title": "Quiz: Privacidad",
         "questions": [
           {
-            "id": "threat-model",
-            "title": "Modelo de Amenazas",
-            "prompt": "¿Cuál es el modelo de amenazas principal en Nostr?",
+            "id": "separate-personas",
+            "title": "Separar identidades",
+            "prompt": "¿Para qué sirve tener identidades separadas en Nostr?",
             "options": [
               {
                 "id": "a",
-                "label": "Todo es público"
+                "label": "Para conseguir más seguidores"
               },
               {
                 "id": "b",
-                "label": "Ataques de hackers"
+                "label": "Para compartimentar distintas facetas de tu vida y reducir la correlación entre ellas"
               },
               {
                 "id": "c",
-                "label": "Censura por gobiernos"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "En Nostr todo es público y permanente. Es la amenaza principal para privacidad. Debes decidir conscientemente qué publicas.",
-            "severity": "critical"
-          },
-          {
-            "id": "identity-separation",
-            "title": "Separación de Identidades",
-            "prompt": "¿Por qué tener varias identidades?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Para diferentes propósitos"
-              },
-              {
-                "id": "b",
-                "label": "Para tener más followers"
-              },
-              {
-                "id": "c",
-                "label": "Es requerido"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "Separar identidades permite aislar diferentes esferas de vida. Puedes tener perfil separado para trabajo, hobbies y activismo. Aumenta privacidad.",
-            "severity": "warning"
-          },
-          {
-            "id": "signer-apps",
-            "title": "Apps Firmadoras",
-            "prompt": "¿Qué son las signer apps (ej. Amber)?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Apps que guardan llaves de forma segura"
-              },
-              {
-                "id": "b",
-                "label": "Editores de gráficos"
-              },
-              {
-                "id": "c",
-                "label": "Apps de firma digital legal"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "Signer apps (ej. Amber, Nos2x) guardan tu llave privada y firman transacciones sin mostrarla a clientes. Es mucho más seguro.",
-            "severity": "warning"
-          },
-          {
-            "id": "metadata-leaks",
-            "title": "Filtraciones de Metadatos",
-            "prompt": "¿Qué metadatos pueden traicionarte?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Ubicación GPS"
-              },
-              {
-                "id": "b",
-                "label": "Todas las anteriores"
-              },
-              {
-                "id": "c",
-                "label": "EXIF en fotos"
+                "label": "Lo exige el protocolo Nostr"
               }
             ],
             "correctId": "b",
-            "explanation": "Los metadatos son más que GPS. Son hora de posts, tipo de dispositivo, patrones de actividad, EXIF en fotos. Todo puede ayudar a identificarte.",
+            "explanation": "Con identidades separadas evitas que se relacionen tus actividades. Mantén aisladas la profesional, la personal y la anónima para conservar tus límites de privacidad.",
             "severity": "warning"
           },
           {
-            "id": "key-rotation",
-            "title": "Rotación de Llaves",
-            "prompt": "¿Cuándo deberías cambiar tu llave?",
+            "id": "exif-data",
+            "title": "Metadatos de las imágenes",
+            "prompt": "¿Por qué conviene eliminar los datos EXIF de las imágenes antes de publicarlas?",
             "options": [
               {
                 "id": "a",
-                "label": "Cuando hay compromiso"
+                "label": "Porque el EXIF hace que las imágenes carguen más lento"
               },
               {
                 "id": "b",
-                "label": "Cada mes"
+                "label": "Porque el EXIF puede llevar coordenadas GPS e información del dispositivo que te identifican"
               },
               {
                 "id": "c",
-                "label": "Nunca"
+                "label": "Porque lo exige NIP-05"
               }
             ],
-            "correctId": "a",
-            "explanation": "Cambia tu llave solo cuando hay razón - filtración, sospecha de compromiso, o quieres empezar de nuevo. Rotación sin razón es tediosa.",
-            "severity": "warning"
-          },
-          {
-            "id": "recovery-planning",
-            "title": "Plan de Recuperación",
-            "prompt": "¿Qué hacer en caso de incidente de seguridad?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Tener plan de acción"
-              },
-              {
-                "id": "b",
-                "label": "Entrar en pánico"
-              },
-              {
-                "id": "c",
-                "label": "Esperar"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "Prepara un plan por si se filtra tu llave: nueva llave, notificar contactos, migrar. Planificar reduce estrés y daños.",
+            "correctId": "b",
+            "explanation": "Las fotos suelen llevar metadatos EXIF con ubicación GPS, modelo de cámara y fecha. Bórralos para proteger dónde estás y quién eres.",
             "severity": "critical"
+          },
+          {
+            "id": "hardware-keys",
+            "title": "Seguridad por hardware",
+            "prompt": "¿Qué aporta un dispositivo de firma por hardware?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Queda bonito"
+              },
+              {
+                "id": "b",
+                "label": "La clave privada nunca sale del hardware seguro, lo que te protege del malware"
+              },
+              {
+                "id": "c",
+                "label": "Hace que publicar sea más rápido"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "Un firmante por hardware guarda tu clave privada en un chip aislado. Aunque tu ordenador esté infectado, la clave no se puede extraer.",
+            "severity": "critical"
+          },
+          {
+            "id": "correlation-attacks",
+            "title": "Riesgos de correlación",
+            "prompt": "¿Cómo puede alguien relacionar tu identidad de Nostr con tu identidad real?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Analizando patrones, metadatos, cuentas enlazadas e información que has compartido"
+              },
+              {
+                "id": "b",
+                "label": "No puede, Nostr es totalmente anónimo"
+              },
+              {
+                "id": "c",
+                "label": "Solo hackeando los relays"
+              }
+            ],
+            "correctId": "a",
+            "explanation": "La privacidad es cuestión de hábitos. Evita dar detalles identificativos, reutilizar nombres de usuario, enlazar redes sociales que te identifican o publicar tu ubicación.",
+            "severity": "warning"
+          },
+          {
+            "id": "encrypted-backups",
+            "title": "Copias seguras",
+            "prompt": "¿Cuál es la forma más segura de respaldar tus claves de Nostr?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Un archivo cifrado guardado fuera de línea, o escrito en papel o metal en un sitio seguro"
+              },
+              {
+                "id": "b",
+                "label": "Mandárselo a un amigo por WhatsApp"
+              },
+              {
+                "id": "c",
+                "label": "Guardarlo en Google Drive con enlace público"
+              }
+            ],
+            "correctId": "a",
+            "explanation": "Cifra tus claves con una contraseña fuerte y guárdalas fuera de línea. El soporte físico, papel o placas de acero en un lugar seguro, aguanta muy bien el paso del tiempo.",
+            "severity": "critical"
+          },
+          {
+            "id": "client-security",
+            "title": "Verificar un cliente",
+            "prompt": "¿Cómo puedes comprobar que un cliente de Nostr es seguro?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Mirando si es de código abierto, si ha pasado auditorías y qué confianza tiene en la comunidad"
+              },
+              {
+                "id": "b",
+                "label": "Si tiene más de 1000 descargas, es seguro"
+              },
+              {
+                "id": "c",
+                "label": "Todos los clientes son igual de seguros"
+              }
+            ],
+            "correctId": "a",
+            "explanation": "Prefiere clientes de código abierto, que cualquiera pueda auditar. Fíjate en los comentarios de la comunidad y en la actividad de desarrollo, y usa apps de firma siempre que puedas.",
+            "severity": "warning"
           }
         ]
       }
@@ -1344,114 +1344,114 @@
         "title": "Quiz: NIP-17",
         "questions": [
           {
-            "id": "purpose",
-            "title": "Propósito de NIP-17",
-            "prompt": "¿Para qué sirve NIP-17?",
+            "id": "nip17-purpose",
+            "title": "Para qué sirve NIP-17",
+            "prompt": "¿Qué es NIP-17?",
             "options": [
               {
                 "id": "a",
-                "label": "Para mensajes privados"
+                "label": "Un nuevo tipo de relay"
               },
               {
                 "id": "b",
-                "label": "Para publicar posts"
+                "label": "Un estándar de cifrado mejorado para mensajes privados que sustituye a NIP-04"
               },
               {
                 "id": "c",
-                "label": "Para gestionar relays"
+                "label": "Una integración de billetera bitcoin"
               }
             ],
-            "correctId": "a",
-            "explanation": "NIP-17 es estándar para mensajes directos privados (DM). Reemplaza NIP-04 ofreciendo mejor seguridad.",
-            "severity": "info"
+            "correctId": "b",
+            "explanation": "NIP-17 es el estándar actualizado para mensajes directos cifrados de extremo a extremo en Nostr, y viene a sustituir al antiguo NIP-04 con mejor seguridad.",
+            "severity": "critical"
           },
           {
-            "id": "nip04-problem",
-            "title": "Problema con NIP-04",
-            "prompt": "¿Cuál es el problema del viejo NIP-04?",
+            "id": "nip04-vs-nip17",
+            "title": "Mejoras de seguridad",
+            "prompt": "¿Por qué es mejor NIP-17 que NIP-04?",
             "options": [
               {
                 "id": "a",
-                "label": "Cifrado débil"
+                "label": "Porque es más rápido"
               },
               {
                 "id": "b",
-                "label": "Sin soporte"
+                "label": "Porque oculta al remitente frente a los relays y usa un cifrado mejor"
               },
               {
                 "id": "c",
-                "label": "Demasiado lento"
+                "label": "Porque tiene colores más bonitos"
               }
             ],
-            "correctId": "a",
-            "explanation": "NIP-04 tiene cifrado débil. Los metadatos (quién, cuándo, con quién) son visibles. NIP-17 lo arregla con mejor cifrado.",
-            "severity": "warning"
-          },
-          {
-            "id": "gift-wrap",
-            "title": "Gift Wrap",
-            "prompt": "¿Qué es 'Gift Wrap' en NIP-17?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Capa adicional de cifrado"
-              },
-              {
-                "id": "b",
-                "label": "Regalo para usuarios"
-              },
-              {
-                "id": "c",
-                "label": "Paquete de inicio"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "Gift Wrap es capa adicional de cifrado que oculta metadatos del mensaje. No se ve quién, a quién ni cuándo.",
-            "severity": "info"
-          },
-          {
-            "id": "compatibility",
-            "title": "Compatibilidad",
-            "prompt": "¿Qué clientes soportan NIP-17?",
-            "options": [
-              {
-                "id": "a",
-                "label": "Clientes modernos"
-              },
-              {
-                "id": "b",
-                "label": "Todos"
-              },
-              {
-                "id": "c",
-                "label": "Ninguno"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "NIP-17 es soportado por clientes modernos, pero no todos. Verifica que tu cliente soporte NIP-17 antes de migrar.",
-            "severity": "info"
+            "correctId": "b",
+            "explanation": "NIP-17 envuelve el mensaje de forma que el relay no puede ver quién lo envía, y usa protocolos criptográficos mejores. Ojo: el destinatario sí queda a la vista del relay.",
+            "severity": "critical"
           },
           {
             "id": "migration",
             "title": "Migración",
-            "prompt": "¿Cómo migrar a NIP-17?",
+            "prompt": "¿Hay que migrar de NIP-04 a NIP-17?",
             "options": [
               {
                 "id": "a",
-                "label": "Gradualmente, informando contactos"
+                "label": "No, los mensajes se convierten solos"
               },
               {
                 "id": "b",
-                "label": "De un día para otro"
+                "label": "Sí, usa un cliente compatible con NIP-17 para los mensajes nuevos"
               },
               {
                 "id": "c",
-                "label": "No hay migración"
+                "label": "NIP-04 sigue siendo lo recomendado"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "Usa clientes compatibles con NIP-17 para tus mensajes privados nuevos. Los antiguos de NIP-04 se quedan como están. Cada vez más clientes usan NIP-17 por defecto.",
+            "severity": "warning"
+          },
+          {
+            "id": "sealed-sender",
+            "title": "Remitente sellado",
+            "prompt": "¿Qué significa 'remitente sellado' en NIP-17?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Que los mensajes se guardan en sobres"
+              },
+              {
+                "id": "b",
+                "label": "Que el relay no ve quién envió el mensaje, solo quién puede descifrarlo"
+              },
+              {
+                "id": "c",
+                "label": "Que los mensajes se autodestruyen al leerlos"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "El remitente sellado esconde la identidad de quien escribe frente al relay. El relay ve el mensaje cifrado y sabe a quién va dirigido, pero no de quién viene.",
+            "severity": "warning"
+          },
+          {
+            "id": "client-support",
+            "title": "Compatibilidad",
+            "prompt": "¿Cómo sabes si tu cliente admite NIP-17?",
+            "options": [
+              {
+                "id": "a",
+                "label": "Consultando la documentación o los ajustes del cliente"
+              },
+              {
+                "id": "b",
+                "label": "Todos los clientes lo admiten automáticamente"
+              },
+              {
+                "id": "c",
+                "label": "Se indica con una marca azul"
               }
             ],
             "correctId": "a",
-            "explanation": "Migración a NIP-17 requiere tiempo. Asegúrate que tus contactos usen clientes que soporten NIP-17. Conserva acceso a mensajes antiguos.",
-            "severity": "warning"
+            "explanation": "Mira la lista de funciones o la documentación de tu cliente. Amethyst, 0xchat y Coracle declaran compatibilidad con NIP-17 en su propia documentación; Damus, en cambio, sigue usando NIP-04.",
+            "severity": "info"
           }
         ]
       }
@@ -1463,113 +1463,113 @@
         "title": "Quiz: Protocolos",
         "questions": [
           {
-            "id": "identity-model",
-            "title": "Modelo de Identidad",
-            "prompt": "¿Cómo funciona la identidad en Nostr vs ActivityPub vs Bluesky?",
+            "id": "nostr-architecture",
+            "title": "Diseño de Nostr",
+            "prompt": "¿Cuál es la filosofía de diseño de Nostr?",
             "options": [
               {
                 "id": "a",
-                "label": "Nostr: llaves criptográficas, ActivityPub: servidores, Bluesky: DID"
+                "label": "Consenso basado en blockchain"
               },
               {
                 "id": "b",
-                "label": "Todos usan emails"
+                "label": "Relays simples y tontos con clientes listos, sin autoridad central"
               },
               {
                 "id": "c",
-                "label": "Todos requieren NFT"
+                "label": "Servidores federados con administradores"
               }
             ],
-            "correctId": "a",
-            "explanation": "Nostr usa llaves criptográficas (auto-soberana), ActivityPub se basa en servidores (instancias), y Bluesky usa DID (identificadores descentralizados).",
-            "severity": "info"
+            "correctId": "b",
+            "explanation": "Nostr usa relays sencillos que solo almacenan y reenvían. El trabajo pesado lo hacen los clientes. Ni blockchain, ni servidores centrales, ni jerarquía de administradores.",
+            "severity": "critical"
           },
           {
-            "id": "censorship-resistance",
-            "title": "Resistencia a Censura",
-            "prompt": "¿Qué protocolo es más resistente a la censura?",
+            "id": "activitypub-comparison",
+            "title": "ActivityPub (Mastodon)",
+            "prompt": "¿En qué se diferencia ActivityPub (Mastodon) de Nostr?",
             "options": [
               {
                 "id": "a",
-                "label": "Nostr"
+                "label": "ActivityPub usa servidores federados con administradores; Nostr usa relays sin cuentas"
               },
               {
                 "id": "b",
-                "label": "ActivityPub"
+                "label": "Son idénticos"
               },
               {
                 "id": "c",
-                "label": "Bluesky"
+                "label": "ActivityPub es más rápido"
               }
             ],
             "correctId": "a",
-            "explanation": "Nostr es el más descentralizado - no hay servidores que cerrar. ActivityPub depende de instancias, Bluesky tiene routing central.",
-            "severity": "info"
+            "explanation": "ActivityPub es federado: te registras en un servidor concreto que alguien administra. Nostr usa relays, sin cuentas en el servidor, y tus claves funcionan en todas partes desde el primer momento.",
+            "severity": "critical"
           },
           {
-            "id": "portability",
-            "title": "Portabilidad",
-            "prompt": "¿Dónde son más portables tus datos?",
+            "id": "bluesky-comparison",
+            "title": "Bluesky y el protocolo AT",
+            "prompt": "¿Cómo se compara Bluesky (protocolo AT) con Nostr?",
             "options": [
               {
                 "id": "a",
-                "label": "Nostr"
+                "label": "Bluesky usa una arquitectura más compleja, con servidores de datos personales; Nostr es más simple"
               },
               {
                 "id": "b",
-                "label": "ActivityPub"
+                "label": "Son el mismo protocolo"
               },
               {
                 "id": "c",
-                "label": "Igual en todos"
+                "label": "Bluesky no existe"
               }
             ],
             "correctId": "a",
-            "explanation": "En Nostr los datos están ligados a tu llave, no al servidor. Puedes cambiar de cliente y todo está ahí. En ActivityPub los datos están en instancias.",
-            "severity": "info"
+            "explanation": "El protocolo AT de Bluesky se apoya en servidores de datos personales (PDS) y una arquitectura bastante más compleja. Nostr es deliberadamente más simple: relays y claves.",
+            "severity": "warning"
           },
           {
-            "id": "network-type",
-            "title": "Arquitectura de Red",
-            "prompt": "¿Cuál es la arquitectura de cada protocolo?",
+            "id": "censorship-resistance-compare",
+            "title": "Resistencia a la censura",
+            "prompt": "¿Qué protocolo resiste mejor la censura?",
             "options": [
               {
                 "id": "a",
-                "label": "Nostr: relays, ActivityPub: federación, Bluesky: PDS"
+                "label": "Todos por igual"
               },
               {
                 "id": "b",
-                "label": "Todos son blockchain"
+                "label": "Nostr: no hay cuentas en los servidores, cambiar de relay es trivial y no manda nadie"
               },
               {
                 "id": "c",
-                "label": "Todos son cliente-servidor"
+                "label": "Las plataformas centralizadas"
               }
             ],
-            "correctId": "a",
-            "explanation": "Nostr usa simples relays, ActivityPub es federación de instancias (servidores), Bluesky tiene servidores personales de datos (PDS) con routing central.",
-            "severity": "info"
+            "correctId": "b",
+            "explanation": "El diseño de Nostr es el que más aguanta la censura: no hay cuentas de servidor que vetar, cambiar de relay cuesta un momento y no hay empresa ni fundación al mando.",
+            "severity": "warning"
           },
           {
-            "id": "best-use-case",
-            "title": "Mejor Caso de Uso",
-            "prompt": "¿Qué protocolo elegir?",
+            "id": "user-experience",
+            "title": "Contrapartidas de uso",
+            "prompt": "¿Qué precio paga Nostr por su descentralización?",
             "options": [
               {
                 "id": "a",
-                "label": "Depende de necesidades"
+                "label": "Una experiencia de usuario más sencilla"
               },
               {
                 "id": "b",
-                "label": "Siempre Nostr"
+                "label": "Que cada persona tiene que gestionar sus claves y elegir sus relays, o sea, más responsabilidad"
               },
               {
                 "id": "c",
-                "label": "Siempre ActivityPub"
+                "label": "Que es más lento que otros protocolos"
               }
             ],
-            "correctId": "a",
-            "explanation": "Cada protocolo tiene ventajas. Nostr para máxima descentralización, ActivityPub para amigos en Mastodon, Bluesky para UX similar a Twitter.",
+            "correctId": "b",
+            "explanation": "La descentralización de Nostr traslada responsabilidad a quien la usa: custodiar las claves, elegir relays y entender cómo funciona la cosa. Ese es el precio de la libertad.",
             "severity": "info"
           }
         ]
@@ -1588,11 +1588,11 @@
             "options": [
               {
                 "id": "a",
-                "label": "Indica a los seguidores qué relays revisar para tus publicaciones"
+                "label": "Indica a tus seguidores qué relays revisar para encontrar tus publicaciones"
               },
               {
                 "id": "b",
-                "label": "Encripta tus publicaciones para privacidad"
+                "label": "Cifra tus publicaciones para darles privacidad"
               },
               {
                 "id": "c",
@@ -1600,13 +1600,13 @@
               }
             ],
             "correctId": "a",
-            "explanation": "El modelo de bandeja de salida publica tus preferencias de relay (kind:10002) para que los seguidores sepan dónde encontrar tu contenido.",
+            "explanation": "El modelo de bandeja de salida publica tus preferencias de relay (kind:10002) para que tus seguidores sepan dónde encontrar tu contenido.",
             "severity": "critical"
           },
           {
             "id": "relay-list-kind",
             "title": "Tipo de Evento",
-            "prompt": "¿Qué tipo de evento se usa para los metadatos de la lista de relay?",
+            "prompt": "¿Qué tipo de evento se usa para los metadatos de la lista de relays?",
             "options": [
               {
                 "id": "a",
@@ -1622,29 +1622,29 @@
               }
             ],
             "correctId": "a",
-            "explanation": "kind:10002 es el evento reemplazable que almacena tu lista de relay con marcadores de lectura/escritura.",
+            "explanation": "kind:10002 es el evento reemplazable que almacena tu lista de relays con marcadores de lectura y escritura.",
             "severity": "info"
           },
           {
             "id": "read-write-markers",
             "title": "Marcadores de Relay",
-            "prompt": "¿Qué indica el marcador 'write' (escritura) en tu lista de relay?",
+            "prompt": "¿Qué indica el marcador 'write' (escritura) en tu lista de relays?",
             "options": [
               {
                 "id": "a",
-                "label": "Relays donde publicas tus posts"
+                "label": "Los relays donde publicas tus notas"
               },
               {
                 "id": "b",
-                "label": "Relays donde lees menciones"
+                "label": "Los relays donde lees las menciones"
               },
               {
                 "id": "c",
-                "label": "Relays que has bloqueado"
+                "label": "Los relays que has bloqueado"
               }
             ],
             "correctId": "a",
-            "explanation": "El marcador 'write' indica tu bandeja de salida - relays donde normalmente publicas. 'Read' indica dónde revisas las menciones.",
+            "explanation": "El marcador 'write' señala tu bandeja de salida, los relays donde normalmente publicas. El marcador 'read' indica dónde revisas las menciones.",
             "severity": "warning"
           },
           {
@@ -1654,11 +1654,11 @@
             "options": [
               {
                 "id": "a",
-                "label": "2-4 relays"
+                "label": "Entre 2 y 4 relays"
               },
               {
                 "id": "b",
-                "label": "10-15 relays"
+                "label": "Entre 10 y 15 relays"
               },
               {
                 "id": "c",
@@ -1666,17 +1666,17 @@
               }
             ],
             "correctId": "a",
-            "explanation": "2-4 relays es óptimo. Más relays drenan la batería y proporcionan rendimientos decrecientes a medida que el contenido se propaga naturalmente.",
+            "explanation": "Entre 2 y 4 relays es lo que pide NIP-65 para la lista que publicas (kind 10002), que es otra cosa distinta de con cuántos relays habla tu cliente mientras funciona. Una lista publicada muy larga gasta batería y aporta poco, porque el contenido se propaga igualmente entre relays.",
             "severity": "warning"
           },
           {
             "id": "switching-relays",
             "title": "Migración de Relay",
-            "prompt": "Si dejas de usar un relay y cambias a uno nuevo, ¿qué les pasa a tus seguidores?",
+            "prompt": "Si dejas de usar un relay y te pasas a otro, ¿qué les ocurre a tus seguidores?",
             "options": [
               {
                 "id": "a",
-                "label": "Te encuentran automáticamente en el nuevo relay"
+                "label": "Te encuentran automáticamente en el relay nuevo"
               },
               {
                 "id": "b",
@@ -1684,11 +1684,11 @@
               },
               {
                 "id": "c",
-                "label": "Necesitas enviar un mensaje a cada seguidor individualmente"
+                "label": "Tienes que escribir a cada seguidor por separado"
               }
             ],
             "correctId": "a",
-            "explanation": "When you update your relay list (kind:10002), followers automatically start checking your new relays. No manual reconnection needed!",
+            "explanation": "Cuando actualizas tu lista de relays (kind:10002), tus seguidores empiezan a consultar automáticamente los nuevos. No hace falta reconectar nada a mano.",
             "severity": "critical"
           }
         ]
@@ -1706,7 +1706,7 @@
       "scoreDisplay": "{{score}} / {{total}} respuestas correctas",
       "conceptsMastered": "Conceptos clave dominados",
       "nextSteps": "Próximos pasos",
-      "perfectScore": "Comparte tu conocimiento—ayuda a alguien nuevo.",
+      "perfectScore": "Comparte tu conocimiento y ayuda a quien acaba de llegar.",
       "reviewSections": "Revisa las secciones que te confundieron.",
       "retakeQuiz": "Repetir quiz",
       "questionCounter": "Pregunta {{current}} de {{total}}",
@@ -1838,7 +1838,7 @@
       "title": "Lista de Verificación de Seguridad",
       "items": {
         "understand": {
-          "label": "Entiendo que esta es mi única contraseña - si la pierdo, no se puede recuperar"
+          "label": "Entiendo que esta es mi única contraseña y que si la pierdo, no se puede recuperar"
         },
         "threePlaces": {
           "label": "La guardaré en al menos 3 ubicaciones seguras diferentes"
@@ -1882,8 +1882,8 @@
     "backupFile": {
       "title": "COPIA DE SEGURIDAD DE CLAVES NOSTR",
       "generated": "Generado",
-      "publicKey": "CLAVE PÚBLICA (npub) - Seguro para compartir",
-      "privateKey": "CLAVE PRIVADA (nsec) - NUNCA COMPARTIR",
+      "publicKey": "CLAVE PÚBLICA (npub): segura para compartir",
+      "privateKey": "CLAVE PRIVADA (nsec): NUNCA LA COMPARTAS",
       "hexPrivate": "Clave Privada Hex",
       "hexPublic": "Clave Pública Hex",
       "warnings": {
@@ -1891,7 +1891,7 @@
         "keepSecret": "Mantén tu clave privada (nsec) en secreto",
         "neverShare": "Nunca la compartas",
         "storeBackups": "Almacena copias de seguridad en múltiples ubicaciones seguras",
-        "onlyPassword": "Esta es tu única contraseña - si la pierdes, no se puede recuperar"
+        "onlyPassword": "Esta es tu única contraseña. Si la pierdes, no se puede recuperar"
       }
     }
   },
@@ -1944,7 +1944,7 @@
         "options": {
           "unknown": "No estoy seguro / No lo sé",
           "connectedEmpty": "Sí, pero el feed sigue vacío",
-          "offline": "Los relay aparecen como offline"
+          "offline": "Los relays aparecen como offline"
         }
       },
       "connectionCheck": {
@@ -1957,7 +1957,7 @@
         }
       },
       "zapCheck": {
-        "text": "¿Qué sucede cuando intentas zap?",
+        "text": "¿Qué sucede cuando intentas enviar un zap?",
         "options": {
           "nothing": "No sucede nada",
           "error": "Aparece un mensaje de error",
@@ -1986,7 +1986,7 @@
     },
     "solutions": {
       "lostKeys": {
-        "title": "Claves perdidas - Enfoque en prevención",
+        "title": "Claves perdidas: enfoque en la prevención",
         "description": "Desafortunadamente, las claves perdidas no se pueden recuperar. Sin embargo, podemos ayudarte a prevenir esto en el futuro.",
         "steps": [
           "Crea un nuevo par de claves usando el Generador de Claves",
@@ -1997,7 +1997,7 @@
         ],
         "tips": [
           "No hay 'Olvidé mi contraseña' en Nostr",
-          "Tus claves son tu identidad - trátalas como dinero en efectivo",
+          "Tus claves son tu identidad. Trátalas como dinero en efectivo",
           "Prueba tu copia de seguridad restaurando desde ella"
         ]
       },
@@ -2007,66 +2007,66 @@
         "steps": [
           "Ve a la herramienta Arreglar Feed Vacío abajo",
           "Selecciona un paquete inicial de cuentas para seguir",
-          "Conecta a 3-5 relay recomendados",
+          "Conéctate a 3-5 relays recomendados",
           "Espera unos minutos para que se cargue el contenido",
           "Intenta seguir cuentas populares manualmente"
         ],
         "tips": [
           "Comienza con un paquete inicial para tus intereses",
           "Sigue al menos 10-20 cuentas para ver contenido",
-          "Conecta a múltiples relay para mejor cobertura"
+          "Conéctate a varios relays para tener mejor cobertura"
         ]
       },
       "partialFeed": {
         "title": "Faltan algunas publicaciones",
-        "description": "El contenido parcial generalmente significa problemas de conectividad con relay.",
+        "description": "El contenido incompleto suele indicar problemas de conectividad con los relays.",
         "steps": [
-          "Verifica a qué relay estás conectado",
-          "Agrega más relay (apunta a 5-10 relay diversos)",
+          "Verifica a qué relays estás conectado",
+          "Agrega más relays (apunta a entre 3 y 10 relays variados)",
           "Espera unos minutos para que se complete la sincronización",
           "Intenta refrescar el feed",
-          "Verifica si los usuarios faltantes usan relay diferentes"
+          "Verifica si los usuarios que faltan usan relays diferentes"
         ],
         "tips": [
-          "Diferentes usuarios publican en diferentes relay",
-          "Más relay = más contenido pero carga más lenta",
-          "Algunos relay pueden filtrar cierto contenido"
+          "Cada persona publica en relays distintos",
+          "Más relays significa más contenido, pero también carga más lenta",
+          "Algunos relays filtran cierto contenido"
         ]
       },
       "checkRelays": {
-        "title": "Verifica tus conexiones de relay",
-        "description": "Verifiquemos tu configuración de relay.",
+        "title": "Verifica tus conexiones de relays",
+        "description": "Vamos a revisar tu configuración de relays.",
         "steps": [
           "Abre la configuración de tu cliente",
           "Busca la sección 'Relay' o 'Red'",
-          "Verifica si tienes 3+ relay conectados",
-          "Prueba las conexiones de relay",
-          "Agrega relay recomendados si es necesario"
+          "Verifica si tienes 3 o más relays conectados",
+          "Prueba las conexiones de los relays",
+          "Agrega relays recomendados si hace falta"
         ]
       },
       "relayIssue": {
-        "title": "Problema de conexión con relay",
-        "description": "Conectado pero sin contenido sugiere problemas con relay.",
+        "title": "Problema de conexión con los relays",
+        "description": "Estar conectado y no ver contenido apunta a un problema con los relays.",
         "steps": [
-          "Verifica si los relay muestran estado 'online'",
-          "Elimina y vuelve a agregar relay problemáticos",
-          "Intenta diferentes URLs de relay",
+          "Verifica si los relays muestran estado 'online'",
+          "Elimina y vuelve a agregar los relays problemáticos",
+          "Prueba con otras URLs de relays",
           "Verifica tu conexión a internet",
           "Espera e intenta de nuevo más tarde"
         ],
         "tips": [
-          "Los relay a veces están offline durante mantenimiento",
-          "Intenta relay geográficamente más cercanos a ti",
-          "Los relay gratuitos pueden estar sobrecargados"
+          "Los relays a veces están offline por mantenimiento",
+          "Prueba relays geográficamente más cercanos a ti",
+          "Los relays gratuitos pueden estar sobrecargados"
         ]
       },
       "offlineRelays": {
-        "title": "Todos los relay offline",
+        "title": "Todos los relays offline",
         "description": "Esto generalmente indica un problema de red o configuración.",
         "steps": [
           "Verifica tu conexión a internet",
-          "Verifica que las URLs de relay sean correctas (wss://...)",
-          "Intenta diferentes relay del Explorador de Relay",
+          "Verifica que las URLs de los relays sean correctas (wss://...)",
+          "Prueba otros relays desde el Explorador de Relays",
           "Verifica si el cliente está bloqueado por firewall",
           "Reinicia la aplicación e intenta de nuevo"
         ],
@@ -2078,12 +2078,12 @@
       },
       "stuckConnecting": {
         "title": "Atascado en conectando",
-        "description": "El cliente tiene problemas para llegar a los relay.",
+        "description": "El cliente tiene problemas para llegar a los relays.",
         "steps": [
           "Fuerza el cierre y abre la aplicación de nuevo",
           "Verifica la conexión a internet",
-          "Elimina relay lentos o muertos",
-          "Intenta conectarte a menos relay (3-5)",
+          "Elimina los relays lentos o muertos",
+          "Prueba a conectarte a menos relays (3-5)",
           "Limpia la caché/datos de la aplicación si estás en móvil"
         ]
       },
@@ -2091,10 +2091,10 @@
         "title": "Las publicaciones no se publican",
         "description": "Tus publicaciones están fallando al enviarse.",
         "steps": [
-          "Verifica si tienes relay con escritura habilitada",
-          "Verifica que tengas suficientes relay (al menos 1)",
-          "Intenta publicar de nuevo - puede ser temporal",
-          "Verifica el estado del relay - algunos requieren pago",
+          "Verifica si tienes relays con escritura habilitada",
+          "Verifica que tengas suficientes relays (al menos 1)",
+          "Vuelve a intentar publicar, quizá sea algo temporal",
+          "Verifica el estado del relay: algunos requieren pago",
           "Reduce la longitud de la publicación e intenta de nuevo"
         ]
       },
@@ -2102,9 +2102,9 @@
         "title": "Carga lenta",
         "description": "El contenido se carga muy lentamente.",
         "steps": [
-          "Reduce el número de relay conectados",
-          "Cambia a relay más rápidos (menor latencia)",
-          "Usa el Explorador de Relay para encontrar relay rápidos",
+          "Reduce el número de relays conectados",
+          "Cambia a relays más rápidos (menor latencia)",
+          "Usa el Explorador de Relays para encontrar relays rápidos",
           "Verifica tu velocidad de internet",
           "Cierra otras aplicaciones que usen ancho de banda"
         ]
@@ -2113,9 +2113,9 @@
         "title": "Conexión inestable",
         "description": "La conexión sigue desconectándose.",
         "steps": [
-          "Elimina relay no confiables",
-          "Mantén solo 3-5 relay estables",
-          "Usa relay geográficamente más cercanos a ti",
+          "Elimina los relays poco fiables",
+          "Mantén solo 3-5 relays estables",
+          "Usa relays geográficamente más cercanos a ti",
           "Verifica si estás en WiFi/datos móviles inestables",
           "Intenta usar VPN"
         ]
@@ -2150,14 +2150,14 @@
           "Verifica el historial de transacciones de tu billetera",
           "Verifica la dirección lightning del destinatario",
           "Contacta al destinatario para verificar su billetera",
-          "Los zaps a veces fallan silenciosamente - intenta de nuevo"
+          "Los zaps a veces fallan en silencio. Inténtalo de nuevo"
         ]
       },
       "noWallet": {
         "title": "No hay billetera conectada",
         "description": "Necesitas una billetera Bitcoin Lightning para enviar zaps.",
         "steps": [
-          "Descarga una billetera lightning (Alby, Zeus, Phoenix)",
+          "Consigue una billetera lightning compatible con Nostr Wallet Connect (Zeus, Coinos, o Alby Hub con Alby Go)",
           "Fondea la billetera con Bitcoin",
           "Conecta la billetera a tu cliente Nostr vía NWC",
           "Intenta enviar un zap de prueba pequeño",
@@ -2179,7 +2179,7 @@
         "title": "Pantalla en blanco o blanca",
         "description": "La aplicación se abre pero no muestra nada.",
         "steps": [
-          "Espera 30 segundos - puede estar cargando",
+          "Espera 30 segundos, puede que esté cargando",
           "Verifica la conexión a internet",
           "Fuerza el cierre y abre de nuevo",
           "Limpia los datos/caché de la aplicación",
@@ -2215,7 +2215,7 @@
           "Verifica que el npub sea correcto",
           "Intenta buscar por NIP-05 en su lugar",
           "Verifica si el usuario usa un relay específico",
-          "Agrega más relay para encontrar el perfil",
+          "Agrega más relays para encontrar el perfil",
           "El usuario puede haber cambiado de claves"
         ]
       },
@@ -2224,7 +2224,7 @@
         "description": "Perfil encontrado pero falta contenido.",
         "steps": [
           "Espera un momento para que carguen las publicaciones",
-          "Conecta a relay donde el usuario publica",
+          "Conéctate a los relays donde esa persona publica",
           "El usuario puede ser nuevo o inactivo",
           "Intenta refrescar el perfil",
           "Verifica diferentes períodos de tiempo"
@@ -2237,7 +2237,7 @@
           "Desliza hacia abajo para refrescar",
           "Limpia la caché de la aplicación",
           "Reconecta al relay del perfil",
-          "Espera a que los relay se sincronicen",
+          "Espera a que los relays se sincronicen",
           "Las actualizaciones de perfil toman tiempo en propagarse"
         ]
       },
@@ -2246,10 +2246,10 @@
         "description": "La acción de seguir no está funcionando.",
         "steps": [
           "Verifica la conexión a internet",
-          "Verifica que tengas acceso de escritura a relay",
+          "Verifica que tengas acceso de escritura a los relays",
           "Intenta de nuevo en unos minutos",
           "Usa un cliente diferente para seguir",
-          "Verifica si los relay están funcionando"
+          "Verifica si los relays están funcionando"
         ]
       }
     }
@@ -2275,7 +2275,7 @@
         "title": "¡NIP-05 válido!",
         "description": "Este identificador está correctamente configurado",
         "publicKey": "Clave pública (npub)",
-        "recommendedRelays": "Relay recomendados"
+        "recommendedRelays": "Relays recomendados"
       },
       "invalid": {
         "title": "NIP-05 inválido",
@@ -2303,7 +2303,7 @@
       "jsonError": {
         "title": "Error de análisis JSON",
         "description": "El servidor devolvió datos inválidos",
-        "fix": "Esto suele ser un problema del servidor - intenta de nuevo más tarde"
+        "fix": "Esto suele ser un problema del servidor. Inténtalo de nuevo más tarde"
       },
       "networkError": {
         "title": "Error de red",
@@ -2374,7 +2374,7 @@
       },
       "wssPurplePages": {
         "name": "Purple Pages",
-        "description": "Relay de metadatos"
+        "description": "Solo perfiles y listas, sin publicaciones"
       }
     }
   },
@@ -2390,7 +2390,7 @@
       "ios": "iOS",
       "android": "Android",
       "web": "Web",
-      "desktop": "Desktop"
+      "desktop": "Escritorio"
     },
     "difficultyLabels": {
       "beginner": "Principiante",
@@ -2399,7 +2399,7 @@
     },
     "featureLabels": {
       "wallet": "Billetera",
-      "media": "Media",
+      "media": "Multimedia",
       "longform": "Contenido Largo",
       "privacy": "Privacidad"
     },
@@ -2416,7 +2416,7 @@
         "web": "Web",
         "ios": "iOS",
         "android": "Android",
-        "desktop": "Desktop"
+        "desktop": "Escritorio"
       }
     },
     "clients": {
@@ -2427,12 +2427,12 @@
           "UI hermosa",
           "Fácil de usar",
           "Desarrollo activo",
-          "Gran onboard",
+          "Excelente proceso de bienvenida",
           "Soporte para zaps"
         ],
         "cons": [
           "Solo iOS",
-          "Sincronización desktop limitada",
+          "Sincronización limitada con el escritorio",
           "Sin contenido largo"
         ]
       },
@@ -2457,15 +2457,15 @@
         "description": "Un cliente rápido y moderno disponible en todas las plataformas con excelente rendimiento.",
         "pros": [
           "Todas las plataformas",
+          "Billetera Lightning integrada",
           "Carga rápida",
           "Gran búsqueda",
-          "Diseño hermoso",
           "Actualizaciones regulares"
         ],
         "cons": [
-          "Preocupaciones de privacidad para algunos",
-          "Aplicación más nueva",
-          "Algunas funciones aún en desarrollo"
+          "Dudas de privacidad para algunas personas",
+          "Lee a través de los servidores de caché de Primal",
+          "Menos control sobre los relays que los clientes avanzados"
         ]
       },
       "iris": {
@@ -2475,7 +2475,7 @@
           "Sin descarga necesaria",
           "Funciona al instante",
           "Interfaz limpia",
-          "Open source",
+          "Código abierto",
           "Privado"
         ],
         "cons": [
@@ -2502,48 +2502,48 @@
       },
       "coracle": {
         "name": "Coracle",
-        "description": "Un cliente desktop para usuarios avanzados con funciones avanzadas.",
+        "description": "Un cliente web para usuarios avanzados, con control minucioso de relays y comunidades.",
         "pros": [
           "Funciones potentes",
-          "Optimizado para desktop",
+          "Funciona en cualquier navegador y se instala como app web",
           "Excelente para creadores",
           "Filtrado avanzado",
           "Atajos de teclado"
         ],
         "cons": [
-          "Solo desktop",
+          "Sin app móvil nativa",
           "Curva de aprendizaje pronunciada",
-          "No amigable para móvil"
+          "Muchísimos ajustes por revisar"
         ]
       },
       "current": {
-        "name": "Current",
-        "description": "Cliente iOS con excelente integración de Nostr Wallet Connect.",
+        "name": "Current (descontinuado)",
+        "description": "Descontinuado. Fue un cliente de iOS construido alrededor de Nostr Wallet Connect, pero el desarrollo se detuvo en 2023 y la app ya no está en la App Store, así que el enlace de descarga no lleva a ninguna parte. Si buscas una experiencia de iOS centrada en la billetera, mira Primal.",
         "pros": [
-          "Mejor soporte de billetera",
-          "Integración NWC",
-          "Funciones avanzadas",
-          "UI limpia"
+          "Fue de los primeros clientes con Nostr Wallet Connect",
+          "Diseño pensado para los zaps",
+          "Interfaz limpia",
+          "El código fuente sigue en GitHub"
         ],
         "cons": [
-          "Más complejo",
-          "Solo iOS",
-          "Curva de aprendizaje"
+          "El desarrollo se detuvo en 2023",
+          "Retirado de la App Store, el enlace de descarga está muerto",
+          "No es una opción para quien empieza"
         ]
       },
       "habla": {
         "name": "Habla",
-        "description": "Cliente enfocado en contenido largo con soporte para newsletters.",
+        "description": "Un cliente de escritura para artículos largos. Aviso: habla.news devuelve un error 404 desde al menos septiembre de 2026, así que usa YakiHonne para textos largos mientras no vuelva.",
         "pros": [
           "Excelente para artículos",
-          "Soporte para newsletters",
+          "Pensado para publicaciones largas (NIP-23)",
           "Interfaz de escritura limpia",
-          "Monetización"
+          "Quien te lee puede zapear lo que publicas"
         ],
         "cons": [
+          "El sitio está caído ahora mismo (404)",
           "Solo web",
-          "Base de usuarios más pequeña",
-          "Funciones sociales limitadas"
+          "Base de usuarios más pequeña"
         ]
       },
       "nostur": {
@@ -2552,8 +2552,8 @@
         "pros": [
           "Gran UI",
           "Rápido",
-          "Buena gestión de relay",
-          "Desarrollador activo"
+          "Buena gestión de relays",
+          "Desarrollo activo"
         ],
         "cons": [
           "Solo iOS",
@@ -2561,16 +2561,16 @@
         ]
       },
       "plebstr": {
-        "name": "Plebstr",
-        "description": "Un cliente Android simple para principiantes.",
+        "name": "Openvibe (antes Plebstr)",
+        "description": "Plebstr pasó a llamarse Openvibe: la misma app, ahora con un único feed que junta Nostr, Bluesky, Mastodon y Threads. Sigue siendo un comienzo cómodo en Android, solo que no esperes una experiencia dedicada a Nostr.",
         "pros": [
           "Fácil de usar",
-          "Diseño limpio",
-          "Buen rendimiento"
+          "Una sola app para varias redes",
+          "Diseño limpio"
         ],
         "cons": [
-          "Menos funciones",
-          "Solo Android",
+          "Nostr es solo una parte de lo que hace",
+          "Menos funciones específicas de Nostr",
           "Sin billetera"
         ]
       }
@@ -2589,7 +2589,7 @@
       "writers": "Para Escritores",
       "ios": "iOS",
       "android": "Android",
-      "desktop": "Desktop"
+      "desktop": "Escritorio"
     }
   },
   "backupChecklist": {
@@ -2603,7 +2603,7 @@
       },
       "copiedNsec": {
         "label": "Copiado nsec (clave privada)",
-        "description": "Tu contraseña secreta - nunca la compartas",
+        "description": "Tu contraseña secreta. No la compartas nunca",
         "warning": "Crítico: Esta es tu única contraseña. Si la pierdes, no se puede recuperar la cuenta."
       },
       "passwordManager": {

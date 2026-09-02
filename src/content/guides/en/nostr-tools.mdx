@@ -9,7 +9,6 @@ prerequisites: ["keys-and-security", "quickstart"]
 ---
 
 import { Callout } from "@components/ui/Callout";
-import { CTAButton } from "@components/CTAButton";
 
 Nostr has a rich ecosystem of tools and services that make using the protocol easier. Here's a curated list of essential tools organized by category.
 
@@ -34,17 +33,13 @@ Nostr has a rich ecosystem of tools and services that make using the protocol ea
 - **Features:** Key generation, event signing, relay interaction, debugging
 - **Best for:** Developers and power users who need CLI tools
 
-**Nostr Key Generator**
-- **What it does:** Generate new key pairs offline
-- **Why use it:** Create keys in a secure, air-gapped environment
-
 ### Backup & Recovery
 
 **Key Storage Best Practices**
 - Password managers (Bitwarden, 1Password)
-- Hardware security keys (YubiKey)
 - Paper backups (written and stored safely)
 - Encrypted USB drives
+- A signer app such as Amber on Android, so your nsec stays in one place and other apps never see it
 
 <Callout variant="warning">
   **Security Note:** Never store your nsec (private key) in plain text files, email, or cloud storage without encryption.
@@ -62,17 +57,10 @@ Nostr has a rich ecosystem of tools and services that make using the protocol ea
 - **Features:** Drag-and-drop upload, instant URLs, CDN delivery
 - **Best for:** Sharing images in posts
 
-**NostrImg**
-- **URL:** [nostrimg.com](https://nostrimg.com)
-- **What it does:** Simple image hosting service
-- **Features:** Fast uploads, permanent storage
-
-### File Sharing
-
-**Nostr Files**
-- **URL:** [nostrfiles.com](https://nostrfiles.com)
-- **What it does:** General file hosting for Nostr users
-- **Best for:** PDFs, documents, and other files
+**NostrCheck (media side)**
+- **URL:** [nostrcheck.me](https://nostrcheck.me)
+- **What it does:** Hosts images and video, on the same account that gives you a NIP-05 name (see Identity below)
+- **Best for:** Keeping uploads and your verified name in one place
 
 ---
 
@@ -111,11 +99,11 @@ Nostr has a rich ecosystem of tools and services that make using the protocol ea
 
 ### Network Discovery & Stats
 
-**Stats.OtherStuff**
-- **URL:** [stats.otherstuff.org](https://stats.otherstuff.org)
+**Nostr Band Stats**
+- **URL:** [stats.nostr.band](https://stats.nostr.band)
 - **What it does:** Nostr network statistics and analytics
-- **Features:** Global metrics, relay statistics, network growth data
-- **Best for:** Understanding the overall Nostr ecosystem
+- **Features:** Event, user and zap counts over time
+- **Best for:** Getting a rough sense of the ecosystem. Treat user counts with suspicion: nobody can separate real people from bots and abandoned keys, so the headline numbers run high
 
 **Primal Explore**
 - **URL:** [primal.net/explore](https://primal.net/explore)
@@ -134,20 +122,6 @@ Nostr has a rich ecosystem of tools and services that make using the protocol ea
 - **Features:** Real-time status, latency monitoring, global map
 - **Best for:** Finding reliable relays
 
-**Relay Tools**
-- Various community-maintained relay lists
-- Check nostr.watch for current recommendations
-
-### Relay Software
-
-**strfry**
-- **What it does:** High-performance relay software
-- **Best for:** Running your own relay
-
-**nostr-rs-relay**
-- **What it does:** Rust-based relay implementation
-- **Best for:** Technical users wanting to self-host
-
 ---
 
 ## Lightning & Zaps
@@ -162,12 +136,13 @@ Nostr has a rich ecosystem of tools and services that make using the protocol ea
 **Coinos** (Web)
 - **URL:** [coinos.io](https://coinos.io)
 - **Best for:** Beginners wanting a hosted web wallet
-- **Features:** Lightning address (`you@coinos.io`), Nostr Wallet Connect; custodial—keep amounts small
+- **Features:** Lightning address (`you@coinos.io`), Nostr Wallet Connect; custodial, so keep amounts small
 
 **Alby Hub** (Desktop/Cloud + Browser Extension)
 - **URL:** [getalby.com](https://getalby.com)
 - **Best for:** Desktop/web users
-- **Features:** Self-custodial Lightning node (cloud or self-hosted), Lightning address, browser extension and Alby Go mobile companion, Nostr Wallet Connect
+- **Features:** Self-custodial Lightning node, Lightning address, browser extension and Alby Go mobile companion, Nostr Wallet Connect
+- **Cost:** Free if you run it yourself on your own machine. The hosted version, Alby Cloud, is a paid monthly subscription
 
 **Phoenix** (Mobile)
 - **URL:** [phoenix.acinq.co](https://phoenix.acinq.co)
@@ -181,13 +156,14 @@ Nostr has a rich ecosystem of tools and services that make using the protocol ea
 
 ### Zap Tools
 
-**ZapSplits**
-- **What it does:** Automatically split zap revenue
-- **Best for:** Collaborative content (podcasts, team projects)
+**Zap splits**
+- **What it is:** A setting inside some clients, not a separate app. It routes a share of every zap on a post to the people you name
+- **Best for:** Collaborative content (podcasts, co-written pieces, team projects). Look for a "zap split" or "contributors" option in the posting screen of whichever client you use
 
-**Zap Stream**
-- **What it does:** Real-time zap notifications
-- **Best for:** Live events, streams
+**zap.stream**
+- **URL:** [zap.stream](https://zap.stream)
+- **What it does:** Live streaming on Nostr, where viewers zap you while you are on air
+- **Best for:** Musicians and streamers going live
 
 ---
 
@@ -206,42 +182,9 @@ Nostr has a rich ecosystem of tools and services that make using the protocol ea
 
 ---
 
-## Developer Tools
+## Building on Nostr
 
-### Libraries & SDKs
-
-**nostr-tools (JavaScript)**
-- **GitHub:** [github.com/nbd-wtf/nostr-tools](https://github.com/nbd-wtf/nostr-tools)
-- **What it does:** Core JavaScript library for Nostr
-- **Best for:** Building web apps
-
-**NDK (Nostr Development Kit)**
-- **GitHub:** [github.com/nostr-dev-kit/ndk](https://github.com/nostr-dev-kit/ndk)
-- **What it does:** Comprehensive TypeScript SDK for Nostr
-- **Features:** React hooks, cache management, relay pool optimization
-- **Best for:** Modern TypeScript/React applications
-
-**Khatru**
-- **GitHub:** [github.com/fiatjaf/khatru](https://github.com/fiatjaf/khatru)
-- **What it does:** Go framework for building Nostr relays
-- **Features:** Modular design, easy to extend, production-ready
-- **Best for:** Developers building custom relay implementations
-
-**Nostr Python**
-- Various Python libraries for Nostr development
-
-**Nostr Rust**
-- Rust implementations for high-performance apps
-
-### Testing & Debugging
-
-**Nostr Debug**
-- Various tools for testing Nostr implementations
-- Check GitHub for latest tools
-
-**Relay Test Tools**
-- Test your relay implementation
-- Verify NIP compliance
+This guide is for creators, so it skips the code. If you write software, or you have hired someone who does, the community keeps a maintained index of libraries, relay software and SDKs at [github.com/aljazceru/awesome-nostr](https://github.com/aljazceru/awesome-nostr).
 
 ---
 
@@ -249,22 +192,28 @@ Nostr has a rich ecosystem of tools and services that make using the protocol ea
 
 ### Signer Apps
 
-**Primal Signer (iOS)**
-- **Built into Primal app**
-- **What it does:** Secure key storage with biometric authentication
-- **Features:** FaceID/TouchID protection, no separate app needed
-- **Best for:** iOS users who want built-in security
+A signer holds your nsec so that other apps never have to. When a web client wants to post as you, it asks the signer, and the signer asks you.
 
 **Amber (Android)**
-- **Dedicated signer app for Android**
-- **What it does:** Secure key signing with approval prompts
+- **URL:** [github.com/greenart7c3/Amber](https://github.com/greenart7c3/Amber)
+- **What it does:** Dedicated signer app. Other Android apps hand it a request, you approve or refuse it, and your key stays inside Amber
 - **Features:** Multiple key support, detailed signing requests
-- **Best for:** Android users wanting maximum security
+- **Note:** Amber is not on Google Play. Install it from Zap Store, Obtainium, F-Droid or the GitHub releases page
 
-**Other Signer Apps**
-- Various dedicated apps for secure key signing
-- Keep your nsec off your main device
-- Search your app store for "Nostr signer"
+**Primal Remote Login (iOS and Android)**
+- **URL:** [primal.net](https://primal.net)
+- **What it does:** Lets you sign into other Nostr apps using the Primal app you already have, so you never paste your nsec into a website
+- **Best for:** iOS, where there is no system-wide signer standard the way Android has one
+
+**Nostash (Safari)**
+- **URL:** [apps.apple.com/us/app/nostash/id6744309333](https://apps.apple.com/us/app/nostash/id6744309333)
+- **What it does:** Signing extension for Safari on iPhone, iPad, Mac and Vision Pro, so web clients can ask it to sign instead of asking you for your key
+- **Best for:** Apple users who mainly browse Nostr on the web
+
+**nsec.app (Web)**
+- **URL:** [use.nsec.app](https://use.nsec.app)
+- **What it does:** Keeps your key in one browser-based signer and approves requests from other web clients
+- **Best for:** People who move between several web clients on a computer
 
 ### VPN & Tor
 
@@ -279,9 +228,9 @@ Nostr has a rich ecosystem of tools and services that make using the protocol ea
 See our [Quickstart Guide](/guides/quickstart) for comprehensive mobile app recommendations and simulations.
 
 Quick reference:
-- **iOS:** Damus, Primal, Amethyst
+- **iOS:** Damus, Primal
 - **Android:** Amethyst, Primal
-- **Cross-platform:** Primal, Iris, Snort
+- **Web:** Primal, Iris, Snort
 
 ---
 
@@ -290,22 +239,14 @@ Quick reference:
 ### Lists & Directories
 
 **Awesome Nostr**
-- GitHub repository with curated Nostr resources
-- Comprehensive list of clients, relays, and tools
-
-**Nostr Directory**
-- Various community-maintained directories
-- Check nostr.social or similar aggregators
+- **URL:** [github.com/aljazceru/awesome-nostr](https://github.com/aljazceru/awesome-nostr)
+- Community-maintained list of clients, relays and tools, updated far more often than any guide
 
 ### Support
 
 **Nostr Subreddit**
 - r/nostr on Reddit
 - Community discussions and help
-
-**Telegram/Discord Groups**
-- Various Nostr communities
-- Search for "Nostr" on your preferred platform
 
 ---
 
@@ -314,10 +255,11 @@ Quick reference:
 | Category | Tool | Best For | Cost |
 |----------|------|----------|------|
 | **Media** | nostr.build | Image hosting | Free |
-| **Identity** | NostrPlebs | NIP-05 identifier | Free/Paid |
+| **Identity** | NostrPlebs | NIP-05 identifier | Paid |
+| **Identity** | nostrcheck.me | NIP-05 identifier | Free tier |
 | **Analytics** | Zaplife | Zap tracking | Free |
 | **Relays** | nostr.watch | Relay monitoring | Free |
-| **Wallet** | Alby Hub | Web users | Free |
+| **Wallet** | Alby Hub | Web users | Free self-hosted, paid cloud |
 | **Wallet** | Phoenix | Mobile self-custody | Free |
 | **Search** | Primal | Discovery | Free |
 

@@ -1,0 +1,686 @@
+# Content audit 2026-09 — low-severity findings (not verified)
+
+Style and polish only. These skipped the adversarial verifier, so treat each as a lead.
+
+- **src/content/guides/ar/faq.mdx:585** — "New users" mistyped as "المستخدمون الجدود" ("grandfather users") twice in the relay-deletion answer.
+  - Replace "الجدود" with "الجدد" in both occurrences. Also in line 592, "المرحل المحذوف" (the deleted relay) should be "المرحل الذي حذف المحتوى" (the relay that deleted), matching EN "the deleting relay".
+- **src/content/guides/ar/faq.mdx:171** — Calque "يشعر بالصواب" for "feels right" is ungrammatical (the app cannot 'feel'); recurs in multi-client.
+  - faq.mdx:171 → "استخدم ما ترتاح إليه أكثر"; multi-client.mdx:190 → "استخدم ما تراه مناسبًا".
+- **src/content/guides/ar/faq.mdx:88** — Broken comparative in the 256-bit explanation: "لديه المزيد من التركيبات المحتملة من الذرات".
+  - Change to: "عدد التركيبات الممكنة لكل مفتاح أكبر من عدد ذرات الكون المرئي، ما يجعل تخمينه مستحيلًا."
+- **src/content/guides/ar/faq.mdx:443** — FAQ transliterates zaps as "الزابس/زاب" while the canonical zaps guide and the locale convention keep "zap/zaps" in English.
+  - On first mention keep both: "ما هي الـ zaps ('الزابس') وكيف أعدّها؟", then use "zap/zaps" consistently (e.g. "يرسل لك zap", "أرسل شخص ما zap لمنشور قديم").
+- **src/content/guides/ar/faq.mdx:144** — Client terminology flips between "عميل" and "تطبيق" within the same guide (and across the locale).
+  - Pick one term in a locale glossary (for the creator audience, "تطبيق" is the friendlier choice, with "(client)" glossed once per guide) and normalize within each guide; at minimum make each of the four audited guides internally consistent.
+- **src/content/guides/ar/finding-community.mdx:375** — "RSVP on Nostr" flattened to "الرد على Nostr" (replying on Nostr), losing the event-attendance meaning
+  - Replace the heading with "**تأكيد الحضور (RSVP) على Nostr:**"
+- **src/content/guides/ar/finding-community.mdx:400** — "In-person > virtual" rendered as "الشخصية > الافتراضية" — "الشخصية" alone reads as "the personality"
+  - Replace with "**اللقاء الحضوري أفضل من الافتراضي:** لقاءات Nostr تُعقد في جميع أنحاء العالم. ابحث عن لقاء في منطقتك!"
+- **src/content/guides/ar/finding-community.mdx:506** — "العلاقات الجودة > الكمية" is ungrammatical (noun-noun apposition instead of a construct)
+  - Replace with "- جودة العلاقات أهم من عددها".
+- **src/content/guides/ar/finding-community.mdx:247** — Callout imperative list calqued as bare nouns: "كتم، إلغاء متابعة، وحظر"
+  - Replace with "**خلاصتك مسؤوليتك.** نسّقها باستمرار: اكتم واحظر وألغِ المتابعة بحرية لتبقى ذات قيمة." (also folds in the feed-term fix).
+- **src/content/guides/ar/keys-and-security.mdx:74** — Gender mismatch: "هذا هو كلمة المرور" (masculine demonstrative with feminine noun)
+  - Replace with "هذه هي كلمة المرور الخاصة بك."
+- **src/content/guides/ar/keys-and-security.mdx:94** — Broken comparative calqued from "more X than Y" in the grains-of-sand line
+  - Replace with "عدد المفاتيح الخاصة الممكنة أكبر من عدد حبّات الرمل على الأرض. لن يخمّن أحد مفتاحك."
+- **src/content/guides/ar/keys-and-security.mdx:218** — "Not your spouse" narrowed to "لا مع زوجتك" (your wife), addressing only male readers
+  - Replace with "- لا مع شريك حياتك".
+- **src/content/guides/ar/keys-and-security.mdx:157** — "2 نوعين مختلفين" doubles the numeral with the dual form
+  - Replace with "**نوعان مختلفان من الوسائط (2)**" to keep the 3-2-1 mnemonic digits visible, matching the neighbouring "3 نسخ" and "1 موقع" items.
+- **src/content/guides/ar/multi-client.mdx:286** — Subsection promoted to h2: "## التنقل بين التطبيقات" where EN has an h3, breaking the section hierarchy.
+  - Change line 286 to "### التنقل بين التطبيقات".
+- **src/content/guides/ar/multi-client.mdx:96** — "Custom feeds" translated as "المغذيات" (feeders/nutrients).
+  - Change to: "- ✗ الخلاصات/الخوارزميات المخصصة" (matching the ar.json UI term الخلاصة).
+- **src/content/guides/ar/nip05-identity.mdx:138** — "Free providers" misspelled as "المزودين المجانين" ("the insane providers") in three places.
+  - Replace "المجانين" with "المجانيين" in all three occurrences.
+- **src/content/guides/ar/nip05-identity.mdx:61** — Party-dialogue example is half-translated: two spoken lines remain in English inside an otherwise Arabic exchange.
+  - Translate the two remaining lines, e.g. line 61 → "\"ااا... n-p-u-b-1-x-x-x... لحظة، دعني أبحث عنه في هاتفي\"" and line 64 → "\"ببساطة alice@example.com\"".
+- **src/content/guides/ar/nip05-identity.mdx:254** — "يصبح معرفك: alice@yourdomain.com" is displaced after the hex callout and DNS paragraph, orphaned from the JSON example it explains.
+  - Move line 254 up to directly follow the code block ending at line 237, matching EN ordering.
+- **src/content/guides/ar/nip05-identity.mdx:366** — Garbled sentence in NostrPlebs troubleshooting: "مجلد البريد العشوائي للبريد الإلكتروني التحقق".
+  - Change to: "- ابحث في مجلد البريد العشوائي عن رسالة التحقق".
+- **src/content/guides/ar/nip05-identity.mdx:473** — "Keep reading" blocks in all four audited ar guides lag the reworked EN versions: link descriptions dropped, and nip05's link to the NIP-05 checker tool replaced by nostr-tools.
+  - Backport the current EN keep-reading blocks (links + one-line descriptions, translated) to the four ar guides; for nip05, either link the EN tool page /tools/nip05-checker with an Arabic description or keep nostr-tools until an ar tool page exists — but add the descriptive text either way.
+- **src/content/guides/ar/nostr-tools.mdx:87** — "معرف قابل للقراءة بشري بسرعة" has broken adjective agreement and reads as machine translation.
+  - Rewrite as "الحصول بسرعة على معرّف يسهل على البشر قراءته".
+- **src/content/guides/ar/nostr-tools.mdx:121** — "اكتشاف المحتوى والمستخدمين المتداول" breaks agreement and uses the wrong word for "trending".
+  - Line 121 → "اكتشاف المحتوى الرائج والحسابات الرائجة"; line 122 → "المنشورات الرائجة".
+- **src/content/guides/ar/nostr-tools.mdx:278** — The Quickstart guide link label is left in English although the ar guide has an Arabic title.
+  - Change to "راجع دليل [البدء السريع](/ar/guides/quickstart)".
+- **src/content/guides/ar/nostr-tools.mdx:85** — Latin "satoshi" breaks the locale's established "ساتوشي" transliteration.
+  - Change to "12,500-65,000 ساتوشي في السنة".
+- **src/content/guides/ar/nostr-tools.mdx:163** — Wallet entries drift from the EN source: Coinos loses "beginners/hosted web wallet" and the Alby Hub heading replaces the platform description.
+  - Line 163 → "المبتدئين الذين يريدون محفظة ويب مستضافة"; line 166 → "**Alby Hub** (سطح المكتب/السحابة + امتداد متصفح)".
+- **src/content/guides/ar/nostr-tools.mdx:61** — Two small grammar slips: "رفع السحب والإفلات" (missing preposition) and the nonstandard plural "البثوث".
+  - Line 61 → "رفع بالسحب والإفلات"; line 189 → "الأحداث المباشرة والبث المباشر".
+- **src/content/guides/ar/outbox-model.mdx:136** — Typo "لمتتابعيك" instead of "لمتابعيك" (your followers).
+  - Change to "يمكن لمتابعيك العثور عليك".
+- **src/content/guides/ar/outbox-model.mdx:253** — The "Keep reading" links drop the EN descriptive clauses (also in privacy-security).
+  - Append translated clauses after each link: outbox line 253 → "... — ما هو الـ relay فعلياً، قبل أن تضبط أيها تستخدم", line 254 → "... — كيف تختار مجموعة قراءة وكتابة تجعل نموذج الصندوق الصادر يعمل لصالحك"; privacy-security line 499 → "... — الأساس الذي يقوم عليه كل قرار خصوصية على Nostr", line 500 → "... — كيف تعمل الرسائل المشفرة فعلياً، وما الذي يظل يتسرب".
+- **src/content/guides/ar/privacy-security.mdx:218** — The "Critical:" label on the signer-backup warning is softened to "مهم" (Important).
+  - Change "**مهم:**" to "**بالغ الأهمية:**" (or "**تحذير حاسم:**") to preserve the escalated register of the EN warning callout.
+- **src/content/guides/ar/protocol-comparison.mdx:79** — "متكرر" for "Redundant" reads as "repetitive" rather than fault-tolerant redundancy.
+  - Change the label to "**قائم على التكرار (Redundancy):**" or "**متعدد النسخ:**".
+- **src/content/guides/ar/protocol-comparison.mdx:179** — "احتباس" for "lock-in" is a calque; the word means retention/congestion (as in global warming).
+  - Line 179 → "لكنه يقيّدك بخادمك: هويتك مرتبطة به"; line 237 → "لا تقييد بمزوّد بحكم التصميم".
+- **src/content/guides/ar/protocol-comparison.mdx:24** — The user-count cells keep the English "M" abbreviation, which has no meaning in Arabic.
+  - Change to "نحو 5 ملايين مستخدم"، "نحو 15 مليون مستخدم"، "نحو 25 مليون مستخدم".
+- **src/content/guides/ar/quickstart.mdx:145** — "قبل أن تصبح مباشراً" is a calque of "before you go live" (reads "before you become direct")
+  - Replace with "فحص أخير قبل الانطلاق:"
+- **src/content/guides/ar/relay-guide.mdx:186** — Text promises five starter relays but the code block lists only four (mirrors the EN source error, made explicit in Arabic by "الخمسة").
+  - Drop the numeral: "اتصل بهذه الـ relays للحصول على تغطية جيدة:" — or sync the count with whatever fix lands in the EN source.
+- **src/content/guides/ar/relay-guide.mdx:31** — "تحول" is an ambiguous rendering of "forward" in the guide's key definition sentence (undiacritized, it also reads as "transform/change").
+  - Rewrite as "**الـ Relays هي خوادم تخزن رسائلك على Nostr وتمررها.**" — "تمرر" matches the wording already used at line 43 ("لا تمررها إلى relays أخرى") and restores the dropped "your".
+- **src/content/guides/ar/relay-guide.mdx:37** — Grammatical number mismatch: plural subject "المستلمون" followed by dual "تستخدمانه كلاكما" in the post-office analogy.
+  - Use "يستلمها المستلم من مكتب بريد تستخدمانه أنتما الاثنان" or, simpler, "يستلمها الآخرون من مكتب بريد مشترك بينكم".
+- **src/content/guides/ar/relay-guide.mdx:491** — "Feed" translated as "الخلاصة" here but as "الموجز" in ar/troubleshooting.mdx for the identical symptom heading.
+  - Pick one term for "feed" (recommend "الموجز", the common social-app usage) and use it in both guides; here: "**الموجز فارغ**".
+- **src/content/guides/ar/relays-demystified.mdx:157** — Outbox model called "نموذج outbox" here, while the dedicated guide and troubleshooting use "نموذج الصندوق الصادر".
+  - Align with the dedicated guide: "تُسمى \"نموذج الصندوق الصادر\" (outbox model)" — and consider the same wording in the section heading at line 149 ("## متقدم: نموذج Outbox (NIP-65)").
+- **src/content/guides/ar/troubleshooting.mdx:20** — "Blank timeline" translated as "المخطط الزمني" (a chart/schedule) instead of the standard social-media term "الخط الزمني".
+  - Use "- الخط الزمني فارغ", the term Arabic social apps use for a timeline.
+- **src/content/guides/ar/what-is-nostr.mdx:52** — "هذه السحرية" — adjective used as a noun, calqued from "this magic"
+  - Replace with "ربما تستخدم البريد الإلكتروني كل يوم دون أن تنتبه إلى هذا السحر:"
+- **src/content/guides/ar/what-is-nostr.mdx:76** — Doubled pronoun "لكنهم لا يمكنهم إيقافك" (twice in the file)
+  - Replace both with "يمكنهم تجاهلك، لكن لا يمكنهم منعك من النشر".
+- **src/content/guides/ar/zaps-and-lightning.mdx:24** — "sats" and "ساتوشي" are mixed within the same guide, sometimes within one line.
+  - Gloss once on first mention — "ساتوشي (sats)" at line 24 — then use "ساتوشي" consistently in prose; keeping bare "sats" only inside UI-mimicking labels (MockPost reactions) is acceptable if applied consistently.
+- **src/content/guides/ar/zaps-and-lightning.mdx:24** — Number shift and a calqued "social proof" in the How-Zaps-Work steps: singular "شخص ما" becomes plural "يرسلون", and "دلالة اجتماعية" is a weak rendering.
+  - Line 24: "**يرسل ساتوشي**". Line 26: "وتشكّل دليلًا اجتماعيًا على قيمة المحتوى" (or "إثباتًا اجتماعيًا").
+- **src/content/guides/ar/zaps-and-lightning.mdx:57** — Calqued "attention pays the platform" in the DiagramCompare panels reads unnaturally in Arabic ("يدفع" left without an object).
+  - Rephrase: "انتباهك يدرّ المال على المنصة" / "انتباهك يدرّ المال على المبدع", and caption "الوصول مجاني في الحالتين، والفرق فيمن يجني قيمة انتباهك."
+- **src/content/guides/ar/zaps-and-lightning.mdx:468** — "لا تفعل:" bullets are bare affirmative imperfect verbs, so each bullet read alone states the opposite of the intended prohibition.
+  - Negate each bullet explicitly: "لا تشعر بالضغط لإرسال Zaps"، "لا ترسل أكثر مما تستطيع تحمّله"، "لا تتوقع Zaps في المقابل"، "لا تنشر محتوى منخفض الجودة طمعًا في Zaps"، "لا تنسَ نسخ عبارة استرداد محفظتك احتياطيًا".
+- **src/content/guides/ar/zaps-and-lightning.mdx:526** — The two explanatory clauses in the "Keep reading" links were dropped in translation.
+  - Append the annotations: "- [مفاتيحك، هويتك](/ar/guides/keys-and-security): ترتبط Zaps بالمفتاح الذي يوقّعها، لذا يستحق هذا الأمر أن تضبطه أولًا" and "- [أدوات Nostr الأساسية](/ar/guides/nostr-tools): محافظ وخدمات تجعل إرسال Zaps أسهل".
+- **src/content/guides/de/faq.mdx:79** — Three internal links carry English anchor slugs that cannot exist on the German target pages, so the jump lands at the top of the page (the EN source anchors are themselves stale, but a DE fix additionally needs German slugs).
+  - Point the three fragments at the real German slugs (#die-3-2-1-backup-regel-2-minuten, #schlussel-verstehen-2-minuten — verify the generated slug for the umlaut, #schritt-2-wahle-deinen-client) or drop the fragments and link to the pages. Note the EN faq.mdx anchors are also stale against the EN headings (e.g. #the-3-2-1-backup-rule vs 'The 3-2-1 Backup Rule (2 minutes)') and deserve their own fix.
+- **src/content/guides/de/faq.mdx:862** — The condensed intro of 'Wie funktionieren Zaps technisch?' drops the EN point that no Nostr platform sits in the middle and the payment goes straight to the recipient's wallet.
+  - Append to the intro: "Keine Nostr-Plattform sitzt dazwischen – die Zahlung geht direkt an das Wallet, auf das die Lightning-Adresse des Empfängers zeigt."
+- **src/content/guides/de/finding-community.mdx:141** — Cluster of machine-translation calques and small slips in the relay/community sections.
+  - Line 141 -> "Starte hier, um einen ersten Eindruck von relay-basierter Entdeckung zu bekommen"; line 216 -> "Folge, wenn dir ihr Vibe gefällt"; line 484 -> "Poste nicht mitten in der Nacht (außer deine Zielgruppe lebt in dieser Zeitzone)"; line 150 -> "Aufgeräumte Oberfläche zum Stöbern in Relays".
+- **src/content/guides/de/finding-community.mdx:107** — "Community" and "Gemeinschaft" are mixed inconsistently within the same guide.
+  - Standardize on "Community/Communities" throughout (matches the guide title, the other DE guides and the creator audience's usage); replace the four "Gemeinschaft(en)" occurrences in lines 100-134.
+- **src/content/guides/de/keys-and-security.mdx:228** — The DO/DON'T emphasis capitals landed on the wrong German words, changing what is stressed.
+  - Restore the DO-emphasis on the verb phrase: "**Nutze unbedingt einen Passwort-Manager**", "**Schreib ihn auf Papier**"; line 87 -> "- Leg IMMER ein sicheres Backup an (siehe unten)".
+- **src/content/guides/de/keys-and-security.mdx:255** — "Dies sind echt." is ungrammatical for "These are real."
+  - "Diese Geschichten sind wirklich passiert. Lern daraus:"
+- **src/content/guides/de/multi-client.mdx:454** — The 'Weiterlesen' links drop the explanatory descriptions present in EN; the same pattern recurs in de/nip05-identity.mdx and de/nip17-private-messages.mdx, where one link title is additionally left in English.
+  - Add German renderings of the EN dash-descriptions to all three Weiterlesen sections and translate the nip17 link title (e.g. "[Privatsphäre und Sicherheit auf Nostr](/de/guides/privacy-security) — das größere Bedrohungsmodell, in dem diese Nachrichten stecken").
+- **src/content/guides/de/multi-client.mdx:272** — Two list items are ungrammatical or use an English verb form as a German imperative.
+  - Line 272: "- Prüfe, welcher Client gut mit Fotos/Videos umgeht". Lines 177/191: "**Poste vom Desktop**" / "**Poste von beiden**".
+- **src/content/guides/de/nip05-identity.mdx:32** — In the DiagramCompare component the 'After NIP-05' panel keeps the English label 'Follow:' while the 'Before' panel translated it to 'Folgen:'.
+  - Change 'Follow: alice@example.com' to 'Folgen: alice@example.com' in the second panel.
+- **src/content/guides/de/nip05-identity.mdx:361** — Two troubleshooting lines are word-for-word calques that are ungrammatical in German.
+  - Line 361: "- Prüfe, ob `.htaccess` oder die Server-Konfiguration Punkt-Verzeichnisse erlaubt". Line 326: "- Prüfe es mit dem Befehl `dig` oder `nslookup`".
+- **src/content/guides/de/nip05-identity.mdx:256** — The sentence naming the resulting identifier was moved below the DNS paragraph and reads as a broken fragment; in EN it directly follows the JSON example.
+  - Move the sentence to directly after the nostr.json code block (before the hex-key Callout, matching EN) and reword to "Dein Identifier lautet dann: `alice@deinedomain.com`".
+- **src/content/guides/de/nip17-private-messages.mdx:17** — The opening sentence of the guide is a calque with a dangling relative clause.
+  - Reword to "NIP-17 ist ein bedeutendes Sicherheits-Upgrade für die Art, wie private Nachrichten in Nostr funktionieren."
+- **src/content/guides/de/nostr-tools.mdx:159** — Wallet entries drift from the EN source (added platform list, changed "Best for" lines, calque "null Einrichtung")
+  - Realign with EN: Primal "Am besten für: Start ohne Einrichtung direkt im Client", Features "Self-custodial (Spark-basiert), aktiviert sich direkt in der App" (drop "Web/iOS/Android"); Coinos "Am besten für: Anfänger, die ein gehostetes Web-Wallet wollen"; Alby Hub parenthetical "(Desktop/Cloud + Browser-Extension)". The custodial small-amounts warning is already correct — keep it.
+- **src/content/guides/de/nostr-tools.mdx:145** — Masculine gender for Relay against the sitewide neuter convention
+  - Change to "Dein eigenes Relay betreiben".
+- **src/content/guides/de/nostr-tools.mdx:314** — English-style title case in table header "Am Besten Für"
+  - Change the header cell to "Am besten für".
+- **src/content/guides/de/nostr-tools.mdx:122** — "Entdecke trendenden Content" uses a non-existent German participle
+  - Rewrite as "Entdecke angesagte Inhalte und Nutzer" (or "Trending-Content und Nutzer entdecken").
+- **src/content/guides/de/nostr-tools.mdx:88** — "Identifikation" vs "Identifikator" used inconsistently for NIP-05 identifier
+  - Use "Identifikator" in all three places: "Schnell einen menschenlesbaren Identifikator bekommen".
+- **src/content/guides/de/nostr-tools.mdx:279** — Link text "Quickstart Guide" untranslated and mismatched with the DE guide's actual title
+  - Change the link text to "Schnellstart-Guide" (keep the /de/guides/quickstart href as is).
+- **src/content/guides/de/outbox-model.mdx:254** — "Weiterlesen" section drops the EN explanatory blurbs after each link
+  - Append German renderings, e.g. "- [Wie Posts Reisen: Relays Erklärt](/de/guides/relays-demystified) – was ein Relay eigentlich ist, bevor du auswählst, welche du nutzt" and "- [Relay-Management-Guide](/de/guides/relay-guide) – wie du ein Read- und Write-Set zusammenstellst, mit dem das Outbox-Modell für dich funktioniert".
+- **src/content/guides/de/outbox-model.mdx:23** — English possessive apostrophe "Alice's" used in German prose, inconsistently with "Bobs"/"Charlies"
+  - Replace all seven "Alice's" occurrences with "Alices" (in the @-handle case on lines 23/36, rephrase to "der Post von @alice" to avoid mangling the handle).
+- **src/content/guides/de/outbox-model.mdx:54** — Wrong preposition: "Postämter, an die du Post erhältst"
+  - Rewrite as "…von Postämtern, bei denen du Post empfängst".
+- **src/content/guides/de/outbox-model.mdx:131** — Calque "Traditionelle Social Media hat einen zentralen Server"
+  - Rewrite as "Klassische Social-Media-Plattformen haben einen zentralen Server, der alle kennt."
+- **src/content/guides/de/privacy-security.mdx:240** — Denglish "Nicht casual rotieren"
+  - Change to "**Rotiere nicht leichtfertig:**".
+- **src/content/guides/de/privacy-security.mdx:162** — Several list items are word-for-word calques or grammatically clipped
+  - Line 162: "Du siehst, was du signierst"; line 192: "[FORTGESCHRITTEN]"; line 271: "Gib den alten Account schließlich auf"; line 368: "✅ Geh davon aus, dass du beobachtet wirst"; line 409: "**Fragen, die du dir stellen solltest:**".
+- **src/content/guides/de/privacy-security.mdx:501** — "Weiterlesen" section drops the EN explanatory blurbs after each link
+  - Append German renderings: "…keys-and-security) – das Fundament, auf dem jede Privatsphäre-Entscheidung auf Nostr aufbaut" and "…nip17-private-messages) – wie verschlüsselte DMs wirklich funktionieren und was trotzdem durchsickert".
+- **src/content/guides/de/protocol-comparison.mdx:319** — Invented word "Bitcoin-aligniert" (twice)
+  - Use "an Bitcoin ausgerichtete" in both places (line 319: "minimale, an Bitcoin ausgerichtete Technologie"; line 508: "zensurresistente, an Bitcoin ausgerichtete Kommunikation").
+- **src/content/guides/de/protocol-comparison.mdx:197** — Reflexive "sich defederieren" shifts the EN meaning
+  - Change to "Server können andere Server defederieren (komplett blocken)".
+- **src/content/guides/de/protocol-comparison.mdx:275** — Garbled fragment "Echtnamen-Politik ermutigt"
+  - Rewrite as "⚠️ Klarnamen werden gefördert (Domain-Handles)".
+- **src/content/guides/de/protocol-comparison.mdx:80** — Masculine pronoun for Relay against the sitewide neuter convention
+  - Change "wenn einer dich zensiert" to "wenn eines dich zensiert".
+- **src/content/guides/de/protocol-comparison.mdx:167** — Calque heading "Schlüsseldifferenzen" collides with cryptographic keys
+  - Line 167: "## Die wichtigsten Unterschiede"; line 531: "…ob du die wichtigsten Unterschiede zwischen den Protokollen verstehst?".
+- **src/content/guides/de/protocol-comparison.mdx:387** — Machine-translation calques in the migration section
+  - Line 387: "**Lass dich auf die Unterschiede ein:**"; line 417: "Teile deine besten Inhalte manuell auch auf den anderen Plattformen"; line 451: "Bring echten Mehrwert ein (nicht nur Eigenwerbung)".
+- **src/content/guides/de/quickstart.mdx:3** — seoTitle is missing the compound hyphen: "Nostr Konto" instead of "Nostr-Konto".
+  - seoTitle: "Nostr-Konto erstellen: in 5 Minuten startklar".
+- **src/content/guides/de/quickstart.mdx:186** — Mismatched German quotation marks: opens with „ but closes with a straight ASCII quote.
+  - Pair „…“ correctly: aus „eine schlechte Website kostet dich deine Identität“ wird „eine schlechte Website bekommt nichts“. Grep the de/ guides for „ followed by a straight closing quote and fix each pair.
+- **src/content/guides/de/quickstart.mdx:4** — Two English calques a native reader stumbles on: "Schnellspur" and "deine Erfahrung maximieren".
+  - Line 4 -> "Dein schneller Einstieg in Nostr."; line 227 -> "Sobald du drin bist, holst du mit diesen Schritten am meisten heraus:".
+- **src/content/guides/de/relay-guide.mdx:211** — "Vermeide häufig offline Relays" is ungrammatical.
+  - Replace with "- Meide Relays, die häufig offline sind".
+- **src/content/guides/de/relay-guide.mdx:120** — "Dieser Relay" uses masculine gender while the rest of the guide treats Relay as neuter.
+  - Change to "Dieses Relay war über längere Zeit offline/unzuverlässig." and standardize on neuter "das Relay" across all de guides.
+- **src/content/guides/de/relay-guide.mdx:26** — Untranslated English remnants: the cross-guide link label and the "Pros:"/"Cons:" list headers.
+  - Use the German guide title as link text ("[Relays erklärt](/de/guides/relays-demystified)") and replace every "**Pros:**"/"**Cons:**" with "**Vorteile:**"/"**Nachteile:**".
+- **src/content/guides/de/relays-demystified.mdx:161** — The "Instead of / You do" construction is translated word-for-word and comes out broken.
+  - Rewrite as: "**Statt** dich manuell mit 10+ Relays zu verbinden, **veröffentlichst du** deine bevorzugte Relay-Liste einmal und lässt die Clients den Rest erledigen."
+- **src/content/guides/de/relays-demystified.mdx:50** — Grammatical gender of "Relay" flip-flops between masculine and neuter within the same guide.
+  - Standardize on neuter: "Posts an jedes Relay senden", "Dein eigenes Relay betreiben", "Allgemeines Relay", "ein bezahltes Relay", "Das Relay könnte down sein".
+- **src/content/guides/de/relays-demystified.mdx:150** — "[ADVANCED]" tag and the "Relay Guide" link label left in English, inconsistent with relay-guide's "[ERWEITERT]".
+  - Change the heading tag to "[ERWEITERT]" and the link text to "[Relay-Management-Guide](/de/guides/relay-guide)".
+- **src/content/guides/de/troubleshooting.mdx:128** — Two literal calques produce ungrammatical German sentences.
+  - Line 128: "- Jemand gibt sich als du aus". Line 278: "- Relay wird als offline angezeigt".
+- **src/content/guides/de/troubleshooting.mdx:266** — Doubled "auf" in the key-backup instruction: "Schreibe deinen nsec auf auf Papier".
+  - Change to "1. **Schreibe deinen nsec auf Papier auf**" (or simply "1. **Notiere deinen nsec auf Papier**").
+- **src/content/guides/de/troubleshooting.mdx:393** — "Still stuck?" is calqued as "Immer noch fest?", which does not mean stuck in German.
+  - Use "## Kommst du nicht weiter? 🆘" and "5. **Kommst du nicht weiter?** → Siehe unten"; change line 383 to "**Probleme? Geh diese Schritte durch:**".
+- **src/content/guides/de/troubleshooting.mdx:29** — Cross-guide link labels left in English while their German guide titles exist.
+  - Line 29: "aus dem Guide [Deine Community auf Nostr finden](/de/guides/finding-community)". Line 447: "- [Deine Schlüssel, deine Identität](/de/guides/keys-and-security) - Aussperrung verhindern".
+- **src/content/guides/de/what-is-nostr.mdx:161** — Literal calques of English idioms in the "Warum Das Wichtig Ist" section.
+  - Line 161 -> "und manches hat noch Ecken und Kanten"; line 149 -> "alles gehört dir, und du nimmst es überallhin mit".
+- **src/content/guides/de/zaps-and-lightning.mdx:258** — Table header "Wann zu Nutzen" is a broken calque of "When to Use".
+  - Change the header to "Wofür" (or "Wann angebracht").
+- **src/content/guides/de/zaps-and-lightning.mdx:96** — Compound nouns written with spaces instead of hyphens (Deppenleerzeichen) in several headings.
+  - Use "## Wallet-Einrichtung 💼", "### Etikette für Zap-Beträge", "## Fehlerbehebung bei Zaps 🔧".
+- **src/content/guides/de/zaps-and-lightning.mdx:532** — The "Keep reading" link annotations from EN were dropped.
+  - Append the explanations: "- [Deine Schlüssel, deine Identität](/de/guides/keys-and-security): Zaps hängen an dem Schlüssel, der sie signiert. Das solltest du zuerst sauber aufsetzen." and "- [Essentielle Nostr-Tools](/de/guides/nostr-tools): Wallets und Services, die das Zappen weniger fummelig machen."
+- **src/content/guides/de/zaps-and-lightning.mdx:359** — "Lifetime" mistranslated as "Lebensdauer" in the analytics section.
+  - Change to "- **Insgesamt empfangene Zaps**: gesamt und pro Zeitraum".
+- **src/content/guides/de/zaps-and-lightning.mdx:48** — Gender mismatch and calqued word order: "Künstler wird gezappt für das Teilen ihrer Arbeit".
+  - Change to "- Künstlerin wird für das Teilen ihrer Arbeit gezappt" (or "- Künstler werden für das Teilen ihrer Arbeit gezappt").
+- **src/content/guides/de/zaps-and-lightning.mdx:317** — "[ADVANCED]" heading tag left in English, inconsistent with relay-guide's "[ERWEITERT]".
+  - Change to "## Zap Splits [ERWEITERT]".
+- **src/content/guides/en/faq.mdx:5** — estimatedTime of '10 minutes' understates a ~4,200-word page by roughly half.
+  - Bump to "20 minutes" — or, since category is 'reference' and nobody reads an FAQ linearly, use a phrasing the schema allows like "1-2 minutes per question" if other reference pages do the same.
+- **src/content/guides/en/faq.mdx:115** — The illustrative npub is 77 characters; real npubs are exactly 63, so the guide's own example of 'what an npub looks like' is malformed.
+  - Trim the example to `npub1` + 58 q's (63 chars total), matching the 'Example Format (Not Real Keys)' convention used in keys-and-security.
+- **src/content/guides/en/faq.mdx:89** — The 'more combinations than atoms in the observable universe' claim is false: 2^256 is about 1.2x10^77, roughly a thousand times fewer than the ~10^80 atoms.
+  - Change to "about as many combinations as there are atoms in the observable universe" or "a number 77 digits long" — the pedagogical point survives intact.
+- **src/content/guides/en/faq.mdx:20** — Eleven em-dashes in reader-facing copy, against the repo owner's standing no-em-dash style rule for product text.
+  - Rework each sentence using comma, colon, period or parentheses per the user's global style rule (rebuild the sentence, don't just swap the character).
+- **src/content/guides/en/faq.mdx:904** — The 'Found an Error?' call to action tells readers to 'submit improvements on GitHub' without linking the repository.
+  - Link the word GitHub to the public repository URL (or, if the repo isn't meant to take issues from readers, replace the sentence with 'reply to us on Nostr' plus the project npub).
+- **src/content/guides/en/faq.mdx:79** — Three FAQ cross-guide links use anchors that do not exist in the target guides, and one is labeled after a removed component.
+  - Point the two keys-and-security links at #the-3-2-1-backup-rule-2-minutes and #understanding-keys-2-minutes (or drop the '(N minutes)' suffixes from those headings site-wide, which fixes future links too). Change line 177 to "[Pick a client →](/guides/quickstart#step-2)" so the label matches what the page now offers.
+- **src/content/guides/en/faq.mdx:696** — FAQ says strfry is written in Rust; relay-guide correctly says C++.
+  - Change both FAQ mentions to "strfry (C++, high performance)".
+- **src/content/guides/en/finding-community.mdx:148** — Unexplained jargon and a house-style em-dash in reader-facing copy.
+  - Reword Gossip's blurb to something a creator can parse, e.g. "Desktop app that can show any single relay's feed", and change line 127 to "Filter by category: Bitcoin, Art, Music, Tech, and more."
+- **src/content/guides/en/keys-and-security.mdx:5** — estimatedTime says 8 minutes but the section timers in the body sum to 10 minutes.
+  - Either change estimatedTime to "10 minutes" or retime the section headings so they sum to 8. Whichever you pick, keep the commented-out ProgressIndicator placeholder (line 17, also says 8 minutes) consistent.
+- **src/content/guides/en/keys-and-security.mdx:130** — The example npub/nsec strings are the wrong length (72 data chars vs the real 58), while the guide claims this is what Nostr keys look like.
+  - Shorten all four placeholder strings (and the defaults in src/components/ui/KeyVisualizer.tsx) to the correct 63-character shape: npub1/nsec1 followed by exactly 58 filler characters, keeping the 'not valid keys' caveat.
+- **src/content/guides/en/keys-and-security.mdx:22** — Intro overpromises: individual relays and clients can and do ban or filter users, so 'no companies to ban you' is too absolute.
+  - Soften to the accurate claim: no single company can take your identity or lock you out of the whole network; any one relay or app can still refuse your posts, but you keep your keys and followers and can simply move. This also matches the more careful model in the site's protocol-comparison guide.
+- **src/content/guides/en/keys-and-security.mdx:215** — 'Apple Notes, Google Keep, etc. aren't encrypted' is factually imprecise.
+  - Reword to: "Default notes in Apple Notes, Google Keep, etc. aren't end-to-end encrypted and sync to the cloud automatically — anyone who gets into your account (or your unlocked device) can read them."
+- **src/content/guides/en/keys-and-security.mdx:197** — Text points readers to 'the simple backup steps below' but the backup steps are above this paragraph.
+  - Change "below" to "above", or move 'What Happens If You Lose Your Keys?' to the top of the 3-2-1 section so the motivation precedes the rule (which also reads better pedagogically).
+- **src/content/guides/en/keys-and-security.mdx:232** — 'Generate strong passwords for clients too' contradicts the guide's own model that Nostr has no passwords.
+  - Delete the line, or replace with something true and useful, e.g. "it's also where a strong password for the password manager itself, and for your email, belongs".
+- **src/content/guides/en/keys-and-security.mdx:271** — A second, hand-rolled backup checklist duplicates the interactive BackupChecklist component with non-persisting raw checkboxes.
+  - Drop the raw-HTML checklist block (or fold its four items into the BackupChecklist component's data) so the guide has a single, stateful checklist.
+- **src/content/guides/en/keys-and-security.mdx:10** — AlertBanner is imported but never used, and a disabled ProgressIndicator placeholder comment lingers at the top of the body.
+  - Delete the AlertBanner import; remove the ProgressIndicator comment block or track that TODO in an issue instead of in seven translated copies of the guide.
+- **src/content/guides/en/multi-client.mdx:29** — 'Long-form writing' is attributed to Iris/Snort, which have no article authoring, in a guide aimed at writers
+  - Change 'Long-form writing' to 'longer posts and threads', and add one sentence noting that actual articles are written in dedicated long-form clients (Habla, YakiHonne), or link the relevant guide if one exists.
+- **src/content/guides/en/multi-client.mdx:5** — estimatedTime '8 minutes' contradicts the guide's own section timers, which sum to 12 minutes
+  - Set estimatedTime to '12 minutes' (or retune the per-section minutes down to total 8) and update the figure inside the commented ProgressIndicator block if it is kept.
+- **src/content/guides/en/multi-client.mdx:11** — Unused CTAButton import and stale commented-out ProgressIndicator block
+  - Delete the CTAButton import and the two-line ProgressIndicator comment block.
+- **src/content/guides/en/nip05-identity.mdx:160** — USD conversions in the NostrPlebs pricing table are ~25-30% stale (calculated at ~$62k BTC; BTC is ~$78.5k on 2026-09-01).
+  - Drop the parenthetical USD figures and keep only sats, with one sentence: "At the time of writing 12,500 sats is roughly $10; check a converter for today's rate." This stops the column going stale again.
+- **src/content/guides/en/nip05-identity.mdx:369** — NostrPlebs troubleshooting invents a "verification email" step that is not part of its documented flow.
+  - Replace the bullet with "Log into the management portal and confirm the npub saved there matches yours exactly", keeping the existing "Ensure npub is correct (not nsec!)" and "Contact support" bullets.
+- **src/content/guides/en/nip05-identity.mdx:247** — Overreaching "most clients" claim about where to find the hex public key.
+  - Soften to: "Some clients show the hex form under their key settings; if yours only shows npub1..., paste it into the checker further down this page, which displays both forms side by side." The checker is already the guide's reliable path.
+- **src/content/guides/en/nip05-identity.mdx:12** — CTA is imported but never used in the body.
+  - Delete line 12, or add the standard end-of-guide CTA if this guide was meant to have one like its siblings.
+- **src/content/guides/en/nip17-private-messages.mdx:11** — Frontmatter lacks estimatedTime while sibling guides define it
+  - Add an estimatedTime consistent with the other guides' format once the rewrite settles the length (currently roughly a 12-15 minute read plus the quiz).
+- **src/content/guides/en/nip17-private-messages.mdx:5** — NIP-17 guide is the only one of the 16 without estimatedTime/priority frontmatter, leaving an empty time slot on the guides index card.
+  - Add `estimatedTime: "12-15 minutes"` and a priority consistent with its advanced-path neighbours (privacy-security has 9; e.g. `priority: 9` or 10) to the frontmatter; optionally drop the unused `difficulty`/`author` fields so the guide matches the shared schema.
+- **src/content/guides/en/nostr-tools.mdx:12** — CTAButton is imported but never used in the body.
+  - Delete the import line, or add the closing CTA the import was presumably meant for (e.g. a button to the quickstart guide before the final disclaimer).
+- **src/content/guides/en/outbox-model.mdx:153** — "2-4 relays total" misstates NIP-65's guidance (2-4 of each category) and conflicts with the guide's own example setup
+  - Change line 153 to "**Recommended:** a small list - NIP-65 itself suggests 2-4 write relays and 2-4 read relays; most people are fine with 3-5 total", and change line 230 to match ("Do you have a small list - roughly 3-5?"). This keeps the advice safe while no longer misquoting the spec in a guide whose SEO title is "NIP-65 Explained Simply".
+- **src/content/guides/en/outbox-model.mdx:72** — Example kind:10002 event lists relay.snort.social, which was unreachable (HTTP 503) throughout this audit
+  - Replace "wss://relay.snort.social" with a currently reliable relay (e.g. "wss://relay.primal.net") after a quick liveness check at edit time - or switch the whole example to the fictional style the scenarios already use (wss://relay.a.com etc.) so the snippet can never go stale.
+- **src/content/guides/en/outbox-model.mdx:176** — Relay-quality bullets overpromise permanence and use unexplained jargon (ephemeral, latency)
+  - Rewrite the bullets in creator language: "- Are online reliably (rarely down) - Keep your posts for the long term (some relays quietly delete old posts to save space) - Are hosted near you, so the app feels faster".
+- **src/content/guides/en/privacy-security.mdx:5** — estimatedTime says 15 minutes but the section headers sum to 20
+  - Set estimatedTime to "20 minutes" (or trim per-section estimates to match 15); keep the two numbers in sync after the prose rewrite.
+- **src/content/guides/en/privacy-security.mdx:13** — CTAButton is imported but never used in the body
+  - Delete the unused import line (or, if the guide is meant to end with a CTA like its siblings, add the intended CTAButton before 'Keep reading').
+- **src/content/guides/en/privacy-security.mdx:192** — '[ADVANCED]' renders literally as a leftover editorial tag
+  - Change to "**Hardware wallets** (advanced, rarely needed)" or drop the tag.
+- **src/content/guides/en/protocol-comparison.mdx:11** — ProtocolComparison and CTAButton are imported but never used in the body
+  - Delete the two unused import lines, or if ProtocolComparison was meant to replace the markdown summary table, wire it in deliberately.
+- **src/content/guides/en/protocol-comparison.mdx:93** — Three small invented or stale figures: "~2,000 lines of specification", "5+ years of development", and "AT Protocol (v1.0)"
+  - Line 93: "the core protocol (NIP-01) fits in a single short document". Line 133: "8+ years of development" or just "years of development". Line 549 footer: drop the invented version labels, keep "Last updated" only, and bump that date when the fixes from this audit land.
+- **src/content/guides/en/quickstart.mdx:45** — The keys button promises "(2 min)" but the linked keys-and-security guide declares estimatedTime "8 minutes".
+  - Either drop the parenthetical or match it to the target guide, e.g. "Generate keys first (8 min)". If the intent is that generation alone takes 2 minutes, say so: "Generate keys first (the generator itself takes 2 min)".
+- **src/content/guides/en/quickstart.mdx:50** — "You'll need your npub (public key) and nsec (private key) to continue" is inaccurate: only the nsec (or a signer) is needed, the npub is derived from it.
+  - Reword to: "You'll need your nsec (private key). Your npub (public key) is derived from it automatically."
+- **src/content/guides/en/quickstart.mdx:60** — Six em dashes (U+2014) remain in reader-facing copy, against the project owner's explicit no-em-dash style rule.
+  - Rebuild each sentence with comma, colon, period, or parentheses instead of the dash, per the owner's global style rule. Example for line 60: "Nostr has dozens of clients. Think of them like email apps and pick one to start."
+- **src/content/guides/en/relay-guide.mdx:11** — CTAButton is imported but never used anywhere in the body.
+  - Delete line 11, or add the intended CTA (other guides end with a CTAButton to the next guide; if that was the intent, add one after the quiz pointing at the next guide in the track).
+- **src/content/guides/en/relay-guide.mdx:332** — Troubleshooting tip "Try http vs https (should be wss://)" tells beginners to try protocols that never apply to relays.
+  - Delete the "Try http vs https" bullet and strengthen the first one: "Make sure the address starts with wss:// — not https://, http:// or ws://."
+- **src/content/guides/en/relay-guide.mdx:372** — nostr.wine price is stated as "~$5-10/month" in dollars, but the relay charges in sats (18,888 sats admission per its live NIP-11), so the dollar figure drifts with the bitcoin price.
+  - Replace the dollar figure with: "Cost: paid in bitcoin over Lightning (an admission fee of around 19k sats at the time of writing) — check nostr.wine for the current price." Same pattern for any future dollar figures tied to sats.
+- **src/content/guides/en/relays-demystified.mdx:150** — The NIP-65 heading carries the advanced marker twice: an 'Advanced:' prefix plus the site's rendered '[ADVANCED]' tag.
+  - Rename the heading to "## The Outbox Model (NIP-65) [ADVANCED]" to match the sitewide convention and drop the duplicated prefix.
+- **src/content/guides/en/troubleshooting.mdx:11** — The intro sentence is authored as an H2 heading, so it renders as an oversized heading and pollutes the document's heading hierarchy
+  - Remove the `## ` prefix so it renders as a lead paragraph (fold into the prose-intro rewrite above).
+- **src/content/guides/en/troubleshooting.mdx:119** — 'Most relays limit to 1-5 posts per second' is an invented figure that contradicts the section's own 'wait a few minutes' advice
+  - Replace with: "**Note**: Relays throttle rapid posting to fight spam; limits vary per relay, so a few minutes' pause usually clears it."
+- **src/content/guides/en/troubleshooting.mdx:339** — Suggests testing your Lightning address by 'sending yourself 10 sats', but self-payments within the same wallet commonly fail, giving beginners a false negative
+  - Change to: "**Test**: Ask a friend to zap you 10 sats, or send from a second wallet — many wallets refuse to pay themselves."
+- **src/content/guides/en/troubleshooting.mdx:412** — The 'Client-specific docs' resource link is mislabeled: it points only to the Damus README anchor, not to client docs in general
+  - Either relabel it "Damus docs" or point the generic label at a client directory such as https://nostrapps.com (verified live).
+- **src/content/guides/en/what-is-nostr.mdx:155** — Bolded absolute "No ads or algorithms" overclaims; algorithmic feeds (Primal trending, DVM feeds) are common on Nostr in 2026, just opt-in.
+  - Change the bold to "**No forced ads or algorithms.**" and the follow-up to "Feeds are chronological by default, and any algorithm you use is one you chose. Your attention isn't the product."
+- **src/content/guides/en/what-is-nostr.mdx:12** — NostrSimulator is imported but only referenced inside commented-out MDX, and lines 15-19 are dead commented-out blocks.
+  - Delete line 12 (the NostrSimulator import) and lines 15-19 (all three `{ /* ... */ }` comment expressions). Nothing renders from them today; they are pure cruft and keep a dead dependency reference in the guide.
+- **src/content/guides/en/what-is-nostr.mdx:25** — Heading hierarchy is inverted: seventeen H3s with no H2 ancestor, then the only H2s appear at the end of the page.
+  - Promote the four top-level sections to H2: 'The Problem', 'The Solution: Protocol vs Platform', 'Key Concepts', 'Why This Matters' (and 'Is It Worth It?' stays H3 under the last). Keep their subsections at H3. This gives a clean H1 > H2 > H3 outline consistent with the two existing H2s.
+- **src/content/guides/en/what-is-nostr.mdx:5** — estimatedTime '5 minutes' is inconsistent with the guide's own section labels, which sum to 6 minutes before two unlabeled H2 sections and the quiz.
+  - Either set estimatedTime to "7 minutes" (and adjust the description's '5 minutes' claim), or drop the per-section '(X minute read)' labels entirely since they no longer sum correctly; if kept, fix the grammar to '(2-minute read)'. estimatedTime feeds the PT{n}M structured data in [slug].astro, so keep it honest.
+- **src/content/guides/en/what-is-nostr.mdx:177** — "Five pieces make up the whole protocol" lists 'Web of trust', which is a community practice, not a protocol piece; no NIP defines it.
+  - Reword line 177 to "Five ideas explain how Nostr works under the hood. You do not need to memorize them to use Nostr..." and open the last bullet with "**Web of trust** (a convention, not a spec) — ...", or move it out of the list as a closing sentence.
+- **src/content/guides/en/what-is-nostr.mdx:185** — 'sats' is the one piece of jargon in the guide used without any inline explanation.
+  - Add a three-word gloss: "...denominated in sats (tiny fractions of a bitcoin)." or wrap 'sats' in the existing HoverCard component with a one-line definition.
+- **src/content/guides/en/what-is-nostr.mdx:99** — The example npub/nsec placeholders are 77 characters; real bech32 npub/nsec strings are 63, so a beginner comparing lengths may think their key looks wrong.
+  - Trim both placeholders to 63 characters (prefix + 58 q's) in lines 99 and 113 so the fake keys have realistic length.
+- **src/content/guides/en/what-is-nostr.mdx:34** — 19 em-dashes (U+2014) in the guide, including classic mid-sentence interjections in running prose, against the house rule banning them in reader-facing text.
+  - Rewrite the running-prose occurrences (lines 21, 34, 47, 100, 136, 138, 143, 153, 195) using commas, colons, or sentence breaks; for the definition-list items (lines 179-183, 191-193) replace "**Term** — definition" with "**Term:** definition". Do this as a rewrite, not a character swap, per the house rule.
+- **src/content/guides/en/zaps-and-lightning.mdx:281** — The heading "Setting Up LNURL" drops unexplained jargon on a section that is actually about Lightning addresses.
+  - Rename the heading to "Setting Up Your Lightning Address" and change line 284's "Get your Lightning Address or LNURL" to just "Get your Lightning address".
+- **src/content/guides/en/zaps-and-lightning.mdx:508** — "21 sats = Minimum viable zap" contradicts the guide's own 10-sat test zap and "No amount is too small".
+  - Reword line 508 to match the rest: "21 sats = a classic small zap (a Bitcoin in-joke)", or drop the line and let the etiquette table carry the amounts.
+- **src/content/guides/es/faq.mdx:244** — 'superpotencias' (superpower nations) used for 'superpowers'
+  - Change to "Este es uno de los superpoderes de Nostr: portabilidad de verdad."
+- **src/content/guides/es/faq.mdx:98** — 'Las bases de datos centralizadas son violadas' is an unfortunate rendering of 'get breached'
+  - Change to "- Las bases de datos centralizadas sufren filtraciones" (or "son vulneradas").
+- **src/content/guides/es/finding-community.mdx:424** — Misspelled imperative "Manténlo".
+  - Change to "- Mantenlo relevante".
+- **src/content/guides/es/finding-community.mdx:412** — Encryption terminology inconsistent across guides: "encriptados/encriptación" here vs "cifrar/cifrado" in keys-and-security.
+  - Standardize on "cifrado": "Los DMs de Nostr están cifrados pero no son perfectos", "Cifrado de extremo a extremo (E2EE)", "Algunos clientes manejan el cifrado de forma diferente".
+- **src/content/guides/es/finding-community.mdx:455** — "Involucramiento" is an awkward rendering of "engagement" in two headings.
+  - Use "Interacción" or "Participación": "### Estrategia de Interacción", "**Consejos de Interacción:**", "- Interacción con los lectores".
+- **src/content/guides/es/keys-and-security.mdx:24** — Missing opening question mark in "La buena noticia?".
+  - Change to "¿La buena noticia? Asegurar tus claves es sencillo."
+- **src/content/guides/es/keys-and-security.mdx:44** — The green key label "SEGURO COMPARTIR" is ungrammatical.
+  - Change to "SEGURO DE COMPARTIR" or, clearer for the badge, "SE PUEDE COMPARTIR".
+- **src/content/guides/es/keys-and-security.mdx:91** — Two machine-translation calques in the "¿Por Qué Tan Largas?" section.
+  - Line 91: "El motivo:" or "Esta es la razón:". Line 94: "Ni siquiera las computadoras pueden predecirlas".
+- **src/content/guides/es/keys-and-security.mdx:199** — "tus ahorros de por vida" mistranslates "your life savings".
+  - Change to "No llevarías los ahorros de toda tu vida en efectivo en el bolsillo."
+- **src/content/guides/es/keys-and-security.mdx:313** — "su laptop se bloqueó" softens "laptop crashed" into "froze", weakening the data-loss story.
+  - Change to "...cuando su laptop se averió" or "...dejó de funcionar".
+- **src/content/guides/es/keys-and-security.mdx:240** — Signer terminology inconsistent with quickstart: "Apps Firmadoras" here vs "extensión firmante"/"firmante remoto" there.
+  - Standardize on "firmante": "**SÍ Usa Apps Firmantes de Nostr [AVANZADO]**" (and "apps firmantes" in the bullets if referenced).
+- **src/content/guides/es/multi-client.mdx:451** — 'Sigue leyendo' drops the EN dash-descriptions in multi-client and nip17
+  - Append translated explainers, e.g. multi-client: "…](/es/guides/nostr-tools) — las utilidades que hacen llevadero usar varios clientes" / "…](/es/guides/troubleshooting) — qué revisar cuando un cliente muestra publicaciones distintas que otro"; nip17: "…](/es/guides/privacy-security) — el modelo de amenaza más amplio en el que viven estos mensajes" / "…](/es/guides/keys-and-security) — perder la clave es perder la conversación, para siempre".
+- **src/content/guides/es/multi-client.mdx:143** — 'Pro tip' left in English in multi-client and nip17 while the FAQ translates it as 'Consejo pro'
+  - Change both to "**Consejo pro:**" for cross-guide consistency.
+- **src/content/guides/es/multi-client.mdx:315** — '(propio)' loses the meaning of '(proprietary)' in the settings-export bullet
+  - Change to "- Exportar ajustes (formato propietario de cada cliente)".
+- **src/content/guides/es/nip05-identity.mdx:97** — Recurring calque 'ser serio sobre Nostr' for 'serious about Nostr'
+  - Use "te tomas Nostr en serio": nip05 line 97 "- Te tomas Nostr en serio a largo plazo"; line 144 "Si te tomas Nostr en serio…"; faq line 131 "**Recomendado** si te tomas Nostr en serio"; multi-client line 69 "Pero si te tomas Nostr en serio, desbloquea nuevos flujos de trabajo."
+- **src/content/guides/es/nip05-identity.mdx:86** — 'a la verdadera tú' assumes a female reader and reads awkwardly
+  - Rewrite gender-neutral: "Esto ayuda a la gente a saber que te sigue a ti de verdad, no a un impostor."
+- **src/content/guides/es/nip17-private-messages.mdx:103** — False-friend calques in nip17: 'mensaje actual', 'recae elegantemente', 'suplantar', plus missing accent in 'Ultima'
+  - Line 103: "que contiene el mensaje en sí" (o "el mensaje real"). Line 259: "Amethyst vuelve automáticamente a NIP-04 si el destinatario no soporta NIP-17". Line 365: "que podría reemplazar a NIP-17". Line 400: "Última actualización".
+- **src/content/guides/es/nip17-private-messages.mdx:64** — 'Deprecado' (anglicism) inconsistent with 'Obsoleto' used in the FAQ for the same NIP-04 status
+  - Use "Obsoleto" in the table (line 64) and "el protocolo NIP-04, ya obsoleto" (line 378) to match the FAQ; 'obsoleto' also reads better for a non-developer audience.
+- **src/content/guides/es/nostr-tools.mdx:138** — Three agreement/grammar slips: "Varios listas", "e usuarios", and singular participles for plural "Backups".
+  - Line 138: "Varias listas de relays mantenidas por la comunidad". Line 122: "Descubre contenido y usuarios en tendencia". Line 46: "Backups en papel (escritos y almacenados de forma segura)".
+- **src/content/guides/es/nostr-tools.mdx:198** — "Comprehensive" repeatedly rendered as the false friend "comprehensivo".
+  - Use "completo/exhaustivo": line 198 "Resultados rápidos y completos", line 220 "SDK completo de TypeScript", line 279 "recomendaciones y simulaciones completas de apps móviles", line 294 "Lista exhaustiva de clientes, relays y herramientas".
+- **src/content/guides/es/nostr-tools.mdx:55** — "Media" left untranslated in the section heading and frontmatter description.
+  - Line 55: "## Hospedaje de Multimedia". Line 4 description: "...gestión de claves, hospedaje de multimedia, analítica y más".
+- **src/content/guides/es/outbox-model.mdx:47** — "Post office" translated as bare "correo", which reads as "mail", muddying the guide's central analogy.
+  - Use "oficinas de correos": line 47 "...son como oficinas de correos?", line 49 "**Oficina de Correos Tradicional:**", line 50 "Tienes un buzón en una sola oficina de correos", line 54 "una **lista pública** de oficinas de correos donde recibes correspondencia".
+- **src/content/guides/es/outbox-model.mdx:223** — "## Toma Acción" is a Spanglish calque of "Take Action".
+  - Rename the heading to "## Pasa a la Acción" (or "## Manos a la Obra").
+- **src/content/guides/es/privacy-security.mdx:256** — Migration announcement templates read as machine-translated gerund/participle calques of "Moving to" / "Moved to".
+  - Line 256: "Me mudo a [nuevo npub]". Line 269: "Me mudé a [nuevo npub]". Line 237: "Pasas de un servicio custodial a autocustodia".
+- **src/content/guides/es/privacy-security.mdx:393** — "Monitorea por impersonadores" uses the non-word "impersonadores" and the "monitor for" calque.
+  - Replace with "- [ ] Vigila posibles suplantadores (cuentas que se hagan pasar por ti)".
+- **src/content/guides/es/privacy-security.mdx:356** — Grammar and register slips: an usted-form verb in a tú-voice list, plus three agreement errors.
+  - Recast the "Qué NO hacer" list items as infinitives ("❌ Mencionar tu otra cuenta", "❌ Seguir exactamente a las mismas personas", etc.), which also removes the odd affirmative-imperative reading of a don'ts list. Line 130: "Máximo aislamiento". Line 235: "Sospechas que tu clave está comprometida". Line 410: "¿qué encontraría?".
+- **src/content/guides/es/protocol-comparison.mdx:178** — EN's conditional-imperative "Lose your key and your identity is gone" translated literally, producing an odd indicative sequence.
+  - "Si pierdes tu clave privada (nsec), tu identidad desaparece para siempre."
+- **src/content/guides/es/protocol-comparison.mdx:123** — PDS section wording is inconsistent ("Almacenamiento" vs "Almacén") and repeats "enfoque" awkwardly.
+  - Line 123: "### Bluesky AT Protocol: El Modelo de Almacén de Datos Personal". Line 125: "Bluesky combina ideas de ambos modelos, con el foco puesto en la experiencia de usuario y el respaldo corporativo."
+- **src/content/guides/es/quickstart.mdx:146** — "antes de entrar en vivo" is a calque of "before you go live" and not idiomatic Spanish.
+  - Reword as "Una última comprobación antes de lanzarte:" (echoes the guide title) or "...antes de publicar por primera vez:".
+- **src/content/guides/es/quickstart.mdx:252** — "te tenemos cubierto" is a calque of "we've got you covered".
+  - Reword as "Desde zaps hasta privacidad: aquí encontrarás todo lo que necesitas."
+- **src/content/guides/es/relay-guide.mdx:361** — Cluster of machine-translation calques and dropped articles in relay-guide.
+  - Line 361: '- Te tomas Nostr en serio'; line 575: '...si te tomas Nostr en serio'; line 197: 'A medida que te sientas más cómodo'; line 97: '- Sin costo de uso'; line 490: '**El feed está vacío**'.
+- **src/content/guides/es/relay-guide.mdx:272** — Systematic anglicized gerund headings across all four guides ('Agregando Relays', 'Enviando Zaps', ...).
+  - Use infinitive or 'Cómo + infinitivo' headings, the natural Spanish convention: 'Cómo agregar relays', 'Configurar relays de pago', 'Cómo elegir relays', 'Reportar bugs', 'Conectar tu wallet', 'Enviar zaps', 'Recibir zaps', 'Configurar LNURL', 'Configurar splits'. Apply the same pattern in one pass across the four es files.
+- **src/content/guides/es/relays-demystified.mdx:55** — ES adds 'client:idle' to RelayWorldMap that EN deliberately omits, hydrating a purely presentational component.
+  - Change line 55 to '<RelayWorldMap />' to match EN.
+- **src/content/guides/es/relays-demystified.mdx:114** — Table header 'Reliability' translated as 'Confianza' (trust), inconsistent with 'Confiabilidad' used in relay-guide.
+  - Change the header cell to 'Confiabilidad'.
+- **src/content/guides/es/relays-demystified.mdx:162** — Calqued constructions: '**Haces**: Publicar...' and 'la diferencia clave de las redes sociales'.
+  - Lines 161-162: '**En lugar de** conectarte manualmente a 10+ relays, **publicas** tu lista de relays preferidos una vez y dejas que los clientes se encarguen del resto.' Line 27: 'Esta es la diferencia clave frente a las redes sociales tradicionales:'.
+- **src/content/guides/es/troubleshooting.mdx:319** — Grammatical gender of 'wallet' is inconsistent within the guide and against zaps-and-lightning.
+  - Pick one gender for 'wallet' across both guides (masculine matches the whole zaps guide): in troubleshooting change lines 321/330/332/334 to 'un wallet Lightning', 'Wallet offline', 'Los wallets no custodiales', 'un wallet custodial como Alby'.
+- **src/content/guides/es/troubleshooting.mdx:169** — Confusing renderings: 'cura cuidadosamente', 'lista de silencio', 'Nostr mismo'.
+  - Line 169: '- **Mejor**: No sigas cuentas en masa; elige con cuidado a quién sigues'; lines 176-178: 'Sin lista de silenciados' / 'Crea una lista de silenciados en tu cliente'; line 407: '- El propio Nostr - Publica con la etiqueta #help'.
+- **src/content/guides/es/what-is-nostr.mdx:71** — "Tú tienes las llaves" uses "llaves" where the guide's established term for keys is "claves".
+  - Change to "Tú tienes las claves." so the metaphor reinforces the term taught in the keys guide.
+- **src/content/guides/es/what-is-nostr.mdx:29** — "pueden bloquearte años de contenido" is an awkward rendering of "can lock you out of years of content".
+  - Reword as "...pueden dejarte sin acceso a años de contenido y conexiones".
+- **src/content/guides/es/zaps-and-lightning.mdx:364** — Untranslated English 'Supporters' in a heading and a subheading.
+  - Line 364: '### Para Quienes Apoyan'; line 389: '**3. Agradece a Quienes Te Apoyan**'.
+- **src/content/guides/es/zaps-and-lightning.mdx:90** — Minor calques in zaps-and-lightning: 'No Son Requeridos', 'involucramiento', 'Actualiza a auto-custodia', 'Pide a un amigo enviarte'.
+  - Line 90: '### ¡No Son Obligatorios!'; line 36: '- La interacción es vacía'; line 158: 'Pasa a auto-custodia completa'; lines 229/296: 'Pídele a un amigo que te envíe un zap de prueba (100 sats)' / 'Pídele a un amigo que te envíe 10 sats'.
+- **src/content/guides/hi/faq.mdx:428** — English remnants and one garbled English quote left in user-visible text
+  - Fix 428 to '- Post: "New to Nostr—who should I follow?"' (keeping the sample post in English is fine, but it must be correct English); translate 356 to "- Cache clear करें / app restart करें"; 521 bold to "**अपना data समय-समय पर export करें**"; 176 label to "हमारा Client Recommender आज़माएं →".
+- **src/content/guides/hi/faq.mdx:61** — Calque 'Nostr में कोई नहीं है:' reads as 'in Nostr there is nobody' before a list of things
+  - Change to "Nostr में ये चीज़ें नहीं हैं:" (or "Nostr में नहीं मिलेगा:").
+- **src/content/guides/hi/faq.mdx:572** — Web-of-trust bullet 'आपके trust करने वाले लोग' is ambiguous between 'people you trust' and 'people who trust you'
+  - Rewrite as "देखें कि जिन लोगों पर आप trust करते हैं, वे उन्हें follow करते हैं या नहीं".
+- **src/content/guides/hi/multi-client.mdx:378** — Automation warning bullets are raw transliteration calques: 'ऑथेंटिसिटी मैटर' and 'स्पेअरिंगली उपयोग करें'
+  - Change to "- ऑथेंटिसिटी मायने रखती है" and "- संयम से उपयोग करें".
+- **src/content/guides/hi/multi-client.mdx:452** — 'Keep reading' link descriptions dropped in hi (pattern repeats in nip05-identity and nip17); nip05 also silently swaps the NIP-05 checker link for a different guide
+  - Add translated one-line descriptions after each link in all three hi 'Keep reading' sections; in nip05-identity, restore a link to the checker (the tool page exists only unprefixed, so link "[किसी भी NIP-05 एड्रेस की जाँच करें](/tools/nip05-checker)" or keep the inline checker reference deliberate and note it).
+- **src/content/guides/hi/nip05-identity.mdx:18** — Opening sentence is garbled by a doubled conjunction: 'रखने की अनुमति देता है, जबकि ... के बजाय'
+  - Rewrite: "NIP-05 ... आपको लंबी रैंडम कैरेक्टर स्ट्रिंग के बजाय `you@domain.com` जैसा मानव-पठनीय पहचानकर्ता रखने देता है।"
+- **src/content/guides/hi/nip05-identity.mdx:127** — Fragmentary calques: 'भी मुफ्त' for 'Also free' and 'यह आपकी डी-ऑनॉनिमाइज़ कर सकता है' (wrong case) for 'could deanonymize you'
+  - 127: "- यह भी मुफ्त है"; 451: "- अगर डोमेन में आपकी असली जानकारी है, तो यह आपकी पहचान उजागर (de-anonymize) कर सकता है".
+- **src/content/guides/hi/nip17-private-messages.mdx:206** — 'Send a note to frequent contacts' rendered as 'बार-बार संपर्कों को एक नोट भेजें', which reads 'send a note to contacts repeatedly'
+  - Change to "जिन संपर्कों से आपकी अक्सर बात होती है, उन्हें एक नोट भेजें:".
+- **src/content/guides/hi/nip17-private-messages.mdx:371** — Typos: 'यों' for 'यह' in the conclusion and 'पढा' missing the nukta in a troubleshooting heading
+  - Line 371: 'यों' → 'यह'; line 333: 'पढा' → 'पढ़ा'.
+- **src/content/guides/hi/nip17-private-messages.mdx:397** — Closing footer italic is never terminated: opening underscore has no matching close, so a literal '_' renders before the sentence
+  - Append the closing underscore: "...इश्यू खोलें।_"
+- **src/content/guides/hi/nostr-tools.mdx:21** — Headings "की मैनेजमेंट टूल्स" / "की कन्वर्टर और जनरेटर" open the page with the ambiguous bare "की" (key vs possessive).
+  - Use Latin "Key" in these headings — "## Key मैनेजमेंट टूल्स" and "### Key कन्वर्टर और जनरेटर" — consistent with the hi locale's existing convention (hi/keys-and-security.mdx title is "आपकी Keys, आपकी Identity").
+- **src/content/guides/hi/nostr-tools.mdx:159** — Primal Wallet entry diverges from current EN: "activates right in the app" replaced by an unsourced platform list.
+  - Line 159: "- **फीचर्स:** सेल्फ-कस्टोडियल (Spark-आधारित), ऐप में ही तुरंत एक्टिवेट होता है"; line 158: "- **सबसे अच्छा:** क्लाइंट के अंदर ही ज़ीरो-सेटअप शुरुआत के लिए".
+- **src/content/guides/hi/nostr-tools.mdx:4** — estimatedTime left in English ("minutes") in exactly the four audited guides, while the other 12 hi guides use "मिनट".
+  - Change the four values to "10 मिनट", "10-15 मिनट", "15 मिनट", "15 मिनट" (Arabic numerals + मिनट, the majority convention in the hi locale).
+- **src/content/guides/hi/outbox-model.mdx:253** — The "Keep reading" link annotations from EN are dropped (also dropped in privacy-security.mdx).
+  - Append translated annotations, e.g. "- [पोस्टें कैसे यात्रा करती हैं: रिले समझाए गए](/hi/guides/relays-demystified) — रिले असल में क्या है, इससे पहले कि आप तय करें कौन से इस्तेमाल करने हैं" and "- [रिले प्रबंधन गाइड](/hi/guides/relay-guide) — read और write रिले का ऐसा सेट कैसे चुनें जिससे Outbox मॉडल आपके लिए काम करे"; mirror the fix in privacy-security.mdx lines 496-497.
+- **src/content/guides/hi/outbox-model.mdx:241** — Two grammar slips: "इस गाइड शेयर करें" (missing postposition) and "डिस्कवरी मदद के लिए" (missing में).
+  - Line 241: "- यह गाइड शेयर करें". Line 207: "क्लाइंट्स डिस्कवरी में मदद के लिए रिले सूचियाँ फैलाते हैं".
+- **src/content/guides/hi/privacy-security.mdx:432** — The recovery-plan question "How will you prove you're you?" lost its "how" and became a flat statement.
+  - Line 432: "**पहचान का प्रमाण** - आप कैसे साबित करेंगे कि आप ही हैं?". Line 410: "मेरा रिकवरी प्लान क्या है?".
+- **src/content/guides/hi/protocol-comparison.mdx:177** — "सावधान की मैनेजमेंट" misparses because bare "की" (key) collides with the possessive postposition की.
+  - Rewrite as "...लेकिन इसके लिए कीज़ का सावधानी से मैनेजमेंट ज़रूरी है।" — the plural "कीज़" (already the file's convention) avoids the की/की collision.
+- **src/content/guides/hi/relay-guide.mdx:78** — Cluster of ungrammatical sentences and MT calques a native reader stumbles on.
+  - Line 78 → "बस इतना जानें कि रिले की वजह से Nostr बिना किसी केंद्रीय नियंत्रण के काम करता है।"; line 46 → "आपकी पोस्टें कई जगहों पर मौजूद रहती हैं"; line 533 → "ऐसी सामग्री सेंसर कर रहा है जिसकी आप परवाह करते हैं"; line 186 → "...नेटवर्क विविधता बनाए रखने के लिए छोटे, समुदाय-चलित और भुगतान वाले रिले जोड़ने पर विचार करें।"; line 409 → "नुकसान: सीखने में थोड़ा समय लगता है"; line 167 → "सार्वजनिक".
+- **src/content/guides/hi/relay-guide.mdx:2** — All four hi guides (in fact all 16) drop the seoTitle frontmatter field that EN, pl, es and de carry.
+  - Add translated seoTitle fields to the hi guides (for these four: relay-guide, relays-demystified, troubleshooting, zaps-and-lightning), e.g. relay-guide → 'seoTitle: "Nostr रिले सूची: रिले कैसे चुनें और प्रबंधित करें"'. Since zh and ar share the gap, treat it as one batch task for the three newest locales rather than a per-file patch.
+- **src/content/guides/hi/relays-demystified.mdx:99** — Machine-translation calques: 'इसे समझना मदद करता है', misspelling 'ऐरर', and the stilted title 'रिले समझाए गए'.
+  - Line 99 → "लेकिन यह समझना तब काम आता है जब आप:"; line 229 → "एरर"; title → "पोस्टें कैसे यात्रा करती हैं: रिले की पूरी समझ" (also update the matching title in src/i18n/locales/hi.json and the link text "[Relays समझाए गए]" in hi/troubleshooting.mdx line 443 so they stay in sync).
+- **src/content/guides/hi/troubleshooting.mdx:122** — Awkward renderings: the impersonation heading reads 'someone is making me fake', plus assorted grammar slips.
+  - Line 122 → "## समस्या: \"कोई मेरे नाम का फर्जी अकाउंट चला रहा है\""; line 240 → "केंद्रीय सर्वर"; line 386 → "सत्यापित करें कि कुंजियां सही हैं"; line 420 → "आपने क्या अपेक्षा की थी"; line 429 → "इस गाइड को संभालकर रखें".
+- **src/content/guides/hi/what-is-nostr.mdx:156** — Awkward calques: "कोई हेल्प डेस्क नहीं बुलाने के लिए" and "आप कभी भी बंदी नहीं हैं".
+  - Line 156 → "मदद माँगने के लिए कोई हेल्प डेस्क नहीं है"; line 138 → "कभी भी बदलें—आप कहीं बंधे नहीं हैं".
+- **src/content/guides/hi/zaps-and-lightning.mdx:483** — The 'ZapSplits टूल' resource link silently swaps EN's URL for the general NIPs repo, so the label no longer matches the target.
+  - Relabel and retarget to the actual zaps spec: "[Zaps विनिर्देश (NIP-57)](https://github.com/nostr-protocol/nips/blob/master/57.md)" — and flag EN's dead nostr-protocol/zaps link to whoever owns the EN audit, since the same fix applies there and in the other locales.
+- **src/content/guides/hi/zaps-and-lightning.mdx:528** — Both explanatory clauses in the 'Keep reading' section were dropped in translation.
+  - Append the clauses: line 528 → "...keys-and-security) — Zaps उसी कुंजी से जुड़े होते हैं जो उन पर हस्ताक्षर करती है, इसलिए पहले इसे ठीक से समझ लेना ज़रूरी है"; line 529 → "...nostr-tools) — ऐसे वॉलेट और सेवाएं जो Zapping को आसान बनाती हैं".
+- **src/content/guides/hi/zaps-and-lightning.mdx:434** — Recurring 'X सही है जांचें' word-order calque in the troubleshooting checklist, plus 'उदार से' for 'generously'.
+  - Rewrite as subordinate clauses: "जांचें कि वॉलेट कनेक्ट है (Settings → Wallet)", "सत्यापित करें कि आपकी कनेक्शन स्ट्रिंग सही है", "जांचें कि आपका वॉलेट अनलॉक है", "सत्यापित करें कि आपका Lightning पता प्रोफ़ाइल में सही है"; line 514 → "अच्छे कंटेंट का खुले दिल से समर्थन करें!"
+- **src/content/guides/pl/faq.mdx:274** — Machine-translation calques in the first (accented) half of the FAQ: 'Słodki punkt', 'Punkt wyjścia' for 'Bottom line', 'jesteś poważny co do Nostr', 'Rekomender Klientów'.
+  - Line 274: "**Optymalnie:** 5-10 dobrych relayów". Line 320: "**Podsumowując:** Zacznij od domyślnych relayów." Line 131: "**Zalecany**, jeśli poważnie myślisz o Nostr". Line 177: "Wypróbuj nasz dobór klienta →" (or "nasze narzędzie do wyboru klienta"). Also line 69: "do którego można prosić o pomoc" → "do którego można zwrócić się o pomoc".
+- **src/content/guides/pl/finding-community.mdx:164** — English thousands separator: "5,000 losowych" reads as a decimal in Polish.
+  - Change to "5000 losowych".
+- **src/content/guides/pl/finding-community.mdx:296** — Cluster of calques and in-file terminology drift: "dobrze połączony", "nie masz tego na myśli", "Karmi trolli", "klienci" vs "klienty", "kanał" vs "feed".
+  - Line 296: "**Jeśli masz już spore grono znajomych:**"; line 447: "...jeśli nie mówisz tego poważnie"; line 443: "**Nie wdawaj się w dyskusję** - to tylko karmi trolle"; unify on non-personal "klienty" ("Niektóre klienty mają...") and on "feed" ("Twój obecny feed", "Feed relay") to match the other PL guides.
+- **src/content/guides/pl/keys-and-security.mdx:148** — Cluster of English calques: "Stosuj ją religijnie", "Historie Horrorów" / "To są prawdziwe", "kontent", "Niska technologia, bardzo niezawodna", "brak odzysku".
+  - Line 148: "Stosuj ją bezwzględnie."; line 252: "### Historie grozy (lektura opcjonalna)"; line 254: "Te historie wydarzyły się naprawdę. Ucz się na nich:"; line 22: "tłumiących Twoje treści"; line 235: "Prosta technologia, a bardzo niezawodna"; line 312: "brak możliwości odzyskania".
+- **src/content/guides/pl/keys-and-security.mdx:20** — English Title Case carried into Polish headings throughout the PL guides; Polish uses sentence case.
+  - Lowercase non-initial heading words across the four PL guides (e.g. "## Dlaczego to ważne", "## Krok 1: sprawdzenie wymagań wstępnych", "### Dlaczego hashtagi mają znaczenie"), keeping proper nouns (Nostr, Bitcoin) capitalized.
+- **src/content/guides/pl/multi-client.mdx:453** — 'Czytaj dalej' sections in three guides drop the EN descriptive blurbs after each link; the NIP-05 guide additionally swaps out the NIP-05 checker link.
+  - Add translated blurbs after each link in all three files (e.g. multi-client: "— narzędzia, dzięki którym kilka klientów naraz nie boli" / "— co sprawdzić, gdy jeden klient pokazuje inne posty niż drugi"). In pl/nip05-identity.mdx restore the checker link as the first item: "[Sprawdź dowolny adres NIP-05](/tools/nip05-checker) — zweryfikuj, czy `nazwa@domena` wskazuje na deklarowany klucz" (the unlocalized /tools/ route is the only one that exists), keeping or dropping the nostr-tools link per EN, which links quickstart second.
+- **src/content/guides/pl/multi-client.mdx:191** — Calques and one meaning shift: 'używaj co czujesz', 'Używaj strategicznie Nie Przeszkadzać', and 'Lost track' rendered as 'Straciłeś kontrolę'.
+  - Line 191: "Po prostu używaj tego, co Ci pasuje". Line 407: "Strategicznie korzystaj z trybu Nie przeszkadzać". Line 411: "**Pogubiłeś się:**".
+- **src/content/guides/pl/nip05-identity.mdx:154** — Typos and calques: 'Cenny jest uzależniony', 'Powązani Użytkownicy', 'JSON jest ważny', 'Rejestratory domen niestandardowych', 'Może zająć kilka minut propagacji'.
+  - Line 154: "Cennik jest uzależniony od długości nazwy użytkownika...". Line 209: "Poważni użytkownicy". Line 312: "Upewnij się, że JSON jest poprawny (użyj walidatora JSON)". Line 197: "**Rejestratory domen** - wiele z nich oferuje teraz konfigurację NIP-05". Line 428: "Propagacja może zająć kilka minut".
+- **src/content/guides/pl/nip17-private-messages.mdx:368** — Grammar and anglicisms: 'Twoi kontakty wspierają', 'elegancko fallbackuje', 'zabezpieczenia swoich komunikacji', 'Pod "Wiadomości Bezpośrednimi," wybierz'.
+  - Line 368: "zweryfikuj, czy Twoje kontakty wspierają NIP-17". Line 250: "Amethyst płynnie przełącza się z powrotem na NIP-04, jeśli odbiorca nie wspiera NIP-17." Line 17: "praktyczne kroki do zabezpieczenia swojej komunikacji". Line 181: "W sekcji \"Wiadomości bezpośrednie\" wybierz \"NIP-17 (Zalecany)\"".
+- **src/content/guides/pl/nostr-tools.mdx:3** — seoTitle drops the audience keyword "for Beginners" present in EN.
+  - seoTitle: "Niezbędne narzędzia i aplikacje Nostr dla początkujących (2026)".
+- **src/content/guides/pl/nostr-tools.mdx:62** — "CDN delivery" calqued as "dostawa przez CDN" ("dostawa" is parcel delivery).
+  - "...natychmiastowe URL-e, serwowanie plików przez CDN".
+- **src/content/guides/pl/nostr-tools.mdx:22** — English Title Case applied to Polish headings throughout (Polish orthography uses sentence case); same pattern in pl/privacy-security.mdx and pl/protocol-comparison.mdx, while pl/outbox-model.mdx already uses correct sentence case.
+  - Lowercase non-initial words in headings across the three files (e.g. "## Narzędzia do zarządzania kluczami", "### Przed czym się chronisz?"), keeping proper nouns capitalized. Align with outbox-model's existing sentence-case style.
+- **src/content/guides/pl/outbox-model.mdx:217** — Heading "### Rozważanie prywatności" is a calque of "Privacy Consideration" that reads oddly in Polish.
+  - "### Kwestia prywatności".
+- **src/content/guides/pl/outbox-model.mdx:50** — Cluster of preposition/declension slips in the post-office analogy and elsewhere.
+  - 50: "na jednej poczcie"; 51: "pod zły adres"; 54: "na których odbierasz pocztę"; 104/108: "Klient Charliego"; 234: "Usuń te ze słabą dostępnością"; 153: "łącznie 2-4 relaye".
+- **src/content/guides/pl/outbox-model.mdx:254** — "Czytaj dalej" drops the EN explanatory blurbs after both links.
+  - Append translated blurbs, e.g. "...relays-demystified) - czym właściwie jest relay, zanim zaczniesz dobierać swoje" and "...relay-guide) - jak dobrać zestaw read/write, żeby model skrzynki nadawczej pracował dla Ciebie".
+- **src/content/guides/pl/privacy-security.mdx:390** — OPSEC checklist item "Monitorowanie dla podszywaczy" grammatically means monitoring done FOR the impersonators' benefit.
+  - 390: "- [ ] Wypatruj kont podszywających się pod Ciebie"; 288: "- Nawyki w używaniu wielkich liter".
+- **src/content/guides/pl/privacy-security.mdx:421** — Cluster of grammar and register slips.
+  - 421: "ze skompromitowanego konta"; 410: "Komu powiedziałbym, gdyby moje konto zostało przejęte?"; 453: "Przestań obserwować stare konto i zaobserwuj to nowe."; 201: "**Zdecydowanie zalecane:**".
+- **src/content/guides/pl/privacy-security.mdx:497** — "Keep reading" section drops the EN explanatory blurbs after each link.
+  - Append translated blurbs, e.g. "...keys-and-security) - fundament, na którym opiera się każda decyzja o prywatności na Nostr" and "...nip17-private-messages) - jak naprawdę działają szyfrowane DM-y i co mimo to wycieka".
+- **src/content/guides/pl/protocol-comparison.mdx:403** — The three hyperlinks in "The Bridge Approach" were dropped and one link text is left capitalized mid-sentence.
+  - Restore the three markdown links with the EN URLs and lowercase the last: "...lub [natywnych narzędzi Bluesky](https://bsky.app)".
+- **src/content/guides/pl/protocol-comparison.mdx:444** — Typo in a user-visible checklist item: "Wnś wartość" is not a word.
+  - "- [ ] Wnoś wartość (nie tylko promuj)".
+- **src/content/guides/pl/protocol-comparison.mdx:199** — Cluster of grammar slips and broken sentences a native reader stumbles on.
+  - 199: "Lepsze zapobieganie spamowi"; 192: "ale ryzyko fragmentacji"; 377: "Nostr jest wciąż niszowy"; 378: "Niektóre konta kopiują (mirrorują) treści z Twittera na Nostr"; 405: "Publikuj na jednej platformie, a kopie wysyłaj na pozostałe"; 427: "Ogłoś przenosiny (przypnij tweeta z nowymi kontami)".
+- **src/content/guides/pl/protocol-comparison.mdx:21** — Identity terminology in the comparison table shifts meaning: "self-sovereign" as "samowystarczalne" (= self-sufficient) and "handles" as "uchwyty" (physical grips).
+  - Use "Suwerenne, własne klucze" for self-sovereign keys and "nazwy użytkownika (handle)" for handles throughout; retitle line 15 to "## Najważniejsze wnioski" and line 162 to "### Tożsamość i uwierzytelnianie".
+- **src/content/guides/pl/quickstart.mdx:2** — Title repeats the same word: "Szybki Start: Start w 5 Minut".
+  - Change to "Szybki start: wystartuj w 5 minut" (also fixes the English-style Title Case).
+- **src/content/guides/pl/quickstart.mdx:146** — Cluster of English calques a native reader stumbles on: "zanim wejdziesz na żywo", "zmaksymalizować swoje doświadczenie", "Wskazówki Profesjonalne".
+  - Line 146: "Ostatnie sprawdzenie przed startem:"; line 226: "Gdy już będziesz w środku, zrób kilka rzeczy, które ułatwią Ci start:"; line 224: "## Sprawdzone wskazówki na pierwszy dzień".
+- **src/content/guides/pl/relay-guide.mdx:178** — The closing sentence of the decentralization Callout (the eggs-in-one-basket goal) was dropped.
+  - Append before the closing tag: "Celem jest zdrowa mieszanka dużych i małych relayów: coś jak niewkładanie wszystkich jajek do jednego koszyka."
+- **src/content/guides/pl/relay-guide.mdx:160** — Wrong numeral form in the section heading: "(5 minuty)" should be "(5 minut)".
+  - Change to "## Wybór Relayów (5 minut)".
+- **src/content/guides/pl/relay-guide.mdx:176** — Cluster of machine-translation calques a native reader stumbles on (komfortowy, poważny co do, relewantność, zrównoważoność, przypadkowi użytkownicy).
+  - L176: "Gdy poczujesz się pewniej"; L339/553: "Poważnie podchodzisz do Nostr" / "jeśli poważnie podchodzisz do Nostr"; L141: "Znaczenie dla regionu"; L334: "Stabilne finansowanie"; L121: "❌ Niekonieczne dla okazjonalnych użytkowników".
+- **src/content/guides/pl/relay-guide.mdx:539** — "Quick Reference" is translated three different ways across the reviewed guides; "Szybkie Odniesienie" here is the worst calque.
+  - Standardize on "Szybka ściągawka" in all three headings (relay-guide 539, zaps-and-lightning 496; relays-demystified already has it).
+- **src/content/guides/pl/relay-guide.mdx:26** — The relays-demystified guide is referred to by three different Polish names across links, none matching its actual title.
+  - Use the real title (or its distinctive part) in both links: "[Relaye Wyjaśnione](/pl/guides/relays-demystified)".
+- **src/content/guides/pl/relays-demystified.mdx:59** — "Oto najczęstsza konfuzja, z jaką borykają się nowi użytkownicy" is a bookish calque with a broken collocation.
+  - Replace with: "Oto nieporozumienie, na które nowi użytkownicy trafiają najczęściej:".
+- **src/content/guides/pl/relays-demystified.mdx:55** — PL adds client:idle to RelayWorldMap that EN renders without a directive, needlessly hydrating a static component.
+  - Change to "<RelayWorldMap />" to match EN.
+- **src/content/guides/pl/relays-demystified.mdx:162** — The NIP-65 "Instead of / You do" pair mixes moods and calques "let clients figure it out".
+  - Replace with: "**Zamiast**: ręcznie łączyć się z 10+ relayami / **Ty**: publikujesz raz listę preferowanych relayów, a klienci zajmują się resztą".
+- **src/content/guides/pl/relays-demystified.mdx:125** — Community-relay bullet labels "Development" and "Art" are left untranslated.
+  - Translate the labels: "**Programowanie**" and "**Sztuka**" (relay URLs unchanged).
+- **src/content/guides/pl/troubleshooting.mdx:20** — Nostr "events" translated as "wydarzeń" (happenings) instead of the site's established term "zdarzenia".
+  - Change to '- Komunikat "Nie znaleziono zdarzeń"'.
+- **src/content/guides/pl/troubleshooting.mdx:215** — "Nuclear option" rendered literally as "Opcja atomowa" instead of the Polish idiom.
+  - Replace with "- **Ostateczność**: przeinstaluj aplikację i ponownie zaimportuj klucze".
+- **src/content/guides/pl/troubleshooting.mdx:195** — "staje się nie responsywna" is misspelled (split negation) and a calque of "becomes unresponsive".
+  - Replace with "- Zawiesza się lub przestaje reagować".
+- **src/content/guides/pl/troubleshooting.mdx:183** — Inconsistent verb form within one sentence: "Wyciszaj wcześnie, wyciszuj często".
+  - Replace with "- Wyciszaj wcześnie i często".
+- **src/content/guides/pl/troubleshooting.mdx:43** — Section heading "Prewencja" (used three times) is a register mismatch; natural Polish is "Zapobieganie".
+  - Change all three headings to "### Zapobieganie" (line 264: "### Zapobieganie (Zrób To TERAZ)").
+- **src/content/guides/pl/what-is-nostr.mdx:153** — Stray quote-and-dot after the bolded phrase renders visible garbage: 'Brak przycisku "cofnij"."'
+  - Change to '⚠️ **Brak przycisku "cofnij".** Usunięte posty...'
+- **src/content/guides/pl/what-is-nostr.mdx:143** — Gender agreement error: "każdy polubienie" (polubienie is neuter).
+  - Change to "każde polubienie"; the tail is also a calque of "it's all yours to move" — better: "— wszystko to zabierasz ze sobą".
+- **src/content/guides/pl/what-is-nostr.mdx:4** — SEO description has a number-agreement calque: "jak działa zdecentralizowane social media".
+  - Change to: "Dowiedz się, jak działają zdecentralizowane media społecznościowe, dlaczego to ważne i czym różnią się od tradycyjnych platform."
+- **src/content/guides/pl/what-is-nostr.mdx:25** — "followers/follower" left in English although "obserwujący" is the established term in the other PL guides.
+  - Use "obserwujący" in all three spots: "**Twoi obserwujący nie należą do Ciebie.**", "Twoje posty i obserwujący idą z Tobą", "każdy obserwujący".
+- **src/content/guides/pl/what-is-nostr.mdx:108** — Inconsistent inflection of "relay" across the PL guides: declined here ("Relaye", "na relayach") but treated as indeclinable in finding-community ("na tym konkretnym relay", "Każde relay").
+  - Pick one convention (the declined forms "relay / relaye / na relayach" read most naturally) and apply it across pl/what-is-nostr.mdx and pl/finding-community.mdx, including the HoverCard term prop (term="Relaye" vs prose).
+- **src/content/guides/pl/zaps-and-lightning.mdx:314** — EN's <Note type="advanced"> for the Zap Splits intro was swapped for <Callout variant="info">, losing the "advanced" styling used elsewhere.
+  - Restore '<Note type="advanced">...</Note>' around the sentence (the component is globally injected via [slug].astro, no import needed).
+- **src/content/guides/pl/zaps-and-lightning.mdx:391** — Three competing conjugation stems for the verb "to zap" appear in one guide (zapować/zapnąć/zapiować), two of them malformed.
+  - Standardize on the pair zapować (impf.) / zapnąć (pf.): line 391 → "którzy Cię zapują", line 488 → "społeczności zapującej", line 74 → "- Kwota zapa (np. \"21 sats\")".
+- **src/content/guides/pl/zaps-and-lightning.mdx:299** — Locative plural "o Zapach" is a homograph of "zapach" (smell); headings read as "Notifications about Smell".
+  - Rephrase to avoid the locative plural: line 299 → "### Powiadomienia o otrzymanych zapach" is still ambiguous, so use "### Zapy: powiadomienia"; line 517 → "## Sprawdź, Co Wiesz o Zapowaniu"; line 519 → "...czego się nauczyłeś o zapowaniu?"; troubleshooting links → "[Zapy i Lightning](/pl/guides/zaps-and-lightning)".
+- **src/content/guides/pl/zaps-and-lightning.mdx:38** — Mixed-language remnant: "Nostr z Zaps" leaves the English plural undeclined.
+  - Change to "**Nostr z Zapami:**".
+- **src/content/guides/pl/zaps-and-lightning.mdx:527** — The two "Keep reading" link annotations were dropped in Polish.
+  - Append the annotations: "- [Twoje Klucze, Twoja Tożsamość](/pl/guides/keys-and-security) — zapy są związane z kluczem, który je podpisuje, więc warto najpierw ogarnąć właśnie to" and "- [Niezbędne Narzędzia Nostr](/pl/guides/nostr-tools) — portfele i usługi, dzięki którym zapowanie mniej męczy".
+- **src/content/guides/pl/zaps-and-lightning.mdx:469** — Several agreement/calque slips: "Nie czuj się presją", "Zacznij mało, ucząc się", "zap pokazują się", "Przycisk zap nie responsywny".
+  - L469: "- ❌ Nie czuj presji, żeby zapować"; L463: "- ✅ Na początku wysyłaj małe kwoty"; L71: "W obsługujących je klientach zapy pokazują się jako:"; L313: "- Przycisk zap nie reaguje".
+- **src/content/guides/pl/zaps-and-lightning.mdx:260** — "Rule of thumb" rendered as the calque "Zasada kciuka".
+  - Replace with: "> 💡 **Praktyczna zasada**: zapuj tyle, ile dana treść jest dla Ciebie warta. Żadna kwota nie jest za mała!"
+- **src/content/guides/zh/faq.mdx:208** — Machine-translation calques a native reader stumbles on: "你恢复业务了！", "虔诚地保护你的 nsec", and the doubled "客户端端".
+  - Line 208 → "一切恢复如常！"; line 747 → "放心分享你的 npub，像守护生命一样保护你的 nsec"; replace 客户端端 with 客户端侧 (or restructure, e.g. "审核发生在客户端一侧，而不是平台一侧"); line 220 → "传统社交媒体上，Twitter、Instagram 和 TikTok 是各自独立的账号；Nostr 则在所有应用上共用同一个身份。"
+- **src/content/guides/zh/faq.mdx:499** — Troubleshooting heading says "中继存储限制" (relay storage limits) but EN and the bullets underneath are about relay downtime.
+  - Change the heading to "**原因 1：中继问题**".
+- **src/content/guides/zh/faq.mdx:2** — All 16 zh guides lack the seoTitle frontmatter field that en/pl/es/de carry (16/16 each) — a known "not yet" gap with a deliberate fallback, still pending.
+  - When zh SEO titles are wanted, add localized seoTitle to the zh frontmatter of all 16 guides (for the four reviewed: faq, multi-client, nip05-identity, nip17-private-messages), mirroring the pl/es/de approach; no code change needed.
+- **src/content/guides/zh/finding-community.mdx:427** — 'Spam' rendered as 垃圾邮件 (junk email) in a social-posting context, including as an action item in a Don't list.
+  - Line 427: change to '- 刷屏或骚扰他人'. Line 177: change to '- 垃圾信息或低质量帖子'.
+- **src/content/guides/zh/finding-community.mdx:233** — 'Not overwhelming' translated as the ungrammatical fragment 不会压倒性.
+  - Change to '- 不至于让你应接不暇'.
+- **src/content/guides/zh/finding-community.mdx:332** — 'Japanese-focused' rendered as the ungrammatical calque 日本专注.
+  - Change to '- 以日本社区为主'.
+- **src/content/guides/zh/finding-community.mdx:297** — 'Help newcomers find good people' translated as 找到好人, which means morally good persons.
+  - Change to '3. 帮助新人找到值得关注的人'.
+- **src/content/guides/zh/keys-and-security.mdx:146** — 'Follow it religiously' rendered as a literal religious calque.
+  - Change the second sentence to '请严格遵守。'
+- **src/content/guides/zh/keys-and-security.mdx:218** — The 'Not your spouse / Not your best friend...' list is a word-for-word calque that reads as identity statements instead of prohibitions.
+  - Rewrite the four bullets as: '- 配偶也不行\n- 最好的朋友也不行\n- "Nostr 客服"也不行（根本不存在客服）\n- 任何人都不行，永远不行'.
+- **src/content/guides/zh/keys-and-security.mdx:161** — 'Digital fails differently than physical' translated ungrammatically.
+  - Change to '为什么要不同类型？因为数字媒介和物理媒介的损坏方式不同'.
+- **src/content/guides/zh/multi-client.mdx:37** — Several calques: "媒体很棒" for "great for media", "随处工作" for "works everywhere", and "看到相同的帖子为'新'".
+  - Line 37 → "**客户端 A：** 擅长处理媒体"; use "随处可用" consistently for "works everywhere"; line 202 → "同一条帖子在另一个客户端上可能再次显示为'新帖'".
+- **src/content/guides/zh/multi-client.mdx:449** — "Keep reading" sections drop the EN explanatory clauses (and multi-client's link titles diverge from the target guides' actual focus).
+  - Append the translated descriptions, e.g. multi-client: "- [值得了解的 Nostr 工具](/zh/guides/nostr-tools)——让同时使用多个客户端不再折磨的实用工具" and "- [Nostr 故障排除](/zh/guides/troubleshooting)——当两个客户端显示的帖子不一致时该查什么"; nip17: "——这些消息所处的更大威胁模型" and "——密钥一丢，对话就永远找不回来".
+- **src/content/guides/zh/nip05-identity.mdx:144** — Terminology polish: "自我托管" for self-hosting (standard is 自托管/自建) and "Nostr 探索器" for Nostr explorer (探索器 is not an established term).
+  - Use "自托管" (or "自建") throughout, and render explorer as "Nostr 浏览工具（如 nostr.guru）" in both files.
+- **src/content/guides/zh/nostr-tools.mdx:13** — Awkward doubled 使 in the opening sentence ("使使用协议更容易").
+  - Rewrite as "Nostr 拥有丰富的工具和服务生态系统，让这个协议用起来更容易。"
+- **src/content/guides/zh/nostr-tools.mdx:49** — The nsec storage warning is grammatically clumsy and uses 纯文本 where the security term is 明文.
+  - Rewrite as: "**安全提示：** 永远不要把你的 nsec（私钥）以明文形式存放在文件、电子邮件或未加密的云存储中。"
+- **src/content/guides/zh/nostr-tools.mdx:164** — "Nostr Wallet Connect" abbreviated to bare "NWC", an acronym never introduced to this non-developer audience.
+  - Spell it out on both lines as in EN: "Nostr Wallet Connect" (optionally "Nostr Wallet Connect（NWC）" on first mention at line 164, then NWC at line 169).
+- **src/content/guides/zh/quickstart.mdx:247** — 'From zaps to privacy' mistranslated as 'From the Lightning Network to privacy', inconsistent with 打赏 used in the other zh guides.
+  - Change to '从打赏（zap）到隐私——我们都有涵盖。'
+- **src/content/guides/zh/relay-guide.mdx:24** — Cross-links call relays-demystified "中继解释", matching neither its zh page title (中继详解) nor its card title (中继解密).
+  - Change both link texts to 中继详解 to match the destination page title (outbox-model.mdx line 253 already links with the full page title).
+- **src/content/guides/zh/relays-demystified.mdx:121** — 'Communities often run their own relays for focused discussions' loses both 'their own' (attached to relays) and 'focused'.
+  - Replace with: "许多社区会运营自己的中继，用于聚焦特定主题的讨论："
+- **src/content/guides/zh/relays-demystified.mdx:116** — 'General relay' translated as 一般中继, which reads as 'mediocre relay' in Chinese.
+  - Change 一般中继 to 通用中继.
+- **src/content/guides/zh/troubleshooting.mdx:240** — 'This is by design' rendered as the ungrammatical "这是设计如此".
+  - Change to "这是有意为之的设计：Nostr 没有\"忘记密码\"功能，因为没有任何中央服务器保管你的密钥。"
+- **src/content/guides/zh/troubleshooting.mdx:214** — 'Nuclear option' translated literally as 核选项, unidiomatic for this audience.
+  - Change label to "**最后手段**：重新安装应用，再重新导入密钥".
+- **src/content/guides/zh/troubleshooting.mdx:168** — 'curate carefully' rendered as 仔细策划 (to plan/scheme), a false-friend calque; the 'Better:' label is also calqued.
+  - Change to "**更好的做法**：不要批量关注，精挑细选你要关注的账号" (also update the parallel "**更好**" label on line 173 to "**更好的做法**").
+- **src/content/guides/zh/troubleshooting.mdx:406** — 'Post with #help tag' translated without an object, leaving the sentence unfinished.
+  - Change to "- Nostr 本身 - 发布带 #help 标签的帖子求助".
+- **src/content/guides/zh/troubleshooting.mdx:435** — Quiz lead-in "认为你知道...吗？" is a calque of 'Think you know...?'; relay-guide.mdx already has the natural pattern.
+  - Change to "觉得自己已经会解决常见的 Nostr 问题了吗？" to match the established pattern.
+- **src/content/guides/zh/troubleshooting.mdx:84** — 'followers' is 粉丝 in this guide but 关注者 in relay-guide.mdx; the split runs through the whole zh locale (20 粉丝 vs 16 关注者 in guides).
+  - Pick one term for the locale (粉丝 is the more natural social-media word) and align these four guides now; schedule the remaining zh guides and zh.json (6 关注者 / 3 粉丝) in a follow-up pass.
+- **src/content/guides/zh/zaps-and-lightning.mdx:260** — Two calqued sentences in the Sending Zaps section ('No amount is too small' and 'add a message with your zap').
+  - Line 260: "按你觉得内容值多少来打赏，再小的金额也不嫌少！". Line 264: "大多数客户端都允许你在打赏时附上一条留言：".
+- **src/content/guides/zh/zaps-and-lightning.mdx:49** — 'viral content' translated as 病毒内容, which reads like malware-related content.
+  - Change to "- 梗图创作者因内容疯传而收到打赏".
+- **src/content/guides/zh/zaps-and-lightning.mdx:527** — The 'Keep reading' links drop the EN explanatory clauses that tell the reader why each guide is next.
+  - Append the annotations: "- [你的密钥，你的身份](/zh/guides/keys-and-security)：闪电打赏绑定在签名它的密钥上，先把密钥这件事做对" and "- [必备 Nostr 工具](/zh/guides/nostr-tools)：让打赏更省心的钱包和服务".
+- **src/data/glossary/en.ts:47** — Zap definition says the payment is 'sent over Nostr', but the money travels over Lightning; Nostr only carries the receipt (NIP-57).
+  - EN: 'A Bitcoin Lightning payment attached to a Nostr note or profile. The money travels over the Lightning Network; Nostr records a public receipt. Used to tip or support other users.' Port the same correction to pl ('Płatność Bitcoin Lightning powiązana z notatką lub profilem w Nostr. Pieniądze idą siecią Lightning, a Nostr zapisuje publiczne potwierdzenie. Służy do dawania napiwków i wspierania innych użytkowników.'), es ('Un pago de Bitcoin por Lightning vinculado a una nota o perfil de Nostr. El dinero viaja por la red Lightning; Nostr registra un recibo público. Se usa para dar propinas o apoyar a otros usuarios.') and de ('Eine Bitcoin-Lightning-Zahlung, verknüpft mit einer Nostr-Notiz oder einem Profil. Das Geld fließt über das Lightning-Netzwerk; Nostr speichert eine öffentliche Quittung. Dient dazu, anderen Nutzern Trinkgeld zu geben oder sie zu unterstützen.').
+- **src/data/glossary/pl.ts:8** — Polish glossary SEO title hardcodes '(2026)', which goes stale in four months and diverges from the en/es/de title pattern.
+  - Change pl seoTitle to 'Słownik pojęć Nostr: npub, nsec, relay i więcej' (no year), matching the other locales.
+- **src/i18n/locales/ar.json:315** — "hardware" left untranslated mid-sentence in five security strings, producing awkward code-switched phrases
+  - Use Arabic with the English term parenthesized on first use, keeping "signer" as the file already does: "مفتاح hardware" → "جهاز توقيع خارجي", "أجهزة التوقيع hardware" → "أجهزة التوقيع المادية (hardware signers)", "محفظة hardware" → "محفظة مادية (hardware wallet)".
+- **src/i18n/locales/ar.json:2440** — "crashes" rendered as "ينهار" (collapses) in four wizard strings; standard Arabic UI wording is "يتعطل"
+  - Replace "ينهار" with "يتعطل" in all four strings (e.g. "العميل يتعطل أو يعرض أخطاء", "التطبيق يتعطل فور فتحه.").
+- **src/i18n/locales/ar.json:3159** — followPack alone transliterates Nostr, Lightning, and sats into Arabic script, breaking the file-wide Latin-term convention
+  - Align with the rest of the file: "مستخدمو Nostr", "عبر Lightning", "أماكن تنفق فيها sats" (or adopt the transliterations globally, but do it in one direction).
+- **src/i18n/locales/ar.json:1051** — Troubleshooting empty-feed quiz question freely rewritten (prompt, correct option, distractor, and explanation all diverge from EN)
+  - If EN parity is wanted, retranslate: prompt "خلاصتك فارغة - ما السبب الأرجح؟", option b "لست متصلاً بأي Relays، أو لا يوجد محتوى على هذه الـ Relays", option c "هاتفك معطل", explanation "الخلاصات الفارغة تعني عادةً مشكلة في Relays. تحقق من اتصالك بـ Relays نشطة في إعدادات عميلك وجرب إضافة Relays عامة شائعة." Otherwise accept the rewrite knowingly.
+- **src/i18n/locales/de.json:1657** — Quiz option labels keep lowercase English 'relays' instead of 'Relays'.
+  - Change to "2-4 Relays" and "10-15 Relays".
+- **src/i18n/locales/de.json:153** — Quiz prompt narrows 'item' to 'Schlüssel' although one distractor is a seed phrase, not a key.
+  - Rephrase to "Was davon kannst du bedenkenlos mit jedem teilen?"
+- **src/i18n/locales/de.json:1296** — Denglish verb 'backupen' in a quiz prompt.
+  - "Was ist der sicherste Weg, deine Nostr-Schlüssel zu sichern?"
+- **src/i18n/locales/de.json:1669** — Financial calque 'abnehmende Renditen' and odd 'entleeren den Akku' in the outbox quiz explanation.
+  - "Mehr Relays belasten den Akku und bringen immer weniger zusätzlichen Nutzen, da sich Inhalte ohnehin von selbst verbreiten."
+- **src/i18n/locales/de.json:2432** — Unidiomatic phrase 'setzt deinen Account aufs Risiko' in the backup skip warning.
+  - "Ohne Backup gefährdest du deinen Account." (keep the rest of the sentence as is)
+- **src/i18n/locales/de.json:1468** — English apostrophe genitive ('Nostr's', 'Bluesky's') used four times in the protocol comparison quiz.
+  - Use "Nostrs" / "Blueskys" without apostrophe, or rephrase: "Was ist die Kernphilosophie der Nostr-Architektur?", "Das AT-Protokoll von Bluesky ...", "Das Design von Nostr ...", "Die Dezentralisierung von Nostr ...".
+- **src/i18n/locales/de.json:383** — Gender error: 'unerwünschte Spam' (Spam is masculine).
+  - "... und vermeide unerwünschten Spam und unerwünschte Werbung."
+- **src/i18n/locales/de.json:943** — Nonstandard comparative 'wenigeren' in a quiz option.
+  - "Verbinde dich mit weniger, dafür hochwertigen Relays statt mit vielen langsamen"
+- **src/i18n/locales/de.json:1855** — Case error: 'folgen' needs dative, but the sentence supplies only 'dich'.
+  - "Teile ihn mit anderen, damit sie dich finden und dir folgen können."
+- **src/i18n/locales/de.json:1983** — Missing dative with 'folgen' in two wizard strings: 'Kann Nutzer nicht folgen'.
+  - "Kann dem Nutzer nicht folgen" in both places.
+- **src/i18n/locales/de.json:130** — Gender mismatch and calque in Mastodon-comparison option: 'einen Server/Instanz zum Beitritt wählt'.
+  - "Bei Nostr muss man keinen Server und keine Instanz wählen, um beizutreten"
+- **src/i18n/locales/en.json:1669** — Three different relay-count recommendations across guides with no reconciliation (2-4 vs 3-10 vs 5-10).
+  - Add one distinguishing sentence to the outboxModel explanation: "That 2-4 is for your published relay list (NIP-65); your client may connect to more relays overall." and align the partialFeed wizard step to the same 3-10 range used in the relay guides.
+- **src/i18n/locales/en.json:2534** — Primal's cons read like 2023 and omit its built-in wallet, the feature most relevant to creators.
+  - Replace the "Newer app" and "Some features still in development" cons with current ones (e.g. "Relies on Primal's caching servers", matching the existing "Privacy concerns for some" pro/con framing) and add "Built-in wallet" to the pros.
+- **src/i18n/locales/es.json:153** — Key terminology split between "llave" (quizzes) and "clave" (tools) for the same concept
+  - Standardize on "clave" (the term the interactive tools and backup flow already use) when re-translating the quiz sets; the llave occurrences are all inside the stale quiz content, so the main re-translation fix resolves this if done with "clave".
+- **src/i18n/locales/es.json:2478** — Iris pro "Open source" left in English
+  - Translate to "Código abierto".
+- **src/i18n/locales/es.json:2430** — "Gran onboard" is not Spanish (nor the English term)
+  - Use "Excelente proceso de bienvenida" (or the loanword "Gran onboarding" if brevity matters in the card).
+- **src/i18n/locales/es.json:2402** — Feature filter label "Media" reads as "average" in Spanish
+  - Change to "Multimedia".
+- **src/i18n/locales/es.json:1960** — "¿Qué sucede cuando intentas zap?" uses the bare English noun as a verb
+  - Use "¿Qué sucede cuando intentas enviar un zap?" (or "...cuando intentas zapear?" to match zapError.steps[3]).
+- **src/i18n/locales/es.json:1778** — Desktop platform label inconsistently rendered as "Escritorio" in the recommender but "Desktop" in the comparison table
+  - Pick one term for both components; "Escritorio" is the more natural Spanish and already used in the recommender, so change the clientComparisonTable desktop labels/tags to "Escritorio".
+- **src/i18n/locales/hi.json:146** — Grammar error in keysAndSecurity guide description: oblique plural used as subject
+  - Change the opening to: "Nostr कुंजियाँ कैसे काम करती हैं, उन्हें सुरक्षित रूप से कैसे रखें, और अपनी पहचान कभी न खोने के लिए सर्वोत्तम अभ्यास सीखें।"
+- **src/i18n/locales/hi.json:2397** — Typo "इसी तरहा" in backup checklist password-manager item
+  - Change to: "1Password, Bitwarden, KeePass, या इसी तरह का सुरक्षित स्टोरेज".
+- **src/i18n/locales/hi.json:2401** — Word-for-word rendering of "safe, secure location" duplicates "सुरक्षित" in the paper-backup item
+  - Change to: "सुरक्षित जगह पर रखी हुई भौतिक (कागज़) प्रति".
+- **src/i18n/locales/pl.json:772** — The word "zap" is inflected inconsistently, including double-plural forms built on the English plural "zaps".
+  - Standardize on the declined base "zap": zapa, zapy, zapów, zapami ("Jak odebrać pierwszego zapa?", "Problemy z zapami", "Jak bezpiecznie skonfigurować zapy?").
+- **src/i18n/locales/pl.json:2342** — English-style Title Case is used throughout the PL locale, which is nonstandard Polish orthography and reads as machine-translated.
+  - Sweep the locale to sentence case (capitalize only the first word and proper nouns): "Zrób kopię zapasową swoich kluczy", "Wygeneruj nową parę kluczy", "Przyjazny dla początkujących".
+- **src/i18n/locales/pl.json:962** — Guide title "Wielu Klientów" is an oblique-case fragment that is ungrammatical as a standalone title.
+  - Rename to "Korzystanie z wielu klientów" (or "Wiele klientów naraz").
+- **src/i18n/locales/pl.json:4** — Guide title "Nostr Wyjaśniony Prosto" is a word-for-word calque of "Nostr Explained Simply".
+  - Rename to "Nostr w prostych słowach".
+- **src/i18n/locales/pl.json:1572** — Wrong declension "na Mastodonzie" in the protocol comparison explanation.
+  - Change to "na Mastodonie".
+- **src/i18n/locales/pl.json:1804** — Mid-word capital in "WBudowany Portfel".
+  - Change to "Wbudowany portfel".
+- **src/i18n/locales/pl.json:591** — The NIP-05 purpose question's correct answer says NIP-05 "replaces" the npub, which misstates the mechanism (it maps to it).
+  - Change the label to "Dodaje czytelny adres powiązany z Twoim npub".
+- **src/i18n/locales/pl.json:2420** — The backup checklist tip dropped EN's scare quotes around "support", losing the anti-scam nuance.
+  - Change to: "Nie udostępniaj kluczy nikomu, także osobom podającym się za \"pomoc techniczną\"".
+- **src/i18n/locales/pl.json:1155** — PL-only quiz question teaches non-technical creators that running their own relay is worthwhile, marking "no, it's too hard" as wrong.
+  - Replace the question with a creator-relevant one (e.g. how to check a relay's status in the client), or soften the correct answer to "Można, ale to opcja dla osób technicznych - większości wystarczą publiczne relaye" and adjust options accordingly.
+- **src/i18n/locales/pl.json:951** — In the zap troubleshooting question the explanation validates the very option that is marked wrong.
+  - Replace option c with something clearly false, e.g. "Relay pobiera prowizję od zapów", and keep the explanation.
+- **src/i18n/locales/pl.json:2719** — Literal calques in the relay playground: "Plac Zabaw Relay" and a "Zdrowie" tab for server health.
+  - Title: "Poligon relayów" (or keep "Relay Playground" as a product-like name); tab: "Stan", noData: "Brak danych o stanie relaya".
+- **src/i18n/locales/pl.json:736** — "Samodzielny portfel Lightning" is a nonstandard rendering of self-custodial, and its explanation mixes in the untranslated word "Custodial" with English word order.
+  - Label: "Własny (niepowierniczy) portfel Lightning"; explanation: "Portfele powiernicze (custodial) wymagają zaufania do operatora."
+- **src/i18n/locales/zh.json:1494** — English word "relays" left untranslated inside a correct-answer label while the rest of the file consistently uses 中继.
+  - "Nostr 更简单，没有中央身份系统——只有密钥和中继" (also "中央身份验证" is off; the intended contrast is with a central identity system, not authentication).
+- **src/i18n/locales/zh.json:194** — Wrong measure word in the 3-2-1 backup explanation: 三种副本 means "three kinds of copies", not "three copies".
+  - "至少保存三份副本，分布在两种介质上，其中一份离线（纸张、金属板）。云端截图是单点故障。"
+- **src/i18n/locales/zh.json:516** — Ungrammatical fragment "永久，保证的" as an option label (calque of "Forever, guaranteed").
+  - "永久保留，绝对保证" — keeps it clearly the over-promising distractor while reading as Chinese.
+- **src/i18n/locales/zh.json:963** — multiClient guide description renders "your work/data is your own" as 你的工作是你自己的, which reads "your job is your own".
+  - This string belongs to the diverged set and should be replaced by a translation of the current EN description ("How to use multiple clients simultaneously and keep your data in sync."), e.g. "如何同时使用多个客户端并保持数据同步。" If kept as-is, at minimum change to "你的数据属于你自己——用任何客户端都能访问。"

@@ -24,7 +24,7 @@ Imagina Nostr como una red de oficinas de correos alrededor del mundo.
 - **Los relays** son oficinas de correos
 - **Las publicaciones** son cartas que envías
 
-Aquí está la diferencia clave de las redes sociales tradicionales: **Tú eliges a dónde enviar tu correo.**
+Esta es la diferencia clave frente a las redes sociales tradicionales: **Tú eliges a dónde enviar tu correo.**
 
 <DiagramCompare
   panels={[
@@ -52,7 +52,7 @@ En Nostr, no estás encerrado en un proveedor de servicios. Puedes:
 - Cambiar de relay en cualquier momento
 - Ejecutar tu propio relay
 
-<RelayWorldMap client:idle />
+<RelayWorldMap />
 
 ## Por Qué las Publicaciones No Se Sincronizan 🔄
 
@@ -105,25 +105,23 @@ La mayoría de los clientes de Nostr te conectan a varios relays por defecto. Pe
 
 <PostFlowSimulator client:idle />
 
-## Elegiendo Relays 🔌
+## Cómo Elegir Relays 🔌
 
 ### Recomendaciones por Defecto
 
 Si estás empezando, quédate con estos relays populares y confiables:
 
-| Relay                      | Descripción      | Confianza |
-| -------------------------- | ---------------- | --------- |
-| `wss://relay.damus.io`     | Relay principal de Damus | ⭐⭐⭐⭐⭐  |
-| `wss://nostr.wine`         | Relay general    | ⭐⭐⭐⭐    |
-| `wss://relay.snort.social` | Snort social     | ⭐⭐⭐⭐    |
+| Relay                    | Descripción              | Coste   |
+| ------------------------ | ------------------------ | ------- |
+| `wss://relay.damus.io`   | Relay principal de Damus | Gratis  |
+| `wss://nos.lol`          | Relay general muy usado  | Gratis  |
+| `wss://relay.primal.net` | Relay público de Primal  | Gratis  |
 
 ### Descubrimiento Basado en Intereses
 
-Las comunidades a menudo ejecutan sus propios relays para discusiones enfocadas:
+Las comunidades a menudo llevan sus propios relays para conversaciones más centradas. `wss://nostr.bitcoiner.social` es un ejemplo veterano, montado alrededor de Bitcoin.
 
-- **Bitcoin**: `wss://nostr.bitcoiner.social`
-- **Desarrollo**: `wss://relay.nostrdevs.com`
-- **Arte**: `wss://relay.nostrich.art`
+Los relays temáticos aparecen y desaparecen, así que una lista impresa en una guía se queda vieja enseguida. Usa mejor el explorador de aquí abajo: comprueba cada relay mientras lo miras, así que solo copias direcciones que están respondiendo ahora mismo.
 
 <RelayExplorer client:idle />
 
@@ -138,7 +136,8 @@ Las comunidades a menudo ejecutan sus propios relays para discusiones enfocadas:
 
 **Relays Pagados**
 
-- Usualmente requieren una pequeña tarifa (a menudo 1000-5000 sats/mes)
+- Piden un pequeño pago en bitcoin: unos cobran una vez al entrar, otros cobran cada mes
+- Los precios varían mucho, desde unos pocos miles de sats hasta cerca de 20.000
 - Mejor rendimiento
 - Menos spam
 - Apoyan a los operadores de relays
@@ -147,7 +146,7 @@ Las comunidades a menudo ejecutan sus propios relays para discusiones enfocadas:
 
 ---
 
-## Avanzado: Modelo Outbox (NIP-65) [AVANZADO]
+## El Modelo Outbox (NIP-65) [AVANZADO]
 
 <Note type="advanced">
   Esta sección es opcional. Puedes usar Nostr perfectamente bien sin
@@ -158,35 +157,33 @@ Las comunidades a menudo ejecutan sus propios relays para discusiones enfocadas:
 
 NIP-65 introduce una forma más inteligente de manejar relays llamada el "modelo outbox".
 
-**En lugar de**: Tú conectándote manualmente a 10+ relays
-**Haces**: Publicar tu lista de relays preferidos una vez, dejar que los clientes lo resuelvan
+**En lugar de** conectarte a mano a más de 10 relays, **publicas** una vez tu lista de relays preferidos y dejas que los clientes se encarguen del resto.
 
 ### Cómo Funciona
 
-```
-1. Publicas una lista de relays:
-   {
-     "read": ["wss://relay-a.com"],
-     "write": ["wss://relay-b.com"]
-   }
+Tu cliente publica una lista corta, y cada relay que aparece en ella queda marcado como un sitio donde escribes, un sitio del que lees, o ambos. Los clientes de otras personas buscan esa lista antes de salir a buscarte.
 
-2. Otros clientes leen esto y saben:
-    - Dónde encontrar tus publicaciones (relays de lectura)
-    - Dónde enviarte mensajes (relays de escritura)
-```
+- Los relays de **escritura** son donde publicas. Cuando alguien te sigue, su cliente va a tus relays de escritura a recoger tus publicaciones.
+- Los relays de **lectura** son donde llega lo que va dirigido a ti: respuestas, menciones, notificaciones. Tu cliente los vigila para que las veas.
 
-### Configurando Relays Personales
+Si inviertes los dos, tus publicaciones acaban en un sitio donde nadie piensa en mirar. La mayoría de los clientes ponen las marcas por ti cuando editas tu lista de relays en los ajustes, así que rara vez tocarás esto a mano.
 
-Para usuarios avanzados, ejecutar tu propio relay te da:
+> 📚 El recorrido completo, con el aspecto que tiene la lista de verdad, está en nuestra [guía del modelo outbox](/es/guides/outbox-model).
+
+### Configurar Relays Personales
+
+Para usuarios avanzados, llevar tu propio relay te da:
 
 - **Control completo** sobre tus datos
-- **Confiabilidad perfecta** (sin dependencia de otros)
-- **Privacidad** (solo tus datos en el relay)
+- **Una copia permanente** de todo lo que publicas, en tus manos
+- **Independencia** de las decisiones de cualquier operador concreto
+
+Lo que no te da es fiabilidad ni privacidad. Un relay en tu propio servidor es tan fiable como ese servidor, y un operador grande suele mantener mejor uptime del que mantendrás tú. La privacidad es un malentendido aún mayor: todo lo que publicas sigue saliendo hacia tus otros relays y sigue siendo legible públicamente allí. Un relay personal solo cambia dónde se guarda una copia de tus publicaciones. Todo el mundo las sigue leyendo.
 
 Software popular de relay personal:
 
 - [strfry](https://github.com/hoytech/strfry) - Implementación rápida en C++
-- [nostr-rs-relay](https://gitlab.com/soapbox-pub/nostr-rs-relay) - Implementación en Rust
+- [nostr-rs-relay](https://github.com/scsibug/nostr-rs-relay) - Implementación en Rust
 
 > 📚 Ve nuestra [Guía de Relays](/es/guides/relay-guide) para instrucciones detalladas de configuración.
 
@@ -222,13 +219,13 @@ En la mayoría de los clientes, puedes:
 ### "Mis publicaciones desaparecen"
 
 - Algunos relays eliminan contenido antiguo para ahorrar espacio
-- Conéctate a más relays para redundancia
-- Considera un relay pagado para almacenamiento permanente
+- Conéctate a más relays, para que ninguno sea el único que guarda tu copia
+- Los relays de pago suelen conservar las publicaciones mucho más tiempo, pero en Nostr nada está garantizado para siempre: los relays podan datos, cambian sus reglas o cierran
 
 ### "El relay no se conecta"
 
 - Verifica tu conexión a internet
-- Intenta la URL del relay en un navegador (debería mostrar error/página ws)
+- Cambia el `wss://` del principio de la dirección por `https://` y abre eso en tu navegador: un relay que funciona responde con una página de información o un bloque corto de texto, y uno muerto no te devuelve nada
 - El relay podría estar caído - prueba otro
 
 <TroubleshootingWizard client:idle />

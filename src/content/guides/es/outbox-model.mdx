@@ -44,14 +44,14 @@ El modelo de bandeja de salida (NIP-65) es como tener una **agenda de direccione
 
 ### La Analogía del Correo Extendida
 
-¿Recuerdas que los relays son como correos? El modelo de bandeja de salida agrega un **sistema de direcciones de reenvío**:
+¿Recuerdas que los relays son como oficinas de correos? El modelo de bandeja de salida agrega un **sistema de direcciones de reenvío**:
 
-**Correo Tradicional:**
-- Tienes un buzón en un solo correo
+**Oficina de correos tradicional:**
+- Tienes un buzón en una sola oficina de correos
 - Si te mudas, la gente envía correo al lugar equivocado
 
 **Modelo de Bandeja de Salida de Nostr:**
-- Tienes una **lista pública** de correos donde recibes correspondencia
+- Tienes una **lista pública** de oficinas de correos donde recibes correspondencia
 - Si te "mudas" (cambias de relays), actualizas tu lista pública
 - Todos saben dónde encontrarte
 
@@ -69,7 +69,7 @@ Tu cliente de Nostr crea automáticamente una **lista de relays** que le dice a 
     
     // Relays donde lees menciones (tu "buzón")
     ["r", "wss://nos.lol", "read"],
-    ["r", "wss://relay.snort.social", "read"]
+    ["r", "wss://relay.primal.net", "read"]
   ]
 }
 ```
@@ -89,11 +89,12 @@ Tu cliente de Nostr crea automáticamente una **lista de relays** que le dice a 
 Lista de Relays de Alicia (kind:10002):
   - wss://relay.a.com [write]
   - wss://relay.b.com [write]
+  - wss://relay.inbox.com [read]
 
 Beto sigue a Alicia. El cliente de Beto ve:
   "Revisa wss://relay.a.com y wss://relay.b.com para ver las publicaciones de Alicia"
 
-Resultado: ¡Beto se conecta a ambos relays y ve el contenido de Alicia! ✅
+Resultado: ¡Beto se conecta a los dos relays de escritura y ve el contenido de Alicia! ✅
 ```
 
 ### Escenario 2: Carlos Menciona a Alicia
@@ -101,11 +102,11 @@ Resultado: ¡Beto se conecta a ambos relays y ve el contenido de Alicia! ✅
 ```
 Carlos menciona a @alice en una publicación
 
-El cliente de Carlos revisa la lista de relays de Alicia:
-  - wss://relay.a.com [read]
-  - wss://relay.b.com [read]
+El cliente de Carlos revisa esa misma lista de relays y busca
+la entrada [read], que es el buzón de Alicia:
+  - wss://relay.inbox.com [read]
 
-El cliente de Carlos envía la mención a los relays de LECTURA de Alicia
+El cliente de Carlos envía ahí la mención
 
 Resultado: ¡Alicia ve la mención incluso si está desconectada! ✅
 ```
@@ -116,7 +117,7 @@ Resultado: ¡Alicia ve la mención incluso si está desconectada! ✅
 Alicia deja de usar relay.a.com, empieza a usar relay.c.com
 
 1. Alicia actualiza su lista de relays kind:10002
-2. Se propaga a todos los relays conectados
+2. Su cliente publica la lista actualizada en sus relays
 3. Los seguidores automáticamente empiezan a revisar relay.c.com
 
 Resultado: ¡No hay publicaciones perdidas, no se necesita reconexión manual! ✅
@@ -150,12 +151,12 @@ Los clientes solo se conectan a los relays que tú usas, no a todos los relays e
 
 ### Mantén Tu Lista Pequeña
 
-**Recomendado:** 2-4 relays en total
+**Recomendado:** una lista corta. NIP-65 propone 2-4 relays de escritura y 2-4 de lectura, así que la mayoría acaba entre cuatro y ocho en total.
 
 ¿Por qué?
 - Más relays = más conexiones = más consumo de batería
-- Rendimientos decrecientes después de 4 relays
-- La mayoría del contenido se propaga a los relays populares de todos modos
+- Los rendimientos decrecen en cuanto tus seguidores ya pueden llegar a ti
+- Los clientes de quienes te siguen leen directamente los relays de tu lista, así que las entradas de más no aportan nada
 
 ### Mezcla Lectura y Escritura
 
@@ -172,9 +173,9 @@ Leer de: Relay popular B (para menciones)
 ### Elige Relays Confiables
 
 Usa relays conocidos y confiables que:
-- Tengan buen tiempo de actividad
-- Almacenen contenido permanentemente (no efímero)
-- Estén geográficamente cerca (menor latencia)
+- Estén en línea cuando los necesitas, y rara vez se caigan
+- Guarden tus publicaciones a largo plazo (algunos relays borran en silencio lo más antiguo para ahorrar espacio)
+- Estén alojados cerca de ti, para que la app se sienta más rápida
 
 ---
 
@@ -182,7 +183,7 @@ Usa relays conocidos y confiables que:
 
 ### "Necesito estar en cada relay"
 
-**Incorrecto:** Estar en 20+ relays no ayuda. Tus publicaciones se propagan a través de la red. Quédate con 2-4 relays de calidad.
+**Incorrecto:** Estar en 20+ relays no ayuda. Los relays no se copian las publicaciones entre sí, así que un relay del que nadie lee es solo una conexión de más. Tu lista de relays ya manda a los clientes de tus seguidores al sitio correcto, así que con un puñado de relays buenos basta.
 
 ### "Si dejo un relay, pierdo a mis seguidores"
 
@@ -190,7 +191,7 @@ Usa relays conocidos y confiables que:
 
 ### "Los mensajes privados también pasan por la bandeja de salida"
 
-**Parcialmente cierto:** NIP-17 (mensajes privados) usa el modelo de bandeja de salida para entrega, pero con encriptación extra.
+**No exactamente:** los mensajes privados (NIP-17) viajan a una lista de relays para DMs aparte (kind:10050), no a la lista kind:10002 de la que trata esta guía, y van encriptados de extremo a extremo. Tu cliente mantiene las dos listas. Si los DMs no llegan, la lista que hay que revisar es la de DMs.
 
 ### "Necesito decirle manualmente a la gente mis relays"
 
@@ -220,20 +221,20 @@ Tu lista de relays es **pública**. Cualquiera puede ver qué relays usas. Esto 
 
 ---
 
-## Toma Acción
+## Pasa a la Acción
 
 ### Revisa Tus Relays Actuales
 
 Mira en la configuración de tu cliente de Nostr:
 - ¿A qué relays estás conectado?
 - ¿Están marcados como "read" o "write"?
-- ¿Tienes 2-4 en total?
+- ¿Es una lista corta, de unos cuatro a ocho?
 
 ### Optimiza Tu Configuración
 
-**Si tienes 5+ relays:**
-- Elimina los que tienen mal tiempo de actividad
-- Mantén tus 3-4 favoritos
+**Si tienes 10+ relays:**
+- Elimina los que se caen a menudo
+- Quédate con un puñado de favoritos, unos cuantos para escribir y un par para leer
 - Asegúrate de que al menos uno sea "read" para menciones
 
 ### Comparte el Conocimiento
@@ -251,5 +252,5 @@ Ayuda a otros a entender:
 
 ## Sigue leyendo
 
-- [Cómo Viajan las Publicaciones: Relays Explicados](/es/guides/relays-demystified)
-- [Guía de Gestión de Relays](/es/guides/relay-guide)
+- [Cómo Viajan las Publicaciones: Relays Explicados](/es/guides/relays-demystified): qué es de verdad un relay, antes de ponerte a ajustar cuáles usas
+- [Guía de Gestión de Relays](/es/guides/relay-guide): cómo elegir un conjunto de lectura y escritura que haga funcionar el modelo de bandeja de salida en tu caso

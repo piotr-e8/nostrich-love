@@ -7,9 +7,12 @@ category: "reference"
 prerequisites: ["keys-and-security", "quickstart"]
 ---
 
-## Nostr 用户遇到的最常见问题的快速参考指南。
+这是一份快速参考指南，收录 Nostr 用户最常遇到的问题。
+
+下面几乎所有问题都源自同一件事：你的帖子、个人资料和关注列表都存在中继上，而不是存在应用里面。动态一片空白，或者某条帖子好像消失了，通常只是说明应用连错了服务器，并不是你的作品没了。
 
 import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz";
+import { TroubleshootingWizard } from "@components/interactive/TroubleshootingWizard";
 
 ## 问题："我的动态是空的" 📭
 
@@ -31,7 +34,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - **原因**：没有连接到任何中继
 - **解决方案**：检查设置 → 中继，确保你连接到 3-5 个中继
-- **快速修复**：添加热门中继：`wss://relay.damus.io`、`wss://nostr.wine`
+- **快速修复**：添加热门的免费中继：`wss://relay.damus.io`、`wss://nos.lol`
 
 **3. 客户端缓存为空**
 
@@ -73,7 +76,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - **原因**：客户端未能向所有中继发布
 - **解决方案**：检查哪些中继收到了你的帖子
-- **注意**：发布后，无法追溯地向新中继重新广播
+- **好消息**：你的帖子带有签名、可以搬运，所以之后还能再发一次。很多客户端在笔记的菜单里藏了一个"广播"选项，能把那条笔记重新发布到你现在用的中继上，包括你后来才添加的那些。
 
 ### 什么同步与什么不同步
 
@@ -81,7 +84,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 | -------------- | -------------------- | -------------------------- |
 | 你的帖子     | ✅ 是               | 如果发布到共享中继 |
 | 你的关注   | ✅ 是               | 公开数据                |
-| 你的粉丝 | ✅ 是               | 公开数据                |
+| 你的关注者 | ✅ 是               | 公开数据                |
 | 你的个人资料   | ✅ 是               | 公开数据                |
 | 草稿         | ❌ 否                | 每个客户端本地存储  |
 | 应用设置   | ❌ 否                | 客户端特定            |
@@ -115,7 +118,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - **原因**：达到速率限制
 - **解决方案**：放慢速度，等待几分钟
-- **注意**：大多数中继限制每秒 1-5 个帖子
+- **注意**：中继会限制高频发帖，以此压制垃圾信息。各家中继的限制不一样，停一小会儿通常就恢复了。
 
 ---
 
@@ -125,14 +128,14 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - 使用你的名字/照片的虚假账号
 - 有人声称是你
-- 困惑的粉丝询问哪个账号是真实的
+- 困惑的关注者询问哪个账号是真实的
 
 ### 原因与解决方案
 
-**1. 获取 NIP-05 验证**
+**1. 拿一个 NIP-05 地址**
 
 - **解决方案**：设置 NIP-05 身份（参见 [指南](/zh/guides/nip05-identity)）
-- **为什么**：验证徽章区分真实与虚假
+- **为什么**：一个建立在你自己域名上的地址，比如 you@yoursite.com，把账号和你自己的网站绑在一起。任何人都能弄到某个 NIP-05 地址，冒充者也不例外，所以要让别人去看域名，而不是看那个对勾。
 
 **2. 广泛分享你的 npub**
 
@@ -152,7 +155,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 ---
 
-## 问题："动态中有垃圾邮件" 🗑️
+## 问题："动态里全是垃圾信息" 🗑️
 
 ### 症状
 
@@ -162,20 +165,20 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 ### 原因与解决方案
 
-**1. 关注了垃圾邮件账号**
+**1. 关注了发垃圾信息的账号**
 
 - **解决方案**：取消关注垃圾来源
-- **更好**：不要批量关注；仔细策划
+- **更好的做法**：不要批量关注，精挑细选你要关注的账号
 
 **2. 审核不良的中继**
 
 - **解决方案**：断开与低质量中继的连接
-- **更好**：使用付费或仅限邀请的中继
+- **更好的做法**：使用付费或仅限邀请的中继
 
 **3. 没有静音列表**
 
 - **解决方案**：在客户端中创建静音列表
-- **如何**：个人资料 → 静音账号 → 添加垃圾发送者
+- **如何**：个人资料 → 静音账号 → 把发垃圾信息的账号加进去
 
 ### 最佳实践
 
@@ -206,12 +209,13 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - **原因**：连接到 20+ 个中继压垮了客户端
 - **解决方案**：减少到 4-8 个活动中继
-- **优化**：使用 NIP-65 发件箱模型
+- **优化**：让应用替你挑选中继，参见[发件箱模型指南](/zh/guides/outbox-model)
 
 **3. 缓存损坏**
 
-- **解决方案**：清除应用数据（你不会丢失帖子/关注）
-- **核选项**：重新安装应用，重新导入密钥
+- **先做**：确认你的 nsec 在应用之外还有一份备份。清除数据会一并抹掉设备上保存的密钥，没有备份的话，账号谁也救不回来。
+- **然后**：清除应用数据。帖子、关注和个人资料都留在中继上，重新登录后就会回来。
+- **最后手段**：重新安装应用，用备份的密钥重新登录；如果你用签名应用，就用签名应用登录。
 
 ### 尝试不同的客户端
 
@@ -219,8 +223,8 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 | 平台           | 替代方案          |
 | ------------------ | -------------------- |
-| iOS（Damus）        | Nos、Nostur          |
-| Android（Amethyst）| Primal 网页、Nostros  |
+| iOS（Damus）        | Nostur、Primal       |
+| Android（Amethyst）| Primal、YakiHonne    |
 | 网页（Primal）       | Iris、Snort、Coracle |
 
 ---
@@ -237,7 +241,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 > ⚠️ **如果你没有密钥备份，你的账号无法恢复。**
 
-这是设计如此——Nostr 没有"忘记密码"，因为没有中央服务器持有你的密钥。
+这是有意为之的设计：Nostr 没有"忘记密码"功能，因为没有任何中央服务器保管你的密钥。
 
 ### 你能做什么
 
@@ -245,7 +249,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - 检查密码管理器
 - 寻找截图
-- 检查电子邮件中的欢迎消息
+- 翻一翻笔记类应用，以及旧设备的云备份
 - 检查安装了客户端的其他设备
 
 **2. 检查客户端是否存储了密钥**
@@ -281,7 +285,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 **1. 中继宕机**
 
-- **测试**：在浏览器中打开中继 URL（应该显示错误或 ws 页面）
+- **测试**：把地址开头的 `wss://` 换成 `https://`，在浏览器里打开。运行正常的中继会返回一个简短的信息页，或者一句提示你改用 Nostr 客户端的话。什么都不返回，就说明它多半宕机了。
 - **解决方案**：检查中继的状态页面或社交媒体
 - **修复**：暂时移除，恢复时重新添加
 
@@ -324,18 +328,18 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - **检查**：钱包余额
 - **解决方案**：向钱包添加资金
-- **最低**：通常需要 100+ 聪用于费用
+- **注意**：哪怕 1 聪的闪电打赏也能成功。但钱包刮到一分不剩时，仍可能卡在路由费或钱包自己的最低限额上，所以留一点余量在里面。
 
 **3. 钱包离线**
 
 - **原因**：非托管钱包需要在线
 - **解决方案**：打开你的钱包应用，确保它正在运行
-- **替代方案**：使用托管钱包如 Alby
+- **替代方案**：用托管钱包，比如 Coinos，或者客户端内置的钱包（Primal 就有）。不管你的手机醒着还是睡着，它们都在线。取舍见[闪电打赏指南](/zh/guides/zaps-and-lightning)。
 
 **4. 错误的闪电地址**
 
 - **检查**：你的闪电地址在个人资料中正确吗？
-- **测试**：尝试给自己发送 10 聪
+- **测试**：请朋友给你打赏 10 聪，或者用第二个钱包付款。大多数钱包拒绝支付自己开出的发票，所以自己付给自己什么也证明不了。
 - **修复**：在个人资料设置中更新地址
 
 ---
@@ -377,7 +381,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 ## 快速决策树 🌳
 
-<TroubleshootingWizard />
+<TroubleshootingWizard client:idle />
 
 **遇到问题？遵循以下步骤：**
 
@@ -393,22 +397,17 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 ### 社区帮助
 
-**Telegram：**
-
-- [Nostr Protocol](https://t.me/nostr_protocol) - 一般帮助
-- [Damus](https://t.me/damusios) - iOS 特定
-- [Amethyst](https://t.me/AmethystNostr) - Android 特定
-
-**其他平台：**
-
+- [Telegram 上的 Damus 群](https://t.me/damusios) - iOS 相关
+- [Amethyst 的 issue 页面](https://github.com/vitorpamplona/amethyst/issues) - Android 问题在这里得到解答，Amethyst 没有公开的 Telegram 群
 - [r/nostr](https://reddit.com/r/nostr) - Reddit 社区
 - [Stacker News](https://stacker.news) - 比特币/Nostr 论坛
-- Nostr 本身 - 发布带有 #help 标签
+- Nostr 本身 - 发一条带 #asknostr 标签的帖子，会有人回答你
 
 ### 资源
 
-- [Nostr Wiki](https://wiki.nostr.com)
-- [客户端特定文档](https://github.com/damus-io/damus#documentation)
+- [Nostr.how](https://nostr.how) - 用大白话讲客户端、中继和闪电打赏
+- [Nostr 应用目录](https://nostrapps.com) - 按平台找客户端
+- [Damus 文档](https://github.com/damus-io/damus#documentation)
 - [NIP 规范](https://github.com/nostr-protocol/nips)
 
 ### 报告 Bug
@@ -432,7 +431,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 ## 测试你的故障排除技能
 
-认为你知道如何解决常见的 Nostr 问题吗？
+觉得自己已经会解决常见的 Nostr 问题了吗？
 
 <TroubleshootingQuiz client:idle />
 
@@ -440,7 +439,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 ## 相关指南
 
-- [中继解释](/zh/guides/relays-demystified) - 修复连接问题
+- [中继详解](/zh/guides/relays-demystified) - 修复连接问题
 - [快速开始指南](/zh/guides/quickstart) - 切换客户端
 - [闪电打赏指南](/zh/guides/zaps-and-lightning) - 修复支付问题
 - [密钥与安全](/zh/guides/keys-and-security) - 防止锁定

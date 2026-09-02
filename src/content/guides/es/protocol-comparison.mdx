@@ -8,8 +8,6 @@ category: "advanced"
 ---
 
 import { HoverCard } from "@components/HoverCard";
-import { ProtocolComparison } from "@components/ProtocolComparison";
-import { CTAButton } from "@components/CTAButton";
 import { ProtocolComparisonQuiz } from "@components/interactive/ProtocolComparisonQuiz";
 
 ## Resumen Ejecutivo
@@ -22,8 +20,10 @@ El panorama de redes sociales descentralizadas tiene tres protocolos principales
 | **Resistencia a la Censura** | Muy Alta                        | Moderada                   | Moderada                      |
 | **Tipo de Red**           | Red de relays sin permisos         | Servidores federados       | Arquitectura PDS + Relay      |
 | **Portabilidad de Datos** | Nativa                             | Dependiente del servidor   | Nativa (con backups)          |
-| **Escala Actual**         | ~5M usuarios                       | ~15M usuarios              | ~25M usuarios                 |
-| **Mejor Para**            | Activistas, cypherpunks, Bitcoiners | Comunidades, organizaciones | Usuarios mainstream, periodistas |
+| **Escala Actual**         | Sin recuento fiable (ver abajo)    | ~10M cuentas               | Más de 43M cuentas registradas |
+| **Mejor Para**            | Creadores independientes, activistas, cypherpunks, Bitcoiners | Comunidades, organizaciones | Usuarios mainstream, periodistas |
+
+Una nota sobre esa fila de escala, porque estas cifras se citan fatal. Bluesky superó los 43 millones de cuentas registradas en abril de 2026, que es el último dato que ha publicado. Mastodon ronda los 10 millones de cuentas registradas, pero menos de un millón de personas publican en un mes cualquiera. Nostr no tiene ningún recuento de usuarios en el que se pueda confiar: lo único fácil de medir es cuántas claves públicas han aparecido alguna vez, que son decenas de millones y en su mayoría son bots, spam y claves abandonadas. Cada una de estas cifras es un tipo de número distinto, así que trata la fila como un orden de magnitud, no como un marcador.
 
 ### ¿Quién Debería Usar Qué Protocolo?
 
@@ -69,7 +69,7 @@ Nostr es elegantemente simple: solo son clientes y relays.
 
 <HoverCard
   term="Relay"
-  definition="Un servidor que almacena y retransmite eventos de Nostr. Los relays no saben quién eres—solo validan firmas y almacenan datos."
+  definition="Un servidor que almacena y retransmite eventos de Nostr. Los relays no saben quién eres: solo validan firmas y almacenan datos."
 >
   Los relays son tuberías simples que almacenan mensajes firmados
 </HoverCard>
@@ -78,7 +78,7 @@ Nostr es elegantemente simple: solo son clientes y relays.
 
 - **Sin Estado:** Los relays no mantienen cuentas de usuario ni relaciones
 - **Redundante:** Puedes usar 10+ relays simultáneamente; si uno te censura, otros aún tienen tus datos
-- **Protocolo Simple:** Todo el protocolo son ~2,000 líneas de especificación
+- **Protocolo Simple:** La especificación básica (NIP-01) cabe en un documento corto; todo lo demás son extensiones opcionales
 - **Sin Federación:** Los relays no se comunican entre sí; los clientes agregan de múltiples fuentes
 
 ### ActivityPub: El Modelo de Servidor Federado
@@ -118,11 +118,11 @@ ActivityPub crea una federación de servidores interconectados, como el email pe
 - **Centrado en Instancia:** Tu servidor es tu hogar; almacena tus datos y gestiona tu identidad
 - **Servidor-a-Servidor:** Los servidores se comunican activamente y comparten contenido
 - **Moderado:** Cada servidor establece sus propias políticas de contenido y puede bloquear otros servidores
-- **Ecosistema Maduro:** 5+ años de desarrollo, mejores prácticas establecidas
+- **Ecosistema Maduro:** Recomendación del W3C desde 2018, con mejores prácticas ya establecidas
 
-### Bluesky AT Protocol: El Modelo de Almacenamiento de Datos Personal
+### Bluesky AT Protocol: El Modelo de Almacén de Datos Personal
 
-Bluesky combina ideas de ambos enfoques con un enfoque en la experiencia de usuario y respaldo corporativo.
+Bluesky combina ideas de ambos modelos, con el foco puesto en la experiencia de usuario y el respaldo corporativo.
 
 <DiagramNodes
   rows={[
@@ -151,7 +151,7 @@ Bluesky combina ideas de ambos enfoques con un enfoque en la experiencia de usua
 **Cómo Funciona:**
 
 1. **Tu Identidad:** Un Decentralized Identifier (DID) que puede vincularse a handles de dominio
-2. **Personal Data Store (PDS):** Tus datos viven en un PDS—inicialmente hospedado por Bluesky, pero puede ser auto-hospedado
+2. **Personal Data Store (PDS):** Tus datos viven en un PDS, inicialmente hospedado por Bluesky, aunque puedes auto-hospedarlo
 3. **Relay/Indexer:** Bluesky ejecuta relays que agregan datos de todos los PDS y construyen índices de búsqueda
 4. **Independencia de Cliente:** Cualquier app puede leer de la red de relays usando tu DID
 
@@ -159,7 +159,7 @@ Bluesky combina ideas de ambos enfoques con un enfoque en la experiencia de usua
 
 - **Enfoque Híbrido:** Combina propiedad de datos del usuario con indexación centralizada
 - **Handles de Dominio:** Tu identidad puede vincularse a dominios que controlas (alice.com)
-- **Descentralización Gradual:** Actualmente centralizado, pero diseñado para volverse más descentralizado con el tiempo
+- **La Federación Está Abierta, la Adopción No:** desde 2024 cualquiera puede levantar su propio PDS y federar, pero Bluesky sigue presentando el auto-hospedaje como acceso anticipado (un PDS auto-hospedado tiene un tope de 10 cuentas) y casi todas las cuentas siguen en uno alojado por Bluesky
 - **Respaldo Comercial:** Bluesky PBC proporciona estabilidad y recursos para desarrollo
 
 ---
@@ -175,7 +175,7 @@ Bluesky combina ideas de ambos enfoques con un enfoque en la experiencia de usua
 | **Recuperación**   | Ninguna (inmutable)    | El servidor puede resetear | Recuperación de cuenta vía PDS      |
 | **Portabilidad**   | Las claves funcionan en todas partes | Handle vinculado al servidor | El DID es portable, los handles pueden cambiar |
 
-**Nostr** toma el enfoque más radical: tu identidad es puramente criptográfica. Pierdes tu clave privada (nsec) y tu identidad se ha ido para siempre. Esto es una característica para resistencia a la censura—ninguna autoridad puede confiscar o resetear tu identidad—pero requiere gestión cuidadosa de claves.
+**Nostr** toma el enfoque más radical: tu identidad es puramente criptográfica. Si pierdes tu clave privada (nsec), tu identidad desaparece para siempre. Eso es una virtud de cara a la resistencia a la censura, porque ninguna autoridad puede confiscar ni resetear tu identidad, pero exige una gestión cuidadosa de las claves.
 
 **ActivityPub** usa autenticación tradicional basada en servidor. Esto es familiar (como el email) y permite reseteos de contraseña, pero crea lock-in: tu identidad está vinculada a tu servidor. Si mastodon.social te banea, pierdes @yourname@mastodon.social.
 
@@ -187,7 +187,7 @@ Bluesky combina ideas de ambos enfoques con un enfoque en la experiencia de usua
 
 - Ninguna autoridad central puede banearte del protocolo
 - Cualquiera puede ejecutar un relay; solo necesitas uno para participar
-- El contenido está firmado criptográficamente—no puede ser falsificado o modificado
+- El contenido está firmado criptográficamente, así que no se puede falsificar ni modificar
 - Si un relay te bloquea, usa otro
 - _Trade-off:_ El spam es más difícil de prevenir; la moderación es del lado del cliente
 
@@ -234,7 +234,8 @@ Bluesky combina ideas de ambos enfoques con un enfoque en la experiencia de usua
 **Nostr:**
 
 - ✅ Portabilidad nativa: tus datos existen en múltiples relays
-- ✅ Cambia de cliente instantáneamente: solo importa tu nsec
+- ✅ Cambia de cliente al instante: tus claves funcionan en todas las apps, así que no hay nada que exportar
+- ⚠️ Entra con un firmador, no pegando claves: en Android usa una app firmadora como Amber, y en el navegador una extensión como Alby o nos2x. Nunca pegues tu nsec en una web
 - ✅ Sin vendor lock-in por diseño
 - ⚠️ No hay garantía de persistencia de datos (los relays pueden eliminar datos antiguos)
 
@@ -270,10 +271,11 @@ Bluesky combina ideas de ambos enfoques con un enfoque en la experiencia de usua
 
 **Bluesky:**
 
-- ⚠️ La verificación por teléfono es cada vez más requerida
+- ⚠️ Se exige verificación por correo electrónico al registrarse
 - ⚠️ Bluesky PBC tiene acceso a los datos
-- ⚠️ Se fomenta la política de nombre real (handles de dominio)
-- ✅ Controles de privacidad en el protocolo
+- ⚠️ Todo es público por diseño: en el protocolo no existen las cuentas privadas ni bloqueadas
+- ⚠️ Los DMs pasan por el servicio de chat de la propia Bluesky y no van encriptados de extremo a extremo
+- ✅ Sin requisito de nombre real: se permiten los seudónimos y las cuentas de parodia claramente etiquetadas, y un handle de dominio demuestra que controlas ese dominio, no quién eres
 
 ### Experiencia del Desarrollador
 
@@ -319,6 +321,12 @@ Bluesky combina ideas de ambos enfoques con un enfoque en la experiencia de usua
 - Prefieres tecnología minimalista y alineada con Bitcoin
 - Aceptas la responsabilidad de la gestión de claves
 
+✅ **Quieres que tu público pueda pagarte directamente**
+
+- Los zaps son pagos pequeños por Lightning que van del lector a ti, sin que ninguna plataforma se lleve una comisión ni haya un mínimo que alcanzar antes de cobrar
+- Los clientes de texto largo, de música y de arte se apoyan en la misma identidad que tus publicaciones cortas, así que una sola clave lo cubre todo
+- Nadie puede desmonetizarte, porque no hay ningún programa de monetización del que sacarte
+
 ✅ **Estás construyendo en el ecosistema Bitcoin**
 
 - La integración con Lightning Network es importante
@@ -357,11 +365,12 @@ Bluesky combina ideas de ambos enfoques con un enfoque en la experiencia de usua
 - La experiencia de usuario es tu prioridad principal
 - Quieres soporte y desarrollo profesional
 
-✅ **Eres creador de contenido o figura pública**
+✅ **Quieres alcance mainstream y verificación por dominio**
 
 - La verificación de dominio es importante para ti
 - Quieres elección algorítmica (múltiples feeds)
 - Necesitas infraestructura confiable
+- Nota para creadores: aquí no hay ninguna forma integrada de que tu público te pague, así que esto funciona mejor junto a Nostr que en lugar de Nostr
 
 ✅ **Confías en la descentralización respaldada por corporaciones**
 
@@ -382,16 +391,16 @@ Los tres protocolos ofrecen rutas de escape desde Twitter/X, pero la experiencia
 **Twitter → Nostr:**
 
 1. **Encuentra tu comunidad:** Nostr aún es de nicho; busca tus intereses
-2. **Sigue puentes de Twitter:** Algunas cuentas reflejan Twitter a Nostr
-3. **Publica cruzada inicialmente:** Usa herramientas como NostrPad o copia y pega manualmente
-4. **Abraza las diferencias:** Sin algoritmos, sin viralidad—solo feeds cronológicos
+2. **Trae a tus contactos de siempre:** nuestra [herramienta puente de Twitter](/twitter-bridge/) comprueba cuáles de las personas que sigues en X ya tienen una clave Nostr
+3. **Haz publicación cruzada al principio:** [Xstr](https://xtonostr.com) refleja automáticamente tus publicaciones de X en Nostr, o copia y pega a mano mientras te acomodas
+4. **Abraza las diferencias:** los feeds son cronológicos salvo que elijas otra cosa. Existen feeds de tendencias y algorítmicos, pero los eliges tú; ninguna plataforma decide por ti
 5. **Construye lentamente:** Nostr recompensa el engagement auténtico sobre conteos de seguidores
 
 **Twitter → ActivityPub/Mastodon:**
 
 1. **Elige tu servidor:** Investiga instancias alineadas con tus intereses
 2. **Usa herramientas de migración:** Existen herramientas de exportación de Twitter → importación a Mastodon
-3. **Sigue puentes de Twitter:** @TwitterBridge y servicios similares
+3. **Cuenta con rehacer a mano tu lista de seguidos:** los espejos automáticos de Twitter a Mastodon murieron cuando X cerró el acceso gratuito a su API en 2023
 4. **Aprende la cultura:** Advertencias de contenido, texto alternativo y etiqueta de federación
 5. **Trae tu red:** Muchas comunidades de Twitter tienen espejos en Mastodon
 
@@ -401,15 +410,16 @@ Los tres protocolos ofrecen rutas de escape desde Twitter/X, pero la experiencia
 2. **Encuentra a tu gente:** Bluesky tiene la mayoría de los migrantes de Twitter
 3. **Usa verificación de dominio:** Reclama tu dominio para credibilidad
 4. **Explora feeds personalizados:** El marketplace de algoritmos de Bluesky reemplaza el feed único de Twitter
-5. **Publica cruzada fácilmente:** La mayoría de las herramientas soportan Bluesky nativamente
+5. **Haz publicación cruzada fácilmente:** La mayoría de las herramientas soportan Bluesky nativamente
 
 ### Estrategias de Publicación Cruzada
 
 **El Enfoque Puente:**
 
-- Usa servicios como [Nostr2Twitter](https://nostr2twitter.com), [Mastodon-Twitter Crossposter](https://crossposter.masto.donte.com.br/), o [herramientas nativas de Bluesky](https://bsky.app)
+- [Openvibe](https://openvibe.social) es una app que inicia sesión a la vez en Nostr, Bluesky, Mastodon y Threads, y publica en todas desde una sola caja de texto
+- [Xstr](https://xtonostr.com) refleja entre X y Nostr en ambos sentidos, gratis y sin custodia
 - Publica en una plataforma, refleja en otras
-- _Pro:_ Alcance máximo | _Con:_ Conversaciones fragmentadas
+- _Pro:_ Alcance máximo | _Con:_ Conversaciones fragmentadas, porque cada copia acumula sus propias respuestas por separado
 
 **El Enfoque Centro:**
 
@@ -474,17 +484,19 @@ Los tres protocolos ofrecen rutas de escape desde Twitter/X, pero la experiencia
 
 **Bluesky:**
 
-- **Auto-Hospedaje:** Lanzamiento de auto-hospedaje de Personal Data Store (PDS)
-- **Federación:** Apertura de la red de relays a terceros
+El auto-hospedaje y la federación abierta ya están hechos, no son una promesa: desde 2024 cualquiera puede levantar un PDS y unirse a la red. Lo que sigue sin resolverse:
+
+- **Que la fontanería la lleve alguien que no sea Bluesky:** el relay que indexa toda la red sigue siendo el suyo, y montar uno propio sale caro
+- **Auto-hospedaje más allá de la escala de aficionado:** un PDS auto-hospedado sigue con un tope de 10 cuentas según las indicaciones de acceso anticipado de Bluesky
 - **Algoritmos Personalizados:** Algoritmos de feed más sofisticados
-- **Verificación:** Sistemas de verificación de identidad descentralizados
+- **Pagar todo esto:** la empresa se financia con capital riesgo y aún no ha enseñado cuál es su modelo de negocio
 
 ### Posibilidades de Interoperabilidad
 
 **La Realidad del Puente:**
 
 - **Nostr ↔ ActivityPub:** Los puentes existen pero son imperfectos
-- **Bluesky ↔ Otros:** Bluesky está actualmente aislado pero planea puentes
+- **Bluesky ↔ ActivityPub:** funciona ya a través de Bridgy Fed, un puente de terceros al que te apuntas tú. Sigue a [@ap.brid.gy](https://bsky.app/profile/ap.brid.gy) desde Bluesky y tu cuenta aparece en Mastodon
 - **Identidad Cross-Protocolo:** La identidad unificada entre protocolos sigue siendo difícil
 
 **Desafíos Técnicos:**
@@ -522,7 +534,7 @@ No tienes que elegir solo uno. Muchos usuarios mantienen presencia en los tres:
 - **ActivityPub** para comunidades de nicho y contenido de formato largo
 - **Bluesky** para networking profesional y alcance mainstream
 
-El futuro de las redes sociales no es una sola plataforma—es un mundo nativo de protocolo donde los usuarios controlan sus identidades y los datos fluyen libremente entre redes.
+El futuro de las redes sociales no es una sola plataforma. Es un mundo nativo de protocolo donde los usuarios controlan sus identidades y los datos fluyen libremente entre redes.
 
 ---
 
@@ -534,6 +546,6 @@ El futuro de las redes sociales no es una sola plataforma—es un mundo nativo d
 
 ---
 
-_Actualizado: Febrero 2026 | Versiones de protocolo: Nostr (NIPs actual), ActivityPub (Recomendación W3C), AT Protocol (v1.0)_
+_Actualizado: septiembre de 2026_
 
-_¿Tienes preguntas? Únete a la discusión en [Nostr](https://primal.net/p/npub1beginner), [Mastodon](https://fosstodon.org/tags/nostr), o [Bluesky](https://bsky.app/search?q=nostr)._
+_¿Tienes preguntas? Únete a la discusión en [Nostr](https://primal.net/p/npub1p6t6gjhy3q4rfmcxuff7hu3xh5u09cvzem98d48arfzsrzd9kxws3cpeyl), [Mastodon](https://fosstodon.org/tags/nostr), o [Bluesky](https://bsky.app/search?q=nostr)._

@@ -2,7 +2,7 @@
 title: "Encontrando Tu Comunidad en Nostr"
 seoTitle: "Cómo encontrar gente a la que seguir en Nostr"
 description: "Descubre tu tribu en Nostr. Estrategias para encontrar personas, comunidades y conversaciones que te importan en redes sociales descentralizadas."
-estimatedTime: "10 minutos"
+estimatedTime: "15-20 minutos"
 priority: 10
 category: "intermediate"
 prerequisites: ["keys-and-security", "quickstart"]
@@ -55,7 +55,6 @@ Los hashtags son la forma principal de descubrir contenido y personas en Nostr:
 **Comunidad y Cultura:**
 
 - #grownostr - Jardinería y cultivo
-- #semester - Educación y aprendizaje
 - #plebchain - Comunidad de plebs de Bitcoin
 
 **Regionales:**
@@ -123,7 +122,7 @@ Cada relay desarrolla su propia personalidad y comunidad:
     </svg>
   </a>
   <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-    Filtra por categoría—Bitcoin, Arte, Música, Tech y más. Previsualiza relays antes de agregarlos.
+    Filtra por categoría: Bitcoin, Arte, Música, Tech y más. Previsualiza relays antes de agregarlos.
   </p>
 </div>
 
@@ -145,11 +144,14 @@ Cada relay desarrolla su propia personalidad y comunidad:
 **Mejores para explorar relays:**
 
 - **Jumble** (Web) - Construido específicamente para la exploración de relays
-- **Gossip** (Desktop) - Feeds de relay efímeros
+- **Gossip** (Escritorio) - App de escritorio que puede mostrarte el feed de un relay concreto
 - **Coracle** (Web) - Gestión avanzada de relays
-- **Wisp** (Web) - Interfaz limpia para navegar relays
-- **Primal** (Web/Mobile) - Rápido y simple
 - **Snort** (Web) - Rico en funciones
+
+Primal es un buen cliente para el día a día, pero no está en esta lista por un
+motivo. Las apps de Primal leen del servidor de caché del propio Primal, que
+recoge eventos de muchos relays y los sirve como un único flujo, así que no hay
+una vista de "muéstrame qué hay en este relay" que abrir.
 
 <Callout variant="success">
   **Consejo pro:** Usa hashtags para descubrir temas en todo Nostr, y feeds de relay para encontrar comunidades organizadas alrededor de intereses específicos. ¡Ambos enfoques funcionan muy bien juntos!
@@ -246,7 +248,7 @@ La forma más fácil de llenar tu feed con cuentas de calidad:
 - Elimina cuentas inactivas
 
 <Callout variant="info">
-  **Tu feed es tu responsabilidad.** Curarlo activamente. Mutea, deja de seguir y
+  **Tu feed es tu responsabilidad.** Cúralo activamente. Mutea, deja de seguir y
   bloquea para mantenerlo valioso.
 </Callout>
 
@@ -254,42 +256,33 @@ La forma más fácil de llenar tu feed con cuentas de calidad:
 
 ## Directorios de la Comunidad (2 minutos)
 
+### Empieza por un Pack de Seguidos
+
+La vía más rápida siguen siendo los [packs de seguidos curados](/follow-pack) de
+este sitio. Elige el tema que más se parezca a ti, echa un vistazo a las cuentas y
+quédate con las que te gusten. Para mirar no hace falta cuenta.
+
 ### Exploradores de Nostr
 
-**Qué son:**
+Un explorador es una web que lee Nostr y te lo enseña sin pedirte que inicies
+sesión. Viene bien cuando quieres echarle un ojo a alguien antes de seguirlo, o
+cuando un amigo te manda un enlace y solo quieres leerlo.
 
-- Busca usuarios, publicaciones y hashtags
-- Descubre contenido trending
-- Encuentra personas por tema
-- Navega sin una cuenta
+Dos que funcionan hoy:
 
-**Cómo usar:**
+- **primal.net** - busca un tema o un nombre y lee los resultados en el navegador
+- **njump.me** - pega cualquier enlace de Nostr (un `npub`, un `note1...`, un `nevent1...`) y se abre como una página web normal
 
-1. Usa un explorador de Nostr
-2. Busca temas que te gusten
-3. Mira quién publica sobre ellos
-4. Revisa sus perfiles
-5. Sigue a personas interesantes
+Busca un tema que te importe, fíjate en quién aparece una y otra vez, abre unos
+cuantos perfiles y lee sus últimas doce publicaciones. Si la voz encaja, sigue a
+esa persona. Ese es todo el método.
 
-### Directorios y Listas
+### Descubrimiento Dentro del Cliente
 
-**Nostr.info**
-
-- Directorio de usuarios
-- Listados de clientes
-- Información sobre relays
-
-**Listas de la Comunidad**
-
-- Repositorios de GitHub con listas de usuarios
-- Hilos curados de Twitter (irónico, pero útil)
-- Listas de comunidades de Telegram/Discord
-
-**Específicos del Cliente**
-
-- Algunos clientes tienen descubrimiento integrado
-- Funciones de "usuarios sugeridos"
-- Secciones de publicaciones trending
+La mayoría de los clientes también traen sus propios "usuarios sugeridos",
+publicaciones en tendencia o listas por tema. Merece la pena mirarlos, aunque las
+sugerencias tienden a repetir las mismas cuentas conocidas, así que tómalos como
+punto de partida y no como el mapa.
 
 ### Creando Tu Propia Lista
 
@@ -318,23 +311,20 @@ Nostr no es solo microblogging estilo Twitter. Hay un ecosistema rico de conteni
 
 ### Encontrando Escritores de Formato Largo
 
-**Nostrudel**
+Hay dos clientes construidos alrededor de los artículos y no de las publicaciones
+cortas, así que son los sitios más fáciles para encontrar escritores.
 
-- Cliente especializado para formato largo
-- Listas curadas de escritores
-- Genial para lectura
+**Highlighter** (highlighter.com)
 
-**Habla.news**
+- App web para leer y publicar textos largos
+- Puedes subrayar pasajes, y tus subrayados quedan como algo que otros pueden encontrar y zapear
+- Admite suscripciones de pago, así que los escritores pueden cobrar directamente a sus lectores
 
-- Interfaz estilo noticias
-- Enfocado en formato largo
-- Curado por la comunidad
+**YakiHonne** (yakihonne.com)
 
-**YakiHonne**
-
-- Enfocado en Japón
-- Soporte para formato largo
-- Comunidad en crecimiento
+- Artículos de formato largo y contenido multimedia, con un portal para creadores que publican su propia obra
+- App web más apps nativas de iOS y Android, y una versión de escritorio
+- Zaps y ajustes de relays integrados
 
 ### Siguiendo Escritores
 
@@ -342,7 +332,7 @@ Nostr no es solo microblogging estilo Twitter. Hay un ecosistema rico de conteni
 
 - Publicación consistente
 - Calidad sobre cantidad
-- Involucramiento con lectores
+- Interacción con los lectores
 - Perspectivas únicas
 - Buena relación señal-ruido
 
@@ -363,7 +353,7 @@ Nostr no es solo microblogging estilo Twitter. Hay un ecosistema rico de conteni
 
 - Meetups (reuniones locales de Nostr)
 - Conferencias (Bitcoin, privacidad, tecnología)
-- Equivalentes a Twitter Spaces
+- Salas de audio en directo, la respuesta de Nostr a los Spaces de X/Twitter
 - Hackathons
 - AMAs (Pregúntame lo que sea)
 
@@ -393,11 +383,12 @@ Nostr no es solo microblogging estilo Twitter. Hay un ecosistema rico de conteni
 
 ### Eventos Virtuales
 
-**Alternativas a Twitter Spaces:**
+**Salas de audio en directo (como los Spaces de X/Twitter):**
 
-- Algunos clientes agregando audio
-- Herramientas externas (Fountain, etc.)
-- AMAs programados de texto
+- **Nostr Nests** (nostrnests.com) - salas de audio abiertas que funcionan sobre Nostr, para charlar, tocar música o montar pequeñas conferencias
+- Algunos clientes están añadiendo audio propio
+- **Fountain** (fountain.fm) es una app de pódcast y música más que un anfitrión de salas, útil de conocer si publicas audio
+- Los AMAs de texto programados siguen funcionando perfectamente y no necesitan ninguna app extra
 
 <Callout variant="success">
   **Presencial > virtual:** Los meetups de Nostr están sucediendo en todo el mundo. ¡Busca uno en tu área!
@@ -409,11 +400,17 @@ Nostr no es solo microblogging estilo Twitter. Hay un ecosistema rico de conteni
 
 ### Seguridad Primero
 
-**Los DMs de Nostr están encriptados pero no son perfectos:**
+Los DMs de Nostr están cifrados, así que los relays no pueden leer lo que
+escribiste. Lo que se filtra alrededor del mensaje depende del método que use tu
+cliente.
 
-- Encriptación de extremo a extremo (E2EE)
-- Pero los metadatos son visibles (quién habla con quién)
-- Algunos clientes manejan la encriptación diferente
+- **DMs antiguos (NIP-04)**: ocultan el texto, pero no a los participantes. Un relay puede ver que tú y una persona concreta estáis hablando, y con qué frecuencia.
+- **DMs nuevos (NIP-17)**: ocultan al remitente, porque cada mensaje va envuelto y firmado con una clave de usar y tirar. El destinatario sigue viéndose en claro, porque el relay necesita saber dónde entregarlo, y el momento del envío también.
+- **Los clientes no son iguales.** Dos personas en apps distintas puede que ni siquiera usen el mismo método, y a veces los mensajes no llegan a aparecer al cruzar esa frontera.
+
+En cualquier caso, el contenido es privado y el hecho de que alguien esté
+recibiendo mensajes no lo es. Para el cuadro completo, lee
+[Mensajes privados con NIP-17](/es/guides/nip17-private-messages).
 
 ### Mejores Prácticas en DMs
 
@@ -421,15 +418,15 @@ Nostr no es solo microblogging estilo Twitter. Hay un ecosistema rico de conteni
 
 - Sé respetuoso
 - Preséntate
-- Manténlo relevante
+- Mantenlo relevante
 - Respeta los límites
-- Recuerda que los metadatos siguen siendo públicos
+- Recuerda que el cuerpo del mensaje es privado, pero los metadatos que lo rodean no
 
 **No hagas:**
 
 - Spam o acoso
 - Enviar mensajes no solicitados
-- Compartir llaves privadas (NUNCA)
+- Compartir claves privadas (NUNCA)
 - Asumir privacidad completa
 - Enviar información sensible
 
@@ -437,10 +434,17 @@ Nostr no es solo microblogging estilo Twitter. Hay un ecosistema rico de conteni
 
 **Si alguien te molesta:**
 
-1. **Mute** - Deja de ver su contenido
-2. **Block** - No pueden interactuar contigo
-3. **Report** - Si es grave, avisa a la comunidad
-4. **No interactúes** - Alimenta a los trolls
+1. **Silencia o bloquea** - En Nostr las dos cosas hacen lo mismo: tu app deja de
+   mostrarte a esa persona. Es un filtro de tu lado, no un muro del suyo.
+2. **Ten claro lo que no hace** - No existe un bloqueo a nivel de protocolo. A esa
+   persona no se le avisa, y puede seguir leyendo tus publicaciones públicas,
+   respondiéndolas y mencionándote. Los demás siguen viendo esas respuestas; tú
+   simplemente dejas de verlas.
+3. **Denuncia** - Si la cosa es grave, denúnciala en tu cliente y avisa a gente de
+   confianza. La moderación en Nostr pasa por los relays y por listas de bloqueo
+   compartidas, así que un relay de pago o moderado es lo más parecido a una
+   sanción real.
+4. **No interactúes** - Responder alimenta a los trolls
 
 **Prevención:**
 
@@ -452,7 +456,7 @@ Nostr no es solo microblogging estilo Twitter. Hay un ecosistema rico de conteni
 
 ## Construyendo Tu Red (3 minutos)
 
-### Estrategia de Involucramiento
+### Estrategia de Interacción
 
 **La Regla 80/20:**
 
@@ -524,7 +528,7 @@ Nostr no es solo microblogging estilo Twitter. Hay un ecosistema rico de conteni
 - Directorios de la comunidad
 - Starter packs
 
-**Consejos de Involucramiento:**
+**Consejos de Interacción:**
 
 - Responde consideradamente
 - Zap generosamente

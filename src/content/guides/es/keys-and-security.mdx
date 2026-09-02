@@ -2,26 +2,20 @@
 title: "Tus Claves, Tu Identidad"
 seoTitle: "Claves de Nostr: npub, nsec y cómo protegerlas"
 description: "Aprende a generar, guardar y proteger tus claves Nostr. La guía completa de seguridad para principiantes. Sigue la regla de respaldo 3-2-1."
-estimatedTime: "8 minutos"
+estimatedTime: "10 minutos"
 priority: 3
 category: "getting-started"
 ---
 
-import { AlertBanner } from "@components/AlertBanner";
-import { KeyVisualizer } from "@components/KeyVisualizer";
 import { KeyGenerator } from "@components/KeyGenerator";
 import { BackupChecklist } from "@components/BackupChecklist";
 import { SecurityQuiz } from "@components/interactive/SecurityQuiz";
 
-{/* ProgressIndicator temporalmente deshabilitado - se implementará con seguimiento real más tarde */}
-{/* <ProgressIndicator current={2} total={4} estimatedTime="8 minutos" /> */}
-
-
 ## Por Qué Esto Importa
 
-A diferencia de Twitter o Instagram, Nostr te pone **a ti** a cargo de tu identidad. No hay empresas que puedan banearte, no hay algoritmos que supriman tu contenido, y no hay servicio al cliente que pierda tus datos. Esta libertad viene con responsabilidad: tú posees tus claves, tú controlas tu cuenta.
+A diferencia de Twitter o Instagram, Nostr te pone **a ti** a cargo de tu identidad. Ninguna empresa puede quitarte la cuenta ni dejarte fuera de la red. Una app o un relay concreto sí pueden negarse a llevar tus publicaciones, pero tus claves, tus publicaciones y tus seguidores no son suyos, así que puedes irte a otro sitio y seguir donde lo dejaste. Esa libertad viene con responsabilidad: tú posees tus claves, tú controlas tu cuenta.
 
-La buena noticia? Asegurar tus claves es sencillo. Sigue esta guía y estarás más seguro que el 99% de los usuarios.
+¿La buena noticia? Asegurar tus claves es sencillo. Sigue esta guía y estarás más seguro que el 99% de los usuarios.
 
 ---
 
@@ -31,9 +25,7 @@ Nostr usa criptografía para asegurar tu identidad. No te preocupes, no necesita
 
 ### ¿Qué es un Par de Claves?
 
-Cada usuario de Nostr tiene dos claves que trabajan juntas:
-
-<KeyVisualizer />
+Cada usuario de Nostr tiene dos claves que trabajan juntas. Una es pública y empieza por `npub1`; la otra es privada y empieza por `nsec1`. Esto es para lo que sirve cada una.
 
 ### Tu Clave Pública (npub1...)
 
@@ -41,11 +33,11 @@ Cada usuario de Nostr tiene dos claves que trabajan juntas:
   <div className="flex items-center gap-2 mb-2">
     <span className="text-2xl">🟢</span>
     <span className="font-bold text-green-700 dark:text-green-400">
-      SEGURO COMPARTIR
+      SE PUEDE COMPARTIR
     </span>
   </div>
   <code className="text-sm break-all bg-white dark:bg-gray-800 p-2 rounded block text-gray-900 dark:text-gray-100">
-    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   </code>
   <p className="mt-2 text-sm text-green-700 dark:text-green-400">
     Este es tu nombre de usuario. Compártelo en todas partes. Publícalo públicamente. Así es como
@@ -70,7 +62,7 @@ Cada usuario de Nostr tiene dos claves que trabajan juntas:
     </span>
   </div>
   <code className="text-sm break-all bg-white dark:bg-gray-800 p-2 rounded block text-gray-900 dark:text-gray-100">
-    nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+    nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   </code>
   <p className="mt-2 text-sm text-red-700 dark:text-red-400">
     Esta es tu contraseña. Cualquiera con esto puede publicar como tú. Pierdes esto = pierdes tu
@@ -88,10 +80,10 @@ Cada usuario de Nostr tiene dos claves que trabajan juntas:
 
 ### ¿Por Qué Tan Largas?
 
-Esas cadenas parecen caracteres aleatorios porque son claves criptográficas. Aquí está por qué:
+Esas cadenas parecen caracteres aleatorios porque son claves criptográficas. El motivo:
 
 - **Seguridad de 256 bits:** Hace imposible adivinarlas o descifrarlas
-- **Generación aleatoria:** Incluso las computadoras no pueden predecirlas
+- **Generación aleatoria:** Ni siquiera las computadoras pueden predecirlas
 - **Matemática unidireccional:** No puedes deducir la clave privada de la pública
 
 Piénsalo así: Hay más claves privadas posibles que granos de arena en la Tierra. Nadie está adivinando la tuya.
@@ -100,7 +92,7 @@ Piénsalo así: Hay más claves privadas posibles que granos de arena en la Tier
 
 ## Genera Tus Claves (3 minutos)
 
-> 💡 **Consejo:** Aunque este generador de claves las crea de forma segura en tu navegador, también puedes generar claves directamente en la mayoría de clientes Nostr (como Damus, Amethyst o Iris). Piensa en esta herramienta como un "simulador" para practicar antes de usar un cliente real.
+> 💡 **Consejo:** Este generador crea un par de claves real y válido dentro de tu navegador. No se envía nada a ninguna parte. Puedes conservarlo como tu identidad Nostr de verdad, o tomarlo como práctica y dejar que tu app cree otro más adelante. Si lo conservas, respalda el nsec ahora mismo. Si solo estás practicando, no reutilices nunca ese par para tu cuenta real.
 
 <KeyGenerator client:idle />
 
@@ -110,35 +102,36 @@ Piénsalo así: Hay más claves privadas posibles que granos de arena en la Tier
    - Esto crea un par de claves aleatorias
    - Observa la animación para entender qué está pasando
 
-2. **Guarda Ambas Claves Inmediatamente**
+2. **Si Vas a Conservar Este Par, Guarda Ambas Claves Ya**
    - Copia tu **npub** (verde) a un lugar seguro
    - Copia tu **nsec** (rojo) a un lugar SEGURO
-   - Haz esto AHORA antes de hacer cualquier otra cosa
+   - Hazlo antes de usar la clave para nada más
+   - ¿Solo practicando? No guardes nada, y no uses este par para una cuenta real
 
 3. **Verifica Que Las Guardaste**
-   - Cierra el generador
-   - Vuelve a abrirlo
-   - ¿Aún puedes acceder a tus claves?
+   - El generador no conserva nada: cierra esta página y las claves desaparecen de aquí
+   - Así que ve al sitio donde las guardaste y vuelve a leer las dos
+   - Si no puedes leerlas de vuelta, todavía no tienes respaldo
 
 ### Formato de Ejemplo (No Son Claves Reales)
 
-A continuación se muestra cómo se ven las claves Nostr. Son ejemplos únicamente, no claves válidas:
+A continuación tienes la forma que tiene una clave Nostr. Son ejemplos únicamente, no claves válidas:
 
 <div className="test-keys bg-gray-100 dark:bg-gray-800 p-4 rounded-lg my-4">
   <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Ejemplo de formato de Clave Pública (npub):</p>
   <code className="text-xs break-all block mb-4 text-gray-900 dark:text-gray-100">
-    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   </code>
 
 <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
   Ejemplo de formato de Clave Privada (nsec):
 </p>
 <code className="text-xs break-all block text-red-600 dark:text-red-400">
-  nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+  nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
 </code>
 
   <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 italic">
-    Estos son solo formatos de ejemplo, no claves válidas. Usa el Generador de Claves de arriba para claves de prueba reales.
+    Estos son solo formatos de ejemplo, no claves válidas. Usa el Generador de Claves de arriba para crear un par de claves que funcione.
   </p>
 </div>
 
@@ -194,9 +187,9 @@ Esta regla viene de la gestión profesional de datos. Síguela religiosamente.
 
 **Por eso importa la regla de respaldo 3-2-1.**
 
-A diferencia de las plataformas centralizadas, Nostr no tiene botón de "olvidé contraseña" ni soporte al cliente para recuperar tu cuenta. Pero no te preocupes: seguir los simples pasos de respaldo a continuación te mantendrá seguro.
+A diferencia de las plataformas centralizadas, Nostr no tiene botón de "olvidé contraseña" ni soporte al cliente para recuperar tu cuenta. Pero no te preocupes: seguir los pasos de respaldo de arriba te mantendrá seguro.
 
-**Piénsalo así:** No llevarías tus ahorros de por vida como efectivo en el bolsillo. Guardarías la mayoría en un banco (múltiples respaldos) y solo llevarías lo que necesitas. Tu nsec es similar: guárdala de forma segura, no solo en tu teléfono.
+**Piénsalo así:** No llevarías los ahorros de toda tu vida en efectivo en el bolsillo. Guardarías la mayoría en un banco (múltiples respaldos) y solo llevarías lo que necesitas. Tu nsec es similar: guárdala de forma segura, no solo en tu teléfono.
 
 ---
 
@@ -212,9 +205,9 @@ A diferencia de las plataformas centralizadas, Nostr no tiene botón de "olvidé
 
 **NO Guardes en Notas Sin Cifrar**
 
-- Apple Notes, Google Keep, etc. no están cifrados
-- Cualquiera con tu teléfono/computadora puede leerlos
-- Se sincronizan a la nube por defecto
+- Las notas normales de Apple Notes, Google Keep y similares no llevan cifrado de extremo a extremo
+- Se sincronizan a la nube automáticamente, así que quien entre en tu cuenta puede leerlas
+- Y también quien tenga tu teléfono o computadora desbloqueados
 
 **NO Compartas Con Nadie**
 
@@ -229,7 +222,7 @@ A diferencia de las plataformas centralizadas, Nostr no tiene botón de "olvidé
 
 - 1Password, Bitwarden, KeePass
 - Cifrado, respaldo, accesible
-- Genera contraseñas fuertes para clientes también
+- Es también el sitio adecuado para una contraseña fuerte del propio gestor y de tu correo
 
 **SÍ Escribe en Papel**
 
@@ -237,9 +230,9 @@ A diferencia de las plataformas centralizadas, Nostr no tiene botón de "olvidé
 - No necesita baterías
 - Guarda en caja fuerte, caja con cerradura, o ubicación escondida
 
-**SÍ Usa Apps Firmadoras Nostr [AVANZADO]**
+**SÍ Usa Apps Firmantes de Nostr [AVANZADO]**
 
-- Apps como Amber (Android) almacenan tus claves de forma segura
+- Apps firmantes como Amber (Android) almacenan tus claves de forma segura
 - Los clientes solicitan firmas en lugar de almacenar claves
 - Añade capa extra de seguridad
 - Recomendado para usuarios serios
@@ -250,21 +243,21 @@ A diferencia de las plataformas centralizadas, Nostr no tiene botón de "olvidé
 
 <SecurityQuiz client:idle />
 
-### Historias de Terror (Lectura Opcional)
+### Tres Formas de Perder una Cuenta (Lectura Opcional)
 
-Estas son reales. Aprende de ellas:
+No son citas de nadie. Son composiciones de los errores que aparecen una y otra vez, escritas para que los reconozcas antes de cometer alguno.
 
 **"Pensé que lo había respaldado"**
 
-> "Guardé mi nsec en mi gestor de contraseñas, pero olvidé sincronizarlo. El teléfono murió. 2,000 seguidores desaparecidos. Tuve que empezar de nuevo." — @nostruser123
+El nsec va a parar a un gestor de contraseñas que en realidad nunca estaba sincronizando. El teléfono muere, la bóveda del portátil no tiene esa entrada, y la cuenta y sus seguidores quedan fuera de alcance.
 
 **"La captura que no se borró"**
 
-> "Capturé mis claves en pantalla, luego borré la foto. Olvidé la carpeta Elementos Eliminados Recientemente. Alguien la restauró de mi iCloud. Perdí todo." — Anónimo
+Alguien captura las claves en pantalla y luego borra la foto. La carpeta de eliminados recientes la guarda un mes, y la copia en la nube bastante más. Quien entre en esa cuenta de la nube se lleva el nsec.
 
 **"El extraño 'servicial'"**
 
-> "Alguien me envió un mensaje ofreciendo 'verificar mi cuenta'. Pidió mi nsec para 'vincularla correctamente'. Se la di. Robaron mi cuenta y empezaron a publicar estafas." — @learnedthehardway
+Llega un mensaje ofreciendo "verificar" o "vincular" tu cuenta, y pide tu nsec para hacerlo. Nadie legítimo necesita jamás tu nsec. No existe servicio de verificación, ni mesa de soporte, ni ninguna razón para entregarlo.
 
 ---
 
@@ -296,23 +289,23 @@ Estas son reales. Aprende de ellas:
 
 ---
 
-## Avanzado: Historias Cautelares del Mundo Real
+## Avanzado: Lo Que Cuesta Perder Tus Claves
 
 <details>
-<summary>⚠️ Haz clic para leer: Qué pasa sin respaldos adecuados (opcional)</summary>
+<summary>⚠️ Haz clic para leer: qué pasa sin respaldos adecuados (opcional)</summary>
 
-Mientras la regla de respaldo 3-2-1 te mantiene seguro, aquí hay ejemplos reales de lo que pasó cuando la gente no la siguió:
+La regla 3-2-1 te mantiene seguro. Sáltatela y la pérdida suele tomar una de estas formas:
 
-**Caso de Estudio 1: Las Propinas Bitcoin**  
-Un creador de contenido recibió $50,000 en propinas Bitcoin (zaps) durante 6 meses. Le robaron el teléfono—no tenía respaldo. Las propinas desaparecieron para siempre porque el nsec estaba solo en ese dispositivo.
+**El creador que cobra zaps**  
+Meses construyendo una audiencia y cobrando en zaps, y entonces le roban el teléfono y el nsec estaba solo ahí. La identidad se acabó: ya no hay forma de publicar como tú, ni de demostrar que la cuenta fue tuya alguna vez. Conviene saberlo: los zaps se pagan directamente a tu cartera Lightning, no los custodia tu clave Nostr, así que ese dinero está tan a salvo como el respaldo de la propia cartera. Son dos cosas que respaldar, no una.
 
-**Caso de Estudio 2: El Influencer**  
-Una personalidad de Nostr con 10,000 seguidores dejó caer su teléfono en una piscina. Sin respaldo = empezar desde cero. Años de construcción de comunidad, perdidos.
+**La cuenta con años a la espalda**  
+Un teléfono acaba en la piscina. Sin respaldo, las publicaciones, las respuestas y la audiencia se quedan en los relays bajo una clave que ya nadie puede usar, y empiezas otra vez desde cero.
 
-**Caso de Estudio 3: El Desarrollador**  
-Un desarrollador de apps Nostr con años de contribuciones de código y discusiones técnicas perdió todo cuando su laptop se bloqueó. Sin respaldo en la nube, sin segundo dispositivo, sin recuperación.
+**El portátil que se averió**  
+Una única copia en una sola máquina no es un respaldo. Cuando el disco falla, no hay enlace de restablecimiento ni nadie a quien reclamar.
 
-**El hilo común:** Todo esto fue prevenible con un simple respaldo a un gestor de contraseñas o USB cifrado.
+**El hilo común:** cada una de estas se evita con una copia en un gestor de contraseñas o en papel, hecha el mismo día en que generas la clave.
 
 </details>
 

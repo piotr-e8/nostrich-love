@@ -42,12 +42,12 @@ Antes de lanzarnos, ¿tienes tus claves Nostr listas?
       <svg className="w-5 h-5 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
       </svg>
-      Generar claves primero (2 min)
+      Generar claves primero (10 min)
     </a>
   </div>
   
   <p className="mt-4 text-sm text-gray-600 dark:text-gray-400 text-center">
-    Necesitarás tu <code>npub</code> (clave pública) y <code>nsec</code> (clave privada) para continuar.
+    Para continuar necesitarás tu <code>nsec</code> (clave privada). Tu <code>npub</code> (clave pública) sale de ella automáticamente, así que no hace falta que tengas las dos a mano.
   </p>
 </div>
 
@@ -57,13 +57,13 @@ Antes de lanzarnos, ¿tienes tus claves Nostr listas?
 
 ## Paso 2: Elige Tu Cliente
 
-Nostr tiene docenas de clientes—piensa en ellos como apps de correo electrónico. Elige uno para empezar.
+Nostr tiene docenas de clientes. Piensa en ellos como apps de correo electrónico y elige uno para empezar.
 
 <a href="https://sandstr.app" target="_blank" rel="noopener noreferrer" className="not-prose my-6 flex items-start gap-4 p-5 rounded-xl border-2 border-primary/30 bg-primary/5 dark:bg-primary/10 hover:border-primary/60 transition-colors">
   <span className="text-3xl" aria-hidden="true">🏖️</span>
   <span>
     <span className="block font-bold text-gray-900 dark:text-white mb-1">¿Aún no lo tienes claro? Prueba los clientes en tu navegador</span>
-    <span className="block text-sm text-gray-600 dark:text-gray-400">Sandstr te deja explorar Damus, Amethyst, Primal y más — sin claves, sin instalar nada, nada es real. Vuelve cuando uno te convenza.</span>
+    <span className="block text-sm text-gray-600 dark:text-gray-400">Sandstr te deja explorar Damus, Amethyst, Primal y más, sin claves, sin instalar nada y sin que nada sea real. Vuelve cuando uno te convenza.</span>
   </span>
 </a>
 
@@ -143,7 +143,7 @@ Nostr tiene docenas de clientes—piensa en ellos como apps de correo electróni
 
 ## Paso 3: Lista de Verificación de Lanzamiento
 
-Una última verificación antes de entrar en vivo:
+Una última comprobación antes de lanzarte:
 
 <div className="my-8 p-6 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl border-2 border-yellow-400 dark:border-yellow-600">
   <h3 className="text-lg font-bold text-yellow-800 dark:text-yellow-400 mb-4 flex items-center gap-2">
@@ -174,19 +174,23 @@ Una última verificación antes de entrar en vivo:
 Abre tu cliente elegido e inicia sesión. **Cómo** inicias sesión importa más de lo
 que admiten la mayoría de las guías.
 
-**En el móvil**, pega tu nsec en la app una vez. Una app móvil es un entorno
-aislado: solo esa app puede leer lo que pegas en ella.
+**En el móvil**, pega tu nsec en la app una vez. Lo que guardas dentro de una app
+se queda dentro de esa app, pero el portapapeles es terreno común: mientras tu
+clave está ahí, otras apps pueden leerla, y un teclado que sincroniza el
+portapapeles con la nube puede sacarla del teléfono. Desactiva esa sincronización
+antes de pegarla y copia cualquier cosa inofensiva encima de la clave en cuanto
+hayas iniciado sesión.
 
 **En el navegador, no pegues tu nsec en el sitio web.** Instala una extensión
-firmante — [Alby](https://getalby.com),
-[nos2x](https://github.com/fiatjaf/nos2x) o
-[Nostore](https://apps.apple.com/app/nostore/id1666553677) en Safari. La clave
-vive en la extensión; el sitio le pide que firme cada acción y nunca ve la clave.
-Todo cliente web serio lo admite (se llama NIP-07), y convierte «un sitio malo te
-cuesta tu identidad» en «un sitio malo no obtiene nada».
+firmante: [Alby](https://getalby.com),
+[nos2x](https://chromewebstore.google.com/detail/nos2x/kpgefcfmnafjgpblomihpgmejjdanjjp)
+o [Nostash](https://apps.apple.com/us/app/nostash/id6744309333) en Safari. La
+clave vive en la extensión; el sitio le pide que firme cada acción y nunca ve la
+clave. Todo cliente web serio lo admite (se llama NIP-07), y convierte «un sitio
+malo te cuesta tu identidad» en «un sitio malo no obtiene nada».
 
 Si prefieres no tener la clave en tus dispositivos, un firmante remoto como
-[nsec.app](https://nsec.app) (NIP-46) la guarda y aprueba acciones desde otra app.
+[nsec.app](https://use.nsec.app) (NIP-46) la guarda y aprueba acciones desde otra app.
 
 <Callout variant="warning" title="Un sitio que te pide el nsec es una señal de alarma">
   Cuando un sitio tiene tu nsec, tiene tu identidad para siempre: una clave Nostr
@@ -249,10 +253,10 @@ Una vez que estés dentro, haz esto para maximizar tu experiencia:
       <h3 className="font-bold text-green-800 dark:text-green-400">Sigue Aprendiendo</h3>
     </div>
     <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
-      Domina Nostr con nuestras guías paso a paso. Desde zaps hasta privacidad—te tenemos cubierto.
+      Domina Nostr con nuestras guías paso a paso. Desde zaps hasta privacidad: aquí encontrarás todo lo que necesitas.
     </p>
     <a 
-      href="/guides" 
+      href="/es/guides" 
       className="inline-flex items-center text-green-600 hover:text-green-700 font-semibold"
     >
       Explorar Todas las Guías

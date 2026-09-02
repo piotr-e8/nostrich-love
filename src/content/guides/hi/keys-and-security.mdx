@@ -1,292 +1,287 @@
 ---
-title: "आपकी Keys, आपकी Identity"
-description: "Nostr keys generate, save, और protect करना सीखें। शुरुआती लोगों के लिए complete security guide। 3-2-1 backup rule follow करें।"
-estimatedTime: "8 मिनट"
+title: "आपकी कुंजियाँ, आपकी पहचान"
+seoTitle: "Nostr कुंजियाँ समझें: npub, nsec और सुरक्षा"
+description: "Nostr कुंजियाँ बनाना, सहेजना और बचाकर रखना सीखें। शुरुआती लोगों के लिए पूरी सुरक्षा गाइड। 3-2-1 बैकअप नियम अपनाएँ।"
+estimatedTime: "10 मिनट"
 priority: 3
 category: "getting-started"
 ---
 
-import { AlertBanner } from "@components/AlertBanner";
-import { KeyVisualizer } from "@components/KeyVisualizer";
 import { KeyGenerator } from "@components/KeyGenerator";
 import { BackupChecklist } from "@components/BackupChecklist";
 import { SecurityQuiz } from "@components/interactive/SecurityQuiz";
 
-{/* ProgressIndicator temporarily disabled - will be implemented with actual tracking later */}
+## यह क्यों मायने रखता है
 
+Twitter या Instagram के उलट, Nostr आपकी पहचान की कमान **आपको** सौंपता है। कोई एक कंपनी न आपका खाता आपसे छीन सकती है, न आपको नेटवर्क से बाहर कर सकती है। हाँ, कोई एक ऐप या कोई एक रिले आपकी पोस्ट ढोने से मना कर सकता है, पर आपकी कुंजियाँ, आपकी पोस्ट और आपके फॉलोअर्स उसकी मुट्ठी में नहीं हैं, इसलिए आप कहीं और जाकर वहीं से काम जारी रख सकते हैं। इस आज़ादी के साथ ज़िम्मेदारी भी आती है: कुंजियाँ आपकी हैं, खाता आपके नियंत्रण में है।
 
-## यह क्यों Important है
-
-Twitter या Instagram के विपरीत, Nostr **आपको** आपकी identity के in-charge puts करता है। कोई companies नहीं हैं जो आपको ban करें, कोई algorithms नहीं हैं जो आपका content suppress करें, और कोई customer service नहीं है जो आपका data lose करे। यह freedom responsibility के साथ आता है—आप अपनी keys own करते हैं, आप अपना account control करते हैं।
-
-अच्छी खबर? अपनी keys secure करना straightforward है। इस guide को follow करें और आप 99% users से सुरक्षित रहेंगे।
+अच्छी खबर? कुंजियाँ सुरक्षित रखना सीधा-सादा काम है। इस गाइड को अपनाइए और आप 99% उपयोगकर्ताओं से ज़्यादा सुरक्षित रहेंगे।
 
 ---
 
-## Keys को समझना (2 मिनट)
+## कुंजियों को समझना (2 मिनट)
 
-Nostr आपकी identity secure करने के लिए cryptography use करता है। चिंता मत करें—आपको math समझने की जरूरत नहीं। बस इसे lock और key system की तरह सोचें।
+Nostr आपकी पहचान सुरक्षित रखने के लिए क्रिप्टोग्राफी का इस्तेमाल करता है। घबराइए नहीं, गणित समझने की कोई ज़रूरत नहीं। बस इसे ताले और चाबी की तरह सोचिए।
 
-### Key Pair क्या है?
+### की-पेयर क्या है?
 
-हर Nostr user के पास दो keys होती हैं जो एक साथ काम करती हैं:
+हर Nostr उपयोगकर्ता के पास दो कुंजियाँ होती हैं जो साथ मिलकर काम करती हैं। एक सार्वजनिक होती है और `npub1` से शुरू होती है, दूसरी निजी होती है और `nsec1` से शुरू होती है। नीचे बताया है कि कौन सी किस काम की है।
 
-<KeyVisualizer />
-
-### आपकी Public Key (npub1...)
+### आपकी सार्वजनिक कुंजी (npub1...)
 
 <div className="key-display bg-green-50 dark:bg-green-900/20 border-2 border-green-500 p-4 rounded-lg my-4">
   <div className="flex items-center gap-2 mb-2">
     <span className="text-2xl">🟢</span>
     <span className="font-bold text-green-700 dark:text-green-400">
-      SHARE करना सुरक्षित है
+      साझा करना सुरक्षित है
     </span>
   </div>
   <code className="text-sm break-all bg-white dark:bg-gray-800 p-2 rounded block text-gray-900 dark:text-gray-100">
-    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   </code>
   <p className="mt-2 text-sm text-green-700 dark:text-green-400">
-    यह आपका username है। इसे हर जगह share करें। Public post करें। यह लोगों को
-    आपको ढूंढने में help करता है।
+    यह आपका उपयोगकर्ता नाम है। इसे हर जगह साझा कीजिए, सार्वजनिक रूप से पोस्ट
+    कीजिए। इसी से लोग आप तक पहुँचते हैं।
   </p>
 </div>
 
-**आप अपने npub से क्या करते हैं:**
+**अपने npub का क्या करें:**
 
-- अपनी website या other social profiles पर share करें
-- Friends को दें ताकि वे आपको follow कर सकें
-- Public post करें
-- अपने email signature में include करें
+- अपनी वेबसाइट और दूसरी सोशल प्रोफ़ाइलों पर लगाएँ
+- दोस्तों को दें ताकि वे आपको फॉलो कर सकें
+- सार्वजनिक रूप से पोस्ट करें
+- अपने ईमेल हस्ताक्षर में जोड़ें
 
-### आपकी Private Key (nsec1...)
+### आपकी निजी कुंजी (nsec1...)
 
 <div className="key-display bg-red-50 dark:bg-red-900/20 border-2 border-red-500 p-4 rounded-lg my-4">
   <div className="flex items-center gap-2 mb-2">
     <span className="text-2xl">🔴</span>
     <span className="font-bold text-red-700 dark:text-red-400">
-      NEVER SHARE - TOP SECRET
+      कभी साझा न करें, परम गुप्त
     </span>
   </div>
   <code className="text-sm break-all bg-white dark:bg-gray-800 p-2 rounded block text-gray-900 dark:text-gray-100">
-    nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+    nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   </code>
   <p className="mt-2 text-sm text-red-700 dark:text-red-400">
-    यह आपका password है। इसके पास कोई भी आपके रूप में post कर सकता है। इसे खोना = अपना account
-    हमेशा के लिए खोना।
+    यह आपका पासवर्ड है। जिसके पास भी यह पहुँच जाए, वह आपके नाम से पोस्ट कर सकता
+    है। इसे खोना = अपना खाता हमेशा के लिए खोना।
   </p>
 </div>
 
 **आपके nsec के नियम:**
 
-- कभी भी किसी को share न करें
-- कभी screenshot न करें (cloud को जाता है)
-- कभी unencrypted notes में save न करें
-- कभी random websites में paste न करें
-- हमेशा securely backup करें (नीचे देखें)
+- इसे किसी को भी कभी मत दीजिए
+- इसका स्क्रीनशॉट कभी मत लीजिए (वह क्लाउड में चला जाता है)
+- इसे बिना एन्क्रिप्शन वाले नोट्स में मत सहेजिए
+- इसे किसी भी अनजान वेबसाइट में मत चिपकाइए
+- इसका बैकअप हमेशा सुरक्षित तरीके से रखिए (नीचे देखें)
 
 ### इतनी लंबी क्यों?
 
-वे strings gibberish दिखती हैं क्योंकि वे cryptographic keys हैं। यहाँ क्यों:
+ये स्ट्रिंग बेतुकी दिखती हैं क्योंकि ये क्रिप्टोग्राफिक कुंजियाँ हैं। वजह यह है:
 
-- **256-bit security:** इसे guess या crack करना impossible बनाता है
-- **Random generation:** Computers भी इसे predict नहीं कर सकते
-- **One-way math:** आप public key से private key figure नहीं कर सकते
+- **256-बिट सुरक्षा:** इसे अंदाज़े से या तोड़कर निकालना नामुमकिन हो जाता है
+- **यादृच्छिक निर्माण:** कंप्यूटर तक इसका अनुमान नहीं लगा सकते
+- **एकतरफा गणित:** सार्वजनिक कुंजी से निजी कुंजी निकाली नहीं जा सकती
 
-इस तरह सोचें: Earth पर sand के grains से ज्यादा possible private keys हैं। कोई आपके guess नहीं कर रहा।
+इस तरह सोचिए: धरती पर रेत के कणों से ज़्यादा संभव निजी कुंजियाँ हैं। कोई आपकी कुंजी का अंदाज़ा नहीं लगा सकता।
 
 ---
 
-## अपनी Keys Generate करें (3 मिनट)
+## अपनी कुंजियाँ बनाएँ (3 मिनट)
 
-> 💡 **Tip:** जबकि यह key generator आपके browser में safely keys create करता है, आप अधिकांश Nostr clients (जैसे Damus, Amethyst, या Iris) में भी directly keys generate कर सकते हैं। इस tool को "simulator" की तरह सोचें real client use करने से पहले practice करने के लिए।
+> 💡 **सुझाव:** यह जनरेटर आपके ब्राउज़र के भीतर ही एक असली, वैध की-पेयर बनाता है। कुछ भी कहीं नहीं भेजा जाता। आप चाहें तो इसे अपनी असली Nostr पहचान बना लें, या इसे अभ्यास मानकर बाद में अपने ऐप से नई कुंजी बनवा लें। रखना हो तो nsec का बैकअप अभी ले लीजिए। सिर्फ़ अभ्यास हो तो इस जोड़ी को असली खाते के लिए दोबारा कभी इस्तेमाल मत कीजिए।
 
 <KeyGenerator client:idle />
 
-### Step-by-Step Instructions
+### कदम दर कदम
 
-1. **"Generate New Keys" Click करें**
-   - यह random key pair create करता है
-   - Animation watch करें क्योंकि हो रहा है समझने के लिए
+1. **"Generate New Keys" पर क्लिक करें**
+   - इससे एक यादृच्छिक की-पेयर बनता है
+   - एनिमेशन देखिए ताकि समझ आए कि हो क्या रहा है
 
-2. **Dono Keys Immediately Save करें**
-   - अपने **npub** (green) को safe place में copy करें
-   - अपने **nsec** (red) को SECURE place में copy करें
-   - यह NOW करें कुछ और करने से पहले
+2. **यह जोड़ी रख रहे हैं? तो दोनों कुंजियाँ अभी सहेज लें**
+   - अपना **npub** (हरा) किसी सुरक्षित जगह पर कॉपी करें
+   - अपना **nsec** (लाल) किसी और भी सुरक्षित जगह पर कॉपी करें
+   - कुंजी के साथ कुछ और करने से पहले यह कर लीजिए
+   - सिर्फ़ अभ्यास कर रहे हैं? तो कुछ मत सहेजिए, और इस जोड़ी को असली खाते के लिए कभी मत इस्तेमाल कीजिए
 
-3. **Verify आपने Save किया**
-   - Generator close करें
-   - इसे reopen करें
-   - क्या आप अभी भी अपनी keys access कर सकते हैं?
+3. **जाँचिए कि बैकअप सचमुच है**
+   - जनरेटर कुछ भी नहीं रखता: यह पेज बंद करते ही कुंजियाँ उसमें से मिट जाती हैं
+   - इसलिए जहाँ आपने सहेजा है वहाँ जाकर दोनों कुंजियाँ पढ़कर देखिए
+   - अगर पढ़कर नहीं दिखा सकते, तो अभी आपके पास बैकअप नहीं है
 
-### Example Format (Not Real Keys)
+### उदाहरण का प्रारूप (असली कुंजियाँ नहीं)
 
-नीचे दिखाया गया है कि Nostr keys कैसे दिखते हैं। ये examples हैं—valid keys नहीं:
+नीचे Nostr कुंजी की बनावट दी गई है। ये सिर्फ़ उदाहरण हैं, वैध कुंजियाँ नहीं:
 
 <div className="test-keys bg-gray-100 dark:bg-gray-800 p-4 rounded-lg my-4">
-  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Example Public Key (npub) format:</p>
+  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">सार्वजनिक कुंजी (npub) का उदाहरण प्रारूप:</p>
   <code className="text-xs break-all block mb-4 text-gray-900 dark:text-gray-100">
-    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   </code>
 
 <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-  Example Private Key (nsec) format:
+  निजी कुंजी (nsec) का उदाहरण प्रारूप:
 </p>
 <code className="text-xs break-all block text-red-600 dark:text-red-400">
-  nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+  nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
 </code>
 
   <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 italic">
-    ये सिर्फ example formats हैं—valid keys नहीं। Real test keys के लिए ऊपर दिए गए Key Generator का use करें।
+    ये सिर्फ़ उदाहरण के प्रारूप हैं, वैध कुंजियाँ नहीं। चलती-फिरती की-पेयर बनाने के लिए ऊपर दिए जनरेटर का इस्तेमाल कीजिए।
   </p>
 </div>
 
 ---
 
-## The 3-2-1 Backup Rule (2 मिनट)
+## 3-2-1 बैकअप नियम (2 मिनट)
 
-यह rule professional data management से आता है। इसे religiously follow करें।
+यह नियम पेशेवर डेटा प्रबंधन से आया है। इसे पूरी सख़्ती से निभाइए।
 
 <BackupChecklist client:idle />
 
-### Rule Explained
+### नियम का मतलब
 
-**आपके nsec की 3 copies**
+**अपने nsec की 3 प्रतियाँ**
 
-- एक enough नहीं। दो better। तीन safe।
-- अगर एक fail हो, आपके पास दो backups
+- एक काफ़ी नहीं। दो बेहतर। तीन सुरक्षित।
+- एक बिगड़ जाए तो दो बैकअप बचे रहते हैं
 
-**2 different media types**
+**2 अलग-अलग माध्यम**
 
-- Digital: Password manager, encrypted file
-- Physical: Paper hand से लिखा, metal plate
-- अलग types क्यों? Digital और physical अलग तरह fail होते हैं
+- डिजिटल: पासवर्ड मैनेजर, एन्क्रिप्टेड फ़ाइल
+- भौतिक: हाथ से लिखा कागज़, धातु की प्लेट
+- अलग माध्यम क्यों? डिजिटल और भौतिक चीज़ें अलग-अलग तरीकों से खराब होती हैं
 
-**1 offsite location**
+**1 प्रति दूसरी जगह पर**
 
-- कम से कम एक copy कहीं और होनी चाहिए
-- Cloud storage offsite count होता है (अगर encrypted)
-- Safe deposit box, trusted friend/family member
+- कम से कम एक प्रति किसी और ठिकाने पर होनी चाहिए
+- क्लाउड स्टोरेज दूसरी जगह मानी जाती है (बशर्ते एन्क्रिप्टेड हो)
+- बैंक लॉकर, या कोई भरोसेमंद दोस्त या परिवार का सदस्य
 
-### Backup Methods Ranked
+### बैकअप के तरीके, अच्छे से कमज़ोर तक
 
-**BEST (यह करें):**
+**सबसे अच्छा (यही कीजिए):**
 
-1. ✅ Password manager (1Password, Bitwarden)
-2. ✅ Paper पर लिखा हुआ, safe में stored
-3. ✅ Encrypted USB drive different location में
+1. ✅ पासवर्ड मैनेजर (1Password, Bitwarden)
+2. ✅ कागज़ पर लिखकर तिजोरी में रखा हुआ
+3. ✅ एन्क्रिप्टेड USB ड्राइव, किसी दूसरी जगह पर
 
-**GOOD:**
+**ठीक है:**
 
-4. ✅ Encrypted cloud storage (iCloud/Google Drive with encryption)
-5. ✅ Metal seed plate (fireproof/waterproof)
+4. ✅ एन्क्रिप्टेड क्लाउड स्टोरेज (एन्क्रिप्शन के साथ iCloud या Google Drive)
+5. ✅ धातु की सीड प्लेट (आग और पानी से बची रहने वाली)
 
-**NEVER DO:**
+**कभी मत कीजिए:**
 
-- ❌ Phone पर screenshot (cloud को sync)
-- ❌ Unencrypted notes app
-- ❌ खुद को email
-- ❌ Text message
-- ❌ Browser autocomplete में save
+- ❌ फ़ोन पर स्क्रीनशॉट (क्लाउड में सिंक हो जाता है)
+- ❌ बिना एन्क्रिप्शन वाला नोट्स ऐप
+- ❌ खुद को ईमेल करना
+- ❌ टेक्स्ट मैसेज
+- ❌ ब्राउज़र के ऑटोकम्प्लीट में सहेजना
 
-### अगर आप अपनी Keys खो दें तो क्या होगा?
+### कुंजियाँ खो जाएँ तो क्या होता है?
 
-**यही कारण है कि 3-2-1 backup rule matter करता है।**
+**इसीलिए 3-2-1 बैकअप नियम मायने रखता है।**
 
-Centralized platforms के विपरीत, Nostr में कोई "forgot password" button या customer support नहीं है जो आपका account recover करे। लेकिन चिंता मत करें—नीचे दिए गए simple backup steps follow करना आपको safe रखेगा।
+केंद्रीकृत प्लेटफ़ॉर्म के उलट, Nostr में कोई "पासवर्ड भूल गए" बटन नहीं है और न कोई सपोर्ट टीम जो आपका खाता वापस दिला दे। पर घबराइए नहीं: ऊपर बताए बैकअप कदम अपना लेने भर से आप सुरक्षित रहेंगे।
 
-**इस तरह सोचें:** आप अपनी life savings cash के रूप में pocket में नहीं रखेंगे। आप ज्यादातर bank में रखेंगे (multiple backups) और सिर्फ जितना जरूरत हो उतना carry करेंगे। आपका nsec similar है—इसे securely store करें, सिर्फ अपने phone पर नहीं।
+**इस तरह सोचिए:** आप अपनी सारी जमापूँजी नकद जेब में लेकर नहीं घूमेंगे। ज़्यादातर हिस्सा बैंक में रखेंगे (यानी कई बैकअप) और जितना चाहिए उतना ही साथ रखेंगे। आपका nsec भी ऐसा ही है: उसे सुरक्षित जगह रखिए, सिर्फ़ फ़ोन पर नहीं।
 
 ---
 
-## Security Best Practices (2 मिनट)
+## सुरक्षा की अच्छी आदतें (2 मिनट)
 
-### The DON'Ts (दूसरों की गलतियों से सीखें)
+### ये मत कीजिए (दूसरों की गलतियों से सीखिए)
 
-**DON'T अपनी Keys Screenshot करें**
+**अपनी कुंजियों का स्क्रीनशॉट मत लीजिए**
 
-- Screenshots cloud को sync करते हैं (iCloud, Google Photos)
-- Cloud accounts hack हो जाते हैं
-- Photo delete करना इसे backups से remove नहीं करता
+- स्क्रीनशॉट क्लाउड में सिंक हो जाते हैं (iCloud, Google Photos)
+- क्लाउड खाते हैक होते रहते हैं
+- फ़ोटो हटा देने से वह बैकअप से नहीं हटती
 
-**DON'T Unencrypted Notes में Save करें**
+**बिना एन्क्रिप्शन वाले नोट्स में मत सहेजिए**
 
-- Apple Notes, Google Keep, etc. encrypted नहीं हैं
-- जिसके पास आपका phone/computer है वे उन्हें पढ़ सकते हैं
-- Default से cloud sync होता है
+- Apple Notes, Google Keep जैसे ऐप्स के आम नोट एंड-टू-एंड एन्क्रिप्टेड नहीं होते
+- वे अपने आप क्लाउड में सिंक होते हैं, इसलिए जो भी आपके खाते तक पहुँच जाए वह उन्हें पढ़ सकता है
+- और जिसके हाथ आपका खुला फ़ोन या कंप्यूटर लग जाए, वह भी
 
-**DON'T किसी को Share करें**
+**किसी को भी मत बताइए**
 
-- न आपके spouse
-- न आपके best friend
-- न "Nostr support" (कोई support नहीं है)
-- न किसी को, कभी नहीं
+- अपने जीवनसाथी को नहीं
+- अपने सबसे अच्छे दोस्त को नहीं
+- "Nostr सपोर्ट" को नहीं (ऐसा कोई सपोर्ट है ही नहीं)
+- किसी को नहीं, कभी नहीं
 
-### The DOs (Best Practices)
+### ये कीजिए (अच्छी आदतें)
 
-**DO Password Manager Use करें**
+**पासवर्ड मैनेजर इस्तेमाल कीजिए**
 
 - 1Password, Bitwarden, KeePass
-- Encrypted, backed up, accessible
-- Clients के लिए strong passwords भी generate करें
+- एन्क्रिप्टेड, बैकअप वाला, और जब चाहिए तब हाथ में
+- खुद पासवर्ड मैनेजर का और अपने ईमेल का मज़बूत पासवर्ड रखने की सही जगह भी यही है
 
-**DO Paper पर लिखें**
+**कागज़ पर लिखिए**
 
-- Low-tech, highly reliable
-- कोई batteries नहीं चाहिए
-- Safe, lockbox, या hidden location में store करें
+- पुराने ढंग का, पर बेहद भरोसेमंद
+- न बैटरी चाहिए, न बिजली
+- तिजोरी, लॉकबॉक्स या किसी छिपी जगह पर रखिए
 
-**DO Nostr Signer Apps Use करें** [ADVANCED]
+**Nostr साइनर ऐप्स इस्तेमाल कीजिए** [ADVANCED]
 
-- Apps जैसे Amber (Android) आपकी keys securely store करते हैं
-- Clients signatures request करते हैं keys store करने की बजाय
-- Extra security layer add करता है
-- Serious users के लिए recommended
+- Amber (Android) जैसे ऐप आपकी कुंजियाँ सुरक्षित रखते हैं
+- क्लाइंट कुंजी रखने के बजाय हर बार हस्ताक्षर माँगते हैं
+- सुरक्षा की एक परत और जुड़ जाती है
+- गंभीरता से इस्तेमाल करने वालों के लिए सुझाया जाता है
 
 ---
 
-## Common Mistakes (1 minute)
+## आम गलतियाँ (1 मिनट)
 
 <SecurityQuiz client:idle />
 
-### Horror Stories (Optional Reading)
+### खाता खोने के तीन तरीके (चाहें तो पढ़ें)
 
-ये real हैं। उनसे सीखें:
+ये किसी के कहे हुए शब्द नहीं हैं। ये वही गलतियाँ हैं जो बार-बार सामने आती हैं, यहाँ इसलिए लिखी गई हैं ताकि आप उन्हें करने से पहले पहचान लें।
 
-**"मैंने सोचा मैंने backup कर लिया"**
+**"मुझे लगा था बैकअप हो गया है"**
 
-> "मैंने अपना nsec password manager में save किया, लेकिन मैं sync करना भूल गया। Phone died। 2,000 followers gone। फिर से शुरू करना पड़ा।" — @nostruser123
+nsec ऐसे पासवर्ड मैनेजर में चला जाता है जो असल में सिंक हो ही नहीं रहा था। फ़ोन बंद हो जाता है, लैपटॉप वाली तिजोरी में वह प्रविष्टि है ही नहीं, और खाता तथा उसके फॉलोअर्स पहुँच से बाहर हो जाते हैं।
 
-**"Screenshot delete नहीं किया गया"**
+**"स्क्रीनशॉट जो मिटा नहीं"**
 
-> "मैंने अपनी keys screenshot की, फिर photo delete की। Recently Deleted folder के बारे में भूल गया। iCloud से किसी ने restore किया। सब कुछ खो दिया।" — Anonymous
+कुंजियों का स्क्रीनशॉट लिया जाता है, फिर फ़ोटो हटा दी जाती है। Recently Deleted फ़ोल्डर उसे एक महीने तक रखता है और क्लाउड बैकअप उससे भी लंबा। जो भी उस क्लाउड खाते तक पहुँच गया, उसके हाथ nsec लग गया।
 
-**"'helpful' stranger"**
+**"मदद करने वाला अजनबी"**
 
-> "किसी ने मुझे DM किया account 'verify' करने की offer के साथ। उन्होंने properly 'link' करने के लिए मेरा nsec माँगा। मैंने उन्हें दे दिया। उन्होंने मेरा account steal कर लिया और scams post करने लगे।" — @learnedthehardway
+एक संदेश आता है जो आपका खाता "verify" या "link" करने की पेशकश करता है, और उसके लिए आपका nsec माँगता है। किसी भी भरोसेमंद सेवा को आपका nsec कभी नहीं चाहिए। न कोई वेरिफिकेशन सेवा है, न सपोर्ट डेस्क, और न इसे सौंपने की कोई वजह।
 
 ---
 
 <div className="confirmation-section my-12 p-6 bg-green-50 dark:bg-green-900/20 border-2 border-green-500 rounded-lg">
   <h3 className="text-xl font-bold mb-4 text-green-700 dark:text-green-400">
-    ✓ Key Backup Checklist
+    ✓ कुंजी बैकअप चेकलिस्ट
   </h3>
 
 <div className="space-y-2 mb-6">
   <label className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
     <input type="checkbox" className="w-5 h-5" />
-    <span>मैंने अपना npub (public key) save कर लिया है</span>
+    <span>मैंने अपना npub (सार्वजनिक कुंजी) सहेज लिया है</span>
   </label>
   <label className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
     <input type="checkbox" className="w-5 h-5" />
-    <span>मैंने अपना nsec (private key) 3+ जगहों पर save कर लिया है</span>
+    <span>मैंने अपना nsec (निजी कुंजी) 3 या ज़्यादा जगहों पर सहेज लिया है</span>
   </label>
   <label className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
     <input type="checkbox" className="w-5 h-5" />
-    <span>मैं समझता हूं कि nsec खोना = account खोना</span>
+    <span>मैं समझता/समझती हूँ कि nsec खोना = खाता खोना</span>
   </label>
   <label className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
     <input type="checkbox" className="w-5 h-5" />
-    <span>मैं कभी भी अपना nsec किसी को share नहीं करूंगा</span>
+    <span>मैं अपना nsec कभी किसी को साझा नहीं करूँगा/करूँगी</span>
   </label>
 </div>
 
@@ -294,26 +289,26 @@ Centralized platforms के विपरीत, Nostr में कोई "forg
 
 ---
 
-## Advanced: Real-World Cautionary Tales
+## आगे की बात: कुंजियाँ खोने की कीमत
 
 <details>
-<summary>⚠️ Click to read: Proper backups के बिना क्या होता है (optional)</summary>
+<summary>⚠️ पढ़ने के लिए क्लिक करें: सही बैकअप के बिना क्या होता है (वैकल्पिक)</summary>
 
-जबकि 3-2-1 backup rule आपको safe रखता है, यहाँ real examples हैं कि क्या हुआ जब लोगों ने follow नहीं किया:
+3-2-1 नियम आपको सुरक्षित रखता है। इसे छोड़ दें तो नुकसान आमतौर पर इन्हीं शक्लों में आता है:
 
-**Case Study 1: The Bitcoin Tips**  
-एक content creator ने 6 महीने में $50,000 worth के Bitcoin tips (zaps) receive किए। उनका phone चोरी हो गया—उनके पास backup नहीं था। Tips हमेशा के लिए gone क्योंकि nsec सिर्फ उस device पर था।
+**zaps कमाने वाला रचनाकार**  
+महीनों तक दर्शक बनाए, zaps के रूप में कमाई हुई, फिर फ़ोन चोरी हो गया और nsec सिर्फ़ उसी फ़ोन पर था। पहचान चली गई: न दोबारा अपने नाम से पोस्ट करने का रास्ता, न यह दिखाने का कि वह खाता कभी आपका था। यह जानना ज़रूरी है कि zaps सीधे आपके Lightning वॉलेट में जाते हैं, आपकी Nostr कुंजी उन्हें नहीं रखती, इसलिए वह पैसा उतना ही सुरक्षित है जितना आपके वॉलेट का अपना बैकअप। यानी बैकअप दो चीज़ों का चाहिए, एक का नहीं।
 
-**Case Study 2: The Influencer**  
-एक Nostr personality जिसके 10,000 followers थे, उनका phone pool में गिर गया। Backup नहीं = zero से शुरू। Years का community building, lost।
+**सालों पुराना खाता**  
+एक फ़ोन पानी में गिर जाता है। बैकअप न हो तो पोस्ट, जवाब और दर्शक रिले पर उस कुंजी के नीचे पड़े रहते हैं जिसे अब कोई इस्तेमाल नहीं कर सकता, और आप शून्य से दोबारा शुरू करते हैं।
 
-**Case Study 3: The Developer**  
-एक Nostr app developer years के code contributions और technical discussions के साथ सब कुछ खो गया जब उनका laptop crash हो गया। कोई cloud backup नहीं, दूसरा device नहीं, कोई recovery।
+**जो लैपटॉप चल बसा**  
+एक ही मशीन पर पड़ी अकेली प्रति बैकअप नहीं होती। ड्राइव खराब होने पर न कोई रीसेट लिंक है, न कोई जिससे अपील की जा सके।
 
-**The common thread:** ये सब simple backup से prevent हो सकते थे—password manager या encrypted USB drive में।
+**सबमें एक बात साझा है:** इनमें से हर नुकसान उस दिन टल जाता जिस दिन कुंजी बनी थी, बस पासवर्ड मैनेजर में या कागज़ पर एक प्रति बना ली जाती।
 
 </details>
 
 ---
 
-**Questions?** हमारी [FAQ](/hi/guides/faq) देखें keys और security के बारे में common concerns के लिए।
+**कोई सवाल?** कुंजियों और सुरक्षा से जुड़ी आम उलझनों के लिए हमारा [FAQ](/hi/guides/faq) देखें।
