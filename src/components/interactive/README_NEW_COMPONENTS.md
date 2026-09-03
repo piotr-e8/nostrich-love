@@ -7,7 +7,6 @@ This directory contains interactive React components for the Nostr beginner guid
 ### Existing Components (P0)
 
 - **KeyGenerator** - Generate secure Nostr key pairs with safety checklists
-- **EmptyFeedFixer** - Guide users to fix empty feeds with starter packs
 - **ClientRecommender** - Quiz-based client recommendation system
 - **BackupChecklist** - Ensure users properly backup their keys
 

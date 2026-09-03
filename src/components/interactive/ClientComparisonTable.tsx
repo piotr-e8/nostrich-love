@@ -3,7 +3,6 @@ import {
   Smartphone,
   Monitor,
   Globe,
-  Star,
   Wallet,
   Image as ImageIcon,
   FileText,
@@ -14,9 +13,6 @@ import {
   Check,
   X,
   ExternalLink,
-  Sparkles,
-  Users,
-  Zap,
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
@@ -27,18 +23,18 @@ import { getValue } from '../../i18n';
 type Platform = 'ios' | 'android' | 'web' | 'desktop';
 type Difficulty = 'beginner' | 'intermediate' | 'advanced';
 
+// Machine-readable only. Every human-readable string (name, description,
+// pros, cons, tags) lives in the translations under clientComparisonTable.*.
 interface NostrClient {
   id: string;
   name: string;
   icon: string;
   platforms: Platform[];
-  rating: number;
   difficulty: Difficulty;
   wallet: boolean;
   media: boolean;
   longform: boolean;
   privacy: boolean;
-  userCount: string;
   description: string;
   pros: string[];
   cons: string[];
@@ -62,22 +58,39 @@ const PLATFORM_ICONS: Record<Platform, React.ReactNode> = {
   desktop: <Monitor className="w-4 h-4" />,
 };
 
-// Client URLs are static
+// The CSV is a file the reader keeps, not a UI label, so the name stays
+// constant across locales; the column headers inside it are translated.
+const CSV_FILENAME = 'nostr-clients.csv';
+
+// Store and site links, checked against docs/audit-2026-09/facts.md and
+// re-verified at source on 2026-09-02 (iTunes lookup by track id, Play Store
+// listing by package name, HTTP status for the web clients).
+//
+// Three entries used to live here and are gone:
+//   - Current: App Store id 1668517032 returns zero results and the repo
+//     stopped in December 2023.
+//   - Habla: habla.news answers 404.
+//   - Plebstr: the package com.plebstr.client is now the Openvibe app, a
+//     multi-network client, not the Nostr client we described.
+// YakiHonne took the long-form slot: web, iOS, Android and desktop, iOS
+// id6472556189 updated 2026-08-31.
 const CLIENT_URLS: Record<string, { web?: string; ios?: string; android?: string; desktop?: string }> = {
   damus: { ios: 'https://apps.apple.com/app/damus/id1628663131' },
   amethyst: { android: 'https://play.google.com/store/apps/details?id=com.vitorpamplona.amethyst' },
-  primal: { 
+  primal: {
     web: 'https://primal.net',
     ios: 'https://apps.apple.com/app/primal/id1673134518',
     android: 'https://play.google.com/store/apps/details?id=net.primal.android'
   },
   iris: { web: 'https://iris.to' },
   snort: { web: 'https://snort.social' },
-  coracle: { desktop: 'https://coracle.social' },
-  current: { ios: 'https://apps.apple.com/app/current-nostr-client/id1668517032' },
-  habla: { web: 'https://habla.news' },
+  coracle: { web: 'https://coracle.social' },
+  yakihonne: {
+    web: 'https://yakihonne.com',
+    ios: 'https://apps.apple.com/app/yakihonne/id6472556189',
+    android: 'https://play.google.com/store/apps/details?id=com.yakihonne.yakihonne'
+  },
   nostur: { ios: 'https://apps.apple.com/app/nostur/id1672780508' },
-  plebstr: { android: 'https://play.google.com/store/apps/details?id=com.plebstr.client' },
 };
 
 export function ClientComparisonTable({ className }: ClientComparisonTableProps) {
@@ -92,20 +105,26 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
   // Helper to get array from translations
   const getArray = (key: string): string[] => getValue(key, locale) || [];
 
-  // Get clients data with translations
+  // None of these is a native desktop app. The web clients carry "desktop"
+  // as well, because opening them in a browser is how somebody on a Mac or a
+  // PC uses them, and a Desktop filter that returns nothing helps nobody.
+  // Coracle in particular is a web app (its own README says so) and was
+  // filed here as desktop-only.
+  //
+  // Cards are shown in the order below, easiest first. There used to be a
+  // sort by a per-client rating; nobody could source those numbers, so the
+  // ratings and the follower counts next to them are gone.
   const clients = useMemo((): NostrClient[] => [
     {
       id: 'damus',
       name: t('clientComparisonTable.clients.damus.name'),
       icon: 'D',
       platforms: ['ios'],
-      rating: 4.8,
       difficulty: 'beginner',
       wallet: true,
       media: true,
       longform: false,
       privacy: true,
-      userCount: '100K+',
       description: t('clientComparisonTable.clients.damus.description'),
       pros: getArray('clientComparisonTable.clients.damus.pros'),
       cons: getArray('clientComparisonTable.clients.damus.cons'),
@@ -113,35 +132,15 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
       tags: [t('clientComparisonTable.tags.beginnerFriendly'), t('clientComparisonTable.tags.popular')],
     },
     {
-      id: 'amethyst',
-      name: t('clientComparisonTable.clients.amethyst.name'),
-      icon: 'A',
-      platforms: ['android'],
-      rating: 4.7,
-      difficulty: 'intermediate',
-      wallet: true,
-      media: true,
-      longform: true,
-      privacy: true,
-      userCount: '50K+',
-      description: t('clientComparisonTable.clients.amethyst.description'),
-      pros: getArray('clientComparisonTable.clients.amethyst.pros'),
-      cons: getArray('clientComparisonTable.clients.amethyst.cons'),
-      urls: CLIENT_URLS.amethyst,
-      tags: [t('clientComparisonTable.tags.powerUser'), t('clientComparisonTable.tags.featureRich')],
-    },
-    {
       id: 'primal',
       name: t('clientComparisonTable.clients.primal.name'),
       icon: 'P',
-      platforms: ['web', 'ios', 'android'],
-      rating: 4.6,
+      platforms: ['web', 'desktop', 'ios', 'android'],
       difficulty: 'beginner',
       wallet: true,
       media: true,
       longform: true,
       privacy: false,
-      userCount: '30K+',
       description: t('clientComparisonTable.clients.primal.description'),
       pros: getArray('clientComparisonTable.clients.primal.pros'),
       cons: getArray('clientComparisonTable.clients.primal.cons'),
@@ -152,14 +151,12 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
       id: 'iris',
       name: t('clientComparisonTable.clients.iris.name'),
       icon: 'I',
-      platforms: ['web'],
-      rating: 4.4,
+      platforms: ['web', 'desktop'],
       difficulty: 'beginner',
       wallet: false,
       media: true,
       longform: false,
       privacy: true,
-      userCount: '20K+',
       description: t('clientComparisonTable.clients.iris.description'),
       pros: getArray('clientComparisonTable.clients.iris.pros'),
       cons: getArray('clientComparisonTable.clients.iris.cons'),
@@ -170,14 +167,12 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
       id: 'snort',
       name: t('clientComparisonTable.clients.snort.name'),
       icon: 'S',
-      platforms: ['web'],
-      rating: 4.3,
+      platforms: ['web', 'desktop'],
       difficulty: 'beginner',
       wallet: false,
       media: true,
       longform: true,
       privacy: true,
-      userCount: '15K+',
       description: t('clientComparisonTable.clients.snort.description'),
       pros: getArray('clientComparisonTable.clients.snort.pros'),
       cons: getArray('clientComparisonTable.clients.snort.cons'),
@@ -185,57 +180,35 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
       tags: [t('clientComparisonTable.tags.minimal'), t('clientComparisonTable.tags.privacy')],
     },
     {
-      id: 'coracle',
-      name: t('clientComparisonTable.clients.coracle.name'),
-      icon: 'C',
-      platforms: ['desktop'],
-      rating: 4.5,
-      difficulty: 'advanced',
-      wallet: true,
-      media: true,
-      longform: true,
-      privacy: true,
-      userCount: '10K+',
-      description: t('clientComparisonTable.clients.coracle.description'),
-      pros: getArray('clientComparisonTable.clients.coracle.pros'),
-      cons: getArray('clientComparisonTable.clients.coracle.cons'),
-      urls: CLIENT_URLS.coracle,
-      tags: [t('clientComparisonTable.tags.powerUser'), t('clientComparisonTable.tags.desktop')],
-    },
-    {
-      id: 'current',
-      name: t('clientComparisonTable.clients.current.name'),
-      icon: 'Cu',
-      platforms: ['ios'],
-      rating: 4.4,
+      id: 'amethyst',
+      name: t('clientComparisonTable.clients.amethyst.name'),
+      icon: 'A',
+      platforms: ['android'],
       difficulty: 'intermediate',
       wallet: true,
       media: true,
       longform: true,
       privacy: true,
-      userCount: '8K+',
-      description: t('clientComparisonTable.clients.current.description'),
-      pros: getArray('clientComparisonTable.clients.current.pros'),
-      cons: getArray('clientComparisonTable.clients.current.cons'),
-      urls: CLIENT_URLS.current,
-      tags: [t('clientComparisonTable.tags.powerUser'), t('clientComparisonTable.tags.walletFocused')],
+      description: t('clientComparisonTable.clients.amethyst.description'),
+      pros: getArray('clientComparisonTable.clients.amethyst.pros'),
+      cons: getArray('clientComparisonTable.clients.amethyst.cons'),
+      urls: CLIENT_URLS.amethyst,
+      tags: [t('clientComparisonTable.tags.powerUser'), t('clientComparisonTable.tags.featureRich')],
     },
     {
-      id: 'habla',
-      name: t('clientComparisonTable.clients.habla.name'),
-      icon: 'H',
-      platforms: ['web'],
-      rating: 4.2,
-      difficulty: 'beginner',
+      id: 'yakihonne',
+      name: t('clientComparisonTable.clients.yakihonne.name'),
+      icon: 'Y',
+      platforms: ['web', 'desktop', 'ios', 'android'],
+      difficulty: 'intermediate',
       wallet: true,
       media: true,
       longform: true,
       privacy: false,
-      userCount: '5K+',
-      description: t('clientComparisonTable.clients.habla.description'),
-      pros: getArray('clientComparisonTable.clients.habla.pros'),
-      cons: getArray('clientComparisonTable.clients.habla.cons'),
-      urls: CLIENT_URLS.habla,
+      description: t('clientComparisonTable.clients.yakihonne.description'),
+      pros: getArray('clientComparisonTable.clients.yakihonne.pros'),
+      cons: getArray('clientComparisonTable.clients.yakihonne.cons'),
+      urls: CLIENT_URLS.yakihonne,
       tags: [t('clientComparisonTable.tags.longForm'), t('clientComparisonTable.tags.writers')],
     },
     {
@@ -243,13 +216,11 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
       name: t('clientComparisonTable.clients.nostur.name'),
       icon: 'N',
       platforms: ['ios'],
-      rating: 4.3,
       difficulty: 'intermediate',
       wallet: true,
       media: true,
       longform: false,
       privacy: true,
-      userCount: '12K+',
       description: t('clientComparisonTable.clients.nostur.description'),
       pros: getArray('clientComparisonTable.clients.nostur.pros'),
       cons: getArray('clientComparisonTable.clients.nostur.cons'),
@@ -257,24 +228,22 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
       tags: [t('clientComparisonTable.tags.ios'), t('clientComparisonTable.tags.featureRich')],
     },
     {
-      id: 'plebstr',
-      name: t('clientComparisonTable.clients.plebstr.name'),
-      icon: 'Pl',
-      platforms: ['android'],
-      rating: 4.1,
-      difficulty: 'beginner',
-      wallet: false,
+      id: 'coracle',
+      name: t('clientComparisonTable.clients.coracle.name'),
+      icon: 'C',
+      platforms: ['web', 'desktop'],
+      difficulty: 'advanced',
+      wallet: true,
       media: true,
-      longform: false,
+      longform: true,
       privacy: true,
-      userCount: '8K+',
-      description: t('clientComparisonTable.clients.plebstr.description'),
-      pros: getArray('clientComparisonTable.clients.plebstr.pros'),
-      cons: getArray('clientComparisonTable.clients.plebstr.cons'),
-      urls: CLIENT_URLS.plebstr,
-      tags: [t('clientComparisonTable.tags.beginnerFriendly'), t('clientComparisonTable.tags.android')],
+      description: t('clientComparisonTable.clients.coracle.description'),
+      pros: getArray('clientComparisonTable.clients.coracle.pros'),
+      cons: getArray('clientComparisonTable.clients.coracle.cons'),
+      urls: CLIENT_URLS.coracle,
+      tags: [t('clientComparisonTable.tags.powerUser'), t('clientComparisonTable.tags.privacy')],
     },
-  ], [t]);
+  ], [t, locale]);
 
   // Filter clients
   const filteredClients = useMemo(() => {
@@ -302,7 +271,7 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
         !difficultyFilter || client.difficulty === difficultyFilter;
 
       return matchesSearch && matchesPlatform && matchesFeatures && matchesDifficulty;
-    }).sort((a, b) => b.rating - a.rating);
+    });
   }, [clients, searchQuery, selectedPlatforms, selectedFeatures, difficultyFilter]);
 
   const togglePlatform = (platform: Platform) => {
@@ -325,27 +294,39 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
     setSelectedFeatures(newSet);
   };
 
-  const exportData = () => {
-    const csv = [
-      ['Name', 'Platforms', 'Rating', 'Difficulty', 'Wallet', 'Media', 'Long-form', 'Privacy'].join(','),
-      ...filteredClients.map((c) => [
-        c.name,
-        c.platforms.join(';'),
-        c.rating,
-        c.difficulty,
-        c.wallet ? 'Yes' : 'No',
-        c.media ? 'Yes' : 'No',
-        c.longform ? 'Yes' : 'No',
-        c.privacy ? 'Yes' : 'No',
-      ].join(',')),
-    ].join('\n');
-
-    downloadFile('nostr-clients.csv', csv);
-  };
-
   const getPlatformLabel = (platform: Platform) => t(`clientComparisonTable.platformLabels.${platform}`);
   const getDifficultyLabel = (diff: Difficulty) => t(`clientComparisonTable.difficultyLabels.${diff}`);
   const getFeatureLabel = (feature: string) => t(`clientComparisonTable.featureLabels.${feature}`);
+
+  const exportData = () => {
+    const yes = t('clientComparisonTable.csvExport.yes');
+    const no = t('clientComparisonTable.csvExport.no');
+    // A translated header can carry a comma, so quote every cell and double
+    // any quote inside it, per RFC 4180.
+    const cell = (value: string) => `"${value.replace(/"/g, '""')}"`;
+    const csv = [
+      [
+        t('clientComparisonTable.csvExport.headers.name'),
+        t('clientComparisonTable.csvExport.headers.platforms'),
+        t('clientComparisonTable.csvExport.headers.difficulty'),
+        getFeatureLabel('wallet'),
+        getFeatureLabel('media'),
+        getFeatureLabel('longform'),
+        getFeatureLabel('privacy'),
+      ].map(cell).join(','),
+      ...filteredClients.map((c) => [
+        c.name,
+        c.platforms.map(getPlatformLabel).join('; '),
+        getDifficultyLabel(c.difficulty),
+        c.wallet ? yes : no,
+        c.media ? yes : no,
+        c.longform ? yes : no,
+        c.privacy ? yes : no,
+      ].map(cell).join(',')),
+    ].join('\n');
+
+    downloadFile(CSV_FILENAME, csv);
+  };
 
   const difficultyColors: Record<Difficulty, string> = {
     beginner: 'text-success-500 bg-success-500/10',
@@ -501,23 +482,11 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
           >
             {/* Card Header */}
             <div className="p-4">
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center text-white font-bold text-lg">
-                    {client.icon}
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-gray-900 dark:text-white">{client.name}</h3>
-                    <div className="flex items-center gap-2 text-sm text-gray-500">
-                      <Users className="w-3.5 h-3.5" />
-                      {client.userCount}
-                    </div>
-                  </div>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center text-white font-bold text-lg">
+                  {client.icon}
                 </div>
-                <div className="flex items-center gap-1 text-yellow-500">
-                  <Star className="w-4 h-4 fill-yellow-500" />
-                  <span className="font-semibold text-gray-900 dark:text-white">{client.rating}</span>
-                </div>
+                <h3 className="font-bold text-gray-900 dark:text-white">{client.name}</h3>
               </div>
 
               {/* Platforms & Difficulty */}

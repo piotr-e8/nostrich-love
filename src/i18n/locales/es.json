@@ -17,11 +17,11 @@
               },
               {
                 "id": "b",
-                "label": "Network of Secure Transmission Resources"
+                "label": "Red de Recursos de Transmisión Segura"
               },
               {
                 "id": "c",
-                "label": "New Online Social Technology Resource"
+                "label": "Nuevo Recurso de Tecnología Social en Línea"
               }
             ],
             "correctId": "a",
@@ -2417,320 +2417,6 @@
       "verifiedOn": "NIP-05 verificado en {domain}"
     }
   },
-  "emptyFeedFixer": {
-    "title": "Arreglar Feed Vacío",
-    "description": "¿Nuevo en Nostr? Empieza siguiendo algunas cuentas y conectándote a relays para ver contenido en tu feed.",
-    "setupProgress": "Progreso de Configuración",
-    "step1": {
-      "title": "Paso 1: Seguir Cuentas",
-      "description": "Elige un paquete inicial o agrega cuentas personalizadas",
-      "following": "Siguiendo",
-      "followAll": "Seguir Todos",
-      "follow": "Seguir",
-      "addCustom": "Agregar",
-      "continue": "Continuar a Relays",
-      "followingCount": "Siguiendo a {count} cuentas",
-      "accountCount": "{count} cuentas para seguir",
-      "packAccountsTitle": "Cuentas en {pack}",
-      "npubLabel": "Pega un npub para seguirlo",
-      "npubPlaceholder": "Pega un npub, empieza por npub1",
-      "npubInvalid": "Ese npub no es válido. Un solo carácter equivocado lo rompe, así que vuelve a pegar la clave entera."
-    },
-    "step2": {
-      "title": "Paso 2: Conectar a Relays",
-      "description": "Conecta a relays para ver contenido",
-      "connected": "Conectado",
-      "connect": "Conectar",
-      "connectAll": "Conectar a Todos los Relays Recomendados",
-      "continue": "Continuar",
-      "info": "Los relays son servidores que almacenan y distribuyen contenido de Nostr. Conectar a múltiples relays asegura mejor disponibilidad de contenido.",
-      "recommended": "Recomendado",
-      "connectedCount": "Conectado a {count} relays"
-    },
-    "step3": {
-      "title": "Paso 3: ¡Empieza a Usar Nostr!",
-      "description": "Estás listo para explorar. Elige un cliente para comenzar.",
-      "completed": "¡Todo Listo!",
-      "successMessage": "Has seguido {accounts} cuentas y te has conectado a {relays} relays. ¡Tu feed de Nostr debería tener contenido ahora!",
-      "awesome": "¡Genial!"
-    },
-    "starterPacks": {
-      "technology": {
-        "name": "Tecnología",
-        "description": "Desarrolladores, noticias tech e innovación"
-      },
-      "bitcoin": {
-        "name": "Bitcoin",
-        "description": "Entusiastas de Bitcoin y Lightning Network"
-      },
-      "art": {
-        "name": "Arte y Diseño",
-        "description": "Artistas, diseñadores y creativos"
-      },
-      "general": {
-        "name": "General",
-        "description": "Una mezcla de gente interesante para seguir"
-      }
-    },
-    "relays": {
-      "wssRelayDamus": {
-        "name": "Relay Damus",
-        "description": "Relay más popular"
-      },
-      "wssRelayNostr": {
-        "name": "Relay Nostr",
-        "description": "Relay de propósito general"
-      },
-      "wssPurplePages": {
-        "name": "Purple Pages",
-        "description": "Solo perfiles y listas, sin publicaciones"
-      },
-      "damus": {
-        "name": "Damus",
-        "description": "El relay que mantiene el equipo de Damus. Gratis para leer y para publicar."
-      },
-      "nosLol": {
-        "name": "nos.lol",
-        "description": "Acepta casi cualquier nota, salvo el spam."
-      },
-      "primal": {
-        "name": "Primal",
-        "description": "El relay público de Primal. Gratis para leer y para publicar."
-      },
-      "snort": {
-        "name": "Snort",
-        "description": "Un relay rápido que guarda las notas recientes en memoria."
-      }
-    },
-    "clients": {
-      "damus": {
-        "platform": "iOS"
-      },
-      "amethyst": {
-        "platform": "Android"
-      },
-      "iris": {
-        "platform": "Web"
-      },
-      "primal": {
-        "platform": "Web, iOS y Android"
-      }
-    }
-  },
-  "clientComparisonTable": {
-    "searchPlaceholder": "Buscar clientes...",
-    "filters": {
-      "button": "Filtros",
-      "platform": "Plataforma",
-      "features": "Características Clave",
-      "difficulty": "Dificultad"
-    },
-    "platformLabels": {
-      "ios": "iOS",
-      "android": "Android",
-      "web": "Web",
-      "desktop": "Escritorio"
-    },
-    "difficultyLabels": {
-      "beginner": "Principiante",
-      "intermediate": "Intermedio",
-      "advanced": "Avanzado"
-    },
-    "featureLabels": {
-      "wallet": "Billetera",
-      "media": "Multimedia",
-      "longform": "Contenido Largo",
-      "privacy": "Privacidad"
-    },
-    "clearFilters": "Limpiar todos los filtros",
-    "export": "Exportar",
-    "noResults": {
-      "title": "No se encontraron clientes",
-      "description": "Intenta ajustar tus filtros para ver más resultados"
-    },
-    "card": {
-      "pros": "Pros",
-      "cons": "Contras",
-      "links": {
-        "web": "Web",
-        "ios": "iOS",
-        "android": "Android",
-        "desktop": "Escritorio"
-      }
-    },
-    "clients": {
-      "damus": {
-        "name": "Damus",
-        "description": "El cliente iOS más popular con una interfaz pulida y experiencia fluida.",
-        "pros": [
-          "UI hermosa",
-          "Fácil de usar",
-          "Desarrollo activo",
-          "Excelente proceso de bienvenida",
-          "Soporte para zaps"
-        ],
-        "cons": [
-          "Solo iOS",
-          "Sincronización limitada con el escritorio",
-          "Sin contenido largo"
-        ]
-      },
-      "amethyst": {
-        "name": "Amethyst",
-        "description": "Un cliente Android completo con excelente soporte para todas las funciones Nostr.",
-        "pros": [
-          "Completo",
-          "Soporte para zaps",
-          "Comunidad activa",
-          "Actualizaciones regulares",
-          "Altamente personalizable"
-        ],
-        "cons": [
-          "Puede ser abrumador para principiantes",
-          "Solo Android",
-          "Configuración compleja"
-        ]
-      },
-      "primal": {
-        "name": "Primal",
-        "description": "Un cliente rápido y moderno disponible en todas las plataformas con excelente rendimiento.",
-        "pros": [
-          "Todas las plataformas",
-          "Billetera Lightning integrada",
-          "Carga rápida",
-          "Gran búsqueda",
-          "Actualizaciones regulares"
-        ],
-        "cons": [
-          "Dudas de privacidad para algunas personas",
-          "Lee a través de los servidores de caché de Primal",
-          "Menos control sobre los relays que los clientes avanzados"
-        ]
-      },
-      "iris": {
-        "name": "Iris",
-        "description": "Un cliente web simple, sin registro, perfecto para empezar rápidamente.",
-        "pros": [
-          "Sin descarga necesaria",
-          "Funciona al instante",
-          "Interfaz limpia",
-          "Código abierto",
-          "Privado"
-        ],
-        "cons": [
-          "Solo web",
-          "Funciones avanzadas limitadas",
-          "Sin integración de billetera"
-        ]
-      },
-      "snort": {
-        "name": "Snort",
-        "description": "Un cliente web enfocado en simplicidad y rendimiento.",
-        "pros": [
-          "Ultra rápido",
-          "UI minimalista",
-          "Sin exceso",
-          "Excelente para leer",
-          "Enfocado en privacidad"
-        ],
-        "cons": [
-          "Solo web",
-          "Menos funciones sociales",
-          "Sin billetera"
-        ]
-      },
-      "coracle": {
-        "name": "Coracle",
-        "description": "Un cliente web para usuarios avanzados, con control minucioso de relays y comunidades.",
-        "pros": [
-          "Funciones potentes",
-          "Funciona en cualquier navegador y se instala como app web",
-          "Excelente para creadores",
-          "Filtrado avanzado",
-          "Atajos de teclado"
-        ],
-        "cons": [
-          "Sin app móvil nativa",
-          "Curva de aprendizaje pronunciada",
-          "Muchísimos ajustes por revisar"
-        ]
-      },
-      "current": {
-        "name": "Current (descontinuado)",
-        "description": "Descontinuado. Fue un cliente de iOS construido alrededor de Nostr Wallet Connect, pero el desarrollo se detuvo en 2023 y la app ya no está en la App Store, así que el enlace de descarga no lleva a ninguna parte. Si buscas una experiencia de iOS centrada en la billetera, mira Primal.",
-        "pros": [
-          "Fue de los primeros clientes con Nostr Wallet Connect",
-          "Diseño pensado para los zaps",
-          "Interfaz limpia",
-          "El código fuente sigue en GitHub"
-        ],
-        "cons": [
-          "El desarrollo se detuvo en 2023",
-          "Retirado de la App Store, el enlace de descarga está muerto",
-          "No es una opción para quien empieza"
-        ]
-      },
-      "habla": {
-        "name": "Habla",
-        "description": "Un cliente de escritura para artículos largos. Aviso: habla.news devuelve un error 404 desde al menos septiembre de 2026, así que usa YakiHonne para textos largos mientras no vuelva.",
-        "pros": [
-          "Excelente para artículos",
-          "Pensado para publicaciones largas (NIP-23)",
-          "Interfaz de escritura limpia",
-          "Quien te lee puede zapear lo que publicas"
-        ],
-        "cons": [
-          "El sitio está caído ahora mismo (404)",
-          "Solo web",
-          "Base de usuarios más pequeña"
-        ]
-      },
-      "nostur": {
-        "name": "Nostur",
-        "description": "Un cliente iOS completo enfocado en usabilidad.",
-        "pros": [
-          "Gran UI",
-          "Rápido",
-          "Buena gestión de relays",
-          "Desarrollo activo"
-        ],
-        "cons": [
-          "Solo iOS",
-          "Requiere algo de aprendizaje"
-        ]
-      },
-      "plebstr": {
-        "name": "Openvibe (antes Plebstr)",
-        "description": "Plebstr pasó a llamarse Openvibe: la misma app, ahora con un único feed que junta Nostr, Bluesky, Mastodon y Threads. Sigue siendo un comienzo cómodo en Android, solo que no esperes una experiencia dedicada a Nostr.",
-        "pros": [
-          "Fácil de usar",
-          "Una sola app para varias redes",
-          "Diseño limpio"
-        ],
-        "cons": [
-          "Nostr es solo una parte de lo que hace",
-          "Menos funciones específicas de Nostr",
-          "Sin billetera"
-        ]
-      }
-    },
-    "tags": {
-      "beginnerFriendly": "Amigable para Principiantes",
-      "popular": "Popular",
-      "powerUser": "Usuario Avanzado",
-      "featureRich": "Rico en Funciones",
-      "crossPlatform": "Multiplataforma",
-      "webOnly": "Solo Web",
-      "minimal": "Minimalista",
-      "privacy": "Privacidad",
-      "walletFocused": "Enfocado en Billetera",
-      "longForm": "Contenido Largo",
-      "writers": "Para Escritores",
-      "ios": "iOS",
-      "android": "Android",
-      "desktop": "Escritorio"
-    }
-  },
   "backupChecklist": {
     "title": "Haz una Copia de Seguridad de tus Claves",
     "description": "Antes de continuar, completa esta lista de verificación para asegurarte de que tus claves estén respaldadas de forma segura. Esto es crítico: las claves perdidas no se pueden recuperar.",
@@ -2796,6 +2482,197 @@
       "description": "Por favor confirma que has completado todos los pasos de la copia de seguridad. Entiendes que las claves perdidas no se pueden recuperar.",
       "review": "Revisar",
       "confirm": "Confirmar"
+    }
+  },
+  "clientComparisonTable": {
+    "searchPlaceholder": "Buscar clientes...",
+    "filters": {
+      "button": "Filtros",
+      "platform": "Plataforma",
+      "features": "Características Clave",
+      "difficulty": "Dificultad"
+    },
+    "platformLabels": {
+      "ios": "iOS",
+      "android": "Android",
+      "web": "Web",
+      "desktop": "Escritorio"
+    },
+    "difficultyLabels": {
+      "beginner": "Principiante",
+      "intermediate": "Intermedio",
+      "advanced": "Avanzado"
+    },
+    "featureLabels": {
+      "wallet": "Billetera",
+      "media": "Multimedia",
+      "longform": "Contenido Largo",
+      "privacy": "Privacidad"
+    },
+    "clearFilters": "Limpiar todos los filtros",
+    "export": "Exportar",
+    "csvExport": {
+      "headers": {
+        "name": "Nombre",
+        "platforms": "Plataformas",
+        "difficulty": "Dificultad"
+      },
+      "yes": "Sí",
+      "no": "No"
+    },
+    "noResults": {
+      "title": "No se encontraron clientes",
+      "description": "Intenta ajustar tus filtros para ver más resultados"
+    },
+    "card": {
+      "pros": "Pros",
+      "cons": "Contras",
+      "links": {
+        "web": "Web",
+        "ios": "iOS",
+        "android": "Android",
+        "desktop": "Escritorio"
+      }
+    },
+    "clients": {
+      "damus": {
+        "name": "Damus",
+        "description": "El cliente iOS más popular con una interfaz pulida y experiencia fluida.",
+        "pros": [
+          "UI hermosa",
+          "Fácil de usar",
+          "Desarrollo activo",
+          "Excelente proceso de bienvenida",
+          "Soporte para zaps"
+        ],
+        "cons": [
+          "Solo iOS",
+          "Sincronización limitada con el escritorio",
+          "Sin contenido largo"
+        ]
+      },
+      "primal": {
+        "name": "Primal",
+        "description": "Un cliente rápido y moderno disponible en todas las plataformas con excelente rendimiento.",
+        "pros": [
+          "Todas las plataformas",
+          "Billetera Lightning integrada",
+          "Carga rápida",
+          "Gran búsqueda",
+          "Actualizaciones regulares"
+        ],
+        "cons": [
+          "Dudas de privacidad para algunas personas",
+          "Lee a través de los servidores de caché de Primal",
+          "Menos control sobre los relays que los clientes avanzados"
+        ]
+      },
+      "iris": {
+        "name": "Iris",
+        "description": "Un cliente web simple, sin registro, perfecto para empezar rápidamente.",
+        "pros": [
+          "Sin descarga necesaria",
+          "Funciona al instante",
+          "Interfaz limpia",
+          "Código abierto",
+          "Privado"
+        ],
+        "cons": [
+          "Solo web",
+          "Funciones avanzadas limitadas",
+          "Sin integración de billetera"
+        ]
+      },
+      "snort": {
+        "name": "Snort",
+        "description": "Un cliente web enfocado en simplicidad y rendimiento.",
+        "pros": [
+          "Ultra rápido",
+          "UI minimalista",
+          "Sin exceso",
+          "Excelente para leer",
+          "Enfocado en privacidad"
+        ],
+        "cons": [
+          "Solo web",
+          "Menos funciones sociales",
+          "Sin billetera"
+        ]
+      },
+      "amethyst": {
+        "name": "Amethyst",
+        "description": "Un cliente Android completo con excelente soporte para todas las funciones Nostr.",
+        "pros": [
+          "Completo",
+          "Soporte para zaps",
+          "Comunidad activa",
+          "Actualizaciones regulares",
+          "Altamente personalizable"
+        ],
+        "cons": [
+          "Puede ser abrumador para principiantes",
+          "Solo Android",
+          "Configuración compleja"
+        ]
+      },
+      "yakihonne": {
+        "name": "YakiHonne",
+        "description": "Un cliente de escritura para artículos largos, en web, iOS, Android y escritorio. Ocupa el sitio que antes tenía Habla, y es el que conviene abrir si publicas artículos en lugar de notas sueltas.",
+        "pros": [
+          "Pensado para artículos largos (NIP-23)",
+          "Web, iOS, Android y escritorio, así que los borradores te siguen",
+          "Quien te lee puede enviarte zaps por lo que publicas",
+          "Coloca imágenes y vídeo junto al texto"
+        ],
+        "cons": [
+          "Mucha cosa en pantalla la primera vez que lo abres",
+          "Más recargado que un cliente hecho solo para leer",
+          "Algunos rincones dan por hecho que ya conoces Nostr"
+        ]
+      },
+      "nostur": {
+        "name": "Nostur",
+        "description": "Un cliente iOS completo enfocado en usabilidad.",
+        "pros": [
+          "Gran UI",
+          "Rápido",
+          "Buena gestión de relays",
+          "Desarrollo activo"
+        ],
+        "cons": [
+          "Solo iOS",
+          "Requiere algo de aprendizaje"
+        ]
+      },
+      "coracle": {
+        "name": "Coracle",
+        "description": "Un cliente web para usuarios avanzados, con control minucioso de relays y comunidades.",
+        "pros": [
+          "Funciones potentes",
+          "Funciona en cualquier navegador y se instala como app web",
+          "Excelente para creadores",
+          "Filtrado avanzado",
+          "Atajos de teclado"
+        ],
+        "cons": [
+          "Sin app móvil nativa",
+          "Curva de aprendizaje pronunciada",
+          "Muchísimos ajustes por revisar"
+        ]
+      }
+    },
+    "tags": {
+      "beginnerFriendly": "Amigable para Principiantes",
+      "popular": "Popular",
+      "powerUser": "Usuario Avanzado",
+      "featureRich": "Rico en Funciones",
+      "crossPlatform": "Multiplataforma",
+      "webOnly": "Solo Web",
+      "minimal": "Minimalista",
+      "privacy": "Privacidad",
+      "longForm": "Contenido Largo",
+      "writers": "Para Escritores",
+      "ios": "iOS"
     }
   },
   "relayExplorer": {
@@ -3499,6 +3376,16 @@
       "holoboard": {
         "description": "Un tablón de anuncios donde los sats deciden el orden. Cada nota que hay allí se pagó, así que leer es gratis pero publicar no."
       }
+    },
+    "allCategories": "Todas",
+    "viewFeed": "Ver el feed",
+    "eventCount": "{count} eventos",
+    "copyUrl": "Copia la dirección del relay para añadirla en tu cliente",
+    "loadMore": "Cargar más publicaciones",
+    "loading": "Cargando...",
+    "errors": {
+      "connectFailed": "No hemos podido conectar con este relay. Puede estar caído, o tu red puede estar bloqueándolo.",
+      "loadMoreFailed": "No hemos podido cargar publicaciones más antiguas. Inténtalo otra vez en un momento."
     }
   },
   "officialAccount": {

@@ -2417,106 +2417,6 @@
       "verifiedOn": "NIP-05 potwierdzony w domenie {domain}"
     }
   },
-  "emptyFeedFixer": {
-    "title": "Napraw pusty feed",
-    "description": "Nowy w Nostr? Zacznij od obserwowania kont i łączenia się z relay, aby zobaczyć treści w swoim feedzie.",
-    "setupProgress": "Postęp konfiguracji",
-    "step1": {
-      "title": "Krok 1: Obserwuj konta",
-      "description": "Wybierz pakiet startowy lub dodaj własne konta",
-      "following": "Obserwujesz",
-      "followAll": "Obserwuj wszystkich",
-      "follow": "Obserwuj",
-      "addCustom": "Dodaj",
-      "continue": "Przejdź do relay",
-      "followingCount": "Obserwowane konta: {count}",
-      "accountCount": "Konta do zaobserwowania: {count}",
-      "packAccountsTitle": "Konta w pakiecie {pack}",
-      "npubLabel": "Wklej npub, żeby zaobserwować",
-      "npubPlaceholder": "Wklej npub, zaczyna się od npub1",
-      "npubInvalid": "To nie jest prawidłowy npub. Wystarczy jeden zły znak, żeby go zepsuć, więc wklej cały klucz jeszcze raz."
-    },
-    "step2": {
-      "title": "Krok 2: Połącz się z relayami",
-      "description": "Połącz się z relay, aby zobaczyć treści",
-      "connected": "Połączony",
-      "connect": "Połącz",
-      "connectAll": "Połącz się ze wszystkimi rekomendowanymi relay",
-      "continue": "Kontynuuj",
-      "info": "Relay to serwery przechowujące i dystrybuujące treści Nostr. Połączenie z wieloma relay zapewnia lepszą dostępność treści.",
-      "recommended": "Rekomendowane",
-      "connectedCount": "Połączone relay: {count}"
-    },
-    "step3": {
-      "title": "Krok 3: Zacznij używać Nostr!",
-      "description": "Jesteś gotowy do eksploracji. Wybierz klienta, aby zacząć.",
-      "completed": "Wszystko gotowe!",
-      "successMessage": "Obserwujesz {accounts} kont i połączyłeś się z {relays} relay. Twój feed Nostr powinien teraz mieć treści!",
-      "awesome": "Świetnie!"
-    },
-    "starterPacks": {
-      "technology": {
-        "name": "Technologia",
-        "description": "Deweloperzy, wiadomości technologiczne i innowacje"
-      },
-      "bitcoin": {
-        "name": "Bitcoin",
-        "description": "Entuzjaści Bitcoina i Lightning Network"
-      },
-      "art": {
-        "name": "Sztuka i design",
-        "description": "Artyści, projektanci i twórcy"
-      },
-      "general": {
-        "name": "Ogólne",
-        "description": "Mieszanka ciekawych osób do obserwowania"
-      }
-    },
-    "relays": {
-      "wssRelayDamus": {
-        "name": "Relay Damus",
-        "description": "Najpopularniejszy relay"
-      },
-      "wssRelayNostr": {
-        "name": "Relay Nostr",
-        "description": "Relay ogólnego przeznaczenia"
-      },
-      "wssPurplePages": {
-        "name": "Purple Pages",
-        "description": "Tylko profile i listy, bez postów"
-      },
-      "damus": {
-        "name": "Damus",
-        "description": "Relay prowadzony przez zespół Damusa. Czytanie i publikowanie za darmo."
-      },
-      "nosLol": {
-        "name": "nos.lol",
-        "description": "Przyjmuje większość notatek, poza spamem."
-      },
-      "primal": {
-        "name": "Primal",
-        "description": "Publiczny relay Primala. Czytanie i publikowanie za darmo."
-      },
-      "snort": {
-        "name": "Snort",
-        "description": "Szybki relay, który trzyma świeże notatki w pamięci."
-      }
-    },
-    "clients": {
-      "damus": {
-        "platform": "iOS"
-      },
-      "amethyst": {
-        "platform": "Android"
-      },
-      "iris": {
-        "platform": "Przeglądarka"
-      },
-      "primal": {
-        "platform": "Przeglądarka, iOS i Android"
-      }
-    }
-  },
   "backupChecklist": {
     "title": "Zrób kopię zapasową swoich kluczy",
     "description": "Przed kontynuowaniem uzupełnij tę listę kontrolną, aby upewnić się, że Twoje klucze są bezpiecznie zapisane. To krytyczne - zgubionych kluczy nie można odzyskać.",
@@ -2611,6 +2511,15 @@
     },
     "clearFilters": "Wyczyść wszystkie filtry",
     "export": "Eksportuj",
+    "csvExport": {
+      "headers": {
+        "name": "Nazwa",
+        "platforms": "Platformy",
+        "difficulty": "Poziom trudności"
+      },
+      "yes": "Tak",
+      "no": "Nie"
+    },
     "noResults": {
       "title": "Nie znaleziono klientów",
       "description": "Spróbuj zmienić filtry, aby zobaczyć więcej wyników"
@@ -2640,22 +2549,6 @@
           "Tylko iOS",
           "Ograniczona synchronizacja z desktopem",
           "Brak długich postów"
-        ]
-      },
-      "amethyst": {
-        "name": "Amethyst",
-        "description": "Bogaty w funkcje klient na Androida ze świetnym wsparciem dla wszystkich funkcji Nostr.",
-        "pros": [
-          "Pełen funkcji",
-          "Obsługa zapów",
-          "Aktywna społeczność",
-          "Regularne aktualizacje",
-          "Duże możliwości personalizacji"
-        ],
-        "cons": [
-          "Może przytłaczać początkujących",
-          "Tylko Android",
-          "Skomplikowane ustawienia"
         ]
       },
       "primal": {
@@ -2706,50 +2599,35 @@
           "Brak portfela"
         ]
       },
-      "coracle": {
-        "name": "Coracle",
-        "description": "Klient webowy dla zaawansowanych, z rozbudowaną kontrolą nad relayami i społecznościami.",
+      "amethyst": {
+        "name": "Amethyst",
+        "description": "Bogaty w funkcje klient na Androida ze świetnym wsparciem dla wszystkich funkcji Nostr.",
         "pros": [
-          "Potężne funkcje",
-          "Działa w każdej przeglądarce, można zainstalować jako aplikację webową",
-          "Świetny dla twórców",
-          "Zaawansowane filtrowanie",
-          "Skróty klawiszowe"
+          "Pełen funkcji",
+          "Obsługa zapów",
+          "Aktywna społeczność",
+          "Regularne aktualizacje",
+          "Duże możliwości personalizacji"
         ],
         "cons": [
-          "Brak natywnej aplikacji mobilnej",
-          "Wyższy próg wejścia",
-          "Sporo ustawień do przebrnięcia"
+          "Może przytłaczać początkujących",
+          "Tylko Android",
+          "Skomplikowane ustawienia"
         ]
       },
-      "current": {
-        "name": "Current (zamknięty)",
-        "description": "Projekt zamknięty. Był klientem na iOS zbudowanym wokół Nostr Wallet Connect, ale prace stanęły w 2023 roku, a aplikacja zniknęła z App Store, więc link do pobrania donikąd już nie prowadzi. Jeśli szukasz na iOS czegoś z portfelem na pierwszym planie, zerknij na Primala.",
+      "yakihonne": {
+        "name": "YakiHonne",
+        "description": "Klient do pisania długich tekstów, dostępny w przeglądarce, na iOS, Androidzie i na komputerze. To tu przeniosło się to, co kiedyś robiła Habla. Sięgasz po niego, jeśli publikujesz, a nie tylko wrzucasz notki.",
         "pros": [
-          "Był jednym z pierwszych klientów z Nostr Wallet Connect",
-          "Projekt skupiony na zapach",
-          "Przejrzysty interfejs",
-          "Kod źródłowy nadal jest na GitHubie"
+          "Zbudowany wokół długich artykułów (NIP-23)",
+          "Web, iOS, Android i komputer, więc szkice masz zawsze pod ręką",
+          "Czytelnicy mogą zapować to, co publikujesz",
+          "Obsługuje zdjęcia i wideo obok tekstu"
         ],
         "cons": [
-          "Rozwój zatrzymał się w 2023 roku",
-          "Zdjęty z App Store, link do pobrania nie działa",
-          "Nie jest wyborem dla nowych użytkowników"
-        ]
-      },
-      "habla": {
-        "name": "Habla",
-        "description": "Klient do pisania długich artykułów. Uwaga: habla.news zwraca 404 co najmniej od września 2026, więc do dłuższych form używaj na razie YakiHonne.",
-        "pros": [
-          "Świetny do artykułów",
-          "Zbudowany wokół długich form (NIP-23)",
-          "Przejrzysty edytor tekstu",
-          "Czytelnicy mogą zapować to, co opublikujesz"
-        ],
-        "cons": [
-          "Strona obecnie nie działa (404)",
-          "Tylko web",
-          "Mniejsza baza użytkowników"
+          "Przy pierwszym uruchomieniu sporo dzieje się na ekranie",
+          "Więcej zamieszania niż w zwykłym kliencie do czytania",
+          "Miejscami zakłada, że znasz już Nostr"
         ]
       },
       "nostur": {
@@ -2766,18 +2644,20 @@
           "Wymaga trochę nauki"
         ]
       },
-      "plebstr": {
-        "name": "Openvibe (dawniej Plebstr)",
-        "description": "Plebstr stał się Openvibe: ta sama aplikacja, ale teraz z jednym feedem łączącym Nostr, Bluesky, Mastodona i Threads. Nadal łatwy start na Androidzie, tylko nie licz na doświadczenie wyłącznie nostrowe.",
+      "coracle": {
+        "name": "Coracle",
+        "description": "Klient webowy dla zaawansowanych, z rozbudowaną kontrolą nad relayami i społecznościami.",
         "pros": [
-          "Łatwy w obsłudze",
-          "Jedna aplikacja do kilku sieci",
-          "Przejrzysty design"
+          "Potężne funkcje",
+          "Działa w każdej przeglądarce, można zainstalować jako aplikację webową",
+          "Świetny dla twórców",
+          "Zaawansowane filtrowanie",
+          "Skróty klawiszowe"
         ],
         "cons": [
-          "Nostr to tylko część tego, co robi",
-          "Mniej funkcji specyficznych dla Nostr",
-          "Brak portfela"
+          "Brak natywnej aplikacji mobilnej",
+          "Wyższy próg wejścia",
+          "Sporo ustawień do przebrnięcia"
         ]
       }
     },
@@ -2790,12 +2670,9 @@
       "webOnly": "Tylko web",
       "minimal": "Minimalistyczny",
       "privacy": "Prywatność",
-      "walletFocused": "Nastawiony na portfel",
       "longForm": "Długie formy",
       "writers": "Dla piszących",
-      "ios": "iOS",
-      "android": "Android",
-      "desktop": "Desktop"
+      "ios": "iOS"
     }
   },
   "relayExplorer": {
@@ -3499,6 +3376,16 @@
       "holoboard": {
         "description": "Tablica ogłoszeń, na której o kolejności decydują saty. Każda notatka jest tu opłacona, więc czytanie jest darmowe, a publikowanie nie."
       }
+    },
+    "allCategories": "Wszystkie",
+    "viewFeed": "Zobacz feed",
+    "eventCount": "{count} zdarzeń",
+    "copyUrl": "Skopiuj adres relay, żeby dodać go w swojej aplikacji",
+    "loadMore": "Wczytaj więcej postów",
+    "loading": "Ładowanie...",
+    "errors": {
+      "connectFailed": "Nie udało się połączyć z tym relayem. Może być wyłączony albo blokuje go twoja sieć.",
+      "loadMoreFailed": "Nie udało się wczytać starszych postów. Spróbuj za chwilę."
     }
   },
   "officialAccount": {

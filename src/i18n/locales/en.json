@@ -2417,106 +2417,6 @@
       "verifiedOn": "Verified NIP-05 on {domain}"
     }
   },
-  "emptyFeedFixer": {
-    "title": "Fix Your Empty Feed",
-    "description": "New to Nostr? Start by following some accounts and connecting to relays to see content in your feed.",
-    "setupProgress": "Setup Progress",
-    "step1": {
-      "title": "Step 1: Follow Accounts",
-      "description": "Choose a starter pack or add custom accounts",
-      "following": "Following",
-      "followAll": "Follow All",
-      "follow": "Follow",
-      "addCustom": "Add",
-      "continue": "Continue to Relays",
-      "followingCount": "Following {count} accounts",
-      "accountCount": "{count} accounts to follow",
-      "packAccountsTitle": "Accounts in {pack}",
-      "npubLabel": "Paste an npub to follow",
-      "npubPlaceholder": "Paste an npub, starting with npub1",
-      "npubInvalid": "That is not a valid npub. One wrong character breaks it, so paste the whole key again."
-    },
-    "step2": {
-      "title": "Step 2: Connect to Relays",
-      "description": "Connect to relays to see content",
-      "connected": "Connected",
-      "connect": "Connect",
-      "connectAll": "Connect to All Recommended Relays",
-      "continue": "Continue",
-      "info": "Relays are servers that store and distribute Nostr content. Connecting to multiple relays ensures better content availability.",
-      "recommended": "Recommended",
-      "connectedCount": "Connected to {count} relays"
-    },
-    "step3": {
-      "title": "Step 3: Start Using Nostr!",
-      "description": "You're ready to explore. Choose a client to get started.",
-      "completed": "You're All Set!",
-      "successMessage": "You've followed {accounts} accounts and connected to {relays} relays. Your Nostr feed should now have content!",
-      "awesome": "Awesome!"
-    },
-    "starterPacks": {
-      "technology": {
-        "name": "Technology",
-        "description": "Developers, tech news, and innovation"
-      },
-      "bitcoin": {
-        "name": "Bitcoin",
-        "description": "Bitcoiners and Lightning Network enthusiasts"
-      },
-      "art": {
-        "name": "Art & Design",
-        "description": "Artists, designers, and creatives"
-      },
-      "general": {
-        "name": "General",
-        "description": "A mix of interesting people to follow"
-      }
-    },
-    "relays": {
-      "wssRelayDamus": {
-        "name": "Damus Relay",
-        "description": "Most popular relay"
-      },
-      "wssRelayNostr": {
-        "name": "Nostr Relay",
-        "description": "General purpose relay"
-      },
-      "wssPurplePages": {
-        "name": "Purple Pages",
-        "description": "Profiles and lists only, no posts"
-      },
-      "damus": {
-        "name": "Damus",
-        "description": "The relay the Damus team runs. Free to read and post."
-      },
-      "nosLol": {
-        "name": "nos.lol",
-        "description": "Accepts most notes, apart from spam."
-      },
-      "primal": {
-        "name": "Primal",
-        "description": "Primal's public relay. Free to read and post."
-      },
-      "snort": {
-        "name": "Snort",
-        "description": "A fast relay that keeps recent notes in memory."
-      }
-    },
-    "clients": {
-      "damus": {
-        "platform": "iOS"
-      },
-      "amethyst": {
-        "platform": "Android"
-      },
-      "iris": {
-        "platform": "Web"
-      },
-      "primal": {
-        "platform": "Web, iOS and Android"
-      }
-    }
-  },
   "backupChecklist": {
     "title": "Backup Your Keys",
     "description": "Before proceeding, complete this checklist to ensure your keys are safely backed up. This is critical - lost keys cannot be recovered.",
@@ -2611,6 +2511,15 @@
     },
     "clearFilters": "Clear all filters",
     "export": "Export",
+    "csvExport": {
+      "headers": {
+        "name": "Name",
+        "platforms": "Platforms",
+        "difficulty": "Difficulty"
+      },
+      "yes": "Yes",
+      "no": "No"
+    },
     "noResults": {
       "title": "No clients found",
       "description": "Try adjusting your filters to see more results"
@@ -2640,22 +2549,6 @@
           "iOS only",
           "Limited desktop sync",
           "No long-form content"
-        ]
-      },
-      "amethyst": {
-        "name": "Amethyst",
-        "description": "A feature-rich Android client with excellent support for all Nostr features.",
-        "pros": [
-          "Full-featured",
-          "Zaps support",
-          "Active community",
-          "Regular updates",
-          "Highly customizable"
-        ],
-        "cons": [
-          "Can be overwhelming for beginners",
-          "Android only",
-          "Complex settings"
         ]
       },
       "primal": {
@@ -2706,50 +2599,35 @@
           "No wallet"
         ]
       },
-      "coracle": {
-        "name": "Coracle",
-        "description": "A web client for power users, with deep relay and community controls.",
+      "amethyst": {
+        "name": "Amethyst",
+        "description": "A feature-rich Android client with excellent support for all Nostr features.",
         "pros": [
-          "Powerful features",
-          "Runs in any browser, installable as a web app",
-          "Great for creators",
-          "Advanced filtering",
-          "Keyboard shortcuts"
+          "Full-featured",
+          "Zaps support",
+          "Active community",
+          "Regular updates",
+          "Highly customizable"
         ],
         "cons": [
-          "No native mobile app",
-          "Steeper learning curve",
-          "Plenty of settings to wade through"
+          "Can be overwhelming for beginners",
+          "Android only",
+          "Complex settings"
         ]
       },
-      "current": {
-        "name": "Current (discontinued)",
-        "description": "Discontinued. It was an iOS client built around Nostr Wallet Connect, but work stopped in 2023 and the app is gone from the App Store, so the download link no longer leads anywhere. For a wallet-first iOS experience, look at Primal instead.",
+      "yakihonne": {
+        "name": "YakiHonne",
+        "description": "A writing client for long-form articles, on the web, iOS, Android and desktop. This is where Habla used to sit, and it is the one to reach for if you publish rather than post.",
         "pros": [
-          "Was an early Nostr Wallet Connect client",
-          "Zap-focused design",
-          "Clean UI",
-          "Source code still on GitHub"
+          "Built around long-form articles (NIP-23)",
+          "Web, iOS, Android and desktop, so drafts follow you",
+          "Readers can zap what you publish",
+          "Handles images and video next to the writing"
         ],
         "cons": [
-          "Development stopped in 2023",
-          "Pulled from the App Store, the download link is dead",
-          "Not a choice for new users"
-        ]
-      },
-      "habla": {
-        "name": "Habla",
-        "description": "A writing client for long-form articles. Heads up: habla.news has been returning a 404 since at least September 2026, so use YakiHonne for long-form writing until it comes back.",
-        "pros": [
-          "Great for articles",
-          "Built around long-form posts (NIP-23)",
-          "Clean writing interface",
-          "Readers can zap what you publish"
-        ],
-        "cons": [
-          "The site is currently down (404)",
-          "Web only",
-          "Smaller user base"
+          "A lot on screen the first time you open it",
+          "Busier than a plain reading client",
+          "Some corners assume you already know Nostr"
         ]
       },
       "nostur": {
@@ -2766,18 +2644,20 @@
           "Some learning required"
         ]
       },
-      "plebstr": {
-        "name": "Openvibe (formerly Plebstr)",
-        "description": "Plebstr became Openvibe: the same app, now a single feed across Nostr, Bluesky, Mastodon and Threads. Still an easy start on Android, just don't expect a Nostr-only experience.",
+      "coracle": {
+        "name": "Coracle",
+        "description": "A web client for power users, with deep relay and community controls.",
         "pros": [
-          "Easy to use",
-          "One app for several networks",
-          "Clean design"
+          "Powerful features",
+          "Runs in any browser, installable as a web app",
+          "Great for creators",
+          "Advanced filtering",
+          "Keyboard shortcuts"
         ],
         "cons": [
-          "Nostr is only part of what it does",
-          "Fewer Nostr-specific features",
-          "No wallet"
+          "No native mobile app",
+          "Steeper learning curve",
+          "Plenty of settings to wade through"
         ]
       }
     },
@@ -2790,12 +2670,9 @@
       "webOnly": "Web Only",
       "minimal": "Minimal",
       "privacy": "Privacy",
-      "walletFocused": "Wallet Focused",
       "longForm": "Long Form",
       "writers": "Writers",
-      "ios": "iOS",
-      "android": "Android",
-      "desktop": "Desktop"
+      "ios": "iOS"
     }
   },
   "relayExplorer": {
@@ -3499,6 +3376,16 @@
       "holoboard": {
         "description": "A bulletin board where sats decide the order. Every note there was paid for, so reading is free but posting is not."
       }
+    },
+    "allCategories": "All",
+    "viewFeed": "View Feed",
+    "eventCount": "{count} events",
+    "copyUrl": "Copy the relay address so you can add it in your app",
+    "loadMore": "Load more posts",
+    "loading": "Loading...",
+    "errors": {
+      "connectFailed": "Could not reach this relay. It may be offline, or your network may be blocking it.",
+      "loadMoreFailed": "Could not load older posts. Try again in a moment."
     }
   },
   "officialAccount": {

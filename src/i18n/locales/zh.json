@@ -2527,106 +2527,6 @@
       "verifiedOn": "已在 {domain} 上验证 NIP-05"
     }
   },
-  "emptyFeedFixer": {
-    "title": "修复你的空动态",
-    "description": "刚接触 Nostr？先关注一些账号并连接到中继，以在你的动态中看到内容。",
-    "setupProgress": "设置进度",
-    "step1": {
-      "title": "步骤 1：关注账号",
-      "description": "选择入门包或添加自定义账号",
-      "following": "正在关注",
-      "followAll": "全部关注",
-      "follow": "关注",
-      "addCustom": "添加",
-      "continue": "继续到中继",
-      "followingCount": "已关注 {count} 个账号",
-      "accountCount": "{count} 个可以关注的账号",
-      "packAccountsTitle": "{pack} 里的账号",
-      "npubLabel": "粘贴一个 npub 来关注",
-      "npubPlaceholder": "粘贴一个 npub，以 npub1 开头",
-      "npubInvalid": "这不是有效的 npub。错一个字符就不行了，请把整串密钥重新粘贴一次。"
-    },
-    "step2": {
-      "title": "步骤 2：连接到中继",
-      "description": "连接到中继以查看内容",
-      "connected": "已连接",
-      "connect": "连接",
-      "connectAll": "连接到所有推荐中继",
-      "continue": "继续",
-      "info": "中继是存储和分发 Nostr 内容的服务器。连接多个中继可确保更好的内容可用性。",
-      "recommended": "推荐",
-      "connectedCount": "已连接 {count} 个中继"
-    },
-    "step3": {
-      "title": "步骤 3：开始使用 Nostr！",
-      "description": "你已准备好探索。选择一个客户端开始。",
-      "completed": "一切就绪！",
-      "successMessage": "你已关注 {accounts} 个账号并连接到 {relays} 个中继。你的 Nostr 动态现在应该有内容了！",
-      "awesome": "太棒了！"
-    },
-    "starterPacks": {
-      "technology": {
-        "name": "技术",
-        "description": "开发者、科技新闻和创新"
-      },
-      "bitcoin": {
-        "name": "比特币",
-        "description": "比特币爱好者和闪电网络支持者"
-      },
-      "art": {
-        "name": "艺术与设计",
-        "description": "艺术家、设计师和创意人士"
-      },
-      "general": {
-        "name": "综合",
-        "description": "一批有趣的值得关注的人"
-      }
-    },
-    "relays": {
-      "wssRelayDamus": {
-        "name": "Damus 中继",
-        "description": "最受欢迎的中继"
-      },
-      "wssRelayNostr": {
-        "name": "Nostr 中继",
-        "description": "通用中继"
-      },
-      "wssPurplePages": {
-        "name": "Purple Pages",
-        "description": "只有个人资料和列表，没有帖子"
-      },
-      "damus": {
-        "name": "Damus",
-        "description": "Damus 团队运营的中继。读和发都免费。"
-      },
-      "nosLol": {
-        "name": "nos.lol",
-        "description": "除了垃圾内容，大部分笔记都收。"
-      },
-      "primal": {
-        "name": "Primal",
-        "description": "Primal 的公共中继。读和发都免费。"
-      },
-      "snort": {
-        "name": "Snort",
-        "description": "很快的中继，最近的笔记都放在内存里。"
-      }
-    },
-    "clients": {
-      "damus": {
-        "platform": "iOS"
-      },
-      "amethyst": {
-        "platform": "Android"
-      },
-      "iris": {
-        "platform": "网页版"
-      },
-      "primal": {
-        "platform": "网页版、iOS 和 Android"
-      }
-    }
-  },
   "backupChecklist": {
     "title": "备份你的密钥",
     "description": "在继续之前，完成此清单以确保你的密钥已安全备份。这很关键 - 丢失的密钥无法恢复。",
@@ -2721,6 +2621,15 @@
     },
     "clearFilters": "清除所有筛选",
     "export": "导出",
+    "csvExport": {
+      "headers": {
+        "name": "名称",
+        "platforms": "平台",
+        "difficulty": "难度"
+      },
+      "yes": "是",
+      "no": "否"
+    },
     "noResults": {
       "title": "未找到客户端",
       "description": "尝试调整筛选条件以查看更多结果"
@@ -2750,22 +2659,6 @@
           "仅 iOS",
           "有限的桌面同步",
           "不支持长文章"
-        ]
-      },
-      "amethyst": {
-        "name": "Amethyst",
-        "description": "功能丰富的 Android 客户端，对所有 Nostr 功能的支持非常出色。",
-        "pros": [
-          "功能齐全",
-          "支持 Zap",
-          "活跃的社区",
-          "定期更新",
-          "高度可定制"
-        ],
-        "cons": [
-          "对新手可能过于复杂",
-          "仅 Android",
-          "设置复杂"
         ]
       },
       "primal": {
@@ -2816,50 +2709,35 @@
           "无钱包"
         ]
       },
-      "coracle": {
-        "name": "Coracle",
-        "description": "面向高级用户的网页客户端，中继和社区方面的设置很细。",
+      "amethyst": {
+        "name": "Amethyst",
+        "description": "功能丰富的 Android 客户端，对所有 Nostr 功能的支持非常出色。",
         "pros": [
-          "功能强大",
-          "任何浏览器都能打开，也可以装成网页应用",
-          "适合创作者",
-          "高级筛选",
-          "键盘快捷键"
+          "功能齐全",
+          "支持 Zap",
+          "活跃的社区",
+          "定期更新",
+          "高度可定制"
         ],
         "cons": [
-          "没有原生移动应用",
-          "学习曲线较陡",
-          "设置项繁多，要花点时间摸清"
+          "对新手可能过于复杂",
+          "仅 Android",
+          "设置复杂"
         ]
       },
-      "current": {
-        "name": "Current（已停止开发）",
-        "description": "已停止开发。它曾是一个围绕 Nostr Wallet Connect 打造的 iOS 客户端，2023 年停止开发，App Store 上也已下架，下载链接现在哪里都去不了。想在 iOS 上要以钱包为核心的体验，可以看看 Primal。",
+      "yakihonne": {
+        "name": "YakiHonne",
+        "description": "面向长文章的写作客户端，网页、iOS、Android 和桌面端都能用。以前 Habla 的位置现在由它接手；如果你是发表作品，而不是随手发帖，就用它。",
         "pros": [
-          "早期的 Nostr Wallet Connect 客户端",
-          "以 zap 为核心的设计",
-          "简洁界面",
-          "源代码仍在 GitHub 上"
+          "围绕长文章设计（NIP-23）",
+          "网页、iOS、Android 和桌面端都有，草稿走到哪儿跟到哪儿",
+          "读者可以给你发表的内容 Zap 打赏",
+          "文字旁边就能放图片和视频"
         ],
         "cons": [
-          "2023 年停止开发",
-          "已从 App Store 下架，下载链接失效",
-          "不适合新用户"
-        ]
-      },
-      "habla": {
-        "name": "Habla",
-        "description": "面向长文写作的客户端。请注意：habla.news 至少从 2026 年 9 月起一直返回 404，在它恢复之前，长文写作可以先改用 YakiHonne。",
-        "pros": [
-          "适合文章",
-          "围绕长文（NIP-23）设计",
-          "简洁的写作界面",
-          "读者可以为你发布的内容打赏"
-        ],
-        "cons": [
-          "网站目前打不开（404）",
-          "仅网页版",
-          "用户群较小"
+          "第一次打开，屏幕上东西不少",
+          "比单纯用来阅读的客户端要繁杂",
+          "有些地方默认你已经懂 Nostr"
         ]
       },
       "nostur": {
@@ -2876,18 +2754,20 @@
           "需要一定学习"
         ]
       },
-      "plebstr": {
-        "name": "Openvibe（原 Plebstr）",
-        "description": "Plebstr 已经变成 Openvibe：还是那个应用，但现在把 Nostr、Bluesky、Mastodon 和 Threads 汇进同一条信息流。在安卓上依然容易上手，只是别指望纯 Nostr 的体验。",
+      "coracle": {
+        "name": "Coracle",
+        "description": "面向高级用户的网页客户端，中继和社区方面的设置很细。",
         "pros": [
-          "易于使用",
-          "一个应用管好几个网络",
-          "简洁设计"
+          "功能强大",
+          "任何浏览器都能打开，也可以装成网页应用",
+          "适合创作者",
+          "高级筛选",
+          "键盘快捷键"
         ],
         "cons": [
-          "Nostr 只是它做的一部分",
-          "Nostr 专属功能较少",
-          "无钱包"
+          "没有原生移动应用",
+          "学习曲线较陡",
+          "设置项繁多，要花点时间摸清"
         ]
       }
     },
@@ -2900,12 +2780,9 @@
       "webOnly": "仅网页",
       "minimal": "极简",
       "privacy": "隐私",
-      "walletFocused": "钱包导向",
       "longForm": "长文章",
       "writers": "写作",
-      "ios": "iOS",
-      "android": "Android",
-      "desktop": "桌面端"
+      "ios": "iOS"
     }
   },
   "relayExplorer": {
@@ -3499,6 +3376,16 @@
       "holoboard": {
         "description": "一块公告板，排序由 sats 决定。上面每一条笔记都是花钱发的，所以读免费，发不免费。"
       }
+    },
+    "allCategories": "全部",
+    "viewFeed": "查看动态",
+    "eventCount": "{count} 条事件",
+    "copyUrl": "复制中继地址，方便你在应用里添加",
+    "loadMore": "加载更多帖子",
+    "loading": "加载中...",
+    "errors": {
+      "connectFailed": "连不上这个中继。它可能已经下线，也可能是你的网络把它挡住了。",
+      "loadMoreFailed": "加载不了更早的帖子。过一会儿再试试。"
     }
   },
   "officialAccount": {

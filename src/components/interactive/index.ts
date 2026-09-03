@@ -1,5 +1,4 @@
 export { KeyGenerator } from "./KeyGenerator";
-export { EmptyFeedFixer } from "./EmptyFeedFixer";
 export { ClientRecommender } from "./ClientRecommender";
 export { BackupChecklist } from "./BackupChecklist";
 

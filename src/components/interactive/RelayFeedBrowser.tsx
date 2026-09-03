@@ -51,6 +51,8 @@ interface RelayFeedBrowserProps {
   className?: string;
 }
 
+type FeedError = "connectFailed" | "loadMoreFailed";
+
 export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
   const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState<RelayCategory | "all">("all");
@@ -61,7 +63,9 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [oldestTimestamp, setOldestTimestamp] = useState<number | null>(null);
   const [hasMore, setHasMore] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // The error is held as a code, not as a message: the text is resolved through
+  // t() at render time, so it follows the reader's language.
+  const [error, setError] = useState<FeedError | null>(null);
   const [copied, setCopied] = useState(false);
   const wsRef = useRef<WebSocket | null>(null);
 
@@ -106,7 +110,7 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
     
     ws.onerror = () => {
       setIsLoading(false);
-      setError("Failed to connect to relay");
+      setError("connectFailed");
     };
   };
 
@@ -145,7 +149,7 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
     
     ws.onerror = () => {
       setIsLoadingMore(false);
-      setError("Failed to load more posts");
+      setError("loadMoreFailed");
     };
   };
 
@@ -172,11 +176,11 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
         <div className="flex items-center gap-3 mb-2">
           <Newspaper className="h-6 w-6 text-orange-500" />
           <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-            {t("relayFeedBrowser.title") || "Browse Relay Feeds"}
+            {t("relayFeedBrowser.title")}
           </h3>
         </div>
         <p className="text-gray-600 dark:text-gray-400">
-          {t("relayFeedBrowser.subtitle") || "Discover Nostr communities by browsing relay feeds"}
+          {t("relayFeedBrowser.subtitle")}
         </p>
       </div>
 
@@ -188,7 +192,9 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
                 <Eye className="h-5 w-5 text-orange-600 dark:text-orange-400" />
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-gray-100">{viewingRelay.name}</h4>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">{events.length} events</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {t("relayFeedBrowser.eventCount").replace("{count}", String(events.length))}
+                  </p>
                 </div>
               </div>
               <button onClick={stopViewing} className="p-2 hover:bg-orange-200 dark:hover:bg-orange-900 rounded-lg">
@@ -197,14 +203,14 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
             </div>
             <div className="flex items-center gap-2 bg-white dark:bg-gray-900 px-3 py-2 rounded-lg">
               <code className="flex-1 text-xs text-gray-600 dark:text-gray-400 font-mono truncate">{viewingRelay.url}</code>
-              <button onClick={handleCopyUrl} className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition-colors" title="Copy relay URL to add to your client">
+              <button onClick={handleCopyUrl} className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition-colors" title={t("relayFeedBrowser.copyUrl")}>
                 {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4 text-gray-500 dark:text-gray-400" />}
               </button>
             </div>
             {error && (
               <div className="mt-2 flex items-center gap-2 text-sm text-red-600 dark:text-red-400">
                 <AlertCircle className="h-4 w-4" />
-                <span>{error}</span>
+                <span>{t(`relayFeedBrowser.errors.${error}`)}</span>
               </div>
             )}
           </div>
@@ -236,10 +242,10 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
                       {isLoadingMore ? (
                         <>
                           <Loader2 className="h-4 w-4 animate-spin" />
-                          <span>Loading...</span>
+                          <span>{t("relayFeedBrowser.loading")}</span>
                         </>
                       ) : (
-                        <span>Load More Posts</span>
+                        <span>{t("relayFeedBrowser.loadMore")}</span>
                       )}
                     </button>
                   </div>
@@ -251,7 +257,7 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
       )}
 
       <div className="flex flex-wrap gap-2 mb-6">
-        <button onClick={() => setSelectedCategory("all")} className={cn("px-3 py-1.5 rounded-full text-sm font-medium transition-colors", selectedCategory === "all" ? "bg-orange-500 text-white" : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700")}>All</button>
+        <button onClick={() => setSelectedCategory("all")} className={cn("px-3 py-1.5 rounded-full text-sm font-medium transition-colors", selectedCategory === "all" ? "bg-orange-500 text-white" : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700")}>{t("relayFeedBrowser.allCategories")}</button>
         {RELAY_CATEGORIES.map((category) => (
           <button key={category.id} onClick={() => setSelectedCategory(category.id)} className={cn("px-3 py-1.5 rounded-full text-sm font-medium transition-colors", selectedCategory === category.id ? "bg-orange-500 text-white" : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700")}>
             {category.label}
@@ -267,7 +273,7 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
               <p className="text-sm text-gray-600 dark:text-gray-400">{relay.description}</p>
             </div>
             <button onClick={() => handleViewFeed(relay)} disabled={viewingRelay?.id === relay.id} className={cn("px-3 py-2 rounded-lg text-sm font-medium transition-colors", viewingRelay?.id === relay.id ? "bg-orange-500 text-white" : "bg-orange-100 dark:bg-orange-950 text-orange-700 dark:text-orange-300 hover:bg-orange-200 dark:hover:bg-orange-900")}>
-              {viewingRelay?.id === relay.id ? <Loader2 className="h-4 w-4 animate-spin" /> : "View Feed"}
+              {viewingRelay?.id === relay.id ? <Loader2 className="h-4 w-4 animate-spin" /> : t("relayFeedBrowser.viewFeed")}
             </button>
           </div>
         ))}

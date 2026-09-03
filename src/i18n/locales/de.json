@@ -17,11 +17,11 @@
               },
               {
                 "id": "b",
-                "label": "Network of Secure Transmission Resources"
+                "label": "Netzwerk sicherer Übertragungsressourcen"
               },
               {
                 "id": "c",
-                "label": "New Online Social Technology Resource"
+                "label": "Neue Online-Ressource für Sozialtechnologie"
               }
             ],
             "correctId": "a",
@@ -2417,106 +2417,6 @@
       "verifiedOn": "NIP-05 auf {domain} bestätigt"
     }
   },
-  "emptyFeedFixer": {
-    "title": "Leeren Feed Beheben",
-    "description": "Neu bei Nostr? Beginne damit, einigen Accounts zu folgen und dich mit Relays zu verbinden, um Inhalte in deinem Feed zu sehen.",
-    "setupProgress": "Setup-Fortschritt",
-    "step1": {
-      "title": "Schritt 1: Accounts Folgen",
-      "description": "Wähle ein Starter-Pack oder füge benutzerdefinierte Accounts hinzu",
-      "following": "Folge ich",
-      "followAll": "Allen Folgen",
-      "follow": "Folgen",
-      "addCustom": "Hinzufügen",
-      "continue": "Weiter zu Relays",
-      "followingCount": "Du folgst {count} Accounts",
-      "accountCount": "{count} Accounts zum Folgen",
-      "packAccountsTitle": "Accounts in {pack}",
-      "npubLabel": "Füge einen npub ein, dem du folgen willst",
-      "npubPlaceholder": "npub einfügen, beginnt mit npub1",
-      "npubInvalid": "Das ist kein gültiger npub. Ein einziges falsches Zeichen macht ihn unbrauchbar, füge den ganzen Schlüssel also noch einmal ein."
-    },
-    "step2": {
-      "title": "Schritt 2: Mit Relays Verbinden",
-      "description": "Verbinde dich mit Relays, um Inhalte zu sehen",
-      "connected": "Verbunden",
-      "connect": "Verbinden",
-      "connectAll": "Mit allen empfohlenen Relays verbinden",
-      "continue": "Weiter",
-      "info": "Relays sind Server, die Nostr-Inhalte speichern und verteilen. Die Verbindung mit mehreren Relays sorgt für eine bessere Verfügbarkeit von Inhalten.",
-      "recommended": "Empfohlen",
-      "connectedCount": "Mit {count} Relays verbunden"
-    },
-    "step3": {
-      "title": "Schritt 3: Beginne Nostr zu nutzen!",
-      "description": "Du bist bereit zu erkunden. Wähle einen Client, um loszulegen.",
-      "completed": "Alles Bereit!",
-      "successMessage": "Du folgst {accounts} Accounts und bist mit {relays} Relays verbunden. Dein Nostr-Feed sollte jetzt Inhalte haben!",
-      "awesome": "Super!"
-    },
-    "starterPacks": {
-      "technology": {
-        "name": "Technologie",
-        "description": "Entwickler, Technik-News und Innovation"
-      },
-      "bitcoin": {
-        "name": "Bitcoin",
-        "description": "Bitcoiner und Lightning Network-Enthusiasten"
-      },
-      "art": {
-        "name": "Kunst & Design",
-        "description": "Künstler, Designer und Kreative"
-      },
-      "general": {
-        "name": "Allgemein",
-        "description": "Eine Mischung interessanter Leute zum Folgen"
-      }
-    },
-    "relays": {
-      "wssRelayDamus": {
-        "name": "Damus Relay",
-        "description": "Beliebtestes Relay"
-      },
-      "wssRelayNostr": {
-        "name": "Nostr Relay",
-        "description": "Allzweck-Relay"
-      },
-      "wssPurplePages": {
-        "name": "Purple Pages",
-        "description": "Nur Profile und Listen, keine Beiträge"
-      },
-      "damus": {
-        "name": "Damus",
-        "description": "Das Relay des Damus-Teams. Lesen und Posten sind kostenlos."
-      },
-      "nosLol": {
-        "name": "nos.lol",
-        "description": "Nimmt die meisten Notizen an, außer Spam."
-      },
-      "primal": {
-        "name": "Primal",
-        "description": "Das öffentliche Relay von Primal. Lesen und Posten sind kostenlos."
-      },
-      "snort": {
-        "name": "Snort",
-        "description": "Ein schnelles Relay, das aktuelle Notizen im Arbeitsspeicher hält."
-      }
-    },
-    "clients": {
-      "damus": {
-        "platform": "iOS"
-      },
-      "amethyst": {
-        "platform": "Android"
-      },
-      "iris": {
-        "platform": "Web"
-      },
-      "primal": {
-        "platform": "Web, iOS und Android"
-      }
-    }
-  },
   "backupChecklist": {
     "title": "Sichere deine Schlüssel",
     "description": "Bevor du fortfährst, vervollständige diese Checkliste, um sicherzustellen, dass deine Schlüssel sicher gesichert sind. Das ist kritisch - verlorene Schlüssel können nicht wiederhergestellt werden.",
@@ -2611,6 +2511,15 @@
     },
     "clearFilters": "Alle Filter zurücksetzen",
     "export": "Exportieren",
+    "csvExport": {
+      "headers": {
+        "name": "Name",
+        "platforms": "Plattformen",
+        "difficulty": "Schwierigkeitsgrad"
+      },
+      "yes": "Ja",
+      "no": "Nein"
+    },
     "noResults": {
       "title": "Keine Clients gefunden",
       "description": "Versuche, deine Filter anzupassen, um mehr Ergebnisse zu sehen"
@@ -2640,22 +2549,6 @@
           "Nur iOS",
           "Eingeschränkte Desktop-Synchronisierung",
           "Keine Langform-Inhalte"
-        ]
-      },
-      "amethyst": {
-        "name": "Amethyst",
-        "description": "Ein funktionsreicher Android-Client mit hervorragender Unterstützung für alle Nostr-Funktionen.",
-        "pros": [
-          "Voller Funktionsumfang",
-          "Zaps-Unterstützung",
-          "Aktive Community",
-          "Regelmäßige Updates",
-          "Sehr anpassbar"
-        ],
-        "cons": [
-          "Kann Einsteiger überfordern",
-          "Nur Android",
-          "Komplexe Einstellungen"
         ]
       },
       "primal": {
@@ -2706,50 +2599,35 @@
           "Keine Wallet"
         ]
       },
-      "coracle": {
-        "name": "Coracle",
-        "description": "Ein Web-Client für Power-User, mit weitreichenden Relay- und Community-Einstellungen.",
+      "amethyst": {
+        "name": "Amethyst",
+        "description": "Ein funktionsreicher Android-Client mit hervorragender Unterstützung für alle Nostr-Funktionen.",
         "pros": [
-          "Mächtige Funktionen",
-          "Läuft in jedem Browser, installierbar als Web-App",
-          "Gut für Kreative",
-          "Erweiterte Filter",
-          "Tastenkürzel"
+          "Voller Funktionsumfang",
+          "Zaps-Unterstützung",
+          "Aktive Community",
+          "Regelmäßige Updates",
+          "Sehr anpassbar"
         ],
         "cons": [
-          "Keine native Mobile-App",
-          "Steilere Lernkurve",
-          "Viele Einstellungen, durch die man sich arbeiten muss"
+          "Kann Einsteiger überfordern",
+          "Nur Android",
+          "Komplexe Einstellungen"
         ]
       },
-      "current": {
-        "name": "Current (eingestellt)",
-        "description": "Eingestellt. Es war ein iOS-Client rund um Nostr Wallet Connect, aber die Arbeit daran endete 2023 und die App ist aus dem App Store verschwunden, der Download-Link führt also ins Leere. Wer auf iOS ein Wallet-zentriertes Erlebnis sucht, schaut sich besser Primal an.",
+      "yakihonne": {
+        "name": "YakiHonne",
+        "description": "Ein Schreib-Client für lange Artikel, im Web, auf iOS, Android und dem Desktop. Hier war früher Habla zu Hause, und das ist die richtige Wahl, wenn du veröffentlichst statt nur zu posten.",
         "pros": [
-          "War einer der ersten Clients mit Nostr Wallet Connect",
-          "Auf Zaps ausgelegtes Design",
-          "Aufgeräumte Oberfläche",
-          "Quellcode weiterhin auf GitHub"
+          "Ganz auf lange Artikel ausgelegt (NIP-23)",
+          "Web, iOS, Android und Desktop, deine Entwürfe sind also überall dabei",
+          "Leser können zappen, was du veröffentlichst",
+          "Bilder und Videos passen direkt neben den Text"
         ],
         "cons": [
-          "Entwicklung 2023 eingestellt",
-          "Aus dem App Store entfernt, der Download-Link ist tot",
-          "Für neue Nutzer keine Option"
-        ]
-      },
-      "habla": {
-        "name": "Habla",
-        "description": "Ein Schreib-Client für lange Artikel. Achtung: habla.news liefert mindestens seit September 2026 einen 404, nimm für Langform-Texte also YakiHonne, bis die Seite zurück ist.",
-        "pros": [
-          "Gut für Artikel",
-          "Rund um Langform-Beiträge gebaut (NIP-23)",
-          "Aufgeräumte Schreibumgebung",
-          "Leser können zappen, was du veröffentlichst"
-        ],
-        "cons": [
-          "Die Seite ist derzeit offline (404)",
-          "Nur Web",
-          "Kleinere Nutzerbasis"
+          "Beim ersten Öffnen ist ziemlich viel auf dem Bildschirm",
+          "Unruhiger als ein schlichter Client zum Lesen",
+          "An manchen Stellen wird vorausgesetzt, dass du Nostr schon kennst"
         ]
       },
       "nostur": {
@@ -2766,18 +2644,20 @@
           "Etwas Einarbeitung nötig"
         ]
       },
-      "plebstr": {
-        "name": "Openvibe (früher Plebstr)",
-        "description": "Aus Plebstr wurde Openvibe: dieselbe App, jetzt mit einem gemeinsamen Feed über Nostr, Bluesky, Mastodon und Threads. Immer noch ein leichter Einstieg unter Android, nur erwarte kein reines Nostr-Erlebnis.",
+      "coracle": {
+        "name": "Coracle",
+        "description": "Ein Web-Client für Power-User, mit weitreichenden Relay- und Community-Einstellungen.",
         "pros": [
-          "Einfach zu bedienen",
-          "Eine App für mehrere Netzwerke",
-          "Aufgeräumtes Design"
+          "Mächtige Funktionen",
+          "Läuft in jedem Browser, installierbar als Web-App",
+          "Gut für Kreative",
+          "Erweiterte Filter",
+          "Tastenkürzel"
         ],
         "cons": [
-          "Nostr ist nur ein Teil davon",
-          "Weniger Nostr-spezifische Funktionen",
-          "Keine Wallet"
+          "Keine native Mobile-App",
+          "Steilere Lernkurve",
+          "Viele Einstellungen, durch die man sich arbeiten muss"
         ]
       }
     },
@@ -2790,12 +2670,9 @@
       "webOnly": "Nur Web",
       "minimal": "Minimalistisch",
       "privacy": "Privatsphäre",
-      "walletFocused": "Wallet-orientiert",
       "longForm": "Langform",
       "writers": "Autoren",
-      "ios": "iOS",
-      "android": "Android",
-      "desktop": "Desktop"
+      "ios": "iOS"
     }
   },
   "relayExplorer": {
@@ -3499,6 +3376,16 @@
       "holoboard": {
         "description": "Ein schwarzes Brett, auf dem Sats über die Reihenfolge entscheiden. Für jede Notiz dort wurde bezahlt, Lesen ist also kostenlos, Posten nicht."
       }
+    },
+    "allCategories": "Alle",
+    "viewFeed": "Feed ansehen",
+    "eventCount": "{count} Beiträge",
+    "copyUrl": "Relay-Adresse kopieren, um sie in deiner App einzutragen",
+    "loadMore": "Mehr Beiträge laden",
+    "loading": "Wird geladen...",
+    "errors": {
+      "connectFailed": "Dieses Relay ist nicht erreichbar. Vielleicht ist es offline, oder dein Netzwerk blockiert es.",
+      "loadMoreFailed": "Ältere Beiträge konnten nicht geladen werden. Versuch es gleich noch einmal."
     }
   },
   "officialAccount": {

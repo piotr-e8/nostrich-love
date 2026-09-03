@@ -74,7 +74,7 @@ Nostr में ये चीज़ें हैं ही नहीं:
 2. **Mitigation:** नया key pair बनाएं और अपने followers को अपने नए account के बारे में बताएं
 3. **NIP-05:** अगर आपके पास NIP-05 identifier है, तो इसे अपने नए npub पर redirect कर सकते हैं
 
-**Real talk:** लोग हर दिन accounts खो देते हैं। उनमें से एक न बनें। अपनी keys को अभी backup करें।
+**सच बात:** लोग हर दिन accounts खो देते हैं। उनमें से एक न बनें। अपनी keys को अभी backup करें।
 
 [और जानें: The 3-2-1 Backup Rule →](/hi/guides/keys-and-security#3-2-1-बैकअप-नियम-2-मिनट)
 
@@ -88,9 +88,9 @@ Nostr में ये चीज़ें हैं ही नहीं:
 
 **256-bit security:** संभव keys की संख्या 77 अंकों की है, यानी देखे जा सकने वाले ब्रह्मांड में परमाणुओं की गिनती के आसपास। कोई भी अंदाज़ा लगाकर वहाँ तक नहीं पहुँचता।
 
-**One-way math:** आप public key से private key नहीं बना सकते। यह mathematically असंभव है।
+**एकतरफा गणित:** आप public key से private key नहीं बना सकते। यह mathematically असंभव है।
 
-**No central database:** Twitter या Facebook के विपरीत, कोई company "username: password" pairs store नहीं करती। आपकी keys ही आपकी पहचान हैं।
+**कोई central database नहीं:** Twitter या Facebook के विपरीत, कोई company "username: password" pairs store नहीं करती। आपकी keys ही आपकी पहचान हैं।
 
 **कुछ और सरल क्यों नहीं?**
 
@@ -159,7 +159,7 @@ Nostr में ये चीज़ें हैं ही नहीं:
 - **Coracle** (Web) - Fast, minimal, keyboard shortcuts
 - **Snort** (Web) - Great performance, active development
 
-**Specialized Clients:**
+**खास काम के Clients:**
 
 - **YakiHonne** (Web/iOS/Android) - Long-form articles, छोटी posts की जगह पूरे लेख लिखने के लिए
 - **0xchat** - Encrypted private messaging के इर्द-गिर्द बना हुआ
@@ -172,7 +172,7 @@ Nostr में ये चीज़ें हैं ही नहीं:
 3. जो सही लगे उसे use करें
 4. याद रखें: आप कभी भी switch कर सकते हैं!
 
-**Pro tip:** Iris या Primal से शुरू करें। वे हर जगह काम करते हैं और beginner-friendly हैं।
+**काम की बात:** Iris या Primal से शुरू करें। वे हर जगह काम करते हैं और beginner-friendly हैं।
 
 [एक client चुनें →](/hi/guides/quickstart#कदम-2-अपना-क्लाइंट-चुनें)
 
@@ -228,7 +228,7 @@ Traditional social media के विपरीत जहाँ Twitter, Instagr
 - ये keys हर Nostr client पर काम करती हैं
 - आप हर जगह same keys से log in करते हैं
 
-**Example:**
+**उदाहरण:**
 
 - Keys एक बार बनाएं
 - उन्हें Damus (iOS app) पर use करें
@@ -276,7 +276,7 @@ Nostr decentralized है, कोई central server नहीं। आप choo
 - **Sweet spot:** 5-10 quality relays
 - **Maximum:** ज्यादा हमेशा बेहतर नहीं होता
 
-**Popular free relays:**
+**लोकप्रिय मुफ्त relays:**
 
 - `wss://relay.damus.io`
 - `wss://nos.lol`
@@ -312,13 +312,13 @@ Nostr decentralized है, कोई central server नहीं। आप choo
 2. अपनी relay list publish करें, ताकि दूसरे लोगों के apps को पता हो कि आपके posts कहाँ ढूंढने हैं। यही NIP-65 है, outbox model [ADVANCED]
 3. Multiple relays पर cross-post करें
 
-**Trade-off:**
+**फायदा और कीमत:**
 
 - ज्यादा relays = wider reach
 - ज्यादा relays = ज्यादा data usage
 - अपना balance ढूंढें
 
-**Bottom line:** Default relays से शुरू करें। जैसे आप grow करें, आप optimize कर सकते हैं।
+**सार:** Default relays से शुरू करें। जैसे आप grow करें, आप optimize कर सकते हैं।
 
 [और जानें: Outbox Model →](/hi/guides/outbox-model)
 
@@ -328,7 +328,7 @@ Nostr decentralized है, कोई central server नहीं। आप choo
   question="मेरा feed खाली क्यों है? सब कहाँ हैं?"
   category="troubleshooting"
 >
-**#1 beginner issue!** यहाँ क्यों और कैसे fix करें:
+**Beginners की #1 समस्या!** यहाँ क्यों और कैसे fix करें:
 
 **यह खाली क्यों है:**
 
@@ -336,7 +336,7 @@ Nostr decentralized है, कोई central server नहीं। आप choo
 2. **किसी को follow नहीं कर रहे** - आपका feed सिर्फ उन लोगों को दिखाता है जिन्हें आप follow करते हैं
 3. **नया account** - Content discover और sync होने में time लगता है
 
-**Quick Fix (2 minutes):**
+**तुरंत fix (2 मिनट):**
 
 1. **Popular relays add करें:**
    - Settings → Relays पर जाएं
@@ -376,7 +376,7 @@ wss://relay.damus.io          (Most popular, very reliable)
 wss://nos.lol                 (Fast, well-maintained)
 ```
 
-**Recommended Extras:**
+**सुझाए गए अतिरिक्त relays:**
 
 ```
 wss://relay.snort.social      (Popular, good uptime)
@@ -391,13 +391,13 @@ wss://nostr.mom               (Reliable, lightly filtered)
 - Slow या unreliable को **remove करें**
 - किस पर आपके लिए सबसे अच्छा काम करता है उस पर **ध्यान दें**
 
-**[ADVANCED] Specialized relays:**
+**[ADVANCED] विशेष relays:**
 
 - कुछ specific topics पर focus करते हैं (Bitcoin, nostr development)
 - कुछ आपके posts स्वीकार करने से पहले payment मांगते हैं। उदाहरण के लिए nostr.wine एक बार का 18,888 sats का admission fee लेता है, तो उसे free relay समझकर add न करें
 - कुछ regional हैं (local content के लिए बेहतर)
 
-**Pro tip:** बहुत ज्यादा add मत करें। 5-10 quality relays, 50 random से बेहतर हैं।
+**काम की बात:** बहुत ज्यादा add मत करें। 5-10 quality relays, 50 random से बेहतर हैं।
 
 [और जानें: Relay Guide →](/hi/guides/relay-guide)
 
@@ -409,37 +409,37 @@ wss://nostr.mom               (Reliable, lightly filtered)
 >
 **अपना community ढूंढना Nostr का आनंद लेने की key है।** यहाँ कैसे:
 
-**Method 1: Topics Search करें**
+**तरीका 1: Topics search करें**
 
 - Hashtags search करें: #bitcoin, #photography, #music, #nostr
 - उन लोगों को ढूंढें जो चीजें post करते हैं जो आप पसंद करते हैं
 - Interesting लोगों को follow करें
 
-**Method 2: Suggested Users**
+**तरीका 2: Suggested users**
 
 - अधिकांश clients में "Suggested" या "Discover" sections होते हैं
 - Popular, active accounts से शुरू करें
 - Follow करने से पहले उनके recent posts check करें
 
-**Method 3: Followers को Follow करें**
+**तरीका 3: Followers को follow करें**
 
 - एक व्यक्ति ढूंढें जो आपको पसंद है
 - देखें वे किसे follow करते हैं
 - Good taste वाले लोगों को follow करें
 
-**Method 4: Publicly Engage करें**
+**तरीका 4: सबके सामने engage करें**
 
 - Post: "New to Nostr. Who should I follow?"
 - अपनी interests से related hashtags use करें
 - Interesting posts पर reply करें
 - लोग आपको ढूंढेंगे
 
-**Method 5: Twitter से Import करें** [ADVANCED]
+**तरीका 5: Twitter से import करें** [ADVANCED]
 
 - कुछ tools आपको Nostr users ढूंढने देते हैं जिन्हें आप Twitter पर follow करते हैं
 - "nostr twitter bridge" search करें
 
-**Quality over quantity:** 1,000 random accounts की बजाय 20-30 interesting लोगों को follow करें। आपका feed बहुत बेहतर होगा।
+**संख्या नहीं, quality:** 1,000 random accounts की बजाय 20-30 interesting लोगों को follow करें। आपका feed बहुत बेहतर होगा।
 
 </FAQAccordion>
 
@@ -499,23 +499,23 @@ wss://nostr.mom               (Reliable, lightly filtered)
 >
 **यह आमतौर पर तीन कारणों से होता है:**
 
-**Reason 1: Relay Issues**
+**कारण 1: Relay की समस्या**
 
 - आपके posts relays पर stored हैं
 - अगर relay down हो जाता है, posts temporarily disappear हो सकती हैं
-- **Fix:** Multiple relays से connect करें
+- **हल:** Multiple relays से connect करें
 
-**Reason 2: New Client/Data Sync**
+**कारण 2: नया client या data sync**
 
 - जब नए client में log in करते हैं, old posts fetch होने में time लगता है
 - कुछ clients initially सिर्फ recent history fetch करते हैं
-- **Fix:** कुछ minutes wait करें, या manually refresh करें
+- **हल:** कुछ minutes wait करें, या manually refresh करें
 
-**Reason 3: Client Cache**
+**कारण 3: Client का cache**
 
 - कुछ clients data को locally cache करते हैं
 - अगर cache clear हो जाता है, उन्हें refetch करना पड़ता है
-- **Fix:** Pull to refresh, या app restart करें
+- **हल:** Pull to refresh, या app restart करें
 
 **इसे prevent कैसे करें:**
 
@@ -524,7 +524,7 @@ wss://nostr.mom               (Reliable, lightly filtered)
 3. **[ADVANCED] Backup service use करें** - कुछ services आपके posts archive करती हैं
 4. **अपना data समय-समय पर export करें** - अपना content locally save करें
 
-**Important note:** भले ही आप पुराने posts न देखें, वे अभी भी relays पर exist कर सकते हैं। Try करें:
+**जरूरी बात:** भले ही आप पुराने posts न देखें, वे अभी भी relays पर exist कर सकते हैं। Try करें:
 
 - Different clients
 - Different relays
@@ -546,14 +546,14 @@ wss://nostr.mom               (Reliable, lightly filtered)
 >
 आमतौर पर relay connectivity issues। Messages deliver नहीं हो सकती अगर: recipient offline है, relays down हैं, या आप same relays से connected नहीं हैं। अपने relay connections check करें, और relays add करने की कोशिश करें, या propagation का wait करें। Redundancy के लिए multiple relays use करें।
 
-**Common causes:**
+**आम कारण:**
 
 - Recipient के relays offline या slow हैं
 - आप overlapping relays से connect नहीं हैं
 - Network connectivity issues
 - Relay rate limiting
 
-**Solutions:**
+**समाधान:**
 
 1. Client settings में relay status check करें
 2. 2-3 additional popular relays add करें
@@ -568,7 +568,7 @@ wss://nostr.mom               (Reliable, lightly filtered)
 >
 Nostr में identity verification जैसी कोई चीज़ नहीं है, सिर्फ ऐसे संकेत हैं जिन्हें आपको खुद तौलना पड़ता है। NIP-05 नाम (alice@domain.com) के बगल में checkmark का ठीक एक मतलब है: जो domain.com चलाता है, वह कह रहा है कि यह नाम उस key का है। अगर domain उस व्यक्ति की अपनी साइट है या उसके employer की, तो इसका बहुत मतलब है। अगर नाम किसी public NIP-05 provider से आया है, तो इसका मतलब लगभग कुछ भी नहीं, क्योंकि famousname@ वहाँ से कोई भी खरीद सकता है। यानी checkmark नहीं, domain पढ़िए। फिर उनका npub कहीं ऐसी जगह मिलाकर देखिए जहाँ आप उस व्यक्ति पर पहले से भरोसा करते हैं, और जो बात मायने रखती हो उसके लिए उनसे किसी दूसरे channel पर पूछ लीजिए।
 
-**Verification methods:**
+**पहचान जाँचने के तरीके:**
 
 1. **NIP-05 identifier** - सिर्फ checkmark नहीं, यह देखें कि नाम किस domain पर टिका है
 2. **Cross-platform check** - वही npub उनकी अपनी साइट, कहीं और उनके bio, या उनके newsletter में ढूंढें
@@ -608,7 +608,7 @@ Nostr में identity verification जैसी कोई चीज़ नह
 >
 Nostr posts immutable हैं - वे posting के बाद edit नहीं हो सकती। आप correction या follow-up note post कर सकते हैं। Deletion के लिए, आप deletion request भेज सकते हैं, लेकिन relays इसे honor करें या नहीं, यह उन पर निर्भर करता है। Post करने से पहले सोचें - permanence protocol की feature है।
 
-**Reality:**
+**असलियत:**
 
 - **No editing** - इसके बजाय correction post करें
 - **Deletion requests** - भेजी जाती हैं लेकिन guaranteed नहीं
@@ -650,7 +650,7 @@ Nostr posts immutable हैं - वे posting के बाद edit नही
 >
 आपकी nsec ही इकलौती चीज़ है जिसकी जगह कोई नहीं ले सकता, तो सबसे पहले उसका backup लें और एक से ज्यादा जगह लें। आपके posts तो पहले से relays पर हैं। Local copy के लिए अपने client की settings देखें: कई clients export या backup का विकल्प देते हैं, और अधिकांश लोगों के लिए यही सबसे आसान रास्ता है। इसके आगे tooling तेज़ी से technical हो जाती है।
 
-**Backup steps:**
+**Backup कैसे लें:**
 
 1. **Private key** - सबसे important! अपनी nsec backup करें
 2. **Client export** - Settings में export या backup का विकल्प ढूंढें
@@ -670,15 +670,15 @@ Nostr posts immutable हैं - वे posting के बाद edit नही
 >
 NIP-04 (deprecated) known vulnerabilities के साथ shared secret encryption use करता है। NIP-17 (recommended) हर message को इस तरह wrap करता है कि sender relay से छिपा रहे। Recipient छिपा नहीं रहता: उसकी public key एक plain tag में चलती है, ताकि relay को पता हो कि message किसे deliver करना है। NIP-17 support करने वाले client पर migrate करें, और किसी संवेदनशील काम के लिए उस पर भरोसा करने से पहले [NIP-17 गाइड](/hi/guides/nip17-private-messages) पढ़ें।
 
-**Comparison:**
+**तुलना:**
 
-| Feature             | NIP-04 (Old)  | NIP-17 (New)        |
-| ------------------- | ------------- | ------------------- |
-| Content encryption  | ✅ Yes        | ✅ Yes              |
-| Sender hidden       | ❌ No         | ✅ Yes              |
-| Recipient hidden    | ❌ No         | ❌ No               |
-| Security            | ⚠️ Vulnerable | ✅ Current standard |
-| Status              | Deprecated    | Recommended         |
+| विशेषता             | NIP-04 (पुराना) | NIP-17 (नया)       |
+| ------------------- | --------------- | ------------------ |
+| संदेश का encryption | ✅ हाँ          | ✅ हाँ             |
+| भेजने वाला छिपा     | ❌ नहीं         | ✅ हाँ             |
+| पाने वाला छिपा      | ❌ नहीं         | ❌ नहीं            |
+| सुरक्षा             | ⚠️ असुरक्षित    | ✅ मौजूदा standard |
+| स्थिति              | अप्रचलित        | अनुशंसित           |
 
 <Callout variant="info">
    Amethyst, 0xchat और Coracle आज NIP-17 लागू करते हैं। Damus अभी भी DMs के लिए पुराना
@@ -695,20 +695,20 @@ NIP-04 (deprecated) known vulnerabilities के साथ shared secret encrypt
 >
 Popular options: strfry (C++, high performance), nostream (TypeScript, easy setup), या khatru (Go)। Requirements: server (VPS ~$5-20/month), domain name, basic CLI knowledge। Benefits: data sovereignty, custom policies, learning experience। Detailed setup instructions के लिए हमारा Relay Guide देखें।
 
-**Relay software options:**
+**Relay software के विकल्प:**
 
 - **strfry** - C++, high performance, efficient
 - **nostream** - TypeScript, easiest setup
 - **khatru** - Go, well-maintained
 - **nostr-rs-relay** - Rust, battle-tested
 
-**Requirements:**
+**क्या चाहिए:**
 
 - VPS (DigitalOcean, Linode, etc.): $5-20/month
 - Domain name: $10-15/year
 - Basic Linux/CLI knowledge
 
-**Benefits:**
+**फायदे:**
 
 ✅ Complete data sovereignty
 ✅ Custom content policies
@@ -725,15 +725,15 @@ Popular options: strfry (C++, high performance), nostream (TypeScript, easy setu
 >
 Content दोनों तरीकों में encrypted रहता है। फर्क इसमें है कि relay बातचीत के इर्द-गिर्द कितना जान पाता है। NIP-17 में हर message एक throwaway key से wrap और sign होता है, इसलिए relay यह नहीं देख पाता कि भेजा किसने। यह देख सकता है कि message किसके नाम है: recipient की public key एक plain, बिना encryption वाले tag में रहती है, क्योंकि relay को इसी से पता चलता है कि deliver कहाँ करना है। पुराने NIP-04 में दोनों सिरे दिखते हैं। जिस relay से आप जुड़ते हैं, उससे आपका IP address कोई भी तरीका नहीं छिपाता, तो अगर यह आपके लिए मायने रखता है तो VPN या Tor जोड़ें।
 
-**Privacy levels:**
+**Privacy के स्तर:**
 
-**NIP-17 (Use this!):**
+**NIP-17 (यही use करें!):**
 
 - ✅ Content end-to-end encrypted
 - ✅ Sender relay से छिपा रहता है
 - ⚠️ Recipient की key खुले में रहती है, यानी relay जानता है कि किसे और कब लिखा जा रहा है
 
-**NIP-04 (Deprecated):**
+**NIP-04 (अप्रचलित):**
 
 - ✅ Content encrypted
 - ❌ बातचीत के दोनों सिरे relay को दिखते हैं
@@ -754,7 +754,7 @@ Content दोनों तरीकों में encrypted रहता ह�
 >
 नहीं। आपका npub (public key) share करने के लिए है - यह आपका username जैसा है। आपका nsec (private key) आपका password है। nsec को secret रखें। केवल npub जानने से account compromise नहीं हो सकता। अपना npub freely share करें, अपनी nsec religiously protect करें।
 
-**Key facts:**
+**मुख्य बातें:**
 
 - **npub** = Public username ✅ Freely share
 - **nsec** = Private password 🔒 Never share
@@ -776,12 +776,12 @@ Nostr में कोई central moderation नहीं है। हर clien
 
 **Moderation कैसे काम करता है:**
 
-| Traditional           | Nostr                 |
-| --------------------- | --------------------- |
-| Platform decides      | You decide            |
-| Centralized rules     | Personal choice       |
-| Account bans possible | You control your view |
-| One policy for all    | Diverse approaches    |
+| पारंपरिक                  | Nostr                          |
+| ------------------------- | ------------------------------ |
+| Platform decide करता है   | आप decide करते हैं             |
+| केंद्रीकृत rules          | निजी choice                    |
+| Account ban हो सकता है    | आप अपना view control करते हैं  |
+| सबके लिए एक policy        | अलग-अलग approaches             |
 
 **आपके tools:**
 
@@ -799,7 +799,7 @@ Nostr में कोई central moderation नहीं है। हर clien
 >
 Check करें कि उन्होंने अपने Twitter bio/posts में अपना npub share किया है। NIP-05 identifiers use करें अगर उनके पास है (याद रखना आसान)। Direct रूप से पूछें। कुछ tools Twitter users scan करते हैं जिन्होंने Nostr keys post किए हैं। Search engines पर उनका Twitter handle + "npub" search करें।
 
-**Finding methods:**
+**ढूंढने के तरीके:**
 
 1. **Bio check** - उनके Twitter bio में npub या NIP-05 देखें
 2. **Pinned tweets** - कई लोग अपना Nostr वहाँ share करते हैं
@@ -807,7 +807,7 @@ Check करें कि उन्होंने अपने Twitter bio/post
 4. **Direct ask** - Tweet करके उनका Nostr पूछें
 5. **Bridge tools** - कुछ services Nostr keys scan करती हैं
 
-**Pro tip:** जब आप उन्हें ढूंढें, दूसरों को भी ढूंढने में मदद करने के लिए उनका npub welcome message के साथ post करें!
+**काम की बात:** जब आप उन्हें ढूंढें, दूसरों को भी ढूंढने में मदद करने के लिए उनका npub welcome message के साथ post करें!
 
 </FAQAccordion>
 
@@ -863,7 +863,7 @@ Twitter के chronological feed के विपरीत, Nostr कई source
 >
 Zaps Bitcoin Lightning Network use करते हैं और NIP-57 इस process को standardize करता है। इसमें sender का client, recipient का LNURL server (उनके profile के Lightning address के पीछे की service), और Lightning payment मिलकर काम करते हैं।
 
-**Technical flow:**
+**तकनीकी प्रक्रिया:**
 
 1. **Zap request** - Sender का client kind 9734 zap request create और sign करता है और उसे recipient के LNURL server को भेजता है (यह 9734 relays पर publish नहीं होता)
 2. **Invoice** - Recipient का LNURL server उस zap request से जुड़ा Lightning invoice return करता है
@@ -871,7 +871,7 @@ Zaps Bitcoin Lightning Network use करते हैं और NIP-57 इस p
 4. **Receipt** - Recipient का LNURL server (sender नहीं) kind 9735 zap receipt sign करके zap request में listed relays पर publish करता है
 5. **Display** - Clients zap दिखाते हैं
 
-**Key points:**
+**खास बातें:**
 
 - Receipt recipient के wallet server द्वारा publish होती है और spec के अनुसार यह payment का proof नहीं है
 - लगभग instant settlement

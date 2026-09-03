@@ -6,7 +6,6 @@ This directory contains critical interactive tools for the Nostr beginner guide.
 
 1. [KeyGenerator](#keygenerator) - Generate secure Nostr keys
 2. [BackupChecklist](#backupchecklist) - Ensure proper key backup
-3. [EmptyFeedFixer](#emptyfeedfixer) - Follow accounts and connect relays
 4. [ClientRecommender](#clientrecommender) - Find the right Nostr client
 
 ## Security Notice
@@ -152,80 +151,6 @@ import { BackupChecklist } from '../components/interactive';
 - Checklist state persisted to `localStorage` as `nostr-backup-checklist`
 - Tracks which items are checked
 - Prevents accidental data loss on page refresh
-
----
-
-## EmptyFeedFixer
-
-**File:** `src/components/interactive/EmptyFeedFixer.tsx`
-
-### Purpose
-Prevent new user abandonment by guaranteeing content visibility. Helps users follow starter accounts and connect to relays.
-
-### Features
-
-#### Starter Packs
-Pre-curated accounts by interest category:
-
-| Pack | Description | Accounts |
-|------|-------------|----------|
-| Technology | Developers, tech news | 3+ accounts |
-| Bitcoin & Crypto | Bitcoiners, traders | 3+ accounts |
-| Art & Design | Artists, designers | 3+ accounts |
-| General | Interesting people | 3+ accounts |
-
-Features per pack:
-- Account name, description, and follower count
-- One-click "Follow All" button
-- Individual follow/unfollow toggles
-- Custom npub input for manual additions
-
-#### Relay Connection
-- 5 default relays pre-configured:
-  - `wss://relay.damus.io` (Damus)
-  - `wss://nos.lol` (nos.lol)
-  - `wss://relay.nostr.band` (Nostr.band)
-  - `wss://purplepag.es` (Purple Pages)
-  - `wss://relay.snort.social` (Snort)
-- Individual connect toggles
-- "Connect All" button
-- Connection status indicators
-
-#### Client Recommendations
-Links to recommended clients based on platform:
-- **Damus** - iOS
-- **Amethyst** - Android
-- **Iris** - Web
-- **Primal** - All platforms
-
-### Props
-
-```typescript
-interface EmptyFeedFixerProps {
-  className?: string;
-  onComplete?: () => void;
-}
-```
-
-### Usage
-
-```tsx
-import { EmptyFeedFixer } from '../components/interactive';
-
-<EmptyFeedFixer 
-  onComplete={() => {
-    // User is ready to open a client
-    console.log('User followed accounts and connected relays');
-  }}
-/>
-```
-
-### Progress Tracking
-
-- Tracks followed accounts in `localStorage` as `nostr-feed-setup`
-- Tracks connected relays
-- Persists completion state
-- Progress bar shows overall setup completion
 
 ---
 
@@ -387,7 +312,6 @@ import { useState } from 'react';
 import { 
   KeyGenerator, 
   BackupChecklist, 
-  EmptyFeedFixer, 
   ClientRecommender 
 } from '../components/interactive';
 
@@ -414,9 +338,6 @@ function OnboardingFlow() {
       )}
       
       {step === 3 && (
-        <EmptyFeedFixer 
-          onComplete={() => setStep(4)}
-        />
       )}
       
       {step === 4 && <ClientRecommender />}

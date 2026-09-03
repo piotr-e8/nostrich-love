@@ -47,7 +47,7 @@ import { RelayVisualizer } from './components/ui';
 
 const relays = [
   { id: '1', url: 'wss://relay.damus.io', name: 'Damus', status: 'connected', latency: 120 },
-  { id: '2', url: 'wss://relay.nostr.band', name: 'Nostr.band', status: 'disconnected' },
+  { id: '2', url: 'wss://nos.lol', name: 'nos.lol', status: 'disconnected' },
 ];
 
 <RelayVisualizer 
