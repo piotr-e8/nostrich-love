@@ -36,20 +36,25 @@ import {
 import { cn, copyToClipboard } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
 
-// Relay interface
+// How much a beginner is allowed to do on a relay. Machine-readable; the label
+// and the wording next to it come from i18n.
+type RelayAccess = "free" | "paid" | "restricted" | "unknown";
+
+// Relay interface. Human-readable copy (the description, the access label) is
+// NOT stored here — it is looked up per locale from
+// relayPlayground.relays.<id>.description / relayPlayground.access.<access>.
 interface Relay {
   id: string;
   url: string;
   name: string;
-  description: string;
-  location: string;
-  region: string;
+  access: RelayAccess;
   status: "online" | "offline" | "checking";
   latency?: number;
   lastChecked?: Date;
   nip11Info?: NIP11Info;
   connectionState?: "idle" | "connecting" | "connected" | "error";
-  connectionError?: string;
+  /** i18n key suffix under relayPlayground.connectionTab, not a message. */
+  connectionError?: "connectionFailed" | "invalidUrl";
   supportedNIPs: number[];
 }
 
@@ -108,96 +113,54 @@ interface StreamEvent {
 
 type Tab = "connection" | "health" | "nips" | "events" | "query";
 
-// Curated relay list (40 reliable relays)
+// Relay list. Every host here answered a NIP-11 request on 2026-09-02
+// (docs/audit-2026-09/relays-verified.md), except purplepag.es, whose own proxy
+// returned 502 while its certificate was still being renewed: unresolved, kept,
+// and it simply shows as offline until it answers again.
+//
+// Sixteen entries were removed or repointed in that pass. Dead hosts with no DNS
+// at all: relay.current.fyi, relay.eden.nostr.land, relay.nostr.bg, relay.yabu.me,
+// relay.welshman.com, relay.stacker.news, relay.f7z.io, relay.hivetech.ovh,
+// knots.nostr.technology, relay.vera.live, relay.nostrdice.com, relay.sdamus.io.
+// Two were hostname typos, not dead services: relay.bitcoiner.social -> bitcoiner.social
+// and nostr.plebs.network -> relay.nostrplebs.com.
+//
+// No location or region field: nothing verifies where a relay's server actually
+// sits (most answer from behind a CDN), and the measured latency below is the
+// honest version of the same information.
 const CURATED_RELAYS: Omit<Relay, "status" | "supportedNIPs">[] = [
-  { id: "damus", url: "wss://relay.damus.io", name: "Damus", description: "Most popular Nostr relay", location: "USA", region: "na" },
-  { id: "nos-lol", url: "wss://nos.lol", name: "nos.lol", description: "Fast general-purpose relay", location: "Germany", region: "eu" },
-  { id: "purple-pages", url: "wss://purplepag.es", name: "Purple Pages", description: "Metadata relay for profiles", location: "USA", region: "na" },
-  { id: "snort", url: "wss://relay.snort.social", name: "Snort", description: "Snort client relay", location: "USA", region: "na" },
-  { id: "primal", url: "wss://relay.primal.net", name: "Primal", description: "Primal client relay", location: "USA", region: "na" },
-  { id: "current", url: "wss://relay.current.fyi", name: "Current", description: "Paid relay with support", location: "USA", region: "na" },
-  { id: "eden", url: "wss://relay.eden.nostr.land", name: "Eden", description: "High-performance paid relay", location: "USA", region: "na" },
-  { id: "bitcoiner-social", url: "wss://relay.bitcoiner.social", name: "Bitcoiner.social", description: "Bitcoin-focused relay", location: "USA", region: "na" },
-  { id: "nostr-pub", url: "wss://relay.nostr.bg", name: "Nostr.bg", description: "Bulgarian relay", location: "Bulgaria", region: "eu" },
-  { id: "yabu", url: "wss://relay.yabu.me", name: "Yabu", description: "Japanese relay", location: "Japan", region: "asia" },
-  { id: "welshman", url: "wss://relay.welshman.com", name: "Welshman", description: "Community relay with moderation", location: "UK", region: "eu" },
-  { id: "nostr-wine", url: "wss://nostr.wine", name: "Nostr Wine", description: "Paid relay", location: "USA", region: "na" },
-  { id: "stacker-news", url: "wss://relay.stacker.news", name: "Stacker News", description: "Stacker News community", location: "USA", region: "na" },
-  { id: "nostr-plebs", url: "wss://nostr.plebs.network", name: "Plebs Network", description: "Community relay", location: "USA", region: "na" },
-  { id: "wolf-fiatjaf", url: "wss://relay.f7z.io", name: "F7Z", description: "fiatjaf's relay", location: "Brazil", region: "other" },
-  { id: "hivetech", url: "wss://relay.hivetech.ovh", name: "Hivetech", description: "General purpose", location: "France", region: "eu" },
-  { id: "damus-knots", url: "wss://knots.nostr.technology", name: "Knots", description: "Experimental relay", location: "USA", region: "na" },
-  { id: "relay-vera", url: "wss://relay.vera.live", name: "Vera", description: "Live streaming", location: "USA", region: "na" },
-  { id: "relay-nostrdice", url: "wss://relay.nostrdice.com", name: "NostrDice", description: "Gaming relay", location: "USA", region: "na" },
-  { id: "relay-sdamus", url: "wss://relay.sdamus.io", name: "sDamus", description: "Spam-resistant relay", location: "USA", region: "na" },
+  { id: "damus", url: "wss://relay.damus.io", name: "Damus", access: "free" },
+  { id: "nos-lol", url: "wss://nos.lol", name: "nos.lol", access: "free" },
+  { id: "primal", url: "wss://relay.primal.net", name: "Primal", access: "free" },
+  { id: "snort", url: "wss://relay.snort.social", name: "Snort", access: "free" },
+  { id: "nostr-mom", url: "wss://nostr.mom", name: "nostr.mom", access: "free" },
+  { id: "bitcoiner-social", url: "wss://bitcoiner.social", name: "bitcoiner.social", access: "free" },
+  { id: "christpill", url: "wss://christpill.nostr1.com", name: "Christpill", access: "free" },
+  { id: "news-utxo", url: "wss://news.utxo.one", name: "NewsBot", access: "free" },
+  { id: "nostr-wine", url: "wss://nostr.wine", name: "Nostr Wine", access: "paid" },
+  { id: "nostr-plebs", url: "wss://relay.nostrplebs.com", name: "Nostr Plebs", access: "paid" },
+  { id: "chillstr", url: "wss://chillstr.nostr1.com", name: "Chillstr", access: "paid" },
+  { id: "holoboard", url: "wss://relay.holoboard.space", name: "Holoboard", access: "paid" },
+  { id: "spatia-arcana", url: "wss://spatia-arcana.com", name: "Spatia Arcana", access: "restricted" },
+  { id: "purple-pages", url: "wss://purplepag.es", name: "Purple Pages", access: "unknown" },
 ];
 
-const NIP_DESCRIPTIONS: Record<number, string> = {
-  1: "Basic protocol flow",
-  2: "Follow list",
-  3: "OpenTimestamps",
-  4: "Encrypted direct messages",
-  5: "Mapping Nostr keys to DNS-based internet identifiers",
-  6: "Delegated event signing",
-  7: "Event deletion",
-  9: "Event coordinates",
-  10: "Conventions for clients",
-  11: "Relay information",
-  13: "Delegated event signing",
-  15: "Nostr marketplace",
-  17: "Private direct messages",
-  18: "Reposts",
-  19: "bech32-encoded entities",
-  20: "Command results",
-  21: "nostr: URI scheme",
-  23: "Long-form content",
-  24: "Extra metadata fields",
-  25: "Reactions",
-  26: "Delegated event signing",
-  27: "Text note references",
-  28: "Public chat",
-  29: "Relay-based groups",
-  30: "Custom emoji",
-  31: "Dealing with unknown events",
-  32: "Labeling",
-  33: "Parameterized replaceable events",
-  36: "Sensitive content",
-  38: "User statuses",
-  39: "External identities",
-  40: "Expiration timestamp",
-  42: "Authentication",
-  44: "Encrypted payloads",
-  45: "Counting results",
-  46: "Nostr connect",
-  47: "Nostr wallet connect",
-  48: "Nostr wallet auth",
-  50: "Search",
-  51: "Lists",
-  52: "Calendar events",
-  53: "Live activities",
-  54: "Zaps",
-  55: "Zap goal",
-  56: "Reporting",
-  57: "Public key recovery",
-  58: "Badges",
-  59: "Long-form articles",
-  60: "Coinjoin coordination",
-  61: "Coinjoin peering",
-  62: "Coinjoin signing",
-  64: "Chess",
-  65: "Relay lists",
-  72: "Metadata",
-  73: "External content IDs",
-  75: "Zap request",
-  84: "Highlights",
-  89: "Recommended apps",
-  90: "Data vending machines",
-  92: "Media attachments",
-  94: "File metadata",
-  96: "HTTP File Storage Integration",
-  98: "HTTP Auth",
-  99: "Classifieds",
-};
+// NIPs a relay may advertise in its NIP-11 document. Titles follow the index at
+// github.com/nostr-protocol/nips (checked 2026-09-02); 12, 16, 20 and 33 are the
+// old numbers whose text now says "Moved to NIP-01". The list is here only so the
+// UI knows WHICH numbers it can name — the names themselves come from i18n.
+const KNOWN_NIPS = [
+  1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+  27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+  51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 75,
+  77, 78, 84, 85, 86, 87, 88, 89, 90, 92, 94, 96, 98, 99,
+];
+const KNOWN_NIP_SET = new Set(KNOWN_NIPS);
+
+/** Localized one-line name of a NIP, or a neutral fallback for numbers we do not know. */
+function nipName(nip: number, t: (key: string) => string): string {
+  return KNOWN_NIP_SET.has(nip) ? t(`relayPlayground.nipNames.${nip}`) : t("relayPlayground.nipsTab.unknownNip");
+}
 
 export function RelayPlayground({ className }: { className?: string }) {
   const { t } = useTranslation();
@@ -399,7 +362,7 @@ export function RelayPlayground({ className }: { className?: string }) {
 
       ws.onerror = (error) => {
         setRelays(prev => prev.map(r => 
-          r.id === relay.id ? { ...r, connectionState: "error", connectionError: "Connection failed" } : r
+          r.id === relay.id ? { ...r, connectionState: "error", connectionError: "connectionFailed" } : r
         ));
       };
 
@@ -410,7 +373,7 @@ export function RelayPlayground({ className }: { className?: string }) {
       };
     } catch (error) {
       setRelays(prev => prev.map(r => 
-        r.id === relay.id ? { ...r, connectionState: "error", connectionError: "Invalid URL" } : r
+        r.id === relay.id ? { ...r, connectionState: "error", connectionError: "invalidUrl" } : r
       ));
     }
   }, []);
@@ -428,8 +391,7 @@ export function RelayPlayground({ className }: { className?: string }) {
   const filteredRelays = relays.filter(relay =>
     relay.status === "online" && (
       relay.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      relay.url.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      relay.location.toLowerCase().includes(searchQuery.toLowerCase())
+      relay.url.toLowerCase().includes(searchQuery.toLowerCase())
     )
   );
 
@@ -477,7 +439,7 @@ export function RelayPlayground({ className }: { className?: string }) {
           </div>
           <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
             <div className="text-3xl font-bold text-gray-900 dark:text-white">{relays.length}</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Total Relays</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">{t('relayPlayground.stats.totalRelays')}</div>
           </div>
           <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
             <div className="text-3xl font-bold text-primary-600 dark:text-primary-400">{avgLatency}ms</div>
@@ -649,12 +611,19 @@ function ConnectionLab({
                 </div>
               </div>
 
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">{relay.description}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
+                {t(`relayPlayground.relays.${relay.id}.description`)}
+              </p>
 
               <div className="flex items-center justify-between text-xs text-gray-500">
-                <span className="flex items-center gap-1">
-                  <Globe className="w-3 h-3" />
-                  {relay.location}
+                <span className={cn(
+                  "px-2 py-0.5 rounded-full",
+                  relay.access === "free" ? "bg-green-500/20 text-green-400" :
+                  relay.access === "paid" ? "bg-amber-500/20 text-amber-500" :
+                  relay.access === "restricted" ? "bg-purple-500/20 text-purple-400" :
+                  "bg-gray-500/20 text-gray-600 dark:text-gray-400"
+                )}>
+                  {t(`relayPlayground.access.${relay.access}`)}
                 </span>
                 <span className={cn(
                   "px-2 py-0.5 rounded-full",
@@ -677,6 +646,9 @@ function ConnectionLab({
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{selectedRelay.name}</h3>
                 <p className="text-gray-600 dark:text-gray-400">{selectedRelay.url}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                  {t(`relayPlayground.relays.${selectedRelay.id}.description`)}
+                </p>
               </div>
               <button
                 onClick={() => onSelectRelay(null as any)}
@@ -721,7 +693,11 @@ function ConnectionLab({
                 {selectedRelay.connectionState === "idle" && t('relayPlayground.connectionTab.unknown')}
                 {selectedRelay.connectionState === "connecting" && `const ws = new WebSocket('${selectedRelay.url}');\nws.onopen = () => console.log('${t('relayPlayground.status.connected')}');`}
                 {selectedRelay.connectionState === "connected" && t('relayPlayground.connectionTab.connected')}
-                {selectedRelay.connectionState === "error" && `${t('relayPlayground.connectionTab.error')}: ${selectedRelay.connectionError || t('relayPlayground.connectionTab.unknown')}`}
+                {selectedRelay.connectionState === "error" && `${t('relayPlayground.connectionTab.error')}: ${
+                  selectedRelay.connectionError
+                    ? t(`relayPlayground.connectionTab.${selectedRelay.connectionError}`)
+                    : t('relayPlayground.connectionTab.unknown')
+                }`}
               </div>
             </div>
 
@@ -729,10 +705,10 @@ function ConnectionLab({
             <div className="mt-4 p-4 bg-blue-500/10 border border-blue-500/30 rounded-xl">
               <h4 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
                 <Info className="w-4 h-4" />
-                {t('relayPlayground.connectionTab.selectRelay')}
+                {t('relayPlayground.connectionTab.whatHappensTitle')}
               </h4>
-              <p className="text-sm text-gray-300">
-                {t('relayPlayground.nipsTab.description')}
+              <p className="text-sm text-gray-700 dark:text-gray-300">
+                {t('relayPlayground.connectionTab.whatHappensBody')}
               </p>
             </div>
           </div>
@@ -749,7 +725,7 @@ function HealthDashboard({
   healthHistory: HealthCheck[];
 }) {
   const { t } = useTranslation();
-  const [sortBy, setSortBy] = useState<"latency" | "location">("latency");
+  const [sortBy, setSortBy] = useState<"latency" | "name">("latency");
 
   const sortedRelays = [...relays].sort((a, b) => {
     if (sortBy === "latency") {
@@ -757,7 +733,7 @@ function HealthDashboard({
       if (!b.latency) return -1;
       return a.latency - b.latency;
     }
-    return a.location.localeCompare(b.location);
+    return a.name.localeCompare(b.name);
   });
 
   const getLatencyColor = (latency?: number) => {
@@ -771,11 +747,11 @@ function HealthDashboard({
     <div className="space-y-6 animate-slide-up motion-reduce:animate-none">
       {/* Sort Controls */}
       <div className="flex items-center gap-4">
-        <span className="text-gray-600 dark:text-gray-400 text-sm">Sort by:</span>
+        <span className="text-gray-600 dark:text-gray-400 text-sm">{t('relayPlayground.healthTab.sortBy')}</span>
         <div className="flex gap-2">
           {[
             { key: "latency" as const, label: t('relayPlayground.healthTab.responseTime') },
-            { key: "location" as const, label: t('relayPlayground.relayCard.location') },
+            { key: "name" as const, label: t('relayPlayground.healthTab.relay') },
           ].map((option) => (
             <button
               key={option.key}
@@ -798,8 +774,8 @@ function HealthDashboard({
         <table className="w-full">
           <thead className="bg-gray-100/50 dark:bg-gray-800/50">
             <tr>
-              <th className="text-start px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Relay</th>
-              <th className="text-start px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.relayCard.location')}</th>
+              <th className="text-start px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.healthTab.relay')}</th>
+              <th className="text-start px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.healthTab.access')}</th>
               <th className="text-start px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.connectionTab.latency')}</th>
               <th className="text-start px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.healthTab.lastChecked')}</th>
             </tr>
@@ -817,13 +793,12 @@ function HealthDashboard({
                   </div>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
-                    <Globe className="w-3 h-3" />
-                    {relay.location}
+                  <span className="text-gray-600 dark:text-gray-400 text-sm">
+                    {t(`relayPlayground.access.${relay.access}`)}
                   </span>
                 </td>
                 <td className={cn("px-4 py-3 font-mono", getLatencyColor(relay.latency))}>
-                  {relay.latency ? `${relay.latency}ms` : "—"}
+                  {relay.latency ? `${relay.latency}ms` : t('relayPlayground.connectionTab.unknown')}
                 </td>
                 <td className="px-4 py-3 text-gray-600 dark:text-gray-400 text-sm">
                   {relay.lastChecked ? 
@@ -842,28 +817,28 @@ function HealthDashboard({
         <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
           <div className="flex items-center gap-2 text-green-400 font-semibold mb-2">
             <CheckCircle2 className="w-5 h-5" />
-            {t('relayPlayground.status.online')} (&lt; 100ms)
+            {t('relayPlayground.healthTab.fastTitle')} (&lt; 100ms)
           </div>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            {t('relayPlayground.nipsTab.description')}
+            {t('relayPlayground.healthTab.fastBody')}
           </p>
         </div>
         <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4">
           <div className="flex items-center gap-2 text-yellow-400 font-semibold mb-2">
             <Activity className="w-5 h-5" />
-            {t('relayPlayground.healthTab.responseTime')} (100-300ms)
+            {t('relayPlayground.healthTab.okTitle')} (100-300ms)
           </div>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            {t('relayPlayground.nipsTab.description')}
+            {t('relayPlayground.healthTab.okBody')}
           </p>
         </div>
         <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
           <div className="flex items-center gap-2 text-red-400 font-semibold mb-2">
             <AlertCircle className="w-5 h-5" />
-            {t('relayPlayground.status.error')} (&gt; 300ms)
+            {t('relayPlayground.healthTab.slowTitle')} (&gt; 300ms)
           </div>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            {t('relayPlayground.nipsTab.description')}
+            {t('relayPlayground.healthTab.slowBody')}
           </p>
         </div>
       </div>
@@ -930,10 +905,12 @@ function NIPDetector({
                 </span>
               </div>
               <div className="text-xs text-gray-600 dark:text-gray-400 line-clamp-2">
-                {NIP_DESCRIPTIONS[nip] || "Unknown NIP"}
+                {nipName(nip, t)}
               </div>
               <div className="mt-2 text-xs text-gray-500">
-                {supportCount} / {relays.length} {t('relayPlayground.nipsTab.supported')}
+                {t('relayPlayground.nipsTab.relayCount')
+                  .replace('{count}', String(supportCount))
+                  .replace('{total}', String(relays.length))}
               </div>
             </button>
           );
@@ -946,7 +923,7 @@ function NIPDetector({
             <div className="flex items-start justify-between mb-4">
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">NIP-{selectedNIP}</h3>
-                <p className="text-purple-400">{NIP_DESCRIPTIONS[selectedNIP]}</p>
+                <p className="text-purple-400">{nipName(selectedNIP, t)}</p>
               </div>
               <button
                 onClick={() => setSelectedNIP(null)}
@@ -957,7 +934,7 @@ function NIPDetector({
             </div>
 
             <div className="mb-4">
-              <h4 className="font-semibold text-gray-900 dark:text-white mb-2">{t('relayPlayground.nipsTab.supported')}:</h4>
+              <h4 className="font-semibold text-gray-900 dark:text-white mb-2">{t('relayPlayground.nipsTab.supportedBy')}</h4>
               <div className="flex flex-wrap gap-2">
                 {relays
                   .filter(r => r.supportedNIPs.includes(selectedNIP))
@@ -973,7 +950,7 @@ function NIPDetector({
             </div>
 
             <div>
-              <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Not supported by:</h4>
+              <h4 className="font-semibold text-gray-900 dark:text-white mb-2">{t('relayPlayground.nipsTab.notSupportedBy')}</h4>
               <div className="flex flex-wrap gap-2">
                 {relays
                   .filter(r => !r.supportedNIPs.includes(selectedNIP))
@@ -988,7 +965,10 @@ function NIPDetector({
                   ))}
                 {relays.filter(r => !r.supportedNIPs.includes(selectedNIP)).length > 10 && (
                   <span className="px-3 py-1 bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-600 dark:text-gray-400 rounded-full text-sm">
-                    +{relays.filter(r => !r.supportedNIPs.includes(selectedNIP)).length - 10} more
+                    {t('relayPlayground.nipsTab.andMore').replace(
+                      '{count}',
+                      String(relays.filter(r => !r.supportedNIPs.includes(selectedNIP)).length - 10)
+                    )}
                   </span>
                 )}
               </div>
@@ -1000,11 +980,11 @@ function NIPDetector({
       <div className="bg-gray-100/30 dark:bg-gray-800/30 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('relayPlayground.nipsTab.title')}</h3>
         <div className="space-y-3">
-          {[1, 2, 4, 9, 11, 40, 42].map((nip) => (
+          {[1, 2, 9, 11, 17, 40, 42].map((nip) => (
             <div key={nip} className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="w-12 font-mono text-gray-600 dark:text-gray-400">NIP-{nip}</span>
-                <span className="text-gray-300">{NIP_DESCRIPTIONS[nip]}</span>
+                <span className="text-gray-700 dark:text-gray-300">{nipName(nip, t)}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-32 h-2 bg-gray-300 dark:bg-gray-700 rounded-full overflow-hidden">
@@ -1041,12 +1021,8 @@ function EventStreamViewer({
   const wsRef = useRef<WebSocket | null>(null);
   const subscriptionRef = useRef<string | null>(null);
 
-  const EVENT_KINDS = [
-    { kind: 0, label: "Metadata", description: "User profiles" },
-    { kind: 1, label: "Text Note", description: "Regular posts" },
-    { kind: 6, label: "Repost", description: "Shared posts" },
-    { kind: 7, label: "Reaction", description: "Likes" },
-  ];
+  // Kind numbers are protocol values; their names come from i18n.
+  const EVENT_KINDS = [0, 1, 6, 7];
 
   const startStreaming = useCallback(() => {
     if (!selectedRelay) return;
@@ -1174,19 +1150,19 @@ function EventStreamViewer({
           <div className="flex flex-wrap gap-2">
             {EVENT_KINDS.map((kind) => (
               <button
-                key={kind.kind}
-                onClick={() => !isStreaming && toggleKind(kind.kind)}
+                key={kind}
+                onClick={() => !isStreaming && toggleKind(kind)}
                 disabled={isStreaming}
                 className={cn(
                   "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all",
-                  selectedKinds.includes(kind.kind)
+                  selectedKinds.includes(kind)
                     ? "bg-primary-600 text-white"
                     : "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-600 dark:text-gray-400",
                   isStreaming && "opacity-50 cursor-not-allowed"
                 )}
               >
                 <Hash className="w-4 h-4" />
-                {kind.label}
+                {t(`relayPlayground.kinds.${kind}`)}
               </button>
             ))}
           </div>
@@ -1299,14 +1275,8 @@ function QueryTester({
   const [showRaw, setShowRaw] = useState(false);
   const wsRef = useRef<WebSocket | null>(null);
 
-  const EVENT_KINDS = [
-    { kind: 0, label: "Metadata" },
-    { kind: 1, label: "Text Note" },
-    { kind: 3, label: "Contacts" },
-    { kind: 6, label: "Repost" },
-    { kind: 7, label: "Reaction" },
-    { kind: 9735, label: "Zap" },
-  ];
+  // Kind numbers are protocol values; their names come from i18n.
+  const EVENT_KINDS = [0, 1, 3, 6, 7, 9735];
 
   const runQuery = useCallback(() => {
     if (!selectedRelay) return;
@@ -1393,7 +1363,7 @@ function QueryTester({
               onChange={(e) => setSelectedRelay(relays.find(r => r.id === e.target.value) || null)}
               className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-lg text-gray-900 dark:text-white"
             >
-              <option value="">{t('relayPlayground.search.placeholder')}</option>
+              <option value="">{t('relayPlayground.queryTab.chooseRelay')}</option>
               {relays.map(r => (
                 <option key={r.id} value={r.id}>{r.name} ({r.latency}ms)</option>
               ))}
@@ -1406,16 +1376,16 @@ function QueryTester({
             <div className="flex flex-wrap gap-2">
               {EVENT_KINDS.map(kind => (
                 <button
-                  key={kind.kind}
-                  onClick={() => toggleKind(kind.kind)}
+                  key={kind}
+                  onClick={() => toggleKind(kind)}
                   className={cn(
                     "px-3 py-1.5 rounded-lg text-sm transition-all",
-                    queryKinds.includes(kind.kind)
+                    queryKinds.includes(kind)
                       ? "bg-primary-600 text-white"
                       : "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-600 dark:text-gray-400"
                   )}
                 >
-                  {kind.label}
+                  {t(`relayPlayground.kinds.${kind}`)}
                 </button>
               ))}
             </div>
@@ -1464,7 +1434,7 @@ function QueryTester({
                 showRaw ? "bg-primary-600 text-white" : "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-600 dark:text-gray-400"
               )}
             >
-              {showRaw ? t('relayPlayground.buttons.disconnect') : t('relayPlayground.buttons.inspect')} JSON
+              {showRaw ? t('relayPlayground.buttons.hideJson') : t('relayPlayground.buttons.showJson')}
             </button>
           </div>
 

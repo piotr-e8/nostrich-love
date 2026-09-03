@@ -1,44 +1,58 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import {
   Users,
   Radio,
   Check,
   ExternalLink,
-  RefreshCw,
   TrendingUp,
-  Zap,
   Palette,
-  Cpu,
-  Globe,
+  Camera,
+  Music,
+  BookOpen,
+  BadgeCheck,
+  Rocket,
   Search,
   ChevronRight,
   AlertCircle,
   CheckCircle2,
 } from "lucide-react";
+import { nip19 } from "nostr-tools";
 import { cn, saveToLocalStorage, loadFromLocalStorage } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
+import { curatedAccounts } from "../../data/follow-pack";
+import type { CategoryId, CuratedAccount } from "../../types/follow-pack";
 
+/**
+ * Starter packs are DERIVED from src/data/follow-pack, never written by hand.
+ *
+ * The hardcoded list this replaced named twelve accounts, and eleven of the
+ * twelve npubs failed their own bech32 checksum — invented keys that cannot
+ * belong to anybody ("npub1news3333...", "npub1community4444..."). Telling a
+ * beginner to follow a key that does not exist is the one failure this tool
+ * must not have, so the accounts now come from the 527 curated npubs that the
+ * follow pack already ships, every one of which decodes as a valid 32-byte key.
+ *
+ * A pack id IS a follow-pack category id, which buys the labels for free:
+ * `followPack.categories.<id>.{name,description}` is already translated into
+ * all seven locales.
+ */
 interface StarterPack {
-  id: string;
-  name: string;
-  description: string;
+  id: CategoryId;
   icon: React.ReactNode;
-  accounts: Account[];
   color: string;
-}
-
-interface Account {
-  npub: string;
-  name: string;
-  description: string;
-  followerCount?: string;
+  accounts: CuratedAccount[];
 }
 
 interface Relay {
+  id: string;
   url: string;
-  name: string;
-  description: string;
   isDefault?: boolean;
+}
+
+interface RecommendedClient {
+  id: string;
+  name: string;
+  url: string;
 }
 
 interface EmptyFeedFixerProps {
@@ -46,159 +60,102 @@ interface EmptyFeedFixerProps {
   onComplete?: () => void;
 }
 
-const getStarterPacks = (t: (key: string) => string): StarterPack[] => [
+/** How many accounts each pack offers. Enough to fill a feed, few enough to read. */
+const ACCOUNTS_PER_PACK = 6;
+
+/**
+ * Which categories become packs, in display order. Aimed at the audience this
+ * site is for: writers, artists, musicians and photographers, plus a
+ * general-purpose starting bucket.
+ */
+const PACK_DEFINITIONS: Array<{
+  id: CategoryId;
+  icon: React.ReactNode;
+  color: string;
+}> = [
   {
-    id: "technology",
-    name: t('emptyFeedFixer.starterPacks.technology.name'),
-    description: t('emptyFeedFixer.starterPacks.technology.description'),
-    icon: <Cpu className="w-6 h-6" />,
-    color: "from-blue-500 to-cyan-500",
-    accounts: [
-      {
-        npub: "npub1xtscya34g58tk0z605fvr788k263gsu6cy9x0mhnm87echrfpy68s0tjzw",
-        name: "fiatjaf",
-        description: "Nostr creator",
-        followerCount: "100K+",
-      },
-      {
-        npub: "npub1gcxzte5zlkncx26j68ez60fzkvtkm9e0vrwdcvsjakxf9mu9zexsh6y3r7",
-        name: "Will",
-        description: "Nostr developer",
-        followerCount: "50K+",
-      },
-      {
-        npub: "npub1nstrcu63lzpjkz94djajuz2evrgu2psd66cw8n5888uzq2a7jcdrdkf02g",
-        name: "Nostr Report",
-        description: "Nostr news & updates",
-        followerCount: "30K+",
-      },
-    ],
-  },
-  {
-    id: "bitcoin",
-    name: t('emptyFeedFixer.starterPacks.bitcoin.name'),
-    description: t('emptyFeedFixer.starterPacks.bitcoin.description'),
-    icon: <Zap className="w-6 h-6" />,
-    color: "from-orange-500 to-yellow-500",
-    accounts: [
-      {
-        npub: "npub180cvv07tjdrrgpa0j7j7tmnyl2yr6yr7l8j4s3evf6u64th6gkwsyjh6w6",
-        name: "Jack Dorsey",
-        description: "Bitcoin advocate",
-        followerCount: "500K+",
-      },
-      {
-        npub: "npub1sg6plzptd64u62q5q6f7y4t8q4z5v7w3x2y1z9a8b7c6d5e4f3g2h1i0j",
-        name: "Bitcoin Magazine",
-        description: "Bitcoin news & education",
-        followerCount: "200K+",
-      },
-      {
-        npub: "npub1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z7a8b9c0d",
-        name: "Lightning Labs",
-        description: "Lightning Network development",
-        followerCount: "80K+",
-      },
-    ],
-  },
-  {
-    id: "art",
-    name: t('emptyFeedFixer.starterPacks.art.name'),
-    description: t('emptyFeedFixer.starterPacks.art.description'),
-    icon: <Palette className="w-6 h-6" />,
-    color: "from-pink-500 to-rose-500",
-    accounts: [
-      {
-        npub: "npub1art1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdef",
-        name: "NostrArt",
-        description: "Digital artist",
-        followerCount: "25K+",
-      },
-      {
-        npub: "npub1design9876543210zyxwvutsrqponmlkjihgfedcba0987654321",
-        name: "Design Daily",
-        description: "Design inspiration",
-        followerCount: "40K+",
-      },
-      {
-        npub: "npub1creative1111111111111111111111111111111111111111111111",
-        name: "Creative Minds",
-        description: "Creative community",
-        followerCount: "15K+",
-      },
-    ],
-  },
-  {
-    id: "general",
-    name: t('emptyFeedFixer.starterPacks.general.name'),
-    description: t('emptyFeedFixer.starterPacks.general.description'),
-    icon: <Globe className="w-6 h-6" />,
+    id: "jumpstart",
+    icon: <Rocket className="w-6 h-6 text-white" />,
     color: "from-purple-500 to-indigo-500",
-    accounts: [
-      {
-        npub: "npub1general22222222222222222222222222222222222222222222222",
-        name: "Nostr Explorer",
-        description: "Nostr content curator",
-        followerCount: "60K+",
-      },
-      {
-        npub: "npub1news333333333333333333333333333333333333333333333333",
-        name: "Nostr News",
-        description: "Daily highlights",
-        followerCount: "45K+",
-      },
-      {
-        npub: "npub1community44444444444444444444444444444444444444444444",
-        name: "Community Hub",
-        description: "Nostr community",
-        followerCount: "35K+",
-      },
-    ],
+  },
+  {
+    id: "legit",
+    icon: <BadgeCheck className="w-6 h-6 text-white" />,
+    color: "from-emerald-500 to-teal-500",
+  },
+  {
+    id: "artists",
+    icon: <Palette className="w-6 h-6 text-white" />,
+    color: "from-pink-500 to-rose-500",
+  },
+  {
+    id: "photography",
+    icon: <Camera className="w-6 h-6 text-white" />,
+    color: "from-teal-500 to-cyan-500",
+  },
+  {
+    id: "musicians",
+    icon: <Music className="w-6 h-6 text-white" />,
+    color: "from-violet-500 to-fuchsia-500",
+  },
+  {
+    id: "books",
+    icon: <BookOpen className="w-6 h-6 text-white" />,
+    color: "from-amber-500 to-orange-500",
   },
 ];
 
-const getDefaultRelays = (t: (key: string) => string): Relay[] => [
-  {
-    url: "wss://relay.damus.io",
-    name: t('emptyFeedFixer.relays.wssRelayDamus.name'),
-    description: t('emptyFeedFixer.relays.wssRelayDamus.description'),
-    isDefault: true,
-  },
-  {
-    url: "wss://nos.lol",
-    name: t('emptyFeedFixer.relays.wssRelayNostr.name'),
-    description: t('emptyFeedFixer.relays.wssRelayNostr.description'),
-    isDefault: true,
-  },
-  {
-    url: "wss://purplepag.es",
-    name: t('emptyFeedFixer.relays.wssPurplePages.name'),
-    description: t('emptyFeedFixer.relays.wssPurplePages.description'),
-    isDefault: true,
-  },
-  {
-    url: "wss://relay.snort.social",
-    name: "Snort",
-    description: "Snort client relay",
-    isDefault: true,
-  },
+const isValidNpub = (value: string): boolean => {
+  try {
+    return nip19.decode(value.trim()).type === "npub";
+  } catch {
+    return false;
+  }
+};
+
+const STARTER_PACKS: StarterPack[] = PACK_DEFINITIONS.map((definition) => ({
+  ...definition,
+  accounts: curatedAccounts
+    .filter(
+      (account) =>
+        account.categories.includes(definition.id) &&
+        account.bio.trim().length > 0,
+    )
+    .slice(0, ACCOUNTS_PER_PACK),
+})).filter((pack) => pack.accounts.length > 0);
+
+/**
+ * Only relays confirmed alive and free to write to on 2026-09-02
+ * (docs/audit-2026-09/relays-verified.md). purplepag.es used to sit in this
+ * list; its NIP-11 could not be fetched at all, and a step whose whole promise
+ * is "connect to these and your feed fills up" cannot ship a relay nobody can
+ * confirm is answering.
+ */
+const DEFAULT_RELAYS: Relay[] = [
+  { id: "damus", url: "wss://relay.damus.io", isDefault: true },
+  { id: "nosLol", url: "wss://nos.lol", isDefault: true },
+  { id: "primal", url: "wss://relay.primal.net", isDefault: true },
+  { id: "snort", url: "wss://relay.snort.social", isDefault: true },
 ];
 
-const RECOMMENDED_CLIENTS = [
-  { name: "Damus", url: "https://damus.io", platform: "iOS" },
+/**
+ * Platform labels come from t(), not from this table: Amethyst being Android
+ * only is a fact (docs/audit-2026-09/facts.md), but "Android" still renders in
+ * seven languages.
+ */
+const RECOMMENDED_CLIENTS: RecommendedClient[] = [
+  { id: "damus", name: "Damus", url: "https://damus.io" },
   {
+    id: "amethyst",
     name: "Amethyst",
     url: "https://github.com/vitorpamplona/amethyst",
-    platform: "Android",
   },
-  { name: "Iris", url: "https://iris.to", platform: "Web" },
-  { name: "Primal", url: "https://primal.net", platform: "Web/iOS/Android" },
+  { id: "iris", name: "Iris", url: "https://iris.to" },
+  { id: "primal", name: "Primal", url: "https://primal.net" },
 ];
 
 export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
   const { t } = useTranslation();
-  const STARTER_PACKS = getStarterPacks(t);
-  const DEFAULT_RELAYS = getDefaultRelays(t);
   const [selectedPack, setSelectedPack] = useState<string | null>(null);
   const [followedAccounts, setFollowedAccounts] = useState<Set<string>>(
     new Set(),
@@ -215,6 +172,13 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
   const [successExiting, setSuccessExiting] = useState(false);
   const successExitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const successAutoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const trimmedNpub = customNpub.trim();
+  const customNpubIsValid = useMemo(
+    () => isValidNpub(trimmedNpub),
+    [trimmedNpub],
+  );
+  const showNpubError = trimmedNpub.length > 0 && !customNpubIsValid;
 
   useEffect(() => {
     // Double rAF: paint the hidden state first so the enter transition runs
@@ -275,6 +239,10 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
     });
   }, [followedAccounts, connectedRelays, isComplete]);
 
+  const packName = (id: CategoryId) => t(`followPack.categories.${id}.name`);
+  const packDescription = (id: CategoryId) =>
+    t(`followPack.categories.${id}.description`);
+
   const handleFollowAll = (packId: string) => {
     const pack = STARTER_PACKS.find((p) => p.id === packId);
     if (!pack) return;
@@ -293,6 +261,12 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
       newFollowed.add(npub);
     }
     setFollowedAccounts(newFollowed);
+  };
+
+  const handleAddCustomNpub = () => {
+    if (!customNpubIsValid) return;
+    handleFollowIndividual(trimmedNpub);
+    setCustomNpub("");
   };
 
   const handleConnectRelay = (url: string) => {
@@ -321,6 +295,8 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
   const progress = Math.round(
     (followedAccounts.size > 0 ? 50 : 0) + (connectedRelays.size > 0 ? 50 : 0),
   );
+
+  const openPack = STARTER_PACKS.find((p) => p.id === selectedPack);
 
   return (
     <div className={cn("max-w-4xl mx-auto p-6", className)}>
@@ -384,7 +360,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                 </h3>
                 <p className="text-sm text-gray-400">
                   {followedAccounts.size > 0
-                    ? t('emptyFeedFixer.step1.following').replace('{count}', String(followedAccounts.size))
+                    ? t('emptyFeedFixer.step1.followingCount').replace('{count}', String(followedAccounts.size))
                     : t('emptyFeedFixer.step1.description')}
                 </p>
               </div>
@@ -407,19 +383,21 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                   <div className="flex items-start gap-3">
                     <div
                       className={cn(
-                        "w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br",
+                        "w-12 h-12 shrink-0 rounded-xl flex items-center justify-center bg-gradient-to-br",
                         pack.color,
                       )}
                     >
                       {pack.icon}
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-semibold text-white">{pack.name}</h4>
+                      <h4 className="font-semibold text-white">
+                        {packName(pack.id)}
+                      </h4>
                       <p className="text-sm text-gray-400">
-                        {pack.description}
+                        {packDescription(pack.id)}
                       </p>
                       <p className="text-xs text-gray-500 mt-1">
-                        {pack.accounts.length} accounts
+                        {t('emptyFeedFixer.step1.accountCount').replace('{count}', String(pack.accounts.length))}
                       </p>
                     </div>
                   </div>
@@ -428,24 +406,21 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
             </div>
 
             {/* Selected Pack Details */}
-            {selectedPack && (
+            {openPack && (
                 <div className="bg-gray-800/50 rounded-xl p-4 mb-4 animate-slide-down motion-reduce:animate-none">
                   <div className="flex items-center justify-between mb-3">
                     <h4 className="font-medium text-white">
-                      {STARTER_PACKS.find((p) => p.id === selectedPack)?.name}{" "}
-                      Accounts
+                      {t('emptyFeedFixer.step1.packAccountsTitle').replace('{pack}', packName(openPack.id))}
                     </h4>
                     <button
-                      onClick={() => handleFollowAll(selectedPack)}
+                      onClick={() => handleFollowAll(openPack.id)}
                       className="text-sm text-primary-400 hover:text-primary-300 font-medium"
                     >
                       {t('emptyFeedFixer.step1.followAll')}
                     </button>
                   </div>
                   <div className="space-y-2">
-                    {STARTER_PACKS.find(
-                      (p) => p.id === selectedPack,
-                    )?.accounts.map((account) => (
+                    {openPack.accounts.map((account) => (
                       <div
                         key={account.npub}
                         className="flex items-center justify-between p-3 bg-gray-900 rounded-lg"
@@ -454,8 +429,11 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                           <p className="font-medium text-white truncate">
                             {account.name}
                           </p>
+                          {/* The account's own profile bio, as they wrote it.
+                              Not our copy, so not translated - same as
+                              AccountCard on /follow-pack. */}
                           <p className="text-sm text-gray-400 truncate">
-                            {account.description}
+                            {account.bio}
                           </p>
                           <p className="text-xs text-gray-500 font-mono truncate">
                             {account.npub.slice(0, 20)}...
@@ -463,9 +441,6 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                           </p>
                         </div>
                         <div className="flex items-center gap-3 ms-4">
-                          <span className="text-sm text-gray-400">
-                            {account.followerCount}
-                          </span>
                           <button
                             onClick={() => handleFollowIndividual(account.npub)}
                             className={cn(
@@ -492,26 +467,32 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                 <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                 <input
                   type="text"
-                  aria-label="Enter npub to follow"
+                  aria-label={t('emptyFeedFixer.step1.npubLabel')}
+                  aria-invalid={showNpubError}
                   value={customNpub}
                   onChange={(e) => setCustomNpub(e.target.value)}
-                  placeholder="Enter npub to follow..."
-                  className="w-full ps-10 pe-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
+                  placeholder={t('emptyFeedFixer.step1.npubPlaceholder')}
+                  className={cn(
+                    "w-full ps-10 pe-4 py-2 bg-gray-900 border rounded-lg text-white placeholder-gray-500 focus:outline-none",
+                    showNpubError
+                      ? "border-error-500 focus:border-error-500"
+                      : "border-gray-700 focus:border-primary-500",
+                  )}
                 />
               </div>
               <button
-                onClick={() => {
-                  if (customNpub.startsWith("npub1")) {
-                    handleFollowIndividual(customNpub);
-                    setCustomNpub("");
-                  }
-                }}
-                disabled={!customNpub.startsWith("npub1")}
+                onClick={handleAddCustomNpub}
+                disabled={!customNpubIsValid}
                 className="px-4 py-2 bg-primary-600 disabled:bg-gray-700 text-white rounded-lg font-medium transition-all"
               >
                 {t('emptyFeedFixer.step1.addCustom')}
               </button>
             </div>
+            {showNpubError && (
+              <p className="mt-2 text-sm text-error-500">
+                {t('emptyFeedFixer.step1.npubInvalid')}
+              </p>
+            )}
 
             {followedAccounts.size > 0 && (
               <button
@@ -555,7 +536,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                 </h3>
                 <p className="text-sm text-gray-400">
                   {connectedRelays.size > 0
-                    ? t('emptyFeedFixer.step2.connected').replace('{count}', String(connectedRelays.size))
+                    ? t('emptyFeedFixer.step2.connectedCount').replace('{count}', String(connectedRelays.size))
                     : t('emptyFeedFixer.step2.description')}
                 </p>
               </div>
@@ -583,14 +564,18 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                 >
                   <div>
                     <div className="flex items-center gap-2">
-                      <p className="font-medium text-white">{relay.name}</p>
+                      <p className="font-medium text-white">
+                        {t(`emptyFeedFixer.relays.${relay.id}.name`)}
+                      </p>
                       {relay.isDefault && (
                         <span className="text-xs bg-primary-500/20 text-primary-400 px-2 py-0.5 rounded-full">
                           {t('emptyFeedFixer.step2.recommended')}
                         </span>
                       )}
                     </div>
-                    <p className="text-sm text-gray-400">{relay.description}</p>
+                    <p className="text-sm text-gray-400">
+                      {t(`emptyFeedFixer.relays.${relay.id}.description`)}
+                    </p>
                     <p className="text-xs text-gray-500 font-mono">
                       {relay.url}
                     </p>
@@ -656,7 +641,7 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {RECOMMENDED_CLIENTS.map((client) => (
                 <a
-                  key={client.name}
+                  key={client.id}
                   href={client.url}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -667,7 +652,9 @@ export function EmptyFeedFixer({ className, onComplete }: EmptyFeedFixerProps) {
                     <p className="font-semibold text-white group-hover:text-primary-400 transition-colors">
                       {client.name}
                     </p>
-                    <p className="text-sm text-gray-400">{client.platform}</p>
+                    <p className="text-sm text-gray-400">
+                      {t(`emptyFeedFixer.clients.${client.id}.platform`)}
+                    </p>
                   </div>
                   <ExternalLink className="w-5 h-5 text-gray-500 group-hover:text-primary-400 transition-colors" />
                 </a>

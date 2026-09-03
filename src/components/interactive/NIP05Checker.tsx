@@ -69,25 +69,14 @@ const getErrorMessages = (t: (key: string) => string): Record<
   },
 });
 
+// Only providers confirmed reachable and confirmed to still sell/give away a
+// NIP-05 identifier. nip05.social used to sit here and is now NXDOMAIN on three
+// independent resolvers, so it was sending readers to a domain that no longer
+// exists. Descriptions and prices live in i18n; the name and URL do not, since
+// they are the same in every language.
 const NIP05_PROVIDERS = [
-  {
-    name: "NostrPlebs.com",
-    url: "https://nostrplebs.com",
-    price: "$3/year",
-    description: "Get verified in minutes",
-  },
-  {
-    name: "NostrCheck.me",
-    url: "https://nostrcheck.me",
-    price: "Free/Paid",
-    description: "Free verification available",
-  },
-  {
-    name: "Nip05.social",
-    url: "https://nip05.social",
-    price: "Free",
-    description: "Free NIP-05 identifiers",
-  },
+  { id: "nostrplebs", name: "Nostr Plebs", url: "https://nostrplebs.com" },
+  { id: "nostrcheck", name: "nostrcheck.me", url: "https://nostrcheck.me" },
 ];
 
 export function NIP05Checker({ className }: NIP05CheckerProps) {
@@ -126,7 +115,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
         setResult({
           identifier,
           isValid: false,
-          error: "Invalid format. Use: user@domain.com",
+          error: t('nip05Checker.messages.invalidFormat'),
           errorType: "format",
         });
         setIsChecking(false);
@@ -166,8 +155,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
             setResult({
               identifier,
               isValid: false,
-              error:
-                "CORS error: Domain blocks direct browser requests. Try checking manually or use a Nostr client.",
+              error: t('nip05Checker.messages.corsBlocked'),
               errorType: "network",
             });
             setIsChecking(false);
@@ -181,7 +169,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
         setResult({
           identifier,
           isValid: false,
-          error: "NIP-05 not configured or domain not found",
+          error: t('nip05Checker.messages.notConfigured'),
           errorType: "not-found",
         });
         setIsChecking(false);
@@ -197,7 +185,9 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
         setResult({
           identifier,
           isValid: false,
-          error: `Username "${name}" not found on ${domain}`,
+          error: t('nip05Checker.messages.nameNotFound')
+            .replace('{name}', name)
+            .replace('{domain}', domain),
           errorType: "not-found",
         });
         setIsChecking(false);
@@ -217,7 +207,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
         isValid: true,
         npub,
         name: name === "_" ? domain : name,
-        about: `Verified NIP-05 for ${domain}`,
+        about: t('nip05Checker.messages.verifiedOn').replace('{domain}', domain),
         relays: response.relays?.[pubkey] || [],
       });
 
@@ -233,23 +223,23 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
       setResult({
         identifier,
         isValid: false,
-        error: "Network error occurred",
+        error: t('nip05Checker.messages.networkError'),
         errorType: "network",
       });
     } finally {
       setIsChecking(false);
     }
-  }, [identifier]);
+  }, [identifier, t]);
 
   // Handle copy
-  const handleCopy = async (text: string, label: string) => {
+  const handleCopy = async (text: string, message: string) => {
     const success = await copyToClipboard(text);
     if (success) {
       // Show temporary success state
       const toast = document.createElement("div");
       toast.className =
         "fixed bottom-6 left-1/2 -translate-x-1/2 px-6 py-3 bg-success-500 text-white rounded-xl z-50";
-      toast.textContent = `${label} copied!`;
+      toast.textContent = message;
       document.body.appendChild(toast);
       setTimeout(() => toast.remove(), 2000);
     }
@@ -295,9 +285,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                   {t('nip05Checker.aboutNip05')}
                 </h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                  NIP-05 is a protocol for verifying Nostr identities using DNS.
-                  It lets you use an email-like address (user@domain.com)
-                  instead of a long npub string.
+                  {t('nip05Checker.aboutNip05Body')}
                 </p>
                 <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
                   <li className="flex items-start gap-2">
@@ -444,7 +432,13 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                           {result.npub}
                         </code>
                         <button
-                          onClick={() => handleCopy(result.npub!, "Public key")}
+                          onClick={() =>
+                            handleCopy(
+                              result.npub!,
+                              t('nip05Checker.results.valid.copied')
+                            )
+                          }
+                          aria-label={t('nip05Checker.results.valid.copyPublicKey')}
                           className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                         >
                           <Copy className="w-4 h-4 text-gray-600 dark:text-gray-400" />
@@ -499,7 +493,9 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                         {errorMessages[result.errorType].description}
                       </p>
                       <p className="text-sm">
-                        <span className="text-primary-600 dark:text-primary-400">Fix:</span>{" "}
+                        <span className="text-primary-600 dark:text-primary-400">
+                          {t('nip05Checker.errors.fixLabel')}
+                        </span>{" "}
                         {errorMessages[result.errorType].fix}
                       </p>
                     </div>
@@ -552,12 +548,12 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                       {provider.name}
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      {provider.description}
+                      {t(`nip05Checker.providers.list.${provider.id}.description`)}
                     </p>
                   </div>
                   <div className="text-end">
                     <p className="text-success-500 font-medium">
-                      {provider.price}
+                      {t(`nip05Checker.providers.list.${provider.id}.price`)}
                     </p>
                     <ExternalLink className="w-4 h-4 text-gray-500 inline-block mt-1" />
                   </div>

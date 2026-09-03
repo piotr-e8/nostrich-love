@@ -1,12 +1,13 @@
 import React from "react";
-import { Globe, Signal, Server } from "lucide-react";
+import { Globe, Server } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
 
 interface Relay {
+  /** Stable id; the human-readable line lives at relayWorldMap.relays.<id>.description */
+  id: string;
   url: string;
-  location?: string;
-  latency?: number;
+  /** Only set it when something actually measured the relay. Undefined means "not checked". */
   status?: "online" | "offline" | "degraded";
 }
 
@@ -15,12 +16,18 @@ interface RelayWorldMapProps {
   className?: string;
 }
 
+// NIP-11 fetched per host on 2026-09-02 (docs/audit-2026-09/relays-verified.md).
+// wss://relay.current.fyi was in this list with status "online" and has no DNS
+// record at all, so the map was telling readers a dead relay was up. The whole
+// status field went with it: nothing here measures a relay, and a green dot is a
+// claim about right now, not about the day somebody checked.
+// Geographic labels ("US East", "Asia") went too. Every one of these hosts sits
+// behind a CDN, so the server location was a guess dressed up as data.
 const DEFAULT_RELAYS: Relay[] = [
-  { url: "wss://relay.damus.io", location: "US East", status: "online" },
-  { url: "wss://nos.lol", location: "US West", status: "online" },
-  { url: "wss://relay.snort.social", location: "Europe", status: "online" },
-  { url: "wss://nostr.wine", location: "US East", status: "online" },
-  { url: "wss://relay.current.fyi", location: "Asia", status: "online" },
+  { id: "damus", url: "wss://relay.damus.io" },
+  { id: "nosLol", url: "wss://nos.lol" },
+  { id: "primal", url: "wss://relay.primal.net" },
+  { id: "snort", url: "wss://relay.snort.social" },
 ];
 
 export function RelayWorldMap({
@@ -54,8 +61,8 @@ export function RelayWorldMap({
         </div>
         <div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('relayWorldMap.title')}</h3>
-          <p className="text-sm text-gray-400">
-            {relays.filter((r) => r.status === "online").length} {t('relayExplorer.selected.count').replace('{count}', '')} {t('relayWorldMap.stats.totalRelays')}
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            {t('relayWorldMap.subtitle')}
           </p>
         </div>
       </div>
@@ -115,54 +122,60 @@ export function RelayWorldMap({
           />
         </svg>
 
-        {/* Relay nodes */}
+        {/* Decorative pins. They stand for "relays run everywhere", not for the
+            hosts listed below, which is why no relay name is attached to them. */}
         <div className="absolute top-[35%] left-[20%] flex flex-col items-center">
           <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50" />
-          <span className="mt-2 text-xs text-gray-400">{t('relayWorldMap.regions.northAmerica')}</span>
+          <span className="mt-2 text-xs text-gray-500 dark:text-gray-400">{t('relayWorldMap.regions.northAmerica')}</span>
         </div>
 
         <div className="absolute top-[30%] left-[50%] flex flex-col items-center">
           <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50" />
-          <span className="mt-2 text-xs text-gray-400">{t('relayWorldMap.regions.europe')}</span>
+          <span className="mt-2 text-xs text-gray-500 dark:text-gray-400">{t('relayWorldMap.regions.europe')}</span>
         </div>
 
         <div className="absolute top-[45%] left-[80%] flex flex-col items-center">
           <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50" />
-          <span className="mt-2 text-xs text-gray-400">{t('relayWorldMap.regions.asia')}</span>
+          <span className="mt-2 text-xs text-gray-500 dark:text-gray-400">{t('relayWorldMap.regions.asia')}</span>
         </div>
 
         <div className="absolute top-[60%] left-[15%] flex flex-col items-center">
           <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50" />
-          <span className="mt-2 text-xs text-gray-400">{t('relayWorldMap.regions.northAmerica')}</span>
+          <span className="mt-2 text-xs text-gray-500 dark:text-gray-400">{t('relayWorldMap.regions.northAmerica')}</span>
         </div>
       </div>
 
       {/* Relay List */}
       <div className="space-y-2">
-        {relays.map((relay, index) => (
+        {relays.map((relay) => (
           <div
-            key={index}
-            className="flex items-center gap-3 p-3 bg-white dark:bg-gray-50 dark:bg-gray-900/50 rounded-lg"
+            key={relay.id}
+            className="flex items-start gap-3 p-3 bg-white dark:bg-gray-900 rounded-lg"
           >
-            <div
-              className={cn(
-                "w-2.5 h-2.5 rounded-full",
-                getStatusColor(relay.status),
-              )}
-            />
-            <Server className="w-4 h-4 text-gray-500 flex-shrink-0" />
-            <span className="flex-1 text-sm text-gray-300 font-mono truncate">
-              {relay.url.replace("wss://", "")}
-            </span>
-            {relay.location && (
-              <span className="text-xs text-gray-500 flex items-center gap-1">
-                <Signal className="w-3 h-3" />
-                {relay.location}
-              </span>
+            {relay.status && (
+              <div
+                className={cn(
+                  "mt-1.5 w-2.5 h-2.5 rounded-full flex-shrink-0",
+                  getStatusColor(relay.status),
+                )}
+              />
             )}
+            <Server className="mt-0.5 w-4 h-4 text-gray-500 flex-shrink-0" />
+            <div className="min-w-0">
+              <p className="text-sm text-gray-700 dark:text-gray-300 font-mono truncate">
+                {relay.url.replace("wss://", "")}
+              </p>
+              <p className="text-xs text-gray-600 dark:text-gray-400">
+                {t(`relayWorldMap.relays.${relay.id}.description`)}
+              </p>
+            </div>
           </div>
         ))}
       </div>
+
+      <p className="mt-4 text-xs text-gray-600 dark:text-gray-400">
+        {t('relayWorldMap.checkedNote')}
+      </p>
     </div>
   );
 }

@@ -15,11 +15,11 @@ import {
   ChevronLeft,
   RefreshCw,
   Award,
-  Users,
   Sparkles,
 } from "lucide-react";
 import { cn, saveToLocalStorage, loadFromLocalStorage } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
+import { getValue } from "../../i18n";
 
 type Device = "ios" | "android" | "desktop" | "web";
 type Priority = "easy" | "power" | "privacy" | "web-only";
@@ -31,9 +31,11 @@ interface QuizAnswer {
   features: Feature[];
 }
 
+// Machine-readable only. Every human-readable string (description, pros, cons)
+// lives in the translations under clientRecommender.clients.<id>.
 interface NostrClient {
+  id: string;
   name: string;
-  description: string;
   devices: Device[];
   priority: Priority[];
   features: Feature[];
@@ -44,41 +46,37 @@ interface NostrClient {
     android?: string;
     desktop?: string;
   };
-  pros: string[];
-  cons: string[];
-  screenshot?: string;
-  rating: number;
-  userCount?: string;
 }
 
 interface ClientRecommenderProps {
   className?: string;
 }
 
+// Checked against docs/audit-2026-09/facts.md and re-verified at source on
+// 2026-09-02: App Store / Play Store lookups for the store listings, each
+// project's own README for platform and feature claims.
+//
+// "Current" used to sit in this list. Its App Store id 1668517032 returns zero
+// results, its repo stopped in December 2023 and relay.current.fyi has no DNS
+// record, so it is gone.
+//
+// None of these six is a native desktop app. The four web clients are listed
+// under "desktop" too because that is how a Mac or PC user reaches them: in a
+// browser. Coracle in particular is a web client (its README says so), it was
+// wrongly filed here as desktop-only.
 const CLIENTS: NostrClient[] = [
   {
+    id: "damus",
     name: "Damus",
-    description:
-      "The most popular iOS client for Nostr, known for its polished UI and smooth experience.",
     devices: ["ios"],
     priority: ["easy", "privacy"],
     features: ["wallet", "images"],
     beginnerFriendly: true,
     urls: { ios: "https://apps.apple.com/app/damus/id1628663131" },
-    pros: [
-      "Beautiful UI",
-      "Easy to use",
-      "Active development",
-      "Great onboarding",
-    ],
-    cons: ["iOS only", "Limited desktop support"],
-    rating: 4.8,
-    userCount: "100K+",
   },
   {
+    id: "amethyst",
     name: "Amethyst",
-    description:
-      "A feature-rich Android client with excellent support for all Nostr features.",
     devices: ["android"],
     priority: ["power", "privacy"],
     features: ["wallet", "images", "longform"],
@@ -87,21 +85,11 @@ const CLIENTS: NostrClient[] = [
       android:
         "https://play.google.com/store/apps/details?id=com.vitorpamplona.amethyst",
     },
-    pros: [
-      "Full-featured",
-      "Zaps support",
-      "Active community",
-      "Regular updates",
-    ],
-    cons: ["Can be overwhelming", "Android only"],
-    rating: 4.7,
-    userCount: "50K+",
   },
   {
+    id: "primal",
     name: "Primal",
-    description:
-      "A fast, modern client available on all platforms with excellent performance.",
-    devices: ["web", "ios", "android"],
+    devices: ["web", "desktop", "ios", "android"],
     priority: ["easy", "power"],
     features: ["wallet", "images", "longform"],
     beginnerFriendly: true,
@@ -111,75 +99,33 @@ const CLIENTS: NostrClient[] = [
       android:
         "https://play.google.com/store/apps/details?id=net.primal.android",
     },
-    pros: ["Fast loading", "All platforms", "Great search", "Beautiful design"],
-    cons: ["Newer app", "Some features still in development"],
-    rating: 4.6,
-    userCount: "30K+",
   },
   {
+    id: "iris",
     name: "Iris",
-    description:
-      "A simple, no-signup web client perfect for getting started quickly.",
-    devices: ["web"],
+    devices: ["web", "desktop"],
     priority: ["easy", "web-only"],
     features: ["images"],
     beginnerFriendly: true,
     urls: { web: "https://iris.to" },
-    pros: [
-      "No download needed",
-      "Works instantly",
-      "Clean interface",
-      "Open source",
-    ],
-    cons: ["Web only", "Limited advanced features"],
-    rating: 4.4,
-    userCount: "20K+",
   },
   {
+    id: "snort",
     name: "Snort",
-    description: "A web client focused on simplicity and performance.",
-    devices: ["web"],
+    devices: ["web", "desktop"],
     priority: ["easy", "web-only"],
-    features: ["images", "longform"],
+    features: ["wallet", "images", "longform"],
     beginnerFriendly: true,
     urls: { web: "https://snort.social" },
-    pros: ["Lightning fast", "Minimal UI", "No bloat", "Great for reading"],
-    cons: ["Web only", "Fewer social features"],
-    rating: 4.3,
-    userCount: "15K+",
   },
   {
+    id: "coracle",
     name: "Coracle",
-    description: "A desktop client for power users with advanced features.",
-    devices: ["desktop"],
-    priority: ["power", "privacy"],
-    features: ["wallet", "images", "longform"],
+    devices: ["web", "desktop"],
+    priority: ["power", "privacy", "web-only"],
+    features: ["wallet", "images"],
     beginnerFriendly: false,
-    urls: { desktop: "https://coracle.social" },
-    pros: [
-      "Powerful features",
-      "Desktop optimized",
-      "Great for creators",
-      "Advanced filtering",
-    ],
-    cons: ["Desktop only", "Steeper learning curve"],
-    rating: 4.5,
-    userCount: "10K+",
-  },
-  {
-    name: "Current",
-    description: "iOS client with excellent Nostr Wallet Connect integration.",
-    devices: ["ios"],
-    priority: ["power", "privacy"],
-    features: ["wallet", "images", "longform"],
-    beginnerFriendly: false,
-    urls: {
-      ios: "https://apps.apple.com/app/current-nostr-client/id1668517032",
-    },
-    pros: ["Best wallet support", "Power user features", "NWC integration"],
-    cons: ["More complex", "iOS only"],
-    rating: 4.4,
-    userCount: "8K+",
+    urls: { web: "https://coracle.social" },
   },
 ];
 
@@ -252,11 +198,18 @@ const getFeatureOptions = (t: (key: string) => string) => [
 ];
 
 export function ClientRecommender({ className }: ClientRecommenderProps) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState<QuizAnswer>({ features: [] });
   const [showResults, setShowResults] = useState(false);
   const [recommendations, setRecommendations] = useState<NostrClient[]>([]);
+
+  const clientText = (id: string, field: string): string =>
+    t(`clientRecommender.clients.${id}.${field}`);
+  const clientList = (id: string, field: string): string[] =>
+    (getValue(`clientRecommender.clients.${id}.${field}`, locale) as
+      | string[]
+      | undefined) || [];
 
   useEffect(() => {
     const saved = loadFromLocalStorage<{ answers: QuizAnswer; step: number }>(
@@ -300,9 +253,6 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
         score += 15;
       }
 
-      // Rating bonus
-      score += client.rating * 2;
-
       return { client, score };
     });
 
@@ -312,7 +262,8 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
         !answers.device || client.devices.includes(answers.device),
     );
 
-    // Sort by score
+    // Sort by score. Array.prototype.sort is stable, so ties keep the order
+    // above, which is where the old invented star ratings used to break them.
     const sorted = filtered.sort((a, b) => b.score - a.score);
 
     setRecommendations(sorted.slice(0, 3).map((s) => s.client));
@@ -350,6 +301,8 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
   };
 
   if (showResults && recommendations.length > 0) {
+    const top = recommendations[0];
+
     return (
       <div className={cn("max-w-4xl mx-auto p-6", className)}>
         <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 md:p-8">
@@ -371,36 +324,24 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
             <div className="flex items-start gap-4 mb-4">
               <div className="w-16 h-16 bg-primary-500 rounded-2xl flex items-center justify-center flex-shrink-0">
                 <span className="text-2xl font-bold text-white">
-                  {recommendations[0].name.charAt(0)}
+                  {top.name.charAt(0)}
                 </span>
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <h3 className="text-2xl font-bold text-white">
-                    {recommendations[0].name}
-                  </h3>
-                  {recommendations[0].beginnerFriendly && (
+                  <h3 className="text-2xl font-bold text-white">{top.name}</h3>
+                  {top.beginnerFriendly && (
                     <span className="inline-flex items-center gap-1 px-2 py-1 bg-success-500/20 text-success-500 text-xs rounded-full">
                       <Sparkles className="w-3 h-3" />
                       {t('clientRecommender.results.beginnerFriendly')}
                     </span>
                   )}
                 </div>
-                <div className="flex items-center gap-3 text-sm text-gray-400">
-                  <span className="flex items-center gap-1">
-                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                    {recommendations[0].rating}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Users className="w-4 h-4" />
-                    {recommendations[0].userCount}
-                  </span>
-                </div>
               </div>
             </div>
 
             <p className="text-gray-300 mb-4">
-              {recommendations[0].description}
+              {clientText(top.id, 'description')}
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -409,7 +350,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                   {t('clientRecommender.results.pros')}
                 </h4>
                 <ul className="space-y-1">
-                  {recommendations[0].pros.map((pro, i) => (
+                  {clientList(top.id, 'pros').map((pro, i) => (
                     <li
                       key={i}
                       className="text-sm text-gray-400 flex items-center gap-2"
@@ -425,7 +366,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                   {t('clientRecommender.results.cons')}
                 </h4>
                 <ul className="space-y-1">
-                  {recommendations[0].cons.map((con, i) => (
+                  {clientList(top.id, 'cons').map((con, i) => (
                     <li
                       key={i}
                       className="text-sm text-gray-400 flex items-center gap-2"
@@ -441,20 +382,20 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {answers.device && recommendations[0].urls[answers.device] && (
+              {answers.device && top.urls[answers.device] && (
                 <a
-                  href={recommendations[0].urls[answers.device]}
+                  href={top.urls[answers.device]}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all"
                 >
-                  {t('clientRecommender.results.getApp').replace('{clientName}', recommendations[0].name)}
+                  {t('clientRecommender.results.getApp').replace('{clientName}', top.name)}
                   <ExternalLink className="w-4 h-4" />
                 </a>
               )}
-              {recommendations[0].urls.web && (
+              {top.urls.web && (
                 <a
-                  href={recommendations[0].urls.web}
+                  href={top.urls.web}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-medium transition-all"
@@ -471,7 +412,7 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {recommendations.slice(1).map((client, index) => (
                 <div
-                  key={client.name}
+                  key={client.id}
                   className="bg-gray-800/50 border border-gray-700 rounded-xl p-4 animate-slide-up motion-reduce:animate-none"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
@@ -485,19 +426,16 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                       <h4 className="font-semibold text-white">
                         {client.name}
                       </h4>
-                      <div className="flex items-center gap-2 text-xs text-gray-400">
-                        <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
-                        {client.rating}
-                        {client.beginnerFriendly && (
-                          <span className="text-success-500">
-                            • {t('clientRecommender.results.beginnerFriendly')}
-                          </span>
-                        )}
-                      </div>
+                      {client.beginnerFriendly && (
+                        <div className="flex items-center gap-2 text-xs text-success-500">
+                          <Sparkles className="w-3 h-3" />
+                          {t('clientRecommender.results.beginnerFriendly')}
+                        </div>
+                      )}
                     </div>
                   </div>
                   <p className="text-sm text-gray-400 mb-3">
-                    {client.description}
+                    {clientText(client.id, 'description')}
                   </p>
                   <div className="flex gap-2">
                     {answers.device && client.urls[answers.device] && (
@@ -507,7 +445,8 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                         rel="noopener noreferrer"
                         className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium inline-flex items-center gap-1"
                       >
-                        Get App <ExternalLink className="w-3 h-3" />
+                        {t('clientRecommender.results.getApp').replace('{clientName}', client.name)}
+                        <ExternalLink className="w-3 h-3" />
                       </a>
                     )}
                     {client.urls.web && (
@@ -517,7 +456,8 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                         rel="noopener noreferrer"
                         className="text-sm text-gray-400 hover:text-white inline-flex items-center gap-1"
                       >
-                        Web <Globe className="w-3 h-3" />
+                        {t('clientRecommender.results.tryWeb')}
+                        <Globe className="w-3 h-3" />
                       </a>
                     )}
                   </div>

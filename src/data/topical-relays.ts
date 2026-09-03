@@ -1,113 +1,120 @@
-export type RelayCategory = 
-  | 'general' 
-  | 'bitcoin' 
-  | 'art' 
-  | 'music' 
-  | 'tech' 
-  | 'dev' 
-  | 'gaming' 
-  | 'regional';
+import { t } from '../i18n';
+
+// Every relay below answered a NIP-11 request on 2026-09-02, checked host by
+// host (docs/audit-2026-09/relays-verified.md, re-fetched by hand for this file).
+// wss://140.fz7.io was dropped: no DNS record at all, so there is nothing to
+// browse. The descriptions used to be invented marketing lines in English; they
+// now come from the operators' own NIP-11 text, through t().
+
+export type RelayCategory =
+  | 'general'
+  | 'news';
 
 export interface TopicalRelay {
   id: string;
   url: string;
+  /** Operator's own name for the relay. A proper noun, not translated. */
   name: string;
-  description: string;
+  /** i18n key. Read `description` instead unless you are calling t() yourself. */
+  descriptionKey: string;
+  /** Resolved through t() at read time, so it follows the reader's language. */
+  readonly description: string;
   category: RelayCategory;
   tags: string[];
-  location?: string;
-  language?: string;
-  addedBy?: string;
-  addedDate: string;
-  verified: boolean;
+  /** Date the NIP-11 document was last fetched by hand. */
+  checkedDate: string;
   featured?: boolean;
 }
 
-export const TOPICAL_RELAYS: TopicalRelay[] = [
+type RelaySeed = Omit<TopicalRelay, 'description' | 'descriptionKey'>;
+
+// The payload is a plain constant, but the locale is not known when this module
+// is evaluated: the browser reads it from the URL and the build sets it per page.
+// A getter resolves the string at render time instead, which keeps every consumer
+// working with `relay.description` while the text follows the reader's language.
+function withDescription(seed: RelaySeed): TopicalRelay {
+  const descriptionKey = `relayFeedBrowser.relays.${seed.id}.description`;
+  return {
+    ...seed,
+    descriptionKey,
+    get description() {
+      return t(descriptionKey);
+    },
+  };
+}
+
+const RELAY_SEEDS: RelaySeed[] = [
   {
     id: "spatia-arcana",
     url: "wss://spatia-arcana.com",
     name: "Spatia Arcana",
-    description: "Community-submitted topical relay for discovering niche communities",
     category: "general",
     tags: ["community", "discovery"],
-    addedDate: "2026-03-04",
-    verified: true,
-    featured: true
+    checkedDate: "2026-09-02",
+    featured: true,
   },
   {
     id: "christpill",
     url: "wss://christpill.nostr1.com",
     name: "Christpill",
-    description: "Christian community relay for faith-based discussions and fellowship",
     category: "general",
-    tags: ["christianity", "faith", "community", "religion"],
-    addedDate: "2026-03-05",
-    verified: true,
-    featured: false
+    tags: ["christianity", "faith", "community"],
+    checkedDate: "2026-09-02",
   },
   {
     id: "chillstr",
     url: "wss://chillstr.nostr1.com",
-    name: "Chill Str",
-    description: "Laid-back general chat relay for casual conversations and friendly discussions",
+    name: "Chillstr",
     category: "general",
-    tags: ["casual", "chat", "community", "social"],
-    addedDate: "2026-03-05",
-    verified: true,
-    featured: false
-  },
-  {
-    id: "140-fz7",
-    url: "wss://140.fz7.io",
-    name: "140",
-    description: "Twitter-style short-form posting relay with 140-character focus",
-    category: "general",
-    tags: ["short-form", "microblogging", "social"],
-    addedDate: "2026-03-05",
-    verified: true,
-    featured: false
+    tags: ["meditation", "mindfulness", "paid"],
+    checkedDate: "2026-09-02",
   },
   {
     id: "utxo-news",
     url: "wss://news.utxo.one",
-    name: "UTXO News",
-    description: "Bitcoin and cryptocurrency news aggregation relay with focus on UTXO-based discussions",
-    category: "bitcoin",
-    tags: ["bitcoin", "news", "utxo", "crypto", "finance"],
-    addedDate: "2026-03-05",
-    verified: true,
-    featured: false
+    name: "NewsBot Relay",
+    category: "news",
+    tags: ["news", "headlines", "bot"],
+    checkedDate: "2026-09-02",
   },
   {
     id: "holoboard",
     url: "wss://relay.holoboard.space",
     name: "Holoboard",
-    description: "Tech and innovation focused relay for forward-thinking discussions",
-    category: "tech",
-    tags: ["technology", "innovation", "future", "science"],
-    addedDate: "2026-03-05",
-    verified: true,
-    featured: false
-  }
+    category: "general",
+    tags: ["bulletin-board", "sats", "paid"],
+    checkedDate: "2026-09-02",
+  },
 ];
 
-export const getRelaysByCategory = (category: RelayCategory): TopicalRelay[] => 
+export const TOPICAL_RELAYS: TopicalRelay[] = RELAY_SEEDS.map(withDescription);
+
+export const getRelaysByCategory = (category: RelayCategory): TopicalRelay[] =>
   TOPICAL_RELAYS.filter(r => r.category === category);
 
-export const getFeaturedRelays = (): TopicalRelay[] => 
+export const getFeaturedRelays = (): TopicalRelay[] =>
   TOPICAL_RELAYS.filter(r => r.featured);
 
-export const getVerifiedRelays = (): TopicalRelay[] =>
-  TOPICAL_RELAYS.filter(r => r.verified);
+export interface RelayCategoryOption {
+  id: RelayCategory;
+  /** i18n key. Read `label` instead unless you are calling t() yourself. */
+  labelKey: string;
+  /** Resolved through t() at read time. */
+  readonly label: string;
+}
 
-export const RELAY_CATEGORIES: { id: RelayCategory; label: string; description: string }[] = [
-  { id: 'general', label: 'General', description: 'Broad interest relays' },
-  { id: 'bitcoin', label: 'Bitcoin', description: 'BTC-focused discussions' },
-  { id: 'art', label: 'Art & Creative', description: 'Visual arts and creative content' },
-  { id: 'music', label: 'Music', description: 'Music sharing and discussion' },
-  { id: 'tech', label: 'Technology', description: 'Tech and innovation' },
-  { id: 'dev', label: 'Development', description: 'Software development' },
-  { id: 'gaming', label: 'Gaming', description: 'Gaming community' },
-  { id: 'regional', label: 'Regional', description: 'Location-based communities' }
-];
+// Derived from the relays that actually exist. The old list hardcoded eight
+// categories, five of which (art, music, dev, gaming, regional) matched no relay
+// at all, so those filter buttons led to an empty screen.
+export const RELAY_CATEGORIES: RelayCategoryOption[] = Array.from(
+  new Set(TOPICAL_RELAYS.map(r => r.category)),
+).map((id) => {
+  const labelKey = `relayFeedBrowser.categories.${id}`;
+  return {
+    id,
+    labelKey,
+    get label() {
+      return t(labelKey);
+    },
+  };
+});

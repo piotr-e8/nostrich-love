@@ -1908,6 +1908,31 @@
     "languages": {
       "thisPage": "阅读本页的其他语言版本",
       "guides": "阅读其他语言的指南"
+    },
+    "tagline": "面向新手的 Nostr 协议指南。学习、探索，加入去中心化的社交变革。",
+    "privacyNote": "密钥在你的浏览器里生成。我们的服务器上什么都不存。",
+    "copyright": "© {year} {site}。开源，由社区驱动。",
+    "homeAria": "{site} 首页",
+    "externalLinkAria": "{label}（在新标签页打开）",
+    "sections": {
+      "learn": "学习",
+      "tools": "工具",
+      "community": "社区",
+      "about": "关于"
+    },
+    "links": {
+      "gettingStarted": "新手入门",
+      "interactiveTools": "互动工具",
+      "glossary": "术语表",
+      "faq": "常见问题",
+      "relayPlayground": "中继游乐场",
+      "keyGenerator": "密钥生成器",
+      "followPackFinder": "关注包查找器",
+      "nostrProtocol": "Nostr 协议",
+      "aboutUs": "关于我们",
+      "support": "支持 ⚡",
+      "settings": "设置",
+      "privacyPolicy": "隐私政策"
     }
   },
   "clientRecommender": {
@@ -1978,6 +2003,86 @@
       "cons": "缺点",
       "getApp": "获取 {clientName}",
       "tryWeb": "试用网页版"
+    },
+    "clients": {
+      "damus": {
+        "description": "iPhone 和 iPad 上最知名的 Nostr 应用，界面清爽，第一次上手很轻松。",
+        "pros": [
+          "设置简单，装好就能开始读",
+          "可以收发闪电网络打赏",
+          "更新频繁",
+          "不需要邮箱或手机号"
+        ],
+        "cons": [
+          "只支持 iPhone 和 iPad",
+          "不支持长文"
+        ]
+      },
+      "amethyst": {
+        "description": "功能齐全的 Android 应用，Nostr 能做的事它几乎都跟得上。",
+        "pros": [
+          "覆盖的 Nostr 功能最广",
+          "支持 zap 和加密私信",
+          "长文可读也可写",
+          "更新频繁"
+        ],
+        "cons": [
+          "刚上手时要消化的选项有点多",
+          "只有 Android 版，没有 iPhone 版"
+        ]
+      },
+      "primal": {
+        "description": "在浏览器、iPhone 和 Android 上都很快的应用，自带钱包，也能读长文。",
+        "pros": [
+          "浏览器和手机上用同一个账号",
+          "钱包直接内置在应用里",
+          "搜索和内容发现很强",
+          "长文可读也可写"
+        ],
+        "cons": [
+          "有一部分功能走 Primal 自家的服务器，不只是走中继",
+          "没有单独的桌面应用，浏览器版就顶替了这个角色"
+        ]
+      },
+      "iris": {
+        "description": "打开就能开始读的浏览器客户端，什么都不用装。",
+        "pros": [
+          "无需下载",
+          "手机或电脑上，任何浏览器都能用",
+          "界面清爽，很快就能学会",
+          "开源"
+        ],
+        "cons": [
+          "只有浏览器版，没有手机应用",
+          "高级选项比那几款主流手机应用少"
+        ]
+      },
+      "snort": {
+        "description": "轻快的浏览器客户端，支持长文，也支持闪电 zap。",
+        "pros": [
+          "在浏览器里又轻又快",
+          "长文可读也可写",
+          "可以连接闪电钱包来 zap",
+          "无需下载"
+        ],
+        "cons": [
+          "只有浏览器版，没有手机应用",
+          "界面刻意做得很朴素"
+        ]
+      },
+      "coracle": {
+        "description": "适合想自己挑选中继、自己决定看到什么的人，运行在浏览器里。",
+        "pros": [
+          "对中继有细致的掌控",
+          "过滤时会参考你关注的人信任谁",
+          "支持私密群组和加密私信",
+          "可以像应用一样从浏览器安装"
+        ],
+        "cons": [
+          "用顺手之前，要做的决定比较多",
+          "只有浏览器版，没有手机应用"
+        ]
+      }
     }
   },
   "troubleshootingWizard": {
@@ -2360,7 +2465,9 @@
         "title": "有效的 NIP-05！",
         "description": "此标识符配置正确",
         "publicKey": "公钥（npub）",
-        "recommendedRelays": "推荐中继"
+        "recommendedRelays": "推荐中继",
+        "copied": "公钥已复制",
+        "copyPublicKey": "复制公钥"
       },
       "invalid": {
         "title": "无效的 NIP-05",
@@ -2394,10 +2501,30 @@
         "title": "网络错误",
         "description": "无法连接以验证标识符",
         "fix": "检查你的互联网连接后重试"
-      }
+      },
+      "fixLabel": "解决办法："
     },
     "providers": {
-      "title": "获取你自己的 NIP-05"
+      "title": "获取你自己的 NIP-05",
+      "list": {
+        "nostrplebs": {
+          "description": "一个名字，外加一个闪电地址、一个邮箱地址和一个中继。",
+          "price": "12,500 sats 起"
+        },
+        "nostrcheck": {
+          "description": "免费的 nostr 地址，还带文件托管和一个中继。",
+          "price": "免费"
+        }
+      }
+    },
+    "aboutNip05Body": "NIP-05 通过域名来验证 Nostr 身份。这样你能给别人一个看着像邮箱的地址（you@yourdomain.com），而不是一长串 npub。",
+    "messages": {
+      "invalidFormat": "格式不对。请使用：user@domain.com",
+      "corsBlocked": "这个域名不接受直接从浏览器发起的检查。可以换到 Nostr 客户端里查同一个地址。",
+      "notConfigured": "这里没有设置 NIP-05，或者这个域名连不上。",
+      "nameNotFound": "{domain} 上没有列出“{name}”这个名字。",
+      "networkError": "连接这个域名时出了问题。检查一下网络再试一次。",
+      "verifiedOn": "已在 {domain} 上验证 NIP-05"
     }
   },
   "emptyFeedFixer": {
@@ -2411,7 +2538,13 @@
       "followAll": "全部关注",
       "follow": "关注",
       "addCustom": "添加",
-      "continue": "继续到中继"
+      "continue": "继续到中继",
+      "followingCount": "已关注 {count} 个账号",
+      "accountCount": "{count} 个可以关注的账号",
+      "packAccountsTitle": "{pack} 里的账号",
+      "npubLabel": "粘贴一个 npub 来关注",
+      "npubPlaceholder": "粘贴一个 npub，以 npub1 开头",
+      "npubInvalid": "这不是有效的 npub。错一个字符就不行了，请把整串密钥重新粘贴一次。"
     },
     "step2": {
       "title": "步骤 2：连接到中继",
@@ -2421,7 +2554,8 @@
       "connectAll": "连接到所有推荐中继",
       "continue": "继续",
       "info": "中继是存储和分发 Nostr 内容的服务器。连接多个中继可确保更好的内容可用性。",
-      "recommended": "推荐"
+      "recommended": "推荐",
+      "connectedCount": "已连接 {count} 个中继"
     },
     "step3": {
       "title": "步骤 3：开始使用 Nostr！",
@@ -2460,6 +2594,36 @@
       "wssPurplePages": {
         "name": "Purple Pages",
         "description": "只有个人资料和列表，没有帖子"
+      },
+      "damus": {
+        "name": "Damus",
+        "description": "Damus 团队运营的中继。读和发都免费。"
+      },
+      "nosLol": {
+        "name": "nos.lol",
+        "description": "除了垃圾内容，大部分笔记都收。"
+      },
+      "primal": {
+        "name": "Primal",
+        "description": "Primal 的公共中继。读和发都免费。"
+      },
+      "snort": {
+        "name": "Snort",
+        "description": "很快的中继，最近的笔记都放在内存里。"
+      }
+    },
+    "clients": {
+      "damus": {
+        "platform": "iOS"
+      },
+      "amethyst": {
+        "platform": "Android"
+      },
+      "iris": {
+        "platform": "网页版"
+      },
+      "primal": {
+        "platform": "网页版、iOS 和 Android"
       }
     }
   },
@@ -2763,17 +2927,20 @@
       "type": {
         "label": "所有类型",
         "free": "免费",
-        "paid": "付费"
+        "paid": "付费",
+        "restricted": "受限"
       }
     },
     "selected": {
       "count": "已选择 {count} 个中继",
       "copy": "复制",
-      "download": "下载"
+      "download": "下载",
+      "clear": "清除"
     },
     "customRelay": {
       "placeholder": "添加自定义中继（wss://...）",
-      "add": "添加"
+      "add": "添加",
+      "description": "你自己添加的中继。"
     },
     "toast": {
       "starterPackAdded": "已添加入门包中继！",
@@ -2798,6 +2965,45 @@
       "onlineNow": "当前在线",
       "freeRelays": "免费中继",
       "selected": "已选择"
+    },
+    "empty": {
+      "title": "没有符合条件的中继",
+      "hint": "改一下筛选条件，或者在上面添加一个你自己的中继。"
+    },
+    "relays": {
+      "damus": {
+        "description": "Damus 团队运营的中继。读免费，发也免费。"
+      },
+      "nos-lol": {
+        "description": "除了垃圾内容，一般什么笔记都收。读和发都免费。"
+      },
+      "primal": {
+        "description": "Primal 的公共中继。读免费，发也免费。"
+      },
+      "snort": {
+        "description": "Snort 团队的中继，速度快，数据放在内存里。读和发都免费。"
+      },
+      "bitcoiner-social": {
+        "description": "比特币社区的中继，有在线率监控，每晚备份。读和发都免费。"
+      },
+      "christpill": {
+        "description": "给追随和寻求基督的人。读和发都免费。"
+      },
+      "news-utxo": {
+        "description": "机器人搬运各大媒体标题的信息流。适合读，不适合发自己的笔记。"
+      },
+      "nostr-wine": {
+        "description": "面向葡萄酒爱好者以及所有人的付费中继。入场费 18,888 sats。"
+      },
+      "chillstr": {
+        "description": "冥想、正念，还有放松的片刻。入场费 111 sats。"
+      },
+      "holoboard": {
+        "description": "一块公告板，笔记的排序由 sats 决定。上面每一条笔记都是花钱发的。"
+      },
+      "spatia-arcana": {
+        "description": "谁都能读，但只有运营者批准过的人才能发。"
+      }
     }
   },
   "relayPlayground": {
@@ -2820,7 +3026,9 @@
       "disconnect": "断开",
       "inspect": "检查",
       "clear": "清除",
-      "copy": "复制"
+      "copy": "复制",
+      "showJson": "显示 JSON",
+      "hideJson": "隐藏 JSON"
     },
     "status": {
       "online": "在线",
@@ -2836,17 +3044,35 @@
       "latency": "延迟",
       "unknown": "未知",
       "connected": "已连接到中继",
-      "error": "连接错误"
+      "error": "连接错误",
+      "connectionFailed": "中继没有接受这次连接。",
+      "invalidUrl": "这不是有效的中继地址。",
+      "whatHappensTitle": "连接的时候会发生什么",
+      "whatHappensBody": "你的浏览器会跟中继建立一条实时连接，并且保持着。不会发布任何内容。这只是看看中继有没有回应，回应有多快。"
     },
     "healthTab": {
       "responseTime": "响应时间",
       "lastChecked": "最后检查",
-      "noData": "无健康数据"
+      "noData": "无健康数据",
+      "sortBy": "排序方式：",
+      "relay": "中继",
+      "access": "访问方式",
+      "fastTitle": "快",
+      "fastBody": "中继几乎立刻就回应了。发布和加载都会像是瞬间完成的。",
+      "okTitle": "正常",
+      "okBody": "中继回应前会稍等一下。读的时候几乎察觉不到。",
+      "slowTitle": "慢",
+      "slowBody": "中继过了一会儿才回应。你的笔记可能要等一下才出现。"
     },
     "nipsTab": {
       "title": "支持的 NIPs",
       "description": "Nostr Implementation Possibilities（NIPs）是此中继支持的协议扩展",
-      "supported": "支持 {{count}} 个 NIPs"
+      "supported": "支持 {{count}} 个 NIPs",
+      "unknownNip": "一个我们还叫不出名字的扩展",
+      "relayCount": "{total} 个中继里有 {count} 个",
+      "supportedBy": "支持它的中继：",
+      "notSupportedBy": "不支持的中继：",
+      "andMore": "还有 {count} 个"
     },
     "eventsTab": {
       "title": "实时事件",
@@ -2862,10 +3088,159 @@
       "limit": "限制",
       "execute": "执行查询",
       "results": "结果",
-      "noResults": "未找到结果"
+      "noResults": "未找到结果",
+      "chooseRelay": "选一个中继"
     },
     "relayCard": {
       "location": "位置"
+    },
+    "stats": {
+      "totalRelays": "已检查的中继"
+    },
+    "access": {
+      "free": "可免费发布",
+      "paid": "付费",
+      "restricted": "发布受限",
+      "unknown": "未确认"
+    },
+    "relays": {
+      "damus": {
+        "description": "Damus 应用背后的中继。免费，对所有人开放。"
+      },
+      "nos-lol": {
+        "description": "除了垃圾内容，大部分笔记都收。"
+      },
+      "primal": {
+        "description": "Primal 的公共中继。免费，对所有人开放。"
+      },
+      "snort": {
+        "description": "很快的中继，最近的笔记都放在内存里。"
+      },
+      "nostr-mom": {
+        "description": "过滤垃圾内容和裸露内容，比 nos.lol 更严。"
+      },
+      "bitcoiner-social": {
+        "description": "比特币社区的中继，有在线率监控，每晚备份。"
+      },
+      "christpill": {
+        "description": "给追随和寻求基督的人的中继。"
+      },
+      "news-utxo": {
+        "description": "转载各大媒体标题的新闻机器人信息流，不是发自己作品的地方。"
+      },
+      "nostr-wine": {
+        "description": "面向葡萄酒爱好者以及所有人的付费中继。发布要一次性付大约 18,888 sats。"
+      },
+      "nostr-plebs": {
+        "description": "Nostr Plebs 的中继。要先付费才能发布。"
+      },
+      "chillstr": {
+        "description": "冥想、正念，还有安静的片刻。发布要一次性付 111 sats。"
+      },
+      "holoboard": {
+        "description": "一块公告板，笔记的排序由 sats 决定。上面每一条笔记都是花钱发的。"
+      },
+      "spatia-arcana": {
+        "description": "谁都能读，但只有获批准的人才能发。"
+      },
+      "purple-pages": {
+        "description": "存放个人资料信息的中继，而不是对话。"
+      }
+    },
+    "kinds": {
+      "0": "个人资料",
+      "1": "笔记",
+      "3": "关注列表",
+      "6": "转发",
+      "7": "回应",
+      "9735": "Zap 收据"
+    },
+    "nipNames": {
+      "1": "协议的基本流程",
+      "2": "关注列表",
+      "3": "OpenTimestamps 时间戳证明（已不推荐）",
+      "4": "加密私信（旧写法，已由 NIP-17 取代）",
+      "5": "用你自己的域名做 Nostr 名字",
+      "6": "从助记词生成密钥（已不推荐）",
+      "7": "用浏览器扩展签名",
+      "9": "删除事件的请求",
+      "10": "文本笔记和话题串",
+      "11": "中继信息文档",
+      "12": "通用标签查询（已并入 NIP-01）",
+      "13": "工作量证明",
+      "14": "笔记的标题行",
+      "15": "Nostr 市集（已不推荐）",
+      "16": "事件的处理方式（已并入 NIP-01）",
+      "17": "私密私信",
+      "18": "转发",
+      "19": "npub、note 这类 bech32 标识",
+      "20": "命令返回结果（已并入 NIP-01）",
+      "21": "nostr: 链接格式",
+      "22": "评论",
+      "23": "长文",
+      "24": "个人资料的额外字段",
+      "25": "回应",
+      "26": "委托签名（已不推荐）",
+      "27": "笔记里的提及",
+      "28": "公开聊天室（已不推荐）",
+      "29": "基于中继的群组",
+      "30": "自定义表情",
+      "31": "如何处理未知事件（已不推荐）",
+      "32": "打标签",
+      "33": "带参数的可替换事件（已并入 NIP-01）",
+      "34": "Git 仓库",
+      "35": "种子文件",
+      "36": "敏感内容警告",
+      "37": "草稿事件",
+      "38": "用户状态",
+      "39": "把个人资料关联到其他平台",
+      "40": "过期时间",
+      "42": "中继身份验证",
+      "43": "中继访问信息与申请",
+      "44": "加密的内容载荷",
+      "45": "统计结果数量",
+      "46": "远程签名",
+      "47": "Nostr Wallet Connect",
+      "48": "从其他网络桥接过来的事件",
+      "49": "加密的私钥（ncryptsec）",
+      "50": "搜索",
+      "51": "列表",
+      "52": "日历活动",
+      "53": "直播和线上空间",
+      "54": "维基",
+      "55": "Android 签名应用",
+      "56": "举报",
+      "57": "闪电 zap",
+      "58": "徽章",
+      "59": "礼物包装",
+      "60": "Cashu 钱包",
+      "61": "Nutzap",
+      "62": "请求彻底抹除",
+      "64": "国际象棋对局",
+      "65": "你的中继列表",
+      "66": "中继发现与在线监测",
+      "67": "历史事件已发完的提示",
+      "68": "以图片为主的信息流",
+      "69": "点对点交易订单事件",
+      "70": "受保护的事件",
+      "71": "视频事件",
+      "72": "有审核的社区（已不推荐）",
+      "73": "外部内容 ID",
+      "75": "Zap 目标",
+      "77": "Negentropy 同步",
+      "78": "应用专属数据",
+      "84": "高亮摘录",
+      "85": "可信断言",
+      "86": "中继管理 API",
+      "87": "Cashu 和 Fedimint 的发现",
+      "88": "投票",
+      "89": "推荐的应用处理程序",
+      "90": "数据自动贩卖机（已不推荐）",
+      "92": "媒体附件的信息",
+      "94": "文件元数据",
+      "96": "HTTP 文件存储（已由 Blossom 取代）",
+      "98": "HTTP 身份验证",
+      "99": "分类信息"
     }
   },
   "nostrSimulator": {
@@ -3070,6 +3445,22 @@
     },
     "stats": {
       "totalRelays": "中继总数"
+    },
+    "subtitle": "中继不过是服务器，它们分布在世界各地。",
+    "checkedNote": "这些中继在我们 2026 年 9 月检查时都有回应。中继来来去去，所以请把这当成一张快照，而不是实时状态。",
+    "relays": {
+      "damus": {
+        "description": "由 Damus 应用背后的团队运营。"
+      },
+      "nosLol": {
+        "description": "几乎什么笔记都收，垃圾内容除外。"
+      },
+      "primal": {
+        "description": "Primal 的公共中继，来自 Primal 应用的开发团队。"
+      },
+      "snort": {
+        "description": "很快的中继，最近的笔记都放在内存里。"
+      }
     }
   },
   "interestFilter": {
@@ -3087,7 +3478,28 @@
   },
   "relayFeedBrowser": {
     "title": "浏览中继动态",
-    "subtitle": "通过浏览中继动态发现 Nostr 社区"
+    "subtitle": "通过浏览中继动态发现 Nostr 社区",
+    "categories": {
+      "general": "综合",
+      "news": "新闻"
+    },
+    "relays": {
+      "spatia-arcana": {
+        "description": "谁都能读，但只有获批准的账号才能发。运营者的座右铭是：“我辽阔博大，我包罗万象。”"
+      },
+      "christpill": {
+        "description": "用运营者自己的话说，这里是给追随和寻求基督的人。"
+      },
+      "chillstr": {
+        "description": "冥想、正念，还有几次深呼吸。读免费；发笔记要一次性付大约 111 sats。"
+      },
+      "utxo-news": {
+        "description": "一个机器人转发各大媒体的标题，所以这里是新闻，不是聊天。"
+      },
+      "holoboard": {
+        "description": "一块公告板，排序由 sats 决定。上面每一条笔记都是花钱发的，所以读免费，发不免费。"
+      }
+    }
   },
   "officialAccount": {
     "followUs": "在 Nostr 上关注我们",

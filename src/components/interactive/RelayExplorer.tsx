@@ -10,19 +10,12 @@ import {
   Activity,
   DollarSign,
   Users,
-  Wifi,
-  WifiOff,
-  MapPin,
+  Lock,
   Plus,
   X,
   RefreshCw,
-  ExternalLink,
   Server,
-  Shield,
-  Clock,
-  Signal,
   AlertCircle,
-  CheckCircle2,
   Info,
 } from "lucide-react";
 import {
@@ -35,26 +28,22 @@ import {
 import { recordActivity } from "../../utils/gamificationEngine";
 import { useTranslation } from "../../hooks/useTranslation";
 
-type Topic = "all" | "bitcoin" | "tech" | "general" | "art" | "music";
-type RelayType = "all" | "free" | "paid";
-type Language = "all" | "en" | "es" | "de" | "ja" | "other";
+type Topic = "all" | "bitcoin" | "general";
+type RelayAccess = "free" | "paid" | "restricted";
+type RelayType = "all" | RelayAccess;
 
 interface Relay {
   id: string;
   url: string;
   name: string;
-  description: string;
-  topics: Topic[];
-  type: "free" | "paid";
-  language: Language;
-  location: string;
-  region: "na" | "eu" | "asia" | "other";
-  userCount: string;
+  topics: Exclude<Topic, "all">[];
+  // free = anyone can read and post; paid = admission or per-note payment;
+  // restricted = readable by anyone, but the operator gates who may post.
+  type: RelayAccess;
+  // NIP numbers the relay advertised in its own NIP-11 document.
+  supportedNips: number[];
   latency?: number | null;
   status: "online" | "offline" | "checking";
-  features: string[];
-  owner?: string;
-  contact?: string;
 }
 
 interface RelayExplorerProps {
@@ -62,291 +51,129 @@ interface RelayExplorerProps {
   onSelectRelays?: (relays: string[]) => void;
 }
 
+// Every entry below was re-checked against the relay's own NIP-11 document on
+// 2026-09-02 (see docs/audit-2026-09/relays-verified.md). Relays that no longer
+// answer were removed rather than left on the page as broken suggestions.
+// Deliberately absent: user counts. Nobody can count Nostr users per relay, so
+// the old "500K+" style figures were invented and are gone for good.
 const POPULAR_RELAYS: Relay[] = [
   {
     id: "damus",
     url: "wss://relay.damus.io",
     name: "Damus",
-    description: "The most popular Nostr relay, maintained by Damus team",
-    topics: ["general", "bitcoin", "tech"],
+    topics: ["general"],
     type: "free",
-    language: "en",
-    location: "USA",
-    region: "na",
-    userCount: "500K+",
+    supportedNips: [1, 2, 4, 9, 28, 40, 45, 70],
     status: "checking",
-    features: ["NIP-01", "NIP-04", "NIP-50"],
-    owner: "Damus",
   },
   {
     id: "nos-lol",
     url: "wss://nos.lol",
     name: "nos.lol",
-    description: "Fast general-purpose relay with good uptime",
-    topics: ["general", "tech"],
-    type: "free",
-    language: "en",
-    location: "Germany",
-    region: "eu",
-    userCount: "200K+",
-    status: "checking",
-    features: ["NIP-01", "NIP-09", "NIP-40"],
-  },
-
-  {
-    id: "purple-pages",
-    url: "wss://purplepag.es",
-    name: "Purple Pages",
-    description: "Metadata relay for profiles and contacts",
     topics: ["general"],
     type: "free",
-    language: "en",
-    location: "USA",
-    region: "na",
-    userCount: "400K+",
+    supportedNips: [1, 2, 4, 9, 28, 40, 45, 70],
     status: "checking",
-    features: ["Metadata", "Contacts", "NIP-05"],
-  },
-  {
-    id: "snort",
-    url: "wss://relay.snort.social",
-    name: "Snort",
-    description: "Snort client relay with spam protection",
-    topics: ["general", "bitcoin"],
-    type: "free",
-    language: "en",
-    location: "USA",
-    region: "na",
-    userCount: "150K+",
-    status: "checking",
-    features: ["NIP-01", "Anti-spam", "Paid relay support"],
-  },
-  {
-    id: "nostr-pub",
-    url: "wss://relay.nostr.bg",
-    name: "Nostr.bg",
-    description: "Bulgarian relay serving European users",
-    topics: ["general"],
-    type: "free",
-    language: "other",
-    location: "Bulgaria",
-    region: "eu",
-    userCount: "50K+",
-    status: "checking",
-    features: ["NIP-01", "NIP-04"],
-  },
-  {
-    id: "current",
-    url: "wss://relay.current.fyi",
-    name: "Current",
-    description: "Paid relay with high performance and support",
-    topics: ["general", "bitcoin"],
-    type: "paid",
-    language: "en",
-    location: "USA",
-    region: "na",
-    userCount: "20K+",
-    status: "checking",
-    features: ["Premium", "Priority", "Support"],
-    owner: "Current",
   },
   {
     id: "primal",
     url: "wss://relay.primal.net",
     name: "Primal",
-    description: "Primal client relay optimized for performance",
-    topics: ["general", "tech"],
+    topics: ["general"],
     type: "free",
-    language: "en",
-    location: "USA",
-    region: "na",
-    userCount: "100K+",
+    supportedNips: [1, 2, 4, 9, 22, 28, 40, 70],
     status: "checking",
-    features: ["NIP-01", "NIP-50", "Fast sync"],
   },
   {
+    id: "snort",
+    url: "wss://relay.snort.social",
+    name: "Snort",
+    topics: ["general"],
+    type: "free",
+    supportedNips: [1],
+    status: "checking",
+  },
+  {
+    // The old data said wss://relay.bitcoiner.social, which is NXDOMAIN. The
+    // relay itself is alive and free at this hostname.
     id: "bitcoiner-social",
-    url: "wss://relay.bitcoiner.social",
+    url: "wss://nostr.bitcoiner.social",
     name: "Bitcoiner.social",
-    description: "Community-focused relay for Bitcoiners",
-    topics: ["bitcoin"],
-    type: "free",
-    language: "en",
-    location: "USA",
-    region: "na",
-    userCount: "75K+",
-    status: "checking",
-    features: ["Bitcoin focused", "Community"],
-  },
-  {
-    id: "yabu",
-    url: "wss://relay.yabu.me",
-    name: "Yabu",
-    description: "Japanese relay serving Asian Nostr users",
-    topics: ["general"],
-    type: "free",
-    language: "ja",
-    location: "Japan",
-    region: "asia",
-    userCount: "60K+",
-    status: "checking",
-    features: ["Japanese community"],
-  },
-  {
-    id: "eden",
-    url: "wss://relay.eden.nostr.land",
-    name: "Eden",
-    description: "High-performance paid relay",
-    topics: ["general", "tech", "bitcoin"],
-    type: "paid",
-    language: "en",
-    location: "USA",
-    region: "na",
-    userCount: "30K+",
-    status: "checking",
-    features: ["Premium", "Low latency", "High availability"],
-  },
-  {
-    id: "damus-knots",
-    url: "wss://knots.nostr.technology",
-    name: "Knots",
-    description: "Experimental relay testing new features",
-    topics: ["tech"],
-    type: "free",
-    language: "en",
-    location: "USA",
-    region: "na",
-    userCount: "10K+",
-    status: "checking",
-    features: ["Experimental", "NIP testing"],
-  },
-  {
-    id: "welshman",
-    url: "wss://relay.welshman.com",
-    name: "Welshman",
-    description: "Community relay with good moderation",
-    topics: ["general"],
-    type: "free",
-    language: "en",
-    location: "UK",
-    region: "eu",
-    userCount: "25K+",
-    status: "checking",
-    features: ["Community", "Moderation"],
-  },
-  {
-    id: "nostr-plebs",
-    url: "wss://nostr.plebs.network",
-    name: "Plebs Network",
-    description: "Community relay network",
     topics: ["general", "bitcoin"],
     type: "free",
-    language: "en",
-    location: "USA",
-    region: "na",
-    userCount: "40K+",
+    supportedNips: [1, 2, 4, 9, 28, 40, 45, 70],
     status: "checking",
-    features: ["Community", "Bitcoin"],
   },
   {
-    id: "hivetech",
-    url: "wss://relay.hivetech.ovh",
-    name: "Hivetech",
-    description: "General purpose relay",
+    id: "christpill",
+    url: "wss://christpill.nostr1.com",
+    name: "Christpill",
     topics: ["general"],
     type: "free",
-    language: "en",
-    location: "France",
-    region: "eu",
-    userCount: "15K+",
+    supportedNips: [1, 2, 4, 9, 17, 22, 28, 40],
     status: "checking",
-    features: ["NIP-01"],
   },
   {
-    id: "wolf-fiatjaf",
-    url: "wss://relay.f7z.io",
-    name: "F7Z",
-    description: "fiatjaf's personal relay",
-    topics: ["tech", "general"],
+    id: "news-utxo",
+    url: "wss://news.utxo.one",
+    name: "NewsBot Relay",
+    topics: ["general"],
     type: "free",
-    language: "en",
-    location: "Brazil",
-    region: "other",
-    userCount: "30K+",
+    supportedNips: [1, 9, 42, 45, 70],
     status: "checking",
-    features: ["Experimental"],
-    owner: "fiatjaf",
   },
   {
-    id: "stacker-news",
-    url: "wss://relay.stacker.news",
-    name: "Stacker News",
-    description: "Relay for Stacker News community",
-    topics: ["bitcoin"],
-    type: "free",
-    language: "en",
-    location: "USA",
-    region: "na",
-    userCount: "45K+",
-    status: "checking",
-    features: ["Bitcoin", "Stacker News"],
-  },
-  {
+    // fees.admission 18888000 msats
     id: "nostr-wine",
     url: "wss://nostr.wine",
     name: "Nostr Wine",
-    description: "Paid relay with excellent performance",
+    topics: ["general"],
+    type: "paid",
+    supportedNips: [1, 2, 4, 9, 40, 42, 50, 70],
+    status: "checking",
+  },
+  {
+    // fees.admission 111000 msats
+    id: "chillstr",
+    url: "wss://chillstr.nostr1.com",
+    name: "Chillstr",
+    topics: ["general"],
+    type: "paid",
+    supportedNips: [1, 2, 4, 9, 17, 22, 28, 40],
+    status: "checking",
+  },
+  {
+    id: "holoboard",
+    url: "wss://relay.holoboard.space",
+    name: "Holoboard.space",
     topics: ["general", "bitcoin"],
     type: "paid",
-    language: "en",
-    location: "USA",
-    region: "na",
-    userCount: "15K+",
+    supportedNips: [1, 9, 57],
     status: "checking",
-    features: ["Premium", "High performance"],
   },
   {
-    id: "relay-nostrdice",
-    url: "wss://relay.nostrdice.com",
-    name: "NostrDice",
-    description: "Gaming and dice-focused relay",
+    // limitation.restricted_writes: true
+    id: "spatia-arcana",
+    url: "wss://spatia-arcana.com",
+    name: "Spatia Arcana",
     topics: ["general"],
-    type: "free",
-    language: "en",
-    location: "USA",
-    region: "na",
-    userCount: "5K+",
+    type: "restricted",
+    supportedNips: [1, 9, 16, 29, 34, 40, 42, 45, 50, 70],
     status: "checking",
-    features: ["Gaming"],
-  },
-  {
-    id: "relay-vera",
-    url: "wss://relay.vera.live",
-    name: "Vera",
-    description: "Live streaming focused relay",
-    topics: ["tech", "general"],
-    type: "free",
-    language: "en",
-    location: "USA",
-    region: "na",
-    userCount: "8K+",
-    status: "checking",
-    features: ["Live streaming", "NIP-53"],
   },
 ];
 
 const STARTER_PACK_RELAYS = [
   "wss://relay.damus.io",
   "wss://nos.lol",
-  "wss://purplepag.es",
+  "wss://relay.primal.net",
   "wss://relay.snort.social",
 ];
 
-const REGION_COLORS: Record<string, string> = {
-  na: "from-blue-500/20 to-blue-600/10",
-  eu: "from-green-500/20 to-green-600/10",
-  asia: "from-red-500/20 to-red-600/10",
-  other: "from-purple-500/20 to-purple-600/10",
+const ACCESS_STYLES: Record<RelayAccess, string> = {
+  free: "from-primary-500/20 to-primary-600/10",
+  paid: "from-warning-500/20 to-warning-600/10",
+  restricted: "from-gray-500/20 to-gray-600/10",
 };
 
 export function RelayExplorer({
@@ -471,12 +298,22 @@ export function RelayExplorer({
     checkAllRelays();
   }, []);
 
+  // A relay's blurb lives in the translation files, keyed by its stable id, so
+  // that an Arabic or Hindi reader gets their own language instead of English.
+  const relayDescription = useCallback(
+    (relay: Relay): string =>
+      relay.id.startsWith("custom-")
+        ? t("relayExplorer.customRelay.description")
+        : t(`relayExplorer.relays.${relay.id}.description`),
+    [t],
+  );
+
   // Filter relays
   const filteredRelays = [...relays, ...customRelays].filter((relay) => {
     // Search filter
     const matchesSearch =
       relay.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      relay.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      relayDescription(relay).toLowerCase().includes(searchQuery.toLowerCase()) ||
       relay.url.toLowerCase().includes(searchQuery.toLowerCase());
 
     // Topic filter
@@ -531,15 +368,10 @@ export function RelayExplorer({
       id: `custom-${Date.now()}`,
       url,
       name: url.replace("wss://", "").replace("ws://", ""),
-      description: "Custom relay",
       topics: ["general"],
       type: "free",
-      language: "en",
-      location: "Unknown",
-      region: "other",
-      userCount: "Unknown",
+      supportedNips: [],
       status: "checking",
-      features: ["Custom"],
     };
 
     setCustomRelays([...customRelays, newRelay]);
@@ -657,10 +489,8 @@ export function RelayExplorer({
             <div className="flex flex-wrap gap-2">
               {[
                 { value: "all" as Topic, label: t('relayExplorer.filters.topic.label'), icon: <Globe className="w-4 h-4" /> },
-                { value: "bitcoin" as Topic, label: t('relayExplorer.filters.topic.bitcoin'), icon: <Zap className="w-4 h-4" /> },
-                { value: "tech" as Topic, label: t('relayExplorer.filters.topic.technology'), icon: <Server className="w-4 h-4" /> },
                 { value: "general" as Topic, label: t('relayExplorer.filters.topic.general'), icon: <Users className="w-4 h-4" /> },
-                { value: "art" as Topic, label: t('relayExplorer.filters.topic.art'), icon: <Shield className="w-4 h-4" /> },
+                { value: "bitcoin" as Topic, label: t('relayExplorer.filters.topic.bitcoin'), icon: <Zap className="w-4 h-4" /> },
               ].map((option) => (
                 <button
                   key={option.value}
@@ -684,6 +514,7 @@ export function RelayExplorer({
                 { value: "all" as RelayType, label: t('relayExplorer.filters.type.label'), icon: <Filter className="w-4 h-4" /> },
                 { value: "free" as RelayType, label: t('relayExplorer.filters.type.free'), icon: <Check className="w-4 h-4" /> },
                 { value: "paid" as RelayType, label: t('relayExplorer.filters.type.paid'), icon: <DollarSign className="w-4 h-4" /> },
+                { value: "restricted" as RelayType, label: t('relayExplorer.filters.type.restricted'), icon: <Lock className="w-4 h-4" /> },
               ].map((option) => (
                 <button
                   key={option.value}
@@ -754,7 +585,7 @@ export function RelayExplorer({
                   }}
                   className="px-3 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-lg text-sm transition-all"
                 >
-                  Clear
+                  {t('relayExplorer.selected.clear')}
                 </button>
               </div>
             </div>
@@ -797,33 +628,26 @@ export function RelayExplorer({
                     className={cn(
                       "w-12 h-12 rounded-xl flex items-center justify-center",
                       "bg-gradient-to-br",
-                      REGION_COLORS[relay.region],
+                      ACCESS_STYLES[relay.type],
                     )}
                   >
-                    <Globe className="w-6 h-6 text-white" />
+                    <Globe className="w-6 h-6 text-primary-600 dark:text-primary-400" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <h3 className="font-semibold text-gray-900 dark:text-white truncate">
                       {relay.name}
                     </h3>
-                    <div className="flex items-center gap-2 text-xs text-gray-500">
-                      <MapPin className="w-3 h-3" />
-                      {relay.location}
-                    </div>
+                    <p className="text-xs text-gray-500 truncate">{relay.url}</p>
                   </div>
                 </div>
 
                 {/* Description */}
-                <p className="text-sm  text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
-                  {relay.description}
+                <p className="text-sm  text-gray-600 dark:text-gray-400 mb-3 line-clamp-3">
+                  {relayDescription(relay)}
                 </p>
 
                 {/* Stats */}
                 <div className="flex items-center gap-3 text-xs mb-3">
-                  <span className="flex items-center gap-1  text-gray-600 dark:text-gray-400">
-                    <Users className="w-3 h-3" />
-                    {relay.userCount}
-                  </span>
                   <span
                     className={cn(
                       "flex items-center gap-1",
@@ -837,6 +661,12 @@ export function RelayExplorer({
                     <span className="flex items-center gap-1 text-warning-500">
                       <DollarSign className="w-3 h-3" />
                       {t('relayExplorer.filters.type.paid')}
+                    </span>
+                  )}
+                  {relay.type === "restricted" && (
+                    <span className="flex items-center gap-1 text-warning-500">
+                      <Lock className="w-3 h-3" />
+                      {t('relayExplorer.filters.type.restricted')}
                     </span>
                   )}
                 </div>
@@ -856,17 +686,19 @@ export function RelayExplorer({
                   </span>
                 </div>
 
-                {/* Features Tags */}
-                <div className="flex flex-wrap gap-1 mt-3">
-                  {relay.features.slice(0, 2).map((feature) => (
-                    <span
-                      key={feature}
-                      className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 px-2 py-1 rounded-full"
-                    >
-                      {feature}
-                    </span>
-                  ))}
-                </div>
+                {/* NIPs the relay advertises in its own NIP-11 document */}
+                {relay.supportedNips.length > 0 && (
+                  <div className="flex flex-wrap gap-1 mt-3">
+                    {relay.supportedNips.slice(0, 4).map((nip) => (
+                      <span
+                        key={nip}
+                        className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 px-2 py-1 rounded-full"
+                      >
+                        NIP-{String(nip).padStart(2, "0")}
+                      </span>
+                    ))}
+                  </div>
+                )}
 
                 {/* Remove button for custom relays */}
                 {relay.id.startsWith("custom-") && (
@@ -889,10 +721,10 @@ export function RelayExplorer({
           <div className="text-center py-12">
             <Server className="w-16 h-16 text-gray-600 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              No relays found
+              {t('relayExplorer.empty.title')}
             </h3>
             <p className="text-gray-600 dark:text-gray-400">
-              Try adjusting your filters or add a custom relay
+              {t('relayExplorer.empty.hint')}
             </p>
           </div>
         )}

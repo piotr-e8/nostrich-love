@@ -1816,6 +1816,86 @@
       "cons": "Nachteile",
       "getApp": "{clientName} herunterladen",
       "tryWeb": "Web-Version testen"
+    },
+    "clients": {
+      "damus": {
+        "description": "Die bekannteste Nostr-App für iPhone und iPad, mit klarer Optik und einem leichten Einstieg.",
+        "pros": [
+          "Schnell eingerichtet, du kannst sofort lesen",
+          "Lightning-Trinkgelder senden und empfangen",
+          "Wird regelmäßig aktualisiert",
+          "Keine E-Mail-Adresse, keine Telefonnummer nötig"
+        ],
+        "cons": [
+          "Nur für iPhone und iPad",
+          "Keine Langtexte"
+        ]
+      },
+      "amethyst": {
+        "description": "Eine Android-App mit vollem Funktionsumfang, die fast alles mitmacht, was Nostr kann.",
+        "pros": [
+          "Deckt die meisten Nostr-Funktionen ab",
+          "Zaps und verschlüsselte Nachrichten",
+          "Schreibt und liest Langtexte",
+          "Häufige Updates"
+        ],
+        "cons": [
+          "Am Anfang viele Optionen auf einmal",
+          "Nur Android, eine iPhone-Version gibt es nicht"
+        ]
+      },
+      "primal": {
+        "description": "Schnelle App für Browser, iPhone und Android, mit eingebauter Wallet und Langtexten zum Lesen.",
+        "pros": [
+          "Dasselbe Konto im Browser und auf dem Handy",
+          "Wallet direkt in der App",
+          "Starke Suche, du findest schnell neue Inhalte",
+          "Liest und schreibt Langtexte"
+        ],
+        "cons": [
+          "Teile davon laufen über Primals eigene Server, nicht nur über Relays",
+          "Keine eigene Desktop-App, dafür steht die Browser-Version"
+        ]
+      },
+      "iris": {
+        "description": "Ein Browser-Client, den du einfach öffnest und sofort loslesen kannst, ohne Installation.",
+        "pros": [
+          "Nichts herunterzuladen",
+          "Läuft in jedem Browser, am Handy wie am Computer",
+          "Übersichtlich und schnell zu lernen",
+          "Open Source"
+        ],
+        "cons": [
+          "Nur im Browser, keine Handy-App",
+          "Weniger fortgeschrittene Optionen als die großen Handy-Apps"
+        ]
+      },
+      "snort": {
+        "description": "Ein flotter Browser-Client, der Langtexte und Lightning-Zaps beherrscht.",
+        "pros": [
+          "Leicht und schnell im Browser",
+          "Liest und schreibt Langtexte",
+          "Verbindet sich für Zaps mit einer Lightning-Wallet",
+          "Nichts herunterzuladen"
+        ],
+        "cons": [
+          "Nur im Browser, keine Handy-App",
+          "Bewusst karge Oberfläche"
+        ]
+      },
+      "coracle": {
+        "description": "Ein Browser-Client für alle, die ihre Relays selbst wählen und ihre Ansicht selbst gestalten wollen.",
+        "pros": [
+          "Genaue Kontrolle über die Relays",
+          "Filter, die sich daran orientieren, wem deine Kontakte vertrauen",
+          "Private Gruppen und verschlüsselte Nachrichten",
+          "Lässt sich aus dem Browser wie eine App installieren"
+        ],
+        "cons": [
+          "Mehr Entscheidungen, bis es sich vertraut anfühlt",
+          "Nur im Browser, keine Handy-App"
+        ]
+      }
     }
   },
   "keyGenerator": {
@@ -2275,7 +2355,9 @@
         "title": "Gültiger NIP-05!",
         "description": "Dieser Identifikator ist korrekt konfiguriert",
         "publicKey": "Öffentlicher Schlüssel (npub)",
-        "recommendedRelays": "Empfohlene Relays"
+        "recommendedRelays": "Empfohlene Relays",
+        "copied": "Öffentlicher Schlüssel kopiert",
+        "copyPublicKey": "Öffentlichen Schlüssel kopieren"
       },
       "invalid": {
         "title": "Ungültiger NIP-05",
@@ -2309,10 +2391,30 @@
         "title": "Netzwerkfehler",
         "description": "Konnte keine Verbindung zur Überprüfung des Identifikators herstellen",
         "fix": "Prüfe deine Internetverbindung und versuche es erneut"
-      }
+      },
+      "fixLabel": "Lösung:"
     },
     "providers": {
-      "title": "Hole dir deinen eigenen NIP-05"
+      "title": "Hole dir deinen eigenen NIP-05",
+      "list": {
+        "nostrplebs": {
+          "description": "Ein Name plus Lightning-Adresse, E-Mail-Adresse und Relay.",
+          "price": "Ab 12.500 Sats"
+        },
+        "nostrcheck": {
+          "description": "Eine kostenlose Nostr-Adresse, mit Datei-Hosting und Relay.",
+          "price": "Kostenlos"
+        }
+      }
+    },
+    "aboutNip05Body": "NIP-05 bestätigt eine Nostr-Identität über einen Domainnamen. Damit gibst du eine Adresse weiter, die aussieht wie eine E-Mail (du@deinedomain.com), statt eines langen npub.",
+    "messages": {
+      "invalidFormat": "Ungültiges Format. So sieht es richtig aus: nutzer@domain.com",
+      "corsBlocked": "Diese Domain lehnt Prüfungen direkt aus dem Browser ab. Probiere dieselbe Adresse in einem Nostr-Client.",
+      "notConfigured": "NIP-05 ist hier nicht eingerichtet, oder die Domain war nicht erreichbar.",
+      "nameNotFound": "Der Name \"{name}\" ist auf {domain} nicht eingetragen.",
+      "networkError": "Beim Zugriff auf diese Domain ist etwas schiefgegangen. Prüfe deine Verbindung und versuche es noch einmal.",
+      "verifiedOn": "NIP-05 auf {domain} bestätigt"
     }
   },
   "emptyFeedFixer": {
@@ -2326,7 +2428,13 @@
       "followAll": "Allen Folgen",
       "follow": "Folgen",
       "addCustom": "Hinzufügen",
-      "continue": "Weiter zu Relays"
+      "continue": "Weiter zu Relays",
+      "followingCount": "Du folgst {count} Accounts",
+      "accountCount": "{count} Accounts zum Folgen",
+      "packAccountsTitle": "Accounts in {pack}",
+      "npubLabel": "Füge einen npub ein, dem du folgen willst",
+      "npubPlaceholder": "npub einfügen, beginnt mit npub1",
+      "npubInvalid": "Das ist kein gültiger npub. Ein einziges falsches Zeichen macht ihn unbrauchbar, füge den ganzen Schlüssel also noch einmal ein."
     },
     "step2": {
       "title": "Schritt 2: Mit Relays Verbinden",
@@ -2336,7 +2444,8 @@
       "connectAll": "Mit allen empfohlenen Relays verbinden",
       "continue": "Weiter",
       "info": "Relays sind Server, die Nostr-Inhalte speichern und verteilen. Die Verbindung mit mehreren Relays sorgt für eine bessere Verfügbarkeit von Inhalten.",
-      "recommended": "Empfohlen"
+      "recommended": "Empfohlen",
+      "connectedCount": "Mit {count} Relays verbunden"
     },
     "step3": {
       "title": "Schritt 3: Beginne Nostr zu nutzen!",
@@ -2375,6 +2484,36 @@
       "wssPurplePages": {
         "name": "Purple Pages",
         "description": "Nur Profile und Listen, keine Beiträge"
+      },
+      "damus": {
+        "name": "Damus",
+        "description": "Das Relay des Damus-Teams. Lesen und Posten sind kostenlos."
+      },
+      "nosLol": {
+        "name": "nos.lol",
+        "description": "Nimmt die meisten Notizen an, außer Spam."
+      },
+      "primal": {
+        "name": "Primal",
+        "description": "Das öffentliche Relay von Primal. Lesen und Posten sind kostenlos."
+      },
+      "snort": {
+        "name": "Snort",
+        "description": "Ein schnelles Relay, das aktuelle Notizen im Arbeitsspeicher hält."
+      }
+    },
+    "clients": {
+      "damus": {
+        "platform": "iOS"
+      },
+      "amethyst": {
+        "platform": "Android"
+      },
+      "iris": {
+        "platform": "Web"
+      },
+      "primal": {
+        "platform": "Web, iOS und Android"
       }
     }
   },
@@ -2678,17 +2817,20 @@
       "type": {
         "label": "Alle Typen",
         "free": "Kostenlos",
-        "paid": "Bezahlt"
+        "paid": "Bezahlt",
+        "restricted": "Eingeschränkt"
       }
     },
     "selected": {
       "count": "{count} Relay(s) ausgewählt",
       "copy": "Kopieren",
-      "download": "Herunterladen"
+      "download": "Herunterladen",
+      "clear": "Leeren"
     },
     "customRelay": {
       "placeholder": "Eigenes Relay hinzufügen (wss://...)",
-      "add": "Hinzufügen"
+      "add": "Hinzufügen",
+      "description": "Ein Relay, das du selbst hinzugefügt hast."
     },
     "toast": {
       "starterPackAdded": "Starter-Pack-Relays hinzugefügt!",
@@ -2713,6 +2855,45 @@
       "onlineNow": "Jetzt online",
       "freeRelays": "Kostenlose Relays",
       "selected": "Ausgewählt"
+    },
+    "empty": {
+      "title": "Keine passenden Relays",
+      "hint": "Ändere die Filter oder füge oben ein eigenes Relay hinzu."
+    },
+    "relays": {
+      "damus": {
+        "description": "Das Relay des Damus-Teams. Kostenlos zu lesen und kostenlos zu beschreiben."
+      },
+      "nos-lol": {
+        "description": "Nimmt Notizen in der Regel an, außer den spammigen. Lesen und Posten kostenlos."
+      },
+      "primal": {
+        "description": "Das öffentliche Relay von Primal. Kostenlos zu lesen und kostenlos zu beschreiben."
+      },
+      "snort": {
+        "description": "Ein schnelles Relay vom Snort-Team, das aktuelle Notizen im Arbeitsspeicher hält. Lesen und Posten kostenlos."
+      },
+      "bitcoiner-social": {
+        "description": "Ein Relay der Bitcoin-Community, mit überwachter Verfügbarkeit und nächtlichen Backups. Lesen und Posten kostenlos."
+      },
+      "christpill": {
+        "description": "Für Nachfolger und Suchende Christi. Lesen und Posten kostenlos."
+      },
+      "news-utxo": {
+        "description": "Ein Bot-Feed mit Schlagzeilen großer Medien. Gut zum Lesen, aber kein Ort für eigene Notizen."
+      },
+      "nostr-wine": {
+        "description": "Ein kostenpflichtiges Relay für Weinliebhaber und alle anderen. Der Zugang kostet 18.888 Sats."
+      },
+      "chillstr": {
+        "description": "Meditation, Achtsamkeit und ruhige Momente. Der Zugang kostet 111 Sats."
+      },
+      "holoboard": {
+        "description": "Ein schwarzes Brett, auf dem Sats über die Reihenfolge der Notizen entscheiden. Für jede Notiz dort wurde bezahlt."
+      },
+      "spatia-arcana": {
+        "description": "Lesen kann jeder, posten nur, wer vom Betreiber freigeschaltet wurde."
+      }
     }
   },
   "relayPlayground": {
@@ -2735,7 +2916,9 @@
       "disconnect": "Trennen",
       "inspect": "Inspizieren",
       "clear": "Löschen",
-      "copy": "Kopieren"
+      "copy": "Kopieren",
+      "showJson": "JSON anzeigen",
+      "hideJson": "JSON ausblenden"
     },
     "status": {
       "online": "Online",
@@ -2751,17 +2934,35 @@
       "latency": "Latenz",
       "unknown": "Unbekannt",
       "connected": "Mit Relay verbunden",
-      "error": "Verbindungsfehler"
+      "error": "Verbindungsfehler",
+      "connectionFailed": "Das Relay hat die Verbindung nicht angenommen.",
+      "invalidUrl": "Das ist keine gültige Relay-Adresse.",
+      "whatHappensTitle": "Was beim Verbinden passiert",
+      "whatHappensBody": "Dein Browser öffnet eine laufende Verbindung zum Relay und hält sie offen. Veröffentlicht wird dabei nichts. Geprüft wird nur, ob das Relay antwortet und wie schnell."
     },
     "healthTab": {
       "responseTime": "Antwortzeit",
       "lastChecked": "Zuletzt geprüft",
-      "noData": "Keine Gesundheitsdaten verfügbar"
+      "noData": "Keine Gesundheitsdaten verfügbar",
+      "sortBy": "Sortieren nach:",
+      "relay": "Relay",
+      "access": "Zugang",
+      "fastTitle": "Schnell",
+      "fastBody": "Das Relay hat fast sofort geantwortet. Posten und Laden fühlen sich unmittelbar an.",
+      "okTitle": "Normal",
+      "okBody": "Eine kurze Wartezeit, bis das Relay antwortet. Beim Lesen merkst du davon kaum etwas.",
+      "slowTitle": "Langsam",
+      "slowBody": "Das Relay hat eine Weile zum Antworten gebraucht. Deine Notizen brauchen vielleicht einen Moment, bis sie auftauchen."
     },
     "nipsTab": {
       "title": "Unterstützte NIPs",
       "description": "Nostr Implementation Possibilities (NIPs) sind Protokoll-Erweiterungen, die dieses Relay unterstützt",
-      "supported": "{{count}} NIPs unterstützt"
+      "supported": "{{count}} NIPs unterstützt",
+      "unknownNip": "Eine Erweiterung, für die wir keinen Namen haben",
+      "relayCount": "{count} von {total} Relays",
+      "supportedBy": "Relays, die das unterstützen:",
+      "notSupportedBy": "Relays, die das nicht tun:",
+      "andMore": "{count} weitere"
     },
     "eventsTab": {
       "title": "Live-Events",
@@ -2777,10 +2978,159 @@
       "limit": "Limit",
       "execute": "Abfrage ausführen",
       "results": "Ergebnisse",
-      "noResults": "Keine Ergebnisse gefunden"
+      "noResults": "Keine Ergebnisse gefunden",
+      "chooseRelay": "Wähle ein Relay"
     },
     "relayCard": {
       "location": "Standort"
+    },
+    "stats": {
+      "totalRelays": "Geprüfte Relays"
+    },
+    "access": {
+      "free": "Posten kostenlos",
+      "paid": "Kostenpflichtig",
+      "restricted": "Posten eingeschränkt",
+      "unknown": "Nicht bestätigt"
+    },
+    "relays": {
+      "damus": {
+        "description": "Das Relay hinter der Damus-App. Kostenlos und für alle offen."
+      },
+      "nos-lol": {
+        "description": "Nimmt die meisten Notizen an, außer den spammigen."
+      },
+      "primal": {
+        "description": "Das öffentliche Relay von Primal. Kostenlos und für alle offen."
+      },
+      "snort": {
+        "description": "Ein schnelles Relay, das aktuelle Notizen im Arbeitsspeicher hält."
+      },
+      "nostr-mom": {
+        "description": "Filtert Spam und Nacktheit, strenger als nos.lol."
+      },
+      "bitcoiner-social": {
+        "description": "Ein Relay der Bitcoin-Community mit überwachter Verfügbarkeit und nächtlichen Backups."
+      },
+      "christpill": {
+        "description": "Ein Relay für Nachfolger und Suchende Christi."
+      },
+      "news-utxo": {
+        "description": "Ein Nachrichten-Bot mit Meldungen großer Medien, kein Ort für eigene Beiträge."
+      },
+      "nostr-wine": {
+        "description": "Ein kostenpflichtiges Relay für Weinliebhaber und alle anderen. Posten kostet einmalig rund 18.888 Sats."
+      },
+      "nostr-plebs": {
+        "description": "Das Relay von Nostr Plebs. Vor dem Posten musst du bezahlen."
+      },
+      "chillstr": {
+        "description": "Meditation, Achtsamkeit und stille Momente. Posten kostet einmalig 111 Sats."
+      },
+      "holoboard": {
+        "description": "Ein schwarzes Brett, auf dem Sats über die Reihenfolge der Notizen entscheiden. Für jede Notiz dort wurde bezahlt."
+      },
+      "spatia-arcana": {
+        "description": "Lesen kann jeder, posten dürfen nur freigeschaltete Leute."
+      },
+      "purple-pages": {
+        "description": "Ein Relay, das Profilangaben speichert statt Gespräche."
+      }
+    },
+    "kinds": {
+      "0": "Profil",
+      "1": "Notiz",
+      "3": "Follow-Liste",
+      "6": "Repost",
+      "7": "Reaktion",
+      "9735": "Zap-Beleg"
+    },
+    "nipNames": {
+      "1": "Grundlegender Protokollablauf",
+      "2": "Follow-Liste",
+      "3": "OpenTimestamps-Nachweise (nicht mehr empfohlen)",
+      "4": "Verschlüsselte Direktnachrichten (alte Variante, ersetzt durch NIP-17)",
+      "5": "Nostr-Namen auf deiner eigenen Domain",
+      "6": "Schlüssel aus einer Seed-Phrase (nicht mehr empfohlen)",
+      "7": "Signieren über eine Browser-Erweiterung",
+      "9": "Anfrage zum Löschen eines Events",
+      "10": "Textnotizen und Threads",
+      "11": "Informationsdokument des Relays",
+      "12": "Allgemeine Tag-Abfragen (in NIP-01 aufgegangen)",
+      "13": "Proof of Work",
+      "14": "Betreffzeile für Notizen",
+      "15": "Nostr-Marktplatz (nicht mehr empfohlen)",
+      "16": "Behandlung von Events (in NIP-01 aufgegangen)",
+      "17": "Private Direktnachrichten",
+      "18": "Reposts",
+      "19": "bech32-Einheiten wie npub und note",
+      "20": "Rückmeldungen auf Befehle (in NIP-01 aufgegangen)",
+      "21": "Das Linkschema nostr:",
+      "22": "Kommentare",
+      "23": "Langtexte",
+      "24": "Zusätzliche Profilfelder",
+      "25": "Reaktionen",
+      "26": "Signieren per Vollmacht (nicht mehr empfohlen)",
+      "27": "Erwähnungen in Notizen",
+      "28": "Öffentlicher Chat (nicht mehr empfohlen)",
+      "29": "Gruppen auf Relay-Basis",
+      "30": "Eigene Emojis",
+      "31": "Umgang mit unbekannten Events (nicht mehr empfohlen)",
+      "32": "Kennzeichnung",
+      "33": "Parametrisierte ersetzbare Events (in NIP-01 aufgegangen)",
+      "34": "Git-Repositories",
+      "35": "Torrents",
+      "36": "Warnungen vor heiklen Inhalten",
+      "37": "Entwürfe",
+      "38": "Nutzerstatus",
+      "39": "Profil mit anderen Plattformen verknüpfen",
+      "40": "Ablaufzeitpunkt",
+      "42": "Anmeldung am Relay",
+      "43": "Metadaten und Anfragen zum Relay-Zugang",
+      "44": "Verschlüsselte Inhalte",
+      "45": "Ergebnisse zählen",
+      "46": "Signieren aus der Ferne",
+      "47": "Nostr Wallet Connect",
+      "48": "Über Brücken übertragene Events",
+      "49": "Verschlüsselte private Schlüssel (ncryptsec)",
+      "50": "Suche",
+      "51": "Listen",
+      "52": "Kalendereinträge",
+      "53": "Livestreams und Spaces",
+      "54": "Wiki",
+      "55": "Signier-App für Android",
+      "56": "Inhalte melden",
+      "57": "Lightning-Zaps",
+      "58": "Abzeichen",
+      "59": "Gift Wrap",
+      "60": "Cashu-Wallet",
+      "61": "Nutzaps",
+      "62": "Antrag auf vollständige Löschung",
+      "64": "Schachpartien",
+      "65": "Deine Relay-Liste",
+      "66": "Relays finden und ihre Verfügbarkeit beobachten",
+      "67": "Hinweis auf das Ende der gespeicherten Events",
+      "68": "Feeds mit Bildern zuerst",
+      "69": "Peer-to-Peer-Handelsaufträge",
+      "70": "Geschützte Events",
+      "71": "Video-Events",
+      "72": "Moderierte Communities (nicht mehr empfohlen)",
+      "73": "Externe Inhalts-IDs",
+      "75": "Zap-Ziele",
+      "77": "Negentropy-Abgleich",
+      "78": "Anwendungsspezifische Daten",
+      "84": "Highlights",
+      "85": "Vertrauenswürdige Zusicherungen",
+      "86": "Verwaltungs-API für Relays",
+      "87": "Cashu und Fedimint auffindbar machen",
+      "88": "Umfragen",
+      "89": "Empfohlene App-Handler",
+      "90": "Data Vending Machines (nicht mehr empfohlen)",
+      "92": "Metadaten zu Medienanhängen",
+      "94": "Dateimetadaten",
+      "96": "HTTP-Dateispeicher (ersetzt durch Blossom)",
+      "98": "HTTP-Authentifizierung",
+      "99": "Kleinanzeigen"
     }
   },
   "nostrSimulator": {
@@ -2985,6 +3335,22 @@
     },
     "stats": {
       "totalRelays": "Relays insgesamt"
+    },
+    "subtitle": "Relays sind einfach Server, und sie stehen überall auf der Welt.",
+    "checkedNote": "Diese Relays haben geantwortet, als wir sie im September 2026 geprüft haben. Relays kommen und gehen, lies das also als Momentaufnahme, nicht als Live-Status.",
+    "relays": {
+      "damus": {
+        "description": "Wird vom Team hinter der Damus-App betrieben."
+      },
+      "nosLol": {
+        "description": "Nimmt so ziemlich jede Notiz an, außer den spammigen."
+      },
+      "primal": {
+        "description": "Das öffentliche Relay von Primal, von den Machern der Primal-App."
+      },
+      "snort": {
+        "description": "Ein schnelles Relay, das aktuelle Notizen im Arbeitsspeicher hält."
+      }
     }
   },
   "guideNavigation": {
@@ -3029,6 +3395,31 @@
     "languages": {
       "thisPage": "Diese Seite lesen auf",
       "guides": "Die Anleitungen lesen auf"
+    },
+    "tagline": "Ein anfängerfreundlicher Leitfaden zum Nostr-Protokoll. Lerne, stöbere und mach mit bei der dezentralen sozialen Revolution.",
+    "privacyNote": "Schlüssel entstehen in deinem Browser. Auf unseren Servern wird nichts gespeichert.",
+    "copyright": "© {year} {site}. Open Source und von der Community getragen.",
+    "homeAria": "{site} Startseite",
+    "externalLinkAria": "{label} (öffnet in neuem Tab)",
+    "sections": {
+      "learn": "Lernen",
+      "tools": "Werkzeuge",
+      "community": "Community",
+      "about": "Über uns"
+    },
+    "links": {
+      "gettingStarted": "Erste Schritte",
+      "interactiveTools": "Interaktive Werkzeuge",
+      "glossary": "Glossar",
+      "faq": "FAQ",
+      "relayPlayground": "Relay-Spielplatz",
+      "keyGenerator": "Schlüssel-Generator",
+      "followPackFinder": "Follow-Pack-Finder",
+      "nostrProtocol": "Nostr-Protokoll",
+      "aboutUs": "Über uns",
+      "support": "Unterstützen ⚡",
+      "settings": "Einstellungen",
+      "privacyPolicy": "Datenschutz"
     }
   },
   "guidesPage": {
@@ -3087,7 +3478,28 @@
   },
   "relayFeedBrowser": {
     "title": "Relay-Feeds durchsuchen",
-    "subtitle": "Entdecke Nostr-Communities, indem du Relay-Feeds durchsuchst"
+    "subtitle": "Entdecke Nostr-Communities, indem du Relay-Feeds durchsuchst",
+    "categories": {
+      "general": "Allgemein",
+      "news": "Nachrichten"
+    },
+    "relays": {
+      "spatia-arcana": {
+        "description": "Lesen kann jeder, posten dürfen nur freigeschaltete Accounts. Das Motto des Betreibers: \"Ich bin groß, ich enthalte Vielheiten.\""
+      },
+      "christpill": {
+        "description": "Für Nachfolger und Suchende Christi, in den Worten des Betreibers."
+      },
+      "chillstr": {
+        "description": "Meditation, Achtsamkeit und ein paar tiefe Atemzüge. Lesen ist kostenlos, Posten kostet einmalig rund 111 Sats."
+      },
+      "utxo-news": {
+        "description": "Ein Bot, der Schlagzeilen großer Medien weiterverbreitet. Erwarte also Nachrichten, keine Gespräche."
+      },
+      "holoboard": {
+        "description": "Ein schwarzes Brett, auf dem Sats über die Reihenfolge entscheiden. Für jede Notiz dort wurde bezahlt, Lesen ist also kostenlos, Posten nicht."
+      }
+    }
   },
   "officialAccount": {
     "followUs": "Folge uns auf Nostr",

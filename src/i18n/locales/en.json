@@ -1816,6 +1816,86 @@
       "cons": "Cons",
       "getApp": "Get {clientName}",
       "tryWeb": "Try Web Version"
+    },
+    "clients": {
+      "damus": {
+        "description": "The best known Nostr app for iPhone and iPad, with a clean look and an easy first run.",
+        "pros": [
+          "Simple to set up and start reading",
+          "Send and receive lightning tips",
+          "Updated regularly",
+          "No email or phone number needed"
+        ],
+        "cons": [
+          "iPhone and iPad only",
+          "No long-form articles"
+        ]
+      },
+      "amethyst": {
+        "description": "A full featured Android app that keeps up with almost everything Nostr can do.",
+        "pros": [
+          "Covers the widest range of Nostr features",
+          "Zaps and encrypted messages",
+          "Writes and reads long-form articles",
+          "Frequent updates"
+        ],
+        "cons": [
+          "A lot of options to take in at the start",
+          "Android only, there is no iPhone version"
+        ]
+      },
+      "primal": {
+        "description": "Fast app for the browser, iPhone and Android, with a built-in wallet and long-form reading.",
+        "pros": [
+          "Same account in the browser and on your phone",
+          "Wallet built into the app",
+          "Strong search and content discovery",
+          "Reads and writes long-form articles"
+        ],
+        "cons": [
+          "Parts of it run through Primal's own servers, not only relays",
+          "No separate desktop app, the browser version fills that role"
+        ]
+      },
+      "iris": {
+        "description": "A browser client you can open and start reading straight away, with nothing to install.",
+        "pros": [
+          "Nothing to download",
+          "Works in any browser, on a phone or a computer",
+          "Uncluttered and quick to learn",
+          "Open source"
+        ],
+        "cons": [
+          "Browser only, no phone app",
+          "Fewer advanced options than the big phone apps"
+        ]
+      },
+      "snort": {
+        "description": "A quick browser client that handles long-form articles and lightning zaps.",
+        "pros": [
+          "Light and fast in the browser",
+          "Reads and writes long-form articles",
+          "Connects to a lightning wallet for zaps",
+          "Nothing to download"
+        ],
+        "cons": [
+          "Browser only, no phone app",
+          "Deliberately sparse interface"
+        ]
+      },
+      "coracle": {
+        "description": "A browser client for people who want to choose their own relays and shape what they see.",
+        "pros": [
+          "Detailed control over relays",
+          "Filtering that leans on who your follows trust",
+          "Private groups and encrypted messages",
+          "Installs from the browser like an app"
+        ],
+        "cons": [
+          "More decisions to make before it feels comfortable",
+          "Browser only, no phone app"
+        ]
+      }
     }
   },
   "keyGenerator": {
@@ -2275,7 +2355,9 @@
         "title": "Valid NIP-05!",
         "description": "This identifier is correctly configured",
         "publicKey": "Public Key (npub)",
-        "recommendedRelays": "Recommended Relays"
+        "recommendedRelays": "Recommended Relays",
+        "copied": "Public key copied",
+        "copyPublicKey": "Copy public key"
       },
       "invalid": {
         "title": "Invalid NIP-05",
@@ -2309,10 +2391,30 @@
         "title": "Network Error",
         "description": "Could not connect to verify the identifier",
         "fix": "Check your internet connection and try again"
-      }
+      },
+      "fixLabel": "Fix:"
     },
     "providers": {
-      "title": "Get Your Own NIP-05"
+      "title": "Get Your Own NIP-05",
+      "list": {
+        "nostrplebs": {
+          "description": "A name plus a lightning address, an email address and a relay.",
+          "price": "From 12,500 sats"
+        },
+        "nostrcheck": {
+          "description": "A free nostr address, with file hosting and a relay.",
+          "price": "Free"
+        }
+      }
+    },
+    "aboutNip05Body": "NIP-05 verifies a Nostr identity through a domain name. It lets you hand out an address that looks like an email (you@yourdomain.com) instead of a long npub.",
+    "messages": {
+      "invalidFormat": "Invalid format. Use: user@domain.com",
+      "corsBlocked": "This domain refuses checks made straight from a browser. Try the same address in a Nostr client instead.",
+      "notConfigured": "NIP-05 is not set up here, or the domain could not be reached.",
+      "nameNotFound": "The name \"{name}\" is not listed on {domain}.",
+      "networkError": "Something went wrong while reaching that domain. Check your connection and try again.",
+      "verifiedOn": "Verified NIP-05 on {domain}"
     }
   },
   "emptyFeedFixer": {
@@ -2326,7 +2428,13 @@
       "followAll": "Follow All",
       "follow": "Follow",
       "addCustom": "Add",
-      "continue": "Continue to Relays"
+      "continue": "Continue to Relays",
+      "followingCount": "Following {count} accounts",
+      "accountCount": "{count} accounts to follow",
+      "packAccountsTitle": "Accounts in {pack}",
+      "npubLabel": "Paste an npub to follow",
+      "npubPlaceholder": "Paste an npub, starting with npub1",
+      "npubInvalid": "That is not a valid npub. One wrong character breaks it, so paste the whole key again."
     },
     "step2": {
       "title": "Step 2: Connect to Relays",
@@ -2336,7 +2444,8 @@
       "connectAll": "Connect to All Recommended Relays",
       "continue": "Continue",
       "info": "Relays are servers that store and distribute Nostr content. Connecting to multiple relays ensures better content availability.",
-      "recommended": "Recommended"
+      "recommended": "Recommended",
+      "connectedCount": "Connected to {count} relays"
     },
     "step3": {
       "title": "Step 3: Start Using Nostr!",
@@ -2375,6 +2484,36 @@
       "wssPurplePages": {
         "name": "Purple Pages",
         "description": "Profiles and lists only, no posts"
+      },
+      "damus": {
+        "name": "Damus",
+        "description": "The relay the Damus team runs. Free to read and post."
+      },
+      "nosLol": {
+        "name": "nos.lol",
+        "description": "Accepts most notes, apart from spam."
+      },
+      "primal": {
+        "name": "Primal",
+        "description": "Primal's public relay. Free to read and post."
+      },
+      "snort": {
+        "name": "Snort",
+        "description": "A fast relay that keeps recent notes in memory."
+      }
+    },
+    "clients": {
+      "damus": {
+        "platform": "iOS"
+      },
+      "amethyst": {
+        "platform": "Android"
+      },
+      "iris": {
+        "platform": "Web"
+      },
+      "primal": {
+        "platform": "Web, iOS and Android"
       }
     }
   },
@@ -2678,17 +2817,20 @@
       "type": {
         "label": "All Types",
         "free": "Free",
-        "paid": "Paid"
+        "paid": "Paid",
+        "restricted": "Restricted"
       }
     },
     "selected": {
       "count": "{count} relay(s) selected",
       "copy": "Copy",
-      "download": "Download"
+      "download": "Download",
+      "clear": "Clear"
     },
     "customRelay": {
       "placeholder": "Add custom relay (wss://...)",
-      "add": "Add"
+      "add": "Add",
+      "description": "A relay you added yourself."
     },
     "toast": {
       "starterPackAdded": "Starter pack relays added!",
@@ -2713,6 +2855,45 @@
       "onlineNow": "Online Now",
       "freeRelays": "Free Relays",
       "selected": "Selected"
+    },
+    "empty": {
+      "title": "No relays match",
+      "hint": "Change the filters, or add a relay of your own above."
+    },
+    "relays": {
+      "damus": {
+        "description": "The relay run by the Damus team. Free to read and free to post to."
+      },
+      "nos-lol": {
+        "description": "Generally accepts notes, except spammy ones. Free to read and post."
+      },
+      "primal": {
+        "description": "Primal's public relay. Free to read and free to post to."
+      },
+      "snort": {
+        "description": "A fast, in-memory relay from the Snort team. Free to read and post."
+      },
+      "bitcoiner-social": {
+        "description": "A Bitcoin community relay, with monitored uptime and nightly backups. Free to read and post."
+      },
+      "christpill": {
+        "description": "For followers and seekers of Christ. Free to read and post."
+      },
+      "news-utxo": {
+        "description": "A bot feed of headlines from major publications. Good to read, not a place for your own notes."
+      },
+      "nostr-wine": {
+        "description": "A paid relay for wine enthusiasts and everyone else. Admission costs 18,888 sats."
+      },
+      "chillstr": {
+        "description": "Meditation, mindfulness and chill moments. Admission costs 111 sats."
+      },
+      "holoboard": {
+        "description": "A bulletin board where sats decide the order of the notes. Every note there was paid for."
+      },
+      "spatia-arcana": {
+        "description": "Anyone can read it, but only people the operator has approved can post."
+      }
     }
   },
   "relayPlayground": {
@@ -2735,7 +2916,9 @@
       "disconnect": "Disconnect",
       "inspect": "Inspect",
       "clear": "Clear",
-      "copy": "Copy"
+      "copy": "Copy",
+      "showJson": "Show JSON",
+      "hideJson": "Hide JSON"
     },
     "status": {
       "online": "Online",
@@ -2751,17 +2934,35 @@
       "latency": "Latency",
       "unknown": "Unknown",
       "connected": "Connected to relay",
-      "error": "Connection error"
+      "error": "Connection error",
+      "connectionFailed": "The relay did not accept the connection.",
+      "invalidUrl": "That is not a valid relay address.",
+      "whatHappensTitle": "What happens when you connect",
+      "whatHappensBody": "Your browser opens a live connection to the relay and holds it open. Nothing gets published. This only checks that the relay answers, and how quickly."
     },
     "healthTab": {
       "responseTime": "Response Time",
       "lastChecked": "Last Checked",
-      "noData": "No health data available"
+      "noData": "No health data available",
+      "sortBy": "Sort by:",
+      "relay": "Relay",
+      "access": "Access",
+      "fastTitle": "Fast",
+      "fastBody": "The relay answered almost immediately. Posting and loading will feel instant.",
+      "okTitle": "Normal",
+      "okBody": "A short wait before the relay answers. You will hardly notice it while reading.",
+      "slowTitle": "Slow",
+      "slowBody": "The relay took a while to answer. Your notes may take a moment to show up."
     },
     "nipsTab": {
       "title": "Supported NIPs",
       "description": "Nostr Implementation Possibilities (NIPs) are protocol extensions supported by this relay",
-      "supported": "{{count}} NIPs supported"
+      "supported": "{{count}} NIPs supported",
+      "unknownNip": "An extension we have no name for",
+      "relayCount": "{count} of {total} relays",
+      "supportedBy": "Relays that support it:",
+      "notSupportedBy": "Relays that do not:",
+      "andMore": "{count} more"
     },
     "eventsTab": {
       "title": "Live Events",
@@ -2777,10 +2978,159 @@
       "limit": "Limit",
       "execute": "Execute Query",
       "results": "Results",
-      "noResults": "No results found"
+      "noResults": "No results found",
+      "chooseRelay": "Pick a relay"
     },
     "relayCard": {
       "location": "Location"
+    },
+    "stats": {
+      "totalRelays": "Relays checked"
+    },
+    "access": {
+      "free": "Free to post",
+      "paid": "Paid",
+      "restricted": "Posting restricted",
+      "unknown": "Not confirmed"
+    },
+    "relays": {
+      "damus": {
+        "description": "The relay behind the Damus app. Free and open to everyone."
+      },
+      "nos-lol": {
+        "description": "Accepts most notes, except the spammy ones."
+      },
+      "primal": {
+        "description": "Primal's public relay. Free and open to everyone."
+      },
+      "snort": {
+        "description": "A fast relay that keeps recent notes in memory."
+      },
+      "nostr-mom": {
+        "description": "Filters spam and nudity, stricter than nos.lol."
+      },
+      "bitcoiner-social": {
+        "description": "A Bitcoin community relay with monitored uptime and nightly backups."
+      },
+      "christpill": {
+        "description": "A relay for followers and seekers of Christ."
+      },
+      "news-utxo": {
+        "description": "A news bot feed from major publications, not a place to post your own work."
+      },
+      "nostr-wine": {
+        "description": "A paid relay for wine enthusiasts and everyone else. Posting costs a one time fee of about 18,888 sats."
+      },
+      "nostr-plebs": {
+        "description": "The Nostr Plebs relay. You have to pay before you can post."
+      },
+      "chillstr": {
+        "description": "Meditation, mindfulness and quiet moments. Posting costs a one time fee of 111 sats."
+      },
+      "holoboard": {
+        "description": "A bulletin board where sats decide the order of the notes. Every note there was paid for."
+      },
+      "spatia-arcana": {
+        "description": "Anyone can read it, but only approved people are allowed to post."
+      },
+      "purple-pages": {
+        "description": "A relay that stores profile information rather than conversations."
+      }
+    },
+    "kinds": {
+      "0": "Profile",
+      "1": "Note",
+      "3": "Follow list",
+      "6": "Repost",
+      "7": "Reaction",
+      "9735": "Zap receipt"
+    },
+    "nipNames": {
+      "1": "Basic protocol flow",
+      "2": "Follow list",
+      "3": "OpenTimestamps attestations (no longer recommended)",
+      "4": "Encrypted direct messages (old style, replaced by NIP-17)",
+      "5": "Nostr names on your own domain",
+      "6": "Keys from a seed phrase (no longer recommended)",
+      "7": "Signing from a browser extension",
+      "9": "Event deletion request",
+      "10": "Text notes and threads",
+      "11": "Relay information document",
+      "12": "Generic tag queries (folded into NIP-01)",
+      "13": "Proof of work",
+      "14": "Subject line for notes",
+      "15": "Nostr marketplace (no longer recommended)",
+      "16": "Event treatment (folded into NIP-01)",
+      "17": "Private direct messages",
+      "18": "Reposts",
+      "19": "bech32 entities such as npub and note",
+      "20": "Command results (folded into NIP-01)",
+      "21": "The nostr: link scheme",
+      "22": "Comments",
+      "23": "Long-form articles",
+      "24": "Extra profile fields",
+      "25": "Reactions",
+      "26": "Delegated signing (no longer recommended)",
+      "27": "Mentions inside notes",
+      "28": "Public chat (no longer recommended)",
+      "29": "Relay-based groups",
+      "30": "Custom emoji",
+      "31": "Handling unknown events (no longer recommended)",
+      "32": "Labeling",
+      "33": "Parameterized replaceable events (folded into NIP-01)",
+      "34": "Git repositories",
+      "35": "Torrents",
+      "36": "Sensitive content warnings",
+      "37": "Draft events",
+      "38": "User statuses",
+      "39": "Linking your profile to other platforms",
+      "40": "Expiration timestamp",
+      "42": "Relay authentication",
+      "43": "Relay access metadata and requests",
+      "44": "Encrypted payloads",
+      "45": "Counting results",
+      "46": "Remote signing",
+      "47": "Nostr Wallet Connect",
+      "48": "Bridged events",
+      "49": "Encrypted private keys (ncryptsec)",
+      "50": "Search",
+      "51": "Lists",
+      "52": "Calendar events",
+      "53": "Live streaming and spaces",
+      "54": "Wiki",
+      "55": "Android signer app",
+      "56": "Reporting",
+      "57": "Lightning zaps",
+      "58": "Badges",
+      "59": "Gift wrap",
+      "60": "Cashu wallet",
+      "61": "Nutzaps",
+      "62": "Request to vanish",
+      "64": "Chess games",
+      "65": "Your relay list",
+      "66": "Relay discovery and liveness monitoring",
+      "67": "End of stored events hint",
+      "68": "Picture-first feeds",
+      "69": "Peer-to-peer order events",
+      "70": "Protected events",
+      "71": "Video events",
+      "72": "Moderated communities (no longer recommended)",
+      "73": "External content IDs",
+      "75": "Zap goals",
+      "77": "Negentropy syncing",
+      "78": "Application-specific data",
+      "84": "Highlights",
+      "85": "Trusted assertions",
+      "86": "Relay management API",
+      "87": "Cashu and Fedimint discoverability",
+      "88": "Polls",
+      "89": "Recommended app handlers",
+      "90": "Data vending machines (no longer recommended)",
+      "92": "Media attachment metadata",
+      "94": "File metadata",
+      "96": "HTTP file storage (replaced by Blossom)",
+      "98": "HTTP auth",
+      "99": "Classified listings"
     }
   },
   "nostrSimulator": {
@@ -2985,6 +3335,22 @@
     },
     "stats": {
       "totalRelays": "Total Relays"
+    },
+    "subtitle": "Relays are just servers, and they run all over the world.",
+    "checkedNote": "These relays answered when we checked them in September 2026. Relays come and go, so read this as a snapshot, not a live status.",
+    "relays": {
+      "damus": {
+        "description": "Run by the team behind the Damus app."
+      },
+      "nosLol": {
+        "description": "Takes just about any note, except the spammy ones."
+      },
+      "primal": {
+        "description": "Primal's public relay, from the makers of the Primal app."
+      },
+      "snort": {
+        "description": "A fast relay that keeps recent notes in memory."
+      }
     }
   },
   "guideNavigation": {
@@ -3029,6 +3395,31 @@
     "languages": {
       "thisPage": "Read this page in",
       "guides": "Read the guides in"
+    },
+    "tagline": "A beginner-friendly guide to the Nostr protocol. Learn, explore, and join the decentralized social revolution.",
+    "privacyNote": "Keys generated in your browser. Nothing is stored on our servers.",
+    "copyright": "© {year} {site}. Open source and community-driven.",
+    "homeAria": "{site} home",
+    "externalLinkAria": "{label} (opens in new tab)",
+    "sections": {
+      "learn": "Learn",
+      "tools": "Tools",
+      "community": "Community",
+      "about": "About"
+    },
+    "links": {
+      "gettingStarted": "Getting Started",
+      "interactiveTools": "Interactive Tools",
+      "glossary": "Glossary",
+      "faq": "FAQ",
+      "relayPlayground": "Relay Playground",
+      "keyGenerator": "Key Generator",
+      "followPackFinder": "Follow Pack Finder",
+      "nostrProtocol": "Nostr Protocol",
+      "aboutUs": "About Us",
+      "support": "Support ⚡",
+      "settings": "Settings",
+      "privacyPolicy": "Privacy Policy"
     }
   },
   "guidesPage": {
@@ -3087,7 +3478,28 @@
   },
   "relayFeedBrowser": {
     "title": "Browse Relay Feeds",
-    "subtitle": "Discover Nostr communities by browsing relay feeds"
+    "subtitle": "Discover Nostr communities by browsing relay feeds",
+    "categories": {
+      "general": "General",
+      "news": "News"
+    },
+    "relays": {
+      "spatia-arcana": {
+        "description": "Anyone can read it, but only approved accounts can post. Its operator's motto: \"I am large, I contain multitudes.\""
+      },
+      "christpill": {
+        "description": "For followers and seekers of Christ, in the operator's own words."
+      },
+      "chillstr": {
+        "description": "Meditation, mindfulness and a few deep breaths. Free to read; posting costs a one-off fee of about 111 sats."
+      },
+      "utxo-news": {
+        "description": "A bot that reposts headlines from major publications, so expect news rather than conversation."
+      },
+      "holoboard": {
+        "description": "A bulletin board where sats decide the order. Every note there was paid for, so reading is free but posting is not."
+      }
+    }
   },
   "officialAccount": {
     "followUs": "Follow us on Nostr",
