@@ -1,7 +1,7 @@
 ---
-title: "Schnellstart: In 5 Minuten Loslegen"
-seoTitle: "Nostr Konto erstellen: in 5 Minuten startklar"
-description: "Deine Schnellspur zu Nostr. Prüfe deine Schlüssel, wähle einen Client und starte. Kein Blabla, nur Action."
+title: "Schnellstart: in 5 Minuten loslegen"
+seoTitle: "Nostr-Konto erstellen: in 5 Minuten startklar"
+description: "Dein schneller Einstieg in Nostr. Prüfe deine Schlüssel, wähle einen Client und starte. Kein Blabla, nur Action."
 estimatedTime: "5 Minuten"
 priority: 4
 category: "getting-started"
@@ -19,7 +19,7 @@ prerequisites: ["what-is-nostr", "keys-and-security"]
 
 ---
 
-## Schritt 1: Voraussetzungen Prüfen
+## Schritt 1: Voraussetzungen prüfen
 
 Bevor wir starten, hast du deine Nostr-Schlüssel bereit?
 
@@ -42,12 +42,12 @@ Bevor wir starten, hast du deine Nostr-Schlüssel bereit?
       <svg className="w-5 h-5 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
       </svg>
-      Zuerst Schlüssel generieren (2 Min)
+      Zuerst Schlüssel generieren (10 Min)
     </a>
   </div>
   
   <p className="mt-4 text-sm text-gray-600 dark:text-gray-400 text-center">
-    Du brauchst deinen <code>npub</code> (Public Key) und <code>nsec</code> (Private Key) zum Fortfahren.
+    Du brauchst zum Fortfahren deinen <code>nsec</code> (Private Key). Dein <code>npub</code> (Public Key) ergibt sich automatisch daraus, du musst also nicht beide bereithalten.
   </p>
 </div>
 
@@ -55,15 +55,15 @@ Bevor wir starten, hast du deine Nostr-Schlüssel bereit?
 
 <span id="step-2"></span>
 
-## Schritt 2: Wähle Deinen Client
+## Schritt 2: Wähle deinen Client
 
-Nostr hat Dutzende Clients—denk an sie wie E-Mail-Apps. Wähle einen zum Starten.
+Nostr hat Dutzende Clients. Denk an sie wie an E-Mail-Apps und wähle einen zum Starten.
 
 <a href="https://sandstr.app" target="_blank" rel="noopener noreferrer" className="not-prose my-6 flex items-start gap-4 p-5 rounded-xl border-2 border-primary/30 bg-primary/5 dark:bg-primary/10 hover:border-primary/60 transition-colors">
   <span className="text-3xl" aria-hidden="true">🏖️</span>
   <span>
     <span className="block font-bold text-gray-900 dark:text-white mb-1">Noch unsicher? Probiere Clients zuerst im Browser aus</span>
-    <span className="block text-sm text-gray-600 dark:text-gray-400">Mit Sandstr kannst du dich durch Damus, Amethyst, Primal und mehr klicken — keine Keys, keine Installation, nichts ist echt. Komm zurück, wenn sich einer richtig anfühlt.</span>
+    <span className="block text-sm text-gray-600 dark:text-gray-400">Mit Sandstr kannst du dich durch Damus, Amethyst, Primal und mehr klicken, ohne Schlüssel, ohne Installation, und nichts davon ist echt. Komm zurück, wenn sich einer richtig anfühlt.</span>
   </span>
 </a>
 
@@ -76,7 +76,7 @@ Weißt du schon, was du willst? Wähle deine Plattform:
     <thead>
       <tr className="border-b-2 border-gray-200 dark:border-gray-700">
         <th className="text-start py-3 px-4 font-semibold text-gray-900 dark:text-white">Plattform</th>
-        <th className="text-start py-3 px-4 font-semibold text-gray-900 dark:text-white">Am Besten für Anfänger</th>
+        <th className="text-start py-3 px-4 font-semibold text-gray-900 dark:text-white">Am besten für Anfänger</th>
         <th className="text-start py-3 px-4 font-semibold text-gray-900 dark:text-white">Alternative</th>
       </tr>
     </thead>
@@ -169,29 +169,40 @@ Eine letzte Prüfung, bevor du loslegst:
   </div>
 </div>
 
-### Du Bist Bereit! 🚀
+### Du bist bereit! 🚀
 
 Öffne deinen gewählten Client und melde dich an. **Wie** du dich anmeldest, ist
 wichtiger, als die meisten Anleitungen zugeben.
 
-**Auf dem Handy** fügst du deinen nsec einmal in die App ein. Eine mobile App ist
-eine Sandbox — nur sie kann lesen, was du dort einfügst.
+**Auf Android** installierst du [Amber](https://github.com/greenart7c3/Amber) und
+lässt die App deinen Schlüssel verwahren. Andere Apps bitten Amber ums
+Signieren, du bestätigst jede Anfrage dort, und dein nsec landet nie in der App
+selbst. Amber gibt es nicht bei Google Play, hol es dir also von zap.store,
+F-Droid oder von der Releases-Seite auf GitHub.
+
+**Auf dem iPhone** gibt es nichts Vergleichbares, dort fügst du deinen nsec
+einmal in die App ein. Was in einer App gespeichert ist, bleibt auch in dieser
+App, aber die Zwischenablage ist gemeinsamer Boden: Solange dein Schlüssel dort
+liegt, können andere Apps ihn lesen, und eine Tastatur, die die Zwischenablage in
+die Cloud synchronisiert, trägt ihn vom Handy fort. Schalte diese
+Synchronisierung aus, bevor du einfügst, und kopiere gleich nach dem Anmelden
+etwas Harmloses über den Schlüssel.
 
 **Im Browser: füge deinen nsec niemals in die Website ein.** Installiere
-stattdessen eine Signer-Erweiterung — [Alby](https://getalby.com),
-[nos2x](https://github.com/fiatjaf/nos2x) oder
-[Nostore](https://apps.apple.com/app/nostore/id1666553677) für Safari. Der
+stattdessen eine Signer-Erweiterung: [Alby](https://getalby.com),
+[nos2x](https://chromewebstore.google.com/detail/nos2x/kpgefcfmnafjgpblomihpgmejjdanjjp)
+oder [Nostash](https://apps.apple.com/us/app/nostash/id6744309333) für Safari. Der
 Schlüssel bleibt in der Erweiterung; die Website bittet sie, jede Aktion zu
 signieren, und sieht den Schlüssel selbst nie. Jeder ernstzunehmende Web-Client
 unterstützt das (es heißt NIP-07). Damit wird aus „eine schlechte Website kostet
-dich deine Identität" ein „eine schlechte Website bekommt nichts".
+dich deine Identität“ ein „eine schlechte Website bekommt nichts“.
 
 Wenn du den Schlüssel gar nicht auf deinen Geräten haben willst, verwahrt ihn ein
-Remote-Signer wie [nsec.app](https://nsec.app) (NIP-46) und bestätigt Aktionen aus
+Remote-Signer wie [nsec.app](https://use.nsec.app) (NIP-46) und bestätigt Aktionen aus
 einer separaten App.
 
 <Callout variant="warning" title="Eine Website, die nach deinem nsec fragt, ist ein Warnsignal">
-  Sobald eine Seite deinen nsec hat, hat sie dauerhaft deine Identität — ein
+  Sobald eine Seite deinen nsec hat, hat sie dauerhaft deine Identität. Ein
   Nostr-Schlüssel lässt sich weder rotieren noch der Zugriff entziehen. Es gibt
   kein Passwort-Zurücksetzen und keinen Support.
 
@@ -210,7 +221,7 @@ den privaten Schlüssel in ein Formular zu tippen oder einzufügen: Tab schließ
     rel="noopener noreferrer"
     className="inline-flex items-center px-8 py-4 bg-friendly-purple-700 hover:bg-friendly-purple-800 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl"
   >
-    Primal Öffnen
+    Primal öffnen
     <svg className="ms-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
     </svg>
@@ -222,15 +233,15 @@ den privaten Schlüssel in ein Formular zu tippen oder einzufügen: Tab schließ
 
 ---
 
-## Pro-Tipps für Deinen Ersten Tag
+## Pro-Tipps für deinen ersten Tag
 
-Sobald du drin bist, mach das, um deine Erfahrung zu maximieren:
+Sobald du drin bist, holst du mit diesen Schritten am meisten heraus:
 
 <div className="my-8 grid grid-cols-1 md:grid-cols-2 gap-6">
   <div className="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
     <div className="flex items-center gap-3 mb-3">
       <div className="text-3xl">👥</div>
-      <h3 className="font-bold text-blue-800 dark:text-blue-400">Fülle Zuerst Deinen Feed</h3>
+      <h3 className="font-bold text-blue-800 dark:text-blue-400">Fülle zuerst deinen Feed</h3>
     </div>
     <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
       Ein leerer Feed ist der Grund #1, warum Leute aufhören. Folge sofort 50+ kuratierten Accounts.
@@ -249,16 +260,16 @@ Sobald du drin bist, mach das, um deine Erfahrung zu maximieren:
   <div className="p-6 bg-green-50 dark:bg-green-900/20 rounded-xl border border-green-200 dark:border-green-800">
     <div className="flex items-center gap-3 mb-3">
       <div className="text-3xl">📚</div>
-      <h3 className="font-bold text-green-800 dark:text-green-400">Lerne Weiter</h3>
+      <h3 className="font-bold text-green-800 dark:text-green-400">Lerne weiter</h3>
     </div>
     <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
-      Meistere Nostr mit unseren Schritt-für-Schritt-Anleitungen. Von Zaps bis Privatsphäre—wir haben alles für dich.
+      Meistere Nostr mit unseren Schritt-für-Schritt-Anleitungen. Von Zaps bis Privatsphäre, wir haben alles für dich.
     </p>
     <a 
       href="/de/guides" 
       className="inline-flex items-center text-green-600 hover:text-green-700 font-semibold"
     >
-      Alle Guides Erkunden
+      Alle Guides erkunden
       <svg className="ms-1 w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
       </svg>

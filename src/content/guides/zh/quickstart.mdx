@@ -1,6 +1,6 @@
 ---
 title: "快速开始：5 分钟启动"
-description: "你的 Nostr 快速通道。检查你的密钥，选择客户端，然后启动。没有废话，只有行动。"
+description: "你的 Nostr 快速通道。检查你的密钥，选择客户端，然后启动。全是能照着做的步骤。"
 estimatedTime: "5 分钟"
 priority: 4
 category: "getting-started"
@@ -41,12 +41,12 @@ prerequisites: ["what-is-nostr", "keys-and-security"]
       <svg className="w-5 h-5 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
       </svg>
-      先生成密钥（2 分钟）
+      先生成密钥（10 分钟）
     </a>
   </div>
   
   <p className="mt-4 text-sm text-gray-600 dark:text-gray-400 text-center">
-    你需要你的 <code>npub</code>（公钥）和 <code>nsec</code>（私钥）才能继续。
+    你需要你的 <code>nsec</code>（私钥）才能继续。<code>npub</code>（公钥）会自动由它推导出来，所以不必两个都随身备着。
   </p>
 </div>
 
@@ -56,13 +56,13 @@ prerequisites: ["what-is-nostr", "keys-and-security"]
 
 ## 步骤 2：选择你的客户端
 
-Nostr 有数十个客户端——把它们想象成电子邮件应用。选择一个开始。
+Nostr 有几十个客户端。把它们想象成电子邮件应用，先挑一个用起来。
 
 <a href="https://sandstr.app" target="_blank" rel="noopener noreferrer" className="not-prose my-6 flex items-start gap-4 p-5 rounded-xl border-2 border-primary/30 bg-primary/5 dark:bg-primary/10 hover:border-primary/60 transition-colors">
   <span className="text-3xl" aria-hidden="true">🏖️</span>
   <span>
     <span className="block font-bold text-gray-900 dark:text-white mb-1">还没想好？先在浏览器里试用客户端</span>
-    <span className="block text-sm text-gray-600 dark:text-gray-400">Sandstr 让你直接点开体验 Damus、Amethyst、Primal 等客户端——无需密钥、无需安装，一切都是模拟的。找到合适的再回来。</span>
+    <span className="block text-sm text-gray-600 dark:text-gray-400">Sandstr 让你直接点开体验 Damus、Amethyst、Primal 等客户端，不用密钥，不用安装，一切都是模拟的。找到合适的再回来。</span>
   </span>
 </a>
 
@@ -172,19 +172,27 @@ Nostr 有数十个客户端——把它们想象成电子邮件应用。选择�
 
 打开你选择的客户端并登录。**如何**登录，比大多数教程愿意承认的更重要。
 
-**在手机上**，把 nsec 粘贴进应用一次即可。移动应用是一个沙盒——只有它能读取你粘贴进去的内容。
+**在 Android 上**，装一个 [Amber](https://github.com/greenart7c3/Amber)，让它替你
+保管密钥。应用需要签名时会去请求 Amber，你在那里逐条批准，nsec 自始至终不会进入应用
+本身。Amber 没有上架 Google Play，请从 zap.store、F-Droid 或它的 GitHub releases
+页面获取。
 
-**在浏览器中，不要把 nsec 粘贴到网站里。** 改为安装签名扩展——
-[Alby](https://getalby.com)、[nos2x](https://github.com/fiatjaf/nos2x)，或
-Safari 上的 [Nostore](https://apps.apple.com/app/nostore/id1666553677)。密钥留在
+**在 iPhone 上**没有对应的东西，所以把 nsec 粘贴进应用一次。存进应用里的东西留在那个
+应用里，但剪贴板是块公共地：只要密钥还躺在剪贴板上，别的应用就能读到它，而一个会把
+剪贴板同步到云端的输入法，能把它整个带出这台手机。粘贴之前先关掉这种同步，登录完成
+后马上复制一段无关紧要的文字把密钥盖掉。
+
+**在浏览器中，不要把 nsec 粘贴到网站里。** 改成安装签名扩展：
+[Alby](https://getalby.com)、[nos2x](https://chromewebstore.google.com/detail/nos2x/kpgefcfmnafjgpblomihpgmejjdanjjp)，或
+Safari 上的 [Nostash](https://apps.apple.com/us/app/nostash/id6744309333)。密钥留在
 扩展里；网站请求扩展为每个操作签名，自己从不接触密钥。所有正经的网页客户端都支持这
 一点（这叫 NIP-07），它把「一个坏网站让你失去身份」变成「一个坏网站什么也拿不到」。
 
-如果你根本不想把密钥放在自己的设备上，像 [nsec.app](https://nsec.app)（NIP-46）
+如果你根本不想把密钥放在自己的设备上，像 [nsec.app](https://use.nsec.app)（NIP-46）
 这样的远程签名器可以保管它，并从另一个应用中批准操作。
 
 <Callout variant="warning" title="向你索要 nsec 的网站是危险信号">
-  一旦某个网站拿到你的 nsec，就永久拥有了你的身份——Nostr 密钥无法轮换，也无法撤销
+  一旦某个网站拿到你的 nsec，它就永久拥有了你的身份。Nostr 密钥无法轮换，也无法撤销
   访问权限。没有密码重置，也没有客服。
 
 正规的网页客户端只会请你连接签名器。如果某个网站要你把私钥输入或粘贴到表单里，
@@ -244,10 +252,10 @@ Safari 上的 [Nostore](https://apps.apple.com/app/nostore/id1666553677)。密�
       <h3 className="font-bold text-green-800 dark:text-green-400">继续学习</h3>
     </div>
     <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
-      通过我们的分步指南掌握 Nostr。从闪电网络到隐私——我们都有涵盖。
+      通过我们的分步指南掌握 Nostr。从打赏（zap）到隐私，我们都讲到了。
     </p>
     <a 
-      href="/guides" 
+      href="/zh/guides" 
       className="inline-flex items-center text-green-600 hover:text-green-700 font-semibold"
     >
       探索所有指南

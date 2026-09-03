@@ -8,16 +8,13 @@ category: "getting-started"
 
 import { HoverCard } from "@components/HoverCard";
 import { ProtocolComparison } from "@components/ProtocolComparison";
-import { NostrSimulator } from "@components/NostrSimulator";
 import { WhatIsNostrQuiz } from "@components/interactive/WhatIsNostrQuiz";
 
-{ /* <ProgressIndicator current={1} total={4} estimatedTime="5 分钟" /> */ }
+**Nostr（Notes and Other Stuff Transmitted by Relays 的缩写）是一个开放的社交媒体协议，不是一款应用。** 你的账号就是一对密码学密钥，你的帖子是签名过的事件，中继则是存储并转发它们的服务器。任何客户端都能读到这些内容，所以没有哪家公司能封掉你，也没法把你的粉丝扣在自己手里。
 
-{ /* <div className="simulator-section my-12"> */ }
-  { /* <NostrSimulator client:idle /> */ }
-{ /* </div> */ }
+它由一位化名 fiatjaf 的开发者在 2020 年匿名发布，定义它的是一份份编号的规范（NIP），而不是某家公司。
 
-### 问题所在（1 分钟阅读）
+## 问题所在
 
 **你并不拥有你的社交媒体账号。**
 
@@ -26,7 +23,7 @@ import { WhatIsNostrQuiz } from "@components/interactive/WhatIsNostrQuiz";
 ### 平台风险是真实的
 
 - **封号会发生。** 一个错误、一个有争议的观点，或一个虚假举报，都可能让你被锁在积累了多年的内容和人际关系之外
-- **算法会变。** 你的帖子今天可能触达 10,000 人，明天可能只有 200 人——没有任何警告或解释
+- **算法会变。** 你的帖子今天可能触达 10,000 人，明天可能只有 200 人，没有任何警告，也没有解释
 - **你的粉丝不属于你。** 如果平台封了你，你就失去了花了多年时间建立的受众
 - **数据被锁定。** 你的帖子、照片和消息都被困在一家公司的数据库中
 
@@ -39,11 +36,11 @@ import { WhatIsNostrQuiz } from "@components/interactive/WhatIsNostrQuiz";
 - 什么内容会被推广
 - 你是否可以导出数据
 
-**这不仅仅是麻烦——它让你的数字身份面临风险。**
+**这不只是麻烦。它让你的数字身份处在风险里。**
 
 ---
 
-### 解决方案：协议 vs 平台（2 分钟阅读）
+## 解决方案：协议 vs 平台
 
 Nostr 通过改变一个根本性的东西来解决这个问题：**它是一个协议，而不是平台。**
 
@@ -55,7 +52,7 @@ Nostr 通过改变一个根本性的东西来解决这个问题：**它是一个
 - 你可以从 Yahoo 换到 ProtonMail，保留你的通讯录
 - 没有单一公司控制所有电子邮件
 
-**电子邮件是一个协议。** 任何人都可以构建电子邮件应用。每个人都可以通信。没有人拥有这个网络。
+**电子邮件是一个协议。** 任何人都可以做一个邮件应用，彼此之间也都能通信，而这个网络不归谁所有。
 
 **Nostr 的工作方式相同。**
 
@@ -67,7 +64,7 @@ Nostr 通过改变一个根本性的东西来解决这个问题：**它是一个
 
 **联邦制（Mastodon）：** 许多可以相互通信的服务器，但每个服务器所有者对其用户拥有权力。
 
-**Nostr：** 没有服务器拥有你的身份。你持有密钥。你选择在哪里发布。你可以随时切换应用。
+**Nostr：** 没有服务器拥有你的身份。密钥在你手上，发布到哪里由你决定，想换应用随时可以换。
 
 ### 这对你意味着什么
 
@@ -78,7 +75,7 @@ Nostr 通过改变一个根本性的东西来解决这个问题：**它是一个
 
 ---
 
-### 核心概念（2 分钟阅读）
+## 核心概念
 
 不必担心记住所有内容。你会通过实践学习。但这里有一个心理模型：
 
@@ -91,8 +88,8 @@ Nostr 通过改变一个根本性的东西来解决这个问题：**它是一个
   你在 Nostr 上的公开身份看起来像这样：`npub1q...9x`
 </HoverCard>
 
-- 看起来像这样：<code className="break-all text-sm">npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
-- 自由分享——这是人们找到和关注你的方式
+- 看起来像这样：<code className="break-all text-sm">npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
+- 尽管公开分享：人们就是靠它找到你、关注你的
 - 把它想象成你的电子邮件地址或电话号码
 - **绿灯：可以安全地在任何地方分享**
 
@@ -105,7 +102,7 @@ Nostr 通过改变一个根本性的东西来解决这个问题：**它是一个
   你的秘密密钥看起来像这样：`nsec1q...9x`
 </HoverCard>
 
-- 看起来像这样：<code className="break-all text-sm">nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
+- 看起来像这样：<code className="break-all text-sm">nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
 - 这证明你拥有你的公钥
 - **红色警报：永远不要与任何人分享**
 - 丢失它 = 永久丢失。没有"忘记密码"选项
@@ -128,26 +125,26 @@ Nostr 通过改变一个根本性的东西来解决这个问题：**它是一个
 
 <HoverCard
   term="客户端"
-  definition="你用来与 Nostr 交互的应用——比如 Damus、Amethyst 或 Iris。你可以随时切换客户端而不会丢失身份。"
+  definition="你用来与 Nostr 交互的应用，比如 Damus、Amethyst 或 Iris。你可以随时切换客户端而不会丢失身份。"
 >
-  客户端就像 Gmail 和 Apple Mail——不同的界面，相同的协议
+  客户端就像 Gmail 和 Apple Mail：不同的界面，相同的协议
 </HoverCard>
 
 - 你用来发布、浏览和发消息的应用
 - 示例：Damus（iOS）、Amethyst（Android）、Iris（网页版）
-- 随时切换——你永远不会被锁定
+- 随时可以换。你永远不会被锁死在一个地方
 
 ---
 
-### 为什么这很重要（1 分钟阅读）
+## 为什么这很重要
 
 ### 好处
 
 ✅ **没人能封你。** 他们可以忽略你的帖子，但无法阻止你发布
 
-✅ **你的数据是可移植的。** 每个帖子、每个粉丝、每个点赞——都是你的，可以移动
+✅ **你的数据是可移植的。** 每个帖子、每个粉丝、每个点赞，全都是你的，随时带走
 
-✅ **没有广告或算法。** 大多数客户端按时间顺序显示内容。你的注意力不是产品
+✅ **没有广告，也没有你没要过的算法。** 客户端给你看的就是你关注的人，最新的排在前面。有些客户端也提供热门榜或者算法推荐，但那是你自己点进去的一个标签页，不是塞给你的默认首页
 
 ✅ **有弹性。** 如果一个中继宕机，你的身份仍然存在。如果一个客户端关闭，你切换到另一个
 
@@ -167,6 +164,29 @@ Nostr 通过改变一个根本性的东西来解决这个问题：**它是一个
 - **如果你想要自由：** Nostr 提供的控制是任何平台无法比拟的
 - **如果你好奇：** 最好的学习方式是尝试
 
+## Nostr 实际上是怎么运转的
+
+协议本身只有四块东西。用 Nostr 并不需要懂它们，但别人说"Nostr 很简单"的时候，指的就是这几样。
+
+- **事件（event）：** 每一条帖子、每一次点赞、每一次资料更新、每一条私信，都是一个签名过的 JSON 对象。协议里只有这一种数据结构。
+- **kind：** 事件上的一个整数，说明它是什么：`0` 是个人资料，`1` 是短帖，`3` 是关注列表，`7` 是点赞，`30023` 是长文。
+- **签名：** 基于 secp256k1 的 Schnorr 签名，用你的[私钥](/zh/guides/keys-and-security)生成。它让事件无法被篡改，也是任何中继都伪造不出以你名义发布的帖子的原因。
+- **NIP：** Nostr Implementation Possibility，也就是构成协议的那些编号规范。NIP-01 定义了事件和中继；[NIP-05](/zh/guides/nip05-identity) 把可读的 `name@domain` 映射到你的密钥；[NIP-57](/zh/guides/zaps-and-lightning) 定义了打赏。
+
+你还会听到第五个词，**信任网络**，不过它是一种习惯，不是一份规范。既然没有公司算法替你决定看到什么，发现新内容靠的就是你关注的人又关注了谁。这也是为什么在这里[找到最初的那几个人](/zh/guides/finding-community)比在别的网络上更要紧。
+
+支付在这里属于文化的一部分，不是附加功能：**打赏（zap）**就是附在帖子上的一笔比特币闪电网络小费，以聪（sat）计价，一聪是一亿分之一枚比特币。具体怎么运作，看[闪电打赏](/zh/guides/zaps-and-lightning)。
+
+### 从别的网络过来的？
+
+如果你已经在用别的社交网络，认识 Nostr 最快的办法就是拿它跟你熟悉的东西比一比：
+
+- [Nostr vs Twitter/X](/nostr-vs-twitter)：所有权和触达究竟变了什么
+- [Nostr vs Mastodon](/nostr-vs-mastodon)：为什么中继不等于实例
+- [Nostr vs Bluesky](/nostr-vs-bluesky)：对去中心化身份的两种不同回答
+
+想看协议层面的版本？[Nostr vs ActivityPub vs Bluesky](/zh/guides/protocol-comparison) 讲了这三者底层到底差在哪里。
+
 ---
 
 ## 测试你的知识
@@ -177,4 +197,4 @@ Nostr 通过改变一个根本性的东西来解决这个问题：**它是一个
 
 ---
 
-_想深入了解？查看我们的 [常见问题](/zh/guides/faq) 获取更多主题。_
+_想深入了解？我们的[常见问题](/zh/guides/faq)里还有更多话题，也可以去看看[精选的 Nostr 资源](/resources)。_

@@ -25,7 +25,7 @@
               }
             ],
             "correctId": "a",
-            "explanation": "NOSTR 代表'通过中继传输的笔记和其他内容'（Notes and Other Stuff Transmitted by Relays）——一个简单、开放的去中心化社交媒体协议。",
+            "explanation": "NOSTR 代表'通过中继传输的笔记和其他内容'（Notes and Other Stuff Transmitted by Relays）。这是一个简单、开放的去中心化社交媒体协议。",
             "severity": "info"
           },
           {
@@ -213,7 +213,7 @@
               }
             ],
             "correctId": "signer",
-            "explanation": "切勿将主私钥粘贴到新客户端中。使用签名器（NIP-46）或硬件解决方案，并等待支持委托签名。",
+            "explanation": "不要把主私钥粘贴进一个你还没验证过的客户端。改用签名器：安卓上是 Amber，网页端是浏览器扩展，其他环境可以用 NIP-46 远程签名器。这样应用只拿得到签名，永远看不到你的 nsec。想先随便逛逛，用一把一次性密钥没问题，但 Nostr 上没有“以后再迁移”这回事：粉丝和声誉只留在挣到它们的那把密钥上。",
             "severity": "warning"
           },
           {
@@ -223,7 +223,7 @@
             "options": [
               {
                 "id": "gps",
-                "label": "保持位置标签启用——有助于发现"
+                "label": "保持位置标签启用，有助于发现"
               },
               {
                 "id": "personas",
@@ -350,7 +350,7 @@
               },
               {
                 "id": "b",
-                "label": "可以，许多客户端允许你导入拥有 Nostr 账户的 Twitter 关注者"
+                "label": "可以，但只限那些已经加入 Nostr、并把自己的 npub 公开到你查得到的地方的人"
               },
               {
                 "id": "c",
@@ -358,7 +358,7 @@
               }
             ],
             "correctId": "b",
-            "explanation": "许多 Nostr 客户端提供 Twitter 导入功能。它们检查你的 Twitter 关注者中哪些人已关联了 Nostr npub，让你可以立即关注他们。",
+            "explanation": "没有哪个主流客户端会替你导入 Twitter 关注列表。有个独立的目录站 nostr.directory 可以让你用 X 账号登录、比对你关注的人，但它只认识自己去那里注册过的用户。真正靠得住的办法是按名字或 NIP-05 地址搜索，关注部分客户端提供的入门关注包，再直接问朋友要 npub。",
             "severity": "info"
           },
           {
@@ -394,7 +394,7 @@
               },
               {
                 "id": "b",
-                "label": "静音或屏蔽他们——选择权在你"
+                "label": "静音或屏蔽他们，选择权在你"
               },
               {
                 "id": "c",
@@ -517,7 +517,7 @@
               },
               {
                 "id": "b",
-                "label": "因中继而异——有些永久保留，有些删除旧帖子"
+                "label": "因中继而异：有些永久保留，有些删除旧帖子"
               },
               {
                 "id": "c",
@@ -763,7 +763,7 @@
               }
             ],
             "correctId": "a",
-            "explanation": "要接收 zaps，你需要一个闪电钱包（托管型如 Wallet of Satoshi，或自托管型如 Phoenix/BlueWallet），通过闪电地址链接到你的 Nostr 个人资料。",
+            "explanation": "要收 zap，你需要一个能给你闪电地址的闪电钱包，再把这个地址填进 Nostr 个人资料。Coinos 在浏览器里就能用，什么都不用装，代价是资金由它替你保管。Primal 内置的钱包和 Zeus 则把资金留在你自己手里。",
             "severity": "critical"
           },
           {
@@ -777,7 +777,7 @@
               },
               {
                 "id": "b",
-                "label": "金额和发送者在闪电网络上可见，但你可以为不同身份使用不同钱包"
+                "label": "发送者和金额会写进 Nostr 上的一张公开收据，但你可以为不同身份使用不同钱包"
               },
               {
                 "id": "c",
@@ -785,7 +785,7 @@
               }
             ],
             "correctId": "b",
-            "explanation": "闪电支付像比特币一样是伪匿名的。交易可见，但不会与你的身份关联，除非你跨个人资料链接钱包。为隐私使用单独的钱包。",
+            "explanation": "每一次 zap 都会在中继上留下一张收据（NIP-57），写明谁打赏、打了多少、打给哪条帖子。闪电网络本身没有公开账本，所以大家真正读到的是这张收据。有些客户端支持匿名 zap；如果你不希望两个身份被关联起来，就把它们的钱包分开。",
             "severity": "warning"
           },
           {
@@ -807,7 +807,7 @@
               }
             ],
             "correctId": "a",
-            "explanation": "托管型钱包（如 Wallet of Satoshi）用户友好，但提供商控制你的资金。自托管型钱包（如 Phoenix）给你完全控制，但需要更多责任。",
+            "explanation": "托管型钱包（例如 Coinos）用起来省事，但资金掌握在服务商手里。自托管型钱包（例如 Phoenix 或 Zeus）把控制权连同责任一起交给你。",
             "severity": "warning"
           }
         ]
@@ -819,378 +819,378 @@
     },
     "troubleshooting": {
       "title": "故障排除",
-      "description": "解决 Nostr 上常见问题。找不到帖子？关注被重置？本指南帮你解决。",
+      "description": "常见问题和对应的解决办法。从动态空白到中继故障。",
       "quiz": {
         "title": "问题解决测验",
         "questions": [
           {
-            "id": "missing-posts",
-            "title": "帖子消失",
-            "prompt": "你的一些帖子丢失了。最可能的原因是什么？",
+            "id": "empty-feed",
+            "title": "动态空白",
+            "prompt": "你的动态是空的，最可能的原因是什么？",
             "options": [
               {
                 "id": "a",
-                "label": "你连接的中继没有存储它们"
+                "label": "Nostr 挂了"
               },
               {
                 "id": "b",
-                "label": "Nostr 删除了你的账户"
+                "label": "你没有连接任何中继，或者连上的中继里没有内容"
               },
               {
                 "id": "c",
-                "label": "你的互联网连接太慢"
+                "label": "你的手机坏了"
               }
             ],
-            "correctId": "a",
-            "explanation": "Nostr 使用多个中继，它们可能有不同的内容。如果某个中继没有你的帖子，尝试添加更多中继或检查你发帖时使用了哪些中继。",
+            "correctId": "b",
+            "explanation": "动态空白通常是中继的问题。到客户端设置里确认自己连着还在运行的中继，也可以试着加几个常用的公共中继。",
             "severity": "warning"
           },
           {
-            "id": "follows-gone",
-            "title": "关注丢失",
-            "prompt": "你的关注列表突然为空。该怎么办？",
+            "id": "posts-not-appearing",
+            "title": "帖子可见性",
+            "prompt": "你发了帖，朋友却看不到，为什么？",
             "options": [
               {
                 "id": "a",
-                "label": "在新客户端中导入你的私钥来恢复关注列表"
+                "label": "发帖需要先买高级会员"
               },
               {
                 "id": "b",
-                "label": "重新关注所有人"
+                "label": "你和朋友用的中继不一样"
               },
               {
                 "id": "c",
-                "label": "创建一个全新账户"
+                "label": "帖子要 24 小时后才会出现"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "如果你和朋友连的中继不同，他们就看不到你的帖子。把你在用的中继告诉他们，或者双方都加上共同的中继。",
+            "severity": "warning"
+          },
+          {
+            "id": "connection-issues",
+            "title": "连接问题",
+            "prompt": "客户端老是和中继断开连接，你该检查什么？",
+            "options": [
+              {
+                "id": "a",
+                "label": "你的网络连接，以及中继地址填得对不对"
+              },
+              {
+                "id": "b",
+                "label": "你的星座"
+              },
+              {
+                "id": "c",
+                "label": "什么都不用查，这很正常"
               }
             ],
             "correctId": "a",
-            "explanation": "关注列表存储在 Nostr 上，与你的密钥关联。在新客户端登录后应该自动恢复。如果看不到，尝试添加更多中继或等待客户端同步。",
+            "explanation": "先看网络连接，再确认中继地址的格式对不对（wss:// 开头）。有些中继只是临时宕机，换一个试试。",
             "severity": "info"
           },
           {
-            "id": "cant-post",
-            "title": "发帖失败",
-            "prompt": "你无法发帖。可能是什么问题？",
+            "id": "missing-history",
+            "title": "历史内容丢失",
+            "prompt": "你以前的帖子不见了，发生了什么？",
             "options": [
               {
                 "id": "a",
-                "label": "你没有连接到可写的中继"
+                "label": "你当初发帖的那个中继删掉了旧内容"
               },
               {
                 "id": "b",
-                "label": "你的账户被禁止了"
+                "label": "Nostr 会在 30 天后自动删除帖子"
               },
               {
                 "id": "c",
-                "label": "Nostr 已关闭"
+                "label": "你需要升级到高级版"
               }
             ],
             "correctId": "a",
-            "explanation": "确保你连接的中继支持写入（不仅仅是只读）。检查中继状态并尝试添加不同的中继。",
+            "explanation": "各家中继的存储策略不一样，有的会删掉旧帖来省空间。多用几个中继，再配合备份工具，才留得住自己的历史内容。",
             "severity": "warning"
           },
           {
-            "id": "zaps-not-working",
-            "title": "Zap 问题",
-            "prompt": "你的 zaps 没有被发送。应该检查什么？",
+            "id": "dm-not-working",
+            "title": "私信问题",
+            "prompt": "你的私信发不出去，可能出了什么问题？",
             "options": [
               {
                 "id": "a",
-                "label": "闪电钱包余额、LNURL 配置、钱包连接"
+                "label": "你和对方没有任何共同的中继"
               },
               {
                 "id": "b",
-                "label": "你的 Nostr 声誉分数"
+                "label": "私信只有周二能用"
               },
               {
                 "id": "c",
-                "label": "接收者的粉丝数量"
+                "label": "你需要先验证手机号"
               }
             ],
             "correctId": "a",
-            "explanation": "Zaps 依赖闪电网络。检查：1）你的钱包有余额，2）你的 LNURL 配置正确，3）钱包已连接到客户端。",
+            "explanation": "私信要靠双方都连着的中继来存储和转发这条加密消息。确认你和对方至少共用一个中继。",
             "severity": "warning"
           },
           {
-            "id": "slow-loading",
-            "title": "加载缓慢",
-            "prompt": "客户端加载非常慢。可能是什么原因？",
+            "id": "slow-performance",
+            "title": "性能",
+            "prompt": "你的 Nostr 客户端很慢，怎么改善？",
             "options": [
               {
                 "id": "a",
-                "label": "连接到太多慢速中继"
+                "label": "少连几个中继，挑质量好的，而不是连一堆慢的"
               },
               {
                 "id": "b",
-                "label": "你的电脑太旧"
+                "label": "买一台更快的电脑"
               },
               {
                 "id": "c",
-                "label": "Nostr 正在维护"
+                "label": "少发点帖"
               }
             ],
             "correctId": "a",
-            "explanation": "太多中继（尤其是慢速或离线的）会导致客户端变慢。移除不响应的中继，保留 5-10 个快速、可靠的。",
+            "explanation": "中继太多，或者中继本身慢，都会拖垮客户端。中继列表保持精简（3-10 个又快又稳的）性能最好。",
             "severity": "info"
-          },
-          {
-            "id": "dm-fail",
-            "title": "私信失败",
-            "prompt": "某人收不到你的私信。可能是什么原因？",
-            "options": [
-              {
-                "id": "a",
-                "label": "你们没有共享任何中继"
-              },
-              {
-                "id": "b",
-                "label": "私信已禁用"
-              },
-              {
-                "id": "c",
-                "label": "你需要支付费用"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "双方需要连接到共享中继才能收发私信。尝试添加对方使用的中继。",
-            "severity": "warning"
           }
         ]
       }
     },
     "multiClient": {
       "title": "使用多个客户端",
-      "description": "了解如何跨不同 Nostr 客户端无缝使用你的身份。你的工作是你自己的——任何客户端都可以访问。",
+      "description": "如何同时使用多个客户端，并让数据保持同步。",
       "quiz": {
-        "title": "多客户端测验",
+        "title": "多客户端使用测验",
         "questions": [
           {
             "id": "same-identity",
             "title": "身份便携性",
-            "prompt": "当你在不同客户端使用相同的私钥时会发生什么？",
+            "prompt": "同一个 Nostr 身份能在多个客户端上使用吗？",
             "options": [
               {
                 "id": "a",
-                "label": "你在所有客户端都有相同的身份、关注和帖子"
+                "label": "不能，每个客户端都需要单独的账户"
               },
               {
                 "id": "b",
-                "label": "每个客户端都创建独立的账户"
+                "label": "可以，一个身份走遍所有客户端。用签名器连接每个客户端，而不是把 nsec 粘贴进去"
               },
               {
                 "id": "c",
-                "label": "之前的客户端停止工作"
+                "label": "只有额外付费才可以"
               }
             ],
-            "correctId": "a",
-            "explanation": "你的身份存在于你的密钥中，而不是任何特定客户端。在任何客户端使用相同的 nsec，你都能访问相同的帖子、关注和消息。",
+            "correctId": "b",
+            "explanation": "你的身份是可携带的：同一份资料、关注和帖子会出现在 Damus、Amethyst、Iris 以及其他客户端里。登录时走签名器（安卓上的 Amber、网页端的浏览器扩展、任何环境都能用的 NIP-46 远程签名器），nsec 就只存在一个地方，各个客户端拿到的只是签名。",
             "severity": "critical"
           },
           {
-            "id": "client-features",
-            "title": "客户端差异",
-            "prompt": "为什么使用多个客户端有益？",
+            "id": "data-sync",
+            "title": "数据同步",
+            "prompt": "数据是怎么在各个客户端之间保持同步的？",
             "options": [
               {
                 "id": "a",
-                "label": "每个客户端有不同的功能和界面"
+                "label": "通过一台中央同步服务器"
               },
               {
                 "id": "b",
-                "label": "一个客户端用于发布，其他用于阅读"
+                "label": "靠中继，所有客户端都从同一批中继读取和写入"
               },
               {
                 "id": "c",
-                "label": "需要多个账户"
+                "label": "你得手动在设备之间复制数据"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "中继就是同步层。你在一个客户端发帖，内容进了中继；其他客户端从同一批中继读取，于是也显示出来。",
+            "severity": "critical"
+          },
+          {
+            "id": "client-differences",
+            "title": "客户端功能",
+            "prompt": "为什么你会想用不同的客户端？",
+            "options": [
+              {
+                "id": "a",
+                "label": "各个客户端的功能、界面和设备支持都不一样"
+              },
+              {
+                "id": "b",
+                "label": "规定至少要用 3 个客户端"
+              },
+              {
+                "id": "c",
+                "label": "每个客户端的规则都不同"
               }
             ],
             "correctId": "a",
-            "explanation": "客户端有独特的功能（如长文写作、媒体支持、UI 设计）。使用多个客户端就像在不同的浏览器中使用相同的电子邮件。",
+            "explanation": "客户端只是同一个网络的不同入口。有的在手机上做得好，有的桌面端功能更强。手头是什么设备、要做什么事，就用哪个顺手的。",
             "severity": "info"
           },
           {
-            "id": "switch-clients",
-            "title": "切换客户端",
-            "prompt": "如何在不丢失任何内容的情况下切换到新客户端？",
+            "id": "security-multiple",
+            "title": "跨客户端的安全",
+            "prompt": "同时用多个客户端时，安全上该怎么处理？",
             "options": [
               {
                 "id": "a",
-                "label": "在新客户端中使用你的私钥登录"
+                "label": "用签名器应用，不必把 nsec 粘贴进每一个客户端"
               },
               {
                 "id": "b",
-                "label": "导出帖子并导入到新客户端"
+                "label": "把 nsec 发邮件给自己，方便随时取用"
               },
               {
                 "id": "c",
-                "label": "手动重新创建你的账户"
+                "label": "所有地方都用同一个密码"
               }
             ],
             "correctId": "a",
-            "explanation": "只需使用你的私钥（nsec）登录新客户端。所有你的数据（帖子、关注、消息）都会自动从 Nostr 中继加载。",
+            "explanation": "用 NIP-46 签名器（比如 Amber）或浏览器扩展，就不用把私钥粘进一个个应用。万一某个客户端出事，暴露面也小得多。",
             "severity": "critical"
           },
           {
-            "id": "relay-sync",
-            "title": "中继同步",
-            "prompt": "为什么一个客户端显示的内容比另一个多？",
+            "id": "relay-consistency",
+            "title": "中继配置",
+            "prompt": "所有客户端都该用同一批中继吗？",
             "options": [
               {
                 "id": "a",
-                "label": "每个客户端可能连接不同的中继"
+                "label": "建议保持一致，但并不是必须的"
               },
               {
                 "id": "b",
-                "label": "一个客户端已过期"
+                "label": "不行，每个客户端必须用不同的中继"
               },
               {
                 "id": "c",
-                "label": "Nostr 限制了可见性"
+                "label": "是的，这是强制要求"
               }
             ],
             "correctId": "a",
-            "explanation": "客户端从不同中继获取内容。使用相同的中继列表可以看到相同的内容。添加更多中继可以看到更广泛的网络。",
-            "severity": "warning"
-          },
-          {
-            "id": "client-security",
-            "title": "客户端安全",
-            "prompt": "尝试新客户端时的最佳安全做法是什么？",
-            "options": [
-              {
-                "id": "a",
-                "label": "先使用浏览器扩展（如 nos2x）登录，不直接输入私钥"
-              },
-              {
-                "id": "b",
-                "label": "每次都创建新账户"
-              },
-              {
-                "id": "c",
-                "label": "只使用最古老的客户端"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "浏览器扩展可以将密钥保存在客户端之外。对于完全陌生或测试的客户端，使用扩展登录更安全。",
-            "severity": "critical"
+            "explanation": "各客户端的中继配置接近，体验才连贯；不过你也可以按设备的需要，给每个客户端单独调整。",
+            "severity": "info"
           }
         ]
       }
     },
     "relayGuide": {
       "title": "中继指南",
-      "description": "掌握 Nostr 中继——如何选择、连接和管理它们，以优化你的体验。",
+      "description": "关于挑选中继、连接中继和管理中继，你需要知道的一切。",
       "quiz": {
         "title": "中继管理测验",
         "questions": [
           {
-            "id": "relay-purpose",
-            "title": "中继功能",
-            "prompt": "Nostr 中继的主要功能是什么？",
+            "id": "choosing-relays",
+            "title": "挑选标准",
+            "prompt": "挑中继时该考虑什么？",
             "options": [
               {
                 "id": "a",
-                "label": "存储和转发帖子、关注和消息"
+                "label": "只看中继的配色"
               },
               {
                 "id": "b",
-                "label": "验证用户身份"
+                "label": "稳定性、速度、费用，以及和你圈子的重合度"
               },
               {
                 "id": "c",
-                "label": "创建比特币钱包"
+                "label": "有多少名人在用"
               }
             ],
-            "correctId": "a",
-            "explanation": "中继是存储和转发 Nostr 事件（帖子、关注、反应）的服务器。它们不知道或验证用户——只是存储和转发数据。",
-            "severity": "critical"
-          },
-          {
-            "id": "relay-selection",
-            "title": "选择中继",
-            "prompt": "如何选择要连接的中继？",
-            "options": [
-              {
-                "id": "a",
-                "label": "寻找可靠的、与你的兴趣匹配或你朋友使用的中继"
-              },
-              {
-                "id": "b",
-                "label": "只连接中继数量最多的那个"
-              },
-              {
-                "id": "c",
-                "label": "随机选择"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "选择快速、可靠、与你的兴趣匹配的中继。公共中继列表可以帮你入门。目标是 5-10 个覆盖不同社区的中继。",
+            "correctId": "b",
+            "explanation": "选中继要看在线率（稳不稳）、响应速度、免费还是付费，以及你想交流的人是不是也在上面。",
             "severity": "warning"
           },
           {
-            "id": "relay-payment",
-            "title": "付费中继",
-            "prompt": "付费中继有什么优势？",
+            "id": "relay-discovery",
+            "title": "找到中继",
+            "prompt": "怎么发现好用的中继？",
             "options": [
               {
                 "id": "a",
-                "label": "通常更快、更可靠，垃圾信息更少"
+                "label": "看社区里可信的人分享的中继列表"
               },
               {
                 "id": "b",
-                "label": "免费比特币"
+                "label": "随便猜网址"
               },
               {
                 "id": "c",
-                "label": "它们将你的帖子优先显示给所有人"
+                "label": "只用你找到的第一个中继"
               }
             ],
             "correctId": "a",
-            "explanation": "付费中继通常提供更好的正常运行时间、更低的垃圾信息和更好的性能。付费创造了质量门槛，同时保持网络开放。",
+            "explanation": "可以看社区成员的推荐、中继目录站，或者看看朋友们在用哪些。质量比数量重要。",
             "severity": "info"
           },
           {
-            "id": "relay-moderation",
-            "title": "内容审核",
-            "prompt": "中继如何处理内容审核？",
+            "id": "paid-relay-benefits",
+            "title": "付费中继",
+            "prompt": "为什么有人愿意为中继付费？",
             "options": [
               {
                 "id": "a",
-                "label": "每个中继自行决定存储和转发什么"
+                "label": "为了拿到特别的配色"
               },
               {
                 "id": "b",
-                "label": "没有审核——一切都被允许"
+                "label": "在线率更好、有人维护，垃圾信息也更少"
               },
               {
                 "id": "c",
-                "label": "中央委员会决定"
+                "label": "法律要求"
               }
             ],
-            "correctId": "a",
-            "explanation": "每个中继独立决定存储什么内容。如果一个中继屏蔽了内容，其他中继可能仍然有。用户通过选择中继来管理自己的体验。",
+            "correctId": "b",
+            "explanation": "付费中继往往性能更好、有人照看、能过滤垃圾信息，也活得更久，因为它有资源把基础设施维持在水准上。",
+            "severity": "info"
+          },
+          {
+            "id": "relay-migration",
+            "title": "更换中继",
+            "prompt": "换到一个新中继之后会怎样？",
+            "options": [
+              {
+                "id": "a",
+                "label": "你会失去所有粉丝和帖子"
+              },
+              {
+                "id": "b",
+                "label": "以后的帖子发到新中继，旧帖子还留在原来的地方"
+              },
+              {
+                "id": "c",
+                "label": "你的账户会被删除"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "新帖子发往你当前的中继，旧帖子仍然留在最初发布的那些中继上。身份和粉丝始终跟着你走。",
             "severity": "warning"
           },
           {
-            "id": "relay-count",
-            "title": "中继数量",
-            "prompt": "你应该连接多少个中继？",
+            "id": "relay-health",
+            "title": "状态监控",
+            "prompt": "怎么判断一个中继工作是否正常？",
             "options": [
               {
                 "id": "a",
-                "label": "5-10 个是大多数用户的最佳平衡点"
+                "label": "看客户端里的连接状态，留意有没有超时"
               },
               {
                 "id": "b",
-                "label": "连接得越多越好"
+                "label": "每天给中继运营者打电话"
               },
               {
                 "id": "c",
-                "label": "只连接一个"
+                "label": "没办法判断"
               }
             ],
             "correctId": "a",
-            "explanation": "通常 5-10 个中继是理想的。太少会错过内容，太多会减慢你的客户端。根据性能和质量选择可靠的混合中继。",
+            "explanation": "大多数客户端都会显示中继的连接状态。如果某个中继频繁报错、超时，或者动态不再更新，就该换一个更稳的。",
             "severity": "info"
           }
         ]
@@ -1198,259 +1198,259 @@
     },
     "privacySecurity": {
       "title": "隐私与安全",
-      "description": "保护你的 Nostr 身份和通信。理解权衡并安全使用平台。",
+      "description": "面向进阶用户的隐私与安全实践。",
       "quiz": {
-        "title": "隐私与安全测验",
+        "title": "进阶隐私与安全测验",
         "questions": [
           {
-            "id": "key-backup",
-            "title": "密钥备份",
-            "prompt": "你应该如何备份私钥？",
-            "options": [
-              {
-                "id": "a",
-                "label": "写在纸上，存放在多个安全位置，或使用密码管理器"
-              },
-              {
-                "id": "b",
-                "label": "保存在手机备忘录中"
-              },
-              {
-                "id": "c",
-                "label": "通过电子邮件发送给自己"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "私钥是唯一的恢复方法。将它们写在纸上并存放在安全的地方，或使用安全的密码管理器。切勿通过电子邮件发送或存储在不安全的地方。",
-            "severity": "critical"
-          },
-          {
-            "id": "public-nature",
-            "title": "公开性",
-            "prompt": "关于你在 Nostr 上的帖子，以下哪项是正确的？",
-            "options": [
-              {
-                "id": "a",
-                "label": "帖子是公开可见的，会存储在中继上"
-              },
-              {
-                "id": "b",
-                "label": "只有你关注的人可以看到"
-              },
-              {
-                "id": "c",
-                "label": "30 天后自动删除"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "默认情况下，Nostr 帖子是公开存储在中继上的。任何人都可以看到你的帖子。不要把任何你不希望永久公开的内容发布上去。",
-            "severity": "critical"
-          },
-          {
-            "id": "separate-identities",
+            "id": "separate-personas",
             "title": "身份分离",
-            "prompt": "为什么要为不同目的使用单独的密钥？",
+            "prompt": "为什么要使用多个独立的 Nostr 身份？",
             "options": [
               {
                 "id": "a",
-                "label": "保持个人和专业身份的隔离"
+                "label": "为了涨粉"
               },
               {
                 "id": "b",
-                "label": "Nostr 要求这样"
+                "label": "把生活的不同部分隔开，降低被关联起来的可能"
               },
               {
                 "id": "c",
-                "label": "获得更多粉丝"
+                "label": "这是 Nostr 协议的要求"
               }
             ],
-            "correctId": "a",
-            "explanation": "单独的密钥允许你将生活的不同部分分开。可以为个人话题使用一个身份，为专业内容使用另一个身份。两者完全独立。",
+            "correctId": "b",
+            "explanation": "分开的身份能防止你的各种活动被串到一起。工作、私人和匿名身份彼此隔离，隐私边界才守得住。",
             "severity": "warning"
           },
           {
-            "id": "nip04-limitations",
-            "title": "加密限制",
-            "prompt": "旧版 NIP-04 加密私信有什么限制？",
+            "id": "exif-data",
+            "title": "图片元数据",
+            "prompt": "发图之前为什么要清掉 EXIF 数据？",
             "options": [
               {
                 "id": "a",
-                "label": "元数据（谁发给谁）是可见的，加密也比现代标准弱"
+                "label": "EXIF 会让图片加载变慢"
               },
               {
                 "id": "b",
-                "label": "完全私密和匿名"
+                "label": "EXIF 里可能带着 GPS 坐标和设备信息，足以暴露你的身份"
               },
               {
                 "id": "c",
-                "label": "只能发送文本"
+                "label": "NIP-05 要求这么做"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "照片里常常带着 EXIF 元数据，包括 GPS 位置、相机型号和拍摄时间。清掉这些，才能保护你的实际位置和身份。",
+            "severity": "critical"
+          },
+          {
+            "id": "hardware-keys",
+            "title": "硬件安全",
+            "prompt": "硬件签名设备的好处是什么？",
+            "options": [
+              {
+                "id": "a",
+                "label": "看起来很酷"
+              },
+              {
+                "id": "b",
+                "label": "私钥永远不离开安全硬件，恶意软件拿不到"
+              },
+              {
+                "id": "c",
+                "label": "发帖更快"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "硬件签名器把私钥关在独立的安全芯片里。就算电脑被入侵，密钥也导不出来。",
+            "severity": "critical"
+          },
+          {
+            "id": "correlation-attacks",
+            "title": "关联风险",
+            "prompt": "别人可能怎样把你的 Nostr 身份和现实身份对上？",
+            "options": [
+              {
+                "id": "a",
+                "label": "分析行为模式、元数据、关联的账号和你透露过的信息"
+              },
+              {
+                "id": "b",
+                "label": "对不上，Nostr 是完全匿名的"
+              },
+              {
+                "id": "c",
+                "label": "只有攻破中继才行"
               }
             ],
             "correctId": "a",
-            "explanation": "旧的 NIP-04 加密显示谁与谁通信（元数据）。现代 NIP-17 加密更好地保护内容和元数据。",
+            "explanation": "隐私靠的是操作习惯。别泄露可识别的细节，别到处重复同一个用户名，别关联到能认出你的社交账号，也别发带位置的内容。",
             "severity": "warning"
           },
           {
-            "id": "browser-security",
-            "title": "浏览器扩展",
-            "prompt": "为什么使用浏览器扩展（如 nos2x）登录是安全的？",
+            "id": "encrypted-backups",
+            "title": "安全备份",
+            "prompt": "备份 Nostr 密钥最稳妥的方式是什么？",
             "options": [
               {
                 "id": "a",
-                "label": "密钥保存在扩展中，不会暴露给客户端"
+                "label": "加密后离线保存，或者写在纸上、金属板上，放进安全的地方"
               },
               {
                 "id": "b",
-                "label": "扩展可以查看你的私信"
+                "label": "用 WhatsApp 发给朋友"
               },
               {
                 "id": "c",
-                "label": "它们免费提供比特币"
+                "label": "存进 Google Drive 并设为公开共享"
               }
             ],
             "correctId": "a",
-            "explanation": "扩展将密钥保存在外部客户端，代表你签署事件。你不必在不熟悉的网站输入私钥，降低暴露风险。",
-            "severity": "warning"
+            "explanation": "用强密码加密密钥并离线保存。纸张、钢板这类实体介质放在安全的地方，长期存放非常可靠。",
+            "severity": "critical"
           },
           {
-            "id": "relay-privacy",
-            "title": "中继隐私",
-            "prompt": "中继知道关于你的什么信息？",
+            "id": "client-security",
+            "title": "客户端甄别",
+            "prompt": "怎么判断一个 Nostr 客户端用起来安不安全？",
             "options": [
               {
                 "id": "a",
-                "label": "你的公钥、IP 地址和你发布的内容"
+                "label": "看它是不是开源、有没有被审计过、社区口碑如何"
               },
               {
                 "id": "b",
-                "label": "你的真实姓名和地址"
+                "label": "下载量超过 1000 次就是安全的"
               },
               {
                 "id": "c",
-                "label": "什么都没有——完全匿名"
+                "label": "所有客户端都一样安全"
               }
             ],
             "correctId": "a",
-            "explanation": "中继看到你的公钥（你的身份）、你的 IP 地址和你发布的内容。如果你希望隐藏 IP，使用 VPN 或 Tor。",
-            "severity": "info"
+            "explanation": "优先选开源客户端，安全研究者能去审计它。再看看社区反馈和开发活跃度，能用签名器应用的时候就用。",
+            "severity": "warning"
           }
         ]
       }
     },
     "nip17PrivateMessages": {
       "title": "NIP-17：私密私信",
-      "description": "了解现代 Nostr 加密私信。NIP-17 相比旧标准提供更好的隐私和安全性。",
+      "description": "了解 NIP-17：它是 NIP-04 的安全替代方案，以及如何把你在 Nostr 上的私信迁移过去。",
       "quiz": {
-        "title": "NIP-17 私密通信测验",
+        "title": "NIP-17 私密私信测验",
         "questions": [
           {
-            "id": "nip17-improvement",
-            "title": "NIP-17 改进",
-            "prompt": "相比 NIP-04，NIP-17 的主要改进是什么？",
+            "id": "nip17-purpose",
+            "title": "NIP-17 的用途",
+            "prompt": "NIP-17 是什么？",
             "options": [
               {
                 "id": "a",
-                "label": "更好的隐私——隐藏谁与谁通信的元数据"
+                "label": "一种新型的中继"
               },
               {
                 "id": "b",
-                "label": "消息可以更长"
+                "label": "取代 NIP-04 的私信加密标准，安全性做了改进"
               },
               {
                 "id": "c",
-                "label": "免费发送"
+                "label": "一种比特币钱包集成方案"
               }
             ],
-            "correctId": "a",
-            "explanation": "NIP-17 使用密封事件和礼品包装更好地保护隐私。它隐藏对话的社交图谱（谁与谁交谈），而不仅仅是内容。",
+            "correctId": "b",
+            "explanation": "NIP-17 是 Nostr 上端到端加密私信的新标准，取代旧的 NIP-04，安全性更好。",
             "severity": "critical"
           },
           {
-            "id": "sealed-events",
-            "title": "密封事件",
-            "prompt": "什么是 NIP-17 中的'密封事件'？",
+            "id": "nip04-vs-nip17",
+            "title": "安全改进",
+            "prompt": "NIP-17 比 NIP-04 好在哪里？",
             "options": [
               {
                 "id": "a",
-                "label": "只有预期接收者可以解密的消息"
+                "label": "速度更快"
               },
               {
                 "id": "b",
-                "label": "永久锁定的帖子"
+                "label": "用了密封发送者（对中继隐藏发送方），加密也更强"
               },
               {
                 "id": "c",
-                "label": "付费消息"
+                "label": "配色更好看"
               }
             ],
-            "correctId": "a",
-            "explanation": "密封事件是使用接收者的公钥加密的消息，因此只有他们可以解密。即使看到加密数据，也没有其他人可以阅读。",
+            "correctId": "b",
+            "explanation": "NIP-17 用密封发送者的做法，让中继看不到消息是谁发的，同时采用了更好的加密方案。",
             "severity": "critical"
-          },
-          {
-            "id": "gift-wrap",
-            "title": "礼品包装",
-            "prompt": "礼品包装事件在 NIP-17 中有什么作用？",
-            "options": [
-              {
-                "id": "a",
-                "label": "隐藏发送者身份和对话事实"
-              },
-              {
-                "id": "b",
-                "label": "使消息看起来漂亮"
-              },
-              {
-                "id": "c",
-                "label": "添加比特币支付"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "礼品包装将密封事件包装在另一层加密中。这使中继和旁观者无法判断谁在发送消息或发送给谁。",
-            "severity": "critical"
-          },
-          {
-            "id": "nip17-visibility",
-            "title": "可见性",
-            "prompt": "谁能看到 NIP-17 私信被发送了？",
-            "options": [
-              {
-                "id": "a",
-                "label": "只有发送者和接收者——中继只看到匿名礼品包装"
-              },
-              {
-                "id": "b",
-                "label": "所有连接到中继的人"
-              },
-              {
-                "id": "c",
-                "label": "任何知道发送者公钥的人"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "NIP-17 设计使中继甚至不知道消息是私信。它们看起来像匿名事件。只有预期的接收者可以解包和阅读内容。",
-            "severity": "warning"
           },
           {
             "id": "migration",
-            "title": "客户端支持",
-            "prompt": "为什么不是所有客户端都支持 NIP-17？",
+            "title": "迁移",
+            "prompt": "需要从 NIP-04 迁移到 NIP-17 吗？",
             "options": [
               {
                 "id": "a",
-                "label": "它是较新的标准——客户端正在逐步添加支持"
+                "label": "不用，消息会自动转换"
               },
               {
                 "id": "b",
-                "label": "NIP-17 不安全"
+                "label": "需要，新消息要用支持 NIP-17 的客户端来发"
               },
               {
                 "id": "c",
-                "label": "它需要付费"
+                "label": "现在还是推荐 NIP-04"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "以后的私信用支持 NIP-17 的客户端发就行，旧的 NIP-04 消息保持原样。多数现代客户端已经默认使用 NIP-17。",
+            "severity": "warning"
+          },
+          {
+            "id": "sealed-sender",
+            "title": "密封发送者",
+            "prompt": "NIP-17 里的“密封发送者”是什么意思？",
+            "options": [
+              {
+                "id": "a",
+                "label": "消息装在信封里保存"
+              },
+              {
+                "id": "b",
+                "label": "中继看不到消息是谁发的，只知道谁能解密"
+              },
+              {
+                "id": "c",
+                "label": "消息读完就自动销毁"
+              }
+            ],
+            "correctId": "b",
+            "explanation": "密封发送者对中继隐藏了发送方的身份。中继看到的是加密后的消息，知道该转给谁，却不知道来自谁。",
+            "severity": "warning"
+          },
+          {
+            "id": "client-support",
+            "title": "兼容性",
+            "prompt": "怎么知道自己的客户端支不支持 NIP-17？",
+            "options": [
+              {
+                "id": "a",
+                "label": "查客户端的文档或设置里有没有 NIP-17 的说明"
+              },
+              {
+                "id": "b",
+                "label": "所有客户端都自动支持"
+              },
+              {
+                "id": "c",
+                "label": "看有没有蓝色对勾"
               }
             ],
             "correctId": "a",
-            "explanation": "NIP-17 是相对较新的标准（2024+）。客户端正在添加支持，但采用需要时间。检查你的客户端是否支持 NIP-17 以获得最佳隐私。",
+            "explanation": "翻一下客户端的功能列表或文档。Damus、Amethyst 等现代客户端已经把 NIP-17 用在私信上。",
             "severity": "info"
           }
         ]
@@ -1458,118 +1458,118 @@
     },
     "protocolComparison": {
       "title": "完整协议对比",
-      "description": "了解 Nostr 与其他社交媒体协议的不同，以及它的独特优势。",
+      "description": "对三大去中心化社交协议做一次完整的技术对比。看清各自的架构和取舍，再决定哪一个适合你。",
       "quiz": {
         "title": "协议对比测验",
         "questions": [
           {
-            "id": "nostr-vs-mastodon",
-            "title": "Nostr vs Mastodon",
-            "prompt": "Nostr 与 Mastodon（ActivityPub）的主要区别是什么？",
+            "id": "nostr-architecture",
+            "title": "Nostr 的设计",
+            "prompt": "Nostr 架构上的核心理念是什么？",
             "options": [
               {
                 "id": "a",
-                "label": "Nostr 没有中央服务器实例——用户控制自己的密钥和数据"
+                "label": "基于区块链的共识"
               },
               {
                 "id": "b",
-                "label": "没有区别——它们是相同的"
+                "label": "中继简单甚至笨拙，客户端聪明，没有中央权威"
               },
               {
                 "id": "c",
-                "label": "Mastodon 允许更长的帖子"
+                "label": "由管理员打理的联邦服务器"
               }
             ],
-            "correctId": "a",
-            "explanation": "Mastodon 使用联邦服务器（实例），每个都有管理员。Nostr 是无服务器的——只有中继存储数据，用户用密钥控制身份。",
+            "correctId": "b",
+            "explanation": "Nostr 的中继只负责存储和转发，重活都交给客户端。没有区块链，没有中央服务器，也没有管理员层级。",
             "severity": "critical"
           },
           {
-            "id": "nostr-vs-bluesky",
-            "title": "Nostr vs Bluesky",
-            "prompt": "Nostr 与 Bluesky（AT Protocol）有何不同？",
+            "id": "activitypub-comparison",
+            "title": "ActivityPub（Mastodon）",
+            "prompt": "ActivityPub（Mastodon）和 Nostr 有什么不同？",
             "options": [
               {
                 "id": "a",
-                "label": "Nostr 更简单，没有中央身份验证——只有密钥和 relays"
+                "label": "ActivityPub 用带管理员的联邦服务器；Nostr 用中继，服务器上没有账户"
               },
               {
                 "id": "b",
-                "label": "Bluesky 完全是去中心化的"
+                "label": "两者完全一样"
               },
               {
                 "id": "c",
-                "label": "它们使用相同的技术"
+                "label": "ActivityPub 更快"
               }
             ],
             "correctId": "a",
-            "explanation": "Bluesky 使用带有委托和服务的更复杂协议。Nostr 故意简单：只有密钥对和中继。没有中央身份系统。",
+            "explanation": "ActivityPub 是联邦式的，你得加入某台有管理员的服务器。Nostr 用的是中继，服务器上没有账户，你的密钥到哪都能立刻用。",
             "severity": "critical"
           },
           {
-            "id": "nostr-vs-twitter",
-            "title": "Nostr vs Twitter",
-            "prompt": "相比 Twitter/X，Nostr 的主要优势是什么？",
+            "id": "bluesky-comparison",
+            "title": "Bluesky / AT Protocol",
+            "prompt": "Bluesky（AT Protocol）和 Nostr 比起来如何？",
             "options": [
               {
                 "id": "a",
-                "label": "抗审查、拥有你的受众、没有算法操纵"
+                "label": "Bluesky 的架构更复杂，带有个人数据服务器；Nostr 更简单"
               },
               {
                 "id": "b",
-                "label": "更多的字符限制"
+                "label": "两者是同一个协议"
               },
               {
                 "id": "c",
-                "label": "由大公司运营"
+                "label": "Bluesky 并不存在"
               }
             ],
             "correctId": "a",
-            "explanation": "Nostr 提供抗审查性（没人可以删除你的账户）、拥有关系（你的粉丝随处跟随）和没有算法偏见。它是去中心化 Twitter 的尝试。",
+            "explanation": "Bluesky 的 AT Protocol 用到个人数据服务器，整体架构更复杂。Nostr 有意保持简单，只有中继和密钥。",
             "severity": "warning"
           },
           {
-            "id": "nostr-unique",
-            "title": "独特功能",
-            "prompt": "什么是 Nostr 独特的功能？",
+            "id": "censorship-resistance-compare",
+            "title": "抗审查能力",
+            "prompt": "哪个协议的抗审查能力最强？",
             "options": [
               {
                 "id": "a",
-                "label": "闪电网络集成用于比特币打赏（zaps）"
+                "label": "都差不多"
               },
               {
                 "id": "b",
-                "label": "直接消息加密"
+                "label": "Nostr，服务器上没有账户可封，换中继也容易，没有中央权威"
               },
               {
                 "id": "c",
-                "label": "发布图片的能力"
+                "label": "中心化平台"
               }
             ],
-            "correctId": "a",
-            "explanation": "Zaps（闪电网络支付）是 Nostr 原生的。虽然其他平台有打赏，但 Nostr 直接集成比特币支付，允许全球即时小额支付。",
+            "correctId": "b",
+            "explanation": "Nostr 的设计让它最难被审查：没有服务器账户可以封禁，换中继很容易，也没有哪家公司或基金会掌控它。",
             "severity": "warning"
           },
           {
-            "id": "trade-offs",
-            "title": "权衡",
-            "prompt": "使用 Nostr 需要接受什么权衡？",
+            "id": "user-experience",
+            "title": "体验上的取舍",
+            "prompt": "Nostr 为了去中心化付出了什么代价？",
             "options": [
               {
                 "id": "a",
-                "label": "自己管理密钥、寻找好中继、帖子可能分散在不同地方"
+                "label": "用户体验反而更简单"
               },
               {
                 "id": "b",
-                "label": "没有权衡——一切都更好"
+                "label": "用户得自己管理密钥、自己挑中继，责任更重"
               },
               {
                 "id": "c",
-                "label": "必须付费"
+                "label": "它比其他协议慢"
               }
             ],
-            "correctId": "a",
-            "explanation": "自由带来责任。你需要保护自己的密钥、选择中继，有时内容会分散。但这些权衡换取了不可审查、用户控制的社交媒体。",
+            "correctId": "b",
+            "explanation": "去中心化把更多责任交回给用户：管好密钥、挑好中继、理解这套架构。这就是换来自由的代价。",
             "severity": "info"
           }
         ]
@@ -1577,118 +1577,118 @@
     },
     "outboxModel": {
       "title": "理解发件箱模型",
-      "description": "理解 Nostr 发件箱模型的工作原理——它如何影响内容发现、隐私和去中心化。",
+      "description": "了解 Nostr 如何靠聪明的中继发现机制，把你的帖子送到每一个关注你的人面前。",
       "quiz": {
         "title": "发件箱模型测验",
         "questions": [
           {
-            "id": "outbox-basics",
-            "title": "发件箱概念",
-            "prompt": "Nostr 发件箱模型的核心思想是什么？",
+            "id": "outbox-purpose",
+            "title": "发件箱要解决什么",
+            "prompt": "发件箱模型解决的是什么问题？",
             "options": [
               {
                 "id": "a",
-                "label": "用户通过选择写入的中继来控制自己的内容"
+                "label": "它告诉关注你的人，该去哪些中继找你的帖子"
               },
               {
                 "id": "b",
-                "label": "所有内容存储在一个中央数据库"
+                "label": "它把你的帖子加密起来保护隐私"
               },
               {
                 "id": "c",
-                "label": "中继验证用户身份"
+                "label": "它把你所有的帖子都存在一个地方"
               }
             ],
             "correctId": "a",
-            "explanation": "发件箱模型意味着用户选择他们发布的中继。这创建了一个用户控制内容位置的分布式网络，而不是中央控制。",
+            "explanation": "发件箱模型会公开你的中继偏好（kind:10002），关注你的人因此知道去哪里找你的内容。",
             "severity": "critical"
           },
           {
-            "id": "relay-list",
-            "title": "中继列表",
-            "prompt": "你的中继列表（kind 10002）做什么？",
+            "id": "relay-list-kind",
+            "title": "事件类型",
+            "prompt": "中继列表元数据用的是哪种事件类型？",
             "options": [
               {
                 "id": "a",
-                "label": "告诉其他人你发布到哪些中继，这样他们可以找到你的内容"
+                "label": "kind:10002"
               },
               {
                 "id": "b",
-                "label": "为你所有朋友选择中继"
+                "label": "kind:1"
               },
               {
                 "id": "c",
-                "label": "阻止某些中继"
+                "label": "kind:0"
               }
             ],
             "correctId": "a",
-            "explanation": "中继列表（kind 10002）是一个特殊事件，列出你发布到的中继。它帮助客户端知道在哪里查找你的帖子。",
-            "severity": "critical"
+            "explanation": "kind:10002 是可替换事件，保存着带读写标记的中继列表。",
+            "severity": "info"
           },
           {
-            "id": "content-discovery",
-            "title": "内容发现",
-            "prompt": "在发件箱模型中，你如何找到某人的帖子？",
+            "id": "read-write-markers",
+            "title": "中继标记",
+            "prompt": "中继列表里的 write 标记代表什么？",
             "options": [
               {
                 "id": "a",
-                "label": "检查他们的中继列表，然后查询那些特定中继"
+                "label": "你会把帖子发布到这些中继"
               },
               {
                 "id": "b",
-                "label": "询问中央服务器"
+                "label": "你在这些中继上查看提及"
               },
               {
                 "id": "c",
-                "label": "所有中继自动共享所有内容"
+                "label": "你屏蔽掉的中继"
               }
             ],
             "correctId": "a",
-            "explanation": "要查找某人的内容，客户端首先获取他们的中继列表（kind 10002），然后查询那些特定中继。这就是你的'发件箱'。",
-            "severity": "critical"
-          },
-          {
-            "id": "outbox-privacy",
-            "title": "隐私影响",
-            "prompt": "发件箱模型如何影响隐私？",
-            "options": [
-              {
-                "id": "a",
-                "label": "你可以选择使用更少人知道的私人中继"
-              },
-              {
-                "id": "b",
-                "label": "自动使所有内容私密"
-              },
-              {
-                "id": "c",
-                "label": "没有隐私影响"
-              }
-            ],
-            "correctId": "a",
-            "explanation": "你可以选择只使用你知道的私人中继。虽然内容仍然是公开的，但限制在你选择的中继上可以降低可见性。",
+            "explanation": "write 标记指的是你的发件箱，也就是你平时发布内容的中继。read 则表示你在哪里查看别人对你的提及。",
             "severity": "warning"
           },
           {
-            "id": "censorship-resistance",
-            "title": "抗审查性",
-            "prompt": "发件箱模型如何帮助抗审查？",
+            "id": "optimal-relay-count",
+            "title": "实践建议",
+            "prompt": "你的中继列表里应该放多少个中继？",
             "options": [
               {
                 "id": "a",
-                "label": "如果一个中继屏蔽你，你可以切换到另一个，而你的身份和关注保持不变"
+                "label": "2-4 个"
               },
               {
                 "id": "b",
-                "label": "中继无法删除内容"
+                "label": "10-15 个"
               },
               {
                 "id": "c",
-                "label": "内容被加密"
+                "label": "越多越好"
               }
             ],
             "correctId": "a",
-            "explanation": "因为你控制发布的位置，没有单一实体可以屏蔽你。如果一个中继不行，用另一个。你的密钥和关注随处跟随。",
+            "explanation": "2-4 个是 NIP-65 对你公开发布的中继列表（kind 10002）的建议，这跟客户端运行时实际连接多少中继是两回事。公开的列表太长会耗电，收益却很小，因为内容本来就会在中继之间扩散。",
+            "severity": "warning"
+          },
+          {
+            "id": "switching-relays",
+            "title": "更换中继",
+            "prompt": "如果你不再用某个中继，换到新的，关注你的人会怎样？",
+            "options": [
+              {
+                "id": "a",
+                "label": "他们会自动在新中继上找到你"
+              },
+              {
+                "id": "b",
+                "label": "他们再也找不到你了"
+              },
+              {
+                "id": "c",
+                "label": "你得挨个给粉丝发消息"
+              }
+            ],
+            "correctId": "a",
+            "explanation": "当你更新中继列表（kind:10002），关注你的人会自动开始去你的新中继查看，不需要手动重连。",
             "severity": "critical"
           }
         ]
@@ -1706,7 +1706,7 @@
       "scoreDisplay": "{{score}} / {{total}} 正确答案",
       "conceptsMastered": "关键概念已掌握",
       "nextSteps": "下一步",
-      "perfectScore": "分享你的知识——帮助新人入门。",
+      "perfectScore": "分享你的知识，帮助新人入门。",
       "reviewSections": "复习下面错过的部分。",
       "retakeQuiz": "重新测验",
       "questionCounter": "问题 {{current}} / {{total}}",
@@ -1768,7 +1768,7 @@
       "title": "安全检查清单",
       "items": {
         "understand": {
-          "label": "我理解这是我唯一的密码——如果丢失，无法恢复"
+          "label": "我理解这是我唯一的密码，丢失后无法恢复"
         },
         "threePlaces": {
           "label": "我将把它保存在至少 3 个不同的安全位置"
@@ -1821,14 +1821,14 @@
         "keepSecret": "保密你的私钥（nsec）",
         "neverShare": "切勿与任何人分享",
         "storeBackups": "将备份存储在多个安全位置",
-        "onlyPassword": "这是你唯一的密码——如果丢失无法恢复"
+        "onlyPassword": "这是你唯一的密码，一旦丢失就找不回来"
       }
     }
   },
   "guidesPage": {
     "hero": {
       "title": "循序渐进学习 Nostr",
-      "description": "从入门到进阶的循序渐进等级。所有内容都已开放——等级只是给出一个合理的阅读顺序。"
+      "description": "从入门到进阶的循序渐进等级。所有内容都已开放，等级只是给出一个合理的阅读顺序。"
     },
     "filter": {
       "filterByInterest": "按兴趣筛选"
@@ -2107,7 +2107,7 @@
         "description": "部分内容缺失通常意味着中继连接问题。",
         "steps": [
           "检查你连接了哪些中继",
-          "添加更多中继（目标 5-10 个多样化中继）",
+          "添加更多中继（目标是 3-10 个不同的中继）",
           "等待几分钟让同步完成",
           "尝试刷新动态",
           "检查缺失的用户是否使用不同的中继"
@@ -2242,7 +2242,7 @@
         "title": "未连接钱包",
         "description": "你需要比特币闪电钱包才能发送 zap。",
         "steps": [
-          "下载闪电钱包（Alby、Zeus、Phoenix）",
+          "准备一个支持 Nostr Wallet Connect 的闪电钱包（Zeus、Coinos，或 Alby Hub 搭配 Alby Go）",
           "用比特币为钱包充值",
           "通过 NWC 将钱包连接到 Nostr 客户端",
           "尝试发送小额测试 zap",
@@ -2459,7 +2459,7 @@
       },
       "wssPurplePages": {
         "name": "Purple Pages",
-        "description": "元数据中继"
+        "description": "只有个人资料和列表，没有帖子"
       }
     }
   },
@@ -2609,15 +2609,15 @@
         "description": "快速、现代的客户端，支持所有平台，性能出色。",
         "pros": [
           "全平台支持",
+          "内置闪电钱包",
           "加载快速",
           "优秀的搜索",
-          "精美设计",
           "定期更新"
         ],
         "cons": [
           "部分人担心隐私问题",
-          "较新的应用",
-          "某些功能仍在开发中"
+          "读取要经过 Primal 自家的缓存服务器",
+          "中继控制不如硬核用户的客户端灵活"
         ]
       },
       "iris": {
@@ -2654,48 +2654,48 @@
       },
       "coracle": {
         "name": "Coracle",
-        "description": "为高级用户提供功能强大的桌面客户端。",
+        "description": "面向高级用户的网页客户端，中继和社区方面的设置很细。",
         "pros": [
           "功能强大",
-          "桌面优化",
+          "任何浏览器都能打开，也可以装成网页应用",
           "适合创作者",
           "高级筛选",
           "键盘快捷键"
         ],
         "cons": [
-          "仅桌面端",
+          "没有原生移动应用",
           "学习曲线较陡",
-          "不适合移动设备"
+          "设置项繁多，要花点时间摸清"
         ]
       },
       "current": {
-        "name": "Current",
-        "description": "iOS 客户端，拥有出色的 Nostr Wallet Connect 集成。",
+        "name": "Current（已停止开发）",
+        "description": "已停止开发。它曾是一个围绕 Nostr Wallet Connect 打造的 iOS 客户端，2023 年停止开发，App Store 上也已下架，下载链接现在哪里都去不了。想在 iOS 上要以钱包为核心的体验，可以看看 Primal。",
         "pros": [
-          "最佳钱包支持",
-          "NWC 集成",
-          "高级用户功能",
-          "简洁界面"
+          "早期的 Nostr Wallet Connect 客户端",
+          "以 zap 为核心的设计",
+          "简洁界面",
+          "源代码仍在 GitHub 上"
         ],
         "cons": [
-          "更复杂",
-          "仅 iOS",
-          "学习曲线"
+          "2023 年停止开发",
+          "已从 App Store 下架，下载链接失效",
+          "不适合新用户"
         ]
       },
       "habla": {
         "name": "Habla",
-        "description": "专注于长文章和通讯支持的客户端。",
+        "description": "面向长文写作的客户端。请注意：habla.news 至少从 2026 年 9 月起一直返回 404，在它恢复之前，长文写作可以先改用 YakiHonne。",
         "pros": [
           "适合文章",
-          "通讯支持",
+          "围绕长文（NIP-23）设计",
           "简洁的写作界面",
-          "货币化"
+          "读者可以为你发布的内容打赏"
         ],
         "cons": [
+          "网站目前打不开（404）",
           "仅网页版",
-          "用户群较小",
-          "社交功能有限"
+          "用户群较小"
         ]
       },
       "nostur": {
@@ -2713,16 +2713,16 @@
         ]
       },
       "plebstr": {
-        "name": "Plebstr",
-        "description": "适合新手的简单 Android 客户端。",
+        "name": "Openvibe（原 Plebstr）",
+        "description": "Plebstr 已经变成 Openvibe：还是那个应用，但现在把 Nostr、Bluesky、Mastodon 和 Threads 汇进同一条信息流。在安卓上依然容易上手，只是别指望纯 Nostr 的体验。",
         "pros": [
           "易于使用",
-          "简洁设计",
-          "良好的性能"
+          "一个应用管好几个网络",
+          "简洁设计"
         ],
         "cons": [
-          "功能较少",
-          "仅 Android",
+          "Nostr 只是它做的一部分",
+          "Nostr 专属功能较少",
           "无钱包"
         ]
       }
@@ -2939,18 +2939,18 @@
       "awesome": "太棒了！"
     },
     "keyGen": {
-      "description": "每个 Nostr 账户其实就是一对密钥——生成一对练习密钥，看看它们长什么样。",
+      "description": "每个 Nostr 账户其实就是一对密钥。生成一对练习密钥，看看它们长什么样。",
       "publicKeyTitle": "公钥（npub）",
       "publicKeyDesc": "可安全分享给任何人",
       "privateKeyTitle": "私钥（nsec）",
       "privateKeyDesc": "切勿与任何人分享",
-      "important": "这些练习密钥只在这里有效——它们不是真的。使用真实密钥时，可以随意分享你的 npub，但要把 nsec 保存在密码管理器或签名器应用中，切勿粘贴到任何网站或发送给任何人。"
+      "important": "这些练习密钥不是真的，只在这里有效。使用真实密钥时，可以随意分享你的 npub，但要把 nsec 保存在密码管理器或签名器应用中，切勿粘贴到任何网站或发送给任何人。"
     },
     "simulator": "模拟器",
     "simulationMode": "模拟模式",
-    "simulationNote": "这只是用于练习的模拟——准备好加入 Nostr 时，请安装真正的应用。",
+    "simulationNote": "这只是用于练习的模拟。准备好加入 Nostr 时，请安装真正的应用。",
     "relayStep": {
-      "description": "中继是存储并转发你帖子的服务器——多连接几个，让更多人能看到你写的内容。",
+      "description": "中继是存储并转发你帖子的服务器。多连接几个，让更多人能看到你写的内容。",
       "connected": "已连接",
       "connectOne": "请先连接一个中继"
     },
@@ -2958,7 +2958,7 @@
       "title": "发布第一条帖子",
       "description": "写一条简短的笔记，把它发布到你刚刚连接的中继上。",
       "placeholder": "想说点什么？",
-      "tip": "第一条帖子很适合用来做自我介绍——很多人会加上 #introductions，方便别人找到自己。"
+      "tip": "第一条帖子很适合用来做自我介绍。很多人会加上 #introductions，方便别人找到自己。"
     },
     "followStep": {
       "title": "关注他人",
@@ -2979,7 +2979,7 @@
     },
     "completion": {
       "title": "第一天完成！",
-      "description": "你连接了中继、发布了帖子、关注了他人，还收到了第一个 zap——现在你已经准备好在真正的客户端里完成这一切了。"
+      "description": "你连接了中继、发布了帖子、关注了他人，还收到了第一个 zap。现在你已经准备好在真正的客户端里完成这一切了。"
     }
   },
   "protocolComparisonUI": {
@@ -3148,7 +3148,7 @@
     "categories": {
       "jumpstart": {
         "name": "从这里开始",
-        "description": "精选的入门名单——如果你只关注一批人，就关注他们。"
+        "description": "精选的入门名单。如果你只关注一批人，就关注他们。"
       },
       "legit": {
         "name": "熟悉的面孔",
@@ -3156,7 +3156,7 @@
       },
       "cool_people": {
         "name": "社区推荐",
-        "description": "其他 Nostr 用户反复推荐的账号。没有统一主题——就是值得一起待着的人。"
+        "description": "其他 Nostr 用户反复推荐的账号。没有统一主题，就是一群值得一起待着的人。"
       },
       "artists": {
         "name": "艺术家与插画师",
@@ -3220,8 +3220,8 @@
     "noResults": "没有找到与搜索匹配的术语。",
     "quickReference": {
       "title": "快速参考",
-      "npub": "公钥——可以安全分享",
-      "nsec": "私钥——务必保密！",
+      "npub": "公钥，可以安全分享",
+      "nsec": "私钥，务必保密！",
       "nip01": "基础协议",
       "kind1": "文本笔记（帖子）"
     },

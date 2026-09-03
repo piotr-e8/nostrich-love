@@ -13,40 +13,25 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 
 ## 什么是闪电打赏？⚡
 
-闪电打赏是通过闪电网络发送的比特币小费。它们是 Nostr 的原生价值层——允许用户用真金白银奖励他们喜爱的内容。
+闪电打赏（英文叫 zap，客户端里的按钮和 #zap 标签用的都是这个词）是通过闪电网络发送的比特币小费。它是 Nostr 的原生价值层，让人可以用真金白银奖励自己喜爱的内容。
 
-把它们想象成"有价值的小红心"——一种支持你喜爱的创作者的方式。
+把它想象成"有价值的小红心"，一种支持你喜爱的创作者的方式。
 
 ### 闪电打赏的工作原理
 
-1. **你创建好内容** → 一条帖子、线程或回复
+1. **你创建好内容** → 一条帖子、帖子串或回复
 2. **有人喜欢它** → 他们点击 ⚡ 闪电打赏按钮
-3. **他们发送聪** → 少量比特币（1000 聪 = ~$0.30）
+3. **他们发送聪** → 少量比特币（1000 聪远远不到一美元）
 4. **你立即收到** → 钱出现在你的钱包里
 5. **每个人都看到** → 闪电打赏是公开的，创造社交证明
 
 ### 为什么闪电打赏是革命性的
 
-**传统社交媒体：**
-
-- 小红心是免费的，毫无价值
-- 平台保留所有广告收入
-- 创作者一无所获
-- 互动是空洞的
-
-**带闪电打赏的 Nostr：**
-
-- 每个小红心都可以有真正的价值
-- 没有平台抽成
-- 直接支持创作者
-- 有意义的互动
+在通常那些平台上，点赞不花钱，所以也不值钱。你的作品替它们卖广告，钱进了平台的口袋。闪电打赏改变的是这个动作本身：有人按下那道闪电，真的比特币就从他的钱包出来，进到你的钱包，中间没有哪家公司抽走一个百分点。让发出者付出一点代价的欣赏，分量往往更重。
 
 ### 真实示例
 
-- 开发者因修复 bug 收到 100,000 聪（$30）
-- 艺术家因分享作品被打赏
-- 作家因深刻见解赚取比特币
-- 梗图创作者因病毒内容获得小费
+一位插画师发了一张速写，第二天醒来收到素不相识的人打来的几千聪。一位作者写的长帖子串传了整整一周，这一周里打赏也一直没停。一位音乐人分享了一段粗糙的小样，赚回了一小时的录音棚钱。开发者也会被打赏，有时候一个下午替别人修好一个 bug，就是 100,000 聪（几十美元）。
 
 ### 价值换价值模型
 
@@ -67,12 +52,7 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 
 ### 闪电打赏如何显示
 
-在支持的客户端中，闪电打赏显示为：
-
-- ⚡ 闪电图标
-- 打赏金额（例如，"21 聪"）
-- 帖子的累计总额
-- 收到时的特殊通知
+在支持的客户端里，你会看到一道闪电旁边跟着金额（比如"21 聪"），帖子本身带着累计总额，而每当有一笔打赏落到你这里，你自己也会收到通知。
 
 <MockPost
   author="Alice"
@@ -102,7 +82,7 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 
 **Primal Wallet**（内置于 Primal 应用）
 
-- 零设置——内置于 Primal 客户端
+- 内置于 Primal 客户端，零设置
 - 自 Primal 3.0 起为基于 Spark 的自我托管钱包
 - 网页、iOS 和 Android
 - [primal.net](https://primal.net)
@@ -111,7 +91,7 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 
 - 托管式网页钱包
 - 提供 `you@coinos.io` 闪电地址
-- 托管——只存放小额资金
+- 托管式，只放小额资金
 - [coinos.io](https://coinos.io)
 
 **Phoenix**（移动版）
@@ -159,10 +139,10 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 
 ### Wallet of Satoshi 和 Mutiny 呢？
 
-许多较旧的指南仍然推荐它们——这些信息已经过时了：
+许多较旧的指南仍然推荐它们。这些信息已经过时了：
 
 - **Mutiny 已关闭**：2024 年 8 月宣布停运，所有应用、服务和支持已于 2024 年 12 月 31 日终止。不要向它发送资金。
-- **Wallet of Satoshi**：其经典的托管服务于 2023 年 11 月退出美国市场，并于 2026 年初在欧盟范围内停止。它已重新推出为基于 Spark、宣传为自我托管的钱包——这是一个不同的产品。
+- **Wallet of Satoshi**：其经典的托管服务于 2023 年 11 月退出美国市场，并于 2026 年初在欧盟范围内停止。它已重新推出为基于 Spark、宣传为自我托管的钱包。那是另一个产品。
 
 想要最简单的起步方式，请使用客户端内置钱包（如 Primal 的）或 Coinos。
 
@@ -174,7 +154,7 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 
 1. **设置 Alby Hub**
    - 前往 [getalby.com](https://getalby.com)（云端或自托管）
-   - Alby Hub 是一个自我托管的闪电节点——Alby 不再提供托管式余额
+   - Alby Hub 是一个自我托管的闪电节点，Alby 不再提供托管式余额
    - 浏览器扩展是可选的，可关联到你的 Hub
 
 2. **创建 NWC 应用连接**
@@ -227,7 +207,7 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 4. **验证它是否有效**
    - 在你的个人资料上寻找 ⚡ 图标
    - 请朋友发送测试闪电打赏（100 聪）
-   - 检查你的钱包——应该立即收到
+   - 检查你的钱包，应该立即收到
    - 你应该在客户端中看到闪电打赏通知
 
 <Callout variant="warning">
@@ -253,23 +233,23 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 | 金额           | 何时使用                    |
 | ---------------- | ------------------------------ |
 | 10-50 聪       | 小小的感谢             |
-| 100-500 聪     | 好的帖子/线程               |
+| 100-500 聪     | 优质帖子/帖子串             |
 | 1,000-5,000 聪 | 很棒的内容，播客集 |
 | 10,000+ 聪     | 非凡的价值，艺术，工具   |
 
-> 💡 **经验法则**：打赏你认为内容值多少。没有金额是太小的！
+> 💡 **经验法则**：按你觉得内容值多少来打赏，再小的金额也不嫌少！
 
 ### 自定义消息
 
-大多数客户端允许你添加一条消息与你的闪电打赏一起：
+大多数客户端都允许你在打赏时附上一条留言：
 
 ```
 "谢谢你的帮助！"
-"很棒的线程，学到了很多"
+"这个帖子串很棒，学到了很多"
 "☕ 我请的咖啡"
 ```
 
-这个性化了互动，帮助创作者知道什么内容有共鸣。
+这会让互动更有人情味，也能帮助创作者了解哪些内容引起了共鸣。
 
 <ZapSimulator client:idle />
 
@@ -277,11 +257,11 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 
 ## 接收闪电打赏 💰
 
-### 设置 LNURL
+### 设置你的闪电地址
 
 要接收闪电打赏，你需要配置它们去哪里：
 
-1. **获取你的闪电地址或 LNURL**
+1. **获取你的闪电地址**
    - 从你的钱包（客户端内置钱包、Coinos、Alby Hub 等）
    - 格式：`yourname@provider.com`
 
@@ -293,19 +273,15 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
    ```
 
 3. **验证它是否有效**
-   - 请朋友发送你 10 聪
-   - 或使用测试网水龙头
+   - 在钱包的发送界面里，往你自己的闪电地址打几聪试试
+   - 或者请朋友给你打赏 10 聪来测试
 
 ### 闪电打赏通知
 
-**在大多数客户端中：**
-
-- 被打赏时推送通知
-- 通知标签显示闪电打赏历史
-- 可以看到谁打赏了你
+大多数客户端会在打赏到账的一瞬间推送通知，并在通知里保留一个打赏标签页，你可以往回翻，看谁在什么时候打了多少。
 
 **隐私说明：**
-闪电打赏是半公开的。虽然在某些设置中金额可以是私密的，但你打赏（或被打赏）的事实是可见的。
+闪电打赏是公开的。任何人打开一条帖子，都能看到它被打赏过、打了多少，因为金额就写在发布到中继上的打赏收据里。有些客户端提供匿名打赏，那会把发送者的名字从收据上去掉。无论哪种方式，金额都是看得见的。
 
 ---
 
@@ -331,10 +307,12 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 
 ### 设置拆分
 
-1. **在你的客户端中**：寻找"闪电打赏拆分"或"接收者"
-2. **添加协作者**：输入他们的闪电地址
-3. **设置百分比**：必须总计 100%
-4. **保存**：未来的闪电打赏自动拆分
+拆分属于帖子，不属于你的账号。你要在写帖子的时候，在支持这个功能的客户端里设置它（用得最多的是 Amethyst），设好之后只对这一条笔记生效。并不存在某个开关，能把你此后发布的一切都悄悄拆分掉。
+
+1. **在撰写帖子时**：在编辑界面里找"闪电打赏拆分""接收者"或类似的字样
+2. **按 Nostr 身份添加协作者**：你用 npub 或搜索的方式选人，客户端会从对方的个人资料上读取闪电地址。个人资料里没有闪电地址的人，那份钱没地方收。
+3. **给每个人分配份额**（可选）：这里填的是相对权重，不是百分比，所以 3 和 1 意味着一位协作者拿走四分之三。不填权重，打赏就平均分。
+4. **发布**：这条笔记上的每一笔打赏，都按你设的方式分。
 
 ### 常见用例
 
@@ -345,27 +323,11 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 
 ---
 
-## 闪电打赏分析 📊
+## 记录你的闪电打赏 📊
 
-追踪你的闪电打赏活动：
+你想知道的大部分信息，客户端里已经有了。每条帖子都带着自己的打赏总额，通知里的打赏标签页会列出谁在什么时候发了多少。如果你用的是带内置钱包的客户端，比如 Primal，钱包界面会把进出的聪汇总在一处，历史一目了然。
 
-### 给创作者
-
-- **收到的总闪电打赏**：终身和时间段
-- **被打赏最多的内容**：哪些帖子赚得最多
-- **闪电打赏速度**：传入闪电打赏的速率
-
-**工具：**
-
-- 大多数客户端显示基本统计
-- [zaplife.lol](https://zaplife.lol) - 详细分析
-- [nostrudel.ninja](https://nostrudel.ninja) - 高级统计
-
-### 给支持者
-
-- **总打赏**：你给了多少
-- **闪电打赏排行榜**：你支持最多的人
-- **影响追踪**：查看你的贡献
+目前还不存在真正意义上的打赏数据看板，所以别去找什么热门帖子排行或者支持者榜单了。[zaplife.lol](https://zaplife.lol) 倒是值得一看：它是一条实时流，显示此刻整个 Nostr 上正在发生的打赏，看着有意思，但谈不上是测量工具。
 
 ---
 
@@ -478,8 +440,7 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 
 - [闪电网络信息](https://lightning.network)
 - [Alby 文档](https://guides.getalby.com)
-- [Zaplife - 闪电打赏分析](https://zaplife.lol)
-- [ZapSplits 工具](https://github.com/nostr-protocol/zaps)
+- [Zaplife - 全网闪电打赏实时流](https://zaplife.lol)
 
 ---
 
@@ -505,12 +466,12 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 
 **闪电打赏金额：**
 
-- 21 聪 = 最低可行闪电打赏
+- 21 聪 = 经典的小额打赏（比特币圈的一个梗）
 - 100 聪 = 标准"谢谢"
 - 1000 聪 = "这很有价值"
 - 10000+ 聪 = 非凡内容
 
-**记住：** 每个聪都算数。不要担心金额——慷慨地支持好内容！
+**记住：** 每个聪都算数。不要担心金额，看到好内容就大方一点！
 
 ---
 
@@ -524,5 +485,5 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 
 ## 继续阅读
 
-- [你的密钥，你的身份](/zh/guides/keys-and-security)
-- [必备 Nostr 工具](/zh/guides/nostr-tools)
+- [你的密钥，你的身份](/zh/guides/keys-and-security)：闪电打赏绑定在签名它的密钥上，先把密钥这件事做对
+- [必备 Nostr 工具](/zh/guides/nostr-tools)：让打赏更省心的钱包和服务

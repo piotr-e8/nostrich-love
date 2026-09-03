@@ -111,19 +111,17 @@ Most Nostr clients connect you to several default relays. But understanding this
 
 If you're just starting, stick with these popular, reliable relays:
 
-| Relay                      | Description      | Reliability |
-| -------------------------- | ---------------- | ----------- |
-| `wss://relay.damus.io`     | Damus main relay | ⭐⭐⭐⭐⭐  |
-| `wss://nostr.wine`         | General relay    | ⭐⭐⭐⭐    |
-| `wss://relay.snort.social` | Snort social     | ⭐⭐⭐⭐    |
+| Relay                    | Description             | Cost |
+| ------------------------ | ----------------------- | ---- |
+| `wss://relay.damus.io`   | Damus main relay        | Free |
+| `wss://nos.lol`          | Popular general relay   | Free |
+| `wss://relay.primal.net` | Primal's public relay   | Free |
 
 ### Interest-Based Discovery
 
-Communities often run their own relays for focused discussions:
+Communities often run their own relays for focused discussions. `wss://nostr.bitcoiner.social` is a long-running example, built around Bitcoin.
 
-- **Bitcoin**: `wss://nostr.bitcoiner.social`
-- **Development**: `wss://relay.nostrdevs.com`
-- **Art**: `wss://relay.nostrich.art`
+Topical relays come and go, so a list printed in a guide goes stale fast. Use the explorer below instead: it checks each relay while you look at it, so you only copy addresses that are actually answering right now.
 
 <RelayExplorer client:idle />
 
@@ -138,7 +136,8 @@ Communities often run their own relays for focused discussions:
 
 **Paid Relays**
 
-- Usually require small fee (often 1000-5000 sats/month)
+- Ask for a small Bitcoin payment: some charge once when you join, others monthly
+- Prices vary a lot, from a few thousand sats up to around 20,000
 - Better performance
 - Less spam
 - Support relay operators
@@ -147,7 +146,7 @@ Communities often run their own relays for focused discussions:
 
 ---
 
-## Advanced: Outbox Model (NIP-65) [ADVANCED]
+## The Outbox Model (NIP-65) [ADVANCED]
 
 <Note type="advanced">
   This section is optional. You can use Nostr perfectly well without
@@ -163,30 +162,29 @@ NIP-65 introduces a smarter way to handle relays called the "outbox model."
 
 ### How It Works
 
-```
-1. You publish a relay list:
-   {
-     "read": ["wss://relay-a.com"],
-     "write": ["wss://relay-b.com"]
-   }
+Your client publishes one short list, and every relay entry on it is marked as a place you write to, a place you read from, or both. Other people's clients fetch that list before they go looking for you.
 
-2. Other clients read this and know:
-   - Where to find your posts (read relays)
-   - Where to send you messages (write relays)
-```
+- **Write** relays are where you publish. When someone follows you, their client goes to your write relays to pull your posts.
+- **Read** relays are where things addressed to you arrive: replies, mentions, notifications. Your client watches them so you see them.
+
+If you get the two backwards, your posts land somewhere nobody thinks to look. Most clients set the markers for you when you edit your relay list in settings, so you rarely touch this by hand.
+
+> 📚 The full walkthrough, with what the list actually looks like, is in our [Outbox Model guide](/guides/outbox-model).
 
 ### Setting Up Personal Relays
 
 For advanced users, running your own relay gives you:
 
 - **Complete control** over your data
-- **Perfect reliability** (no dependency on others)
-- **Privacy** (only your data on the relay)
+- **A permanent copy** of everything you post, held by you
+- **Independence** from any single relay operator's decisions
+
+What it does not give you is reliability or privacy. A relay on your own server is only as dependable as that server, and a large operator usually keeps better uptime than you will. Privacy is a bigger misunderstanding: anything you post still travels out to your other relays and stays publicly readable there. A personal relay only changes where a copy of your posts is kept. Everyone can still read them.
 
 Popular personal relay software:
 
 - [strfry](https://github.com/hoytech/strfry) - Fast C++ implementation
-- [nostr-rs-relay](https://gitlab.com/soapbox-pub/nostr-rs-relay) - Rust implementation
+- [nostr-rs-relay](https://github.com/scsibug/nostr-rs-relay) - Rust implementation
 
 > 📚 See our [Relay Guide](/guides/relay-guide) for detailed setup instructions.
 
@@ -222,13 +220,13 @@ In most clients, you can:
 ### "My posts disappear"
 
 - Some relays delete old content to save space
-- Connect to more relays for redundancy
-- Consider a paid relay for permanent storage
+- Connect to more relays, so no single one holds your only copy
+- Paid relays usually keep posts around much longer, but nothing on Nostr is guaranteed forever: relays prune, change their rules, or close down
 
 ### "Relay won't connect"
 
 - Check your internet connection
-- Try the relay URL in a browser (should show error/ws page)
+- Swap the `wss://` at the front of the address for `https://` and open that in your browser: a working relay answers with an info page or a short block of text, a dead one gives you nothing at all
 - The relay might be down - try another one
 
 <TroubleshootingWizard client:idle />

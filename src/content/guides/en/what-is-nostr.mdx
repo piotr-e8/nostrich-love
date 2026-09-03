@@ -9,20 +9,13 @@ category: "getting-started"
 
 import { HoverCard } from "@components/HoverCard";
 import { ProtocolComparison } from "@components/ProtocolComparison";
-import { NostrSimulator } from "@components/NostrSimulator";
 import { WhatIsNostrQuiz } from "@components/interactive/WhatIsNostrQuiz";
 
-{ /* <ProgressIndicator current={1} total={4} estimatedTime="5 minutes" /> */ }
-
-{ /* <div className="simulator-section my-12"> */ }
-  { /* <NostrSimulator client:idle /> */ }
-{ /* </div> */ }
-
-**Nostr — short for Notes and Other Stuff Transmitted by Relays — is an open protocol for social media, not an app.** Your account is a cryptographic key pair, your posts are signed events, and relays are the servers that store and forward them. Any client can read them, so no company can ban you or lock in your followers.
+**Nostr (short for Notes and Other Stuff Transmitted by Relays) is an open protocol for social media, not an app.** Your account is a cryptographic key pair, your posts are signed events, and relays are the servers that store and forward them. Any client can read them, so no company can ban you or lock in your followers.
 
 It was published anonymously by a developer known as fiatjaf in 2020, and it is defined by numbered specs called NIPs rather than by any company.
 
-### The Problem (1 minute read)
+## The Problem
 
 **You don't own your social media presence.**
 
@@ -31,7 +24,7 @@ When you build a following on Twitter, Instagram, or Facebook, you're building o
 ### Platform Risk Is Real
 
 - **Bans happen.** A mistake, a controversial opinion, or a false report can lock you out of years of content and connections
-- **Algorithms change.** Your posts might reach 10,000 people one day and 200 the next—with no warning or explanation
+- **Algorithms change.** Your posts might reach 10,000 people one day and 200 the next, with no warning or explanation
 - **Your followers aren't yours.** If the platform bans you, you lose access to the audience you spent years building
 - **Data lock-in.** Your posts, photos, and messages are trapped in one company's database
 
@@ -44,11 +37,11 @@ Big tech companies control:
 - What content gets promoted
 - Whether you can export your data
 
-**This isn't just inconvenient—it puts your digital identity at risk.**
+**This isn't just inconvenient. It puts your digital identity at risk.**
 
 ---
 
-### The Solution: Protocol vs Platform (2 minutes read)
+## The Solution: Protocol vs Platform
 
 Nostr solves this by changing one fundamental thing: **It's a protocol, not a platform.**
 
@@ -83,7 +76,7 @@ You probably use email every day without thinking about this magic:
 
 ---
 
-### Key Concepts (2 minutes read)
+## Key Concepts
 
 Don't worry about memorizing everything. You'll learn by doing. But here's the mental model:
 
@@ -96,8 +89,8 @@ Don't worry about memorizing everything. You'll learn by doing. But here's the m
   Your public identity on Nostr looks like: `npub1q...9x`
 </HoverCard>
 
-- Looks like: <code className="break-all text-sm">npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
-- Share this freely—it's how people find and follow you
+- Looks like: <code className="break-all text-sm">npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
+- Share this freely: it's how people find and follow you
 - Think of it like your email address or phone number
 - **Green light: Safe to share anywhere**
 
@@ -110,7 +103,7 @@ Don't worry about memorizing everything. You'll learn by doing. But here's the m
   Your secret key looks like: `nsec1q...9x`
 </HoverCard>
 
-- Looks like: <code className="break-all text-sm">nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
+- Looks like: <code className="break-all text-sm">nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
 - This proves you own your public key
 - **RED ALERT: Never share this with anyone**
 - Lose it = permanent loss. No "forgot password" option
@@ -133,26 +126,26 @@ Don't worry about memorizing everything. You'll learn by doing. But here's the m
 
 <HoverCard
   term="Clients"
-  definition="The apps you use to interact with Nostr—like Damus, Amethyst, or Iris. You can switch clients anytime without losing your identity."
+  definition="The apps you use to interact with Nostr, such as Damus, Amethyst or Iris. You can switch clients anytime without losing your identity."
 >
-  Clients are like Gmail vs Apple Mail—different interfaces, same protocol
+  Clients are like Gmail vs Apple Mail: different interfaces, same protocol
 </HoverCard>
 
 - The app you use to post, browse, and message
 - Examples: Damus (iOS), Amethyst (Android), Iris (web)
-- Switch anytime—you're never locked in
+- Switch anytime. You're never locked in
 
 ---
 
-### Why This Matters (1 minute read)
+## Why This Matters
 
 ### The Good
 
 ✅ **No one can ban you.** They can ignore your posts, but they can't stop you from publishing
 
-✅ **Your data is portable.** Every post, every follower, every like—it's all yours to move
+✅ **Your data is portable.** Every post, every follower, every like: it's all yours to move
 
-✅ **No ads or algorithms.** Most clients show chronological feeds. Your attention isn't the product
+✅ **No ads, and no algorithm you didn't ask for.** Clients show you the people you follow, newest first. Some also offer trending or algorithmic feeds, but those are a tab you open, not the default you get handed
 
 ✅ **Resilient.** If one relay goes down, your identity survives. If one client shuts down, you switch to another
 
@@ -174,25 +167,26 @@ That depends on what you value:
 
 ## How Nostr Actually Works
 
-Five pieces make up the whole protocol. You do not need them to use Nostr, but they are what people mean when they say "Nostr is simple".
+Four pieces make up the protocol itself. You do not need to know them to use Nostr, but they are what people mean when they say "Nostr is simple".
 
-- **Event** — every post, reaction, profile update and private message is one signed JSON object. That is the only data structure the protocol has.
-- **Kind** — an integer on each event saying what it is: `0` a profile, `1` a short note, `3` a contact list, `7` a reaction, `30023` a long-form article.
-- **Signature** — a Schnorr signature over secp256k1, made with your [private key](/guides/keys-and-security). It is what makes an event tamper-proof, and why no relay can forge a post in your name.
-- **NIP** — Nostr Implementation Possibility, the numbered specifications the protocol is made of. NIP-01 defines events and relays; [NIP-05](/guides/nip05-identity) maps a human-readable `name@domain` to your key; [NIP-57](/guides/zaps-and-lightning) defines zaps.
-- **Web of trust** — with no company algorithm, discovery runs on who your follows follow. That is why [finding your first people](/guides/finding-community) matters more here than on other networks.
+- **Event:** every post, reaction, profile update and private message is one signed JSON object. That is the only data structure the protocol has.
+- **Kind:** an integer on each event saying what it is: `0` a profile, `1` a short note, `3` a contact list, `7` a reaction, `30023` a long-form article.
+- **Signature:** a Schnorr signature over secp256k1, made with your [private key](/guides/keys-and-security). It is what makes an event tamper-proof, and why no relay can forge a post in your name.
+- **NIP:** Nostr Implementation Possibility, the numbered specifications the protocol is made of. NIP-01 defines events and relays; [NIP-05](/guides/nip05-identity) maps a human-readable `name@domain` to your key; [NIP-57](/guides/zaps-and-lightning) defines zaps.
 
-Payments are part of the culture rather than an add-on: a **zap** is a Bitcoin Lightning tip attached to a post, denominated in sats. See [Zaps & Lightning](/guides/zaps-and-lightning) for how that works.
+The fifth thing you will hear about is the **web of trust**, and that one is a habit rather than a spec. With no company algorithm deciding what you see, discovery runs on who your follows follow, which is why [finding your first people](/guides/finding-community) matters more here than on other networks.
+
+Payments are part of the culture rather than an add-on: a **zap** is a Bitcoin Lightning tip attached to a post, denominated in sats (one sat is a hundred-millionth of a bitcoin). See [Zaps & Lightning](/guides/zaps-and-lightning) for how that works.
 
 ### Coming From Somewhere Else?
 
 If you already use another network, the fastest way to place Nostr is to compare it with what you know:
 
-- [Nostr vs Twitter/X](/nostr-vs-twitter) — what ownership and reach actually change
-- [Nostr vs Mastodon](/nostr-vs-mastodon) — why relays are not instances
-- [Nostr vs Bluesky](/nostr-vs-bluesky) — two different answers to decentralized identity
+- [Nostr vs Twitter/X](/nostr-vs-twitter): what ownership and reach actually change
+- [Nostr vs Mastodon](/nostr-vs-mastodon): why relays are not instances
+- [Nostr vs Bluesky](/nostr-vs-bluesky): two different answers to decentralized identity
 
-For the protocol-level version — how Nostr, ActivityPub and the AT Protocol actually differ underneath — read [Nostr vs ActivityPub vs Bluesky](/guides/protocol-comparison).
+Want the protocol-level version? [Nostr vs ActivityPub vs Bluesky](/guides/protocol-comparison) covers how the three actually differ underneath.
 
 ---
 

@@ -2,20 +2,19 @@
 title: "Relay-Management-Guide"
 seoTitle: "Nostr-Relays auswählen und verwalten (Guide)"
 description: "Meistere Nostr-Relays. Lerne, wie du deine Relay-Verbindungen wählst, konfigurierst und für bessere Performance und Reichweite optimierst."
-estimatedTime: "12 Minuten"
+estimatedTime: "20-25 Minuten"
 priority: 8
 category: "advanced"
 prerequisites: ["keys-and-security", "quickstart", "relays-demystified"]
 ---
 
-import { CTAButton } from "@components/CTAButton";
 import { Callout } from "@components/ui/Callout";
 import { RelayVisualizer } from "@components/ui/RelayVisualizer";
 import { RelayGuideQuiz } from "@components/interactive/RelayGuideQuiz";
 import { RelayPlayground } from "@components/interactive/RelayPlayground";
 
 {/* ProgressIndicator vorübergehend deaktiviert - wird später mit tatsächlichem Tracking implementiert */}
-{/* <ProgressIndicator current={3} total={6} estimatedTime="12 Minuten" /> */}
+{/* <ProgressIndicator current={3} total={6} estimatedTime="20-25 Minuten" /> */}
 
 ## Wie Relays funktionieren (3 Minuten)
 
@@ -23,8 +22,8 @@ import { RelayPlayground } from "@components/interactive/RelayPlayground";
 
 <Callout variant="info">
   **Aufbauend auf vorherigem Wissen:** Dieser Abschnitt wiederholt kurz die
-  Postamts-Analogie aus [Relays Demystified](/de/guides/relays-demystified). Wenn
-  du dich erinnerst, wie Relays funktionieren, kannst du gerne zu [Arten von
+  Postamts-Analogie aus [Relays erklärt](/de/guides/relays-demystified). Wenn du
+  dich erinnerst, wie Relays funktionieren, kannst du gerne zu [Arten von
   Relays](#arten-von-relays) springen.
 </Callout>
 
@@ -35,35 +34,19 @@ import { RelayPlayground } from "@components/interactive/RelayPlayground";
 Denk an sie wie Postfächer:
 
 - Du gibst eine Kopie deines Briefs (deines Posts) bei mehreren Postämtern ab
-- Jedes Postamt behält seine eigene Kopie – sie leiten nichts aneinander weiter
+- Jedes Postamt behält seine eigene Kopie, weitergereicht wird nichts
 - Empfänger holen ihn bei einem Postamt ab, das ihr beide nutzt
 
 Bei Nostr:
 
 - **Du** schreibst eine Notiz (Post)
 - **Client** sendet eine Kopie an jedes Relay, mit dem du verbunden bist
-- **Relays** speichern sie und liefern sie an jeden aus, der danach fragt – aber standardmäßig geben sie sie nicht an andere Relays weiter
-- **Follower** empfangen sie von ihren Relays – deshalb müssen sich eure Relay-Listen überschneiden
+- **Relays** speichern sie und liefern sie an jeden aus, der danach fragt, aber standardmäßig geben sie sie nicht an andere Relays weiter
+- **Follower** bekommen sie von den Relays, auf die du veröffentlichst. Dein Client macht diese Relay-Liste öffentlich bekannt (das ist NIP-65), damit die Apps anderer Leute wissen, wo sie nach dir suchen sollen. Ältere Apps, die diese Liste ignorieren, sehen deine Posts nur, wenn ihr zufällig ein Relay gemeinsam habt
 
 ### Warum das wichtig ist
 
-**Kein Single Point of Failure:**
-
-- Wenn ein Relay ausfällt, funktionieren andere weiter
-- Deine Posts existieren an mehreren Orten
-- Du kontrollierst, wo deine Daten leben
-
-**Zensurresistenz:**
-
-- Niemand kann deine Posts von allen Relays löschen
-- Du kannst immer zu anderen Relays wechseln
-- Netzwerk routet um Blockaden herum
-
-**Wahl und Wettbewerb:**
-
-- Verschiedene Relays bieten verschiedene Features
-- Kostenlose und bezahlte Optionen
-- Spezialisiert vs. Allzweck
+Weil deine Posts gleichzeitig auf mehreren Relays liegen, bist du nicht offline, wenn eines davon ausfällt, und niemand kann deine Texte überall auf einmal löschen. Fängt ein Relay an, deine Arbeit abzulehnen, wechselst du zu einem anderen, und deine Leser kommen mit. Dieselbe Offenheit ist der Grund, warum Relays sich untereinander unterscheiden: manche sind kostenlos, manche kosten Geld, manche filtern streng und manche kaum. Du suchst dir die Mischung aus, mit der du leben willst.
 
 ### Technischer Überblick [ERWEITERT]
 
@@ -88,83 +71,40 @@ Wenn du postest:
 
 ---
 
+<span id="arten-von-relays"></span>
+
 ## Arten von Relays (2 Minuten)
 
 ### Kostenlose öffentliche Relays
 
-**Was sie sind:**
-
-- Von Freiwilligen oder Community-Mitgliedern betrieben
-- Keine Kosten zur Nutzung
-- Offen für alle
-
-**Pros:**
-
-- ✅ Kostenlos
-- ✅ Einfacher Start
-- ✅ Große Netzwerke
-
-**Cons:**
-
-- ❌ Können langsam oder unzuverlässig sein
-- ❌ Können Ausfallzeiten haben
-- ❌ Weniger Anreiz zur Wartung
+Freiwillige und Community-Mitglieder betreiben diese Relays, und jeder darf dort posten. Sie kosten nichts, die meisten Leute fangen hier an, und die großen tragen einen guten Teil des Netzwerks. Der Haken: ein kostenloses Relay ist nur so zuverlässig wie der gute Wille, der es am Laufen hält. Rechne also hin und wieder mit einer lahmen Phase oder einem Ausfall.
 
 **Beispiele:**
 
 - `wss://relay.damus.io` (am beliebtesten)
 - `wss://nos.lol`
 - `wss://relay.snort.social`
+- `wss://nostr.mom`
 
 <Callout variant="warning">
-  **Vermeide relay.nostr.band:** Dieser Relay war über längere Zeit offline/unzuverlässig.
-  Viele Anleitungen empfehlen ihn immer noch, aber du solltest stattdessen die oben genannten Alternativen verwenden.
+  **Lass relay.nostr.band weg.** Es ist seit Langem offline und kommt voraussichtlich
+  nicht zurück. Viele Anleitungen führen es weiter auf, und deshalb ist ein Relay, das
+  nie verbindet, so oft der Grund, warum eine frische Einrichtung kaputt wirkt.
+  Nimm die Relays oben.
 </Callout>
 
 ### Bezahl-Relays
 
-**Was sie sind:**
-
-- Erfordern Zahlung zur Nutzung
-- Normalerweise höhere Qualität
-- Bessere Performance
-
-**Pros:**
-
-- ✅ Zuverlässiger
-- ✅ Bessere Performance
-- ✅ Finanzieller Anreiz zur Wartung
-- ✅ Oft bessere Moderation
-
-**Cons:**
-
-- ❌ Kosten Geld
-- ❌ Können Nutzungslimits haben
-- ❌ Nicht notwendig für gelegentliche Nutzer
+Hier bezahlst du fürs Schreiben, meistens eine Gebühr in Bitcoin über Lightning. Das Geld verschafft dir einen Betreiber, der einen Grund hat, die Maschine schnell zu halten, den Spam kurz zu halten und sich zu melden, wenn etwas kaputtgeht. Fürs gelegentliche Posten braucht es davon nichts, und manche Bezahl-Relays begrenzen, wie viel du speichern darfst. Sieh so ein Relay also als Upgrade für den Moment, in dem ein kostenloses nicht mehr gut genug ist.
 
 **Beispiele:**
 
-- `wss://nostr.wine` (bezahlt)
+- `wss://nostr.wine` (einmalige Aufnahmegebühr)
 - Verschiedene private Relays
 
 ### Spezialisierte Relays
 
-**Was sie sind:**
-
-- Fokus auf spezifische Themen
-- Regionale Relays
-- Anwendungsspezifisch
-
-**Pros:**
-
-- ✅ Themen-fokussierter Content
-- ✅ Gleichgesinnte Communities
-- ✅ Regionale Relevanz
-
-**Cons:**
-
-- ❌ Kleinere Reichweite
-- ❌ Können Nische sein
+Manche Relays gibt es für ein Thema, eine Region oder eine einzelne App. Ein kleinerer Raum heißt: die Leute dort interessieren sich eher für das, was du machst, und es kostet dich nichts, so ein Relay zusätzlich zu den allgemeinen einzutragen. Verlass dich nur nicht allein auf ein Nischen-Relay, denn dort sehen dich nur die, die davon wissen.
 
 **Beispiele:**
 
@@ -183,63 +123,49 @@ Wenn du postest:
 
 ### Empfohlenes Starter-Set
 
-Verbinde dich mit diesen 5 Relays für gute Abdeckung:
+Verbinde dich mit diesen vier kostenlosen Relays für gute Abdeckung:
 
 ```
 wss://relay.damus.io          (Primär - am beliebtesten)
 wss://nos.lol                 (Schnell, zuverlässig)
-wss://relay.snort.social      (Beliebter Client)
-wss://nostr.wine              (Qualitäts-Bezahloption - optional)
+wss://relay.snort.social      (Läuft hinter dem Snort-Client)
+wss://nostr.mom               (Kleiner, Community-betrieben)
 ```
 
+Wenn du später ein Bezahl-Relay dazunehmen willst, ist `wss://nostr.wine` die bekannteste Option. Weiter unten steht mehr dazu.
+
 <Callout variant="info">
-  **Ein Hinweis zur Dezentralisierung:** Während die beliebten Relays oben
-  großartig zum Einstieg sind, konzentriert das Vertrauen auf nur wenige große
-  Relays Macht und geht gegen Nostrs dezentralisiertes Ethos. Wenn du dich
-  wohler fühlst, erwäge kleinere, Community-betriebene Relays und Bezahl-Relays
-  hinzuzufügen, um Netzwerkdiversität zu unterstützen. Das Ziel ist ein
-  gesunder Mix aus großen und kleinen Relays – denk daran als nicht alle Eier
-  in einen Korb zu legen.
+  **Ein Hinweis zur Dezentralisierung:** Die beliebten Relays oben sind
+  großartig zum Einstieg, aber wer sich nur auf ein paar große verlässt,
+  konzentriert Macht, und das widerspricht Nostrs dezentralem Ethos. Sobald du
+  dich sicherer fühlst, nimm zusätzlich kleinere, Community-betriebene Relays
+  und Bezahl-Relays auf, um die Vielfalt des Netzwerks zu stärken. Das Ziel ist
+  ein gesunder Mix aus großen und kleinen Relays: Leg nicht alle Eier in einen
+  Korb.
 </Callout>
+
+### Lese-Relays und Schreib-Relays
+
+Relay-Einstellungen kommen meistens in zwei Spalten. Schreib-Relays halten deine eigenen Posts, dort sucht also die App eines neuen Followers nach dir. Lese-Relays sind die, die du auf Antworten und Erwähnungen beobachtest. Wenn du deine Relay-Einstellungen speicherst, veröffentlicht dein Client diese Liste als öffentliche Notiz, die jede andere App lesen kann. Genau so finden Leute deine Posts, ohne dass du ihnen irgendetwas sagen musst. Von Hand weiterzugeben gibt es hier nichts. [Der Guide zum Outbox-Modell](/de/guides/outbox-model) erklärt die Mechanik, falls dich das interessiert.
 
 ### Auswahlkriterien
 
-**1. Uptime/Zuverlässigkeit**
+**1. Uptime.** Ein Relay, das die halbe Zeit nicht erreichbar ist, ist ein Relay, das deine Leser nicht erreichen. nostr.watch verfolgt die Uptime, falls du vor dem Eintragen nachsehen willst.
 
-- Suche nach Relays mit >99% Uptime
-- Prüfe nostr.watch für Stats
-- Vermeide häufig offline Relays
+**2. Standort.** Ein Relay in deiner Nähe fühlt sich schneller an. Halte also ein bis zwei in der Nähe und ein paar weiter weg für die Reichweite.
 
-**2. Geografische Lage**
+**3. Content-Richtlinie.** Manche Relays filtern Spam scharf, manche nehmen fast alles an. Lies, was der Betreiber dazu sagt, und such dir aus, womit du leben kannst.
 
-- Näher = geringere Latenz
-- Wähle Relays in deiner Nähe
-- Mix aus Regionen für globale Reichweite
+**4. Tempo.** Wenn ein Relay bei jedem Start deiner App mehrere Sekunden zum Verbinden braucht, kostet es dich mehr, als es bringt.
 
-**3. Content-Richtlinie**
-
-- Einige filtern Spam
-- Einige erlauben alles
-- Wähle basierend auf deinen Präferenzen
-
-**4. Performance**
-
-- Schnelle Verbindungszeiten
-- Niedrige Latenz
-- Gute Bandbreite
-
-**5. Community**
-
-- Aktiver Betreiber
-- Reaktionsschnell bei Problemen
-- Transparent über Richtlinien
+**5. Der Betreiber.** Jemand, der Fragen beantwortet und öffentlich sagt, was das Relay tut, ist mehr wert als reine technische Daten.
 
 ### Wo man Relays findet
 
-- **nostr.watch** - Relay-Uptime-Monitor
-- **nostr.info** - Relay-Verzeichnis
-- **Client-Empfehlungen** - Viele schlagen Standard-Relays vor
-- **Community-Listen** - Geteilt in Nostr-Posts
+- **nostr.watch:** verfolgt, welche Relays gerade laufen und welche nicht
+- **nostr.info:** ein Verzeichnis zum Durchblättern
+- **Client-Empfehlungen:** viele Apps schlagen von sich aus Standard-Relays vor
+- **Community-Listen:** Leute posten ihre Sets direkt auf Nostr
 
 ### Wie viele Relays?
 
@@ -290,45 +216,17 @@ Probiere aus, bevor du dich festlegst! Teste Relay-Geschwindigkeiten und sieh, w
    - Sollte grünen Punkt oder "verbunden" zeigen
    - Kann ein paar Sekunden dauern
 
-### Client-spezifische Anleitungen
+### Wo die Einstellung in welcher App steckt
 
-**Damus (iOS):**
+Apps schieben ihre Menüs zwischen Releases gerne um, nimm das hier also als Richtung. In **Damus** und **Amethyst** öffnest du die Einstellungen und suchst nach "Relays". In **Primal** liegt es unter Einstellungen, dann Netzwerk. In Web-Clients wie **Iris** oder **Coracle** steckt es im Einstellungsmenü hinter deinem Avatar. Passt nichts davon zu dem, was du siehst, tippe "relay" in die Suche der App-Einstellungen.
 
-1. Profil-Tab → Einstellungen (Zahnrad-Icon)
-2. "Relays"
-3. Tippe "+"
-4. URL eingeben
-5. Tippe "Hinzufügen"
-
-**Amethyst (Android):**
-
-1. Seitenmenü → Einstellungen
-2. "Relays"
-3. Tippe "+"
-4. URL eingeben
-5. Speichern
-
-**Iris (Web):**
-
-1. Klicke Profilbild → Einstellungen
-2. "Relays"-Tab
-3. Klicke "Relay hinzufügen"
-4. URL eingeben
-5. Hinzufügen
-
-**Primal (Web/Mobile):**
-
-1. Einstellungen → Netzwerk
-2. "Relay hinzufügen"
-3. URL eingeben
-4. Speichern
+Den ganzen Klickweg kannst du in den Client-Simulatoren auf [sandstr.app](https://sandstr.app) durchspielen, ohne dein echtes Konto anzufassen.
 
 ### Verbindungsprobleme beheben
 
 **"Verbindung fehlgeschlagen"**
 
-- Prüfe, ob URL korrekt ist (beginnt mit wss://)
-- Versuche http vs https (sollte wss:// sein)
+- Achte darauf, dass die Adresse mit `wss://` beginnt, nicht mit `https://`, `http://` oder `ws://`
 - Relay könnte down sein
 - Versuche es in ein paar Minuten erneut
 
@@ -350,34 +248,13 @@ Probiere aus, bevor du dich festlegst! Teste Relay-Geschwindigkeiten und sieh, w
 
 ### Warum bezahlen?
 
-**Vorteile:**
-
-- Garantierte Uptime
-- Bessere Performance
-- Direkter Support
-- Finanziell nachhaltig
-- Oft bessere Features
-
-**Wann upgraden:**
-
-- Du meinst es ernst mit Nostr
-- Kostenlose Relays erfüllen Bedürfnisse nicht
-- Du willst Infrastruktur unterstützen
-- Du brauchst spezifische Features
+Ein Bezahl-Relay hat einen Betreiber, der es sich leisten kann, sich zu kümmern. Das zeigt sich meistens in weniger Ausfällen, weniger Spam in deinen Antworten und jemandem, der sich tatsächlich meldet, wenn du ein Problem meldest. Der Moment dafür kommt, wenn kostenlose Relays dich hängen lassen, oder wenn dir dein Archiv wichtig genug ist, dass du es irgendwo haben willst, wo eine Rechnung dranhängt.
 
 ### Beliebte Bezahloptionen
 
-**nostr.wine**
+**nostr.wine** verlangt eine einmalige Aufnahmegebühr in Bitcoin über Lightning (beim Schreiben dieses Textes rund 19.000 Sats, schau also auf der Seite nach dem heutigen Preis). Dafür bekommst du ein schnelles, gut gepflegtes Allzweck-Relay.
 
-- Kosten: ~$5-10/Monat
-- Features: Hohe Performance, gute Uptime
-- Anmeldung: Website-Zahlung
-
-**Private Relays**
-
-- Kosten: Variiert
-- Features: Custom-Richtlinien, private Communities
-- Zugang: Einladung oder Zahlung
+**Private Relays** werden für eine Gruppe betrieben: eine Zeitschrift, eine Community, eine Familie. Die Preise schwanken, und rein kommt man normalerweise per Einladung. Frag nach, wenn du ohnehin schon zu einem Kreis gehörst, der so etwas hat.
 
 ### Bezahl-Relays einrichten
 
@@ -388,99 +265,22 @@ Probiere aus, bevor du dich festlegst! Teste Relay-Geschwindigkeiten und sieh, w
 5. **Bessere Performance genießen**
 
 <Callout variant="success">
-  **Hybrid-Ansatz:** Nutze 3-5 kostenlose Relays + 1-2 Bezahl-Relays. Das Beste
-  aus beiden Welten.
+  **Hybrid-Ansatz:** Nutze 3-5 kostenlose Relays und dazu 1-2 Bezahl-Relays.
 </Callout>
 
 ---
 
-## Eigenes Relay [ERWEITERT] (10 Minuten)
+## Eigenes Relay [ERWEITERT] (2 Minuten)
 
-### Warum ein eigenes betreiben?
+Ein eigenes Relay zu betreiben heißt: eine Kopie deiner Arbeit liegt auf einer Maschine, die niemand sonst kontrolliert, unter Regeln, die du selbst setzt. Es heißt aber auch, einen Server zu mieten (ungefähr 5 bis 20 Dollar im Monat), eine Domain darauf zu richten und sich im Terminal wohlzufühlen. Die meisten Kreativen brauchen das nie, und es kostet dich nichts, das auszulassen: auf Relays zu veröffentlichen, die andere betreiben, ist die normale Art, Nostr zu benutzen.
 
-**Vorteile:**
-
-- Vollständige Kontrolle
-- Privatsphäre (deine Daten bleiben bei dir)
-- Custom-Richtlinien
-- Lernerfahrung
-- Unterstütze das Netzwerk
-
-**Anforderungen:**
-
-- Server (VPS ~$5-20/Monat)
-- Technisches Wissen
-- Zeit zur Wartung
-
-### Beliebte Relay-Software
-
-**strfry**
-
-- Sprache: C++
-- Pros: Schnell, leichtgewichtig
-- Cons: Erfordert Kompilierung
-
-**nostr-rs-relay**
-
-- Sprache: Rust
-- Pros: Modern, aktiv entwickelt
-- Cons: Lernkurve
-
-**nostream**
-
-- Sprache: TypeScript
-- Pros: Einfaches Setup, gute Docs
-- Cons: Erfordert Node.js
-
-### Schnelles Setup (nostream)
-
-**Voraussetzungen:**
-
-- Ubuntu/Debian-Server
-- Node.js 18+
-- PostgreSQL
-
-**Schritte:**
-
-```bash
-# Abhängigkeiten installieren
-sudo apt update
-sudo apt install nodejs npm postgresql
-
-# Repository klonen
-git clone https://github.com/Cameri/nostream.git
-cd nostream
-
-# Pakete installieren
-npm install
-
-# Konfigurieren
-cp .env.sample .env
-nano .env  # Einstellungen bearbeiten
-
-# Bauen
-npm run build
-
-# Starten
-npm start
-```
-
-**Domain verbinden:**
-
-1. Domain auf Server-IP zeigen
-2. SSL einrichten (Let's Encrypt)
-3. Reverse Proxy konfigurieren (nginx)
-
-**Wartung:**
-
-- Festplattenspeicher überwachen
-- Software regelmäßig aktualisieren
-- Datenbank sichern
-- Logs überwachen
+Wenn du es trotzdem probieren willst, tauchen drei Relay-Programme immer wieder auf. **strfry** ist in C++ geschrieben und die schnelle, schlanke Variante. **nostr-rs-relay** ist die in Rust, wird aktiv weiterentwickelt. **nostream** ist TypeScript und hat von den dreien das sanfteste Setup. Jedes Projekt pflegt die Installationsanleitung in seinem eigenen Repository, und die bleibt aktuell, wie es ein Guide wie dieser nicht kann. Fang also dort an und nicht bei einer abgeschriebenen Befehlsliste.
 
 <Callout variant="warning">
-  Ein Relay zu betreiben erfordert laufende Wartung. Fang nicht an, es sei
-  denn, du bist bereit, es am Laufen zu halten.
+  Ein Relay ist etwas, das man am Laufen hält, nicht etwas, das man einmal
+  aufsetzt. Festplatten laufen voll, Software will aktualisiert werden, Backups
+  wollen kontrolliert werden. Fang nicht damit an, wenn du diese Arbeit nicht
+  willst.
 </Callout>
 
 ---
@@ -539,9 +339,9 @@ npm start
 
 ### Monitoring-Tools
 
-- **nostr.watch** - Relay-Uptime und Stats
-- **nostr.info** - Relay-Verzeichnis und Info
-- **Client-Relay-Status** - Die meisten Clients zeigen Verbindungsstatus
+- **nostr.watch:** Uptime und Statistiken
+- **nostr.info:** Verzeichnis mit Angaben zu den einzelnen Relays
+- **Dein Client:** die meisten zeigen den Verbindungsstatus direkt in der Relay-Liste
 
 ### Wann Relays wechseln
 
@@ -567,6 +367,7 @@ npm start
 - `wss://relay.damus.io`
 - `wss://nos.lol`
 - `wss://relay.snort.social`
+- `wss://nostr.mom`
 
 **Empfohlene Anzahl:** 5-10 Relays
 

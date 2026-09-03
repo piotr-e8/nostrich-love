@@ -42,12 +42,12 @@ Before we launch, do you have your Nostr keys ready?
       <svg className="w-5 h-5 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
       </svg>
-      Generate keys first (2 min)
+      Generate keys first (10 min)
     </a>
   </div>
   
   <p className="mt-4 text-sm text-gray-600 dark:text-gray-400 text-center">
-    You'll need your <code>npub</code> (public key) and <code>nsec</code> (private key) to continue.
+    You'll need your <code>nsec</code> (private key) to continue. Your <code>npub</code> (public key) comes from it automatically, so you don't have to keep them both to hand.
   </p>
 </div>
 
@@ -57,13 +57,13 @@ Before we launch, do you have your Nostr keys ready?
 
 ## Step 2: Choose Your Client
 
-Nostr has dozens of clients—think of them like email apps. Pick one to start.
+Nostr has dozens of clients. Think of them like email apps, and pick one to start.
 
 <a href="https://sandstr.app" target="_blank" rel="noopener noreferrer" className="not-prose my-6 flex items-start gap-4 p-5 rounded-xl border-2 border-primary/30 bg-primary/5 dark:bg-primary/10 hover:border-primary/60 transition-colors">
   <span className="text-3xl" aria-hidden="true">🏖️</span>
   <span>
     <span className="block font-bold text-gray-900 dark:text-white mb-1">Not sure yet? Try clients in your browser first</span>
-    <span className="block text-sm text-gray-600 dark:text-gray-400">Sandstr lets you click through Damus, Amethyst, Primal and more — no keys, no install, nothing real. Come back when one feels right.</span>
+    <span className="block text-sm text-gray-600 dark:text-gray-400">Sandstr lets you click through Damus, Amethyst, Primal and more, with no keys, no install and nothing real. Come back when one feels right.</span>
   </span>
 </a>
 
@@ -174,24 +174,33 @@ One last check before you go live:
 Open your chosen client and log in. **How** you log in matters more than most
 guides admit.
 
-**On a phone**, paste your nsec into the app once. A mobile app is a sandbox —
-only that app can read what you paste into it.
+**On Android**, install [Amber](https://github.com/greenart7c3/Amber) and let it
+hold your key. Apps ask Amber to sign, you approve each request there, and your
+nsec never enters the app itself. Amber is not on Google Play, so get it from
+zap.store, F-Droid or its GitHub releases page.
+
+**On iPhone**, there is no equivalent, so paste your nsec into the app once. What
+you store inside an app stays inside that app, but the clipboard is shared
+ground: while your key sits there, other apps can read it, and a keyboard that
+syncs your clipboard to the cloud can carry it off the phone. Turn that sync off
+before you paste, and copy something harmless over the key as soon as you are
+logged in.
 
 **In a web browser, do not paste your nsec into the website.** Install a signer
-extension instead — [Alby](https://getalby.com),
-[nos2x](https://github.com/fiatjaf/nos2x) or
-[Nostore](https://apps.apple.com/app/nostore/id1666553677) on Safari. Your key
-lives in the extension; the website asks the extension to sign each action and
-never sees the key itself. Every serious web client supports this (it is called
-NIP-07), and it turns "one bad website costs you your identity" into "one bad
-website gets nothing."
+extension instead: [Alby](https://getalby.com),
+[nos2x](https://chromewebstore.google.com/detail/nos2x/kpgefcfmnafjgpblomihpgmejjdanjjp)
+or [Nostash](https://apps.apple.com/us/app/nostash/id6744309333) on Safari. Your
+key lives in the extension; the website asks the extension to sign each action
+and never sees the key itself. Every serious web client supports this (it is
+called NIP-07), and it turns "one bad website costs you your identity" into "one
+bad website gets nothing."
 
 If you would rather keep your key off your devices entirely, a remote signer such
-as [nsec.app](https://nsec.app) (NIP-46) holds it and approves actions from a
+as [nsec.app](https://use.nsec.app) (NIP-46) holds it and approves actions from a
 separate app.
 
 <Callout variant="warning" title="A website that asks for your nsec is a red flag">
-  Once a site has your nsec, it has your identity permanently — you cannot rotate
+  Once a site has your nsec, it has your identity permanently. You cannot rotate
   a Nostr key or revoke access. There is no password reset and no support desk.
 
 Legitimate web clients ask you to connect a signer. If a site asks you to type or
@@ -251,7 +260,7 @@ Once you're in, do these to maximize your experience:
       <h3 className="font-bold text-green-800 dark:text-green-400">Keep Learning</h3>
     </div>
     <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
-      Master Nostr with our step-by-step guides. From zaps to privacy—we've got you covered.
+      Master Nostr with our step-by-step guides. From zaps to privacy, we've got you covered.
     </p>
     <a 
       href="/guides" 

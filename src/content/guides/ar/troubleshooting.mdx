@@ -7,9 +7,12 @@ category: "reference"
 prerequisites: ["keys-and-security", "quickstart"]
 ---
 
-## دليل مرجعي سريع لأكثر المشاكل شيوعًا التي يواجهها مستخدمو Nostr.
+دليل مرجعي سريع لأكثر المشاكل شيوعًا التي يواجهها مستخدمو Nostr.
+
+كل ما يلي تقريبًا يعود إلى حقيقة واحدة: منشوراتك وملفك الشخصي وقائمة متابعاتك تعيش على الـ relays لا داخل التطبيق. والموجز الفارغ أو المنشور الذي يبدو أنه اختفى يعنيان عادة أن التطبيق يخاطب الخوادم الخطأ، لا أن عملك ضاع.
 
 import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz";
+import { TroubleshootingWizard } from "@components/interactive/TroubleshootingWizard";
 
 ## المشكلة: "موجزي فارغ" 📭
 
@@ -17,7 +20,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - لا تظهر أي منشورات
 - رسالة "No events found"
-- المخطط الزمني فارغ
+- الخط الزمني فارغ
 
 ### الأسباب والحلول
 
@@ -31,7 +34,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - **السبب**: غير متصل بأي relays
 - **الحل**: تحقق من الإعدادات → Relays، تأكد من الاتصال بـ 3-5 relays
-- **الحل السريع**: أضف relays شائعة: `wss://relay.damus.io`، `wss://nostr.wine`
+- **الحل السريع**: أضف relays مجانية شائعة: `wss://relay.damus.io`، `wss://nos.lol`
 
 **3. ذاكرة التخزين المؤقت للعميل فارغة**
 
@@ -73,7 +76,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - **السبب**: فشل العميل في النشر إلى جميع الـ relays
 - **الحل**: تحقق من أي الـ relays استلمت منشورك
-- **ملاحظة**: بمجرد النشر، لا يمكن إعادة البث إلى relays جديدة بأثر رجعي
+- **الخبر السار**: منشوراتك موقّعة ومحمولة، فيمكن إرسالها من جديد لاحقًا. كثير من العملاء يخفي خيار "Broadcast" في قائمة الملاحظة، وهو يعيد نشرها على الـ relays التي تستخدمها الآن، بما فيها ما أضفته بعد النشر الأول.
 
 ### ما يتزامن وما لا يتزامن
 
@@ -115,7 +118,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - **السبب**: الوصول إلى حدود المعدل
 - **الحل**: تمهّل، انتظر بضع دقائق
-- **ملاحظة**: معظم الـ relays تحد النشر إلى 1-5 منشورات في الثانية
+- **ملاحظة**: الـ relays تكبح النشر السريع لتحدّ من الـ spam. والحدود تختلف من relay إلى آخر، فالتوقف القصير يحلّ المشكلة عادة.
 
 ---
 
@@ -129,10 +132,10 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 ### الأسباب والحلول
 
-**1. احصل على توثيق NIP-05**
+**1. احصل على عنوان NIP-05**
 
 - **الحل**: قم بإعداد هوية NIP-05 (انظر [الدليل](/ar/guides/nip05-identity))
-- **لماذا**: شارة التوثيق تميّز الحساب الحقيقي عن المزيف
+- **لماذا**: العنوان على نطاق تملكه أنت، مثل ‎you@yoursite.com‎، يربط الحساب بموقعك الخاص. وبما أن أي أحد يستطيع الحصول على عنوان NIP-05 ما، بمن فيهم المنتحل، فاطلب من الناس أن ينظروا إلى النطاق لا إلى علامة الصح.
 
 **2. شارك npub الخاص بك على نطاق واسع**
 
@@ -142,7 +145,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 **3. أبلغ عن المنتحل**
 
 - **الحل**: استخدم ميزة الإبلاغ في العميل أو الإشراف المجتمعي
-- **ملاحظة**: لا يمكن حذف حسابه (النظام لامركزي)، لكن يمكن حظره/كتمه
+- **ملاحظة**: لا أحد يستطيع حذف حسابه، والحظر ليس إلا مرشّحًا عندك أنت. سيبقى ظاهرًا لبقية الناس، لذا فإن إخبار جمهورك بأي npub هو npub الحقيقي يفيد أكثر مما يفيده الحظر
 
 ### الوقاية
 
@@ -206,12 +209,13 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - **السبب**: الاتصال بأكثر من 20 relay يُرهق العميل
 - **الحل**: قلّل إلى 4-8 relays نشطة
-- **للتحسين**: استخدم نموذج الصندوق الصادر NIP-65
+- **للتحسين**: دع التطبيق يختار الـ relays نيابة عنك، انظر [دليل نموذج الصندوق الصادر](/ar/guides/outbox-model)
 
 **3. ذاكرة تخزين مؤقت تالفة**
 
-- **الحل**: امسح بيانات التطبيق (لن تفقد منشوراتك/متابعاتك)
-- **الخيار الأخير**: أعد تثبيت التطبيق، ثم أعد استيراد المفاتيح
+- **أولًا**: تأكد من وجود نسخة احتياطية من nsec الخاص بك خارج التطبيق. مسح البيانات يمحو المفتاح المخزّن على الجهاز، وبدون نسخة احتياطية لا يستطيع أحد استعادة الحساب.
+- **ثم**: امسح بيانات التطبيق. منشوراتك ومتابعاتك وملفك الشخصي تبقى على الـ relays وتعود بمجرد تسجيل الدخول من جديد.
+- **الخيار الأخير**: أعد تثبيت التطبيق وسجّل الدخول بمفتاحك المنسوخ احتياطيًا، أو بتطبيق الـ signer إن كنت تستخدم واحدًا.
 
 ### جرّب عميلاً مختلفًا
 
@@ -219,8 +223,8 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 | المنصة             | البديل               |
 | ------------------ | -------------------- |
-| iOS (Damus)        | Nos، Nostur          |
-| Android (Amethyst) | Primal web، Nostros  |
+| iOS (Damus)        | Nostur، Primal       |
+| Android (Amethyst) | Primal، YakiHonne    |
 | ويب (Primal)       | Iris، Snort، Coracle |
 
 ---
@@ -237,7 +241,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 > ⚠️ **إذا لم يكن لديك نسخة احتياطية من مفاتيحك، فحسابك غير قابل للاستعادة.**
 
-هذا بحكم التصميم—لا يوجد في Nostr خيار "نسيت كلمة المرور" لأنه لا يوجد خادم مركزي يحتفظ بمفاتيحك.
+هذا بحكم التصميم. لا يوجد في Nostr خيار "نسيت كلمة المرور" لأنه لا يوجد خادم مركزي يحتفظ بمفاتيحك.
 
 ### ما يمكنك فعله
 
@@ -245,7 +249,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - تحقق من مديري كلمات المرور
 - ابحث عن لقطات شاشة
-- تحقق من بريدك الإلكتروني بحثًا عن رسائل ترحيب
+- تحقق من تطبيقات الملاحظات والنسخ السحابية من أجهزتك القديمة
 - تحقق من أجهزة أخرى مثبت عليها العميل
 
 **2. تحقق مما إذا كان العميل يخزن المفاتيح**
@@ -281,7 +285,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 **1. الـ relay متعطل**
 
-- **اختبار**: افتح عنوان الـ relay في المتصفح (يجب أن يظهر خطأ أو صفحة ws)
+- **اختبار**: استبدل الـ `wss://` في أول العنوان بـ `https://` وافتح العنوان في متصفح. الـ relay العامل بصورة طبيعية يرد بصفحة معلومات قصيرة أو بملاحظة تطلب منك استخدام عميل Nostr. وألا يظهر شيء البتة مؤشر على أنه متوقف.
 - **الحل**: تحقق من صفحة حالة الـ relay أو حساباته الاجتماعية
 - **الإصلاح**: أزله مؤقتًا، وأعد إضافته عند عودته
 
@@ -324,18 +328,18 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - **تحقق**: من رصيد المحفظة
 - **الحل**: أضف أموالاً إلى محفظتك
-- **الحد الأدنى**: عادة تحتاج 100+ ساتوشي للرسوم
+- **ملاحظة**: حتى zap بساتوشي واحد يمر بنجاح. لكن المحفظة التي أُفرغت تمامًا قد تفشل بسبب رسوم التوجيه أو الحد الأدنى الذي تفرضه المحفظة نفسها، فأبقِ فيها هامشًا صغيرًا.
 
 **3. المحفظة غير متصلة**
 
 - **السبب**: المحافظ غير الوصائية تحتاج إلى أن تكون متصلة بالإنترنت
 - **الحل**: افتح تطبيق محفظتك، وتأكد من أنه يعمل
-- **بديل**: استخدم محفظة وصائية مثل Alby
+- **بديل**: استخدم محفظة مستضافة مثل Coinos، أو المحفظة المدمجة في عميلك (Primal لديه واحدة). هذه تبقى في المتناول سواء كان هاتفك مستيقظًا أم لا. راجع [دليل Zaps](/ar/guides/zaps-and-lightning) للموازنة بين الخيارات.
 
 **4. عنوان Lightning خاطئ**
 
 - **تحقق**: هل عنوان Lightning صحيح في ملفك الشخصي؟
-- **اختبار**: جرّب إرسال 10 ساتوشي لنفسك
+- **اختبار**: اطلب من صديق أن يرسل لك zap بـ 10 ساتوشي، أو ادفع من محفظة ثانية. معظم المحافظ ترفض دفع فاتورة أصدرتها هي نفسها، فالدفع لنفسك لا يثبت شيئًا في الاتجاهين.
 - **الإصلاح**: حدّث العنوان في إعدادات ملفك الشخصي
 
 ---
@@ -377,7 +381,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 ## شجرة قرارات سريعة 🌳
 
-<TroubleshootingWizard />
+<TroubleshootingWizard client:idle />
 
 **تواجه مشاكل؟ اتبع هذا:**
 
@@ -393,22 +397,17 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 ### مساعدة المجتمع
 
-**Telegram:**
-
-- [Nostr Protocol](https://t.me/nostr_protocol) - مساعدة عامة
-- [Damus](https://t.me/damusios) - خاص بـ iOS
-- [Amethyst](https://t.me/AmethystNostr) - خاص بـ Android
-
-**منصات أخرى:**
-
+- [Damus على Telegram](https://t.me/damusios) - خاص بـ iOS
+- [متتبّع مشكلات Amethyst](https://github.com/vitorpamplona/amethyst/issues) - هناك تُجاب مشاكل Android، إذ لا تدير Amethyst مجموعة Telegram عامة
 - [r/nostr](https://reddit.com/r/nostr) - مجتمع Reddit
 - [Stacker News](https://stacker.news) - منتدى Bitcoin/Nostr
-- Nostr نفسه - انشر مع وسم #help
+- Nostr نفسه - انشر سؤالك مع وسم ‎#asknostr‎ وسيجيبك الناس
 
 ### الموارد
 
-- [Nostr Wiki](https://wiki.nostr.com)
-- [توثيق خاص بالعملاء](https://github.com/damus-io/damus#documentation)
+- [Nostr.how](https://nostr.how) - أدلة بلغة بسيطة عن العملاء والـ relays والـ zaps
+- [دليل تطبيقات Nostr](https://nostrapps.com) - ابحث عن عميل يناسب منصتك
+- [توثيق Damus](https://github.com/damus-io/damus#documentation)
 - [مواصفات NIP](https://github.com/nostr-protocol/nips)
 
 ### الإبلاغ عن الأخطاء البرمجية

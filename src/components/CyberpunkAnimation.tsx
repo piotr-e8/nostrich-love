@@ -27,12 +27,10 @@ interface RelayNode {
 }
 
 const relayUrls = [
-  "wss://relay.nostr.band",
   "wss://relay.damus.io",
   "wss://nos.lol",
   "wss://relay.snort.social",
   "wss://nostr.wine",
-  "wss://brb.io",
   "wss://eden.nostr.land",
 ];
 

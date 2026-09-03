@@ -213,7 +213,7 @@
               }
             ],
             "correctId": "signer",
-            "explanation": "Never paste your main private key into new clients. Use a signer (NIP-46) or hardware solution and wait until delegated signing is supported.",
+            "explanation": "Never paste your main private key into a client you haven't vetted. Use a signer instead (Amber on Android, a browser extension on the web, or a NIP-46 remote signer), so the app gets signatures without ever seeing your nsec. A throwaway key is fine for a quick look around, but there is no migrating later on Nostr: followers and reputation stay with the key that earned them.",
             "severity": "warning"
           },
           {
@@ -223,7 +223,7 @@
             "options": [
               {
                 "id": "gps",
-                "label": "Leave location tags enabled—it helps discovery"
+                "label": "Leave location tags enabled because it helps discovery"
               },
               {
                 "id": "personas",
@@ -350,7 +350,7 @@
               },
               {
                 "id": "b",
-                "label": "Yes, many clients let you import Twitter followers who have Nostr accounts"
+                "label": "Yes, but only the ones who joined Nostr and published their npub somewhere you can look it up"
               },
               {
                 "id": "c",
@@ -358,7 +358,7 @@
               }
             ],
             "correctId": "b",
-            "explanation": "Many Nostr clients offer Twitter import features. They check which of your Twitter follows have linked their Nostr npubs and let you follow them instantly.",
+            "explanation": "No mainstream client imports your Twitter follows for you. A separate directory, nostr.directory, offers to sign you in with X and match the accounts you follow, but it only knows people who registered there themselves. What reliably works: search by name or NIP-05 address, follow the starter packs some clients offer, and ask friends for their npub.",
             "severity": "info"
           },
           {
@@ -763,7 +763,7 @@
               }
             ],
             "correctId": "a",
-            "explanation": "To receive zaps, you need a Lightning wallet (custodial like Wallet of Satoshi, or self-custodial like Phoenix/BlueWallet) linked to your Nostr profile via a Lightning Address.",
+            "explanation": "To receive zaps you need a Lightning wallet that gives you a Lightning Address, and that address goes in your Nostr profile. Coinos runs in a browser with nothing to install, though it holds the funds for you. Primal's built-in wallet and Zeus keep you in control of the funds.",
             "severity": "critical"
           },
           {
@@ -777,7 +777,7 @@
               },
               {
                 "id": "b",
-                "label": "The amount and sender are visible on Lightning, but you can use different wallets for different identities"
+                "label": "The sender and amount end up in a public receipt on Nostr, but you can use different wallets for different identities"
               },
               {
                 "id": "c",
@@ -785,7 +785,7 @@
               }
             ],
             "correctId": "b",
-            "explanation": "Lightning payments are pseudonymous like Bitcoin. The transaction is visible but not tied to your identity unless you link wallets across personas. Use separate wallets for privacy.",
+            "explanation": "Every zap leaves a receipt on the relays (NIP-57) naming who zapped, how much, and which post. Lightning itself has no public ledger, so the receipt is the part everyone reads. Some clients can zap anonymously, and if the link between two of your identities matters, keep their wallets apart.",
             "severity": "warning"
           },
           {
@@ -807,7 +807,7 @@
               }
             ],
             "correctId": "a",
-            "explanation": "Custodial wallets (like Wallet of Satoshi) are user-friendly but the provider controls your funds. Self-custodial wallets (like Phoenix) give you full control but require more responsibility.",
+            "explanation": "Custodial wallets (like Coinos) are user-friendly but the provider controls your funds. Self-custodial wallets (like Phoenix or Zeus) give you full control and more responsibility.",
             "severity": "warning"
           }
         ]
@@ -975,7 +975,7 @@
               },
               {
                 "id": "b",
-                "label": "Yes, your keys work everywhere - import your nsec into any client"
+                "label": "Yes, one identity works everywhere - connect each client through a signer instead of pasting your nsec into it"
               },
               {
                 "id": "c",
@@ -983,7 +983,7 @@
               }
             ],
             "correctId": "b",
-            "explanation": "Your identity is portable. Import your nsec into any Nostr client (Damus, Amethyst, Iris, etc.) and your profile, followers, and posts follow you.",
+            "explanation": "Your identity is portable: the same profile, followers and posts show up in Damus, Amethyst, Iris and the rest. Log in through a signer (Amber on Android, a browser extension on the web, a NIP-46 remote signer anywhere) so your nsec stays in one place and each client only gets signatures.",
             "severity": "critical"
           },
           {
@@ -1666,7 +1666,7 @@
               }
             ],
             "correctId": "a",
-            "explanation": "2-4 relays is optimal. More relays drain battery and provide diminishing returns as content propagates naturally.",
+            "explanation": "2-4 relays is what NIP-65 asks for in the relay list you publish (kind 10002), which is a different thing from how many relays your client talks to while it works. A long published list drains battery and adds little, because content spreads between relays anyway.",
             "severity": "warning"
           },
           {
@@ -1706,7 +1706,7 @@
       "scoreDisplay": "{{score}} / {{total}} correct answers",
       "conceptsMastered": "Critical concepts mastered",
       "nextSteps": "Next steps",
-      "perfectScore": "Share your knowledge—help onboard someone new.",
+      "perfectScore": "Share your knowledge. Help onboard someone new.",
       "reviewSections": "Review the sections you missed below.",
       "retakeQuiz": "Retake quiz",
       "questionCounter": "Question {{current}} of {{total}}",
@@ -2022,7 +2022,7 @@
         "description": "Partial content usually means relay connectivity issues.",
         "steps": [
           "Check which relays you are connected to",
-          "Add more relays (aim for 5-10 diverse relays)",
+          "Add more relays (aim for 3-10 varied relays)",
           "Wait a few minutes for sync to complete",
           "Try refreshing the feed",
           "Check if the missing users use different relays"
@@ -2157,7 +2157,7 @@
         "title": "No Wallet Connected",
         "description": "You need a Bitcoin Lightning wallet to send zaps.",
         "steps": [
-          "Download a lightning wallet (Alby, Zeus, Phoenix)",
+          "Get a lightning wallet that speaks Nostr Wallet Connect (Zeus, Coinos, or Alby Hub with Alby Go)",
           "Fund the wallet with Bitcoin",
           "Connect wallet to your Nostr client via NWC",
           "Try sending a small test zap",
@@ -2374,7 +2374,7 @@
       },
       "wssPurplePages": {
         "name": "Purple Pages",
-        "description": "Metadata relay"
+        "description": "Profiles and lists only, no posts"
       }
     }
   },
@@ -2524,15 +2524,15 @@
         "description": "A fast, modern client available on all platforms with excellent performance.",
         "pros": [
           "All platforms",
+          "Built-in Lightning wallet",
           "Fast loading",
           "Great search",
-          "Beautiful design",
           "Regular updates"
         ],
         "cons": [
           "Privacy concerns for some",
-          "Newer app",
-          "Some features still in development"
+          "Reads through Primal's own caching servers",
+          "Less relay control than power-user clients"
         ]
       },
       "iris": {
@@ -2569,48 +2569,48 @@
       },
       "coracle": {
         "name": "Coracle",
-        "description": "A desktop client for power users with advanced features.",
+        "description": "A web client for power users, with deep relay and community controls.",
         "pros": [
           "Powerful features",
-          "Desktop optimized",
+          "Runs in any browser, installable as a web app",
           "Great for creators",
           "Advanced filtering",
           "Keyboard shortcuts"
         ],
         "cons": [
-          "Desktop only",
+          "No native mobile app",
           "Steeper learning curve",
-          "Not mobile friendly"
+          "Plenty of settings to wade through"
         ]
       },
       "current": {
-        "name": "Current",
-        "description": "iOS client with excellent Nostr Wallet Connect integration.",
+        "name": "Current (discontinued)",
+        "description": "Discontinued. It was an iOS client built around Nostr Wallet Connect, but work stopped in 2023 and the app is gone from the App Store, so the download link no longer leads anywhere. For a wallet-first iOS experience, look at Primal instead.",
         "pros": [
-          "Best wallet support",
-          "NWC integration",
-          "Power user features",
-          "Clean UI"
+          "Was an early Nostr Wallet Connect client",
+          "Zap-focused design",
+          "Clean UI",
+          "Source code still on GitHub"
         ],
         "cons": [
-          "More complex",
-          "iOS only",
-          "Learning curve"
+          "Development stopped in 2023",
+          "Pulled from the App Store, the download link is dead",
+          "Not a choice for new users"
         ]
       },
       "habla": {
         "name": "Habla",
-        "description": "Long-form content focused client with newsletter support.",
+        "description": "A writing client for long-form articles. Heads up: habla.news has been returning a 404 since at least September 2026, so use YakiHonne for long-form writing until it comes back.",
         "pros": [
           "Great for articles",
-          "Newsletter support",
+          "Built around long-form posts (NIP-23)",
           "Clean writing interface",
-          "Monetization"
+          "Readers can zap what you publish"
         ],
         "cons": [
+          "The site is currently down (404)",
           "Web only",
-          "Smaller user base",
-          "Limited social features"
+          "Smaller user base"
         ]
       },
       "nostur": {
@@ -2628,16 +2628,16 @@
         ]
       },
       "plebstr": {
-        "name": "Plebstr",
-        "description": "A simple Android client for beginners.",
+        "name": "Openvibe (formerly Plebstr)",
+        "description": "Plebstr became Openvibe: the same app, now a single feed across Nostr, Bluesky, Mastodon and Threads. Still an easy start on Android, just don't expect a Nostr-only experience.",
         "pros": [
           "Easy to use",
-          "Clean design",
-          "Good performance"
+          "One app for several networks",
+          "Clean design"
         ],
         "cons": [
-          "Fewer features",
-          "Android only",
+          "Nostr is only part of what it does",
+          "Fewer Nostr-specific features",
           "No wallet"
         ]
       }
@@ -2854,18 +2854,18 @@
       "awesome": "Awesome"
     },
     "keyGen": {
-      "description": "Every Nostr account is just a pair of keys — generate a practice pair to see what they look like.",
+      "description": "Every Nostr account is just a pair of keys. Generate a practice pair to see what they look like.",
       "publicKeyTitle": "Public Key (npub)",
       "publicKeyDesc": "Safe to share with anyone",
       "privateKeyTitle": "Private Key (nsec)",
       "privateKeyDesc": "Never share this with anyone",
-      "important": "These practice keys only work here — they aren't real. With real keys, share your npub freely, but keep your nsec in a password manager or signer app and never paste it into a website or send it to anyone."
+      "important": "These practice keys only work here. They aren't real. With real keys, share your npub freely, but keep your nsec in a password manager or signer app, and never paste it into a website or send it to anyone."
     },
     "simulator": "Simulator",
     "simulationMode": "Simulation Mode",
-    "simulationNote": "This is a simulation for practice — install the real app when you're ready to join Nostr.",
+    "simulationNote": "This is a simulation for practice. Install the real app when you're ready to join Nostr.",
     "relayStep": {
-      "description": "Relays are the servers that store and pass along your posts — connect to a few so more people can see what you write.",
+      "description": "Relays are the servers that store and pass along your posts. Connect to a few so more people can see what you write.",
       "connected": "Connected",
       "connectOne": "Connect a Relay First"
     },
@@ -2873,7 +2873,7 @@
       "title": "Make Your First Post",
       "description": "Write a short note and publish it to the relays you just connected to.",
       "placeholder": "What's on your mind?",
-      "tip": "Your first post is a good place to introduce yourself — many people add #introductions so others can find them."
+      "tip": "Your first post is a good place to introduce yourself. Many people add #introductions so others can find them."
     },
     "followStep": {
       "title": "Follow People",
@@ -2894,7 +2894,7 @@
     },
     "completion": {
       "title": "First Day Complete!",
-      "description": "You connected to relays, published a post, followed people, and received your first zap — you're ready to do all of this in a real client."
+      "description": "You connected to relays, published a post, followed people, and received your first zap. Now you're ready to do all of this in a real client."
     }
   },
   "protocolComparisonUI": {
@@ -2945,7 +2945,7 @@
     "currentStepLabel": "Current Step",
     "stepDescriptions": {
       "0": "You write a post on your device and sign it with your private key.",
-      "1": "Your client sends the same signed post to every relay you use — all at once, not one after another.",
+      "1": "Your client sends the same signed post to every relay you use, all at once rather than one after another.",
       "2": "Anyone connected to one of those relays can fetch it from there.",
       "3": "Someone whose relays don't overlap with yours never sees it. No relay forwards it onward."
     }
@@ -3034,7 +3034,7 @@
   "guidesPage": {
     "hero": {
       "title": "Learn Nostr Step by Step",
-      "description": "Progressive skill levels from beginner to advanced. Everything is open — the levels just show a sensible order to read in."
+      "description": "Progressive skill levels from beginner to advanced. Everything is open, and the levels just show a sensible order to read in."
     },
     "filter": {
       "filterByInterest": "Filter by interest"
@@ -3148,7 +3148,7 @@
     "categories": {
       "jumpstart": {
         "name": "Start Here",
-        "description": "A hand-picked starter set — if you follow nothing else, follow these."
+        "description": "A hand-picked starter set. If you follow nothing else, follow these."
       },
       "legit": {
         "name": "Familiar Faces",
@@ -3156,7 +3156,7 @@
       },
       "cool_people": {
         "name": "Community Favorites",
-        "description": "Accounts other Nostr users keep recommending. No single theme — just good company."
+        "description": "Accounts other Nostr users keep recommending. No single theme, just good company."
       },
       "artists": {
         "name": "Artists & Illustrators",

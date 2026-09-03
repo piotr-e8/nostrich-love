@@ -2,18 +2,14 @@
 title: "Flujo de Trabajo Multi-Cliente"
 seoTitle: "Varios clientes de Nostr: una identidad, muchas apps"
 description: "Maximiza tu experiencia Nostr con múltiples clientes. Flujos de trabajo de escritorio + móvil, estrategias de sincronización y mejores prácticas para usuarios avanzados."
-estimatedTime: "8 minutos"
+estimatedTime: "12 minutos"
 priority: 11
 category: "advanced"
 prerequisites: ["keys-and-security", "quickstart"]
 ---
 
-import { CTAButton } from "@components/CTAButton";
 import { Callout } from "@components/ui/Callout";
 import { MultiClientQuiz } from "@components/interactive/MultiClientQuiz";
-
-{/* ProgressIndicator temporarily disabled - will be implemented with actual tracking later */}
-{/* <ProgressIndicator current={6} total={6} estimatedTime="8 minutos" /> */}
 
 ## ¿Por Qué Múltiples Clientes? (2 minutos)
 
@@ -26,18 +22,27 @@ El superpoder de Nostr es que tu identidad funciona en todas partes. Los usuario
 **Móvil + Escritorio:**
 
 - **Teléfono (Damus/Amethyst):** Chequeos rápidos, publicaciones sobre la marcha, notificaciones
-- **Escritorio (Iris/Snort):** Escritura larga, navegación intensa, horas de trabajo
+- **Escritorio (Iris/Snort):** Publicaciones e hilos más largos, navegación intensa, horas de trabajo
 
-**Público + Privado:**
+Los artículos completos son otra historia. Iris y Snort están pensados para notas
+cortas, así que si escribes ensayos, usa un cliente hecho para formato largo.
+[YakiHonne](https://yakihonne.com) es la opción habitual y funciona tanto en el
+navegador como en iOS y Android.
 
-- **Cliente público:** Identidad profesional, publicaciones públicas
-- **Cliente privado:** Identidad personal, círculos diferentes
+**Dos identidades separadas:**
 
-**Características Diferentes:**
+- Hay quien mantiene un segundo par de claves para su cuenta personal y le da a
+  cada par de claves su propio cliente
+- La separación viene de los dos juegos de claves, no de la app. Un mismo par de
+  claves usado en dos clientes sigue siendo una sola identidad pública, con el
+  mismo npub y las mismas publicaciones en todas partes
 
-- **Cliente A:** Excelente para media
-- **Cliente B:** Mejor para DMs
-- **Cliente C:** Mejor para descubrimiento
+**Características diferentes:**
+
+Un cliente se gana su sitio haciendo bien una cosa: Amethyst por sus controles de
+relays y multimedia, 0xchat por los mensajes privados, Coracle para navegar
+relays uno a uno. Todo lo demás de tu cuenta se comporta igual en cualquiera de
+ellos.
 
 **Backup y Redundancia:**
 
@@ -47,26 +52,14 @@ El superpoder de Nostr es que tu identidad funciona en todas partes. Los usuario
 
 ### Beneficios
 
-✅ **Optimización**
-
-- Usa la mejor herramienta para cada tarea
-- Diferentes UIs para diferentes contextos
-- Ventajas específicas por característica
-
-✅ **Flexibilidad**
-
-- No estás encerrado en una interfaz
-- Fácil cambiar si surgen problemas
-- Experimenta libremente
-
-✅ **Productividad**
-
-- Escritorio para escribir
-- Móvil para consumir
-- Contextos separados = mejor enfoque
+La ganancia es que dejas de doblar tus costumbres para que quepan en una sola
+app. Escribe donde escribir resulte cómodo, lee donde leer resulte cómodo y
+mantén los dos contextos separados a propósito, no por accidente. En un cambio de
+cliente hay poco en juego, porque tu identidad, tus publicaciones y tus seguidos
+viven en los relays, no dentro de ninguna app.
 
 <Callout variant="info">
-  **No necesitas múltiples clientes.** Pero si en serio usas Nostr, desbloquea
+  **No necesitas múltiples clientes.** Pero si te tomas Nostr en serio, desbloquea
   nuevos flujos de trabajo.
 </Callout>
 
@@ -83,7 +76,13 @@ El superpoder de Nostr es que tu identidad funciona en todas partes. Los usuario
 - ✓ Lista de seguidos
 - ✓ Información de perfil
 - ✓ Reacciones (likes, reposts)
-- ✓ DMs (si están correctamente encriptados)
+
+Los DMs son la excepción. Los mensajes privados aparecen en un segundo cliente
+solo si ese cliente habla el mismo estándar de DMs (el moderno es NIP-17) y está
+conectado a tus relays de mensajes. Un cliente que sigue con el estándar antiguo
+te muestra un historial de conversación distinto y separado. En
+[mensajes privados](/es/guides/nip17-private-messages) puedes ver qué cliente
+está en cuál.
 
 ### Qué No Sincroniza
 
@@ -91,7 +90,7 @@ El superpoder de Nostr es que tu identidad funciona en todas partes. Los usuario
 
 - ✗ Ajustes de la app (temas, fuentes)
 - ✗ Preferencias de notificación
-- ✗ Listas de silencio/bloqueo (a veces)
+- ✗ Bloqueos locales de la app y ocultaciones propias de cada cliente (tu lista de silencio estándar sí se sincroniza)
 - ✗ Borradores de publicaciones
 - ✗ Marcadores locales
 - ✗ Feeds/algoritmos personalizados
@@ -105,7 +104,14 @@ El superpoder de Nostr es que tu identidad funciona en todas partes. Los usuario
 2. Cliente A envía a los relays
 3. Cliente B se conecta a los mismos relays
 4. Cliente B ve tu publicación
-5. Todo permanece sincronizado
+5. Tus publicaciones y tus seguidos permanecen sincronizados
+
+Ese tercer paso es todo el truco. Los dos clientes buscan tus publicaciones en
+los relays de tu lista de relays publicada, así que si uno apunta a un sitio
+donde tus publicaciones nunca llegaron, te mostrará una versión más pobre de tu
+propia cuenta. Mantén la misma lista de relays en todos los clientes que uses. El
+[modelo outbox](/es/guides/outbox-model) explica cómo encuentran los clientes esa
+lista.
 
 **Retraso de tiempo:**
 
@@ -123,9 +129,11 @@ El superpoder de Nostr es que tu identidad funciona en todas partes. Los usuario
 
 **Silencios/Bloqueos:**
 
-- Algunos clientes exportan/importan listas
-- NIP-51 estandarizando esto
-- Puede necesitar sincronización manual por ahora
+- Tu lista de silencio forma parte del protocolo (NIP-51), así que viaja con tu
+  cuenta: silencia a alguien en un cliente y los demás lo recogen
+- Lo que se queda atrás es lo local de cada app, un botón de "ocultar esto"
+  propio o los filtros internos del cliente
+- No hace falta exportar ni importar nada
 
 **Borradores:**
 
@@ -140,7 +148,7 @@ El superpoder de Nostr es que tu identidad funciona en todas partes. Los usuario
 - Servicios de marcadores basados en Nostr
 
 <Callout variant="success">
-  **Pro tip:** Enfócate en lo que sincroniza (contenido, seguidos) y no te preocupes
+  **Consejo pro:** Enfócate en lo que sincroniza (contenido, seguidos) y no te preocupes
   demasiado por lo que no lo hace (ajustes).
 </Callout>
 
@@ -248,32 +256,19 @@ El superpoder de Nostr es que tu identidad funciona en todas partes. Los usuario
 
 **Coracle (Web):**
 
-- Integración con Matrix
-- Características únicas
-- Buen rendimiento
-- Desarrollo activo
+- Centrado en los relays: eliges relays y los navegas uno a uno
+- Moderación construida sobre tu red de confianza
+- Comunidades, eventos de calendario y anuncios clasificados
+- Varias cuentas en un mismo navegador
 
 ### Elegir Basado en la Tarea
 
-**Mejor para publicar:**
-
-- Clientes web de escritorio (pantalla más grande, escritura más fácil)
-- Móvil para pensamientos rápidos
-
-**Mejor para leer:**
-
-- Móvil (conveniencia)
-- Escritorio (mejor para contenido largo)
-
-**Mejor para media:**
-
-- Clientes con buen soporte de imágenes
-- Revisa cuál maneja fotos/videos bien
-
-**Mejor para DMs:**
-
-- Móvil (siempre disponible)
-- Escritorio (mejor para conversaciones largas)
+El escritorio gana en todo lo que haya que teclear largo; el teléfono gana para
+leer y para esa respuesta corta que sueltas lejos del escritorio. Lo multimedia y
+los mensajes privados varían más de un cliente a otro que de un dispositivo a
+otro, así que si las fotos son el centro de lo que publicas, o quieres los
+mensajes privados modernos, comprueba que un cliente los maneja bien antes de
+convertirlo en el principal.
 
 <Callout variant="success">
   **Experimenta:** Prueba diferentes clientes para diferentes tareas. Rápidamente encontrarás
@@ -286,12 +281,40 @@ El superpoder de Nostr es que tu identidad funciona en todas partes. Los usuario
 
 ### Movimiento entre Clientes
 
-**Fácil (automático):**
+Añadir un cliente es fácil. La parte que conviene hacer bien es cómo inicias
+sesión en él, porque tu nsec no se puede rotar ni revocar: cada app en la que lo
+pegues se lo queda para siempre.
 
-1. Instala nuevo cliente
-2. Importa tu nsec
-3. Espera la sincronización (seguidos, perfil)
-4. Empieza a usar
+1. Instala el nuevo cliente
+2. Inicia sesión de la forma que corresponda a esa plataforma (abajo)
+3. Espera a que se traiga tu perfil y tus seguidos
+4. Empieza a usarlo
+
+**Clientes web (Iris, Snort, Coracle, Primal web):** conecta una extensión
+firmante, [Alby](https://getalby.com) o
+[nos2x](https://github.com/fiatjaf/nos2x), o un firmante remoto como
+[nsec.app](https://nsec.app). El sitio le pide al firmante que apruebe cada
+acción y nunca ve tu clave. No pegues tu nsec en una web, por muy conocida que
+sea.
+
+**Android:** usa [Amber](https://github.com/greenart7c3/Amber). El cliente le
+pasa a Amber cada petición de firma, tú la apruebas ahí y tu nsec nunca entra en
+el cliente. Amber no está en Google Play; consíguelo en F-Droid, en la Zap Store
+o en su página de releases de GitHub.
+
+**iOS:** una app de la App Store está aislada del resto del sistema, así que
+pegar tu nsec en un cliente de confianza es la vía habitual. Si prefieres no
+entregarlo en ningún caso, Primal puede aprobar la actividad de otras apps de
+Nostr con su función de inicio de sesión remoto, y
+[Nostash](https://apps.apple.com/us/app/nostash/id6744309333) es una extensión
+firmante para Safari en iPhone, iPad y Mac.
+
+<Callout variant="warning">
+  Es la misma regla que en la [guía rápida](/es/guides/quickstart): una web que te
+  pide escribir tu clave privada en un formulario es una señal de alarma, y la
+  solución es un firmante.
+  [Privacidad y seguridad](/es/guides/privacy-security) explica cómo configurar uno.
+</Callout>
 
 **Qué transfiere:**
 
@@ -306,33 +329,28 @@ El superpoder de Nostr es que tu identidad funciona en todas partes. Los usuario
 - Borradores
 - Datos locales
 
-### Exportar/Importar Cuando Está Disponible
+### Exportar e Importar
 
-**Algunos clientes soportan:**
-
-- Exportar lista de seguidos (NIP-02)
-- Exportar lista de silencio (NIP-51)
-- Exportar ajustes (propio)
-
-**Cómo hacerlo:**
-
-1. Ve a Ajustes → Exportar
-2. Guarda el archivo
-3. Importa en el nuevo cliente
-4. Verifica que los datos se transfirieron
+Hay menos que exportar de lo que uno esperaría. Tus seguidos y tu lista de
+silencio se publican en los relays como listas firmadas por ti, así que un
+cliente nuevo las recoge solo en cuanto se conecta a los relays correctos, y ahí
+no cambia de manos ningún archivo. Los marcadores llegan igual en los clientes
+que los guardan como lista de Nostr en lugar de en el dispositivo. Lo que se
+queda atrás es la configuración propia de cada app, y solo algunos clientes
+ofrecen alguna forma de guardarla.
 
 ### Probando Nuevos Clientes
 
 **Enfoque seguro:**
 
-1. Crea claves de prueba primero
-2. Prueba el cliente con cuenta de prueba
-3. Si te gusta, importa las claves reales
-4. Mantén el cliente antiguo como backup
+1. Crea primero un par de claves desechable
+2. Prueba el cliente con esa cuenta de prueba
+3. Si te gusta, conecta tu identidad real a través de tu firmante
+4. Mantén el cliente antiguo como respaldo
 
 **No hagas:**
 
-- Importar nsec en clientes sospechosos
+- Pegar tu nsec en una web, nunca
 - Probar con tu identidad principal
 - Apresurar la migración
 
@@ -344,40 +362,22 @@ El superpoder de Nostr es que tu identidad funciona en todas partes. Los usuario
 
 **Creador de Contenido:**
 
-- **Planificación:** Notion/herramienta externa
-- **Escritura:** Cliente de escritorio (pantalla completa)
-- **Programación:** Si el cliente lo soporta
-- **Analítica:** Herramientas de terceros
-- **Engagement:** Móvil a lo largo del día
-
-**Desarrollador:**
-
-- **Pruebas:** Múltiples clientes simultáneamente
-- **Depuración:** Herramientas de desarrollador
-- **Documentación:** Plataformas de formato largo
-- **Comunidad:** Mezcla de clientes
+- **Planificación:** la app de notas que ya uses
+- **Escritura:** cliente de escritorio, a pantalla completa
+- **Interacción:** móvil a lo largo del día
+- **Números:** las estadísticas de zaps y alcance viven en herramientas aparte, mira
+  [Herramientas de Nostr que vale la pena conocer](/es/guides/nostr-tools)
 
 **Gerente de Comunidad:**
 
-- **Monitoreo:** Móvil siempre activo
-- **Respuesta:** Escritorio para respuestas detalladas
-- **Eventos:** Clientes especializados
-- **Analítica:** Herramientas de terceros
+- **Monitoreo:** móvil, siempre activo
+- **Respuesta:** escritorio para las respuestas largas
+- **Eventos:** un cliente con soporte de calendario, como Coracle
+- **Números:** las mismas herramientas de arriba
 
-### Automatización [AVANZADO]
-
-**Herramientas:**
-
-- Bots de Nostr
-- Servicios de publicación cruzada
-- Herramientas de programación
-- Plataformas de analítica
-
-**Advertencia:**
-
-- No automatices demasiado
-- La autenticidad importa
-- Úsalas con moderación
+Existen puentes de publicación cruzada y bots de programación, y son también la
+forma más rápida de que una cuenta se lea como un feed en vez de como una
+persona. Úsalos con moderación.
 
 ---
 
@@ -397,6 +397,14 @@ El superpoder de Nostr es que tu identidad funciona en todas partes. Los usuario
 - Un cliente no sincronizado completamente
 - Diferentes conjuntos de relays
 - Espera y actualiza
+
+### Los Seguidos Desaparecieron al Abrir un Cliente Antiguo
+
+Un cliente que llevas meses sin tocar puede seguir guardando una copia de tu
+lista de seguidos de hace meses. Si sigues o dejas de seguir a alguien antes de
+que termine de ponerse al día, publica esa copia antigua encima de la actual y la
+gente que añadiste desde entonces desaparece. Ábrelo, deja que cargue, comprueba
+que el número de seguidos tiene buena pinta y solo entonces sigue a alguien.
 
 ### Sobrecarga de Notificaciones
 
@@ -432,7 +440,8 @@ El superpoder de Nostr es que tu identidad funciona en todas partes. Los usuario
 **Mejores Prácticas:**
 
 - Usa diferentes clientes para diferentes tareas
-- No te preocupes demasiado por la sincronización
+- En la web, inicia sesión con un firmante; nunca pegues tu nsec en un sitio
+- Mantén la misma lista de relays en todas partes
 - Elige primario + secundario
 - ¡Haz backup de tus claves (siempre!)
 

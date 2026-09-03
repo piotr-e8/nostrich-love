@@ -5,7 +5,7 @@
 import type { GlossaryData, GlossaryMeta } from './index';
 
 export const meta: GlossaryMeta = {
-  seoTitle: 'Słownik pojęć Nostr: npub, nsec, relay (2026)',
+  seoTitle: 'Słownik pojęć Nostr: npub, nsec, relay i więcej',
   description:
     'Kompletny słownik pojęć i terminów Nostr. Zrozum kluczowe hasła: npub, nsec, relaye, NIP-y, zapy i wiele więcej.',
 };
@@ -14,7 +14,7 @@ const pl: GlossaryData = {
   nostr: {
     term: 'Nostr',
     definition:
-      'Notes and Other Stuff Transmitted by Relays — notatki i inne rzeczy przesyłane przez relaye. Zdecentralizowany protokół dla mediów społecznościowych i innych aplikacji.',
+      'Notes and Other Stuff Transmitted by Relays, czyli notatki i inne rzeczy przesyłane przez relaye. Zdecentralizowany protokół dla mediów społecznościowych i innych aplikacji.',
   },
   npub: {
     term: 'npub',
@@ -34,7 +34,7 @@ const pl: GlossaryData = {
   client: {
     term: 'Klient',
     definition:
-      'Aplikacja, która łączy się z relayami Nostr i pozwala czytać oraz publikować notatki. Przykłady: Damus, Iris, Amethyst.',
+      'Aplikacja, która łączy się z relayami Nostr i pozwala czytać oraz publikować notatki. Przykłady: Primal, Damus, Amethyst, Iris.',
   },
   nip: {
     term: 'NIP',
@@ -44,7 +44,7 @@ const pl: GlossaryData = {
   zap: {
     term: 'Zap',
     definition:
-      'Płatność w sieci Bitcoin Lightning wysyłana przez Nostr. Służy do dawania napiwków i wspierania innych użytkowników.',
+      'Płatność Bitcoin Lightning powiązana z notatką lub profilem w Nostr. Pieniądze idą siecią Lightning, a Nostr zapisuje publiczne potwierdzenie. Służy do dawania napiwków i wspierania innych użytkowników.',
   },
   nip05: {
     term: 'NIP-05',
@@ -64,15 +64,15 @@ const pl: GlossaryData = {
   pubkey: {
     term: 'Pubkey',
     definition:
-      'Skrót od public key — klucz publiczny. Twój identyfikator w sieci Nostr, wyprowadzany z klucza prywatnego.',
+      'Skrót od public key, czyli klucz publiczny. Twój identyfikator w sieci Nostr, wyprowadzany z klucza prywatnego.',
   },
   'nsec-format': {
-    term: '_nsec',
+    term: 'nsec (format)',
     definition:
       'Format klucza prywatnego zakodowanego w Bech32. Zaczyna się od "nsec1" i musi pozostać tajny.',
   },
   'npub-format': {
-    term: '_npub',
+    term: 'npub (format)',
     definition:
       'Format klucza publicznego zakodowanego w Bech32. Zaczyna się od "npub1" i można go bezpiecznie udostępniać publicznie.',
   },
@@ -94,7 +94,7 @@ const pl: GlossaryData = {
   dm: {
     term: 'DM',
     definition:
-      'Direct Message — wiadomość bezpośrednia. Szyfrowane prywatne wiadomości między użytkownikami Nostr (NIP-04 lub NIP-17).',
+      'Wiadomość bezpośrednia (Direct Message). Szyfrowane prywatne wiadomości między użytkownikami Nostr. Nowoczesne klienty używają NIP-17; starszy NIP-04 jest wycofany, bo ujawnia, kto z kim pisze.',
   },
   mention: {
     term: 'Wzmianka',

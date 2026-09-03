@@ -1,7 +1,7 @@
 ---
 title: "Nostr Wyjaśniony Prosto"
 seoTitle: "Co to jest Nostr? Proste wyjaśnienie (2026)"
-description: "Zrozum Nostr w 5 minut. Dowiedz się, jak działa zdecentralizowane social media, dlaczego to ważne i czym różni się od tradycyjnych platform."
+description: "Zrozum Nostr w 5 minut. Dowiedz się, jak działają zdecentralizowane media społecznościowe, dlaczego to ważne i czym różnią się od tradycyjnych platform."
 estimatedTime: "5 minut"
 priority: 2
 category: "getting-started"
@@ -9,10 +9,13 @@ category: "getting-started"
 
 import { HoverCard } from "@components/HoverCard";
 import { ProtocolComparison } from "@components/ProtocolComparison";
-import { NostrSimulator } from "@components/NostrSimulator";
 import { WhatIsNostrQuiz } from "@components/interactive/WhatIsNostrQuiz";
 
-### Problem (1 minuta czytania)
+**Nostr (skrót od Notes and Other Stuff Transmitted by Relays) to otwarty protokół mediów społecznościowych, a nie aplikacja.** Twoje konto to para kluczy kryptograficznych, Twoje posty to podpisane zdarzenia, a relaye to serwery, które je przechowują i przekazują dalej. Odczytać je może dowolny klient, więc żadna firma nie zbanuje Cię ani nie zatrzyma u siebie Twoich obserwujących.
+
+Protokół opublikował anonimowo w 2020 roku programista znany jako fiatjaf. Definiują go numerowane specyfikacje zwane NIP-ami, a nie jakakolwiek firma.
+
+## Problem
 
 **Nie jesteś właścicielem swojej obecności w social media.**
 
@@ -21,8 +24,8 @@ Kiedy budujesz swoją markę na Twitterze, Instagramie czy Facebooku, budujesz n
 ### Ryzyko platformy jest realne
 
 - **Bany się zdarzają.** Pomyłka, kontrowersyjna opinia lub fałszywe zgłoszenie mogą zamknąć Ci dostęp do lat treści i połączeń
-- **Algorytmy się zmieniają.** Twoje posty mogą docierać do 10 000 osób jednego dnia i 200 następnego — bez ostrzeżenia czy wyjaśnienia
-- **Twoi followers nie są Twoi.** Jeśli platforma Cię zbanuje, tracisz dostęp do publiczności, którą budowałeś latami
+- **Algorytmy się zmieniają.** Twoje posty mogą docierać do 10 000 osób jednego dnia i 200 następnego, bez ostrzeżenia czy wyjaśnienia
+- **Twoi obserwujący nie należą do Ciebie.** Jeśli platforma Cię zbanuje, tracisz dostęp do publiczności, którą budowałeś latami
 - **Blokada danych.** Twoje posty, zdjęcia i wiadomości są uwięzione w bazie danych jednej firmy
 
 ### Podstawowy problem
@@ -34,11 +37,11 @@ Wielkie firmy technologiczne kontrolują:
 - Jakie treści są promowane
 - Czy możesz eksportować swoje dane
 
-**To nie jest tylko niewygodne — to stawia Twoją cyfrową tożsamość w niebezpieczeństwie.**
+**Niewygoda to tu najmniejszy problem. W grę wchodzi bezpieczeństwo Twojej cyfrowej tożsamości.**
 
 ---
 
-### Rozwiązanie: Protokół vs Platforma (2 minuty czytania)
+## Rozwiązanie: protokół, nie platforma
 
 Nostr rozwiązuje to, zmieniając jedną fundamentalną rzecz: **To protokół, nie platforma.**
 
@@ -50,7 +53,7 @@ Prawdopodobnie używasz emaila codziennie, nie zastanawiając się nad tą magi�
 - Możesz przejść z Yahoo na ProtonMail i zachować książkę adresową
 - Żadna pojedyncza firma nie kontroluje całego emaila
 
-**Email to protokół.** Każdy może zbudować aplikację emailową. Każdy może komunikować się z każdym. Nikt nie jest właścicielem sieci.
+**Email to protokół.** Każdy może zbudować własną aplikację pocztową i napisać z niej do kogokolwiek. Sieci nie ma kto posiadać.
 
 **Nostr działa w ten sam sposób.**
 
@@ -62,18 +65,18 @@ Prawdopodobnie używasz emaila codziennie, nie zastanawiając się nad tą magi�
 
 **Sfederowane (Mastodon):** Wiele serwerów, które mogą ze sobą rozmawiać, ale każdy właściciel serwera ma władzę nad swoimi użytkownikami.
 
-**Nostr:** Żadne serwery nie posiadają Twojej tożsamości. Ty trzymasz klucze. Ty wybierasz, gdzie publikować. Możesz zmienić aplikację w dowolnym momencie.
+**Nostr:** Żaden serwer nie posiada Twojej tożsamości. Klucze trzymasz Ty i to Ty wybierasz, gdzie publikować. Aplikację zmieniasz, kiedy chcesz.
 
 ### Co to oznacza dla Ciebie
 
 - **Jedna tożsamość, wszędzie.** Twoje klucze działają w każdej aplikacji Nostr
-- **Twoje dane podążają za Tobą.** Zmieniasz klienta? Twoje posty i followers idą z Tobą
+- **Twoje dane podążają za Tobą.** Zmieniasz klienta? Twoje posty i obserwujący idą z Tobą
 - **Nikt nie może Cię zbanować.** Mogą Cię ignorować, ale nie mogą powstrzymać Cię od publikowania
 - **Wiele wyborów.** Używaj aplikacji z interfejsem, który kochasz
 
 ---
 
-### Kluczowe koncepcje (2 minuty czytania)
+## Kluczowe koncepcje
 
 Nie martw się o zapamiętanie wszystkiego. Nauczysz się przez praktykę. Ale oto model mentalny:
 
@@ -86,8 +89,8 @@ Nie martw się o zapamiętanie wszystkiego. Nauczysz się przez praktykę. Ale o
   Twoja publiczna tożsamość na Nostr wygląda tak: `npub1q...9x`
 </HoverCard>
 
-- Wygląda tak: <code className="break-all text-sm">npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
-- Udostępniaj to swobodnie — to jak ludzie Cię znajdują i obserwują
+- Wygląda tak: <code className="break-all text-sm">npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
+- Udostępniaj to swobodnie: tak właśnie ludzie Cię znajdują i obserwują
 - Myśl o tym jak o adresie email lub numerze telefonu
 - **Zielone światło: Bezpieczne do udostępniania wszędzie**
 
@@ -100,7 +103,7 @@ Nie martw się o zapamiętanie wszystkiego. Nauczysz się przez praktykę. Ale o
   Twój tajny klucz wygląda tak: `nsec1q...9x`
 </HoverCard>
 
-- Wygląda tak: <code className="break-all text-sm">nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
+- Wygląda tak: <code className="break-all text-sm">nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</code>
 - To udowadnia, że jesteś właścicielem swojego klucza publicznego
 - **CZERWONY ALARM: Nigdy tego nie udostępniaj nikomu**
 - Utrata = trwała strata. Nie ma opcji "zapomniałem hasła"
@@ -123,26 +126,26 @@ Nie martw się o zapamiętanie wszystkiego. Nauczysz się przez praktykę. Ale o
 
 <HoverCard
   term="Klienci"
-  definition="Aplikacje, których używasz do interakcji z Nostr — jak Damus, Amethyst lub Iris. Możesz zmieniać klientów w dowolnym momencie bez utraty tożsamości."
+  definition="Aplikacje, których używasz do interakcji z Nostr, takie jak Damus, Amethyst czy Iris. Możesz zmieniać klientów w dowolnym momencie bez utraty tożsamości."
 >
-  Klienci są jak Gmail vs Apple Mail — różne interfejsy, ten sam protokół
+  Klienci są jak Gmail vs Apple Mail: różne interfejsy, ten sam protokół
 </HoverCard>
 
 - Aplikacja, której używasz do publikowania, przeglądania i wiadomości
 - Przykłady: Damus (iOS), Amethyst (Android), Iris (web)
-- Zmieniaj w dowolnym momencie — nigdy nie jesteś uwięziony
+- Zmieniaj w dowolnym momencie. Nic Cię tu nie trzyma
 
 ---
 
-### Dlaczego to ma znaczenie (1 minuta czytania)
+## Dlaczego to ma znaczenie
 
 ### Zalety
 
 ✅ **Nikt nie może Cię zbanować.** Mogą ignorować Twoje posty, ale nie mogą powstrzymać Cię od publikowania
 
-✅ **Twoje dane są przenośne.** Każdy post, każdy follower, każdy polubienie — to wszystko jest Twoje do przeniesienia
+✅ **Twoje dane są przenośne.** Każdy post, każdy obserwujący, każde polubienie: wszystko to zabierasz ze sobą
 
-✅ **Brak reklam czy algorytmów.** Większość klientów pokazuje chronologiczne feedy. Twoja uwaga nie jest produktem
+✅ **Brak reklam i brak algorytmu, o który nie prosiłeś.** Klienci pokazują Ci ludzi, których obserwujesz, od najnowszych wpisów. Niektóre mają też feed popularnych albo algorytmiczny, ale to zakładka, którą otwierasz sam, a nie domyślny widok, który dostajesz
 
 ✅ **Odporność.** Jeśli jeden relay przestanie działać, Twoja tożsamość przetrwa. Jeśli jeden klient zostanie zamknięty, przechodzisz na inny
 
@@ -150,7 +153,7 @@ Nie martw się o zapamiętanie wszystkiego. Nauczysz się przez praktykę. Ale o
 
 ⚠️ **Jesteś odpowiedzialny za swoje klucze.** Utrata nsec = utrata tożsamości na zawsze. Nie ma działu obsługi klienta, do którego możesz zadzwonić
 
-⚠️ **Brak przycisku "cofnij"."** Usunięte posty mogą utrzymywać się na relayach. Pomyśl, zanim opublikujesz
+⚠️ **Brak przycisku "cofnij".** Usunięte posty mogą utrzymywać się na relayach. Pomyśl, zanim opublikujesz
 
 ⚠️ **Krzywa uczenia.** To jest nowe, inne i niektóre części są jeszcze surowe
 
@@ -162,6 +165,29 @@ To zależy od tego, co cenisz:
 - **Jeśli chcesz wolności:** Nostr daje Ci kontrolę, której żadna platforma nie może zapewnić
 - **Jeśli jesteś ciekawy:** Najlepszy sposób na naukę to spróbowanie
 
+## Jak Nostr działa naprawdę
+
+Na sam protokół składają się cztery elementy. Nie musisz ich znać, żeby korzystać z Nostr, ale to o nich mowa, kiedy ktoś mówi, że "Nostr jest prosty".
+
+- **Event (zdarzenie):** każdy post, reakcja, aktualizacja profilu i prywatna wiadomość to jeden podpisany obiekt JSON. To jedyna struktura danych, jaką ma ten protokół.
+- **Kind (rodzaj):** liczba w każdym zdarzeniu, która mówi, czym ono jest: `0` to profil, `1` krótka notka, `3` lista kontaktów, `7` reakcja, `30023` dłuższy artykuł.
+- **Podpis:** podpis Schnorra na krzywej secp256k1, złożony Twoim [kluczem prywatnym](/pl/guides/keys-and-security). To dzięki niemu zdarzenia nie da się podmienić i żaden relay nie opublikuje posta w Twoim imieniu.
+- **NIP:** Nostr Implementation Possibility, czyli numerowane specyfikacje, z których zbudowany jest protokół. NIP-01 opisuje zdarzenia i relaye, [NIP-05](/pl/guides/nip05-identity) przypisuje czytelne `nazwa@domena` do Twojego klucza, a [NIP-57](/pl/guides/zaps-and-lightning) definiuje zapy.
+
+Piąta rzecz, o której usłyszysz, to **sieć zaufania** (web of trust), i to raczej zwyczaj niż specyfikacja. Skoro żaden firmowy algorytm nie decyduje, co widzisz, nowe osoby znajdujesz przez to, kogo obserwują ludzie, których już obserwujesz. Dlatego [znalezienie pierwszych osób](/pl/guides/finding-community) znaczy tu więcej niż w innych sieciach.
+
+Płatności są tu częścią kultury, a nie dodatkiem: **zap** to napiwek w Bitcoin Lightning doklejony do posta, liczony w satach (jeden sat to jedna stumilionowa bitcoina). Jak to działa, opisują [Zapy i Lightning](/pl/guides/zaps-and-lightning).
+
+### Znasz już inną sieć?
+
+Jeśli korzystasz już z innej sieci, najszybciej umieścisz Nostr na mapie, porównując go z tym, co znasz:
+
+- [Nostr vs Twitter/X](/nostr-vs-twitter): co naprawdę zmienia się w kwestii własności konta i zasięgu
+- [Nostr vs Mastodon](/nostr-vs-mastodon): dlaczego relaye to nie instancje
+- [Nostr vs Bluesky](/nostr-vs-bluesky): dwie różne odpowiedzi na zdecentralizowaną tożsamość
+
+Chcesz wersję na poziomie protokołu? [Nostr vs ActivityPub vs Bluesky](/pl/guides/protocol-comparison) pokazuje, czym te trzy naprawdę różnią się pod spodem.
+
 ---
 
 ## Sprawdź swoją wiedzę
@@ -172,4 +198,4 @@ Gotowy sprawdzić, czego się nauczyłeś? Rozwiąż ten szybki quiz:
 
 ---
 
-_Chcesz zagłębić się bardziej? Sprawdź nasze [FAQ](/pl/guides/faq), aby poznać więcej tematów._
+_Chcesz zagłębić się bardziej? Zajrzyj do naszego [FAQ](/pl/guides/faq), sprawdź nieznane słowo w [słowniku Nostr](/pl/glossary) albo przejrzyj [wybrane materiały o Nostr](/resources)._

@@ -1,6 +1,6 @@
 ---
 title: "Zapy: Napiwki na Nostr"
-seoTitle: "Zapy na Nostr: napiwki Lightning — jak działają"
+seoTitle: "Zapy na Nostr: jak działają napiwki Lightning"
 description: "Dowiedz się, jak wysyłać i odbierać napiwki w Bitcoinie (zapy) na Nostr używając Lightning Network"
 estimatedTime: "10-15 minut"
 priority: 2
@@ -14,40 +14,25 @@ import { ZapsAndLightningQuiz } from "@components/interactive/ZapsAndLightningQu
 
 ## Czym są Zapy? ⚡
 
-Zapy to napiwki w Bitcoinie wysyłane przez Lightning Network. Są natywną warstwą wartości Nostr—pozwalającą użytkownikom nagradzać treści, które kochają, prawdziwymi pieniędzmi.
+Zapy to napiwki w Bitcoinie wysyłane przez Lightning Network. Są natywną warstwą wartości Nostr, pozwalającą użytkownikom nagradzać prawdziwymi pieniędzmi treści, które kochają.
 
-Pomyśl o nich jako o "lajkach z wartością"—sposobie na wspieranie ludzi, których treści Ci się podobają.
+Pomyśl o nich jako o "lajkach z wartością": to sposób na wspieranie ludzi, których twórczość Ci się podoba.
 
 ### Jak Działają Zapy
 
 1. **Tworzysz dobrą treść** → Post, wątek lub odpowiedź
 2. **Ktoś to docenia** → Klikają przycisk ⚡ zap
-3. **Wysyłają satoshi** → Malutkie ilości Bitcoina (1000 sats = ~$0.30)
+3. **Wysyłają satoshi** → Malutkie ilości Bitcoina (1000 sats to grubo poniżej dolara)
 4. **Odbierasz natychmiast** → Pieniądze pojawiają się w Twoim portfelu
 5. **Wszyscy to widzą** → Zapy są publiczne i tworzą dowód społeczny
 
 ### Dlaczego Zapy Są Rewolucyjne
 
-**Tradycyjne Social Media:**
-
-- Lajki są darmowe i bezwartościowe
-- Platforma zatrzymuje cały przychód z reklam
-- Twórcy nie dostają nic
-- Zaangażowanie jest puste
-
-**Nostr z Zaps:**
-
-- Każdy lajk może mieć prawdziwą wartość
-- Żadna platforma nie pobiera prowizji
-- Bezpośrednie wsparcie twórców
-- Znaczące zaangażowanie
+Na typowych platformach lajk nic nie kosztuje, więc nic nie jest wart. Twoja praca sprzedaje reklamy, a pieniądze inkasuje platforma. Zapy zmieniają to, czym jest sam gest: kiedy ktoś stuka w piorun, prawdziwy Bitcoin wychodzi z jego portfela i trafia do Twojego, bez firmy pośrodku biorącej procent. Uznanie, które kosztuje nadawcę, zwykle więcej znaczy.
 
 ### Prawdziwe Przykłady
 
-- Deweloper otrzymuje 100,000 sats ($30) za naprawienie błędu
-- Artysta dostaje zap za dzielenie się swoją pracą
-- Pisarz zarabia Bitcoina za wnikliwe wątki
-- Twórca memów dostaje napiwki za wiralową treść
+Ilustratorka wrzuca szkic i budzi się z kilkoma tysiącami satoshi od ludzi, których nigdy nie spotkała. Długi wątek pisarza krąży przez tydzień i przez cały ten czas zbiera napiwki. Muzyk dzieli się surowym demem i zbiera na godzinę w studiu. Deweloperzy też dostają zapy, czasem 100 000 satoshi (kilkadziesiąt dolarów) za popołudnie spędzone na naprawianiu czyjegoś błędu.
 
 ### Model Wartość-za-Wartość
 
@@ -63,17 +48,12 @@ Pomyśl o nich jako o "lajkach z wartością"—sposobie na wspieranie ludzi, kt
       lines: ["Darmowe posty", "Darmowe czytanie", "Uwaga płaci twórcy"],
     },
   ]}
-  caption="Po obu stronach dostęp jest tak samo darmowy — różnica polega na tym, komu płaci uwaga."
+  caption="Po obu stronach dostęp jest tak samo darmowy. Różnica polega na tym, komu płaci uwaga."
 />
 
 ### Jak Wyglądają Zapy
 
-W obsługiwanych klientach, zap pokazują się jako:
-
-- ⚡ Ikony pioruna
-- Kwota zapnięta (np. "21 sats")
-- Sumy na postach
-- Specjalne powiadomienia, gdy je otrzymasz
+W obsługujących je klientach widzisz piorun z kwotą obok ("21 sats"), bieżącą sumę na samym poście i osobne powiadomienie za każdym razem, gdy któryś do Ciebie trafi.
 
 <MockPost
   author="Alicja"
@@ -103,8 +83,8 @@ Zanim będziesz mógł wysyłać lub odbierać zapy, potrzebujesz portfela Light
 
 **Primal Wallet** (Wbudowany w aplikację Primal)
 
-- Zero konfiguracji—aktywujesz go w kliencie
-- Samodzielny (oparty na Spark) od Primal 3.0
+- Zero konfiguracji, aktywujesz go w kliencie
+- Samopowierniczy (self-custodial, oparty na Spark) od Primal 3.0
 - Web, iOS i Android
 - [primal.net](https://primal.net)
 
@@ -112,22 +92,22 @@ Zanim będziesz mógł wysyłać lub odbierać zapy, potrzebujesz portfela Light
 
 - Hostowany portfel działający w każdej przeglądarce
 - Daje Ci adres Lightning `ty@coinos.io`
-- Custodial—trzymaj tylko małe kwoty
+- Powierniczy (custodial), trzymaj tylko małe kwoty
 - [coinos.io](https://coinos.io)
 
 **Phoenix** (Mobilny)
 
 - Przyjazny użytkownikowi
-- Samodzielny
+- Samopowierniczy
 - iOS i Android (ponownie w amerykańskim App Store od kwietnia 2025)
-- Uwaga: prawdziwa samodzielność oznacza małe opłaty on-chain/za kanał przy zasilaniu portfela niewielkim pierwszym saldem
+- Uwaga: prawdziwe samopowiernictwo oznacza małe opłaty on-chain lub za kanał przy zasilaniu portfela niewielkim pierwszym saldem
 - [phoenix.acinq.co](https://phoenix.acinq.co)
 
 #### Dla Zaawansowanych Użytkowników
 
 **Alby Hub** (Desktop/Chmura + Rozszerzenie Przeglądarki)
 
-- Twój własny samodzielny węzeł Lightning, w chmurze lub self-hosted
+- Twój własny samopowierniczy węzeł Lightning, w chmurze lub self-hosted
 - Adres Lightning w zestawie; współpracuje z rozszerzeniem przeglądarki Alby i mobilną aplikacją Alby Go
 - Łączy się z każdym klientem Nostr przez Nostr Wallet Connect (NWC)
 - [getalby.com](https://getalby.com)
@@ -141,28 +121,28 @@ Zanim będziesz mógł wysyłać lub odbierać zapy, potrzebujesz portfela Light
 
 ### Custodial vs Non-Custodial
 
-**Custodial (Coinos i inne hostowane portfele)**
+**Powierniczy, custodial (Coinos i inne hostowane portfele)**
 
 - ✅ Łatwa konfiguracja
 - ✅ Niższe opłaty
 - ❌ Oni trzymają Twoje środki
 - ❌ KYC może być wymagane
 
-**Non-Custodial (Primal Wallet, Phoenix, Alby Hub, Zeus)**
+**Samopowierniczy, non-custodial (Primal Wallet, Phoenix, Alby Hub, Zeus)**
 
 - ✅ Ty kontrolujesz swoje klucze
 - ✅ Lepsza prywatność
 - ❌ Trochę bardziej złożone
 - ❌ Wyższe opłaty on-chain
 
-> 💡 **Rekomendacja**: Zacznij od hostowanego lub wbudowanego portfela na małe kwoty. Przejdź na pełną samodzielność (Phoenix lub Alby Hub), gdy Twoje saldo urośnie.
+> 💡 **Rekomendacja**: Zacznij od hostowanego lub wbudowanego portfela na małe kwoty. Przejdź na pełne samopowiernictwo (Phoenix lub Alby Hub), gdy Twoje saldo urośnie.
 
 ### A Co z Wallet of Satoshi i Mutiny?
 
 Starsze poradniki o Nostr polecają te dwa portfele. Te rady są nieaktualne:
 
 - **Mutiny Wallet został zamknięty.** Zespół ogłosił zamknięcie w sierpniu 2024 i do 31 grudnia 2024 zakończył działanie wszystkich aplikacji, usług hostowanych i wsparcia. Nie wysyłaj tam środków.
-- **Wallet of Satoshi nie jest już tą bezobsługową aplikacją custodial, z której słynął.** Jego klasyczna usługa custodial opuściła rynek amerykański w listopadzie 2023, a na początku 2026 została wycofana w całej UE. Od tego czasu wystartował ponownie jako portfel oparty na Spark, reklamowany jako samodzielny—to inny produkt niż ten opisywany w starszych poradnikach.
+- **Wallet of Satoshi nie jest już tą bezobsługową aplikacją custodial, z której słynął.** Jego klasyczna usługa custodial opuściła rynek amerykański w listopadzie 2023, a na początku 2026 została wycofana w całej UE. Od tego czasu wystartował ponownie jako portfel oparty na Spark, reklamowany jako samopowierniczy. To inny produkt niż ten opisywany w starszych poradnikach.
 
 Aby dziś zacząć najłatwiej, użyj wbudowanego portfela swojego klienta (jak ten w Primal) lub hostowanego portfela webowego, takiego jak Coinos.
 
@@ -173,8 +153,8 @@ Aby dziś zacząć najłatwiej, użyj wbudowanego portfela swojego klienta (jak 
 #### Krok po Kroku: Alby Hub + Klient Web
 
 1. **Skonfiguruj Alby Hub**
-   - Uruchom hub na [getalby.com](https://getalby.com)—w chmurze lub self-hosted
-   - Alby Hub to samodzielny węzeł Lightning; Alby nie oferuje już hostowanego salda custodial
+   - Uruchom hub na [getalby.com](https://getalby.com), w chmurze lub self-hosted
+   - Alby Hub to samopowierniczy węzeł Lightning, a Alby nie oferuje już hostowanego salda powierniczego
    - Opcjonalnie zainstaluj rozszerzenie przeglądarki Alby i połącz je ze swoim hubem, aby zapować jednym kliknięciem w klientach webowych
 
 2. **Zdobądź Ciąg Połączenia Nostr Wallet Connect (NWC)**
@@ -207,13 +187,13 @@ Aby dziś zacząć najłatwiej, użyj wbudowanego portfela swojego klienta (jak 
 
 4. **Do Odbierania Zapów Sparuj Go z Adresem Lightning**
    - Zapy trafiają na adres Lightning w Twoim profilu Nostr
-   - Użyj adresu z portfela, który go oferuje (wbudowany portfel Twojego klienta, Coinos lub Alby Hub), a Phoenix zostaw jako samodzielny portfel na większe salda
+   - Użyj adresu z portfela, który go oferuje (wbudowany portfel Twojego klienta, Coinos lub Alby Hub), a Phoenix zostaw jako samopowierniczy portfel na większe salda
 
 #### Krok po Kroku: Portfel Wbudowany w Klienta (np. Primal)
 
 1. **Aktywuj Portfel w Swoim Kliencie**
    - Otwórz zakładkę portfela w swoim kliencie i podążaj za instrukcjami aktywacji
-   - Wbudowany portfel Primal jest samodzielny i działa na web, iOS i Androidzie
+   - Wbudowany portfel Primal jest samopowierniczy i działa na web, iOS i Androidzie
 
 2. **Zdobądź Swój Adres Lightning**
    - Po aktywacji portfel pokaże Twój adres Lightning
@@ -227,11 +207,11 @@ Aby dziś zacząć najłatwiej, użyj wbudowanego portfela swojego klienta (jak 
 4. **Zweryfikuj, Że Działa**
    - Poszukaj ikony ⚡ na swoim profilu
    - Poproś znajomego o wysłanie testowego zapa (100 sats)
-   - Sprawdź swój portfel—powinieneś otrzymać natychmiast
+   - Sprawdź swój portfel, środki powinny dotrzeć natychmiast
    - Powinieneś zobaczyć powiadomienie o zapie w swoim kliencie
 
 <Callout variant="warning">
-  **Ważne:** Zapisz swoją frazę odzyskiwania portfela, jeśli używasz portfela samodzielnego (Phoenix, Primal Wallet, Alby Hub, Zeus)! Jeśli stracisz dostęp do swojego portfela, tracisz swojego Bitcoina. Bez wyjątków.
+  **Ważne:** Zapisz swoją frazę odzyskiwania portfela, jeśli używasz portfela samopowierniczego (Phoenix, Primal Wallet, Alby Hub, Zeus)! Jeśli stracisz dostęp do swojego portfela, tracisz swojego Bitcoina. Bez wyjątków.
 </Callout>
 
 ---
@@ -257,7 +237,7 @@ Aby dziś zacząć najłatwiej, użyj wbudowanego portfela swojego klienta (jak 
 | 1,000-5,000 sats | Świetna treść, odcinek podcastu |
 | 10,000+ sats     | Wyjątkowa wartość, sztuka, narzędzie |
 
-> 💡 **Zasada kciuka**: Zapuj to, co treść jest warta dla Ciebie. Żadna kwota nie jest za mała!
+> 💡 **Praktyczna zasada**: zapuj tyle, ile dana treść jest dla Ciebie warta. Żadna kwota nie jest za mała!
 
 ### Niestandardowe Wiadomości
 
@@ -266,7 +246,7 @@ Większość klientów pozwala dodać wiadomość z Twoim zapem:
 ```
 "Dzięki za pomoc!"
 "Świetny wątek, dużo się nauczyłem"
-"☕ Kawa dla mnie"
+"☕ Stawiam kawę"
 ```
 
 To personalizuje interakcję i pomaga twórcom wiedzieć, jaka treść rezonuje.
@@ -277,11 +257,11 @@ To personalizuje interakcję i pomaga twórcom wiedzieć, jaka treść rezonuje.
 
 ## Odbieranie Zapów 💰
 
-### Konfiguracja LNURL
+### Konfiguracja Adresu Lightning
 
 Aby odbierać zapy, musisz skonfigurować, gdzie mają trafiać:
 
-1. **Zdobądź swój Adres Lightning lub LNURL**
+1. **Zdobądź swój adres Lightning**
    - Ze swojego portfela (wbudowany portfel Twojego klienta, Coinos, Alby Hub, itp.)
    - Format: `twojeimię@provider.com`
 
@@ -293,27 +273,23 @@ Aby odbierać zapy, musisz skonfigurować, gdzie mają trafiać:
    ```
 
 3. **Zweryfikuj, że działa**
-   - Poproś znajomego o wysłanie Ci 10 sats
-   - Lub użyj kranu testnet
+   - Wyślij kilka satoshi na własny adres Lightning z ekranu wysyłki w swoim portfelu
+   - Albo poproś znajomego o testowego zapa na 10 satoshi
 
-### Powiadomienia o Zapach
+### Zapy: powiadomienia
 
-**W większości klientów:**
-
-- Powiadomienie push, gdy zape
-- Zakładka powiadomień pokazuje historię zapów
-- Możesz zobaczyć, kto Cię zapnął
+Większość klientów wysyła powiadomienie w sekundzie, w której zap dociera, i trzyma w powiadomieniach osobną zakładkę na zapy, żebyś mógł przewinąć historię tego, kto ile wysłał.
 
 **Uwaga o prywatności:**
-Zapy są półpubliczne. Podczas gdy kwoty mogą być prywatne w niektórych konfiguracjach, fakt, że zapnąłeś (lub zostałeś zapnięty) jest widoczny.
+Zapy są publiczne. Każdy może spojrzeć na post i zobaczyć, że został zapnięty i na jaką kwotę, bo kwota jest wpisana w potwierdzenie zapa publikowane na relayach. Niektórzy klienci oferują zapa anonimowego, który zostawia na tym potwierdzeniu puste miejsce zamiast nazwy nadawcy. Kwota i tak pozostaje widoczna.
 
 ---
 
 ## Podziały Zapów [ZAAWANSOWANE]
 
-<Callout variant="info">
+<Note type="advanced">
   Opcjonalna funkcja do automatycznego dzielenia przychodów z zapów.
-</Callout>
+</Note>
 
 ### Czym są Podziały Zapów?
 
@@ -331,10 +307,12 @@ Gdy ktoś zapuje Twój post, automatycznie dziel płatność ze współpracownik
 
 ### Konfiguracja Podziałów
 
-1. **W swoim kliencie**: Poszukaj "Zap Splits" lub "Recipients"
-2. **Dodaj współpracowników**: Wpisz ich adresy Lightning
-3. **Ustaw procenty**: Muszą sumować się do 100%
-4. **Zapisz**: Przyszłe zapy będą automatycznie dzielone
+Podziały należą do posta, a nie do Twojego konta. Ustawiasz je w trakcie pisania posta, w kliencie, który tę funkcję obsługuje (najczęściej używa się do tego Amethysta), i obowiązują dla tej jednej notatki. Nie ma ustawienia, które po cichu dzieliłoby wszystko, co od tej pory opublikujesz.
+
+1. **W trakcie pisania posta**: poszukaj w ekranie tworzenia notatki pozycji "Zap Splits", "Recipients" albo czegoś podobnego
+2. **Dodaj współpracowników przez ich profile Nostr**: wybierasz ludzi po npub albo wyszukując ich, a klient sam odczytuje adres Lightning z profilu każdego z nich. Ktoś, kto nie ma adresu Lightning w profilu, nie ma gdzie odebrać swojej części.
+3. **Przydziel każdemu udział** (opcjonalnie): to wagi względne, a nie procenty, więc 3 i 1 znaczy, że jeden ze współpracowników bierze trzy czwarte. Zostaw wagi puste, a zap podzieli się po równo.
+4. **Opublikuj**: każdy zap na tej notatce dzieli się tak, jak ustawiłeś.
 
 ### Powszechne Przypadki Użycia
 
@@ -345,27 +323,11 @@ Gdy ktoś zapuje Twój post, automatycznie dziel płatność ze współpracownik
 
 ---
 
-## Analityka Zapów 📊
+## Trzymanie Ręki na Pulsie Zapów 📊
 
-Śledzenie aktywności zapów:
+Twój klient trzyma już większość tego, co chciałbyś wiedzieć. Każdy post niesie własną sumę zapów, a zakładka z zapami w powiadomieniach wypisuje, kto ile i kiedy wysłał. Jeśli używasz klienta z wbudowanym portfelem, na przykład Primala, ekran portfela trzyma pełną historię satoshi wchodzących i wychodzących w jednym miejscu.
 
-### Dla Twórców
-
-- **Wszystkie otrzymane zapy**: Całkowite i okresowe
-- **Najczęściej zapowane treści**: Które posty zarabiają najwięcej
-- **Prędkość zapów**: Tempo przychodzących zapów
-
-**Narzędzia:**
-
-- Większość klientów pokazuje podstawowe statystyki
-- [zaplife.lol](https://zaplife.lol) - Szczegółowa analityka
-- [nostrudel.ninja](https://nostrudel.ninja) - Zaawansowane statystyki
-
-### Dla Wspierających
-
-- **Wszystko zapowane**: Ile dałeś
-- **Ranking zapów**: Kogo najbardziej wspierałeś
-- **Śledzenie wpływu**: Zobacz swój wkład
+Czego jeszcze nie ma, to prawdziwego panelu analitycznego dla zapów, więc nie szukaj wykresów najlepszych postów ani rankingów wspierających. Na [zaplife.lol](https://zaplife.lol) i tak warto zajrzeć: to żywy strumień zapów lecących właśnie teraz przez Nostr, przyjemniejszy do oglądania niż użyteczny do mierzenia.
 
 ---
 
@@ -388,7 +350,7 @@ Gdy ktoś zapuje Twój post, automatycznie dziel płatność ze współpracownik
 
 **3. Doceniaj Wspierających**
 
-- Dziękuj ludziom, którzy zapiują
+- Dziękuj ludziom, którzy Cię zapują
 - Odpowiadaj na komentarze
 - Buduj relacje
 
@@ -450,7 +412,7 @@ Gdy ktoś zapuje Twój post, automatycznie dziel płatność ze współpracownik
 
 - Zweryfikuj, czy Twój adres Lightning jest w profilu
 - Przetestuj najpierw małą kwotą
-- Upewnij się, że portfel działa (non-custodial)
+- Upewnij się, że portfel działa (samopowierniczy)
 
 ---
 
@@ -460,13 +422,13 @@ Gdy ktoś zapuje Twój post, automatycznie dziel płatność ze współpracownik
 
 - ✅ Zapuj treści, które dostarczają wartość
 - ✅ Dodaj przyjazną wiadomość
-- ✅ Zacznij mało, ucząc się
+- ✅ Na początku wysyłaj małe kwoty
 - ✅ Wspieraj nowych użytkowników zapami powitalnymi
 - ✅ Trzymaj trochę sats w portfelu
 
 ### Nie Rób:
 
-- ❌ Nie czuj się presją do zapowania
+- ❌ Nie czuj presji, żeby zapować
 - ❌ Nie zapuj więcej niż możesz sobie pozwolić
 - ❌ Nie oczekuj zapów w zamian
 - ❌ Nie spamuj słabej jakości treści oczekując zapów
@@ -478,14 +440,13 @@ Gdy ktoś zapuje Twój post, automatycznie dziel płatność ze współpracownik
 
 - [Lightning Network Info](https://lightning.network)
 - [Dokumentacja Alby](https://guides.getalby.com)
-- [Zaplife - Analityka Zapów](https://zaplife.lol)
-- [ZapSplits Tool](https://github.com/nostr-protocol/zaps)
+- [Zaplife](https://zaplife.lol), żywy strumień zapów z całego Nostr
 
 ---
 
 ## Społeczność
 
-Dołącz do społeczności zapiującej:
+Dołącz do społeczności, która zapuje:
 
 - Używaj tagu #zap do dyskusji
 - Obserwuj #plebchain dla wskazówek
@@ -493,30 +454,30 @@ Dołącz do społeczności zapiującej:
 
 ---
 
-## Szybka Referencja
+## Szybka Ściągawka
 
 | Portfel | Trudność | Kontrola | Najlepszy Dla |
 |---------|-----------|---------|----------|
-| Primal Wallet (wbudowany) | Najłatwiejszy | Samodzielny | Początkujący |
-| Coinos | Łatwy | Custodial | Użytkownicy web, małe kwoty |
-| Phoenix | Średni | Samodzielny | Poważni użytkownicy |
-| Alby Hub | Średni | Samodzielny | Użytkownicy desktopowi |
+| Primal Wallet (wbudowany) | Najłatwiejszy | Samopowierniczy | Początkujący |
+| Coinos | Łatwy | Powierniczy | Użytkownicy web, małe kwoty |
+| Phoenix | Średni | Samopowierniczy | Poważni użytkownicy |
+| Alby Hub | Średni | Samopowierniczy | Użytkownicy desktopowi |
 | Zeus | Trudny | Pełna kontrola | Zaawansowani użytkownicy |
 
 **Kwoty Zapów:**
 
-- 21 sats = Minimalny realny zap
+- 21 sats = klasyczny mały zap (bitcoinowy żart wewnętrzny)
 - 100 sats = Standardowe "dziękuję"
 - 1000 sats = "To było wartościowe"
 - 10000+ sats = Wyjątkowa treść
 
-**Pamiętaj:** Każdy sat się liczy. Nie martw się o kwoty—wspieraj dobrą treść hojnie!
+**Pamiętaj:** Każdy sat się liczy. Nie zamartwiaj się kwotami, po prostu hojnie wspieraj dobre rzeczy!
 
 ---
 
-## Przetestuj Swoją Wiedzę o Zapach
+## Sprawdź, Co Wiesz o Zapowaniu
 
-Gotowy przetestować to, czego się nauczyłeś o zapach?
+Gotowy sprawdzić to, czego się nauczyłeś o zapowaniu?
 
 <ZapsAndLightningQuiz client:idle />
 
@@ -524,5 +485,5 @@ Gotowy przetestować to, czego się nauczyłeś o zapach?
 
 ## Czytaj dalej
 
-- [Twoje Klucze, Twoja Tożsamość](/pl/guides/keys-and-security)
-- [Niezbędne Narzędzia Nostr](/pl/guides/nostr-tools)
+- [Twoje Klucze, Twoja Tożsamość](/pl/guides/keys-and-security), bo zapy są związane z kluczem, który je podpisuje
+- [Niezbędne Narzędzia Nostr](/pl/guides/nostr-tools), czyli portfele i usługi, dzięki którym zapowanie mniej męczy

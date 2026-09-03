@@ -127,7 +127,7 @@
               },
               {
                 "id": "b",
-                "label": "Nostr erfordert nicht, dass man einen Server/Instanz zum Beitritt wählt"
+                "label": "Bei Nostr muss man keinen Server und keine Instanz wählen, um beizutreten"
               },
               {
                 "id": "c",
@@ -150,7 +150,7 @@
           {
             "id": "sharing-keys",
             "title": "Schlüsselsicherheit",
-            "prompt": "Welchen Schlüssel kannst du sicher mit jedem teilen?",
+            "prompt": "Was davon kannst du bedenkenlos mit jedem teilen?",
             "options": [
               {
                 "id": "npub",
@@ -213,7 +213,7 @@
               }
             ],
             "correctId": "signer",
-            "explanation": "Füge deinen privaten Hauptschlüssel niemals in neue Clients ein. Verwende einen Signer (NIP-46) oder eine Hardware-Lösung und warte, bis delegiertes Signieren unterstützt wird.",
+            "explanation": "Füge deinen privaten Hauptschlüssel niemals in einen Client ein, den du nicht geprüft hast. Nimm stattdessen einen Signer (Amber unter Android, eine Browser-Erweiterung im Web oder einen NIP-46-Remote-Signer), dann bekommt die App nur Signaturen und sieht deinen nsec nie. Zum Herumschauen reicht ein Wegwerf-Schlüssel, aber einen Umzug gibt es auf Nostr später nicht: Follower und Reputation bleiben bei dem Schlüssel, der sie verdient hat.",
             "severity": "warning"
           },
           {
@@ -223,7 +223,7 @@
             "options": [
               {
                 "id": "gps",
-                "label": "Lasse Standort-Tags aktiviert – es hilft bei der Entdeckung"
+                "label": "Lasse Standort-Tags aktiviert, das hilft bei der Entdeckung"
               },
               {
                 "id": "personas",
@@ -350,7 +350,7 @@
               },
               {
                 "id": "b",
-                "label": "Ja, viele Clients lassen dich Twitter-Follower importieren, die Nostr-Accounts haben"
+                "label": "Ja, aber nur bei denen, die zu Nostr gewechselt sind und ihren npub irgendwo hinterlegt haben, wo du ihn nachschlagen kannst"
               },
               {
                 "id": "c",
@@ -358,7 +358,7 @@
               }
             ],
             "correctId": "b",
-            "explanation": "Viele Nostr-Clients bieten Twitter-Import-Funktionen. Sie prüfen, welche deiner Twitter-Follows ihre Nostr-npubs verknüpft haben und lassen dich ihnen sofort folgen.",
+            "explanation": "Kein verbreiteter Client importiert deine Twitter-Follows für dich. Ein eigenes Verzeichnis, nostr.directory, bietet an, dich mit X anzumelden und deine Follows abzugleichen, kennt aber nur Leute, die sich dort selbst eingetragen haben. Verlässlich funktioniert: nach Namen oder NIP-05-Adresse suchen, den Starterpaketen folgen, die manche Clients anbieten, und Freunde nach ihrem npub fragen.",
             "severity": "info"
           },
           {
@@ -380,7 +380,7 @@
               }
             ],
             "correctId": "b",
-            "explanation": "Sei wie auf jeder anderen Plattform respektvoll. Stelle dich vor, erkläre, warum du schreibst, und vermeide unerwünschte Spam oder Werbung.",
+            "explanation": "Sei wie auf jeder anderen Plattform respektvoll. Stelle dich vor, erkläre, warum du schreibst, und vermeide unerwünschten Spam und unerwünschte Werbung.",
             "severity": "warning"
           },
           {
@@ -394,7 +394,7 @@
               },
               {
                 "id": "b",
-                "label": "Stummschalten oder blockieren – die Wahl liegt bei dir"
+                "label": "Stummschalten oder blockieren, die Wahl liegt bei dir"
               },
               {
                 "id": "c",
@@ -517,7 +517,7 @@
               },
               {
                 "id": "b",
-                "label": "Es variiert je nach Relay – einige behalten alles, einige löschen alte Beiträge"
+                "label": "Es variiert je nach Relay: einige behalten alles, andere löschen alte Beiträge"
               },
               {
                 "id": "c",
@@ -719,7 +719,7 @@
               }
             ],
             "correctId": "b",
-            "explanation": "Zaps sind Bitcoin-Micropayments, die über das Lightning Network gesendet werden. Sie ermöglichen es dir, Content-Ersteller sofort mit echtem Geld zu tippen oder zu unterstützen.",
+            "explanation": "Zaps sind Bitcoin-Micropayments, die über das Lightning Network gesendet werden. Damit kannst du Content-Erstellern sofort mit echtem Geld ein Trinkgeld geben oder sie unterstützen.",
             "severity": "critical"
           },
           {
@@ -763,7 +763,7 @@
               }
             ],
             "correctId": "a",
-            "explanation": "Um Zaps zu empfangen, brauchst du ein Lightning-Wallet (verwahrt wie Wallet of Satoshi oder selbst-verwahrt wie Phoenix/BlueWallet), das über eine Lightning-Adresse mit deinem Nostr-Profil verknüpft ist.",
+            "explanation": "Um Zaps zu empfangen, brauchst du ein Lightning-Wallet, das dir eine Lightning-Adresse gibt; diese Adresse trägst du in dein Nostr-Profil ein. Coinos läuft im Browser, ohne dass du etwas installieren musst, verwahrt dein Guthaben allerdings für dich. Primals eingebautes Wallet und Zeus lassen dir dagegen die Kontrolle über dein Guthaben.",
             "severity": "critical"
           },
           {
@@ -777,7 +777,7 @@
               },
               {
                 "id": "b",
-                "label": "Der Betrag und Sender sind auf Lightning sichtbar, aber du kannst verschiedene Wallets für verschiedene Identitäten verwenden"
+                "label": "Sender und Betrag landen in einer öffentlichen Quittung auf Nostr, aber du kannst für verschiedene Identitäten verschiedene Wallets nutzen"
               },
               {
                 "id": "c",
@@ -785,7 +785,7 @@
               }
             ],
             "correctId": "b",
-            "explanation": "Lightning-Zahlungen sind pseudonym wie Bitcoin. Die Transaktion ist sichtbar, aber nicht mit deiner Identität verknüpft, es sei denn, du verknüpfst Wallets über Personas hinweg. Verwende separate Wallets für Privatsphäre.",
+            "explanation": "Jeder Zap hinterlässt auf den Relays eine Quittung (NIP-57), in der steht, wer gezappt hat, wie viel und welchen Beitrag. Lightning selbst hat kein öffentliches Kassenbuch, also ist die Quittung der Teil, den alle lesen. Manche Clients können anonym zappen, und wenn die Verbindung zwischen zwei deiner Identitäten heikel ist, halte deren Wallets getrennt.",
             "severity": "warning"
           },
           {
@@ -807,7 +807,7 @@
               }
             ],
             "correctId": "a",
-            "explanation": "Verwahrte Wallets (wie Wallet of Satoshi) sind benutzerfreundlich, aber der Anbieter kontrolliert deine Mittel. Selbst-verwahrte Wallets (wie Phoenix) geben dir volle Kontrolle, erfordern aber mehr Verantwortung.",
+            "explanation": "Verwahrte Wallets (wie Coinos) sind benutzerfreundlich, aber der Anbieter kontrolliert dein Guthaben. Selbst-verwahrte Wallets (wie Phoenix oder Zeus) geben dir die volle Kontrolle und mehr Verantwortung.",
             "severity": "warning"
           }
         ]
@@ -826,7 +826,7 @@
           {
             "id": "empty-feed",
             "title": "Leerer Feed",
-            "prompt": "Dein Feed ist leer – was ist die wahrscheinlichste Ursache?",
+            "prompt": "Dein Feed ist leer. Was ist die wahrscheinlichste Ursache?",
             "options": [
               {
                 "id": "a",
@@ -882,11 +882,11 @@
               },
               {
                 "id": "c",
-                "label": "Nichts – das ist normal"
+                "label": "Nichts, das ist normal"
               }
             ],
             "correctId": "a",
-            "explanation": "Prüfe zuerst deine Internetverbindung. Dann verifiziere, ob die Relay-URLs korrekt sind (wss://-Format). Einige Relays können vorübergehend offline sein – probiere andere aus.",
+            "explanation": "Prüfe zuerst deine Internetverbindung. Dann verifiziere, ob die Relay-URLs korrekt sind (wss://-Format). Einige Relays sind vielleicht gerade offline. Dann probierst du eben andere aus.",
             "severity": "info"
           },
           {
@@ -940,7 +940,7 @@
             "options": [
               {
                 "id": "a",
-                "label": "Verbinde dich mit wenigeren, hochwertigen Relays statt vielen langsamen"
+                "label": "Verbinde dich mit weniger, dafür hochwertigen Relays statt mit vielen langsamen"
               },
               {
                 "id": "b",
@@ -975,7 +975,7 @@
               },
               {
                 "id": "b",
-                "label": "Ja, deine Schlüssel funktionieren überall – importiere deinen nsec in jeden Client"
+                "label": "Ja, eine Identität funktioniert überall: Verbinde jeden Client über einen Signer, statt deinen nsec hineinzukopieren"
               },
               {
                 "id": "c",
@@ -983,7 +983,7 @@
               }
             ],
             "correctId": "b",
-            "explanation": "Deine Identität ist portabel. Importiere deinen nsec in jeden Nostr-Client (Damus, Amethyst, Iris, etc.) und dein Profil, deine Follower und Beiträge folgen dir.",
+            "explanation": "Deine Identität ist portabel: Dasselbe Profil, dieselben Follower und dieselben Beiträge tauchen in Damus, Amethyst, Iris und den übrigen Clients auf. Melde dich über einen Signer an (Amber unter Android, eine Browser-Erweiterung im Web, ein NIP-46-Remote-Signer überall), dann bleibt dein nsec an einem Ort und jeder Client bekommt nur Signaturen.",
             "severity": "critical"
           },
           {
@@ -997,7 +997,7 @@
               },
               {
                 "id": "b",
-                "label": "Über Relays – alle Clients lesen aus und schreiben in dasselbe Relay-Netzwerk"
+                "label": "Über Relays: alle Clients lesen aus und schreiben in dasselbe Relay-Netzwerk"
               },
               {
                 "id": "c",
@@ -1279,7 +1279,7 @@
               },
               {
                 "id": "b",
-                "label": "Das können sie nicht – Nostr ist vollständig anonym"
+                "label": "Das können sie nicht, Nostr ist vollständig anonym"
               },
               {
                 "id": "c",
@@ -1293,7 +1293,7 @@
           {
             "id": "encrypted-backups",
             "title": "Sichere Backups",
-            "prompt": "Was ist der sicherste Weg, deine Nostr-Schlüssel zu backupen?",
+            "prompt": "Was ist der sicherste Weg, deine Nostr-Schlüssel zu sichern?",
             "options": [
               {
                 "id": "a",
@@ -1465,7 +1465,7 @@
           {
             "id": "nostr-architecture",
             "title": "Nostr-Design",
-            "prompt": "Was ist Nostr's Kernarchitektur-Philosophie?",
+            "prompt": "Was ist die Kernphilosophie der Nostr-Architektur?",
             "options": [
               {
                 "id": "a",
@@ -1473,7 +1473,7 @@
               },
               {
                 "id": "b",
-                "label": "Einfache, dumme Relays mit schlauen Clients – keine zentrale Autorität"
+                "label": "Einfache, dumme Relays mit schlauen Clients, keine zentrale Autorität"
               },
               {
                 "id": "c",
@@ -1503,7 +1503,7 @@
               }
             ],
             "correctId": "a",
-            "explanation": "ActivityPub ist föderiert – du trittst einem bestimmten Server mit Admins bei. Nostr nutzt Relays – keine Accounts auf Servern, deine Schlüssel funktionieren überall sofort.",
+            "explanation": "ActivityPub ist föderiert: du trittst einem bestimmten Server mit Admins bei. Nostr nutzt Relays, auf denen es gar keine Accounts gibt. Deine Schlüssel funktionieren dort überall sofort.",
             "severity": "critical"
           },
           {
@@ -1525,7 +1525,7 @@
               }
             ],
             "correctId": "a",
-            "explanation": "Bluesky's AT-Protokoll nutzt Personal Data Servers und eine komplexere Architektur. Nostr ist absichtlich einfacher mit nur Relays und Schlüsseln.",
+            "explanation": "Das AT-Protokoll von Bluesky nutzt Personal Data Servers und eine komplexere Architektur. Nostr ist absichtlich einfacher, mit nur Relays und Schlüsseln.",
             "severity": "warning"
           },
           {
@@ -1539,7 +1539,7 @@
               },
               {
                 "id": "b",
-                "label": "Nostr – keine Server-Accounts, einfaches Relay-Wechseln, keine zentrale Autorität"
+                "label": "Nostr: keine Server-Accounts, einfaches Relay-Wechseln, keine zentrale Autorität"
               },
               {
                 "id": "c",
@@ -1547,7 +1547,7 @@
               }
             ],
             "correctId": "b",
-            "explanation": "Nostr's Design macht es am widerstandsfähigsten gegen Zensur: keine Server-Accounts zum Bannen, einfaches Wechseln von Relays, keine Firma oder Stiftung, die es kontrolliert.",
+            "explanation": "Das Design von Nostr macht es am widerstandsfähigsten gegen Zensur: keine Server-Accounts zum Bannen, einfaches Wechseln von Relays, keine Firma oder Stiftung, die es kontrolliert.",
             "severity": "warning"
           },
           {
@@ -1569,7 +1569,7 @@
               }
             ],
             "correctId": "b",
-            "explanation": "Nostr's Dezentralisierung legt mehr Verantwortung auf die Nutzer: Schlüsselverwaltung, Relay-Auswahl und das Verstehen der Architektur. Das ist der Kompromiss für Freiheit.",
+            "explanation": "Die Dezentralisierung von Nostr legt mehr Verantwortung auf die Nutzer: Schlüsselverwaltung, Relay-Auswahl und das Verstehen der Architektur. Das ist der Kompromiss für Freiheit.",
             "severity": "info"
           }
         ]
@@ -1654,11 +1654,11 @@
             "options": [
               {
                 "id": "a",
-                "label": "2-4 relays"
+                "label": "2-4 Relays"
               },
               {
                 "id": "b",
-                "label": "10-15 relays"
+                "label": "10-15 Relays"
               },
               {
                 "id": "c",
@@ -1666,7 +1666,7 @@
               }
             ],
             "correctId": "a",
-            "explanation": "2-4 Relays sind optimal. Mehr Relays entleeren den Akku und bieten abnehmende Renditen, da sich Inhalte natürlich ausbreiten.",
+            "explanation": "2-4 Relays verlangt NIP-65 für die Relay-Liste, die du veröffentlichst (kind 10002). Das ist etwas anderes als die Zahl der Relays, mit denen dein Client im Betrieb spricht. Eine lange veröffentlichte Liste belastet den Akku und bringt kaum zusätzlichen Nutzen, weil sich Inhalte ohnehin zwischen den Relays verbreiten.",
             "severity": "warning"
           },
           {
@@ -1706,7 +1706,7 @@
       "scoreDisplay": "{{score}} / {{total}} richtige Antworten",
       "conceptsMastered": "Kritische Konzepte gemeistert",
       "nextSteps": "Nächste Schritte",
-      "perfectScore": "Teile dein Wissen—hilf jemandem beim Einstieg.",
+      "perfectScore": "Teile dein Wissen und hilf jemandem beim Einstieg.",
       "reviewSections": "Überprüfe die Abschnitte, die du verpasst hast, unten.",
       "retakeQuiz": "Quiz wiederholen",
       "questionCounter": "Frage {{current}} von {{total}}",
@@ -1852,7 +1852,7 @@
       "public": {
         "title": "Öffentlicher Schlüssel (npub)",
         "badge": "Sicher zum Teilen",
-        "description": "Dies ist dein öffentlicher Identifier. Teile ihn mit anderen, damit sie dich finden und folgen können.",
+        "description": "Dies ist dein öffentlicher Identifier. Teile ihn mit anderen, damit sie dich finden und dir folgen können.",
         "copy": "Kopieren",
         "qrCode": "QR-Code"
       },
@@ -1980,7 +1980,7 @@
           "notFound": "Profil nicht gefunden",
           "noPosts": "Profil lädt, aber keine Beiträge",
           "oldData": "Alte Daten werden angezeigt",
-          "cantFollow": "Kann Nutzer nicht folgen"
+          "cantFollow": "Kann dem Nutzer nicht folgen"
         }
       }
     },
@@ -2005,7 +2005,7 @@
         "title": "Willkommen! Dein Feed ist leer",
         "description": "Als neuer Nutzer ist dein Feed leer, weil du zuerst Leuten folgen musst.",
         "steps": [
-          "Gehe zum Empty Feed Fixer-Tool unten",
+          "Gehe unten zum Tool „Leeren Feed Beheben“",
           "Wähle ein Starter-Pack von Accounts zum Folgen",
           "Verbinde dich mit 3-5 empfohlenen Relays",
           "Warte ein paar Minuten, bis der Inhalt lädt",
@@ -2022,7 +2022,7 @@
         "description": "Teilweise fehlende Inhalte bedeuten meist Probleme mit der Relay-Verbindung.",
         "steps": [
           "Prüfe, mit welchen Relays du verbunden bist",
-          "Füge mehr Relays hinzu (ziele auf 5-10 verschiedene Relays ab)",
+          "Füge mehr Relays hinzu (ziele auf 3-10 verschiedene Relays ab)",
           "Warte ein paar Minuten, bis die Synchronisation abgeschlossen ist",
           "Versuche, den Feed zu aktualisieren",
           "Prüfe, ob die fehlenden Nutzer andere Relays verwenden"
@@ -2157,7 +2157,7 @@
         "title": "Kein Wallet verbunden",
         "description": "Du brauchst ein Bitcoin Lightning-Wallet, um Zaps zu senden.",
         "steps": [
-          "Lade ein Lightning-Wallet herunter (Alby, Zeus, Phoenix)",
+          "Besorg dir ein Lightning-Wallet, das Nostr Wallet Connect beherrscht (Zeus, Coinos oder Alby Hub mit Alby Go)",
           "Lade das Wallet mit Bitcoin auf",
           "Verbinde das Wallet über NWC mit deinem Nostr-Client",
           "Versuche, einen kleinen Test-Zap zu senden",
@@ -2242,7 +2242,7 @@
         ]
       },
       "cantFollow": {
-        "title": "Kann Nutzer nicht folgen",
+        "title": "Kann dem Nutzer nicht folgen",
         "description": "Die Folgen-Aktion funktioniert nicht.",
         "steps": [
           "Prüfe die Internetverbindung",
@@ -2374,7 +2374,7 @@
       },
       "wssPurplePages": {
         "name": "Purple Pages",
-        "description": "Metadaten-Relay"
+        "description": "Nur Profile und Listen, keine Beiträge"
       }
     }
   },
@@ -2429,7 +2429,7 @@
     },
     "skipModal": {
       "title": "Bist du sicher?",
-      "description": "Das Überspringen des Backups setzt deinen Account aufs Risiko. Wenn du deinen privaten Schlüssel verlierst:",
+      "description": "Ohne Backup gefährdest du deinen Account. Wenn du deinen privaten Schlüssel verlierst:",
       "risks": [
         "Verlierst du dauerhaft den Zugriff auf deinen Account",
         "Sind alle deine Beiträge, Follower und Daten weg",
@@ -2524,25 +2524,25 @@
         "description": "Ein schneller, moderner Client für alle Plattformen mit hervorragender Performance.",
         "pros": [
           "Alle Plattformen",
+          "Eingebautes Lightning-Wallet",
           "Schnelles Laden",
           "Starke Suche",
-          "Schönes Design",
           "Regelmäßige Updates"
         ],
         "cons": [
           "Für manche bedenklich beim Datenschutz",
-          "Neuere App",
-          "Einige Funktionen noch in Entwicklung"
+          "Liest über Primals eigene Caching-Server",
+          "Weniger Relay-Kontrolle als Clients für Power-User"
         ]
       },
       "iris": {
         "name": "Iris",
-        "description": "Ein einfacher Web-Client ohne Registrierung – ideal für den schnellen Einstieg.",
+        "description": "Ein einfacher Web-Client ohne Registrierung. Ideal für den schnellen Einstieg.",
         "pros": [
           "Kein Download nötig",
           "Sofort einsatzbereit",
           "Aufgeräumte Oberfläche",
-          "Open source",
+          "Open Source",
           "Privat"
         ],
         "cons": [
@@ -2569,58 +2569,58 @@
       },
       "coracle": {
         "name": "Coracle",
-        "description": "Ein Desktop-Client für Power-User mit erweiterten Funktionen.",
+        "description": "Ein Web-Client für Power-User, mit weitreichenden Relay- und Community-Einstellungen.",
         "pros": [
           "Mächtige Funktionen",
-          "Für Desktop optimiert",
+          "Läuft in jedem Browser, installierbar als Web-App",
           "Gut für Kreative",
           "Erweiterte Filter",
           "Tastenkürzel"
         ],
         "cons": [
-          "Desktop only",
+          "Keine native Mobile-App",
           "Steilere Lernkurve",
-          "Nicht für Mobilgeräte geeignet"
+          "Viele Einstellungen, durch die man sich arbeiten muss"
         ]
       },
       "current": {
-        "name": "Current",
-        "description": "iOS-Client mit hervorragender Nostr-Wallet-Connect-Integration.",
+        "name": "Current (eingestellt)",
+        "description": "Eingestellt. Es war ein iOS-Client rund um Nostr Wallet Connect, aber die Arbeit daran endete 2023 und die App ist aus dem App Store verschwunden, der Download-Link führt also ins Leere. Wer auf iOS ein Wallet-zentriertes Erlebnis sucht, schaut sich besser Primal an.",
         "pros": [
-          "Beste Wallet-Unterstützung",
-          "NWC-Integration",
-          "Funktionen für Power-User",
-          "Clean UI"
+          "War einer der ersten Clients mit Nostr Wallet Connect",
+          "Auf Zaps ausgelegtes Design",
+          "Aufgeräumte Oberfläche",
+          "Quellcode weiterhin auf GitHub"
         ],
         "cons": [
-          "More complex",
-          "Nur iOS",
-          "Lernkurve"
+          "Entwicklung 2023 eingestellt",
+          "Aus dem App Store entfernt, der Download-Link ist tot",
+          "Für neue Nutzer keine Option"
         ]
       },
       "habla": {
         "name": "Habla",
-        "description": "Client für Langform-Inhalte mit Newsletter-Unterstützung.",
+        "description": "Ein Schreib-Client für lange Artikel. Achtung: habla.news liefert mindestens seit September 2026 einen 404, nimm für Langform-Texte also YakiHonne, bis die Seite zurück ist.",
         "pros": [
           "Gut für Artikel",
-          "Newsletter-Unterstützung",
+          "Rund um Langform-Beiträge gebaut (NIP-23)",
           "Aufgeräumte Schreibumgebung",
-          "Monetization"
+          "Leser können zappen, was du veröffentlichst"
         ],
         "cons": [
+          "Die Seite ist derzeit offline (404)",
           "Nur Web",
-          "Kleinere Nutzerbasis",
-          "Eingeschränkte soziale Funktionen"
+          "Kleinere Nutzerbasis"
         ]
       },
       "nostur": {
         "name": "Nostur",
         "description": "Ein funktionsreicher iOS-Client mit Fokus auf Bedienbarkeit.",
         "pros": [
-          "Great UI",
-          "Fast",
+          "Tolle Oberfläche",
+          "Schnell",
           "Gute Relay-Verwaltung",
-          "Active dev"
+          "Aktive Entwicklung"
         ],
         "cons": [
           "Nur iOS",
@@ -2628,16 +2628,16 @@
         ]
       },
       "plebstr": {
-        "name": "Plebstr",
-        "description": "Ein einfacher Android-Client für Einsteiger.",
+        "name": "Openvibe (früher Plebstr)",
+        "description": "Aus Plebstr wurde Openvibe: dieselbe App, jetzt mit einem gemeinsamen Feed über Nostr, Bluesky, Mastodon und Threads. Immer noch ein leichter Einstieg unter Android, nur erwarte kein reines Nostr-Erlebnis.",
         "pros": [
           "Einfach zu bedienen",
-          "Clean design",
-          "Gute Performance"
+          "Eine App für mehrere Netzwerke",
+          "Aufgeräumtes Design"
         ],
         "cons": [
-          "Weniger Funktionen",
-          "Nur Android",
+          "Nostr ist nur ein Teil davon",
+          "Weniger Nostr-spezifische Funktionen",
           "Keine Wallet"
         ]
       }
@@ -2854,18 +2854,18 @@
       "awesome": "Super!"
     },
     "keyGen": {
-      "description": "Jeder Nostr-Account besteht nur aus einem Schlüsselpaar – generiere ein Übungspaar, um zu sehen, wie es aussieht.",
+      "description": "Jeder Nostr-Account besteht nur aus einem Schlüsselpaar. Generiere ein Übungspaar, um zu sehen, wie es aussieht.",
       "publicKeyTitle": "Öffentlicher Schlüssel (npub)",
       "publicKeyDesc": "Sicher zum Teilen mit allen",
       "privateKeyTitle": "Privater Schlüssel (nsec)",
       "privateKeyDesc": "Teile ihn niemals mit jemandem",
-      "important": "Diese Übungsschlüssel funktionieren nur hier – sie sind nicht echt. Bei echten Schlüsseln kannst du deinen npub bedenkenlos teilen, aber bewahre deinen nsec in einem Passwort-Manager oder einer Signer-App auf, füge ihn niemals auf einer Website ein und sende ihn niemandem."
+      "important": "Diese Übungsschlüssel sind nicht echt und funktionieren nur hier. Bei echten Schlüsseln kannst du deinen npub bedenkenlos teilen, aber bewahre deinen nsec in einem Passwort-Manager oder einer Signer-App auf, füge ihn niemals auf einer Website ein und sende ihn niemandem."
     },
     "simulator": "Simulator",
     "simulationMode": "Simulationsmodus",
-    "simulationNote": "Dies ist eine Simulation zum Üben – installiere die echte App, wenn du bereit bist, bei Nostr mitzumachen.",
+    "simulationNote": "Dies ist eine Simulation zum Üben. Installiere die echte App, wenn du bereit bist, bei Nostr mitzumachen.",
     "relayStep": {
-      "description": "Relays sind die Server, die deine Beiträge speichern und weiterleiten – verbinde dich mit ein paar davon, damit mehr Leute sehen können, was du schreibst.",
+      "description": "Relays sind die Server, die deine Beiträge speichern und weiterleiten. Verbinde dich mit ein paar davon, damit mehr Leute sehen können, was du schreibst.",
       "connected": "Verbunden",
       "connectOne": "Zuerst ein Relay verbinden"
     },
@@ -2873,11 +2873,11 @@
       "title": "Mach deinen ersten Beitrag",
       "description": "Schreibe einen kurzen Beitrag und veröffentliche ihn auf den Relays, mit denen du dich gerade verbunden hast.",
       "placeholder": "Was beschäftigt dich gerade?",
-      "tip": "Dein erster Beitrag ist ein guter Ort, um dich vorzustellen – viele Leute fügen #introductions hinzu, damit andere sie finden können."
+      "tip": "Dein erster Beitrag ist ein guter Ort, um dich vorzustellen. Viele Leute fügen #introductions hinzu, damit andere sie finden können."
     },
     "followStep": {
       "title": "Folge anderen",
-      "description": "Dein Feed bleibt leer, bis du anderen folgst – folge also mindestens drei Leuten, um ihn zu füllen.",
+      "description": "Dein Feed bleibt leer, bis du anderen folgst. Folge also mindestens drei Leuten, um ihn zu füllen.",
       "following": "Folge ich"
     },
     "interactStep": {
@@ -2894,7 +2894,7 @@
     },
     "completion": {
       "title": "Erster Tag geschafft!",
-      "description": "Du hast dich mit Relays verbunden, einen Beitrag veröffentlicht, anderen gefolgt und deinen ersten Zap erhalten – du bist bereit, das alles in einem echten Client zu machen."
+      "description": "Du hast dich mit Relays verbunden, einen Beitrag veröffentlicht, anderen gefolgt und deinen ersten Zap erhalten. Jetzt kannst du das alles in einem echten Client machen."
     }
   },
   "protocolComparisonUI": {
@@ -2945,7 +2945,7 @@
     "currentStepLabel": "Aktueller Schritt",
     "stepDescriptions": {
       "0": "Du schreibst einen Beitrag auf deinem Gerät und signierst ihn mit deinem privaten Schlüssel.",
-      "1": "Dein Client sendet denselben signierten Beitrag an jeden Relay, den du nutzt — gleichzeitig, nicht nacheinander.",
+      "1": "Dein Client sendet denselben signierten Beitrag an jeden Relay, den du nutzt, und zwar gleichzeitig, nicht nacheinander.",
       "2": "Wer mit einem dieser Relays verbunden ist, kann ihn dort abrufen.",
       "3": "Wer keinen Relay mit dir gemeinsam hat, sieht ihn nie. Kein Relay leitet ihn weiter."
     }
@@ -3034,7 +3034,7 @@
   "guidesPage": {
     "hero": {
       "title": "Lerne Nostr Schritt für Schritt",
-      "description": "Stufen von Anfänger bis Fortgeschritten. Alles ist frei zugänglich — die Stufen zeigen nur eine sinnvolle Reihenfolge."
+      "description": "Stufen von Anfänger bis Fortgeschritten. Alles ist frei zugänglich, die Stufen zeigen nur eine sinnvolle Reihenfolge."
     },
     "filter": {
       "filterByInterest": "Nach Interesse filtern"
@@ -3148,7 +3148,7 @@
     "categories": {
       "jumpstart": {
         "name": "Hier anfangen",
-        "description": "Ein handverlesenes Starter-Set — wenn du niemandem sonst folgst, folge diesen."
+        "description": "Ein handverlesenes Starter-Set: wenn du niemandem sonst folgst, folge diesen."
       },
       "legit": {
         "name": "Bekannte Gesichter",
@@ -3156,7 +3156,7 @@
       },
       "cool_people": {
         "name": "Favoriten der Community",
-        "description": "Accounts, die andere Nostr-Nutzer immer wieder empfehlen. Kein festes Thema — einfach gute Gesellschaft."
+        "description": "Accounts, die andere Nostr-Nutzer immer wieder empfehlen. Kein festes Thema, einfach gute Gesellschaft."
       },
       "artists": {
         "name": "Künstler und Illustratoren",
@@ -3220,8 +3220,8 @@
     "noResults": "Keine Begriffe gefunden, die zu deiner Suche passen.",
     "quickReference": {
       "title": "Schnellreferenz",
-      "npub": "Public Key — kann bedenkenlos geteilt werden",
-      "nsec": "Private Key — geheim halten!",
+      "npub": "Public Key, kann bedenkenlos geteilt werden",
+      "nsec": "Private Key, geheim halten!",
       "nip01": "Basisprotokoll",
       "kind1": "Textnotiz (Post)"
     },

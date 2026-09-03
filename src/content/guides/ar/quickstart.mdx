@@ -41,12 +41,12 @@ prerequisites: ["what-is-nostr", "keys-and-security"]
       <svg className="w-5 h-5 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
       </svg>
-      إنشاء المفاتيح أولاً (2 دقيقة)
+      إنشاء المفاتيح أولاً (10 دقائق)
     </a>
   </div>
   
   <p className="mt-4 text-sm text-gray-600 dark:text-gray-400 text-center">
-    ستحتاج إلى <code>npub</code> (المفتاح العام) و <code>nsec</code> (المفتاح الخاص) للمتابعة.
+    ستحتاج إلى <code>nsec</code> (المفتاح الخاص) للمتابعة. أما <code>npub</code> (المفتاح العام) فيُشتق منه تلقائياً، فلا داعي للاحتفاظ بالاثنين في متناول اليد.
   </p>
 </div>
 
@@ -56,13 +56,13 @@ prerequisites: ["what-is-nostr", "keys-and-security"]
 
 ## الخطوة 2: اختر عميلك
 
-لدى Nostr عشرات العملاء—فكر فيها مثل تطبيقات البريد الإلكتروني. اختر واحداً للبدء.
+لدى Nostr عشرات العملاء. فكر فيها مثل تطبيقات البريد الإلكتروني، واختر واحداً للبدء.
 
 <a href="https://sandstr.app" target="_blank" rel="noopener noreferrer" className="not-prose my-6 flex items-start gap-4 p-5 rounded-xl border-2 border-primary/30 bg-primary/5 dark:bg-primary/10 hover:border-primary/60 transition-colors">
   <span className="text-3xl" aria-hidden="true">🏖️</span>
   <span>
     <span className="block font-bold text-gray-900 dark:text-white mb-1">لم تقرر بعد؟ جرّب العملاء في متصفحك أولاً</span>
-    <span className="block text-sm text-gray-600 dark:text-gray-400">يتيح لك Sandstr تجربة Damus وAmethyst وPrimal وغيرها — بلا مفاتيح، بلا تثبيت، لا شيء حقيقي. عُد عندما يعجبك أحدها.</span>
+    <span className="block text-sm text-gray-600 dark:text-gray-400">يتيح لك Sandstr تجربة Damus وAmethyst وPrimal وغيرها، بلا مفاتيح ولا تثبيت ولا شيء حقيقي. عُد عندما يعجبك أحدها.</span>
   </span>
 </a>
 
@@ -142,7 +142,7 @@ prerequisites: ["what-is-nostr", "keys-and-security"]
 
 ## الخطوة 3: قائمة التحقق قبل الانطلاق
 
-فحص أخير قبل أن تصبح مباشراً:
+فحص أخير قبل الانطلاق:
 
 <div className="my-8 p-6 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl border-2 border-yellow-400 dark:border-yellow-600">
   <h3 className="text-lg font-bold text-yellow-800 dark:text-yellow-400 mb-4 flex items-center gap-2">
@@ -173,21 +173,30 @@ prerequisites: ["what-is-nostr", "keys-and-security"]
 افتح العميل الذي اخترته وسجّل الدخول. **طريقة** تسجيل الدخول أهم مما تعترف به معظم
 الأدلة.
 
-**على الهاتف**، الصق مفتاح nsec داخل التطبيق مرة واحدة. تطبيق الهاتف بيئة معزولة —
-لا يقرأ ما تلصقه فيه سوى ذلك التطبيق.
+**على Android**، ثبّت [Amber](https://github.com/greenart7c3/Amber) ودعه يحتفظ
+بمفتاحك. تطلب التطبيقات من Amber أن يوقّع، وتوافق أنت على كل طلب داخل Amber، ولا
+يدخل مفتاح nsec إلى التطبيق نفسه أبدًا. وAmber غير موجود على Google Play، فاحصل
+عليه من zap.store أو F-Droid أو صفحة إصداراته على GitHub.
 
-**في المتصفح، لا تلصق مفتاح nsec في الموقع.** ثبّت بدلًا من ذلك إضافة توقيع —
-[Alby](https://getalby.com) أو [nos2x](https://github.com/fiatjaf/nos2x) أو
-[Nostore](https://apps.apple.com/app/nostore/id1666553677) على Safari. يبقى
+**على iPhone**، لا يوجد ما يعادل ذلك، فالصق مفتاح nsec داخل التطبيق مرة واحدة. ما
+تخزّنه داخل تطبيق يبقى داخل ذلك التطبيق، لكن الحافظة أرض مشتركة: ما دام المفتاح
+فيها، تستطيع تطبيقات أخرى قراءته، ولوحة مفاتيح تزامن حافظتك مع السحابة قد تنقله
+خارج الهاتف. أوقف هذه المزامنة قبل اللصق، وانسخ شيئًا غير مهم فوق المفتاح بمجرد أن
+تسجّل الدخول.
+
+**في المتصفح، لا تلصق مفتاح nsec في الموقع.** ثبّت بدلًا من ذلك إضافة توقيع:
+[Alby](https://getalby.com) أو
+[nos2x](https://chromewebstore.google.com/detail/nos2x/kpgefcfmnafjgpblomihpgmejjdanjjp)
+أو [Nostash](https://apps.apple.com/us/app/nostash/id6744309333) على Safari. يبقى
 المفتاح داخل الإضافة؛ يطلب الموقع منها توقيع كل إجراء ولا يرى المفتاح نفسه أبدًا.
 كل عميل ويب جاد يدعم ذلك (ويُسمّى NIP-07)، وهو يحوّل «موقع سيّئ واحد يكلّفك هويتك»
 إلى «موقع سيّئ واحد لا يحصل على شيء».
 
 وإذا كنت تفضّل ألّا يكون المفتاح على أجهزتك إطلاقًا، فإن موقّعًا بعيدًا مثل
-[nsec.app](https://nsec.app) (NIP-46) يحتفظ به ويوافق على الإجراءات من تطبيق منفصل.
+[nsec.app](https://use.nsec.app) (NIP-46) يحتفظ به ويوافق على الإجراءات من تطبيق منفصل.
 
 <Callout variant="warning" title="أي موقع يطلب منك مفتاح nsec هو علامة خطر">
-  متى حصل موقع على مفتاح nsec الخاص بك، امتلك هويتك إلى الأبد — لا يمكن تدوير مفتاح
+  متى حصل موقع على مفتاح nsec الخاص بك، امتلك هويتك إلى الأبد. لا يمكن تدوير مفتاح
   Nostr ولا سحب الصلاحية. لا توجد إعادة تعيين لكلمة المرور ولا دعم فني.
 
 العملاء الشرعيون يطلبون منك ربط موقّع. أمّا إذا طلب منك موقع كتابة مفتاحك الخاص أو
@@ -225,10 +234,10 @@ prerequisites: ["what-is-nostr", "keys-and-security"]
   <div className="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
     <div className="flex items-center gap-3 mb-3">
       <div className="text-3xl">👥</div>
-      <h3 className="font-bold text-blue-800 dark:text-blue-400">املأ تغذيتك أولاً</h3>
+      <h3 className="font-bold text-blue-800 dark:text-blue-400">املأ خلاصتك أولاً</h3>
     </div>
     <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
-      التغذية الفارغة هي السبب #1 لترك الناس. تابع 50+ حساب مُنتقى فوراً.
+      الخلاصة الفارغة هي السبب الأول لانسحاب الناس. تابع 50+ حساباً مُنتقى فوراً.
     </p>
     <a 
       href="/follow-pack" 
@@ -247,10 +256,10 @@ prerequisites: ["what-is-nostr", "keys-and-security"]
       <h3 className="font-bold text-green-800 dark:text-green-400">استمر في التعلم</h3>
     </div>
     <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
-      أتقن Nostr مع أدلتنا خطوة بخطوة. من zaps إلى الخصوصية—لدينا ما تحتاجه.
+      أتقن Nostr مع أدلتنا خطوة بخطوة. من zaps إلى الخصوصية، لدينا ما تحتاجه.
     </p>
     <a 
-      href="/guides" 
+      href="/ar/guides" 
       className="inline-flex items-center text-green-600 hover:text-green-700 font-semibold"
     >
       استكشف جميع الأدلة

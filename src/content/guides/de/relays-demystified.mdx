@@ -1,5 +1,5 @@
 ---
-title: "Wie Posts Reisen: Relays Erklärt"
+title: "Wie Posts reisen: Relays erklärt"
 seoTitle: "Nostr-Relays erklärt: So funktionieren sie"
 description: "Verstehe, wie Nostr-Relays funktionieren mit einfachen Analogien und interaktiven Tools"
 estimatedTime: "5-10 Minuten"
@@ -47,20 +47,20 @@ Hier ist der Hauptunterschied zu traditionellen sozialen Medien: **Du wählst, w
 
 Bei Nostr bist du nicht an einen Anbieter gebunden. Du kannst:
 
-- Posts an jeden Relay senden
+- Posts an jedes Relay senden
 - Dich mit mehreren Relays verbinden
 - Jederzeit Relays wechseln
-- Deinen eigenen Relay betreiben
+- Dein eigenes Relay betreiben
 
 <RelayWorldMap />
 
-## Warum Posts Nicht Synchronisieren 🔄
+## Warum Posts nicht synchronisieren 🔄
 
 Hier ist die häufigste Verwirrung, mit der neue Nutzer konfrontiert werden:
 
 > "Ich habe etwas gepostet, aber mein Freund kann es nicht sehen!"
 
-### Die Visuelle Erklärung
+### Die visuelle Erklärung
 
 <DiagramNodes
   rows={[
@@ -79,7 +79,7 @@ Hier ist die häufigste Verwirrung, mit der neue Nutzer konfrontiert werden:
 
 **Wenn du auf Relay A postest und dein Freund nur Relay B nutzt, wird er deinen Post nicht sehen.**
 
-### Die Lösung: Mit Mehreren Relays Verbinden
+### Die Lösung: mit mehreren Relays verbinden
 
 <DiagramNodes
   rows={[
@@ -105,29 +105,27 @@ Die meisten Nostr Clients verbinden dich automatisch mit mehreren Standard-Relay
 
 <PostFlowSimulator client:idle />
 
-## Relays Auswählen 🔌
+## Relays auswählen 🔌
 
 ### Standard-Empfehlungen
 
 Wenn du gerade anfängst, bleib bei diesen beliebten, zuverlässigen Relays:
 
-| Relay                      | Beschreibung      | Zuverlässigkeit |
-| -------------------------- | ----------------- | --------------- |
-| `wss://relay.damus.io`     | Damus Haupt-Relay | ⭐⭐⭐⭐⭐      |
-| `wss://nostr.wine`         | Allgemeiner Relay | ⭐⭐⭐⭐        |
-| `wss://relay.snort.social` | Snort Social      | ⭐⭐⭐⭐        |
+| Relay                    | Beschreibung                  | Kosten    |
+| ------------------------ | ----------------------------- | --------- |
+| `wss://relay.damus.io`   | Haupt-Relay von Damus         | Kostenlos |
+| `wss://nos.lol`          | Beliebtes Allzweck-Relay      | Kostenlos |
+| `wss://relay.primal.net` | Öffentliches Relay von Primal | Kostenlos |
 
 ### Interessenbasierte Entdeckung
 
-Communities betreiben oft ihre eigenen Relays für fokussierte Diskussionen:
+Communities betreiben oft ihre eigenen Relays für fokussierte Diskussionen. `wss://nostr.bitcoiner.social` läuft schon lange und dreht sich um Bitcoin.
 
-- **Bitcoin**: `wss://nostr.bitcoiner.social`
-- **Development**: `wss://relay.nostrdevs.com`
-- **Art**: `wss://relay.nostrich.art`
+Thematische Relays kommen und gehen, eine abgedruckte Liste veraltet also schnell. Nimm lieber den Explorer hier unten: Er prüft jedes Relay in dem Moment, in dem du es dir ansiehst, damit du nur Adressen kopierst, die gerade tatsächlich antworten.
 
 <RelayExplorer client:idle />
 
-### Kostenlose vs. Bezahlte Relays
+### Kostenlose vs. bezahlte Relays
 
 **Kostenlose Relays**
 
@@ -138,7 +136,8 @@ Communities betreiben oft ihre eigenen Relays für fokussierte Diskussionen:
 
 **Bezahlte Relays**
 
-- Erfordern normalerweise eine kleine Gebühr (oft 1000-5000 Sats/Monat)
+- Verlangen eine kleine Zahlung in Bitcoin: manche einmalig beim Beitritt, manche monatlich
+- Die Preise schwanken stark, von ein paar tausend Sats bis rund 20.000
 - Bessere Performance
 - Weniger Spam
 - Unterstützen Relay-Betreiber
@@ -147,7 +146,7 @@ Communities betreiben oft ihre eigenen Relays für fokussierte Diskussionen:
 
 ---
 
-## Fortgeschritten: Outbox Model (NIP-65) [ADVANCED]
+## Das Outbox-Modell (NIP-65) [ERWEITERT]
 
 <Note type="advanced">
   Dieser Abschnitt ist optional. Du kannst Nostr perfekt nutzen, ohne
@@ -156,39 +155,37 @@ Communities betreiben oft ihre eigenen Relays für fokussierte Diskussionen:
 
 ### Was ist NIP-65?
 
-NIP-65 führt eine intelligentere Art ein, Relays zu handhaben, genannt "Outbox Model".
+NIP-65 führt eine intelligentere Art ein, Relays zu handhaben, genannt "Outbox-Modell".
 
-**Anstatt**: Dich manuell mit 10+ Relays zu verbinden
-**Machst du**: Veröffentliche deine bevorzugte Relay-Liste einmal, lass die Clients es herausfinden
+**Statt** dich manuell mit 10+ Relays zu verbinden, **veröffentlichst du** deine bevorzugte Relay-Liste einmal und lässt die Clients den Rest erledigen.
 
-### Wie Es Funktioniert
+### Wie es funktioniert
 
-```
-1. Du veröffentlichst eine Relay-Liste:
-   {
-     "read": ["wss://relay-a.com"],
-     "write": ["wss://relay-b.com"]
-   }
+Dein Client veröffentlicht eine kurze Liste, und jeder Eintrag darauf ist markiert: als Ort, an den du schreibst, als Ort, von dem du liest, oder als beides. Die Clients anderer Leute holen sich diese Liste, bevor sie nach dir suchen.
 
-2. Andere Clients lesen dies und wissen:
-   - Wo sie deine Posts finden (read relays)
-   - Wohin sie dir Nachrichten senden (write relays)
-```
+- **Write**-Relays sind die, auf denen du veröffentlichst. Folgt dir jemand, holt dessen Client deine Posts von genau dort.
+- **Read**-Relays sind die, auf denen ankommt, was an dich gerichtet ist: Antworten, Erwähnungen, Benachrichtigungen. Dein Client beobachtet sie, damit du das auch mitbekommst.
 
-### Persönliche Relays Einrichten
+Vertauschst du die beiden, landen deine Posts an einer Stelle, an der niemand nachsieht. Die meisten Clients setzen die Markierungen selbst, sobald du deine Relay-Liste in den Einstellungen bearbeitest, von Hand fasst du das also selten an.
+
+> 📚 Die ausführliche Erklärung, samt dem, wie so eine Liste tatsächlich aussieht, steht in unserem [Guide zum Outbox-Modell](/de/guides/outbox-model).
+
+### Persönliche Relays einrichten
 
 Für fortgeschrittene Nutzer bietet der Betrieb eines eigenen Relays:
 
 - **Vollständige Kontrolle** über deine Daten
-- **Perfekte Zuverlässigkeit** (keine Abhängigkeit von anderen)
-- **Privatsphäre** (nur deine Daten auf dem Relay)
+- **Eine dauerhafte Kopie** von allem, was du postest, bei dir selbst
+- **Unabhängigkeit** von den Entscheidungen eines einzelnen Relay-Betreibers
+
+Was es dir nicht gibt, sind Zuverlässigkeit und Privatsphäre. Ein Relay auf deinem eigenen Server ist nur so verlässlich wie dieser Server, und ein großer Betreiber hält die Verfügbarkeit meistens besser als du. Bei der Privatsphäre ist das Missverständnis noch größer: Alles, was du postest, geht trotzdem an deine übrigen Relays raus und bleibt dort öffentlich lesbar. Ein eigenes Relay ändert nur, wo eine Kopie deiner Posts liegt. Lesen können sie weiterhin alle.
 
 Beliebte persönliche Relay-Software:
 
-- [strfry](https://github.com/hoytech/strfry) - Schnelle C++ Implementierung
-- [nostr-rs-relay](https://gitlab.com/soapbox-pub/nostr-rs-relay) - Rust Implementierung
+- [strfry](https://github.com/hoytech/strfry): schnelle C++-Implementierung
+- [nostr-rs-relay](https://github.com/scsibug/nostr-rs-relay): in Rust geschrieben
 
-> 📚 Siehe unseren [Relay Guide](/de/guides/relay-guide) für detaillierte Setup-Anleitungen.
+> 📚 Siehe unseren [Relay-Management-Guide](/de/guides/relay-guide) für detaillierte Setup-Anleitungen.
 
 ---
 
@@ -205,7 +202,7 @@ In den meisten Clients kannst du:
 ### Best Practices
 
 1. **Verbinde dich mit 4-8 Relays** für gute Abdeckung
-2. **Füge einen "write" Relay hinzu**, auf dem du immer postest
+2. **Füge ein "write"-Relay hinzu**, auf dem du immer postest
 3. **Prüfe die Relay-Verfügbarkeit**, bevor du dich darauf verlässt
 4. **Halte deine Relay-Liste aktuell**, während das Netzwerk wächst
 
@@ -222,20 +219,20 @@ In den meisten Clients kannst du:
 ### "Meine Posts verschwinden"
 
 - Manche Relays löschen alte Inhalte, um Speicherplatz zu sparen
-- Verbinde dich mit mehr Relays für Redundanz
-- Erwäge einen bezahlten Relay für dauerhafte Speicherung
+- Verbinde dich mit mehr Relays, damit nicht ein einzelnes deine einzige Kopie hält
+- Bezahl-Relays heben Posts meistens deutlich länger auf, garantiert ist bei Nostr aber nichts für immer: Relays räumen auf, ändern ihre Regeln oder machen zu
 
 ### "Relay verbindet sich nicht"
 
 - Prüfe deine Internetverbindung
-- Versuche die Relay-URL in einem Browser (sollte Fehler/ws-Seite zeigen)
-- Der Relay könnte down sein - probiere einen anderen
+- Tausche das `wss://` am Anfang der Adresse gegen `https://` und öffne das im Browser: ein funktionierendes Relay antwortet mit einer Info-Seite oder einem kurzen Textblock, ein totes gibt dir gar nichts
+- Das Relay könnte down sein, probiere ein anderes
 
 <TroubleshootingWizard client:idle />
 
 ---
 
-## Teste Dein Verständnis
+## Teste dein Verständnis
 
 Glaubst du, du hast Relays verstanden? Teste dein Wissen:
 
@@ -243,7 +240,7 @@ Glaubst du, du hast Relays verstanden? Teste dein Wissen:
 
 ---
 
-## Hast Du Noch Fragen?
+## Hast du noch Fragen?
 
 Tritt der Nostr-Community bei:
 

@@ -34,7 +34,7 @@ const en: GlossaryData = {
   client: {
     term: 'Client',
     definition:
-      'An application that connects to Nostr relays, allowing users to read and publish notes. Examples: Damus, Iris, Amethyst.',
+      'An application that connects to Nostr relays, allowing users to read and publish notes. Examples: Primal, Damus, Amethyst, Iris.',
   },
   nip: {
     term: 'NIP',
@@ -44,7 +44,7 @@ const en: GlossaryData = {
   zap: {
     term: 'Zap',
     definition:
-      'A Bitcoin Lightning Network payment sent over Nostr. Used to tip or support other users.',
+      'A Bitcoin Lightning payment attached to a Nostr note or profile. The money travels over the Lightning Network and Nostr records a public receipt. Used to tip or support other users.',
   },
   nip05: {
     term: 'NIP-05',
@@ -67,12 +67,12 @@ const en: GlossaryData = {
       'Short for public key. Your identifier on the Nostr network, derived from your private key.',
   },
   'nsec-format': {
-    term: '_nsec',
+    term: 'nsec (format)',
     definition:
       'Bech32-encoded private key format. Starts with "nsec1" and should be kept secret.',
   },
   'npub-format': {
-    term: '_npub',
+    term: 'npub (format)',
     definition:
       'Bech32-encoded public key format. Starts with "npub1" and is safe to share publicly.',
   },
@@ -94,7 +94,7 @@ const en: GlossaryData = {
   dm: {
     term: 'DM',
     definition:
-      'Direct Message. Encrypted private messages between Nostr users (NIP-04 or NIP-17).',
+      'Direct Message. Encrypted private messages between Nostr users. Modern clients use NIP-17; the older NIP-04 is deprecated because it reveals who is messaging whom.',
   },
   mention: {
     term: 'Mention',

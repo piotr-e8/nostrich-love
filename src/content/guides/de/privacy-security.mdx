@@ -1,8 +1,8 @@
 ---
-title: "Privacy & Security Deep Dive"
+title: "Privatsphäre & Sicherheit: Deep Dive"
 seoTitle: "Ist Nostr sicher? Privatsphäre & Anonymität"
 description: "Erweiterte Sicherheitspraktiken für Nostr. Schütze deine Identität, verhindere Metadaten-Lecks und bewahre deine Privatsphäre bei der Nutzung dezentraler sozialer Medien."
-estimatedTime: "15 Minuten"
+estimatedTime: "20 Minuten"
 priority: 9
 category: "advanced"
 prerequisites: ["keys-and-security", "quickstart"]
@@ -10,7 +10,6 @@ prerequisites: ["keys-and-security", "quickstart"]
 
 import { Callout } from "@components/ui/Callout";
 import { PrivacySecurityQuiz } from "@components/interactive/PrivacySecurityQuiz";
-import { CTAButton } from "@components/CTAButton";
 
 {/* ProgressIndicator vorübergehend deaktiviert - wird später mit tatsächlichem Tracking implementiert */}
 {/* <ProgressIndicator current={4} total={6} estimatedTime="15 Minuten" /> */}
@@ -19,57 +18,30 @@ import { CTAButton } from "@components/CTAButton";
 
 ### Wogegen schützt du dich?
 
-Bevor wir in Sicherheitspraktiken eintauchen, lass uns verstehen, welche Bedrohungen auf Nostr existieren:
+Sicherheitsratschläge ergeben erst dann Sinn, wenn du weißt, vor wem du dich versteckst. Eine Illustratorin, deren Brotjob besser nie von ihrem Skizzen-Account erfährt, hat ein völlig anderes Problem als ein Reporter, der über eine Regierung schreibt, die Reporter einsperrt. Und die Vorsichtsmaßnahmen des Reporters würden der Illustratorin das Leben ohne jeden Grund schwer machen. Fang also hier an.
 
-**Bedrohungsstufe 1: Gelegentliche Privatsphäre**
+Auf der harmlosesten Stufe willst du einfach nicht, dass ein Arbeitgeber, ein Verwandter oder eine künftige Auftraggeberin sich durch alles scrollt, was du je gepostet hast. Die Blöße ist ganz gewöhnlich: Deine Posts sind öffentlich, und dein Profil bindet sie zu einer lesbaren Geschichte zusammen. Eine zweite Identität für die Arbeiten, die du lieber nicht an deinem Namen hängen hättest, erledigt davon das meiste.
 
-- **Sorge:** Möchtest nicht, dass Arbeitgeber/Familie alles sehen
-- **Bedrohungen:** Öffentliche Posts, Profilverknüpfung
-- **Lösung:** Getrennte Identitäten
+Eine Stufe höher gehst du bestimmten Menschen aus dem Weg. Jemand, der dich schon einmal gedoxxt hat, ein Ex, ein Shitstorm, der dir von Plattform zu Plattform folgt. Jetzt muss der Account vom allerersten Post an anonym sein und es durch Gewohnheit auch bleiben. Sicherheitsleute nennen diese Gewohnheiten OPSEC, kurz für operative Sicherheit: die kleinen täglichen Routinen, die verhindern, dass eine Identität in die andere durchsickert.
 
-**Bedrohungsstufe 2: Aktives Vermeiden**
-
-- **Sorge:** Bestimmte Personen/Plattformen vermeiden
-- **Bedrohungen:** Doxxing, Belästigung, Stalking
-- **Lösung:** Anonymer Account, OPSEC
-
-**Bedrohungsstufe 3: Hohe Sicherheit**
-
-- **Sorge:** Whistleblower, Aktivisten, hochkarätige Personen
-- **Bedrohungen:** Staatliche Akteure, ausgeklügelte Angriffe
-- **Lösung:** Erweiterte OPSEC, Air-Gapped Keys
+Ganz oben stehen Whistleblower, Aktivistinnen unter einem feindseligen Staat und alle, deren körperliche Sicherheit davon abhängt, nie identifiziert zu werden. Der Gegner hat dort Budget und Geduld. Das heißt: ernsthafte OPSEC, Schlüssel, die auf einem Gerät erzeugt werden, das nie ins Internet kommt (air-gapped), und ehrlich gesagt deutlich mehr Lektüre, als ein einzelner Guide liefern kann.
 
 ### Was Nostr schützt
 
-✅ **Zensurresistenz**
+✅ **Zensurresistenz.** Kein Unternehmen kann dich sperren, weil kein Unternehmen den Account hält. Deine Identität ist ein Schlüsselpaar, das du kontrollierst, es lässt sich also weder suspendieren noch beschlagnahmen, und deine Posts liegen auf den Relays, die sich für eine Kopie entschieden haben, nicht in der Datenbank einer einzigen Firma.
 
-- Keine Plattform kann dich sperren
-- Deine Identität kann nicht beschlagnahmt werden
-- Posts über das Netzwerk verteilt
-
-✅ **Dateneigentum**
-
-- Du kontrollierst deine Keys
-- Portabel über Clients hinweg
-- Kein Unternehmen besitzt deinen Graph
+✅ **Eigentum an deiner Arbeit.** Der Schlüssel gehört dir. Dein Profil, deine Posts und deine Follower-Liste ziehen mit dir zu jedem Client um, der das Protokoll spricht, und keine Plattform besitzt den Graph derer, mit denen du redest.
 
 ### Was Nostr nicht schützt
 
-❌ **Standardmäßig öffentlich**
+❌ **Standardmäßig ist alles öffentlich.** Solange es keine verschlüsselte Direktnachricht ist, kann es jeder lesen, und das schließt alles ein, was um den Post herum liegt: welche Relays du nutzt, wann du veröffentlicht hast, aus welchem Client heraus. All das kann jeder sammeln und auswerten, der Lust dazu hat.
 
-- Alle Posts sind öffentlich (außer verschlüsselte DMs)
-- Metadaten-Lecks möglich
-- Inhaltsanalyse möglich
-
-❌ **Keine Anonymitätsgarantien**
-
-- Dein npub ist pseudonym, nicht anonym
-- Muster können Identität offenbaren
-- IP-Adressen für Relays sichtbar
+❌ **Pseudonym ist nicht dasselbe wie anonym.** Dein npub verbirgt deinen Namen. Dich verbirgt es nicht. Muster verraten Menschen, und jedes Relay, zu dem du dich verbindest, sieht deine IP-Adresse.
 
 <Callout variant="info">
-  **Realistische Erwartungen:** Nostr bietet Zensurresistenz, nicht perfekte
-  Anonymität. Verstehe den Unterschied.
+  **Realistische Erwartungen:** Nostr bietet Zensurresistenz. Perfekte
+  Anonymität liefert es nicht, und dieser Unterschied trägt alles, was weiter
+  unten steht.
 </Callout>
 
 ---
@@ -78,56 +50,25 @@ Bevor wir in Sicherheitspraktiken eintauchen, lass uns verstehen, welche Bedrohu
 
 ### Warum mehrere Identitäten?
 
-Die meisten Menschen sollten **mindestens zwei** Nostr-Identitäten haben:
+Die meisten Creators wollen am Ende **mindestens zwei** Nostr-Identitäten, und es ist weit einfacher, gleich mit zweien anzufangen, als später eine auseinanderzunehmen.
 
-**1. Öffentliche Identität**
+Die erste ist deine öffentliche Identität. Echter Name oder Künstlername, der auf einem Buchcover oder an einer Galeriewand steht. Sie sammelt Reputation langsam, über Jahre, deshalb gehst du sorgsam mit ihr um.
 
-- Mit echtem Namen verknüpft
-- Professionelle Nutzung
-- Präsenz als öffentliche Person
-- Langfristige Reputation
-
-**2. Private/Pseudonyme Identität**
-
-- Nicht mit echtem Namen verknüpft
-- Persönliche Interessen
-- Kontroverse Meinungen
-- Testing/Experimentieren
+Die zweite ist pseudonym. Nichts daran zeigt auf deinen bürgerlichen Namen. Dort leben die halbfertigen Meinungen, der Fandom-Account, die politische Auseinandersetzung, die eine Auftraggeberin besser nie liest, und der Wegwerf-Account, mit dem du eine unbekannte App ausprobierst, bevor du ihr etwas Wertvolles anvertraust.
 
 ### Wann trennen
 
-**Definitiv trennen:**
+Halte zwei Identitäten immer dann auseinander, wenn die eine Hälfte deines Lebens der anderen peinlich wäre: privat gegen beruflich, Hobbys gegen Arbeit, Politik gegen Kundschaft. Trenne auch, wenn du Software testest, die du nicht geprüft hast. Und trenne, sobald Geld im Spiel ist, denn eine Lightning-Adresse an einem pseudonymen Account kann ihn stillschweigend mit einem Namen verbinden.
 
-- Persönliches vs. berufliches Leben
-- Verschiedene Interessen (Arbeit, Hobbys, Politik)
-- Testing neuer Clients/Apps
-- Finanziell (Tipping) vs. sozial
+Mit einem einzigen Account kommst du aus, wenn die Leute um dich herum ohnehin schon alles wissen, wenn wirklich wenig auf dem Spiel steht, oder wenn du eine öffentliche Person bist, deren ganzer Beruf darin besteht, erkannt zu werden.
 
-**Kann kombiniert werden:**
+### Mehrere Schlüssel verwalten
 
-- Enge Freunde, die alles wissen
-- Low-Stakes gelegentliche Nutzung
-- Bereits öffentliche Persona
+Die einfachste Anordnung ist ein Client pro Identität. Damus für den öffentlichen Account, Amethyst für den privaten. Kostet nichts an Einrichtung und hört in dem Moment auf zu funktionieren, in dem du beide auf demselben Telefon haben willst.
 
-### Mehrere Keys verwalten
+Besser ist eine Signer-App, um die es im nächsten Abschnitt geht. Amber unter Android hält mehrere Schlüssel gleichzeitig und gibt jedem Client nur die Signatur, um die er gebeten hat.
 
-**Option 1: Verschiedene Clients**
-
-- Nutze Damus für öffentliche Identität
-- Nutze Amethyst für private Identität
-- Einfach, aber auf Gerät beschränkt
-
-**Option 2: Nostr Signer Apps**
-
-- Nutze Amber (Android) oder ähnlich
-- Mehrere Keys in einer App
-- Flexibler
-
-**Option 3: Separate Geräte**
-
-- Smartphone für öffentlich
-- Tablet für privat
-- Maximale Isolation
+Die strengste Variante ist getrennte Hardware: Telefon für die eine Identität, ein altes Tablet oder Laptop für die andere, nie eine Überschneidung. Mühsam durchzuhalten, und die einzige Anordnung, die noch trägt, wenn ein Gerät gestohlen wird.
 
 <Callout variant="success">
   **Fang einfach an:** Erstelle zuerst einen pseudonymen Account. Füge später
@@ -140,80 +81,40 @@ Die meisten Menschen sollten **mindestens zwei** Nostr-Identitäten haben:
 
 ### Was sind Signer?
 
-**Signer-Apps** speichern deine privaten Keys sicher und signieren Nachrichten für andere Apps.
-
-**So funktioniert es:**
-
-1. Signer-App hält deinen nsec
-2. Client-App fordert "signiere diese Nachricht"
-3. Signer-App genehmigt und signiert
-4. Client-App sieht niemals deinen nsec
+Eine **Signer-App** ist eine kleine App, deren einzige Aufgabe darin besteht, deinen nsec zu verwahren und in seinem Namen zu signieren. Der Client, aus dem du postest, bekommt den Schlüssel nie. Er übergibt dem Signer einen Entwurf, der Signer zeigt dir, was gleich signiert wird, du bestätigst, und das fertig signierte Event geht zurück an den Client.
 
 ### Vorteile
 
-✅ **Key-Isolation**
+✅ **Schlüssel-Isolation.** Dein nsec bleibt in einer App, die du bewusst ausgewählt hast. Ein Client, den du auf gut Glück installiert hast, sieht ihn nie, und ein Client, der sich als bösartig entpuppt oder später gehackt wird, kann nichts herausgeben, was er nie hatte.
 
-- nsec verlässt niemals den Signer
-- Clients können Keys nicht stehlen
-- Kompromittierter Client = sichere Keys
+✅ **Ein Moment zum Hinsehen.** Jede Signaturanfrage erscheint auf dem Bildschirm, bevor irgendetwas veröffentlicht wird. Das fängt den versehentlichen Post ab, und es fängt einen Client ab, der still etwas in deinem Namen tun will.
 
-✅ **Genehmigung erforderlich**
-
-- Siehst, was du signierst
-- Verhindere versehentliche Posts
-- Kontrolle über Aktionen
-
-✅ **Mehrere Clients**
-
-- Nutze dieselben Keys über Apps hinweg
-- Konsistente Identität
-- Einfacher Wechsel
+✅ **Eine Identität, viele Apps.** Weil der Schlüssel außerhalb der Clients liegt, kannst du denselben Account in fünf verschiedenen Apps nutzen, ohne deinen nsec an fünf verschiedene Stellen zu kopieren.
 
 ### Beliebte Signer Apps
 
-**Amber (Android)**
+**Amber (Android)** ist die Wahl, wenn du unter Android unterwegs bist. Open Source, aktiv entwickelt, hält so viele Schlüssel, wie du willst, und kommt einem Standard-Signer so nah, wie Nostr es bisher hat.
 
-- Bester Signer auf Mobile
-- Open Source
-- Aktive Entwicklung
-- Unterstützt mehrere Keys
+**Primal (iOS)** funktioniert anders, und der Unterschied ist wichtig. Unter iOS gibt es kein Amber, also legt Primal deinen Schlüssel im Schlüsselbund des Geräts ab, innerhalb des Clients selbst. Für iOS ist das eine vernünftige Lösung, und sie isoliert schwächer als ein eigenständiger Signer, weil Client und Schlüsselverwahrer dieselbe App sind. Was Primal den Platz in diesem Abschnitt verschafft, ist die Funktion Remote Login: Primal kann deine Aktivität in anderen kompatiblen Nostr-Apps autorisieren, ohne ihnen den Schlüssel zu geben, diese Apps bekommen also die Signer-Behandlung, auch wenn Primal selbst keine ist.
 
-**Primal (iOS)**
+Weitere Möglichkeiten:
 
-- Eingebaute sichere Speicherung
-- Keine separate Signer-App nötig
-- Keys bleiben auf Gerät
-- Einfach und intuitiv
-
-**Andere Optionen:**
-
-- **Nostr Connect** (Cross-Platform-Protokoll)
-- **Browser-Extensions** (Alby kann signieren)
-- **Hardware Wallets** [ERWEITERT]
+- **Remote-Signierung über NIP-46**, manchmal Nostr Connect genannt. Das ist eine Fähigkeit, kein Produkt. Dienste wie nsec.app setzen sie um, und Primals Remote Login ebenfalls.
+- **Browser-Extensions.** Alby und nos2x signieren am Rechner für Web-Clients.
+- **Hardware-Wallets** (fortgeschritten, selten nötig).
 
 ### Amber einrichten
 
-1. **Download** aus Play Store
-2. **Erstelle oder importiere** Keys
-3. **Setze als Standard-Signer** in Android-Einstellungen
-4. **Öffne Nostr-Client** - er wird Signierung anfordern
-5. **Genehmige Anfragen** in Amber
+1. **Installiere es an der richtigen Stelle.** Amber wird über zap.store, F-Droid und die GitHub-Releases verteilt (Obtainium hält es von dort aus aktuell). Es ist **nicht im Google Play Store**. Was du dort unter diesem Namen findest, ist die App von jemand anderem, und dieser App deinen nsec zu geben, ist der Weg, auf dem ein Account endet.
+2. **Erstelle oder importiere deine Schlüssel** in Amber und sichere die Wiederherstellungswörter, bevor du weitermachst.
+3. **Öffne deinen Nostr-Client** und wähle "Login mit Amber" oder "externer Signer", statt irgendwo einen Schlüssel einzufügen.
+4. **Bestätige die Anfrage**, wenn Amber sich meldet. Android fragt womöglich einmal, welche App diese Anfragen bearbeiten soll. Wähle Amber.
 
 ### Wann Signer nutzen
 
-**Sehr empfohlen:**
+Hol dir einen Signer, sobald der Account dir etwas bedeutet: Du postest regelmäßig, Leute folgen dir dafür, oder es kommen Zaps herein. Dasselbe gilt, wenn du zwischen mehreren Clients wechselst, denn der Signer ist es, der das sicher statt leichtsinnig macht.
 
-- Ernsthafte Nostr-Nutzer
-- High-Value-Accounts
-- Mehrere Clients
-- Sicherheitsbewusste Nutzer
-
-**Nicht notwendig:**
-
-- Gelegentliches Testing
-- Low-Value-Accounts
-- Single-Client-Nutzung
-- Anfänger (später hinzufügen)
+Solange du dich nur umschaust, kannst du darauf verzichten. Ein Wegwerf-Account in einem einzigen Client braucht den zusätzlichen Schritt nicht, und Anfänger haben ohnehin genug zu lernen. Füge ihn später hinzu, wenn aus dem Account etwas geworden ist, das du ungern verlieren würdest.
 
 <Callout variant="warning">
   **Kritisch:** Deine Signer-App wird zum Single Point of Failure. Sichere sie
@@ -222,32 +123,23 @@ Die meisten Menschen sollten **mindestens zwei** Nostr-Identitäten haben:
 
 ---
 
-## Key Rotation (2 Minuten)
+## Schlüsselrotation (2 Minuten)
 
-### Was ist Key Rotation?
+### Was ist Schlüsselrotation?
 
-**Key Rotation** bedeutet, neue Keys zu erstellen und deine Follower zu ihnen zu migrieren.
+Das Wort bedeutet hier etwas anderes als im Büro. Nostr kennt keine Rotation im Protokoll: Es gibt keinen Weg, einen Schlüssel stillzulegen und deine Identität auf einen neuen mitzunehmen. Dein Schlüsselpaar **ist** deine Identität. "Rotieren" heißt also in Wirklichkeit, einen frischen Account anzufangen und alle zu überzeugen mitzukommen, Follower für Follower.
 
 ### Wann rotieren
 
-**Rotiere:**
+Rotiere, wenn du glaubst, dass dein nsec entwischt ist. Du hast ihn auf einer Seite eingefügt, die sich als Phishing-Seite entpuppte, ein Gerät mit dem Schlüssel darauf wurde gestohlen, jemand anderes postet als du. Rotiere auch, wenn du einen Custodial-Dienst verlässt, also einen, der deinen Schlüssel für dich erzeugt und aufbewahrt hat, statt ihn dir selbst zu überlassen, denn du kannst nicht wissen, wer sonst noch eine Kopie hat.
 
-- Kompromittierung vermutet
-- Private Key versehentlich offengelegt
-- Wechsel von Custodial zu Self-Custodial
-- Periodische Sicherheitspraxis
-
-**Nicht casual rotieren:**
-
-- Verlierst gesamte Historie
-- Verwirrst Follower
-- Brichst NIP-05-Verbindungen
+Rotiere nicht nach Kalender. Jährliche Rotation ist ein guter Rat für ein Arbeitspasswort und ein schlechter für einen Nostr-Schlüssel, weil darunter kein Migrationsweg liegt. Jede Rotation kostet dich deine Post-Historie, verstreut deine Follower und zerreißt die NIP-05-Verbindung, die andere sich gespeichert haben. Rotiere, wenn tatsächlich etwas schiefgegangen ist.
 
 ### Wie rotieren
 
 **Schritt 1: Vorbereiten**
 
-1. Generiere neue Keys sicher
+1. Generiere neue Schlüssel sicher
 2. Sichere sie ordentlich
 3. Teste neuen Account
 
@@ -262,93 +154,54 @@ Die meisten Menschen sollten **mindestens zwei** Nostr-Identitäten haben:
 
 1. Folge deinen alten Follows auf neuem Account
 2. Aktualisiere NIP-05, falls vorhanden
-3. Informiere enge Kontakte direkt
+3. Informiere enge Kontakte direkt, denn das ist der Schritt, der Leute wirklich bewegt
 
 **Schritt 4: Auslaufen**
 
 1. Poste periodisch vom alten Account: "Gewechselt zu [neu]"
 2. Behalte alten Account als Weiterleitung
-3. Verlasse schließlich alten Account
+3. Gib den alten Account schließlich auf
 
-<Callout variant="success">
-  **Pro-Tipp:** Wenn du ein NIP-05 hast, kannst du es aktualisieren, um auf
-  deinen neuen npub zu zeigen. Personen, die dein NIP-05 nutzen, werden
-  automatisch deinem neuen Account folgen.
+<Callout variant="warning" title="Ein NIP-05 nimmt deine Follower nicht mit">
+  Du kannst und solltest dein NIP-05 auf den neuen npub umbiegen, damit jeder,
+  der dich über den Namen sucht, beim richtigen Account landet. Die Leute, die
+  dir schon folgen, nimmt es aber nicht mit. NIP-05 verlangt von Clients, weiter
+  dem öffentlichen Schlüssel zu folgen, den sie ursprünglich gespeichert haben,
+  und diesen Schlüssel auch dann in Ruhe zu lassen, wenn die Adresse plötzlich
+  einen anderen zurückgibt. Deine bestehenden Follower bleiben auf den alten
+  Account gerichtet, bis sie dem neuen selbst folgen. Genau deshalb ist es der
+  direkte Hinweis an sie, der tatsächlich wirkt.
 </Callout>
 
 ---
 
 ## Metadaten-Lecks (5 Minuten)
 
-### Was leckt Metadaten?
+### Welche Metadaten verraten dich?
 
-Selbst "anonyme" Posts können Identität offenbaren durch:
+Menschen sind wiedererkennbar. Nicht an ihrem Namen, sondern an allem anderen.
 
-**1. Schreibstil**
+Der Schreibstil kommt zuerst, und Creators unterschätzen ihn stärker als alle anderen. Dein Wortschatz, deine Kommagewohnheiten, ob du nach einem Doppelpunkt großschreibst, die drei Emojis, die du von tausend möglichen tatsächlich benutzt: Wer genug von deinen öffentlichen Arbeiten gelesen hat, spürt die Ähnlichkeit in einem anonymen Post, und Software findet sie schneller als ein Mensch. Das ist das Leck, das getrennte Accounts allein nicht schließen.
 
-- Vokabularwahl
-- Grammatikmuster
-- Emoji-Nutzung
-- Großschreibungsgewohnheiten
+Dann ist da, was du erzählst. Eine Straße, die du nebenbei erwähnt hast. Ein Konzert, auf dem du warst. Ein Insider-Witz, der einem einzigen Gruppenchat gehört. Ein Detail über dein Handwerk, das vielleicht vierzig Menschen auf der Welt kennen. Keines davon identifiziert dich allein. Drei zusammen könnten es.
 
-**2. Inhaltshinweise**
+Das Timing verrät, wo du lebst. Poste einen Monat lang, und deine aktiven Stunden zeichnen erst eine Zeitzone nach, dann einen Arbeitsrhythmus, manchmal den Weg zur Schule.
 
-- Erwähnte Orte
-- Spezifische Events
-- Insider-Witze
-- Einzigartiges Wissen
+Die technische Ebene sickert leise, ganz ohne dein Zutun. Jedes Relay, zu dem du dich verbindest, sieht deine IP-Adresse. Manche Clients stempeln ihren Events die Software und Version auf, die sie erzeugt hat. Web-Clients geben zusätzlich einen Geräte-Fingerabdruck preis, also die besondere Kombination aus Bildschirmgröße, Schriften, Sprache und Einstellungen, an der sich ein Browser von einem anderen unterscheiden lässt, selbst wenn niemand eingeloggt ist.
 
-**3. Timing-Muster**
-
-- Wann du postest (Zeitzone)
-- Antwortzeiten
-- Aktive Stunden
-
-**4. Technische Lecks**
-
-- IP-Adressen (für Relays sichtbar)
-- Client-Software-Version
-- Geräte-Fingerprints
-
-**5. Sozialer Graph**
-
-- Wem du folgst
-- Wer dir folgt
-- Interaktionsmuster
+Der soziale Graph ist das lauteste Signal von allen. Wem du folgst, wer zurückfolgt, auf wessen Posts du binnen einer Minute antwortest. Zwei Accounts mit denselben Freunden sind meistens dieselbe Person, und es braucht erstaunlich wenige Überschneidungen, bis diese Vermutung aufhört, eine Vermutung zu sein.
 
 ### Präventionsstrategien
 
-**1. Separate Schreibstile**
-
-- Nutze verschiedenes Vokabular
-- Variiere Satzstruktur
-- Verschiedene Emoji-Gewohnheiten
-
-**2. Sei vage**
-
-- Erwähne keine spezifischen Daten
-- Vermeide einzigartige Identifikatoren
-- Generalisiere Orte
-
-**3. Nutze Tor/VPN**
-
-- Verstecke IP vor Relays
-- Nutze verschiedene IPs pro Identität
-- Erwäge Tor für maximale Privatsphäre
-
-**4. Limitiere Client-Info**
-
-- Einige Clients leaken Versionsinformationen
-- Prüfe, was dein Client sendet
-- Nutze Privatsphäre-fokussierte Clients
-
-**5. Kontrolliere sozialen Graph**
-
-- Folge nicht denselben Personen
-- Verschiedene Kreise
-- Limitiere Cross-Identity-Interaktionen
+- **Schreibe auf jedem Account anders.** Anderer Wortschatz, anderer Satzrhythmus, andere Zeichensetzungsgewohnheiten. Es fühlt sich ein, zwei Wochen künstlich an und danach nach gar nichts mehr.
+- **Bleib vage.** Keine genauen Daten, keine einzigartigen Details, verallgemeinere die Orte. "Diese Woche" statt Dienstag, "eine Stadt im Norden" statt des Viertels.
+- **Verstecke deine IP.** Ein VPN hält Relays davon ab zu sehen, von wo du dich verbindest, und Tor ist die stärkere Variante, wenn du sie brauchst. Nutze für jede Identität eine andere Verbindung statt derselben für beide.
+- **Prüfe, was dein Client sendet.** Manche versehen Events mit Versionsinformationen. Privatsphäre-orientierte Clients verraten weniger über dich.
+- **Halte die Follow-Graphen auseinander.** Andere Leute, andere Kreise, und so wenig Kontakt zwischen deinen eigenen Identitäten, wie du hinbekommst.
 
 ### Cross-Identity-Kontamination
+
+Die meisten, die enttarnt werden, scheitern nicht an raffinierter Analyse. Sie verbinden die beiden Accounts selbst, ein einziges Mal, aus Versehen.
 
 **Was NICHT tun:**
 
@@ -365,7 +218,7 @@ Selbst "anonyme" Posts können Identität offenbaren durch:
 - ✅ Verschiedene Themen/Interessen
 - ✅ Verschiedene aktive Zeiten
 - ✅ Keine Cross-References
-- ✅ Nimm an, sie beobachten
+- ✅ Geh davon aus, dass du beobachtet wirst
 
 <Callout variant="warning">
   **Paranoia-Check:** Wenn du echte Anonymität brauchst, nimm an, dass ein
@@ -378,26 +231,26 @@ Selbst "anonyme" Posts können Identität offenbaren durch:
 
 ### Basissicherheit (Alle)
 
-- [ ] Sichere Keys an 3+ Orten
+- [ ] Sichere deine Schlüssel an 3+ Orten
 - [ ] Nutze Passwort-Manager
-- [ ] Niemals Keys screenshotten
+- [ ] Niemals Schlüssel screenshotten
 - [ ] Niemals nsec teilen
 - [ ] Halte Client-Software aktuell
-- [ ] Nutze einzigartige Keys pro Identität
+- [ ] Nutze eigene Schlüssel pro Identität
 
 ### Erweiterte Sicherheit (Aktive Nutzer)
 
 - [ ] Nutze Signer-App
 - [ ] Separate Geräte/Accounts
 - [ ] VPN/Tor für sensible Posts
-- [ ] Regelmäßige Key Rotation (jährlich)
+- [ ] Rotiere Schlüssel nur bei vermuteter Offenlegung, nie nach Kalender
 - [ ] Überwache auf Impersonatoren
 - [ ] Dokumentiere Wiederherstellungsprozeduren
 
 ### Maximale Sicherheit (Hohes Risiko)
 
-- [ ] Air-Gapped Key-Generierung
-- [ ] Hardware Security Modules
+- [ ] Air-Gapped Schlüsselerzeugung (auf einem Gerät, das nie ins Internet geht)
+- [ ] Hardware Security Modules (ein eigener Chip oder ein eigenes Gerät, das den Schlüssel hält und nie herausgibt)
 - [ ] Self-Hosted Relay
 - [ ] Nur-Tor-Verbindungen
 - [ ] Mehrere Identitätsebenen
@@ -406,7 +259,7 @@ Selbst "anonyme" Posts können Identität offenbaren durch:
 
 ### Auditiere dich selbst
 
-**Fragen zum Stellen:**
+**Fragen, die du dir stellen solltest:**
 
 1. Wenn jemand mich doxxen wollte, was würde er finden?
 2. Sind meine mehreren Identitäten tatsächlich getrennt?
@@ -424,38 +277,43 @@ Selbst "anonyme" Posts können Identität offenbaren durch:
 
 1. **Stoppe das Posten** vom kompromittierten Account
 2. **Dokumentiere**, was passiert ist
-3. **Generiere neue Keys** auf sicherem Gerät
+3. **Generiere neue Schlüssel** auf sicherem Gerät
 4. **Kündige** die Kompromittierung an (falls öffentlich)
-5. **Rotiere** zu neuen Keys
+5. **Rotiere** zu neuen Schlüsseln
 6. **Untersuche**, wie es passiert ist
 
 ### Wiederherstellungsplan erstellen
 
 **Bevor du ihn brauchst:**
 
-1. **Vertrauenswürdige Kontakte** - Wer kann deine neue Identität verifizieren?
-2. **Identitätsnachweis** - Wie wirst du beweisen, dass du du bist?
-3. **Out-of-Band-Kommunikation** - Wie erreichst du Follower, wenn Nostr kompromittiert ist?
-4. **NIP-05-Kontrolle** - Kannst du deinen Identifier aktualisieren?
-5. **Backup-Strategie** - Wie sind Keys gesichert?
+1. **Vertrauenswürdige Kontakte:** Wer kann deine neue Identität verifizieren?
+2. **Identitätsnachweis:** Wie wirst du beweisen, dass du du bist?
+3. **Out-of-Band-Kommunikation:** Wie erreichst du Follower, wenn Nostr kompromittiert ist?
+4. **NIP-05-Kontrolle:** Kannst du deinen Identifikator aktualisieren?
+5. **Backup-Strategie:** Wie sind die Schlüssel gesichert?
 
 ### Kommunikationsvorlage
 
-Falls kompromittiert, poste etwa so:
+Poste das hier vom neuen Account:
 
 ```
 ⚠️ SICHERHEITSALARM ⚠️
 
-Mein Account [alter npub] wurde kompromittiert.
+Mein alter Account [alter npub] wurde kompromittiert. Alles,
+was ab heute von dort kommt, bin nicht ich.
 
-Mein neuer Account ist: [neuer npub]
+Das ist mein neuer Account: [neuer npub]
 
-Diese Nachricht ist von beiden Keys signiert, um den Übergang zu beweisen.
+Bitte entfolge dem alten und folge diesem.
 
-[Signierte Nachricht vom neuen Key]
-
-Bitte entfolge dem alten Account und folge diesem.
+Dass ich das wirklich bin, kannst du hier prüfen: [deine
+Website, deine anderen Social-Accounts, oder frag mich
+einfach woanders].
 ```
+
+Poste danach das Spiegelbild davon vom alten Account und nenne dort den neuen npub, solange du es noch kannst. Biege dein NIP-05 auf einer Domain um, die du kontrollierst, denn das ist die eine Aussage, die ein Angreifer nicht für dich fälschen kann. Und informiere die Menschen, auf die es ankommt, über einen Kanal außerhalb von Nostr, weil das ist, was tatsächlich überzeugt.
+
+Eines solltest du nicht tun: Versuche nicht, die Ankündigung "mit beiden Schlüsseln" zu signieren. Ein Nostr-Event trägt genau eine Signatur, kein Client lässt dich eine zweite anhängen, und sobald der alte Schlüssel kompromittiert ist, kann der Angreifer ebenfalls damit signieren, es würde also nichts beweisen, selbst wenn es möglich wäre.
 
 <Callout variant="info">
   **Hoffe das Beste, plane das Schlimmste.** Einen Wiederherstellungsplan zu
@@ -474,7 +332,7 @@ Bitte entfolge dem alten Account und folge diesem.
 
 **Minimale Sicherheit:**
 
-- 3 Backups der Keys
+- 3 Backups der Schlüssel
 - Passwort-Manager
 - Niemals nsec teilen
 
@@ -487,16 +345,16 @@ Bitte entfolge dem alten Account und folge diesem.
 
 **Maximale Sicherheit:**
 
-- Air-Gapped Keys
-- Hardware Wallets
+- Air-Gapped Schlüssel
+- Hardware-Wallets
 - Nur-Tor
 - Professionelle OPSEC
 
-**Denk dran:** Sicherheit ist eine Reise, kein Ziel. Fang mit den Basics an, verbessere dich mit der Zeit.
+**Denk dran:** Sicherheit wird nie fertig. Fang mit den Basics an und bau mit der Zeit aus.
 
 ---
 
 ## Weiterlesen
 
-- [Deine Schlüssel, Deine Identität](/de/guides/keys-and-security)
-- [NIP-17: Private Direktnachrichten - Ein Vollständiger Guide](/de/guides/nip17-private-messages)
+- [Deine Schlüssel, Deine Identität](/de/guides/keys-and-security): das Fundament, auf dem jede Privatsphäre-Entscheidung auf Nostr aufbaut
+- [NIP-17: Private Direktnachrichten](/de/guides/nip17-private-messages): wie verschlüsselte DMs wirklich funktionieren und was trotzdem durchsickert

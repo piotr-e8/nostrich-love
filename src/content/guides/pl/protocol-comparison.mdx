@@ -8,36 +8,36 @@ category: "advanced"
 ---
 
 import { HoverCard } from "@components/HoverCard";
-import { ProtocolComparison } from "@components/ProtocolComparison";
-import { CTAButton } from "@components/CTAButton";
 import { ProtocolComparisonQuiz } from "@components/interactive/ProtocolComparisonQuiz";
 
-## Podsumowanie Wykonawcze
+## Najważniejsze wnioski
 
 Krajobraz zdecentralizowanych mediów społecznościowych ma trzy główne protokoły konkurujące o adopcję: **Nostr** (Notes and Other Stuff Transmitted by Relays), **ActivityPub** (protokół napędzający Mastodona) i **AT Protocol Bluesky**. Każdy reprezentuje fundamentalnie inne podejście do rozwiązywania tego samego problemu: jak stworzyć sieci społecznościowe bez scentralizowanej kontroli.
 
 | Cecha                   | Nostr                              | ActivityPub (Mastodon)     | Bluesky AT Protocol           |
 | ------------------------- | ---------------------------------- | -------------------------- | ----------------------------- |
-| **Model Tożsamości**        | Samowystarczalne klucze                | Uchwyty przypisane przez serwer    | Uchwyty oparte na domenach + DID   |
+| **Model Tożsamości**        | Suwerenne, własne klucze                | Nazwa użytkownika przypisana przez serwer    | Nazwa oparta na domenie + DID   |
 | **Odporność na Cenzurę** | Bardzo Wysoka                          | Umiarkowana                   | Umiarkowana                      |
 | **Typ Sieci**          | Sieć relayów bez uprawnień       | Serwery federowane          | Architektura PDS + Relay           |
 | **Przenośność Danych**      | Natywna                             | Zależna od serwera           | Natywna (z backupami)         |
-| **Obecna Skala**         | ~5M użytkowników                          | ~15M użytkowników                 | ~25M użytkowników                 |
-| **Najlepszy Dla**              | Aktywiści, cypherpunki, Bitcoinowcy | Społeczności, organizacje | Użytkownicy mainstreamowi, dziennikarze |
+| **Obecna Skala**         | Brak wiarygodnej liczby (patrz niżej)                          | ~10M kont                 | Ponad 43M zarejestrowanych kont                 |
+| **Najlepszy Dla**              | Niezależni twórcy, aktywiści, cypherpunki, Bitcoinowcy | Społeczności, organizacje | Użytkownicy mainstreamowi, dziennikarze |
 
-### Kto Powinien Używać Którego Protokołu?
+Słowo o wierszu ze skalą, bo te liczby bywają cytowane fatalnie. Bluesky przekroczył 43 miliony zarejestrowanych kont w kwietniu 2026 i to ostatnia liczba, jaką opublikował. Mastodon ma około 10 milionów zarejestrowanych kont, ale mniej niż milion osób publikujących w danym miesiącu. Nostr nie ma żadnej godnej zaufania liczby użytkowników: jedyne, co łatwo zmierzyć, to ile kluczy publicznych kiedykolwiek się pojawiło, a to idzie w dziesiątki milionów i w większości są to boty, spam i porzucone klucze. Każda z tych liczb mierzy co innego, więc traktuj ten wiersz jako kolejność, a nie tabelę wyników.
+
+### Kto powinien używać którego protokołu?
 
 - **Wybierz Nostr** jeśli odporność na cenzurę jest Twoim najwyższym priorytetem, chcesz prawdziwej własności danych lub jesteś częścią społeczności Bitcoin/kryptografii
 - **Wybierz ActivityPub/Mastodon** jeśli chcesz ugruntowanej sieci z dojrzałymi aplikacjami, silną moderacją społecznościową lub musisz prowadzić serwer dla swojej organizacji
-- **Wybierz Bluesky** jeśli chcesz dopracowanego doświadczenia użytkownika, korporacyjnego wsparcia dla długowieczności lub migrujesz z Twittera i chcesz znajomości
+- **Wybierz Bluesky** jeśli chcesz dopracowanego doświadczenia użytkownika, korporacyjnego wsparcia dla długowieczności lub migrujesz z Twittera i chcesz czegoś, co już znasz
 
 ---
 
-## Architektura Protokołu
+## Architektura protokołu
 
 Zrozumienie, jak każdy protokół działa technicznie, pomaga wyjaśnić ich różne mocne strony i ograniczenia.
 
-### Nostr: Model Klient-Relay
+### Nostr: model klient-relay
 
 Nostr jest elegancko prosty: to tylko klienci i relaye.
 
@@ -67,14 +67,21 @@ Nostr jest elegancko prosty: to tylko klienci i relaye.
 3. **Czytanie:** Twój klient odpytuje wiele relayów, aby pobrać posty od ludzi, których obserwujesz
 4. **Brak Centralnego Rejestru:** Każdy może prowadzić relay; nie jest wymagana żadna zgoda, aby dołączyć do sieci
 
+<HoverCard
+  term="Relay"
+  definition="Serwer, który przechowuje i przekazuje eventy Nostr. Relaye nie wiedzą, kim jesteś: sprawdzają tylko podpisy i przechowują dane."
+>
+  Relaye to proste rury, które przechowują podpisane wiadomości
+</HoverCard>
+
 **Kluczowe Charakterystyki:**
 
 - **Bezstanowe:** Relaye nie utrzymują kont użytkowników ani relacji
 - **Redundantne:** Możesz używać 10+ relayów jednocześnie; jeśli jeden Cię cenzuruje, inne nadal mają Twoje dane
-- **Prosty Protokół:** Cały protokół to ~2,000 linii specyfikacji
+- **Prosty Protokół:** Rdzeń specyfikacji (NIP-01) mieści się w jednym krótkim dokumencie, cała reszta to opcjonalne rozszerzenia
 - **Brak Federacji:** Relaye nie rozmawiają ze sobą; klienci agregują z wielu źródeł
 
-### ActivityPub: Model Zfederowanych Serwerów
+### ActivityPub: model sfederowanych serwerów
 
 ActivityPub tworzy federację połączonych serwerów, jak email, ale dla mediów społecznościowych.
 
@@ -111,9 +118,9 @@ ActivityPub tworzy federację połączonych serwerów, jak email, ale dla medió
 - **Zorientowane na Instancję:** Twój serwer to Twój dom; przechowuje Twoje dane i zarządza Twoją tożsamością
 - **Serwer-do-Serwera:** Serwery aktywnie komunikują się i dzielą treści
 - **Moderowane:** Każdy serwer ustala własne polityki treści i może blokować inne serwery
-- **Dojrzały Ekosystem:** 5+ lat rozwoju, ugruntowane najlepsze praktyki
+- **Dojrzały Ekosystem:** Rekomendacja W3C od 2018 roku, z ugruntowanymi dobrymi praktykami
 
-### Bluesky AT Protocol: Model Osobistego Magazynu Danych
+### Bluesky AT Protocol: model osobistego magazynu danych
 
 Bluesky łączy pomysły z obu podejść z naciskiem na doświadczenie użytkownika i korporacyjne wsparcie.
 
@@ -143,44 +150,44 @@ Bluesky łączy pomysły z obu podejść z naciskiem na doświadczenie użytkown
 
 **Jak To Działa:**
 
-1. **Twoja Tożsamość:** Zdecentralizowany Identyfikator (DID), który może być powiązany z uchwytami domen
-2. **Osobisty Magazyn Danych (PDS):** Twoje dane żyją na PDS—początkowo hostowanym przez Bluesky, ale może być samo-hostowany
+1. **Twoja Tożsamość:** Zdecentralizowany Identyfikator (DID), który może być powiązany z nazwą opartą na domenie
+2. **Osobisty Magazyn Danych (PDS):** Twoje dane żyją na PDS, początkowo hostowanym przez Bluesky, ale może być samo-hostowany
 3. **Relay/Indeksator:** Bluesky prowadzi relaye, które agregują dane ze wszystkich PDS-ów i budują indeksy wyszukiwania
 4. **Niezależność Klienta:** Każda aplikacja może czytać z sieci relayów używając Twojego DID
 
 **Kluczowe Charakterystyki:**
 
 - **Podejście Hybrydowe:** Łączy własność danych użytkownika z scentralizowanym indeksowaniem
-- **Uchwyty Domenowe:** Twoja tożsamość może być powiązana z domenami, które kontrolujesz (alicja.com)
-- **Stopniowa Decentralizacja:** Obecnie scentralizowane, ale zaprojektowane, aby stać się bardziej zdecentralizowane z czasem
+- **Nazwy Domenowe:** Twoja tożsamość może być powiązana z domenami, które kontrolujesz (alicja.com)
+- **Federacja Jest Otwarta, Adopcja Nie:** Od 2024 roku każdy może uruchomić własny PDS i się sfederować, ale Bluesky wciąż przedstawia self-hosting jako wczesny dostęp (samodzielnie hostowany PDS ma limit 10 kont), a prawie każde konto nadal siedzi na PDS-ie hostowanym przez Bluesky
 - **Wsparcie Komercyjne:** Bluesky PBC zapewnia stabilność i zasoby dla rozwoju
 
 ---
 
-## Kluczowe Różnice
+## Kluczowe różnice
 
-### Tożsamość i Autentykacja
+### Tożsamość i uwierzytelnianie
 
 | Aspekt             | Nostr                  | ActivityPub            | Bluesky                             |
 | ------------------ | ---------------------- | ---------------------- | ----------------------------------- |
-| **Typ Tożsamości**  | Para kluczy kryptograficznych | Uchwyt przypisany przez serwer | DID + opcjonalna domena               |
+| **Typ Tożsamości**  | Para kluczy kryptograficznych | Nazwa użytkownika przypisana przez serwer | DID + opcjonalna domena               |
 | **Zarządzanie Kluczami** | Użytkownik trzyma klucz prywatny | Serwer zarządza kluczami    | Użytkownik lub PDS zarządza kluczami            |
 | **Odzyskiwanie**       | Brak (niezmienne)       | Serwer może zresetować       | Odzyskiwanie konta przez PDS            |
-| **Przenośność**    | Klucze działają wszędzie   | Uchwyt powiązany z serwerem  | DID jest przenośny, uchwyty mogą się zmieniać |
+| **Przenośność**    | Klucze działają wszędzie   | Nazwa powiązana z serwerem  | DID jest przenośny, nazwa może się zmieniać |
 
-**Nostr** przyjmuje najbardziej radykalne podejście: Twoja tożsamość jest czysto kryptograficzna. Strata klucza prywatnego (nsec) oznacza, że Twoja tożsamość znika na zawsze. To cecha dla odporności na cenzurę—żadna władza nie może skonfiskować ani zresetować Twojej tożsamości—ale wymaga ostrożnego zarządzania kluczami.
+**Nostr** przyjmuje najbardziej radykalne podejście: Twoja tożsamość jest czysto kryptograficzna. Strata klucza prywatnego (nsec) oznacza, że Twoja tożsamość znika na zawsze. Dla odporności na cenzurę to zaleta, bo żadna władza nie może Twojej tożsamości skonfiskować ani zresetować. Kosztem jest ostrożne zarządzanie kluczami.
 
 **ActivityPub** używa tradycyjnej autentykacji opartej na serwerze. To znajome (jak email) i pozwala na resetowanie haseł, ale tworzy uzależnienie: Twoja tożsamość jest powiązana z Twoim serwerem. Jeśli mastodon.social Cię zbanuje, tracisz @twojanazwa@mastodon.social.
 
-**Bluesky** oferuje złoty środek: Twoja podstawowa tożsamość to DID (zdecentralizowany identyfikator), który trwa niezależnie od zmian uchwytów. Możesz przemieszczać się między dostawcami PDS, zachowując swoją tożsamość, podobnie jak przenoszenie numeru telefonu między operatorami.
+**Bluesky** oferuje złoty środek: Twoja podstawowa tożsamość to DID (zdecentralizowany identyfikator), który trwa niezależnie od zmiany nazwy użytkownika. Możesz przemieszczać się między dostawcami PDS, zachowując swoją tożsamość, podobnie jak przenoszenie numeru telefonu między operatorami.
 
-### Odporność na Cenzurę
+### Odporność na cenzurę
 
 **Nostr: Maksymalna Odporność**
 
 - Żadna centralna władza nie może Cię zbanować z protokołu
 - Każdy może prowadzić relay; potrzebujesz tylko jednego, aby uczestniczyć
-- Treść jest podpisana kryptograficznie—nie może być sfałszowana ani zmodyfikowana
+- Treść jest podpisana kryptograficznie, więc nie może być sfałszowana ani zmodyfikowana
 - Jeśli relay Cię blokuje, użyj innego
 - _Kompromis:_ Spam jest trudniejszy do zapobiegania; moderacja jest po stronie klienta
 
@@ -188,17 +195,17 @@ Bluesky łączy pomysły z obu podejść z naciskiem na doświadczenie użytkown
 
 - Twój admin serwera może Cię zbanować z ich instancji
 - Serwery mogą defederować (zablokować) inne serwery całkowicie
-- Tworzy "bezpieczne przestrzenie", ale także echa komory
-- _Kompromis:_ Silna moderacja społecznościowa, ale potencjal dla fragmentacji
+- Tworzy "bezpieczne przestrzenie", ale też bańki informacyjne (echo chambers)
+- _Kompromis:_ Silna moderacja społecznościowa, ale ryzyko fragmentacji
 
 **Bluesky: Moderacja Korporacyjna**
 
 - Bluesky PBC może moderować na poziomie relaya
 - Samo-hostowane PDS-y zapewniają pewną niezależność
 - Weryfikacja oparta na domenach tworzy systemy reputacji
-- _Kompromis:_ Lepsza zapobieganie spamowi, ale polega na dobrej woli Bluesky
+- _Kompromis:_ Lepsze zapobieganie spamowi, ale opiera się na dobrej woli Bluesky
 
-### Skalowalność i Wydajność
+### Skalowalność i wydajność
 
 **Nostr:**
 
@@ -222,12 +229,13 @@ Bluesky łączy pomysły z obu podejść z naciskiem na doświadczenie użytkown
 - ⚠️ Obecnie scentralizowane; prawdziwa decentralizacja TBD
 - ⚠️ Relay jest wąskim gardłem i potencjalnym punktem kontroli
 
-### Przenośność Danych
+### Przenośność danych
 
 **Nostr:**
 
 - ✅ Natywna przenośność: Twoje dane istnieją na wielu relayach
-- ✅ Natychmiastowa zmiana klientów: po prostu zaimportuj swój nsec
+- ✅ Natychmiastowa zmiana klientów: Twoje klucze działają w każdej aplikacji, więc niczego nie trzeba eksportować
+- ⚠️ Loguj się przez signera, a nie wklejając klucze: na Androidzie użyj aplikacji signer, na przykład Ambera, w przeglądarce rozszerzenia takiego jak Alby albo nos2x. Nigdy nie wklejaj swojego nsec na stronę
 - ✅ Brak uzależnienia od dostawcy przez projekt
 - ⚠️ Brak gwarancji trwałości danych (relaye mogą usuwać stare dane)
 
@@ -245,7 +253,7 @@ Bluesky łączy pomysły z obu podejść z naciskiem na doświadczenie użytkown
 - ✅ Narzędzia migracji konta wbudowane
 - ⚠️ Obecnie polega na hostowanym PDS Bluesky
 
-### Rozważania Prywatności
+### Kwestie prywatności
 
 **Nostr:**
 
@@ -263,12 +271,13 @@ Bluesky łączy pomysły z obu podejść z naciskiem na doświadczenie użytkown
 
 **Bluesky:**
 
-- ⚠️ Weryfikacja telefoniczna coraz częściej wymagana
+- ⚠️ Przy rejestracji wymagana jest weryfikacja adresu e-mail
 - ⚠️ Bluesky PBC ma dostęp do danych
-- ⚠️ Polityka prawdziwych imion zachęcana (uchwyty domenowe)
-- ✅ Kontrola prywatności w protokole
+- ⚠️ Wszystko jest publiczne z założenia: w protokole nie ma kont prywatnych ani zamkniętych
+- ⚠️ DM-y idą przez własny czat Bluesky i nie są szyfrowane end-to-end
+- ✅ Brak wymogu prawdziwego nazwiska: pseudonimy i wyraźnie oznaczone konta parodystyczne są dozwolone, a nazwa oparta na domenie dowodzi, że kontrolujesz domenę, a nie kim jesteś
 
-### Doświadczenie Dewelopera
+### Doświadczenie dewelopera
 
 **Nostr:**
 
@@ -296,9 +305,9 @@ Bluesky łączy pomysły z obu podejść z naciskiem na doświadczenie użytkown
 
 ---
 
-## Rekomendacje Przypadków Użycia
+## Rekomendacje: co wybrać
 
-### Wybierz Nostr Jeśli...
+### Wybierz Nostr, jeśli...
 
 ✅ **Odporność na cenzurę jest niepodważalna**
 
@@ -312,6 +321,12 @@ Bluesky łączy pomysły z obu podejść z naciskiem na doświadczenie użytkown
 - Preferujesz minimalną, zgodną z Bitcoinem technologię
 - Akceptujesz odpowiedzialność za zarządzanie kluczami
 
+✅ **Chcesz, żeby Twoi odbiorcy mogli płacić Ci bezpośrednio**
+
+- Zapy to małe płatności Lightning idące prosto od czytelnika do Ciebie, bez prowizji platformy i bez progu wypłaty, do którego trzeba najpierw dobić
+- Klienci do długich form, muzyki i sztuki siedzą na tej samej tożsamości co Twoje krótkie posty, więc jeden klucz obejmuje wszystko
+- Nikt nie może Cię zdemonetyzować, bo nie ma żadnego programu monetyzacji, z którego dałoby się Cię wyrzucić
+
 ✅ **Budujesz w ekosystemie Bitcoin**
 
 - Integracja z Lightning Network jest ważna
@@ -320,7 +335,7 @@ Bluesky łączy pomysły z obu podejść z naciskiem na doświadczenie użytkown
 
 **Najlepsi Klienci:** Damus (iOS), Amethyst (Android), Iris (Web), Primal (Wszystkie platformy)
 
-### Wybierz ActivityPub/Mastodon Jeśli...
+### Wybierz ActivityPub/Mastodon, jeśli...
 
 ✅ **Chcesz ugruntowanej, dojrzałej sieci**
 
@@ -342,7 +357,7 @@ Bluesky łączy pomysły z obu podejść z naciskiem na doświadczenie użytkown
 
 **Najlepsze Serwery:** mastodon.social (ogólne), fosstodon.org (tech), infosec.exchange (bezpieczeństwo), hachyderm.io (tech)
 
-### Wybierz Bluesky Jeśli...
+### Wybierz Bluesky, jeśli...
 
 ✅ **Chcesz dopracowanego, mainstreamowego doświadczenia**
 
@@ -350,11 +365,12 @@ Bluesky łączy pomysły z obu podejść z naciskiem na doświadczenie użytkown
 - Doświadczenie użytkownika jest Twoim najwyższym priorytetem
 - Chcesz profesjonalnego wsparcia i rozwoju
 
-✅ **Jesteś twórcą treści lub osobą publiczną**
+✅ **Chcesz zasięgu w mainstreamie i weryfikacji przez domenę**
 
 - Weryfikacja domenowa ma dla Ciebie znaczenie
 - Chcesz algorytmiczny wybór (wiele feedów)
 - Potrzebujesz niezawodnej infrastruktury
+- Uwaga dla twórców: nie ma tu wbudowanego sposobu, żeby odbiorcy mogli Ci zapłacić, więc to działa raczej obok Nostr niż zamiast niego
 
 ✅ **Ufasz decentralizacji wspieranej korporacyjnie**
 
@@ -366,7 +382,7 @@ Bluesky łączy pomysły z obu podejść z naciskiem na doświadczenie użytkown
 
 ---
 
-## Przewodniki Migracji
+## Przewodniki migracji
 
 ### Przejście z Twittera
 
@@ -374,17 +390,17 @@ Wszystkie trzy protokoły oferują drogi ucieczki z Twittera/X, ale doświadczen
 
 **Twitter → Nostr:**
 
-1. **Znajdź swoją społeczność:** Nostr jest wciąż niszowe; szukaj swoich zainteresowań
-2. **Obserwuj mosty Twittera:** Niektóre konta dublowane z Twittera na Nostr
-3. **Cross-postuj początkowo:** Używaj narzędzi takich jak NostrPad lub ręcznego kopiuj-wklej
-4. **Przyjmij różnice:** Brak algorytmów, brak wiralności—tylko chronologiczne feedy
+1. **Znajdź swoją społeczność:** Nostr jest wciąż niszowy, szukaj swoich zainteresowań
+2. **Zabierz ze sobą stare kontakty:** nasze [narzędzie mostu z Twittera](/twitter-bridge/) sprawdza, kto z obserwowanych przez Ciebie na X ma już klucz Nostr
+3. **Cross-postuj na początek:** [Xstr](https://xtonostr.com) automatycznie kopiuje Twoje posty z X na Nostr, albo kopiuj i wklejaj ręcznie, dopóki się nie zadomowisz
+4. **Przyjmij różnice:** feedy są chronologiczne, chyba że sam wybierzesz inaczej. Feedy popularne i algorytmiczne istnieją, ale to Ty je wybierasz, żadna platforma nie decyduje za Ciebie
 5. **Buduj powoli:** Nostr nagradza autentyczne zaangażowanie ponad liczbę obserwujących
 
 **Twitter → ActivityPub/Mastodon:**
 
 1. **Wybierz swój serwer:** Zbadaj instancje zgodne z Twoimi zainteresowaniami
 2. **Użyj narzędzi migracji:** Istnieją narzędzia eksportu z Twittera → importu do Mastodona
-3. **Obserwuj mosty Twittera:** @TwitterBridge i podobne serwisy
+3. **Licz się z odbudową listy obserwowanych ręcznie:** automatyczne mosty Twitter-Mastodon padły, gdy X zamknął darmowy dostęp do API w 2023 roku
 4. **Naucz się kultury:** Ostrzeżenia o treści, alt text i etykieta federacji
 5. **Przynieś swoją sieć:** Wiele społeczności Twittera ma duble na Mastodonie
 
@@ -392,17 +408,18 @@ Wszystkie trzy protokoły oferują drogi ucieczki z Twittera/X, ale doświadczen
 
 1. **Najłatwiejsze przejście:** Interfejs jest bardzo podobny do starego Twittera
 2. **Znajdź swoich ludzi:** Bluesky ma najwięcej migrantów z Twittera
-3. **Użyj weryfikacji domenowej:** Zareklamuj swoją domenę dla wiarygodności
+3. **Użyj weryfikacji domenowej:** Powiąż swoją domenę z kontem, żeby zwiększyć wiarygodność
 4. **Odkryj niestandardowe feedy:** Rynek algorytmów Bluesky zastępuje pojedynczy feed Twittera
 5. **Cross-postuj łatwo:** Większość narzędzi natywnie wspiera Bluesky
 
-### Strategie Cross-Postingu
+### Strategie cross-postingu
 
 **Podejście Mostowe:**
 
-- Używaj serwisów takich jak Nostr2Twitter, Mastodon-Twitter Crossposter lub Natywne narzędzia Bluesky
-- Postuj na jedną platformę, dublowanie na inne
-- _Pro:_ Maksymalny zasięg | _Con:_ Pofragmentowane konwersacje
+- [Openvibe](https://openvibe.social) to aplikacja, która loguje się naraz do Nostr, Bluesky, Mastodona i Threads i publikuje na wszystkich z jednego pola
+- [Xstr](https://xtonostr.com) kopiuje treści między X a Nostr w obie strony, za darmo i bez powiernictwa
+- Publikuj na jednej platformie, a kopie wysyłaj na pozostałe
+- _Pro:_ Maksymalny zasięg | _Con:_ Pofragmentowane rozmowy, bo każda kopia zbiera własne, osobne odpowiedzi
 
 **Podejście Centrum:**
 
@@ -418,13 +435,13 @@ Wszystkie trzy protokoły oferują drogi ucieczki z Twittera/X, ale doświadczen
 - Bluesky: Obecność profesjonalna, treści mainstreamowe
 - _Pro:_ Treści odpowiednie dla platformy | _Con:_ Trudniejsze do utrzymania
 
-### Checklista Migracji
+### Checklista migracji
 
 **Zanim Opuścisz Twitter:**
 
 - [ ] Eksportuj swoje dane z Twittera (Ustawienia → Twoje Konto → Pobierz archiwum)
 - [ ] Zapisz ważne kontakty i konwersacje
-- [ ] Ogłoś swój ruch (przypnij tweeta z nowymi uchwytami)
+- [ ] Ogłoś przenosiny (przypnij tweeta z nowymi nazwami kont)
 - [ ] Zaktualizuj bio z linkami do nowych protokołów
 - [ ] Skonfiguruj cross-posting, jeśli pożądane
 
@@ -441,14 +458,14 @@ Wszystkie trzy protokoły oferują drogi ucieczki z Twittera/X, ale doświadczen
 - [ ] Ustal rytm postowania
 - [ ] Zbuduj początkową bazę obserwujących
 - [ ] Naucz się funkcji specyficznych dla platformy
-- [ ] Wnś wartość (nie tylko promuj)
+- [ ] Wnoś wartość (nie tylko promuj)
 - [ ] Oceń, czy to jest Twój nowy dom
 
 ---
 
-## Perspektywy Przyszłości
+## Perspektywy na przyszłość
 
-### Roadmapy Protokołów
+### Mapy drogowe protokołów
 
 **Nostr:**
 
@@ -467,17 +484,19 @@ Wszystkie trzy protokoły oferują drogi ucieczki z Twittera/X, ale doświadczen
 
 **Bluesky:**
 
-- **Samodzielne Hostowanie:** Uruchomienie samodzielnego hostowania Personal Data Store (PDS)
-- **Federacja:** Otwarcie sieci relayów dla stron trzecich
-- **Niestandardowe Algorytmy:** Bardziej wyrafinowane algorytmy feedów
-- **Weryfikacja:** Zdecentralizowane systemy weryfikacji tożsamości
+Self-hosting i otwarta federacja są już zrobione, a nie zapowiedziane: od 2024 roku każdy może uruchomić PDS i dołączyć do sieci. Nierozstrzygnięte pozostaje:
 
-### Możliwości Interoperacyjności
+- **Kto poza Bluesky utrzymuje infrastrukturę:** relay indeksujący całą sieć wciąż należy do Bluesky, a prowadzenie własnego jest drogie
+- **Self-hosting powyżej skali hobbystycznej:** samodzielnie hostowany PDS wciąż ma limit 10 kont zgodnie z wytycznymi wczesnego dostępu Bluesky
+- **Niestandardowe Algorytmy:** Bardziej wyrafinowane algorytmy feedów
+- **Kto za to wszystko zapłaci:** spółka jest finansowana przez venture capital i wciąż nie pokazała, na czym ma zarabiać
+
+### Możliwości interoperacyjności
 
 **Rzeczywistość Mostów:**
 
 - **Nostr ↔ ActivityPub:** Mosty istnieją, ale są niedoskonałe
-- **Bluesky ↔ Inni:** Bluesky jest obecnie izolowany, ale planuje mosty
+- **Bluesky ↔ ActivityPub:** działa przez Bridgy Fed, opcjonalny most stron trzecich. Zaobserwuj [@ap.brid.gy](https://bsky.app/profile/ap.brid.gy) z Bluesky, a Twoje konto pojawi się na Mastodonie
 - **Tożsamość Międzyprotokołowa:** Zunifikowana tożsamość między protokołami pozostaje trudna
 
 **Wyzwania Techniczne:**
@@ -492,7 +511,7 @@ Wszystkie trzy protokoły oferują drogi ucieczki z Twittera/X, ale doświadczen
 - **Warstwy zunifikowanej tożsamości:** Serwisy mapujące tożsamości między protokołami
 - **Mosty tylko do odczytu:** Konsumowanie treści z innych protokołów bez pełnej interakcji
 
-### Scenariusze Współistnienia
+### Scenariusze współistnienia
 
 **Prawdopodobna Przyszłość: Uzupełniające się Ekosystemy**
 
@@ -515,90 +534,11 @@ Nie musisz wybierać tylko jednego. Wielu użytkowników utrzymuje obecność we
 - **ActivityPub** dla niszowych społeczności i treści długiej formy
 - **Bluesky** dla profesjonalnego networkingu i zasięgu mainstreamowego
 
-Przyszłość mediów społecznościowych to nie pojedyncza platforma—to świat natywny dla protokołów, gdzie użytkownicy kontrolują swoje tożsamości, a dane przepływają swobodnie między sieciami.
+Nic nie wskazuje na to, żeby któraś z tych sieci miała wygrać całość. Bardziej prawdopodobny jest krajobraz kilku protokołów, w którym tożsamość należy do użytkownika, a dane da się przenieść tam, gdzie chcesz.
 
 ---
 
-## Przetestuj Swoją Wiedzę o Protokołach
-
-Gotowy, aby sprawdzić, czy rozumiesz kluczowe różnice między protokołami?
-
----
-
-## Przyszłość Protokołów
-
-### Mapy Drogowe Protokołów
-
-**Nostr:**
-
-- **Rozwój NIP:** Ciągłe ulepszenia przez Nostr Improvement Proposals
-- **Integracja Lightning:** Głębsza integracja płatności Bitcoin/Lightning
-- **Wiadomości Prywatne:** Ulepszone szyfrowane komunikacje (NIP-17)
-- **Systemy Reputacji:** Zdecentralizowana reputacja bez centralnych władz
-- **Innowacje Relay:** Modele płatnych relay dla zrównoważoności
-
-**ActivityPub:**
-
-- **Przyszłość Fediwersum:** Grupy, wydarzenia i bogatsze interakcje
-- **Ulepszona Migracja:** Lepsza przenośność kont między instancjami
-- **Narzędzia Moderacji:** Współdzielone listy bloków i filtrowanie kolaboratywne
-- **ActivityPub 2.0:** Potencjalna ewolucja protokołu dla lepszej skalowalności
-
-**Bluesky:**
-
-- **Samodzielne Hostowanie:** Uruchomienie samodzielnego hostowania Personal Data Store (PDS)
-- **Federacja:** Otwarcie sieci relay dla stron trzecich
-- **Niestandardowe Algorytmy:** Bardziej wyrafinowane algorytmy feedów
-- **Weryfikacja:** Systemy weryfikacji tożsamości zdecentralizowanej
-
-### Możliwości Interoperacyjności
-
-**Rzeczywistość Mostów:**
-
-- **Nostr ↔ ActivityPub:** Mosty istnieją, ale są niedoskonałe
-- **Bluesky ↔ Inne:** Bluesky jest obecnie izolowany, ale planuje mosty
-- **Tożsamość Międzyprotokołowa:** Zunifikowana tożsamość między protokołami pozostaje trudna
-
-**Wyzwania Techniczne:**
-
-- Różne modele danych utrudniają bezproblemowe tworzenie mostów
-- Polityki moderacji kolidują między protokołami
-- Zapobieganie spamu różni się zasadniczo
-
-**Potencjalne Rozwiązania:**
-
-- **Klienci publikujący podwójnie:** Aplikacje publikujące na wielu protokołach jednocześnie
-- **Warstwy zunifikowanej tożsamości:** Usługi mapujące tożsamości między protokołami
-- **Mosty tylko do odczytu:** Konsumowanie treści z innych protokołów bez pełnej interakcji
-
-### Scenariusze Koegzystencji
-
-**Prawdopodobna Przyszłość: Komplementarne Ekosystemy**
-
-Zamiast jednego protokołu "wygrywającego", prawdopodobnie zobaczymy:
-
-1. **Nostr** pozostaje wyborem dla komunikacji odpornej na cenzurę, zorientowanej na Bitcoin
-2. **ActivityPub** kontynuuje jako dojrzała, skupiona na społeczności federacja
-3. **Bluesky** staje się opcją głównego nurtu, przyjazną korporacjom
-
-Każdy służy innym potrzebom i wartościom, podobnie jak:
-
-- Email (sfederowany) koegzystuje z Signal (zcentralizowany, ale zaszyfrowany) i Matrix (zdecentralizowany)
-- Różne kryptowaluty służą różnym przypadkom użycia
-
-**Co To Oznacza Dla Ciebie:**
-
-Nie musisz wybierać tylko jednego. Wielu użytkowników utrzymuje obecność na wszystkich trzech:
-
-- **Nostr** dla nieocenzurowanych dyskusji o Bitcoin
-- **ActivityPub** dla niszowych społeczności i treści długich form
-- **Bluesky** dla profesjonalnego networkingu i zasięgu głównego nurtu
-
-Przyszłość mediów społecznościowych to nie pojedyncza platforma— to świat natywny dla protokołów, gdzie użytkownicy kontrolują swoje tożsamości, a dane płyną swobodnie między sieciami.
-
----
-
-## Sprawdź Swoją Wiedzę o Protokołach
+## Przetestuj swoją wiedzę o protokołach
 
 Gotowy, aby sprawdzić, czy rozumiesz kluczowe różnice między protokołami?
 
@@ -606,6 +546,6 @@ Gotowy, aby sprawdzić, czy rozumiesz kluczowe różnice między protokołami?
 
 ---
 
-_Ostatnia aktualizacja: Luty 2026 | Wersje protokołów: Nostr (NIP-y aktualne), ActivityPub (Rekomendacja W3C), AT Protocol (v1.0)_
+_Ostatnia aktualizacja: wrzesień 2026_
 
-_Masz pytania? Dołącz do dyskusji na [Nostr](https://primal.net/p/npub1beginner), [Mastodon](https://fosstodon.org/tags/nostr), lub [Bluesky](https://bsky.app/search?q=nostr)._
+_Masz pytania? Dołącz do dyskusji na [Nostr](https://primal.net/p/npub1p6t6gjhy3q4rfmcxuff7hu3xh5u09cvzem98d48arfzsrzd9kxws3cpeyl), [Mastodon](https://fosstodon.org/tags/nostr), lub [Bluesky](https://bsky.app/search?q=nostr)._

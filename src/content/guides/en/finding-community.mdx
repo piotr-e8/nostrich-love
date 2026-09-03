@@ -2,7 +2,7 @@
 title: "Finding Your Community on Nostr"
 seoTitle: "How to Find Your People on Nostr (2026)"
 description: "Discover your Nostr tribe. Strategies for finding people, communities, and conversations that matter to you on decentralized social media."
-estimatedTime: "10 minutes"
+estimatedTime: "15-20 minutes"
 priority: 10
 category: "intermediate"
 prerequisites: ["keys-and-security", "quickstart"]
@@ -55,7 +55,6 @@ Hashtags are the primary way to discover content and people on Nostr:
 **Community & Culture:**
 
 - #grownostr - Gardening and growing
-- #semester - Education and learning
 - #plebchain - Bitcoin plebs community
 
 **Regional:**
@@ -123,7 +122,7 @@ Each relay develops its own personality and community:
     </svg>
   </a>
   <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-    Filter by category—Bitcoin, Art, Music, Tech, and more. Preview relays before adding them.
+    Filter by category: Bitcoin, Art, Music, Tech, and more. Preview relays before adding them.
   </p>
 </div>
 
@@ -145,11 +144,14 @@ Each relay develops its own personality and community:
 **Best for relay browsing:**
 
 - **Jumble** (Web) - Built specifically for relay exploration
-- **Gossip** (Desktop) - Ephemeral relay feeds
+- **Gossip** (Desktop) - Desktop app that can show you any single relay's feed
 - **Coracle** (Web) - Advanced relay management
-- **Wisp** (Web) - Clean relay browsing interface
-- **Primal** (Web/Mobile) - Fast and simple
 - **Snort** (Web) - Feature-rich
+
+Primal is a fine everyday client, but it is not on this list for a reason. Primal
+apps read from Primal's own caching server, which gathers events from many relays
+and serves them back as one stream, so there is no "show me what is on this
+relay" view to open.
 
 <Callout variant="success">
   **Pro tip:** Use hashtags for discovering topics across Nostr, and relay feeds for finding communities organized around specific interests. Both approaches work great together!
@@ -254,42 +256,31 @@ The easiest way to fill your feed with quality accounts:
 
 ## Community Directories (2 minutes)
 
+### Start With a Follow Pack
+
+The fastest route is still the [curated follow packs](/follow-pack) on this site.
+Pick the topic that sounds like you, skim the accounts, and take the ones you like.
+No account needed to look.
+
 ### Nostr Explorers
 
-**What they are:**
+An explorer is a website that reads Nostr and shows it to you without asking you to
+log in. Handy when you want to check somebody out before following them, or when a
+friend sends you a link and you just want to read it.
 
-- Search users, posts, and hashtags
-- Discover trending content
-- Find people by topic
-- Browse without an account
+Two that work today:
 
-**How to use:**
+- **primal.net** - search for a topic or a name and read the results in your browser
+- **njump.me** - paste any Nostr link (an `npub`, a `note1...`, a `nevent1...`) and it opens as a normal web page
 
-1. Use a Nostr explorer
-2. Search topics you like
-3. See who posts about them
-4. Check their profiles
-5. Follow interesting people
+Search a topic you care about, look at who keeps showing up, open a few profiles and
+read their last dozen posts. If the voice fits, follow. That is the whole method.
 
-### Directories and Lists
+### Client-Specific Discovery
 
-**Nostr.info**
-
-- User directory
-- Client listings
-- Relay information
-
-**Community Lists**
-
-- GitHub repositories with user lists
-- Curated Twitter threads (ironic, but useful)
-- Telegram/Discord community lists
-
-**Client-Specific**
-
-- Some clients have built-in discovery
-- "Suggested users" features
-- Trending posts sections
+Most clients also have their own "suggested users", trending posts, or topic lists
+built in. They are worth a look, though the suggestions tend to repeat the same
+well-known accounts, so treat them as a starting point rather than the map.
 
 ### Creating Your Own List
 
@@ -318,23 +309,20 @@ Nostr isn't just Twitter-style microblogging. There's a rich ecosystem of long-f
 
 ### Finding Long-Form Writers
 
-**Nostrudel**
+Two clients are built around articles rather than short posts, so they are the
+easiest places to find writers.
 
-- Specialized client for long-form
-- Curated lists of writers
-- Great for reading
+**Highlighter** (highlighter.com)
 
-**Habla.news**
+- Web app for reading and publishing long pieces
+- You can highlight passages, and your highlights become something others can find and zap
+- Supports paid subscriptions, so writers can charge readers directly
 
-- News-style interface
-- Long-form focused
-- Community curated
+**YakiHonne** (yakihonne.com)
 
-**YakiHonne**
-
-- Japanese-focused
-- Long-form support
-- Growing community
+- Long-form articles and media, with a portal for creators publishing their own work
+- Web app plus native iOS and Android apps, and a desktop build
+- Zaps and relay settings built in
 
 ### Following Writers
 
@@ -363,7 +351,7 @@ Nostr isn't just Twitter-style microblogging. There's a rich ecosystem of long-f
 
 - Meetups (local Nostr gatherings)
 - Conferences (Bitcoin, privacy, tech)
-- Twitter Spaces equivalents
+- Live audio rooms, the Nostr answer to X/Twitter Spaces
 - Hackathons
 - AMAs (Ask Me Anything)
 
@@ -393,11 +381,12 @@ Nostr isn't just Twitter-style microblogging. There's a rich ecosystem of long-f
 
 ### Virtual Events
 
-**Twitter Spaces alternatives:**
+**Live audio rooms (like X/Twitter Spaces):**
 
-- Some clients adding audio
-- External tools (Fountain, etc.)
-- Scheduled text AMAs
+- **Nostr Nests** (nostrnests.com) - drop-in audio rooms running on Nostr, for chatting, jamming or small conferences
+- Some clients are adding audio of their own
+- **Fountain** (fountain.fm) is a podcast and music app rather than a rooms host, worth knowing if you publish audio
+- Scheduled text AMAs still work perfectly well and need no extra app
 
 <Callout variant="success">
   **In-person > virtual:** Nostr meetups are happening worldwide. Check for one in your area!
@@ -409,11 +398,16 @@ Nostr isn't just Twitter-style microblogging. There's a rich ecosystem of long-f
 
 ### Safety First
 
-**Nostr DMs are encrypted but not perfect:**
+Nostr DMs are encrypted, so relays cannot read what you wrote. What leaks around
+the message depends on which method your client uses.
 
-- End-to-end encrypted (E2EE)
-- But metadata visible (who talks to whom)
-- Some clients handle encryption differently
+- **Older DMs (NIP-04)** hide the text but not the participants. A relay can see that you and one particular person are talking, and how often.
+- **Newer DMs (NIP-17)** hide the sender: each message is wrapped and signed by a throwaway key. The recipient is still visible in plain text, because the relay needs to know where to deliver it, and so is the timing.
+- **Clients differ.** Two people on different apps may not even be using the same method, and messages sometimes fail to appear across that gap.
+
+Either way, the content is private and the fact that somebody is receiving
+messages is not. For the full picture, read
+[Private messages with NIP-17](/guides/nip17-private-messages).
 
 ### DM Best Practices
 
@@ -423,7 +417,7 @@ Nostr isn't just Twitter-style microblogging. There's a rich ecosystem of long-f
 - Introduce yourself
 - Keep it relevant
 - Respect boundaries
-- Remember it's still public metadata
+- Remember the message body is private, the surrounding metadata is not
 
 **Don't:**
 
@@ -437,9 +431,14 @@ Nostr isn't just Twitter-style microblogging. There's a rich ecosystem of long-f
 
 **If someone bothers you:**
 
-1. **Mute** - Stop seeing their content
-2. **Block** - They can't interact with you
-3. **Report** - If serious, tell community
+1. **Mute or block** - Both do the same thing on Nostr: your app stops showing
+   you that person. It is a filter on your side, not a wall on theirs.
+2. **Know what it does not do** - There is no protocol-level block. The person
+   is not told, and can still read your public posts, reply to them and mention
+   you. Other people still see those replies; you just stop seeing them.
+3. **Report** - If it is serious, report them in your client and tell people you
+   trust. Moderation on Nostr happens through relays and shared block lists, so
+   a paid or moderated relay is the closest thing to real enforcement.
 4. **Don't engage** - Feeds trolls
 
 **Prevention:**

@@ -1,10 +1,10 @@
 ---
 title: "Rozumienie modelu skrzynki nadawczej"
-seoTitle: "Model outbox (NIP-65) w Nostr — proste wyjaśnienie"
+seoTitle: "Model outbox (NIP-65) w Nostr: proste wyjaśnienie"
 description: "Dowiedz się, jak Nostr zapewnia, że Twoje posty docierają do wszystkich, którzy Cię obserwują"
-estimatedTime: "15 min"
+estimatedTime: "10-15 minut"
 priority: 2
-category: "beginner"
+category: "intermediate"
 prerequisites: ["relays-demystified", "keys-and-security"]
 ---
 
@@ -47,11 +47,11 @@ Model skrzynki nadawczej (NIP-65) jest jak posiadanie **publicznej książki adr
 Pamiętasz, że relaye są jak poczty? Model skrzynki nadawczej dodaje **system adresów do przesyłania dalej**:
 
 **Tradycyjna poczta:**
-- Masz jedną skrzynkę pocztową w jednej poczcie
-- Jeśli się przeprowadzisz, ludzie wysyłają pocztę na złe miejsce
+- Masz jedną skrzynkę pocztową na jednej poczcie
+- Jeśli się przeprowadzisz, ludzie wysyłają pocztę pod zły adres
 
 **Model skrzynki nadawczej Nostr:**
-- Masz **publiczną listę** poczt, w których odbierasz pocztę
+- Masz **publiczną listę** poczt, na których odbierasz pocztę
 - Jeśli się "przeprowadzisz" (zmienisz relaye), aktualizujesz swoją publiczną listę
 - Wszyscy wiedzą, gdzie Cię znaleźć
 
@@ -69,7 +69,7 @@ Twój klient Nostr automatycznie tworzy **listę relayów**, która mówi innym:
     
     // Relaye, na których czytasz wzmianki (Twoja "skrzynka odbiorcza")
     ["r", "wss://nos.lol", "read"],
-    ["r", "wss://relay.snort.social", "read"]
+    ["r", "wss://relay.primal.net", "read"]
   ]
 }
 ```
@@ -89,11 +89,12 @@ Twój klient Nostr automatycznie tworzy **listę relayów**, która mówi innym:
 Lista relayów Alice (kind:10002):
   - wss://relay.a.com [write]
   - wss://relay.b.com [write]
+  - wss://relay.inbox.com [read]
 
 Bob obserwuje Alice. Klient Boba widzi:
   "Sprawdź wss://relay.a.com i wss://relay.b.com w poszukiwaniu postów Alice"
 
-Wynik: Bob łączy się z oboma relayami i widzi treści Alice! ✅
+Wynik: Bob łączy się z obydwoma relayami write i widzi treści Alice! ✅
 ```
 
 ### Scenariusz 2: Charlie wspomina Alice
@@ -101,11 +102,11 @@ Wynik: Bob łączy się z oboma relayami i widzi treści Alice! ✅
 ```
 Charlie wspomina @alice w poście
 
-Klient Charlie sprawdza listę relayów Alice:
-  - wss://relay.a.com [read]
-  - wss://relay.b.com [read]
+Klient Charliego sprawdza tę samą listę relayów i szuka
+wpisu [read], czyli skrzynki odbiorczej Alice:
+  - wss://relay.inbox.com [read]
 
-Klient Charlie wysyła wzmiankę do relayów READ Alice
+Klient Charliego wysyła wzmiankę właśnie tam
 
 Wynik: Alice widzi wzmiankę, nawet jeśli jest offline! ✅
 ```
@@ -116,7 +117,7 @@ Wynik: Alice widzi wzmiankę, nawet jeśli jest offline! ✅
 Alice przestaje używać relay.a.com, zaczyna używać relay.c.com
 
 1. Alice aktualizuje swoją listę relayów kind:10002
-2. Rozpowszechnia się do wszystkich połączonych relayów
+2. Jej klient publikuje zaktualizowaną listę na jej relayach
 3. Obserwujący automatycznie zaczynają sprawdzać relay.c.com
 
 Wynik: Brak utraconych postów, nie trzeba ręcznie łączyć się ponownie! ✅
@@ -150,12 +151,12 @@ Klienci łączą się tylko z relayami, których używasz, a nie z każdym relay
 
 ### Utrzymuj swoją listę małą
 
-**Zalecane:** 2-4 relaye razem
+**Zalecane:** krótka lista. Sam NIP-65 podpowiada od 2 do 4 relayów write i tyle samo read, więc większość ludzi ląduje w sumie gdzieś między czterema a ośmioma.
 
 Dlaczego?
 - Więcej relayów = więcej połączeń = większe zużycie baterii
-- Malejące zyski po 4 relayach
-- Większość treści i tak rozchodzi się na popularne relaye
+- Kolejne relaye przestają cokolwiek dawać, gdy obserwujący już cię znajdują
+- Klienci obserwujących czytają wprost relaye z Twojej listy, więc dodatkowe wpisy niczego nie wnoszą
 
 ### Mieszaj odczyt i zapis
 
@@ -172,9 +173,9 @@ Czytaj z: Popularny relay B (dla wzmianek)
 ### Wybierz niezawodne relaye
 
 Używaj znanych, niezawodnych relayów, które:
-- Mają dobrą dostępność
-- Przechowują treści na stałe (nie ulotne)
-- Są geograficznie blisko (niższe opóźnienie)
+- Rzadko padają, więc są na miejscu, kiedy ich potrzebujesz
+- Trzymają Twoje posty długo. Część relayów po cichu kasuje starsze wpisy, żeby oszczędzić miejsce
+- Odległość: im bliżej Ciebie stoi relay, tym szybciej odpowiada aplikacja
 
 ---
 
@@ -182,7 +183,7 @@ Używaj znanych, niezawodnych relayów, które:
 
 ### "Muszę być na każdym relayu"
 
-**Źle:** Bycie na 20+ relayach nie pomaga. Twoje posty rozchodzą się przez sieć. Trzymaj się 3-4 dobrych relayów.
+**Źle:** Bycie na 20+ relayach nie pomaga. Relaye nie kopiują postów między sobą, więc relay, z którego nikt nie czyta, to tylko jedno połączenie więcej. Twoja lista relayów i tak kieruje klientów obserwujących we właściwe miejsce, a garstka dobrych relayów w zupełności wystarcza.
 
 ### "Jeśli opuszczę relay, stracę obserwujących"
 
@@ -190,7 +191,7 @@ Używaj znanych, niezawodnych relayów, które:
 
 ### "Prywatne wiadomości też przechodzą przez skrzynkę nadawczą"
 
-**Częściowo prawda:** NIP-17 (prywatne wiadomości) używa modelu skrzynki nadawczej do dostarczania, ale z dodatkowym szyfrowaniem.
+**Niezupełnie:** Prywatne wiadomości (NIP-17) wędrują na osobną listę relayów DM (kind:10050), a nie na listę kind:10002, o której jest ten przewodnik, i są szyfrowane end-to-end. Twój klient prowadzi obie listy. Jeśli DM-y nie docierają, to właśnie listę relayów DM warto sprawdzić.
 
 ### "Muszę ręcznie mówić ludziom o moich relayach"
 
@@ -209,12 +210,12 @@ Używaj znanych, niezawodnych relayów, które:
 
 ### Zastępowalne eventy
 
-kind:10002 jest **zastępowalny** - zachowywana jest tylko najnowsza wersja. To oznacza:
+kind:10002 jest **zastępowalny**: zachowywana jest tylko najnowsza wersja. To oznacza:
 - Brak zbędnych danych historycznych
 - Łatwa aktualizacja
 - Proste zarządzanie dla klientów
 
-### Rozważanie prywatności
+### Kwestia prywatności
 
 Twoja lista relayów jest **publiczna**. Każdy może zobaczyć, których relayów używasz. To jest konieczne, aby system działał, ale bądź świadomy, że jest widoczna.
 
@@ -227,13 +228,13 @@ Twoja lista relayów jest **publiczna**. Każdy może zobaczyć, których relay�
 Spójrz w ustawieniach swojego klienta Nostr:
 - Do których relayów jesteś podłączony?
 - Czy są oznaczone jako "read" czy "write"?
-- Czy masz łącznie 2-4?
+- Czy lista jest krótka, mniej więcej od czterech do ośmiu wpisów?
 
 ### Zoptymalizuj swoją konfigurację
 
-**Jeśli masz 5+ relayów:**
-- Usuń te z słabą dostępnością
-- Zachowaj swoje 3-4 ulubione
+**Jeśli masz 10+ relayów:**
+- Usuń te, które często padają
+- Zostaw garstkę ulubionych: kilka do pisania i parę do czytania
 - Upewnij się, że przynajmniej jeden jest "read" dla wzmianek
 
 ### Przekaż dalej
@@ -251,5 +252,5 @@ Pomóż innym zrozumieć:
 
 ## Czytaj dalej
 
-- [Jak Posty Podróżują: Relaye Wyjaśnione](/pl/guides/relays-demystified)
-- [Przewodnik po Zarządzaniu Relayami](/pl/guides/relay-guide)
+- [Jak Posty Podróżują: Relaye Wyjaśnione](/pl/guides/relays-demystified), czyli czym właściwie jest relay, zanim zaczniesz dobierać swoje
+- [Przewodnik po Zarządzaniu Relayami](/pl/guides/relay-guide), czyli jak dobrać zestaw read i write, żeby model skrzynki nadawczej pracował dla Ciebie

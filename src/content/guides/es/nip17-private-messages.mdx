@@ -3,10 +3,12 @@ title: "NIP-17: Mensajes Privados Directos - Una Guía Completa"
 seoTitle: "¿Son privados los DMs de Nostr? NIP-17 explicado"
 description: "Aprende sobre NIP-17, el reemplazo seguro de NIP-04, y cómo migrar tus mensajes privados en Nostr"
 published: 2025-02-11
-lastUpdated: 2026-07-28
+lastUpdated: 2026-09-02
 author: "Comunidad Nostr"
 category: "advanced"
 difficulty: "advanced"
+estimatedTime: "12-15 minutos"
+priority: 9
 tags: ["nip-17", "nip-04", "security", "private-messages", "encryption", "dm"]
 prerequisites: ["keys-and-security", "quickstart"]
 ---
@@ -22,17 +24,17 @@ NIP-17 es una especificación del protocolo Nostr que define **Mensajes Directos
 
 A diferencia de NIP-04, que usaba una sola capa de encriptación AES-256-CBC, NIP-17 usa:
 
-1. **Seal** (kind 13) — la capa interna, que encripta el mensaje y oculta qué
-   clave lo firmó
-2. **Gift wrap** (kind 1059) — el sobre exterior, firmado con una clave
-   desechable, de modo que tu identidad real nunca aparece en el evento que
-   guardan los relays
+1. **Seal** (kind 13): la capa interna, firmada con tu clave real, para que
+   quien te lee pueda comprobar que el mensaje es tuyo de verdad
+2. **Gift wrap** (kind 1059): el sobre exterior, firmado con una clave
+   desechable, que oculta el seal, de modo que tu identidad real nunca aparece en
+   el evento que guardan los relays
 
 Este sistema de capas significa que:
 
 - El contenido del mensaje permanece privado
-- **Los relays no pueden ver quién envió un mensaje** — el gift wrap está firmado
-  con una clave aleatoria de un solo uso, no con la tuya
+- **Los relays no pueden ver quién envió un mensaje.** El gift wrap va firmado
+  con una clave aleatoria de un solo uso, nunca con la tuya
 - Los timestamps se aleatorizan, así que es más difícil correlacionar cuándo se
   envían los mensajes
 
@@ -56,12 +58,12 @@ NIP-04 fue el protocolo de mensaje directo original de Nostr, pero tiene varios 
 | Característica                 | NIP-04                | NIP-17                                        |
 | ------------------------------ | --------------------- | --------------------------------------------- |
 | **Encriptación**               | Una capa AES-256-CBC  | Doble capa (seal + gift wrap)                 |
-| **Metadatos del remitente**    | Visible para relays   | Oculto — firmado con una clave de un solo uso |
-| **Metadatos del destinatario** | Visible para relays   | **Sigue visible** — tag `p` en texto plano    |
+| **Metadatos del remitente**    | Visible para relays   | Oculto, firmado con una clave de un solo uso |
+| **Metadatos del destinatario** | Visible para relays   | **Sigue visible**: tag `p` en texto plano     |
 | **Contenido del mensaje**      | Encriptado            | Encriptado                                    |
-| **Protección contra replay**   | Ninguna               | Timestamps aleatorizados                      |
-| **Secreto hacia adelante**     | No                    | No — NIP-44 no lo proporciona                 |
-| **Estado de seguridad**        | **Deprecado**         | **Recomendado**                               |
+| **Metadatos de tiempo**        | Timestamps reales visibles | Aleatorizados hasta dos días atrás       |
+| **Secreto hacia adelante**     | No                    | No, NIP-44 no lo proporciona                  |
+| **Estado de seguridad**        | **Obsoleto**          | **Recomendado**                               |
 | **Interoperabilidad**          | Ampliamente soportado | Soporte creciente                             |
 
 ### El Problema Central con NIP-04
@@ -83,7 +85,7 @@ Esto significa que operadores de relays, observadores de red y scrapers de datos
 - Rastrear patrones y frecuencias de comunicación
 - Inferir relaciones del tiempo de los mensajes
 
-NIP-17 soluciona esto envolviendo toda la estructura del mensaje en una capa de encriptación adicional, haciendo imposible ver el remitente o destinatario sin la clave de desencriptación.
+NIP-17 cierra casi toda esa brecha envolviendo el mensaje entero en un sobre exterior firmado con una clave desechable, de modo que el relay no puede saber quién lo envió. Una cosa queda a la vista por diseño: la clave pública del destinatario viaja en el sobre, en un tag en texto plano, porque el relay tiene que saber a quién entregarlo. Así que NIP-17 oculta al remitente, no al destinatario.
 
 ## Cómo Funciona NIP-17: Seal + Gift Wrap
 
@@ -91,26 +93,26 @@ Entender la implementación técnica ayuda a apreciar las mejoras de seguridad.
 
 ### La Capa Gift Wrap (Exterior)
 
-El gift wrap es el sobre exterior que oculta todos los metadatos. Está encriptado a una "gift wrap key" especial derivada de la clave pública del destinatario. Esta capa contiene:
+El gift wrap es el sobre que el relay guarda en realidad. Tu cliente genera una clave completamente nueva para este único mensaje, firma el sobre con ella y luego la tira. El contenido va encriptado de forma que solo el destinatario puede abrirlo. Esta capa lleva:
 
-- Una clave pública aleatoria (no vinculada al remitente real)
-- La clave pública del destinatario
-- Un timestamp
-- El mensaje interno sealed
+- Una clave pública de un solo uso, sin nada que la ate a ti
+- La clave pública del destinatario, en un tag en texto plano que el relay puede leer
+- Un timestamp aleatorizado
+- El mensaje interno sellado
 
 ### La Capa Seal (Interior)
 
-Dentro del gift wrap se encuentra el seal, que contiene el mensaje actual. Esta capa:
+Dentro del gift wrap se encuentra el seal. Aquí vive la autoría, y el relay nunca llega a verla. Esta capa:
 
-- Está encriptada usando un par de claves efímeras fresco
-- Contiene la clave pública real del remitente
-- Incluye el contenido del mensaje
-- Tiene su propio timestamp para protección replay
+- Va firmada con tu clave real, que es como el destinatario sabe que el mensaje es tuyo
+- Va encriptada con una clave derivada de tu clave privada y la pública del destinatario, así que solo tú y esa persona pueden leerla
+- Lleva el contenido del mensaje
+- Lleva un timestamp que tu cliente desplaza a propósito hasta dos días hacia atrás, para que nadie pueda agrupar mensajes por el momento en que se enviaron
 
 <DiagramLayers
   layers={[
-    { label: "Gift wrap (capa exterior)", note: "Pubkey aleatorio, pista del destinatario — esto es todo lo que ve un relay" },
-    { label: "Seal (capa interior)", note: "Encriptado con una clave efímera" },
+    { label: "Gift wrap (capa exterior)", note: "Pubkey aleatorio, pista del destinatario: esto es todo lo que ve un relay" },
+    { label: "Seal (capa interior)", note: "Firmado con la clave real del remitente, legible solo por el destinatario" },
     { label: "Contenido real del mensaje", note: "Remitente: pubkey real · Timestamp: 1234567890" },
   ]}
   caption="Cada capa oculta a la que lleva dentro, así que un relay no ve más que la pista del destinatario."
@@ -132,14 +134,14 @@ Dentro del gift wrap se encuentra el seal, que contiene el mensaje actual. Esta 
 
 ### Entrega: La Lista de Relays para DMs (Kind 10050)
 
-El seal y el gift wrap describen cómo se empaqueta un mensaje. Una tercera pieza
-— el **evento kind 10050** — describe dónde se entrega. Es una pequeña lista
-pública de los relays que aceptan tus mensajes privados.
+El seal y el gift wrap describen cómo se empaqueta un mensaje. Hay una tercera
+pieza, el **evento kind 10050**, que describe dónde se entrega. Es una pequeña
+lista pública de los relays que aceptan tus mensajes privados.
 
 La especificación es estricta en esto: los remitentes DEBEN publicar los gift
 wraps únicamente en los relays de la lista kind 10050 del destinatario. Si nunca
 has publicado una, la especificación te considera "no listo para recibir
-mensajes" y los clientes ni siquiera deberían intentarlo — así que los DMs
+mensajes" y los clientes ni siquiera deberían intentarlo. Así que los DMs
 dirigidos a ti simplemente nunca se entregan, en silencio. No hay ningún error en
 ninguno de los dos lados.
 
@@ -147,7 +149,7 @@ Dos reglas prácticas:
 
 - **Publica una antes de esperar cualquier DM NIP-17** (ve el Paso 3 de la guía
   de migración más abajo)
-- **Mantenla pequeña** — la especificación recomienda 1-3 relays, y cada relay
+- **Mantenla pequeña.** La especificación recomienda 1-3 relays, y cada relay
   que listes podrá ver quién te está enviando mensajes
 
 ## Guía de Migración: Cambiando de NIP-04 a NIP-17
@@ -156,75 +158,59 @@ Migrar a NIP-17 es sencillo con clientes Nostr modernos. Aquí te explicamos có
 
 ### Paso 1: Verifica el Soporte de Tu Cliente
 
-Antes de migrar, verifica que tu cliente soporte NIP-17:
+NIP-17 solo sirve si el cliente de *los dos* extremos de la conversación lo habla. Estos cuatro lo dicen en su propia documentación o en su propio código:
 
-| Cliente  | Soporte NIP-17 | Estado                   |
-| -------- | -------------- | ------------------------ |
-| Damus    | Sí             | Por defecto para nuevos DMs |
-| Amethyst | Sí             | Por defecto para nuevos DMs |
-| Primal   | Sí             | Soportado                |
-| Coracle  | Sí             | Soportado                |
-| Iris     | Sí             | Soportado                |
-| Snort    | Sí             | Soportado                |
-| Nos      | Sí             | Soportado                |
+| Cliente  | NIP-17 | Dónde funciona |
+| -------- | ------ | -------------- |
+| Amethyst | Sí     | Android        |
+| 0xchat   | Sí     | Android, iOS   |
+| Coracle  | Sí     | Web            |
+| Snort    | Sí     | Web            |
 
-### Paso 2: Habilita NIP-17 en Tu Cliente
+**Damus merece un aviso aparte.** A fecha de septiembre de 2026, la lista de especificaciones que publica Damus sigue sin incluir NIP-17, solo el viejo NIP-04. Dos consecuencias, y las dos importan. Un mensaje envuelto en gift wrap que tú envíes no le aparecerá en absoluto a alguien que use Damus. Y lo que esa persona te mande sale como un evento kind 4 en claro, con las dos claves públicas por fuera, la tuya y la suya, donde cualquier relay que lo guarde puede leerlas. Si una conversación es delicada, llévala a alguno de los clientes de arriba.
 
-#### Damus (iOS/macOS)
+Primal, Iris y Nos se quedan en una zona sin resolver. Primal no dice nada en público, ni a favor ni en contra, así que trátalo como desconocido. Iris encripta sus chats privados con un esquema propio de doble ratchet en lugar de NIP-17 a secas, lo cual está bien dentro de Iris y no garantiza nada fuera. Nos no lista ni NIP-17 ni las dos especificaciones sobre las que se apoya, y el proyecto lleva callado desde principios de 2025.
 
-1. Abre Ajustes → Privacidad y Seguridad
-2. Desplázate a "Encriptación de Mensajes"
-3. Activa "Usar NIP-17 para nuevos mensajes" a ON
-4. Tus nuevos DMs usarán NIP-17 automáticamente
+Las listas de funciones de los clientes se mueven más rápido que las guías. Si el tuyo no aparece aquí, la prueba del Paso 5 lo aclara antes que leer changelogs.
 
-**Nota**: Los mensajes NIP-04 más antiguos permanecen legibles pero los nuevos mensajes usan NIP-17.
+### Paso 2: Normalmente No Hay Nada Que Activar
 
-#### Amethyst (Android)
+Este paso es más corto de lo que esperarías. Ninguno de los clientes de arriba documenta un interruptor de "activar NIP-17", porque no lo hay. Usan gift wraps automáticamente en cuanto la persona del otro lado puede recibirlos.
 
-1. Ve a Ajustes → Mensajes
-2. Habilita "Usar NIP-17 para DMs"
-3. Reinicia la app para efecto completo
-
-#### Primal (iOS/Android/Web)
-
-1. Navega a Ajustes → Privacidad
-2. Bajo "Mensajes Directos," selecciona "NIP-17 (Recomendado)"
-3. Los cambios aplican inmediatamente a nuevas conversaciones
+Así que salta al Paso 3, que es la parte que sí te necesita. Tus conversaciones NIP-04 existentes se quedan donde están y siguen siendo legibles; nada las convierte.
 
 ### Paso 3: Publica Tu Lista de Relays para DMs (Kind 10050)
 
 Los remitentes NIP-17 entregan solo en los relays que listas en tu evento kind
-10050 — sin uno, los mensajes dirigidos a ti se descartan en silencio (ve
+10050. Sin uno, los mensajes dirigidos a ti se descartan en silencio (ve
 [Entrega: La Lista de Relays para DMs](#entrega-la-lista-de-relays-para-dms-kind-10050) más arriba).
 
 1. En tu cliente, busca el ajuste de DMs, mensajes privados o relays de mensajería
-2. Agrega de uno a tres relays que acepten gift wraps (kind 1059) — algunos
-   relays los rechazan
-3. Guarda — tu cliente publica la lista kind 10050 por ti
+2. Agrega de uno a tres relays que acepten gift wraps (kind 1059), porque algunos
+   los rechazan
+3. Guarda. Tu cliente publica la lista kind 10050 por ti
 
-Algunos clientes publican esta lista automáticamente cuando habilitas NIP-17. No
-lo asumas: verifica la entrega en el Paso 5 antes de confiar en ello.
+Algunos clientes publican esta lista por ti la primera vez que abres un chat
+privado. No des por hecho que el tuyo lo hizo: verifica la entrega en el Paso 5
+antes de confiar en ello.
 
 ### Paso 4: Comunícate con Tus Contactos
 
 NIP-17 solo funciona si **ambas** partes tienen soporte NIP-17. Envía una nota a contactos frecuentes:
 
 ```
-nostr:note1... # Plantilla de mensaje de migración
-
 "¡Hey! Estoy actualizando a NIP-17 para mejor privacidad en nuestros DMs.
 Por favor actualiza tu cliente Nostr si aún no lo has hecho.
 ¡Nuestros mensajes futuros serán más seguros!"
 ```
 
-### Paso 5: Verifica el Éxito de la Migración
+### Paso 5: Comprueba Que Funciona de Verdad
 
-Para confirmar que NIP-17 está funcionando:
+La comprobación que importa no requiere ninguna habilidad técnica. Pídele a alguien que use uno de los clientes del Paso 1 que te escriba, y respóndele. Si llegan los dos sentidos, tu lista kind 10050 está publicada y los gift wraps te están llegando. Si tu mensaje se esfuma y ninguno de los dos ve un error, ese es el síntoma clásico de la lista de relays que falta, y toca volver al Paso 3.
 
-1. Envía un mensaje de prueba a ti mismo o a un amigo
-2. Revisa el tipo de evento (debería ser `1059` para gift wraps)
-3. Busca el `kind: 1059` en los detalles del mensaje
-4. El tag `p` debería apuntar a una clave efímera aleatoria, no a la clave real de tu amigo
+La misma prueba la puedes hacer a solas: entra en tu cuenta desde un segundo cliente, o escríbete a ti mismo si tu cliente lo permite.
+
+Si te pica la curiosidad por lo que se envía en realidad, un visor de eventos de Nostr como [njump.me](https://njump.me) te enseña los eventos en bruto. Un gift wrap que funciona tiene más o menos esta pinta:
 
 ```json
 // Ejemplo de evento NIP-17 (simplificado)
@@ -236,35 +222,7 @@ Para confirmar que NIP-17 está funcionando:
 }
 ```
 
-## Guías de Configuración Específicas por Cliente
-
-### Damus
-
-Damus hizo NIP-17 el predeterminado para nuevos mensajes directos en versiones recientes. Si estás en una versión más antigua:
-
-1. Actualiza a la última versión de Damus desde App Store
-2. NIP-17 se habilita automáticamente para nuevas conversaciones
-3. Revisa los detalles del mensaje (mantén presionado) para ver el badge "NIP-17"
-
-**Pro tip**: Damus muestra un icono de candado con el texto "NIP-17" en mensajes seguros.
-
-### Amethyst
-
-Amethyst soporta NIP-17 pero puede requerir habilitación explícita:
-
-1. Ajustes → Avanzado → Ajustes de Protocolo
-2. Habilita "NIP-17 gift wrap para DMs"
-3. El cliente negociará automáticamente NIP-17 con contactos soportados
-
-**Nota**: Amethyst recae elegantemente a NIP-04 si el destinatario no soporta NIP-17.
-
-### Primal
-
-Primal tiene excelente soporte NIP-17:
-
-1. Ajustes → Seguridad y Privacidad
-2. Bajo "Protocolo de Mensajería" selecciona "NIP-17 (Privado)"
-3. Opcional: Habilita "Actualizar automáticamente conversaciones NIP-04" para convertir chats existentes
+Ahí hay dos cosas que leer. El `pubkey` es una clave de un solo uso que no vas a reconocer, y ese es justamente el remitente quedando oculto, que es lo que quieres. El tag `p` sí muestra la clave real del destinatario. Eso no es un fallo de tu configuración; el relay la necesita para saber adónde va el mensaje.
 
 ## Mejores Prácticas de Seguridad
 
@@ -272,11 +230,11 @@ Maximiza tu privacidad al usar NIP-17:
 
 ### 1. Verifica Soporte de Cliente Antes de Comunicación Sensible
 
-Siempre confirma que tu contacto usa un cliente con capacidad NIP-17 antes de compartir información sensible. Enviar NIP-17 a un cliente solo NIP-04 resultará en mensajes ilegibles.
+Confirma siempre que tu contacto usa un cliente con capacidad NIP-17 antes de compartir nada delicado. Un gift wrap enviado a alguien cuyo cliente solo habla NIP-04 no llega convertido en galimatías. No llega, sin más: su cliente nunca va a buscar eventos kind 1059, y ninguno de los dos recibe un error.
 
-### 2. No Mezcles Protocolos en la Misma Conversación
+### 2. Volver a NIP-04 Es una Decisión de Verdad
 
-Evita confusión usando un protocolo por conversación. Si empiezas con NIP-04, termina con NIP-04, o indica claramente cuándo cambias.
+Algunos clientes te dejan mantener viva una conversación antigua de NIP-04. A veces es lo práctico, pero conviene saber lo que cuesta: un mensaje NIP-04 deja las dos claves públicas, la tuya y la de la otra persona, en claro, en un evento que todos los relays guardan. Resérvalo para charla que no te importaría que quedara ligada públicamente a ti, y empieza cualquier cosa delicada como una conversación NIP-17 nueva.
 
 ### 3. Usa Claves Frescas para Conversaciones de Alta Seguridad
 
@@ -300,23 +258,23 @@ Incluso con NIP-17, tus patrones de tráfico son visibles para los relays. Usa:
 
 ### 6. Entiende las Limitaciones
 
-NIP-17 proporciona excelente privacidad pero no es perfecto:
+NIP-17 es una mejora real, y no es una capa de invisibilidad:
 
-- Los relays aún pueden ver direcciones IP (usa VPN/Tor)
-- El análisis de timing puede revelar patrones de comunicación
-- Clientes comprometidos pueden filtrar información
-- El destinatario siempre ve la identidad del remitente
+- Los relays siguen viendo tu dirección IP (usa una VPN o Tor)
+- El análisis de tiempos sigue pudiendo revelar patrones de comunicación
+- La clave del destinatario va en el sobre en texto plano, por diseño
+- Un teléfono o un cliente comprometido lo filtra todo, haga lo que haga el protocolo
 
 ## Solución de Problemas Comunes
 
-### "Mis mensajes nunca llegan" — revisa primero tu lista de relays para DMs
+### "Mis mensajes nunca llegan": revisa primero tu lista de relays para DMs
 
 Este es el fallo más común de NIP-17, y casi nunca es un problema de
 encriptación.
 
 Quien te escribe con NIP-17 no entrega el mensaje a tus relays habituales. Su
-cliente busca un **evento kind 10050** — la lista que publicas de los relays que
-aceptan tus mensajes directos — y envía el gift wrap solo ahí. Si nunca has
+cliente busca un **evento kind 10050**, la lista que publicas de los relays que
+aceptan tus mensajes directos, y envía el gift wrap solo ahí. Si nunca has
 publicado una, el cliente del remitente no tiene dónde entregarlo y el mensaje se
 descarta en silencio. No aparece nada en ninguna de las dos interfaces.
 
@@ -324,16 +282,17 @@ descarta en silencio. No aparece nada en ninguna de las dos interfaces.
 mensajes directos o privados y guarda al menos un relay. Eso publica tu lista
 kind 10050. Elige un relay que realmente acepte gift wraps: algunos rechazan de
 plano los eventos kind 1059.
-(Esto es el [Paso 3 de la guía de migración](#paso-3-publica-tu-lista-de-relays-para-dms-kind-10050) —
+(Esto es el [Paso 3 de la guía de migración](#paso-3-publica-tu-lista-de-relays-para-dms-kind-10050);
 si lo saltaste, empieza por ahí.)
 
 Mantén la lista corta. Cada relay que incluyas es un relay que podrá ver quién te
 está enviando mensajes.
 
-### "Los mensajes aparecen como ilegibles o sin sentido"
+### "Hay un contacto concreto al que nunca le llega nada de lo que envío"
 
-**Causa**: El destinatario no soporta NIP-17
-**Solución**: Pide al destinatario que actualice su cliente, o cambia temporalmente a NIP-04
+Si todos los demás te oyen y una persona no, el problema está en su extremo, no en tu encriptación. Casi seguro que su cliente no tiene soporte NIP-17, así que nunca se suscribe a los gift wraps y nunca ve tu mensaje. No aparece nada como galimatías, porque no aparece nada en absoluto.
+
+**Solución:** pídele que se pase a alguno de los clientes del Paso 1. Si no puede, y la única forma de hablaros que queda son los mensajes NIP-04 antiguos, lee antes el aviso de Mejores Prácticas de Seguridad: NIP-04 entrega las dos claves públicas, en claro, a todos los relays.
 
 ### "No puedo ver si alguien leyó mi mensaje NIP-17"
 
@@ -347,45 +306,35 @@ está enviando mensajes.
 
 ### "El relay rechaza eventos NIP-17"
 
-**Causa**: Software de relay antiguo
-**Solución**:
+**Causa**: el relay corre software antiguo, o simplemente se niega a guardar eventos kind 1059
+**Solución**: cámbialo por otro en tu lista de relays para DMs. Algunos clientes enseñan lo que soporta un relay en su pantalla de relays; si el tuyo no, probar con otro relay y ver si empiezan a llegar los mensajes es más rápido que investigar. Avisar al operador también vale el minuto que cuesta.
 
-1. Revisa los NIPs soportados del relay
-2. Agrega relays modernos que soporten NIP-17
-3. Reporta al operador del relay
+### "Mi cliente me ofrece elegir el tipo de mensaje"
 
-### "El cliente muestra ambas opciones NIP-04 y NIP-17"
-
-**Comportamiento esperado**: Muchos clientes soportan ambos durante el período de transición. Siempre elige NIP-17 cuando esté disponible.
+**Comportamiento esperado**: algunos clientes todavía leen y escriben los dos formatos mientras la red termina de mudarse, y te dejan elegir por conversación. Elige NIP-17 siempre que esté disponible.
 
 ## El Futuro de la Mensajería Privada en Nostr
 
-NIP-17 es el estándar de oro actual para mensajería privada en Nostr, pero el desarrollo continúa:
+NIP-17 es el estándar actual para la mensajería privada uno a uno en Nostr, y es lo que deberías estar usando hoy. No es el final del camino, eso sí, y sus dos huecos reales son en los que se está trabajando: no hay secreto hacia adelante y no hay chat de grupo en condiciones.
 
-- **NIP-44**: Un esquema de encriptación mejorado que puede suplantar a NIP-17
-- **Encriptación de grupo**: Se están desarrollando protocolos de mensajería de grupo privada
-- **Integración de pagos**: Mensajes privados con pagos Lightning
+La respuesta más seria hasta ahora es el **protocolo Marmot**, que monta MLS (el estándar de mensajería de grupo que hay detrás del chat grupal estilo Signal) encima de Nostr, conservando las claves de Nostr como identidad. El repositorio del propio Marmot da la especificación por adoptada, y White Noise es la app de chat construida sobre ella. Ese enfoque sí da secreto hacia adelante y sí resuelve los grupos, que es justo lo que NIP-17 deja fuera.
 
-Mantente actualizado siguiendo:
-
-- nostr:npub1... # Desarrollo del protocolo Nostr
-- nostr:npub1... # Mejores prácticas de seguridad
+Una aclaración, porque los números invitan a confundirse. NIP-44 no compite con NIP-17 ni lo va a reemplazar. NIP-44 es la encriptación que NIP-17 ya usa en sus dos capas. Son piezas de la misma cosa.
 
 ## Conclusión
 
-NIP-17 representa un gran paso adelante para la privacidad en Nostr. Al abordar los problemas de filtración de metadatos de NIP-04, permite mensajería directa verdaderamente privada que protege tanto el contenido como los patrones de comunicación.
+NIP-17 es una mejora real sobre NIP-04, y es lo que deberías usar. Ten claro, eso sí, qué es lo que te llevas. Tus palabras van encriptadas y el relay no puede saber quién envió un mensaje. Sí puede ver a qué cuenta va dirigido, y quien vigile los dos extremos puede deducir bastante de los tiempos. Tómalo como correo privado, no como algo imposible de rastrear.
 
-El proceso de migración es sencillo: actualiza tu cliente, verifica que tus contactos soporten NIP-17, y disfruta de privacidad mejorada. Con soporte de clientes generalizado ya disponible, no hay razón para seguir usando el protocolo NIP-04 deprecado.
+Pasarte es sobre todo cuestión de elegir bien el cliente y publicar una lista pequeña. El soporte es real pero desigual, y Damus, uno de los clientes más usados en iPhone, sigue sin tenerlo, así que comprobar el otro extremo de una conversación no es un paso opcional.
 
 **Tareas de acción:**
 
-1. ✅ Actualiza tu cliente Nostr a la última versión
-2. ✅ Habilita NIP-17 en los ajustes
-3. ✅ Publica tu lista de relays para DMs (kind 10050) — sin ella, nada llega
-4. ✅ Verifica con contactos que soportan NIP-17
-5. ✅ Empieza a usar NIP-17 para todas las conversaciones privadas nuevas
+1. ✅ Usa un cliente que soporte NIP-17 (Amethyst, 0xchat, Coracle, Snort)
+2. ✅ Publica tu lista de relays para DMs (kind 10050). Sin ella no llega nada
+3. ✅ Manda un mensaje de prueba en los dos sentidos con un contacto, para saber que la entrega funciona
+4. ✅ Antes de nada delicado, comprueba en qué cliente está la otra persona
 
-Recuerda: La privacidad es una práctica, no un producto. NIP-17 te da las herramientas—úsalas sabiamente.
+Recuerda que la privacidad se practica. NIP-17 te da las herramientas; usarlas bien sigue dependiendo de ti.
 
 ---
 
@@ -397,7 +346,7 @@ Recuerda: La privacidad es una práctica, no un producto. NIP-17 te da las herra
 
 ---
 
-_Ultima actualización: 28 de julio de 2026_
+_Última actualización: 2 de septiembre de 2026_
 
 _¿Tienes preguntas? Únete a la discusión en Nostr o abre un issue en este repositorio de documentación._
 

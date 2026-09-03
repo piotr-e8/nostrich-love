@@ -69,7 +69,7 @@ Your Nostr client automatically creates a **relay list** that tells others:
     
     // Relays where you read mentions (your "inbox")
     ["r", "wss://nos.lol", "read"],
-    ["r", "wss://relay.snort.social", "read"]
+    ["r", "wss://relay.primal.net", "read"]
   ]
 }
 ```
@@ -89,11 +89,12 @@ Your Nostr client automatically creates a **relay list** that tells others:
 Alice's Relay List (kind:10002):
   - wss://relay.a.com [write]
   - wss://relay.b.com [write]
+  - wss://relay.inbox.com [read]
 
 Bob follows Alice. Bob's client sees:
   "Check wss://relay.a.com and wss://relay.b.com for Alice's posts"
 
-Result: Bob connects to both relays and sees Alice's content! ✅
+Result: Bob connects to both write relays and sees Alice's content! ✅
 ```
 
 ### Scenario 2: Charlie Mentions Alice
@@ -101,11 +102,11 @@ Result: Bob connects to both relays and sees Alice's content! ✅
 ```
 Charlie mentions @alice in a post
 
-Charlie's client checks Alice's relay list:
-  - wss://relay.a.com [read]
-  - wss://relay.b.com [read]
+Charlie's client checks the same relay list and looks for
+the [read] entry, which is Alice's inbox:
+  - wss://relay.inbox.com [read]
 
-Charlie's client sends the mention to Alice's READ relays
+Charlie's client sends the mention there
 
 Result: Alice sees the mention even if she's offline! ✅
 ```
@@ -116,7 +117,7 @@ Result: Alice sees the mention even if she's offline! ✅
 Alice stops using relay.a.com, starts using relay.c.com
 
 1. Alice updates her kind:10002 relay list
-2. Propagates to all connected relays
+2. Her client publishes the updated list to her relays
 3. Followers automatically start checking relay.c.com
 
 Result: No lost posts, no manual reconnection needed! ✅
@@ -150,12 +151,12 @@ Clients only connect to the relays you use, not every relay in existence.
 
 ### Keep Your List Small
 
-**Recommended:** 2-4 relays total
+**Recommended:** a short list. NIP-65 itself suggests 2-4 write relays and 2-4 read relays, so most people end up somewhere between four and eight in total.
 
 Why?
 - More relays = more connections = more battery drain
-- Diminishing returns after 4 relays
-- Most content propagates to popular relays anyway
+- Diminishing returns once your followers can already reach you
+- Your followers' clients read the relays on your list directly, so extra entries add nothing
 
 ### Mix Read and Write
 
@@ -172,9 +173,9 @@ Read from: Popular relay B (for mentions)
 ### Choose Reliable Relays
 
 Use well-known, reliable relays that:
-- Have good uptime
-- Store content permanently (not ephemeral)
-- Are geographically close (lower latency)
+- Are online when you need them, rarely down
+- Keep your posts around for the long term (some relays quietly delete older posts to save space)
+- Are hosted near you, so the app feels faster
 
 ---
 
@@ -182,7 +183,7 @@ Use well-known, reliable relays that:
 
 ### "I need to be on every relay"
 
-**Wrong:** Being on 20+ relays doesn't help. Your posts propagate through the network. Stick to 2-4 quality relays.
+**Wrong:** Being on 20+ relays doesn't help. Relays don't copy posts to each other, so a relay nobody reads from is just an extra connection. Your relay list already sends your followers' clients to the right place, so a handful of good relays does the job.
 
 ### "If I leave a relay, I lose my followers"
 
@@ -190,7 +191,7 @@ Use well-known, reliable relays that:
 
 ### "Private DMs go through the outbox too"
 
-**Partially true:** NIP-17 (private messages) uses the outbox model for delivery, but with extra encryption.
+**Not quite:** Private messages (NIP-17) travel to a separate DM relay list (kind:10050), not the kind:10002 list this guide is about, and they're encrypted end to end. Your client keeps both lists. If DMs aren't arriving, the DM relay list is the one to check.
 
 ### "I need to manually tell people my relays"
 
@@ -227,13 +228,13 @@ Your relay list is **public**. Anyone can see which relays you use. This is nece
 Look in your Nostr client settings:
 - Which relays are you connected to?
 - Are they marked as "read" or "write"?
-- Do you have 2-4 total?
+- Is the list short, roughly four to eight?
 
 ### Optimize Your Setup
 
-**If you have 5+ relays:**
-- Remove the ones with poor uptime
-- Keep your 3-4 favorites
+**If you have 10+ relays:**
+- Remove the ones that are often down
+- Keep a handful of favorites, a few to write to and a couple to read from
 - Make sure at least one is "read" for mentions
 
 ### Spread the Word
@@ -251,5 +252,5 @@ Help others understand:
 
 ## Keep reading
 
-- [Relays, demystified](/guides/relays-demystified) — what a relay actually is, before you tune which ones you use
-- [Choosing and managing your relays](/guides/relay-guide) — how to pick a read and write set that makes the outbox model work for you
+- [Relays, demystified](/guides/relays-demystified): what a relay actually is, before you tune which ones you use
+- [Choosing and managing your relays](/guides/relay-guide): how to pick a read and write set that makes the outbox model work for you

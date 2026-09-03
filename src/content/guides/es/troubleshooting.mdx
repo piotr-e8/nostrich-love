@@ -8,9 +8,12 @@ category: "reference"
 prerequisites: ["keys-and-security", "quickstart"]
 ---
 
-## Una guía de referencia rápida para los problemas más frecuentes que encuentran los usuarios de Nostr.
+Una guía de referencia rápida para los problemas más frecuentes que encuentran los usuarios de Nostr.
+
+Casi todo lo que verás abajo se explica por un mismo hecho: tus publicaciones, tu perfil y tu lista de seguidos viven en los relays, no dentro de la app. Un feed en blanco o una publicación que parece haberse esfumado casi siempre significan que la app está hablando con los servidores equivocados, no que tu trabajo se haya perdido.
 
 import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz";
+import { TroubleshootingWizard } from "@components/interactive/TroubleshootingWizard";
 
 ## Problema: "Mi Feed está Vacío" 📭
 
@@ -32,7 +35,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - **Causa**: No conectado a ningún relay
 - **Solución**: Revisa Ajustes → Relays, asegúrate de estar conectado a 3-5 relays
-- **Solución rápida**: Agrega relays populares: `wss://relay.damus.io`, `wss://nostr.wine`
+- **Solución rápida**: Agrega relays gratuitos y populares: `wss://relay.damus.io`, `wss://nos.lol`
 
 **3. La caché del cliente está vacía**
 
@@ -74,7 +77,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - **Causa**: El cliente no pudo publicar en todos los relays
 - **Solución**: Revisa qué relays recibieron tu publicación
-- **Nota**: Una vez publicado, no se puede retransmitir a nuevos relays retroactivamente
+- **Buena noticia**: Tus publicaciones están firmadas y son portables, así que pueden volver a enviarse más adelante. Muchos clientes esconden una opción de "Retransmitir" en el menú de cada nota, que la vuelve a publicar en los relays que usas ahora, incluidos los que agregaste después.
 
 ### Qué Sincroniza vs Qué No
 
@@ -116,7 +119,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - **Causa**: Alcanzando límites de tasa
 - **Solución**: Reduce la velocidad, espera unos minutos
-- **Nota**: La mayoría de los relays limitan a 1-5 publicaciones por segundo
+- **Nota**: Los relays frenan las publicaciones muy seguidas para contener el spam. El límite cambia de un relay a otro, así que una pausa corta suele bastar.
 
 ---
 
@@ -130,10 +133,10 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 ### Causas y Soluciones
 
-**1. Obtén verificación NIP-05**
+**1. Consigue una dirección NIP-05**
 
 - **Solución**: Configura identidad NIP-05 (ver [guía](/es/guides/nip05-identity))
-- **Por qué**: El badge de verificado distingue lo real de lo falso
+- **Por qué**: Una dirección en un dominio que controlas, del tipo tu@tusitio.com, ata la cuenta a tu propio sitio. Cualquiera puede conseguir alguna dirección NIP-05, un impostor incluido, así que dile a la gente que mire el dominio y no la marca de verificación.
 
 **2. Comparte tu npub ampliamente**
 
@@ -143,7 +146,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 **3. Reporta al impostor**
 
 - **Solución**: Usa la función de reporte del cliente o moderación comunitaria
-- **Nota**: No puedes eliminar su cuenta (es descentralizado), pero puedes bloquear/silenciar
+- **Nota**: Nadie puede eliminar su cuenta, y bloquearlo solo es un filtro por tu lado. Los demás lo siguen viendo, así que decirle a tu propia audiencia cuál es tu npub real sirve de más que bloquear
 
 ### Prevención
 
@@ -166,16 +169,16 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 **1. Siguiendo cuentas de spam**
 
 - **Solución**: Deja de seguir fuentes de spam
-- **Mejor**: No sigas masivamente; cura cuidadosamente
+- **Mejor**: No sigas cuentas en masa; elige con cuidado a quién sigues
 
 **2. Relay con mala moderación**
 
 - **Solución**: Desconecta de relays de baja calidad
 - **Mejor**: Usa relays de pago o solo por invitación
 
-**3. Sin lista de silencio**
+**3. Sin lista de silenciados**
 
-- **Solución**: Crea una lista de silencio en tu cliente
+- **Solución**: Crea una lista de silenciados en tu cliente
 - **Cómo**: Perfil → Cuentas silenciadas → Agregar spammers
 
 ### Mejores Prácticas
@@ -192,7 +195,7 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 ### Síntomas
 
 - La app se cierra inesperadamente
-- Se congela o se vuelve no responde
+- Se congela o deja de responder
 - Errores al cargar contenido
 
 ### Causas y Soluciones
@@ -207,12 +210,13 @@ import { TroubleshootingQuiz } from "@components/interactive/TroubleshootingQuiz
 
 - **Causa**: Conectado a 20+ relays agobia al cliente
 - **Solución**: Reduce a 4-8 relays activos
-- **Optimiza**: Usa el modelo de outbox NIP-65
+- **Optimiza**: Deja que la app elija los relays por ti, mira la [guía del Modelo Outbox](/es/guides/outbox-model)
 
 **3. Caché corrupta**
 
-- **Solución**: Borra los datos de la app (no perderás publicaciones/seguidos)
-- **Opción nuclear**: Reinstala la app, reimporta las claves
+- **Primero**: Comprueba que tienes tu nsec respaldado en algún sitio fuera de la app. Borrar los datos elimina la clave guardada en el dispositivo, y sin un respaldo nadie puede recuperar esa cuenta.
+- **Después**: Borra los datos de la app. Publicaciones, seguidos y perfil siguen en los relays y vuelven en cuanto inicies sesión otra vez.
+- **Opción nuclear**: Reinstala la app y entra de nuevo con tu clave respaldada, o con tu app firmadora si usas una.
 
 ### Prueba un Cliente Diferente
 
@@ -220,8 +224,8 @@ Si un cliente tiene problemas constantemente, prueba otro:
 
 | Plataforma          | Alternativa          |
 | ------------------- | -------------------- |
-| iOS (Damus)         | Nos, Nostur          |
-| Android (Amethyst)  | Primal web, Nostros  |
+| iOS (Damus)         | Nostur, Primal       |
+| Android (Amethyst)  | Primal, YakiHonne    |
 | Web (Primal)        | Iris, Snort, Coracle |
 
 ---
@@ -238,7 +242,7 @@ Si un cliente tiene problemas constantemente, prueba otro:
 
 > ⚠️ **Si no tienes un backup de tus claves, tu cuenta es irrecuperable.**
 
-Esto es por diseño—Nostr no tiene "olvidé mi contraseña" porque no hay servidor central que guarde tus claves.
+Esto es así por diseño. Nostr no tiene "olvidé mi contraseña" porque no hay ningún servidor central que guarde tus claves.
 
 ### Lo Que PUEDES Hacer
 
@@ -246,7 +250,7 @@ Esto es por diseño—Nostr no tiene "olvidé mi contraseña" porque no hay serv
 
 - Revisa gestores de contraseñas
 - Busca capturas de pantalla
-- Revisa el email por mensajes de bienvenida
+- Revisa apps de notas y copias en la nube de dispositivos viejos
 - Revisa otros dispositivos con el cliente instalado
 
 **2. Verifica si el cliente tiene las claves almacenadas**
@@ -282,7 +286,7 @@ Esto es por diseño—Nostr no tiene "olvidé mi contraseña" porque no hay serv
 
 **1. El relay está caído**
 
-- **Prueba**: Abre la URL del relay en el navegador (debería mostrar error o página ws)
+- **Prueba**: Cambia el `wss://` del principio por `https://` y abre esa dirección en el navegador. Un relay que funciona normalmente responde con una página informativa breve o con un aviso de que uses un cliente Nostr. Si no aparece nada, es señal de que está caído.
 - **Solución**: Revisa la página de estado del relay o redes sociales
 - **Solución**: Elimina temporalmente, vuelve a agregar cuando regrese
 
@@ -318,25 +322,25 @@ Esto es por diseño—Nostr no tiene "olvidé mi contraseña" porque no hay serv
 
 **1. Sin wallet conectado**
 
-- **Solución**: Conecta una wallet Lightning en los ajustes del cliente
+- **Solución**: Conecta un wallet Lightning en los ajustes del cliente
 - **Ver**: [Guía de Zaps](/es/guides/zaps-and-lightning)
 
 **2. Balance insuficiente**
 
-- **Revisa**: Balance de la wallet
+- **Revisa**: Balance del wallet
 - **Solución**: Agrega fondos a tu wallet
-- **Mínimo**: Generalmente necesitas 100+ sats para comisiones
+- **Nota**: Hasta un zap de 1 sat sale adelante. Un wallet raspado a cero puede fallar igualmente por comisiones de ruteo o por el mínimo del propio wallet, así que déjale siempre un pequeño colchón.
 
 **3. Wallet offline**
 
-- **Causa**: Las wallets no custodiales necesitan estar online
+- **Causa**: Los wallets no custodiales necesitan estar online
 - **Solución**: Abre tu app de wallet, asegúrate de que esté funcionando
-- **Alternativa**: Usa wallet custodial como Alby
+- **Alternativa**: Usa un wallet alojado como Coinos, o el wallet que trae tu cliente (Primal tiene uno). Esos siguen disponibles esté o no encendido tu teléfono. Mira la [Guía de Zaps](/es/guides/zaps-and-lightning) para ver los pros y contras.
 
 **4. Dirección Lightning incorrecta**
 
 - **Revisa**: ¿Es tu dirección Lightning correcta en el perfil?
-- **Prueba**: Intenta enviarte 10 sats a ti mismo
+- **Prueba**: Pídele a un amigo que te zapee 10 sats, o paga desde un segundo wallet. Casi todos los wallets se niegan a pagar una factura emitida por ellos mismos, así que pagarte a ti mismo no demuestra nada.
 - **Solución**: Actualiza la dirección en los ajustes del perfil
 
 ---
@@ -378,7 +382,7 @@ Esto es por diseño—Nostr no tiene "olvidé mi contraseña" porque no hay serv
 
 ## Árbol de Decisiones Rápido 🌳
 
-<TroubleshootingWizard />
+<TroubleshootingWizard client:idle />
 
 **¿Tienes problemas? Sigue esto:**
 
@@ -394,22 +398,17 @@ Esto es por diseño—Nostr no tiene "olvidé mi contraseña" porque no hay serv
 
 ### Ayuda Comunitaria
 
-**Telegram:**
-
-- [Nostr Protocol](https://t.me/nostr_protocol) - Ayuda general
-- [Damus](https://t.me/damusios) - Específico de iOS
-- [Amethyst](https://t.me/AmethystNostr) - Específico de Android
-
-**Otras Plataformas:**
-
+- [Damus en Telegram](https://t.me/damusios) - Específico de iOS
+- [Repositorio de incidencias de Amethyst](https://github.com/vitorpamplona/amethyst/issues) - donde se responden los problemas en Android, ya que Amethyst no tiene grupo público de Telegram
 - [r/nostr](https://reddit.com/r/nostr) - Comunidad de Reddit
 - [Stacker News](https://stacker.news) - Foro de Bitcoin/Nostr
-- Nostr mismo - Publica con el tag #help
+- El propio Nostr - publica tu pregunta con la etiqueta #asknostr y la gente te responderá
 
 ### Recursos
 
-- [Nostr Wiki](https://wiki.nostr.com)
-- [Documentación específica de clientes](https://github.com/damus-io/damus#documentation)
+- [Nostr.how](https://nostr.how) - guías en lenguaje llano sobre clientes, relays y zaps
+- [Directorio de apps de Nostr](https://nostrapps.com) - encuentra un cliente para tu plataforma
+- [Documentación de Damus](https://github.com/damus-io/damus#documentation)
 - [Especificaciones NIP](https://github.com/nostr-protocol/nips)
 
 ### Reportando Bugs

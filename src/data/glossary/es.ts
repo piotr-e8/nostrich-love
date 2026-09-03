@@ -34,7 +34,7 @@ const es: GlossaryData = {
   client: {
     term: 'Cliente',
     definition:
-      'Una aplicación que se conecta a los relays de Nostr y te permite leer y publicar notas. Ejemplos: Damus, Iris, Amethyst.',
+      'Una aplicación que se conecta a los relays de Nostr y te permite leer y publicar notas. Ejemplos: Primal, Damus, Amethyst, Iris.',
   },
   nip: {
     term: 'NIP',
@@ -44,7 +44,7 @@ const es: GlossaryData = {
   zap: {
     term: 'Zap',
     definition:
-      'Un pago por la red Lightning de Bitcoin enviado a través de Nostr. Se usa para dar propinas o apoyar a otros usuarios.',
+      'Un pago de Bitcoin por Lightning vinculado a una nota o un perfil de Nostr. El dinero viaja por la red Lightning y Nostr registra un recibo público. Se usa para dar propinas o apoyar a otros usuarios.',
   },
   nip05: {
     term: 'NIP-05',
@@ -67,12 +67,12 @@ const es: GlossaryData = {
       'Abreviatura de public key (clave pública). Tu identificador en la red Nostr, derivado de tu clave privada.',
   },
   'nsec-format': {
-    term: '_nsec',
+    term: 'nsec (formato)',
     definition:
       'Formato de clave privada codificada en Bech32. Empieza por "nsec1" y debe mantenerse en secreto.',
   },
   'npub-format': {
-    term: '_npub',
+    term: 'npub (formato)',
     definition:
       'Formato de clave pública codificada en Bech32. Empieza por "npub1" y puede compartirse públicamente sin riesgo.',
   },
@@ -94,7 +94,7 @@ const es: GlossaryData = {
   dm: {
     term: 'DM',
     definition:
-      'Mensaje directo (Direct Message). Mensajes privados cifrados entre usuarios de Nostr (NIP-04 o NIP-17).',
+      'Mensaje directo (Direct Message). Mensajes privados cifrados entre usuarios de Nostr. Los clientes modernos usan NIP-17; el antiguo NIP-04 está obsoleto porque revela quién habla con quién.',
   },
   mention: {
     term: 'Mención',

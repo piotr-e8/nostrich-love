@@ -1,24 +1,18 @@
 ---
 title: "你的密钥，你的身份"
 description: "学习如何生成、保存和保护你的 Nostr 密钥。面向新手的完整安全指南。遵循 3-2-1 备份规则。"
-estimatedTime: "8 分钟"
+estimatedTime: "10 分钟"
 priority: 3
 category: "getting-started"
 ---
 
-import { AlertBanner } from "@components/AlertBanner";
-import { KeyVisualizer } from "@components/KeyVisualizer";
 import { KeyGenerator } from "@components/KeyGenerator";
 import { BackupChecklist } from "@components/BackupChecklist";
 import { SecurityQuiz } from "@components/interactive/SecurityQuiz";
 
-{/* ProgressIndicator 暂时禁用 - 稍后将用实际追踪功能实现 */}
-{/* <ProgressIndicator current={2} total={4} estimatedTime="8 分钟" /> */}
-
-
 ## 为什么这很重要
 
-与 Twitter 或 Instagram 不同，Nostr 让你**自己**掌控你的身份。没有公司可以封你，没有算法可以压制你的内容，也没有客服会丢失你的数据。这种自由伴随着责任——你拥有你的密钥，你控制你的账号。
+与 Twitter 或 Instagram 不同，Nostr 让你**自己**掌控你的身份。没有哪一家公司能把你的账号收走，也没法把你踢出这个网络。某个应用或某个中继当然还是可以拒绝转发你的帖子，但你的密钥、你的帖子和你的粉丝并不握在它们手里，所以你换个地方继续就是了。这份自由也带着责任：密钥归你，账号也归你管。
 
 好消息？保护你的密钥很简单。按照本指南操作，你会比 99% 的用户更安全。
 
@@ -26,13 +20,11 @@ import { SecurityQuiz } from "@components/interactive/SecurityQuiz";
 
 ## 理解密钥（2 分钟）
 
-Nostr 使用加密技术来保护你的身份。别担心——你不需要理解数学。只需把它想象成锁和钥匙系统。
+Nostr 使用加密技术来保护你的身份。别担心，你不需要看懂里面的数学，把它当成一套锁和钥匙就行。
 
 ### 什么是密钥对？
 
-每个 Nostr 用户都有两个协同工作的密钥：
-
-<KeyVisualizer />
+每个 Nostr 用户都有两个协同工作的密钥。一个是公开的，以 `npub1` 开头；另一个是私密的，以 `nsec1` 开头。下面分别说说它们各自是干什么的。
 
 ### 你的公钥（npub1...）
 
@@ -44,7 +36,7 @@ Nostr 使用加密技术来保护你的身份。别担心——你不需要理�
     </span>
   </div>
   <code className="text-sm break-all bg-white dark:bg-gray-800 p-2 rounded block text-gray-900 dark:text-gray-100">
-    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   </code>
   <p className="mt-2 text-sm text-green-700 dark:text-green-400">
     这是你的用户名。在任何地方分享。公开发布。这是人们找到你的方式。
@@ -64,11 +56,11 @@ Nostr 使用加密技术来保护你的身份。别担心——你不需要理�
   <div className="flex items-center gap-2 mb-2">
     <span className="text-2xl">🔴</span>
     <span className="font-bold text-red-700 dark:text-red-400">
-      永远不要分享 - 绝密
+      绝密：永远不要分享
     </span>
   </div>
   <code className="text-sm break-all bg-white dark:bg-gray-800 p-2 rounded block text-gray-900 dark:text-gray-100">
-    nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+    nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   </code>
   <p className="mt-2 text-sm text-red-700 dark:text-red-400">
     这是你的密码。任何拥有它的人都可以以你的身份发帖。丢失它 = 永远丢失你的账号。
@@ -97,7 +89,7 @@ Nostr 使用加密技术来保护你的身份。别担心——你不需要理�
 
 ## 生成你的密钥（3 分钟）
 
-> 💡 **提示：** 虽然这个密钥生成器在浏览器中安全地创建密钥，但你也可以直接在大多数 Nostr 客户端（如 Damus、Amethyst 或 Iris）中生成密钥。把这个工具看作是在使用真实客户端之前练习的"模拟器"。
+> 💡 **提示：** 这个生成器在你的浏览器里造出的是一对真实、有效的密钥，什么都不会发到别处。你可以把它留下来当作自己真正的 Nostr 身份，也可以只当练习，之后让应用重新生成一对。要留下来，现在就把 nsec 备份好；只是练习，就千万别再拿这对密钥去开真账号。
 
 <KeyGenerator client:idle />
 
@@ -107,35 +99,36 @@ Nostr 使用加密技术来保护你的身份。别担心——你不需要理�
    - 这会创建一个随机的密钥对
    - 观看动画以了解发生了什么
 
-2. **立即保存两个密钥**
+2. **如果你打算留下这对密钥，现在就把两个都存好**
    - 将你的 **npub**（绿色）复制到安全的地方
    - 将你的 **nsec**（红色）复制到**安全**的地方
-   - 在做其他事情之前现在就做
+   - 在拿这把密钥做任何别的事之前先存
+   - 只是练习？那就什么都别存，也永远别用这对密钥开真账号
 
-3. **验证你已保存它们**
-   - 关闭生成器
-   - 重新打开它
-   - 你还能访问你的密钥吗？
+3. **验证你确实存下来了**
+   - 生成器不保留任何东西：关掉这个页面，密钥就从它这里消失了
+   - 所以去你保存的地方，把两个密钥都读一遍
+   - 读不出来，就说明你还没有备份
 
 ### 示例格式（不是真实密钥）
 
-下面是你 Nostr 密钥的样子。这些只是示例——不是有效密钥：
+下面是 Nostr 密钥长什么样。这些只是示例，不是有效密钥：
 
 <div className="test-keys bg-gray-100 dark:bg-gray-800 p-4 rounded-lg my-4">
   <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">公钥（npub）格式示例：</p>
   <code className="text-xs break-all block mb-4 text-gray-900 dark:text-gray-100">
-    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+    npub1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   </code>
 
 <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
   私钥（nsec）格式示例：
 </p>
 <code className="text-xs break-all block text-red-600 dark:text-red-400">
-  nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+  nsec1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
 </code>
 
   <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 italic">
-    这些只是格式示例——不是有效密钥。使用上面的密钥生成器获取真实测试密钥。
+    这些只是格式示例，不是有效密钥。用上面的密钥生成器可以造出一对能用的密钥。
   </p>
 </div>
 
@@ -143,7 +136,7 @@ Nostr 使用加密技术来保护你的身份。别担心——你不需要理�
 
 ## 3-2-1 备份规则（2 分钟）
 
-这个规则来自专业数据管理。虔诚地遵循它。
+这个规则来自专业的数据管理实践。请严格遵守。
 
 <BackupChecklist client:idle />
 
@@ -151,14 +144,14 @@ Nostr 使用加密技术来保护你的身份。别担心——你不需要理�
 
 **你的 nsec 的 3 份副本**
 
-- 一份不够。两份更好。三份才安全。
+- 一份不够，两份也只是好一点。到三份才谈得上安全。
 - 如果一份失败，你有两份备份
 
 **2 种不同的媒介类型**
 
 - 数字：密码管理器、加密文件
 - 物理：手写纸张、金属板
-- 为什么不同类型？数字失败的原理与物理不同
+- 为什么要用不同类型？因为数字媒介和物理媒介的损坏方式不一样
 
 **1 个异地位置**
 
@@ -191,9 +184,9 @@ Nostr 使用加密技术来保护你的身份。别担心——你不需要理�
 
 **这就是 3-2-1 备份规则重要的原因。**
 
-与中心化平台不同，Nostr 没有"忘记密码"按钮或客服可以帮你恢复账号。但别担心——遵循下面简单的备份步骤会让你安全。
+与中心化平台不同，Nostr 没有"忘记密码"按钮，也没有客服能帮你找回账号。但别担心：照着上面的备份步骤做，你就是安全的。
 
-**这样想：** 你不会把毕生积蓄作为现金放在口袋里。你会把大部分存在银行（多个备份），只带需要的。你的 nsec 也是如此——安全存储，不要只放在手机上。
+**这样想：** 你不会把毕生积蓄当现金揣在口袋里。大部分会存进银行（也就是多份备份），身上只带够用的。你的 nsec 也是这个道理，要妥善存起来，别只留在手机上。
 
 ---
 
@@ -209,24 +202,24 @@ Nostr 使用加密技术来保护你的身份。别担心——你不需要理�
 
 **不要保存在未加密的笔记中**
 
-- Apple Notes、Google Keep 等没有加密
-- 任何拥有你手机/电脑的人都可以读取
-- 默认同步到云端
+- Apple Notes、Google Keep 这类应用的默认笔记并没有端到端加密
+- 它们会自动同步到云端，所以谁进得了你的云账号，谁就读得到
+- 拿到你没锁屏的手机或电脑的人，同样读得到
 
 **不要与任何人分享**
 
-- 不是你的配偶
-- 不是你最好的朋友
-- 不是"Nostr 客服"（没有客服）
-- 不是任何人，永远
+- 配偶也不行
+- 最好的朋友也不行
+- "Nostr 客服"也不行（根本就没有客服）
+- 任何人都不行，永远不行
 
 ### 要做的事（最佳实践）
 
 **使用密码管理器**
 
 - 1Password、Bitwarden、KeePass
-- 加密、备份、可访问
-- 也为客户端生成强密码
+- 加密、备份、随时可取
+- 密码管理器自己的主密码和你的邮箱密码，也该放在这里妥善管理
 
 **写在纸上**
 
@@ -247,21 +240,21 @@ Nostr 使用加密技术来保护你的身份。别担心——你不需要理�
 
 <SecurityQuiz client:idle />
 
-### 恐怖故事（可选阅读）
+### 账号丢失的三种典型方式（可选阅读）
 
-这些是真实的。从中学习：
+下面这些不是谁的原话，而是把反复出现的那几类错误拼在一起写出来的，好让你在真犯之前先认出它们。
 
 **"我以为我备份了"**
 
-> "我把 nsec 保存在密码管理器中，但忘了同步。手机坏了。2,000 个粉丝没了。不得不重新开始。" — @nostruser123
+nsec 存进了一个其实根本没在同步的密码管理器。手机报废了，笔记本上的保险库里没有这条记录，账号和粉丝就再也够不着了。
 
-**"那个没被删除的截图"**
+**"那个没被删掉的截图"**
 
-> "我截图了我的密钥，然后删除了照片。忘了最近删除文件夹。有人从我的 iCloud 恢复了它。失去了一切。" — 匿名
+密钥被截了图，照片随后删掉了。可"最近删除"会把它留一个月，云备份留得更久。谁进了那个云账号，谁就拿到了 nsec。
 
 **"那个'乐于助人'的陌生人"**
 
-> "有人私信我提出要'验证我的账号'。要求我提供 nsec 来'正确链接'。我给了他们。他们窃取了我的账号并开始发布诈骗信息。" — @learnedthehardway
+一条私信过来，说要帮你"验证"或者"绑定"账号，然后开口要你的 nsec。正经的人和服务永远不需要你的 nsec。没有什么验证服务，没有客服台，也没有任何理由把它交出去。
 
 ---
 
@@ -293,23 +286,23 @@ Nostr 使用加密技术来保护你的身份。别担心——你不需要理�
 
 ---
 
-## 高级：真实世界的警示故事
+## 高级：弄丢密钥的代价
 
 <details>
-<summary>⚠️ 点击查看：没有适当备份会发生什么（可选）</summary>
+<summary>⚠️ 点击查看：没有妥善备份会怎样（可选）</summary>
 
-虽然 3-2-1 备份规则让你安全，但以下是人们没有遵循它时发生的真实例子：
+3-2-1 规则能保你平安。跳过它，损失通常是下面这几种形状之一：
 
-**案例研究 1：比特币打赏**  
-一位内容创作者在 6 个月内收到了价值 50,000 美元的比特币打赏（zaps）。他们的手机被偷了——没有备份。打赏永远丢失了，因为 nsec 只在那台设备上。
+**靠打赏赚钱的创作者**  
+花了好几个月攒起受众，也真的收到了打赏，然后手机被偷，而 nsec 只存在那台手机上。身份没了：再也没法以自己的名义发帖，也没法证明那个账号曾经属于你。顺带说一句，打赏是直接付进你的闪电钱包的，并不由 Nostr 密钥保管，所以那笔钱的安全取决于钱包自己的备份。要备份的是两样东西，不是一样。
 
-**案例研究 2：网红**  
-一位拥有 10,000 粉丝的 Nostr 网红把手机掉进了泳池。没有备份 = 从零开始。多年的社区建设，付诸东流。
+**攒了好几年的账号**  
+手机掉进泳池。没有备份，帖子、回复和受众就都留在中继上，挂在一把再也没人能用的密钥底下，你只能从零开始。
 
-**案例研究 3：开发者**  
-一位拥有多年代码贡献和技术讨论的 Nostr 应用开发者，在笔记本电脑崩溃时失去了一切。没有云备份，没有第二台设备，无法恢复。
+**报废的笔记本电脑**  
+一台机器上的一份副本不叫备份。硬盘坏了，既没有重置链接，也没有地方申诉。
 
-**共同线索：** 所有这些都是可以通过简单备份到密码管理器或加密 USB 驱动器来预防的。
+**共同点：** 上面每一种，只要在生成密钥的当天往密码管理器里存一份、或者在纸上抄一份，就都不会发生。
 
 </details>
 
