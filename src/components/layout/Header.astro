@@ -3,12 +3,33 @@ import { DarkModeToggleSimple } from '../ui/DarkModeToggle';
 import { LanguageSwitcher } from '../LanguageSwitcher';
 import { LogoText } from '../ui/LogoText';
 import { GuidesLink } from '../navigation/GuidesLink';
+import { siteConfig } from '../../config/site';
+import { localizedLocales, localePath, splitLocale } from '../../i18n/paths';
+// Locale passed explicitly to t(), same as Footer.astro: the header renders
+// inside Layout's slot, and this is too visible to rest on render ordering.
+import { t } from '../../i18n';
+
+const currentLocale = splitLocale(Astro.url.pathname).locale;
+
+// Both halves of every nav entry used to be literals, so a Polish reader got an
+// English word pointing at an English page — on all 105 localized URLs.
+//
+// A path gets a locale prefix ONLY where the build actually emitted one.
+// localizedLocales() is the same source of truth SEO.astro uses for hreflang:
+// /guides… ships in all seven locales, /glossary in en/pl/es/de, everything
+// else in English only. Anything it does not list keeps the English URL, which
+// is a language mismatch but a page that exists — inventing /pl/tools here
+// would add to the 106 not-found URLs Google already has for this domain.
+const localized = (path: string) =>
+  localizedLocales(path).includes(currentLocale) ? localePath(path, currentLocale) : path;
+
+const navLabel = (id: string) => t(`header.nav.${id}`, currentLocale);
 
 const navItems = [
-  { label: 'Tools', href: '/tools' },
-  { label: 'Glossary', href: '/glossary' },
-  { label: 'Resources', href: '/resources' },
-  { label: 'About', href: '/about' },
+  { label: navLabel('tools'), href: localized('/tools') },
+  { label: navLabel('glossary'), href: localized('/glossary') },
+  { label: navLabel('resources'), href: localized('/resources') },
+  { label: navLabel('about'), href: localized('/about') },
 ];
 
 // NOTE: "Client Recommender" was removed here — it pointed at /tools#client-recommender,
@@ -16,17 +37,21 @@ const navItems = [
 // rendered anywhere; see docs/audit-2026-07/market-research.md §2.3). Restore it only
 // together with a page that actually hosts the component.
 const toolItems = [
-  { label: 'Key Generator', href: '/tools/key-generator' },
-  { label: 'NIP-05 Checker', href: '/tools/nip05-checker' },
-  { label: 'Twitter Bridge', href: '/twitter-bridge' },
+  { label: t('header.tools.keyGenerator', currentLocale), href: localized('/tools/key-generator') },
+  { label: t('header.tools.nip05Checker', currentLocale), href: localized('/tools/nip05-checker') },
+  { label: t('header.tools.twitterBridge', currentLocale), href: localized('/twitter-bridge') },
 ];
+
+const progressHref = localized('/progress');
+const settingsHref = localized('/settings');
+const homeAria = t('header.aria.home', currentLocale).replace('{site}', siteConfig.name);
 ---
 
 <header class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md transition-colors duration-200" role="banner">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex h-16 items-center justify-between">
       <!-- Logo -->
-      <a href="/" class="flex items-center gap-3 group" aria-label="Nostrich.love home">
+      <a href="/" class="flex items-center gap-3 group" aria-label={homeAria}>
         <div class="w-10 h-10 transition-transform duration-200 group-hover:scale-105 flex-shrink-0">
           <img class="scale-[1.5]" src="/logo-header.png" width={40} height={40} alt="" />
         </div>
@@ -34,8 +59,8 @@ const toolItems = [
       </a>
 
       <!-- Desktop Navigation -->
-      <nav class="hidden md:flex items-center gap-1" role="navigation" aria-label="Main navigation">
-        <GuidesLink client:idle className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">Guides</GuidesLink>
+      <nav class="hidden md:flex items-center gap-1" role="navigation" aria-label={t('header.aria.mainNav', currentLocale)}>
+        <GuidesLink client:idle className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">{navLabel('guides')}</GuidesLink>
         {navItems.map((item) => (
           <a
             href={item.href}
@@ -58,7 +83,7 @@ const toolItems = [
             type="button"
             class="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             id="user-menu-button"
-            aria-label="User menu"
+            aria-label={t('header.aria.userMenu', currentLocale)}
             aria-expanded="false"
             aria-haspopup="true"
             aria-controls="user-menu-dropdown"
@@ -69,14 +94,14 @@ const toolItems = [
           </button>
           <div id="user-menu-dropdown" class="absolute top-full end-0 mt-1 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible group-[.is-open]:opacity-100 group-[.is-open]:visible group-[.is-closed]:!opacity-0 group-[.is-closed]:!invisible transition-all duration-200 z-50">
             <a
-              href="/progress"
+              href={progressHref}
               class="block px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-700 first:rounded-t-xl transition-colors"
             >
               <span class="flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
-                Progress
+                {t('header.menu.progress', currentLocale)}
               </span>
             </a>
             <!-- Badges link - TEMPORARILY HIDDEN
@@ -94,7 +119,7 @@ const toolItems = [
             -->
             <div class="border-t border-gray-200 dark:border-gray-700 my-1"></div>
             <a
-              href="/settings"
+              href={settingsHref}
               class="block px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-700 last:rounded-b-xl transition-colors"
             >
               <span class="flex items-center gap-2">
@@ -102,7 +127,7 @@ const toolItems = [
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                Settings
+                {t('header.menu.settings', currentLocale)}
               </span>
             </a>
           </div>
@@ -112,7 +137,7 @@ const toolItems = [
         <button
           type="button"
           class="md:hidden p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-          aria-label="Toggle navigation menu"
+          aria-label={t('header.aria.toggleMenu', currentLocale)}
           aria-expanded="false"
           aria-controls="mobile-menu"
           id="mobile-menu-button"
@@ -132,10 +157,10 @@ const toolItems = [
       class="md:hidden hidden border-t border-gray-200 dark:border-gray-800 py-4"
       id="mobile-menu"
       role="navigation"
-      aria-label="Mobile navigation"
+      aria-label={t('header.aria.mobileNav', currentLocale)}
     >
       <div class="flex flex-col gap-2">
-        <GuidesLink client:idle className="px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">Guides</GuidesLink>
+        <GuidesLink client:idle className="px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">{navLabel('guides')}</GuidesLink>
         {navItems.map((item) => (
           <a
             href={item.href}
@@ -147,7 +172,7 @@ const toolItems = [
         
         <!-- Tools Section -->
         <div class="border-t border-gray-200 dark:border-gray-700 my-2 pt-2">
-          <p class="px-4 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Tools</p>
+          <p class="px-4 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">{navLabel('tools')}</p>
           {toolItems.map((item) => (
             <a
               href={item.href}
@@ -161,15 +186,15 @@ const toolItems = [
         
         <!-- User Menu Items -->
         <div class="border-t border-gray-200 dark:border-gray-700 my-2 pt-2">
-          <p class="px-4 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Your Progress</p>
+          <p class="px-4 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">{t('header.menu.yourProgress', currentLocale)}</p>
           <a
-            href="/progress"
+            href={progressHref}
             class="px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-2"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
-            View Progress
+            {t('header.menu.viewProgress', currentLocale)}
           </a>
           <!-- View Badges link - TEMPORARILY HIDDEN
           <a
@@ -183,14 +208,14 @@ const toolItems = [
           </a>
           -->
           <a
-            href="/settings"
+            href={settingsHref}
             class="px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-2"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            Settings
+            {t('header.menu.settings', currentLocale)}
           </a>
         </div>
       </div>

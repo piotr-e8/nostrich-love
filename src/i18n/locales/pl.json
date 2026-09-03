@@ -3270,8 +3270,9 @@
     "backToAllGuides": "Wróć do wszystkich przewodników",
     "exploreAllGuides": "Przeglądaj wszystkie przewodniki",
     "startOfLevel": "Początek poziomu {level}",
-    "levelComplete": "{level} ukończony!",
-    "levelCompleteDescription": "Ukończyłeś wszystkie przewodniki z poziomu {level}",
+    "lastInLevel": "Ostatni przewodnik na poziomie {level}",
+    "lastInLevelDescription": "Na poziomie {level} nie ma już nic dalej. Ścieżka biegnie dalej o poziom wyżej.",
+    "lastInLevelDescriptionFinal": "Tu kończy się ścieżka przewodników. Po poziomie {level} nie ma kolejnego.",
     "continueToLevel": "Kontynuuj do {level}",
     "unlockRequirements": "Ukończ więcej przewodników z {currentLevel}, aby odblokować {nextLevel}",
     "offLevelMessage": "Ten przewodnik nie jest częścią Twojego obecnego poziomu {level}"
@@ -3307,6 +3308,33 @@
     "copyLink": "Kopiuj link",
     "sharePage": "Udostępnij tę stronę",
     "linkCopied": "Skopiowano link"
+  },
+  "header": {
+    "nav": {
+      "guides": "Przewodniki",
+      "tools": "Narzędzia",
+      "glossary": "Słownik",
+      "resources": "Materiały",
+      "about": "O nas"
+    },
+    "tools": {
+      "keyGenerator": "Generator kluczy",
+      "nip05Checker": "Weryfikator NIP-05",
+      "twitterBridge": "Most z Twittera"
+    },
+    "menu": {
+      "progress": "Postępy",
+      "yourProgress": "Twoje postępy",
+      "viewProgress": "Zobacz postępy",
+      "settings": "Ustawienia"
+    },
+    "aria": {
+      "home": "Strona główna {site}",
+      "userMenu": "Menu użytkownika",
+      "toggleMenu": "Otwórz lub zamknij menu nawigacji",
+      "mainNav": "Nawigacja główna",
+      "mobileNav": "Nawigacja mobilna"
+    }
   },
   "footer": {
     "languages": {

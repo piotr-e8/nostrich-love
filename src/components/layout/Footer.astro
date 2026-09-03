@@ -13,6 +13,12 @@ import { t } from '../../i18n';
 // every language (an acronym, a brand, a filename); everything else resolves
 // through footer.links.<id>.
 //
+// The hrefs stayed literal after that fix, which was the worse half of the bug:
+// a Polish reader saw "Słownik pojęć" pointing at /glossary, so the label
+// promised a translated page and the link delivered the English one. Every
+// internal href below now goes through localizedHref() — see its comment for
+// which routes ship locale variants and which do not.
+//
 // The `resources` group that used to live here rendered nowhere — the template
 // has four columns (learn, tools, community, about) and never read it.
 const footerLinks = {
@@ -72,8 +78,21 @@ const languageLinks = (hasRouteVariants ? routeLocales : locales).map((code) => 
   href: hasRouteVariants ? localePath(currentPath, code) : guidesIndexPath(code),
 }));
 
+// A path gets a locale prefix ONLY where the build actually emitted one.
+// localizedLocales() is the same gate the hreflang cluster above uses, so this
+// can never advertise a URL that does not exist: /guides and /guides/faq ship
+// in all seven locales, /glossary in en/pl/es/de, and /tools, /follow-pack,
+// /about, /support, /settings, /privacy, /rss.xml, /humans.txt ship in English
+// only. Those keep the English URL on purpose. A hand-built /pl/tools would
+// read nicer and 404.
+const localizedHref = (path: string) =>
+  localizedLocales(path).includes(currentLocale) ? localePath(path, currentLocale) : path;
+
 const linkLabel = (link: { id: string; label?: string }) =>
   link.label ?? t(`footer.links.${link.id}`, currentLocale);
+
+const linkHref = (link: { href: string; external?: boolean }) =>
+  link.external ? link.href : localizedHref(link.href);
 
 const externalAria = (label: string) =>
   t('footer.externalLinkAria', currentLocale).replace('{label}', label);
@@ -116,7 +135,7 @@ const externalAria = (label: string) =>
           {footerLinks.learn.map((link) => (
             <li>
               <a
-                href={link.href}
+                href={linkHref(link)}
                 class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary transition-colors"
               >
                 {linkLabel(link)}
@@ -135,7 +154,7 @@ const externalAria = (label: string) =>
           {toolLinks.map((link) => (
             <li>
               <a
-                href={link.href}
+                href={linkHref(link)}
                 class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary transition-colors"
               >
                 {linkLabel(link)}
@@ -154,7 +173,7 @@ const externalAria = (label: string) =>
           {footerLinks.community.map((link) => (
             <li>
               <a
-                href={link.href}
+                href={linkHref(link)}
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noopener noreferrer' : undefined}
                 class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary transition-colors inline-flex items-center gap-1"
@@ -178,7 +197,7 @@ const externalAria = (label: string) =>
           {footerLinks.about.map((link) => (
             <li>
               <a
-                href={link.href}
+                href={linkHref(link)}
                 class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary transition-colors"
               >
                 {linkLabel(link)}

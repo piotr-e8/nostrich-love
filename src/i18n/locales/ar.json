@@ -3361,8 +3361,9 @@
     "backToAllGuides": "العودة إلى جميع الأدلة",
     "exploreAllGuides": "استكشاف جميع الأدلة",
     "startOfLevel": "بداية مستوى {level}",
-    "levelComplete": "اكتمل {level}!",
-    "levelCompleteDescription": "لقد أكملت جميع أدلة {level}",
+    "lastInLevel": "آخر دليل في مستوى {level}",
+    "lastInLevelDescription": "لا يوجد المزيد في مستوى {level}. يكمل المسار في المستوى التالي.",
+    "lastInLevelDescriptionFinal": "هنا ينتهي مسار الأدلة. لا يوجد مستوى بعد {level}.",
     "continueToLevel": "الاستمرار إلى {level}",
     "unlockRequirements": "أكمل المزيد من أدلة {currentLevel} لفتح {nextLevel}",
     "offLevelMessage": "هذا الدليل ليس جزءاً من مستوى {level} الحالي"
@@ -3398,6 +3399,33 @@
     "copyLink": "نسخ الرابط",
     "sharePage": "مشاركة هذه الصفحة",
     "linkCopied": "تم نسخ الرابط"
+  },
+  "header": {
+    "nav": {
+      "guides": "الأدلة",
+      "tools": "الأدوات",
+      "glossary": "المسرد",
+      "resources": "المصادر",
+      "about": "عن الموقع"
+    },
+    "tools": {
+      "keyGenerator": "مولّد المفاتيح",
+      "nip05Checker": "مدقق NIP-05",
+      "twitterBridge": "جسر تويتر"
+    },
+    "menu": {
+      "progress": "التقدّم",
+      "yourProgress": "تقدّمك",
+      "viewProgress": "عرض التقدّم",
+      "settings": "الإعدادات"
+    },
+    "aria": {
+      "home": "الصفحة الرئيسية لـ {site}",
+      "userMenu": "قائمة المستخدم",
+      "toggleMenu": "فتح أو إغلاق قائمة التنقل",
+      "mainNav": "التنقل الرئيسي",
+      "mobileNav": "التنقل على الهاتف"
+    }
   },
   "footer": {
     "languages": {

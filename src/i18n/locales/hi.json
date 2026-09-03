@@ -3270,8 +3270,9 @@
     "backToAllGuides": "सभी गाइड पर वापस",
     "exploreAllGuides": "सभी गाइड देखें",
     "startOfLevel": "{level} स्तर की शुरुआत",
-    "levelComplete": "{level} पूर्ण!",
-    "levelCompleteDescription": "आपने {level} की सभी गाइड पूरी कर लीं",
+    "lastInLevel": "{level} स्तर की आखिरी गाइड",
+    "lastInLevelDescription": "{level} स्तर में इसके बाद कुछ नहीं है। रास्ता अगले स्तर पर जारी रहता है।",
+    "lastInLevelDescriptionFinal": "यहाँ गाइड का रास्ता खत्म होता है। {level} के बाद कोई स्तर नहीं है।",
     "continueToLevel": "{level} पर आगे बढ़ें",
     "unlockRequirements": "{nextLevel} अनलॉक करने के लिए {currentLevel} की और गाइड पूरी करें",
     "offLevelMessage": "यह गाइड आपके वर्तमान {level} स्तर का हिस्सा नहीं है"
@@ -3307,6 +3308,33 @@
     "copyLink": "लिंक कॉपी करें",
     "sharePage": "यह पेज साझा करें",
     "linkCopied": "लिंक कॉपी हो गया"
+  },
+  "header": {
+    "nav": {
+      "guides": "गाइड",
+      "tools": "टूल",
+      "glossary": "शब्दावली",
+      "resources": "संसाधन",
+      "about": "परिचय"
+    },
+    "tools": {
+      "keyGenerator": "कुंजी जनरेटर",
+      "nip05Checker": "NIP-05 पहचान सत्यापन",
+      "twitterBridge": "ट्विटर ब्रिज"
+    },
+    "menu": {
+      "progress": "प्रगति",
+      "yourProgress": "आपकी प्रगति",
+      "viewProgress": "प्रगति देखें",
+      "settings": "सेटिंग्स"
+    },
+    "aria": {
+      "home": "{site} होम",
+      "userMenu": "उपयोगकर्ता मेनू",
+      "toggleMenu": "नेविगेशन मेनू खोलें या बंद करें",
+      "mainNav": "मुख्य नेविगेशन",
+      "mobileNav": "मोबाइल नेविगेशन"
+    }
   },
   "footer": {
     "languages": {

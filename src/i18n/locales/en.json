@@ -3270,8 +3270,9 @@
     "backToAllGuides": "Back to All Guides",
     "exploreAllGuides": "Explore All Guides",
     "startOfLevel": "Start of {level} Level",
-    "levelComplete": "{level} Complete!",
-    "levelCompleteDescription": "You've completed all {level} guides",
+    "lastInLevel": "Last guide of the {level} level",
+    "lastInLevelDescription": "Nothing more follows in {level}. The path continues one level up.",
+    "lastInLevelDescriptionFinal": "This is the end of the guide path. There is no level after {level}.",
     "continueToLevel": "Continue to {level}",
     "unlockRequirements": "Complete more {currentLevel} guides to unlock {nextLevel}",
     "offLevelMessage": "This guide isn't part of your current {level} level"
@@ -3307,6 +3308,33 @@
     "copyLink": "Copy link",
     "sharePage": "Share this page",
     "linkCopied": "Link copied"
+  },
+  "header": {
+    "nav": {
+      "guides": "Guides",
+      "tools": "Tools",
+      "glossary": "Glossary",
+      "resources": "Resources",
+      "about": "About"
+    },
+    "tools": {
+      "keyGenerator": "Key Generator",
+      "nip05Checker": "NIP-05 Checker",
+      "twitterBridge": "Twitter Bridge"
+    },
+    "menu": {
+      "progress": "Progress",
+      "yourProgress": "Your Progress",
+      "viewProgress": "View Progress",
+      "settings": "Settings"
+    },
+    "aria": {
+      "home": "{site} home",
+      "userMenu": "User menu",
+      "toggleMenu": "Toggle navigation menu",
+      "mainNav": "Main navigation",
+      "mobileNav": "Mobile navigation"
+    }
   },
   "footer": {
     "languages": {

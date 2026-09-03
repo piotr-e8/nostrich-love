@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Milestone } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { SKILL_LEVELS, type SkillLevel, getGuideLevel } from '../../data/learning-paths';
 import { useTranslation } from '../../hooks/useTranslation';
@@ -26,7 +26,12 @@ interface GuideNavigationProps {
 interface NavigationState {
   prevGuide: GuideInfo | null;
   nextGuide: GuideInfo | null;
-  isLevelComplete: boolean;
+  /**
+   * The current guide is the last one in its level's sequence. This is a
+   * statement about position, never about what the reader has read — this
+   * component has no access to progress, see the note on the render below.
+   */
+  isLastInLevel: boolean;
   showOffLevelMessage: boolean;
   currentLevel: SkillLevel;
   nextLevel: SkillLevel | null;
@@ -64,7 +69,7 @@ function computeNavigation(
   const base: NavigationState = {
     prevGuide: null,
     nextGuide: null,
-    isLevelComplete: false,
+    isLastInLevel: false,
     showOffLevelMessage: false,
     currentLevel: 'beginner',
     nextLevel: null,
@@ -82,9 +87,9 @@ function computeNavigation(
   });
 
   const prevGuide = currentIndex > 0 ? toGuideInfo(sequence[currentIndex - 1]) : null;
-  const isLevelComplete = currentIndex === sequence.length - 1;
+  const isLastInLevel = currentIndex === sequence.length - 1;
 
-  if (!isLevelComplete) {
+  if (!isLastInLevel) {
     return {
       ...base,
       currentLevel: guideLevel,
@@ -99,7 +104,7 @@ function computeNavigation(
     ...base,
     currentLevel: guideLevel,
     prevGuide,
-    isLevelComplete: true,
+    isLastInLevel: true,
     nextLevel,
     nextLevelFirstGuide: nextLevel ? SKILL_LEVELS[nextLevel].sequence[0] : null,
   };
@@ -124,7 +129,7 @@ export function GuideNavigation({
   const {
     prevGuide,
     nextGuide,
-    isLevelComplete,
+    isLastInLevel,
     showOffLevelMessage,
     currentLevel,
     nextLevel,
@@ -155,19 +160,31 @@ export function GuideNavigation({
     );
   }
 
-  // Level complete celebration with level boundary handling
-  if (isLevelComplete) {
+  // End of the level's sequence: a signpost, not a celebration.
+  //
+  // This renders as static HTML with no client directive (see the comment at
+  // the call site in src/pages/[...lang]/guides/[slug].astro), so it is
+  // identical for every visitor and knows nothing about who has read what.
+  // It therefore states position only. Congratulating a reader on finishing a
+  // level is ContinueLearning's job — that one reads stored progress, and it
+  // sits on the same page, so any claim made here would contradict it for a
+  // reader who arrived on this guide from search.
+  if (isLastInLevel) {
     return (
       <div className={cn('border-t border-gray-200 dark:border-gray-800 pt-8 mt-12', className)}>
-        <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-2xl p-8 text-center mb-8">
-          <div className="text-4xl mb-4">🎉</div>
+        <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 p-8 text-center mb-8">
+          <Milestone className="w-8 h-8 mx-auto mb-4 text-gray-400 dark:text-gray-500 rtl:-scale-x-100" aria-hidden="true" />
           <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            {t('guideNavigation.levelComplete').replace('{level}', t(`skillLevels.${currentLevel}.label`) || '')}
+            {t('guideNavigation.lastInLevel').replace('{level}', t(`skillLevels.${currentLevel}.label`) || '')}
           </h3>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
-            {t('guideNavigation.levelCompleteDescription').replace('{level}', t(`skillLevels.${currentLevel}.label`) || '')}
+            {t(
+              nextLevel
+                ? 'guideNavigation.lastInLevelDescription'
+                : 'guideNavigation.lastInLevelDescriptionFinal'
+            ).replace('{level}', t(`skillLevels.${currentLevel}.label`) || '')}
           </p>
-          
+
           {/* Level gating was removed wholesale, so the next level is always
               reachable — there is no locked variant to render any more. */}
           {nextLevelFirstGuide && nextLevel && (

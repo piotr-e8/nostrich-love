@@ -3270,8 +3270,9 @@
     "backToAllGuides": "Zurück zu allen Guides",
     "exploreAllGuides": "Alle Guides erkunden",
     "startOfLevel": "Start des {level}-Levels",
-    "levelComplete": "{level} abgeschlossen!",
-    "levelCompleteDescription": "Du hast alle {level}-Guides abgeschlossen",
+    "lastInLevel": "Letzter Guide im {level}-Level",
+    "lastInLevelDescription": "Im {level}-Level folgt nichts mehr. Der Weg geht ein Level höher weiter.",
+    "lastInLevelDescriptionFinal": "Hier endet der Guide-Pfad. Nach {level} kommt kein weiteres Level.",
     "continueToLevel": "Weiter zu {level}",
     "unlockRequirements": "Schließe weitere {currentLevel}-Guides ab, um {nextLevel} freizuschalten",
     "offLevelMessage": "Dieser Guide ist nicht Teil deines aktuellen {level}-Levels"
@@ -3307,6 +3308,33 @@
     "copyLink": "Link kopieren",
     "sharePage": "Diese Seite teilen",
     "linkCopied": "Link kopiert"
+  },
+  "header": {
+    "nav": {
+      "guides": "Guides",
+      "tools": "Werkzeuge",
+      "glossary": "Glossar",
+      "resources": "Ressourcen",
+      "about": "Über uns"
+    },
+    "tools": {
+      "keyGenerator": "Schlüssel-Generator",
+      "nip05Checker": "NIP-05-Prüfer",
+      "twitterBridge": "Twitter-Brücke"
+    },
+    "menu": {
+      "progress": "Fortschritt",
+      "yourProgress": "Dein Fortschritt",
+      "viewProgress": "Fortschritt ansehen",
+      "settings": "Einstellungen"
+    },
+    "aria": {
+      "home": "Startseite von {site}",
+      "userMenu": "Benutzermenü",
+      "toggleMenu": "Navigationsmenü öffnen oder schließen",
+      "mainNav": "Hauptnavigation",
+      "mobileNav": "Mobile Navigation"
+    }
   },
   "footer": {
     "languages": {

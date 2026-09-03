@@ -1877,8 +1877,9 @@
     "backToAllGuides": "返回所有指南",
     "exploreAllGuides": "探索所有指南",
     "startOfLevel": "{level} 等级开始",
-    "levelComplete": "{level} 完成！",
-    "levelCompleteDescription": "你已完成所有 {level} 指南",
+    "lastInLevel": "{level} 等级的最后一篇指南",
+    "lastInLevelDescription": "{level} 等级到此为止，路径在下一个等级继续。",
+    "lastInLevelDescriptionFinal": "指南路径到此结束，{level} 之后没有更高的等级。",
     "continueToLevel": "继续到 {level}",
     "unlockRequirements": "完成更多 {currentLevel} 指南以解锁 {nextLevel}",
     "offLevelMessage": "本指南不属于你当前的 {level} 等级"
@@ -1914,6 +1915,33 @@
     "copyLink": "复制链接",
     "sharePage": "分享此页面",
     "linkCopied": "链接已复制"
+  },
+  "header": {
+    "nav": {
+      "guides": "指南",
+      "tools": "工具",
+      "glossary": "术语表",
+      "resources": "资源",
+      "about": "关于"
+    },
+    "tools": {
+      "keyGenerator": "密钥生成器",
+      "nip05Checker": "NIP-05 检查器",
+      "twitterBridge": "推特迁移桥"
+    },
+    "menu": {
+      "progress": "进度",
+      "yourProgress": "你的进度",
+      "viewProgress": "查看进度",
+      "settings": "设置"
+    },
+    "aria": {
+      "home": "{site} 首页",
+      "userMenu": "用户菜单",
+      "toggleMenu": "打开或关闭导航菜单",
+      "mainNav": "主导航",
+      "mobileNav": "移动端导航"
+    }
   },
   "footer": {
     "languages": {
