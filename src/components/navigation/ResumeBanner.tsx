@@ -71,7 +71,6 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
 
   const levelConfig = SKILL_LEVELS[currentLevel];
   const levelLabel = levelConfig?.label || 'Your Level';
-  const levelIcon = levelConfig?.icon || '📚';
 
   // Calculate time since last viewed
   const timeSince = Date.now() - lastViewed.timestamp;
@@ -95,7 +94,7 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
   return (
     <div
       className={cn(
-        'w-full bg-gradient-to-r from-primary/10 via-primary/5 to-secondary/10 dark:from-primary/20 dark:via-primary/10 dark:to-secondary/20 border-b border-primary/20',
+        'w-full border-b border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900',
         className
       )}
     >
@@ -105,15 +104,10 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
           the first screen. Everything hidden here is on /progress. */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-4">
         <div className="flex items-center gap-3 sm:gap-4">
-          {/* Level icon */}
-          <div className="flex-shrink-0 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-primary/20 flex items-center justify-center text-xl sm:text-2xl">
-            {levelIcon}
-          </div>
-
           <div className="flex-1 min-w-0">
             {/* Greeting — desktop only */}
             <div className="hidden sm:flex items-center gap-2 flex-wrap">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <h2 className="text-h3 text-gray-900 dark:text-white">
                 Welcome back!
               </h2>
               <span className="text-sm text-gray-500 dark:text-gray-400">
@@ -123,14 +117,14 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
 
             {/* Last viewed guide — the one line that stays on mobile */}
             <div className="flex items-center gap-2 text-sm min-w-0 sm:mt-2">
-              <BookOpen className="w-4 h-4 flex-shrink-0 text-primary-600 dark:text-primary-400" />
+              <BookOpen className="w-4 h-4 flex-shrink-0 text-gray-400 dark:text-gray-500" strokeWidth={1.5} aria-hidden="true" />
               <span className="text-gray-700 dark:text-gray-300 truncate">
                 You were reading:{' '}
                 <strong className="text-gray-900 dark:text-white">{lastViewed.title}</strong>
               </span>
               <span className="hidden sm:inline text-gray-400 dark:text-gray-500">•</span>
               <span className="hidden sm:flex text-gray-400 dark:text-gray-500 items-center gap-1 whitespace-nowrap">
-                <Clock className="w-3 h-3" />
+                <Clock className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                 {timeText}
               </span>
             </div>
@@ -138,9 +132,9 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
             {/* Progress bar — desktop only */}
             {progressPercentage > 0 && (
               <div className="hidden sm:flex mt-3 items-center gap-3">
-                <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                <div className="flex-1 h-1.5 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-primary rounded-full transition-all duration-300"
+                    className="h-full bg-primary-600 rounded-full transition-[width] duration-300 motion-reduce:transition-none"
                     style={{ width: `${progressPercentage}%` }}
                   />
                 </div>
@@ -159,18 +153,18 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
           {/* Actions */}
           <button
             onClick={handleResume}
-            className="flex-shrink-0 inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors"
+            className="flex-shrink-0 inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-md transition-colors"
           >
             Resume
-            <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+            <ArrowRight className="w-4 h-4 rtl:rotate-180" strokeWidth={1.5} aria-hidden="true" />
           </button>
 
           <button
             onClick={handleViewProgress}
-            className="hidden sm:inline-flex flex-shrink-0 items-center justify-center gap-2 px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="hidden sm:inline-flex flex-shrink-0 items-center justify-center gap-2 px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
             View Progress
-            <ChevronRight className="w-4 h-4 rtl:rotate-180" />
+            <ChevronRight className="w-4 h-4 rtl:rotate-180" strokeWidth={1.5} aria-hidden="true" />
           </button>
 
           {/* Dismiss — a plain flex item. It used to be absolutely positioned
@@ -178,10 +172,10 @@ export function ResumeBanner({ className }: ResumeBannerProps) {
               on mobile: invisible, and the tap hit the header. */}
           <button
             onClick={handleDismiss}
-            className="flex-shrink-0 p-1.5 sm:p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="flex-shrink-0 p-1.5 sm:p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             aria-label="Dismiss"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
           </button>
         </div>
       </div>

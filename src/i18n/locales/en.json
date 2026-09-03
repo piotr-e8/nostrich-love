@@ -3275,7 +3275,8 @@
     "lastInLevelDescriptionFinal": "This is the end of the guide path. There is no level after {level}.",
     "continueToLevel": "Continue to {level}",
     "unlockRequirements": "Complete more {currentLevel} guides to unlock {nextLevel}",
-    "offLevelMessage": "This guide isn't part of your current {level} level"
+    "offLevelMessage": "This guide isn't part of your current {level} level",
+    "aria": "Guide navigation"
   },
   "continueLearning": {
     "allLevelsComplete": "All Levels Complete!",

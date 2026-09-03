@@ -295,49 +295,49 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
   };
 
   return (
-    <div className={cn("rounded-2xl border border-gray-200 bg-white p-6 shadow-lg dark:border-gray-800 dark:bg-gray-900", className)}>
+    <div className={cn("rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900", className)}>
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-2">
-          <Newspaper className="h-6 w-6 text-orange-500" />
-          <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+          <Newspaper className="h-6 w-6 text-gray-400 dark:text-gray-500" strokeWidth={1.5} aria-hidden="true" />
+          <h3 className="text-h3 text-gray-900 dark:text-gray-100">
             {t("relayFeedBrowser.title")}
           </h3>
         </div>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-body-sm text-gray-600 dark:text-gray-400">
           {t("relayFeedBrowser.subtitle")}
         </p>
       </div>
 
       {viewingRelay && (
-        <div className="mb-6 border border-orange-200 dark:border-orange-900 rounded-xl overflow-hidden">
-          <div className="p-4 bg-orange-100 dark:bg-orange-950">
+        <div className="mb-6 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
+          <div className="bg-gray-50 p-4 dark:bg-gray-800">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-3">
-                <Eye className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+                <Eye className="h-5 w-5 text-gray-400 dark:text-gray-500" strokeWidth={1.5} aria-hidden="true" />
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-gray-100">{viewingRelay.name}</h4>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-caption text-gray-500 dark:text-gray-400">
                     {t("relayFeedBrowser.eventCount").replace("{count}", String(events.length))}
                   </p>
                 </div>
               </div>
-              <button onClick={stopViewing} className="p-2 hover:bg-orange-200 dark:hover:bg-orange-900 rounded-lg">
-                <X className="h-4 w-4 text-gray-700 dark:text-gray-300" />
+              <button onClick={stopViewing} className="rounded-md p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-700">
+                <X className="h-4 w-4 text-gray-700 dark:text-gray-300" strokeWidth={1.5} aria-hidden="true" />
               </button>
             </div>
-            <div className="flex items-center gap-2 bg-white dark:bg-gray-900 px-3 py-2 rounded-lg">
-              <code className="flex-1 text-xs text-gray-600 dark:text-gray-400 font-mono truncate">{viewingRelay.url}</code>
-              <button onClick={handleCopyUrl} className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition-colors" title={t("relayFeedBrowser.copyUrl")}>
-                {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4 text-gray-500 dark:text-gray-400" />}
+            <div className="flex items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-2 dark:border-gray-800 dark:bg-gray-900">
+              <code className="flex-1 text-caption text-gray-600 dark:text-gray-400 font-mono truncate">{viewingRelay.url}</code>
+              <button onClick={handleCopyUrl} className="rounded-md p-1.5 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800" title={t("relayFeedBrowser.copyUrl")}>
+                {copied ? <Check className="h-4 w-4 text-success-700 dark:text-success-400" strokeWidth={1.5} aria-hidden="true" /> : <Copy className="h-4 w-4 text-gray-500 dark:text-gray-400" strokeWidth={1.5} aria-hidden="true" />}
               </button>
             </div>
             {error && (
-              <div className="mt-2 flex items-start gap-2 text-sm text-red-600 dark:text-red-400">
-                <AlertCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />
+              <div className="mt-2 flex items-start gap-2 text-body-sm text-error-800 dark:text-error-300">
+                <AlertCircle className="h-4 w-4 flex-shrink-0 mt-0.5" strokeWidth={1.5} aria-hidden="true" />
                 <span>
                   {t(`relayFeedBrowser.errors.${error.code}`)}
                   {error.detail && (
-                    <span className="mt-1 block break-all font-mono text-xs text-gray-600 dark:text-gray-400">
+                    <span className="mt-1 block break-all font-mono text-caption text-gray-600 dark:text-gray-400">
                       {error.detail}
                     </span>
                   )}
@@ -348,31 +348,31 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
           <div className="max-h-[400px] overflow-y-auto bg-white dark:bg-gray-900">
             {isLoading ? (
               <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-8 w-8 animate-spin text-orange-500" />
+                <Loader2 className="h-6 w-6 animate-spin text-gray-400 dark:text-gray-500" strokeWidth={1.5} aria-hidden="true" />
               </div>
             ) : (
               <>
-                <div className="divide-y dark:divide-gray-800">
+                <div className="divide-y divide-gray-200 dark:divide-gray-800">
                   {events.map((evt, idx) => (
                     <div key={idx} className="p-4 hover:bg-gray-50 dark:hover:bg-gray-800">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="px-2 py-0.5 bg-orange-100 dark:bg-orange-950 text-xs rounded-full text-orange-800 dark:text-orange-300">
+                        <span className="rounded-md border border-gray-200 px-2 py-0.5 text-caption text-gray-600 dark:border-gray-800 dark:text-gray-400">
                           {evt.event.pubkey.slice(0, 8)}...
                         </span>
-                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                        <span className="text-caption text-gray-500 dark:text-gray-400">
                           {new Date(evt.event.created_at * 1000).toLocaleTimeString()}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-800 dark:text-gray-200">{evt.event.content}</p>
+                      <p className="text-body-sm text-gray-800 dark:text-gray-200">{evt.event.content}</p>
                     </div>
                   ))}
                 </div>
                 {events.length > 0 && hasMore && (
                   <div className="p-4 border-t dark:border-gray-800">
-                    <button onClick={handleLoadMore} disabled={isLoadingMore} className="w-full py-2 px-4 bg-orange-100 dark:bg-orange-950 text-orange-700 dark:text-orange-300 rounded-lg hover:bg-orange-200 dark:hover:bg-orange-900 transition-colors disabled:opacity-50 flex items-center justify-center gap-2">
+                    <button onClick={handleLoadMore} disabled={isLoadingMore} className="flex w-full items-center justify-center gap-2 rounded-md border border-gray-200 px-4 py-2 text-body-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800">
                       {isLoadingMore ? (
                         <>
-                          <Loader2 className="h-4 w-4 animate-spin" />
+                          <Loader2 className="h-4 w-4 animate-spin" strokeWidth={1.5} aria-hidden="true" />
                           <span>{t("relayFeedBrowser.loading")}</span>
                         </>
                       ) : (
@@ -388,9 +388,9 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
       )}
 
       <div className="flex flex-wrap gap-2 mb-6">
-        <button onClick={() => setSelectedCategory("all")} className={cn("px-3 py-1.5 rounded-full text-sm font-medium transition-colors", selectedCategory === "all" ? "bg-orange-500 text-white" : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700")}>{t("relayFeedBrowser.allCategories")}</button>
+        <button onClick={() => setSelectedCategory("all")} className={cn("rounded-md px-3 py-1.5 text-body-sm font-medium transition-colors", selectedCategory === "all" ? "bg-primary-600 text-white" : "border border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800")}>{t("relayFeedBrowser.allCategories")}</button>
         {RELAY_CATEGORIES.map((category) => (
-          <button key={category.id} onClick={() => setSelectedCategory(category.id)} className={cn("px-3 py-1.5 rounded-full text-sm font-medium transition-colors", selectedCategory === category.id ? "bg-orange-500 text-white" : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700")}>
+          <button key={category.id} onClick={() => setSelectedCategory(category.id)} className={cn("rounded-md px-3 py-1.5 text-body-sm font-medium transition-colors", selectedCategory === category.id ? "bg-primary-600 text-white" : "border border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800")}>
             {category.label}
           </button>
         ))}
@@ -398,27 +398,26 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
 
       <div className="grid gap-3">
         {filteredRelays.map((relay) => (
-          <div key={relay.id} className="p-4 border border-gray-200 dark:border-gray-800 rounded-xl flex items-center justify-between bg-white dark:bg-gray-900">
+          <div key={relay.id} className="p-4 border border-gray-200 dark:border-gray-800 rounded-lg flex items-center justify-between bg-white dark:bg-gray-900">
             <div>
               <h5 className="font-semibold text-gray-900 dark:text-gray-100">{relay.name}</h5>
-              <p className="text-sm text-gray-600 dark:text-gray-400">{relay.description}</p>
+              <p className="text-body-sm text-gray-600 dark:text-gray-400">{relay.description}</p>
             </div>
             <button
               type="button"
               onClick={() => handleViewFeed(relay)}
               disabled={viewingRelay?.id === relay.id && isLoading}
               className={cn(
-                "px-3 py-2 rounded-lg text-sm font-medium transition-colors",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                "rounded-md px-3 py-2 text-body-sm font-medium transition-colors",
                 viewingRelay?.id === relay.id
-                  ? "bg-orange-500 text-white"
-                  : "bg-orange-100 dark:bg-orange-950 text-orange-700 dark:text-orange-300 hover:bg-orange-200 dark:hover:bg-orange-900",
+                  ? "bg-primary-600 text-white"
+                  : "border border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800",
               )}
             >
               {/* The spinner belongs to the request, not to the selection: once
                   the feed has loaded the button goes back to being pressable. */}
               {viewingRelay?.id === relay.id && isLoading ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin" strokeWidth={1.5} aria-hidden="true" />
               ) : (
                 t("relayFeedBrowser.viewFeed")
               )}

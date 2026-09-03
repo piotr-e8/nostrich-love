@@ -23,22 +23,36 @@ export function NIP({
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        "flex items-start gap-4 p-4 bg-white dark:bg-gray-800/30 border border-gray-200 dark:border-gray-700 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:border-primary-500/50 transition-all group",
+        "group flex items-start gap-4 rounded-lg border border-gray-200 bg-white p-4 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700 dark:hover:bg-gray-800",
         className,
       )}
     >
-      <div className="w-12 h-12 rounded-xl bg-primary-500/20 flex items-center justify-center flex-shrink-0">
-        <FileText className="w-6 h-6 text-primary-600 dark:text-primary-400" />
-      </div>
+      <FileText
+        className="mt-0.5 h-5 w-5 flex-shrink-0 text-gray-400 dark:text-gray-500"
+        strokeWidth={1.5}
+        aria-hidden="true"
+      />
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-xs font-mono text-primary-600 dark:text-primary-400 bg-primary-500/10 px-2 py-0.5 rounded">
+          <span className="rounded-md border border-gray-200 px-2 py-0.5 font-mono text-caption text-primary-text dark:border-gray-800 dark:text-primary-400">
             NIP-{number.toString().padStart(2, "0")}
           </span>
-          <ExternalLink className="w-3 h-3 text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <ExternalLink
+            className="h-4 w-4 text-gray-400 dark:text-gray-500"
+            strokeWidth={1.5}
+            aria-hidden="true"
+          />
         </div>
-        {title && <h4 className="font-semibold text-gray-900 dark:text-white mb-1">{title}</h4>}
-        {description && <p className="text-sm text-gray-600 dark:text-gray-400">{description}</p>}
+        {title && (
+          <h4 className="mb-1 text-h4 font-semibold text-gray-900 dark:text-white">
+            {title}
+          </h4>
+        )}
+        {description && (
+          <p className="text-body-sm text-gray-600 dark:text-gray-400">
+            {description}
+          </p>
+        )}
       </div>
     </a>
   );

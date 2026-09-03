@@ -47,19 +47,19 @@ export function PrerequisiteWarning({ prerequisites, className }: PrerequisiteWa
   return (
     <div
       className={cn(
-        "border rounded-xl p-4 my-6 bg-amber-500/10 border-amber-500/30",
+        "my-6 rounded-lg border border-warning-200 bg-warning-50 p-4 dark:border-warning-900 dark:bg-warning-950",
         className
       )}
     >
       <div className="flex gap-3">
-        <div className="flex-shrink-0 mt-0.5 text-amber-500">
-          <AlertTriangle className="w-5 h-5" />
+        <div className="mt-0.5 flex-shrink-0 text-warning-600 dark:text-warning-400">
+          <AlertTriangle className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
         </div>
         <div className="flex-1">
-          <h4 className="font-semibold mb-2 text-amber-400">
+          <h4 className="mb-2 text-h4 font-semibold text-warning-900 dark:text-warning-100">
             Prerequisites Recommended
           </h4>
-          <p className="text-gray-300 text-sm mb-3">
+          <p className="mb-3 text-body-sm text-gray-700 dark:text-gray-300">
             This guide builds on concepts from the following guides. We recommend completing them first:
           </p>
           <ul className="space-y-2">
@@ -68,17 +68,25 @@ export function PrerequisiteWarning({ prerequisites, className }: PrerequisiteWa
               return (
                 <li key={prereq.slug} className="flex items-center gap-2">
                   {isCompleted ? (
-                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                    <CheckCircle
+                      className="h-4 w-4 flex-shrink-0 text-success-700 dark:text-success-400"
+                      strokeWidth={1.5}
+                      aria-hidden="true"
+                    />
                   ) : (
-                    <BookOpen className="w-4 h-4 text-amber-500 flex-shrink-0" />
+                    <BookOpen
+                      className="h-4 w-4 flex-shrink-0 text-warning-600 dark:text-warning-400"
+                      strokeWidth={1.5}
+                      aria-hidden="true"
+                    />
                   )}
                   <a
                     href={guidePathFromLocation(prereq.slug)}
                     className={cn(
-                      "text-sm hover:underline transition-colors",
+                      "text-body-sm underline-offset-2 transition-colors hover:underline",
                       isCompleted
-                        ? "text-green-400 line-through opacity-70"
-                        : "text-amber-400 hover:text-amber-300"
+                        ? "text-gray-500 line-through dark:text-gray-400"
+                        : "text-primary-text dark:text-primary-400"
                     )}
                   >
                     {prereq.title}

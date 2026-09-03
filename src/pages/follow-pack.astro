@@ -34,22 +34,18 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
 
   <main id="main-content">
     <!-- Hero Section -->
-    <section class="relative overflow-hidden bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 dark:from-primary/10 dark:to-secondary/10">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 relative">
+    <section class="border-b border-gray-200 dark:border-gray-800">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div class="max-w-4xl mx-auto text-center">
-          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary-700 dark:text-primary-300 text-sm font-medium mb-6">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
+          <p class="text-micro uppercase text-gray-500 dark:text-gray-400 mb-4">
             The last step of the guide
-          </div>
+          </p>
 
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-            You made an account. Now
-            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"> fill the feed </span>
+          <h1 class="text-display font-bold text-gray-900 dark:text-white mb-6">
+            You made an account. Now fill the feed
           </h1>
 
-          <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+          <p class="text-lead text-gray-600 dark:text-gray-300 mb-8 max-w-measure mx-auto">
             {accountCount} hand-checked Nostr accounts, sorted into {categoryCount} categories.
             A starter set of {categoryCounts.jumpstart} essentials, then photographers,
             homesteaders, musicians, shops that take Lightning. Tick the ones that look
@@ -57,17 +53,23 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
             scan a QR code.
           </p>
 
-          <div class="flex flex-wrap justify-center gap-4 text-sm">
+          <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-body-sm">
             <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 flex items-center justify-center text-xs" aria-hidden="true">✓</span>
+              <svg class="h-4 w-4 shrink-0 text-success-600 dark:text-success-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+              </svg>
               Free, no registration
             </div>
             <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 flex items-center justify-center text-xs" aria-hidden="true">✓</span>
+              <svg class="h-4 w-4 shrink-0 text-success-600 dark:text-success-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+              </svg>
               Works with every client
             </div>
             <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 flex items-center justify-center text-xs" aria-hidden="true">✓</span>
+              <svg class="h-4 w-4 shrink-0 text-success-600 dark:text-success-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+              </svg>
               Nothing is published unless you ask
             </div>
           </div>
@@ -76,14 +78,14 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
     </section>
 
     <!-- Why this page exists -->
-    <section class="py-12 lg:py-16 bg-white dark:bg-gray-800">
+    <section class="py-12 lg:py-16">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 class="text-h2 font-bold text-gray-900 dark:text-white mb-4">
             An empty feed is the number one reason beginners quit
           </h2>
 
-          <div class="space-y-4 text-gray-600 dark:text-gray-300">
+          <div class="space-y-4 text-body text-gray-600 dark:text-gray-300">
             <p>
               Nostr has no algorithm deciding what you see. That is the point, and it is also
               why the first five minutes feel broken. You sign up, open a client, and the
@@ -102,17 +104,17 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
           </div>
 
           <div class="mt-8 grid sm:grid-cols-3 gap-4">
-            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700">
-              <p class="text-2xl font-bold text-gray-900 dark:text-white">{accountCount}</p>
-              <p class="text-sm text-gray-600 dark:text-gray-400">curated accounts</p>
+            <div class="p-4 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
+              <p class="font-display text-h2 font-bold text-gray-900 dark:text-white">{accountCount}</p>
+              <p class="text-caption text-gray-600 dark:text-gray-400">curated accounts</p>
             </div>
-            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700">
-              <p class="text-2xl font-bold text-gray-900 dark:text-white">{categoryCount}</p>
-              <p class="text-sm text-gray-600 dark:text-gray-400">categories, all populated</p>
+            <div class="p-4 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
+              <p class="font-display text-h2 font-bold text-gray-900 dark:text-white">{categoryCount}</p>
+              <p class="text-caption text-gray-600 dark:text-gray-400">categories, all populated</p>
             </div>
-            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700">
-              <p class="text-2xl font-bold text-gray-900 dark:text-white">20-50</p>
-              <p class="text-sm text-gray-600 dark:text-gray-400">a good first pack</p>
+            <div class="p-4 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
+              <p class="font-display text-h2 font-bold text-gray-900 dark:text-white">20-50</p>
+              <p class="text-caption text-gray-600 dark:text-gray-400">a good first pack</p>
             </div>
           </div>
         </div>
@@ -120,13 +122,13 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
     </section>
 
     <!-- Browse by category (server-rendered: real ids, real counts) -->
-    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
+    <section class="py-16">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-5xl mx-auto">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+          <h2 class="text-h2 font-bold text-gray-900 dark:text-white mb-2">
             Browse by category
           </h2>
-          <p class="text-gray-600 dark:text-gray-400 mb-10">
+          <p class="text-body text-gray-600 dark:text-gray-400 mb-10">
             Every category below has accounts in it, and the number tells you how many. Pick one
             to open the finder pre-filtered, or scroll on and search the whole set.
           </p>
@@ -135,34 +137,31 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
             {groups.map(group => (
               <div>
                 <div class="mb-4">
-                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                  <h3 class="text-h3 font-bold text-gray-900 dark:text-white">
                     {group.name}
-                    <span class="ms-2 text-sm font-normal text-gray-500 dark:text-gray-400">
+                    <span class="ms-2 text-caption font-normal text-gray-500 dark:text-gray-400">
                       {group.count} accounts
                     </span>
                   </h3>
-                  <p class="text-sm text-gray-600 dark:text-gray-400">{group.description}</p>
+                  <p class="text-body-sm text-gray-600 dark:text-gray-400">{group.description}</p>
                 </div>
 
                 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {group.categories.map(category => (
                     <a
                       href={`/follow-pack?category=${category.id}#find`}
-                      class="group block p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary/60 hover:shadow-sm transition-all"
+                      class="block p-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800"
                     >
                       <div class="flex items-start justify-between gap-3">
                         <div class="min-w-0">
-                          <p class="font-semibold text-gray-900 dark:text-white group-hover:text-primary-700 dark:group-hover:text-primary-300 transition-colors">
+                          <p class="font-semibold text-gray-900 dark:text-white">
                             {category.name}
                           </p>
-                          <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                          <p class="mt-1 text-body-sm text-gray-600 dark:text-gray-400">
                             {category.description}
                           </p>
                         </div>
-                        <span
-                          class="flex-shrink-0 px-2 py-1 rounded-full text-xs font-semibold text-white"
-                          style={`background-color: ${category.color}`}
-                        >
+                        <span class="flex-shrink-0 px-2 py-1 rounded-full text-caption font-semibold text-gray-600 bg-gray-100 dark:text-gray-300 dark:bg-gray-800">
                           {category.count}
                         </span>
                       </div>
@@ -177,13 +176,13 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
     </section>
 
     <!-- Main Tool Section -->
-    <section id="find" class="py-8 lg:py-12 bg-white dark:bg-gray-800 scroll-mt-20">
+    <section id="find" class="py-8 lg:py-12 bg-gray-50 dark:bg-gray-900 scroll-mt-20">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+          <h2 class="text-h2 font-bold text-gray-900 dark:text-white mb-2">
             Pick your accounts
           </h2>
-          <p class="text-gray-600 dark:text-gray-400 mb-6">
+          <p class="text-body text-gray-600 dark:text-gray-400 mb-6">
             Filter by category or search all {accountCount} of them. Your picks are remembered
             in this browser, so you can come back and finish later.
           </p>
@@ -193,42 +192,36 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
     </section>
 
     <!-- How It Works -->
-    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
+    <section class="py-16">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-12">
+          <h2 class="text-h2 font-bold text-gray-900 dark:text-white text-center mb-12">
             How it works
           </h2>
 
           <div class="grid md:grid-cols-3 gap-8">
             <div class="text-center">
-              <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-primary/10 flex items-center justify-center">
-                <span class="text-2xl" aria-hidden="true">1️⃣</span>
-              </div>
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Browse and select</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-400">
+              <p class="mb-2 text-micro uppercase text-gray-500 dark:text-gray-400" aria-hidden="true">1</p>
+              <h3 class="text-h3 font-bold text-gray-900 dark:text-white mb-2">Browse and select</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 Filter {accountCount} accounts by category, then hit "Follow" on the ones you
                 find interesting. Nothing happens on the network yet.
               </p>
             </div>
 
             <div class="text-center">
-              <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-secondary/10 flex items-center justify-center">
-                <span class="text-2xl" aria-hidden="true">2️⃣</span>
-              </div>
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Build your pack</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-400">
+              <p class="mb-2 text-micro uppercase text-gray-500 dark:text-gray-400" aria-hidden="true">2</p>
+              <h3 class="text-h3 font-bold text-gray-900 dark:text-white mb-2">Build your pack</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 Aim for 20-50 accounts across a few categories. The sidebar shows the mix you
                 have picked so far.
               </p>
             </div>
 
             <div class="text-center">
-              <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-green-100 dark:bg-green-900/20 flex items-center justify-center">
-                <span class="text-2xl" aria-hidden="true">3️⃣</span>
-              </div>
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Export and import</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-400">
+              <p class="mb-2 text-micro uppercase text-gray-500 dark:text-gray-400" aria-hidden="true">3</p>
+              <h3 class="text-h3 font-bold text-gray-900 dark:text-white mb-2">Export and import</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 Take a QR code, a plain npub list, or a NIP-02 file into Amethyst, Damus,
                 Coracle, Primal or any other client.
               </p>
@@ -239,42 +232,42 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
     </section>
 
     <!-- FAQ Section -->
-    <section class="py-16 bg-white dark:bg-gray-800">
+    <section class="py-16 border-t border-gray-200 dark:border-gray-800">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-8">
+          <h2 class="text-h2 font-bold text-gray-900 dark:text-white text-center mb-8">
             Frequently asked questions
           </h2>
 
           <div class="space-y-4">
-            <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Is this free to use?</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">
+            <div class="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+              <h3 class="text-h4 font-bold text-gray-900 dark:text-white mb-2">Is this free to use?</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 Yes. No registration, no account, no tracking. It exists because the empty
                 first feed is where most newcomers give up.
               </p>
             </div>
 
-            <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">How do I import into my client?</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">
+            <div class="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+              <h3 class="text-h4 font-bold text-gray-900 dark:text-white mb-2">How do I import into my client?</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 Copy the npub list and paste it into the client's "Import follows" feature.
                 Or publish the pack and scan its QR code. Works with Amethyst, Damus,
                 Coracle, Primal and more.
               </p>
             </div>
 
-            <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">How many accounts should I follow?</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">
+            <div class="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+              <h3 class="text-h4 font-bold text-gray-900 dark:text-white mb-2">How many accounts should I follow?</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 Start with 20-50. That is enough for a feed that moves without being
                 overwhelming, and you will find more people on your own once you are in.
               </p>
             </div>
 
-            <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Who curated these accounts, and how?</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">
+            <div class="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+              <h3 class="text-h4 font-bold text-gray-900 dark:text-white mb-2">Who curated these accounts, and how?</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 The list was assembled from public Nostr follow packs, then checked by hand for
                 activity and topic fit: {accountCount} accounts across {categoryCount}
                 categories. It is a starting point, not a ranking. No vetting authority stands
@@ -283,18 +276,18 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
               </p>
             </div>
 
-            <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Will my selections be saved?</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">
+            <div class="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+              <h3 class="text-h4 font-bold text-gray-900 dark:text-white mb-2">Will my selections be saved?</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 Yes, in this browser's local storage, so your pack is still here when you come
                 back. Nothing is sent anywhere. No account is required and no server of ours
                 holds your picks.
               </p>
             </div>
 
-            <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Does anything get published to Nostr?</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">
+            <div class="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+              <h3 class="text-h4 font-bold text-gray-900 dark:text-white mb-2">Does anything get published to Nostr?</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 Only if you explicitly ask for it. The QR code, npub list and NIP-02 export all
                 run inside your browser and touch no network. The export dialog also offers one
                 optional extra: publishing your pack as a public NIP-51 list to
@@ -310,25 +303,25 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
     </section>
 
     <!-- CTA Section -->
-    <section class="py-16 bg-gradient-to-r from-primary/10 to-secondary/10 dark:from-primary/5 dark:to-secondary/5">
+    <section class="py-16 border-t border-gray-200 dark:border-gray-800">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-2xl mx-auto text-center">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 class="text-h2 font-bold text-gray-900 dark:text-white mb-4">
             Ready to fill that feed?
           </h2>
 
-          <p class="text-gray-600 dark:text-gray-300 mb-8">
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-8">
             {categoryCounts.jumpstart} accounts in the starter set alone. Pick a handful and
             your timeline stops being empty today.
           </p>
 
           <a
             href="#find"
-            class="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition-colors"
+            class="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-md font-semibold hover:bg-primary-700 transition-colors"
           >
             Start picking accounts
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
           </a>
         </div>

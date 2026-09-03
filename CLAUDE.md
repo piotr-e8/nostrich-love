@@ -15,6 +15,7 @@ Platforma edukacyjna o Nostr. Astro + React + Tailwind. 7 języków: `en, pl, es
 - **Hydracja:** `client:idle`. Nie `client:load`. Komponent, który nie potrzebuje JS, nie dostaje żadnej dyrektywy.
 - **Dwie konwencje placeholderów:** quizy `{{double}}`, reszta `{single}`. Zawsze sprawdź `replace()` w kodzie komponentu, zanim napiszesz tłumaczenie.
 - **RTL:** `ms-*` / `me-*` / `ps-*` / `pe-*` / `start-*` / `end-*`. Nigdy `ml-*` / `pl-*` / `left-*`.
+- **Zero ozdobników.** Żadnych gradientów, `bg-clip-text`, `hover:scale`, `backdrop-blur`, `shadow-lg` i wyżej, `rounded-2xl`/`3xl` ani emoji dekoracyjnych. Karta to obramowanie i tło. Pełna specyfikacja z gotowymi klasami: `docs/internal/VISUAL_SYSTEM.md`.
 
 ## Bramki
 

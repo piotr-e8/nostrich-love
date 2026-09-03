@@ -92,25 +92,33 @@ function MobileBar({
   className,
 }: MobileBarProps) {
   const actionClasses =
-    'inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-primary-600 text-white hover:bg-primary-700 transition-colors';
+    'inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-md bg-primary-600 text-white hover:bg-primary-700 transition-colors';
 
   return (
     <div
       className={cn(
         'fixed bottom-0 start-0 end-0 z-40 md:hidden',
-        'border-t border-primary/30 bg-white dark:bg-gray-900 shadow-lg',
+        // A neutral edge, not a purple one: purple marks what you can act on,
+        // and the bar's border is not the control. `shadow-raised` is the one
+        // shadow VISUAL_SYSTEM.md §4 keeps, for things that genuinely sit above
+        // the page — a bar pinned over the article is exactly that.
+        'border-t border-gray-200 bg-white shadow-raised dark:border-gray-800 dark:bg-gray-900',
         'pb-[env(safe-area-inset-bottom)]',
-        'animate-in fade-in slide-in-from-bottom-4 duration-500',
+        // `animate-in fade-in slide-in-from-bottom-4 duration-500` was
+        // tailwindcss-animate syntax and this project does not have that plugin,
+        // so all four classes compiled to nothing. `animate-slide-up` is the
+        // real keyframe in tailwind.config.js.
+        'animate-slide-up motion-reduce:animate-none',
         className
       )}
     >
       <div className="flex items-center gap-1.5 ps-4 pe-1.5 py-1.5">
         <div className="min-w-0 flex-1">
-          <span className="block text-xs font-medium uppercase tracking-wide text-primary-600 dark:text-primary-400">
+          <span className="block text-micro font-medium uppercase text-primary-text dark:text-primary-400">
             {label}
           </span>
           {title && (
-            <span className="block truncate text-sm font-semibold text-gray-900 dark:text-white">
+            <span className="block truncate text-body-sm font-semibold text-gray-900 dark:text-white">
               {title}
             </span>
           )}
@@ -130,9 +138,9 @@ function MobileBar({
           type="button"
           onClick={onDismiss}
           aria-label={dismissLabel}
-          className="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+          className="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-md text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
         >
-          <X className="h-5 w-5" aria-hidden="true" />
+          <X className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
         </button>
       </div>
     </div>
@@ -271,28 +279,36 @@ export function ContinueLearning({
       type="button"
       onClick={dismiss}
       aria-label={dismissLabel}
-      className="absolute top-2 end-2 inline-flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+      className="absolute top-2 end-2 inline-flex h-8 w-8 items-center justify-center rounded-md text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
     >
-      <X className="h-4 w-4" aria-hidden="true" />
+      <X className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
     </button>
   );
 
-  /** Card shell for the desktop panel. Always a bottom bar. */
+  /**
+   * Card shell for the desktop panel. Always a bottom bar.
+   *
+   * A floating popover is one of the few things VISUAL_SYSTEM.md §4 still lets
+   * cast a shadow, so `shadow-raised` stays — but a single hairline border does
+   * the framing that `border-2` plus `shadow-2xl` plus a purple glow was doing.
+   * The success variant keeps a green border, because green here is semantic:
+   * the reader finished a level. The neutral variant is neutral.
+   */
   const desktopCard = (children: React.ReactNode, accent: 'primary' | 'green') => (
     <div className="hidden md:block">
       <div
         className={cn(
           'fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-lg',
-          'animate-in fade-in duration-500 slide-in-from-bottom-4',
+          'animate-slide-up motion-reduce:animate-none',
           className
         )}
       >
         <div
           className={cn(
-            'relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl p-6',
+            'relative rounded-lg border bg-white p-6 shadow-raised dark:bg-gray-900',
             accent === 'green'
-              ? 'border-2 border-green-300 dark:border-green-700'
-              : 'border-2 border-primary/30 shadow-primary/10'
+              ? 'border-success-300 dark:border-success-800'
+              : 'border-gray-200 dark:border-gray-800'
           )}
         >
           {children}
@@ -313,7 +329,7 @@ export function ContinueLearning({
    * the two agree in the reader's head.
    */
   const counters = (
-    <div className="flex items-center justify-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+    <div className="flex items-center justify-center gap-3 text-caption text-gray-500 dark:text-gray-400">
       <span>
         {t('continueLearning.guidesCounter')
           .replace('{done}', String(model.guidesRead))
@@ -343,19 +359,20 @@ export function ContinueLearning({
             label={t('continueLearning.allLevelsComplete')}
             action={{ href: guidesPrefix }}
             actionLabel={t('guideNavigation.exploreAllGuides')}
-            actionIcon={<CheckCircle className="h-5 w-5" aria-hidden="true" />}
+            actionIcon={<CheckCircle className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />}
             onDismiss={dismiss}
             dismissLabel={dismissLabel}
           />
           {desktopCard(
             <>
               {dismissButton}
+              {/* The 🎉 is gone under VISUAL_SYSTEM.md §5: it repeated what the
+                  heading says. The green border already carries "you finished". */}
               <div className="text-center">
-                <div className="text-4xl mb-2">🎉</div>
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                <h3 className="mb-2 text-h3 font-semibold text-gray-900 dark:text-white">
                   {t('continueLearning.allLevelsComplete')}
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                <p className="mb-4 text-body-sm text-gray-600 dark:text-gray-400">
                   {t('continueLearning.allLevelsCompleteDescription').replace(
                     '{level}',
                     levelName(model.level)
@@ -363,9 +380,9 @@ export function ContinueLearning({
                 </p>
                 <a
                   href={guidesPrefix}
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
+                  className="inline-flex items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2 text-body-sm font-medium text-white transition-colors hover:bg-primary-700"
                 >
-                  <CheckCircle className="w-4 h-4" />
+                  <CheckCircle className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                   {t('guideNavigation.exploreAllGuides')}
                 </a>
               </div>
@@ -389,7 +406,7 @@ export function ContinueLearning({
           title={onwardLabel}
           action={{ href: onwardHref }}
           actionLabel={onwardLabel}
-          actionIcon={<ArrowRight className="h-5 w-5 rtl:rotate-180" aria-hidden="true" />}
+          actionIcon={<ArrowRight className="h-5 w-5 rtl:rotate-180" strokeWidth={1.5} aria-hidden="true" />}
           onDismiss={dismiss}
           dismissLabel={dismissLabel}
         />
@@ -397,11 +414,10 @@ export function ContinueLearning({
           <>
             {dismissButton}
             <div className="text-center">
-              <div className="text-4xl mb-2">🎉</div>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+              <h3 className="mb-2 text-h3 font-semibold text-gray-900 dark:text-white">
                 {t('continueLearning.levelComplete')}
               </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+              <p className="mb-3 text-body-sm text-gray-600 dark:text-gray-400">
                 {t('continueLearning.levelCompleteDescription').replace(
                   '{level}',
                   levelName(model.level)
@@ -410,10 +426,10 @@ export function ContinueLearning({
               <div className="mb-4">{counters}</div>
               <a
                 href={onwardHref}
-                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2 text-body-sm font-medium text-white transition-colors hover:bg-primary-700"
               >
                 {onwardLabel}
-                <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+                <ArrowRight className="h-4 w-4 shrink-0 rtl:rotate-180" strokeWidth={1.5} aria-hidden="true" />
               </a>
             </div>
           </>,
@@ -473,7 +489,7 @@ export function ContinueLearning({
           title={t('continueLearning.takeQuiz')}
           action={{ onClick: scrollToQuiz }}
           actionLabel={t('continueLearning.takeQuiz')}
-          actionIcon={<GraduationCap className="h-5 w-5" aria-hidden="true" />}
+          actionIcon={<GraduationCap className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />}
           onDismiss={dismiss}
           dismissLabel={dismissLabel}
         />
@@ -483,33 +499,45 @@ export function ContinueLearning({
           title={targetTitle || undefined}
           action={{ href: targetHref }}
           actionLabel={t('continueLearning.continueLearning')}
-          actionIcon={<ArrowRight className="h-5 w-5 rtl:rotate-180" aria-hidden="true" />}
+          actionIcon={<ArrowRight className="h-5 w-5 rtl:rotate-180" strokeWidth={1.5} aria-hidden="true" />}
           onDismiss={dismiss}
           dismissLabel={dismissLabel}
         />
       )}
 
       {desktopCard(
-        <div className="flex items-start gap-4">
-          <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-            {quizAttempted ? (
-              <GraduationCap className="w-6 h-6 text-primary-600 dark:text-primary-400" />
-            ) : (
-              <BookOpen className="w-6 h-6 text-primary-600 dark:text-primary-400" />
-            )}
-          </div>
+        <div className="flex items-start gap-3">
+          {/* The icon used to sit in a 48px tinted purple disc. §5: no coloured
+              circular badge behind an icon, and nothing above h-6 w-6. */}
+          {quizAttempted ? (
+            <GraduationCap
+              className="mt-0.5 h-5 w-5 shrink-0 text-primary-text dark:text-primary-400"
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
+          ) : (
+            <BookOpen
+              className="mt-0.5 h-5 w-5 shrink-0 text-primary-text dark:text-primary-400"
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
+          )}
 
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
-              <CheckCircle className="w-4 h-4 text-green-500" />
-              <span className="text-xs font-medium text-green-600 dark:text-green-400 uppercase tracking-wide">
+            <div className="mb-1 flex items-center gap-1.5">
+              <CheckCircle
+                className="h-4 w-4 shrink-0 text-success-600 dark:text-success-400"
+                strokeWidth={1.5}
+                aria-hidden="true"
+              />
+              <span className="text-micro font-medium uppercase text-success-700 dark:text-success-400">
                 {eyebrow}
               </span>
             </div>
 
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">{heading}</h3>
+            <h3 className="mb-1 text-h3 font-semibold text-gray-900 dark:text-white">{heading}</h3>
 
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{description}</p>
+            <p className="mb-4 text-body-sm text-gray-600 dark:text-gray-400">{description}</p>
 
             {isBackfill && <div className="mb-4">{counters}</div>}
 
@@ -517,9 +545,9 @@ export function ContinueLearning({
               {quizPending && (
                 <button
                   onClick={scrollToQuiz}
-                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-primary-600 text-white font-medium hover:bg-primary-700 transition-colors"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-body-sm font-medium text-white transition-colors hover:bg-primary-700"
                 >
-                  <GraduationCap className="w-4 h-4" />
+                  <GraduationCap className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                   {t('continueLearning.takeQuiz')}
                 </button>
               )}
@@ -527,23 +555,23 @@ export function ContinueLearning({
               <a
                 href={targetHref}
                 className={cn(
-                  'w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-colors',
+                  'inline-flex w-full items-center justify-center gap-2 rounded-md px-4 py-2.5 text-body-sm font-medium transition-colors',
                   quizPending
                     ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                     : 'bg-primary-600 text-white hover:bg-primary-700'
                 )}
               >
                 {target ? t('continueLearning.continueLearning') : t('continueLearning.browseAllGuides')}
-                <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+                <ArrowRight className="h-4 w-4 shrink-0 rtl:rotate-180" strokeWidth={1.5} aria-hidden="true" />
               </a>
 
               {showRetake && (
                 <button
                   type="button"
                   onClick={scrollToQuiz}
-                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-gray-100 px-4 py-2.5 text-body-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                 >
-                  <GraduationCap className="w-4 h-4" />
+                  <GraduationCap className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                   {t('ui.quiz.retakeQuiz')}
                 </button>
               )}
@@ -552,9 +580,9 @@ export function ContinueLearning({
                 type="button"
                 onClick={dismiss}
                 aria-label={dismissLabel}
-                className="self-end inline-flex items-center justify-center px-3 py-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                className="self-end inline-flex items-center justify-center rounded-md px-3 py-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
               >
-                <X className="w-4 h-4" aria-hidden="true" />
+                <X className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
               </button>
             </div>
           </div>

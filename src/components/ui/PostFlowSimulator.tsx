@@ -51,11 +51,11 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
   // slot at all times, fading rather than appearing.
   const tile = (active: boolean, tone: "primary" | "muted" | "gap") =>
     cn(
-      "flex flex-col items-center gap-1.5 rounded-xl p-3 text-center transition-all duration-500 motion-reduce:transition-none",
-      tone === "muted" && "border border-dashed border-gray-300 dark:border-gray-600",
-      active && tone === "primary" && "bg-primary-500/20 ring-2 ring-primary-400 dark:ring-primary-500",
-      active && tone === "gap" && "bg-amber-500/10 ring-2 ring-amber-400 dark:ring-amber-500",
-      !active && tone !== "muted" && "bg-white dark:bg-gray-800 opacity-60",
+      "flex flex-col items-center gap-1.5 rounded-lg p-3 text-center transition-colors duration-500 motion-reduce:transition-none",
+      tone === "muted" && "border border-dashed border-gray-300 dark:border-gray-700",
+      active && tone === "primary" && "bg-primary-50 ring-2 ring-primary-600 dark:bg-gray-800 dark:ring-primary-400",
+      active && tone === "gap" && "bg-warning-50 ring-2 ring-warning-600 dark:bg-warning-950 dark:ring-warning-400",
+      !active && tone !== "muted" && "bg-white opacity-60 dark:bg-gray-800",
       !active && tone === "muted" && "opacity-60",
     );
 
@@ -63,8 +63,10 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
   const status = (visible: boolean, tone: "primary" | "gap", text: string) => (
     <span
       className={cn(
-        "text-xs h-4 leading-4 transition-opacity duration-300 motion-reduce:transition-none",
-        tone === "primary" ? "text-primary-500" : "text-amber-600 dark:text-amber-500",
+        "h-4 text-caption leading-4 transition-opacity duration-300 motion-reduce:transition-none",
+        tone === "primary"
+          ? "text-primary-text dark:text-primary-400"
+          : "text-warning-700 dark:text-warning-400",
         visible ? "opacity-100" : "opacity-0",
       )}
       aria-hidden={!visible}
@@ -75,9 +77,9 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
 
   const icon = (active: boolean, tone: "primary" | "muted" | "gap") =>
     cn(
-      "w-10 h-10 rounded-xl flex items-center justify-center transition-colors duration-500 motion-reduce:transition-none",
-      active && tone === "primary" && "bg-primary-500 text-white",
-      active && tone === "gap" && "bg-amber-500 text-white",
+      "flex h-10 w-10 items-center justify-center rounded-md transition-colors duration-500 motion-reduce:transition-none",
+      active && tone === "primary" && "bg-primary-600 text-white",
+      active && tone === "gap" && "bg-warning-600 text-white",
       (!active || tone === "muted") && "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400",
     );
 
@@ -93,26 +95,26 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
     used ? (
       <ArrowDown
         className={cn(
-          "w-5 h-5 mx-auto text-primary-500 transition-opacity duration-500 motion-reduce:transition-none",
+          "mx-auto h-5 w-5 text-primary-text transition-opacity duration-500 dark:text-primary-400 motion-reduce:transition-none",
           active ? "opacity-100" : "opacity-20",
         )}
       />
     ) : (
-      <div className="w-5 h-5 mx-auto" aria-hidden="true" />
+      <div className="mx-auto h-5 w-5" aria-hidden="true" />
     );
 
   return (
     <div
       className={cn(
-        "bg-gray-100 dark:bg-gray-800/30 border border-gray-200 dark:border-gray-700 rounded-2xl p-6",
+        "rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900",
         className,
       )}
     >
       <div className="text-center mb-6">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+        <h3 className="mb-2 text-h3 text-gray-900 dark:text-white">
           {t("postFlowSimulator.title")}
         </h3>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+        <p className="text-body-sm text-gray-600 dark:text-gray-400">
           {t("postFlowSimulator.description")}
         </p>
       </div>
@@ -121,9 +123,9 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
       <div className="max-w-[10rem] mx-auto mb-3">
         <div className={tile(true, "primary")}>
           <div className={icon(true, "primary")}>
-            <User className="w-5 h-5" />
+            <User className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
           </div>
-          <span className="text-xs font-medium text-gray-900 dark:text-white">
+          <span className="text-caption font-medium text-gray-900 dark:text-white">
             {t("postFlowSimulator.labels.yourDevice")}
           </span>
           {status(step === 0, "primary", t("postFlowSimulator.stages.sign"))}
@@ -143,13 +145,13 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
         {relays.map((r) => (
           <div key={r.id} className={tile(published && r.used, r.used ? "primary" : "muted")}>
             <div className={icon(published && r.used, r.used ? "primary" : "muted")}>
-              <Server className="w-5 h-5" />
+              <Server className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
             </div>
-            <span className="text-xs font-medium text-gray-900 dark:text-white">{r.label}</span>
+            <span className="text-caption font-medium text-gray-900 dark:text-white">{r.label}</span>
           </div>
         ))}
       </div>
-      <p className="text-[0.7rem] text-center text-gray-500 dark:text-gray-400 mb-3">
+      <p className="mb-3 text-center text-micro text-gray-500 dark:text-gray-400">
         {t("postFlowSimulator.labels.noSync")}
       </p>
 
@@ -166,9 +168,9 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
             className={tile(r.used ? fetched : gapShown, r.used ? "primary" : "gap")}
           >
             <div className={icon(r.used ? fetched : gapShown, r.used ? "primary" : "gap")}>
-              <User className="w-5 h-5" />
+              <User className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
             </div>
-            <span className="text-xs font-medium text-gray-900 dark:text-white">
+            <span className="text-caption font-medium text-gray-900 dark:text-white">
               {t("postFlowSimulator.labels.reader")}
             </span>
             {r.used
@@ -181,7 +183,7 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
       <div className="flex justify-center gap-3 mt-6">
         <button
           onClick={() => setIsPlaying(!isPlaying)}
-          className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-sm font-medium transition-all"
+          className="rounded-md bg-primary-600 px-4 py-2 text-body-sm font-medium text-white transition-colors hover:bg-primary-700"
         >
           {isPlaying ? t("postFlowSimulator.buttons.pause") : t("postFlowSimulator.buttons.play")}
         </button>
@@ -190,20 +192,24 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
             setIsPlaying(false);
             setStep(0);
           }}
-          className="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white rounded-lg text-sm font-medium transition-all"
+          className="rounded-md border border-gray-200 px-4 py-2 text-body-sm font-medium text-gray-900 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:text-white dark:hover:bg-gray-800"
         >
           {t("postFlowSimulator.buttons.reset")}
         </button>
       </div>
 
-      <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-900/50 rounded-xl">
+      <div className="mt-6 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-800">
         <div className="flex items-center gap-3 mb-3">
-          <Send className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-          <span className="text-sm font-medium text-gray-900 dark:text-white">
+          <Send
+            className="h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
+            strokeWidth={1.5}
+            aria-hidden="true"
+          />
+          <span className="text-body-sm font-medium text-gray-900 dark:text-white">
             {t("postFlowSimulator.currentStepLabel")}
           </span>
         </div>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+        <p className="text-body-sm text-gray-600 dark:text-gray-400">
           {t(`postFlowSimulator.stepDescriptions.${step}`)}
         </p>
       </div>

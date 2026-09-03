@@ -82,11 +82,11 @@ export function ScreenshotGallery({
     return (
       <div
         className={cn(
-          "bg-gray-100 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl p-8 text-center",
+          "rounded-lg border border-gray-200 bg-gray-50 p-8 text-center dark:border-gray-800 dark:bg-gray-900",
           className,
         )}
       >
-        <p className="text-gray-500 dark:text-gray-400">No screenshots available</p>
+        <p className="text-body-sm text-gray-500 dark:text-gray-400">No screenshots available</p>
       </div>
     );
   }
@@ -97,7 +97,7 @@ export function ScreenshotGallery({
     <>
       <div className={cn("space-y-4", className)}>
         {/* Main Image */}
-        <div className="relative aspect-video bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+        <div className="relative aspect-video overflow-hidden rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-800">
           <img
             src={currentScreenshot.src}
             alt={currentScreenshot.alt || "Screenshot"}
@@ -106,9 +106,9 @@ export function ScreenshotGallery({
           />
           <button
             onClick={() => setIsLightboxOpen(true)}
-            className="absolute top-4 end-4 w-10 h-10 bg-black/50 hover:bg-black/70 rounded-lg flex items-center justify-center transition-all"
+            className="absolute end-4 top-4 flex h-10 w-10 items-center justify-center rounded-md bg-black/60 transition-colors hover:bg-black/80"
           >
-            <ZoomIn className="w-5 h-5 text-white" />
+            <ZoomIn className="h-5 w-5 text-white" strokeWidth={1.5} aria-hidden="true" />
           </button>
 
           {/* Navigation Arrows */}
@@ -116,15 +116,15 @@ export function ScreenshotGallery({
             <>
               <button
                 onClick={goToPrevious}
-                className="absolute start-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center transition-all"
+                className="absolute start-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 transition-colors hover:bg-black/80"
               >
-                <ChevronLeft className="w-6 h-6 text-white rtl:rotate-180" />
+                <ChevronLeft className="h-5 w-5 text-white rtl:rotate-180" strokeWidth={1.5} aria-hidden="true" />
               </button>
               <button
                 onClick={goToNext}
-                className="absolute end-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center transition-all"
+                className="absolute end-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 transition-colors hover:bg-black/80"
               >
-                <ChevronRight className="w-6 h-6 text-white rtl:rotate-180" />
+                <ChevronRight className="h-5 w-5 text-white rtl:rotate-180" strokeWidth={1.5} aria-hidden="true" />
               </button>
             </>
           )}
@@ -132,7 +132,7 @@ export function ScreenshotGallery({
 
         {/* Caption */}
         {currentScreenshot.caption && (
-          <p className="text-center text-gray-600 dark:text-gray-400 text-sm">
+          <p className="text-center text-body-sm text-gray-600 dark:text-gray-400">
             {currentScreenshot.caption}
           </p>
         )}
@@ -145,10 +145,10 @@ export function ScreenshotGallery({
                 key={index}
                 onClick={() => setCurrentIndex(index)}
                 className={cn(
-                  "w-16 h-12 rounded-lg overflow-hidden border-2 transition-all",
+                  "h-12 w-16 overflow-hidden rounded-md border-2 transition-colors",
                   index === currentIndex
-                    ? "border-primary-500"
-                    : "border-transparent hover:border-gray-600",
+                    ? "border-primary-600 dark:border-primary-400"
+                    : "border-transparent hover:border-gray-300 dark:hover:border-gray-700",
                 )}
               >
                 <img
@@ -174,9 +174,9 @@ export function ScreenshotGallery({
           >
             <button
               onClick={closeLightbox}
-              className="absolute top-4 end-4 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all"
+              className="absolute end-4 top-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
             >
-              <X className="w-6 h-6 text-white" />
+              <X className="h-5 w-5 text-white" strokeWidth={1.5} aria-hidden="true" />
             </button>
 
             <img
@@ -193,18 +193,18 @@ export function ScreenshotGallery({
                     e.stopPropagation();
                     goToPrevious();
                   }}
-                  className="absolute start-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all"
+                  className="absolute start-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
                 >
-                  <ChevronLeft className="w-6 h-6 text-white rtl:rotate-180" />
+                  <ChevronLeft className="h-5 w-5 text-white rtl:rotate-180" strokeWidth={1.5} aria-hidden="true" />
                 </button>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     goToNext();
                   }}
-                  className="absolute end-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all"
+                  className="absolute end-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
                 >
-                  <ChevronRight className="w-6 h-6 text-white rtl:rotate-180" />
+                  <ChevronRight className="h-5 w-5 text-white rtl:rotate-180" strokeWidth={1.5} aria-hidden="true" />
                 </button>
               </>
             )}

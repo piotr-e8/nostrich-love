@@ -321,13 +321,17 @@ ${t('keyGenerator.backupFile.warnings.title')}:
 
   return (
     <div className={cn("max-w-3xl mx-auto p-6", className)}>
-      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 md:p-8">
+      <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900 md:p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4 animate-scale-in motion-reduce:animate-none">
-            <Shield className="w-8 h-8 text-primary-600 dark:text-primary-400" />
+          <div className="mb-4 flex justify-center">
+            <Shield
+              className="h-6 w-6 text-gray-400 dark:text-gray-500"
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
           </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          <h2 className="mb-2 text-h2 text-gray-900 dark:text-white">
             {t('keyGenerator.title')}
           </h2>
           <p className="text-gray-600 dark:text-gray-400 max-w-lg mx-auto">
@@ -341,28 +345,28 @@ ${t('keyGenerator.backupFile.warnings.title')}:
             <button
               onClick={generateKeys}
               disabled={isGenerating}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-300 dark:disabled:bg-gray-600 text-white font-semibold rounded-xl transition-all disabled:cursor-not-allowed"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-300 dark:disabled:bg-gray-600 text-white font-semibold rounded-md transition-colors disabled:cursor-not-allowed"
             >
               {isGenerating ? (
-                <RefreshCw className="w-5 h-5 animate-spin" />
+                <RefreshCw className="w-5 h-5 animate-spin" strokeWidth={1.5} aria-hidden="true" />
               ) : (
-                <Dice5 className="w-5 h-5" />
+                <Dice5 className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
               )}
               {isGenerating ? t('keyGenerator.buttons.generating') : t('keyGenerator.buttons.generate')}
             </button>
 
             {isGenerating && (
               <div className="mt-6 max-w-md mx-auto">
-                <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+                <div className="flex items-center justify-between text-body-sm text-gray-600 dark:text-gray-400 mb-2">
                   <span className="flex items-center gap-2">
-                    <Lock className="w-4 h-4" />
+                    <Lock className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                     {t('keyGenerator.progress.collectingEntropy')}
                   </span>
                   <span>{Math.min(100, Math.round(entropyProgress))}%</span>
                 </div>
                 <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-primary-500 to-success-500 transition-[width] duration-100 ease-out-quint motion-reduce:transition-none"
+                    className="h-full bg-primary-600 transition-[width] duration-100 ease-out-quint dark:bg-primary-400 motion-reduce:transition-none"
                     style={{ width: `${Math.min(100, entropyProgress)}%` }}
                   />
                 </div>
@@ -375,14 +379,14 @@ ${t('keyGenerator.backupFile.warnings.title')}:
         {keys && (
           <div className="space-y-6 animate-slide-up motion-reduce:animate-none">
               {/* Security Warning */}
-              <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl p-4">
+              <div className="border border-warning-200 bg-warning-50 dark:border-warning-900 dark:bg-warning-950 rounded-lg p-4">
                 <div className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-700 dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0 text-warning-600 dark:text-warning-400" strokeWidth={1.5} aria-hidden="true" />
                   <div>
-                    <h3 className="font-semibold text-yellow-700 dark:text-yellow-400 mb-1">
+                    <h3 className="mb-1 font-semibold text-warning-900 dark:text-warning-100">
                       {t('keyGenerator.securityWarning.title')}
                     </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                    <p className="text-body-sm text-gray-600 dark:text-gray-300">
                       {t('keyGenerator.securityWarning.description')}
                     </p>
                   </div>
@@ -390,9 +394,9 @@ ${t('keyGenerator.backupFile.warnings.title')}:
               </div>
 
               {/* Security Checklist */}
-              <div className="bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+              <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-800 rounded-lg p-4">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                  <Shield className="w-4 h-4 text-primary-600 dark:text-primary-400" />
+                  <Shield className="w-4 h-4 text-primary-600 dark:text-primary-400" strokeWidth={1.5} aria-hidden="true" />
                   {t('keyGenerator.securityChecklist.title')}
                 </h3>
                 <div className="space-y-2">
@@ -400,22 +404,22 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                     <label
                       key={check.id}
                       className={cn(
-                        "flex items-start gap-3 p-3 rounded-lg cursor-pointer transition-all",
+                        "flex items-start gap-3 p-3 rounded-lg cursor-pointer transition-colors",
                         check.checked
-                          ? "bg-success-500/10"
+                          ? "bg-success-50 dark:bg-success-950"
                           : "hover:bg-gray-100 dark:hover:bg-gray-700/50",
                       )}
                     >
                       <div
                         className={cn(
-                          "w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 mt-0.5 transition-all",
+                          "w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors",
                           check.checked
                             ? "bg-success-500 border-success-500"
-                            : "border-gray-400 dark:border-gray-500 hover:border-primary-500",
+                            : "border-gray-400 dark:border-gray-500 hover:border-gray-300 dark:hover:border-gray-700",
                         )}
                       >
                         {check.checked && (
-                          <Check className="w-3 h-3 text-white" />
+                          <Check className="w-3 h-3 text-white" strokeWidth={1.5} aria-hidden="true" />
                         )}
                       </div>
                       <input
@@ -426,8 +430,8 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                       />
                       <span
                         className={cn(
-                          "text-sm",
-                          check.checked ? "text-success-500" : "text-gray-600 dark:text-gray-300",
+                          "text-body-sm",
+                          check.checked ? "text-success-700 dark:text-success-400" : "text-gray-600 dark:text-gray-300",
                         )}
                       >
                         {check.label}
@@ -438,14 +442,14 @@ ${t('keyGenerator.backupFile.warnings.title')}:
 
                 {/* Progress Bar */}
                 <div className="mt-4">
-                  <div className="flex justify-between text-sm mb-1">
+                  <div className="flex justify-between text-body-sm mb-1">
                     <span className="text-gray-600 dark:text-gray-400">
                       {t('keyGenerator.progress.securityAcknowledgment')}
                     </span>
                     <span
                       className={cn(
                         "font-medium",
-                        allChecksPassed ? "text-success-500" : "text-gray-600 dark:text-gray-400",
+                        allChecksPassed ? "text-success-700 dark:text-success-400" : "text-gray-600 dark:text-gray-400",
                       )}
                     >
                       {securityChecks.filter((c) => c.checked).length}/
@@ -454,7 +458,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                   </div>
                   <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-primary-500 to-success-500 transition-[width] duration-300 ease-out-quint motion-reduce:transition-none"
+                      className="h-full bg-primary-600 transition-[width] duration-300 ease-out-quint dark:bg-primary-400 motion-reduce:transition-none"
                       style={{
                         width: `${(securityChecks.filter((c) => c.checked).length / securityChecks.length) * 100}%`,
                       }}
@@ -464,39 +468,39 @@ ${t('keyGenerator.backupFile.warnings.title')}:
               </div>
 
               {/* Public Key */}
-              <div className="bg-green-50 dark:bg-green-900/10 border border-success-500/30 rounded-xl p-4">
+              <div className="bg-success-50 dark:bg-success-950 border border-success-200 dark:border-success-900 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <Unlock className="w-5 h-5 text-success-500" />
-                    <h3 className="font-semibold text-success-500">
+                    <Unlock className="w-5 h-5 text-success-700 dark:text-success-400" strokeWidth={1.5} aria-hidden="true" />
+                    <h3 className="font-semibold text-success-700 dark:text-success-400">
                       {t('keyGenerator.keys.public.title')}
                     </h3>
                   </div>
-                  <span className="text-xs bg-green-100 dark:bg-green-900/30 text-success-500 px-2 py-1 rounded-full">
+                  <span className="text-caption border border-success-200 dark:border-success-900 text-success-800 dark:text-success-400 px-2 py-1 rounded-full">
                     {t('keyGenerator.keys.public.badge')}
                   </span>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                <p className="text-body-sm text-gray-600 dark:text-gray-400 mb-3">
                   {t('keyGenerator.keys.public.description')}
                 </p>
-                <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-3 font-mono text-sm text-success-500 break-all mb-3">
+                <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-3 font-mono text-body-sm text-success-700 dark:text-success-400 break-all mb-3">
                   {keys.npub}
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => performCopy(keys.npub, t('keyGenerator.keys.public.title'))}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 dark:green-900/30 hover:bg-success-500/30 text-success-500 rounded-lg transition-all"
+                    className="inline-flex items-center gap-2 px-4 py-2 border border-success-200 dark:border-success-900 hover:bg-success-100 dark:hover:bg-success-900 text-success-700 dark:text-success-400 rounded-lg transition-colors"
                   >
-                    <Copy className="w-4 h-4" />
+                    <Copy className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                     {t('keyGenerator.keys.public.copy')}
                   </button>
                   {qrCodeData?.npub && (
                     <a
                       href={qrCodeData.npub}
                       download="npub-qr.png"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-white rounded-lg transition-all"
+                      className="inline-flex items-center gap-2 rounded-md border border-gray-200 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:text-white dark:hover:bg-gray-800"
                     >
-                      <QrCode className="w-4 h-4" />
+                      <QrCode className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                       {t('keyGenerator.keys.public.qrCode')}
                     </a>
                   )}
@@ -504,52 +508,52 @@ ${t('keyGenerator.backupFile.warnings.title')}:
               </div>
 
               {/* Private Key */}
-              <div className="bg-red-50 dark:bg-red-900/10 border border-error-500/30 rounded-xl p-4">
+              <div className="bg-error-50 dark:bg-error-950 border border-error-200 dark:border-error-900 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <Lock className="w-5 h-5 text-error-500" />
-                    <h3 className="font-semibold text-error-500">
+                    <Lock className="w-5 h-5 text-error-700 dark:text-error-400" strokeWidth={1.5} aria-hidden="true" />
+                    <h3 className="font-semibold text-error-700 dark:text-error-400">
                       {t('keyGenerator.keys.private.title')}
                     </h3>
                   </div>
-                  <span className="text-xs bg-red-100 dark:bg-red-900/30 text-error-500 px-2 py-1 rounded-full">
+                  <span className="text-caption border border-error-200 dark:border-error-900 text-error-800 dark:text-error-400 px-2 py-1 rounded-full">
                     {t('keyGenerator.keys.private.badge')}
                   </span>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                <p className="text-body-sm text-gray-600 dark:text-gray-400 mb-3">
                   {t('keyGenerator.keys.private.description')}
                 </p>
-                <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-3 font-mono text-sm text-error-500 break-all mb-3 flex items-center justify-between gap-3">
+                <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-3 font-mono text-body-sm text-error-700 dark:text-error-400 break-all mb-3 flex items-center justify-between gap-3">
                   <span className={showPrivateKey ? "" : "blur-sm select-none"}>
                     {showPrivateKey ? keys.nsec : "•".repeat(keys.nsec.length)}
                   </span>
                   <button
                     onClick={() => setShowPrivateKey(!showPrivateKey)}
-                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all flex-shrink-0"
+                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors flex-shrink-0"
                     aria-label={
                       showPrivateKey ? t('keyGenerator.keys.private.hide') : t('keyGenerator.keys.private.show')
                     }
                   >
                     {showPrivateKey ? (
-                      <EyeOff className="w-4 h-4" />
+                      <EyeOff className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                     ) : (
-                      <Eye className="w-4 h-4" />
+                      <Eye className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                     )}
                   </button>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => handleCopyPrivate(keys.nsec, t('keyGenerator.keys.private.title'))}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-red-100 dark:red-900/30 hover:bg-error-500/30 text-error-500 rounded-lg transition-all"
+                    className="inline-flex items-center gap-2 px-4 py-2 border border-error-200 dark:border-error-900 hover:bg-error-100 dark:hover:bg-error-900 text-error-700 dark:text-error-400 rounded-lg transition-colors"
                   >
-                    <Copy className="w-4 h-4" />
+                    <Copy className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                     {t('keyGenerator.keys.private.copy')}
                   </button>
                   <button
                     onClick={handleDownload}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-white rounded-lg transition-all"
+                    className="inline-flex items-center gap-2 rounded-md border border-gray-200 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:text-white dark:hover:bg-gray-800"
                   >
-                    <Download className="w-4 h-4" />
+                    <Download className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                     {t('keyGenerator.keys.private.download')}
                   </button>
                   {qrCodeData?.nsec && (
@@ -561,9 +565,9 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                           saveDataUrl(qrCodeData.nsec, "nsec-qr.png"),
                         )
                       }
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-white rounded-lg transition-all"
+                      className="inline-flex items-center gap-2 rounded-md border border-gray-200 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:text-white dark:hover:bg-gray-800"
                     >
-                      <QrCode className="w-4 h-4" />
+                      <QrCode className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                       {t('keyGenerator.keys.private.qrCode')}
                     </button>
                   )}
@@ -583,9 +587,9 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                     });
                     openWarningModal("discard");
                   }}
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-all inline-flex items-center gap-2"
+                  className="text-body-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors inline-flex items-center gap-2"
                 >
-                  <RefreshCw className="w-4 h-4" />
+                  <RefreshCw className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                   {t('keyGenerator.buttons.regenerate')}
                 </button>
               </div>
@@ -597,7 +601,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
       {showWarningModal && (
           <div
             className={cn(
-              "fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4",
+              "fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4",
               "transition-opacity duration-300 motion-reduce:transition-none",
               isModalShown ? "opacity-100" : "opacity-0",
             )}
@@ -605,17 +609,19 @@ ${t('keyGenerator.backupFile.warnings.title')}:
           >
             <div
               className={cn(
-                "bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 max-w-md w-full",
-                "transition-all duration-300 ease-out-quint motion-reduce:transition-none",
+                "w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 shadow-raised dark:border-gray-800 dark:bg-gray-900",
+                "transition-colors duration-300 ease-out-quint motion-reduce:transition-none",
                 isModalShown ? "opacity-100 scale-100" : "opacity-0 scale-95",
               )}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-warning-500/20 rounded-full flex items-center justify-center">
-                  <AlertTriangle className="w-6 h-6 text-yellow-700 dark:text-yellow-400" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                <AlertTriangle
+                  className="h-6 w-6 shrink-0 text-warning-600 dark:text-warning-400"
+                  strokeWidth={1.5}
+                  aria-hidden="true"
+                />
+                <h3 className="text-h3 text-gray-900 dark:text-white">
                   {modalVariant === "discard"
                     ? t('keyGenerator.discardModal.title')
                     : t('keyGenerator.modal.title')}
@@ -629,7 +635,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
               <div className="flex gap-3">
                 <button
                   onClick={closeWarningModal}
-                  className="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-white rounded-lg transition-all"
+                  className="flex-1 rounded-md border border-gray-200 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:text-white dark:hover:bg-gray-800"
                 >
                   {t('keyGenerator.modal.goBack')}
                 </button>
@@ -639,7 +645,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                     setPendingAction(null);
                     closeWarningModal();
                   }}
-                  className="flex-1 px-4 py-2 bg-warning-500/20 hover:bg-yellow-200 dark:hover:bg-yellow-800 text-yellow-700 dark:text-yellow-400 rounded-lg transition-all"
+                  className="flex-1 rounded-md border border-warning-300 px-4 py-2 text-warning-800 transition-colors hover:bg-warning-50 dark:border-warning-800 dark:text-warning-300 dark:hover:bg-warning-950"
                 >
                   {modalVariant === "discard"
                     ? t('keyGenerator.discardModal.confirm')
@@ -655,17 +661,17 @@ ${t('keyGenerator.backupFile.warnings.title')}:
           feedback to screen readers the moment the toast renders */}
       <div aria-live="polite">
         {toast && (
-          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+          <div className="fixed inset-x-0 bottom-6 z-50 flex justify-center">
             <div
               className={cn(
-                "px-6 py-3 rounded-xl shadow-2xl flex items-center gap-2 animate-slide-up motion-reduce:animate-none",
-                toast.type === "success" && "bg-success-500 text-white",
-                toast.type === "error" && "bg-error-500 text-white",
-                toast.type === "warning" && "bg-warning-500 text-black",
+                "flex items-center gap-2 rounded-md px-6 py-3 shadow-raised animate-slide-up motion-reduce:animate-none",
+                toast.type === "success" && "bg-success-700 text-white",
+                toast.type === "error" && "bg-error-700 text-white",
+                toast.type === "warning" && "bg-warning-700 text-white",
               )}
             >
-              {toast.type === "success" && <Check className="w-5 h-5" />}
-              {toast.type === "error" && <AlertTriangle className="w-5 h-5" />}
+              {toast.type === "success" && <Check className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />}
+              {toast.type === "error" && <AlertTriangle className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />}
               {toast.message}
             </div>
           </div>

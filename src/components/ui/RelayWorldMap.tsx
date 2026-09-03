@@ -38,11 +38,11 @@ export function RelayWorldMap({
   const getStatusColor = (status?: string) => {
     switch (status) {
       case "online":
-        return "bg-green-500";
+        return "bg-success-500";
       case "degraded":
-        return "bg-amber-500";
+        return "bg-warning-500";
       case "offline":
-        return "bg-red-500";
+        return "bg-danger-500";
       default:
         return "bg-gray-500";
     }
@@ -51,26 +51,28 @@ export function RelayWorldMap({
   return (
     <div
       className={cn(
-        "bg-gray-100 dark:bg-gray-800/30 border border-gray-200 dark:border-gray-700 rounded-2xl p-6",
+        "rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900",
         className,
       )}
     >
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 rounded-xl bg-primary-500/20 flex items-center justify-center">
-          <Globe className="w-6 h-6 text-primary-600 dark:text-primary-400" />
-        </div>
+        <Globe
+          className="h-6 w-6 shrink-0 text-gray-400 dark:text-gray-500"
+          strokeWidth={1.5}
+          aria-hidden="true"
+        />
         <div>
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('relayWorldMap.title')}</h3>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <h3 className="text-h3 text-gray-900 dark:text-white">{t('relayWorldMap.title')}</h3>
+          <p className="text-body-sm text-gray-600 dark:text-gray-400">
             {t('relayWorldMap.subtitle')}
           </p>
         </div>
       </div>
 
       {/* Simplified World Map Visualization */}
-      <div className="relative h-48 bg-white dark:bg-gray-900 rounded-xl overflow-hidden mb-6">
+      <div className="relative mb-6 h-48 overflow-hidden rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-800">
         {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0 text-gray-400 opacity-30 dark:text-gray-600">
           <svg width="100%" height="100%">
             <defs>
               <pattern
@@ -82,7 +84,7 @@ export function RelayWorldMap({
                 <path
                   d="M 40 0 L 0 0 0 40"
                   fill="none"
-                  stroke="white"
+                  stroke="currentColor"
                   strokeWidth="1"
                 />
               </pattern>
@@ -92,13 +94,13 @@ export function RelayWorldMap({
         </div>
 
         {/* Connection lines */}
-        <svg className="absolute inset-0 w-full h-full">
+        <svg className="absolute inset-0 h-full w-full text-gray-300 dark:text-gray-600">
           <line
             x1="20%"
             y1="40%"
             x2="50%"
             y2="35%"
-            stroke="rgba(139, 92, 246, 0.3)"
+            stroke="currentColor"
             strokeWidth="2"
             strokeDasharray="4 4"
           />
@@ -107,7 +109,7 @@ export function RelayWorldMap({
             y1="35%"
             x2="80%"
             y2="50%"
-            stroke="rgba(139, 92, 246, 0.3)"
+            stroke="currentColor"
             strokeWidth="2"
             strokeDasharray="4 4"
           />
@@ -116,7 +118,7 @@ export function RelayWorldMap({
             y1="40%"
             x2="80%"
             y2="50%"
-            stroke="rgba(139, 92, 246, 0.2)"
+            stroke="currentColor"
             strokeWidth="2"
             strokeDasharray="4 4"
           />
@@ -125,23 +127,23 @@ export function RelayWorldMap({
         {/* Decorative pins. They stand for "relays run everywhere", not for the
             hosts listed below, which is why no relay name is attached to them. */}
         <div className="absolute top-[35%] left-[20%] flex flex-col items-center">
-          <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50" />
-          <span className="mt-2 text-xs text-gray-500 dark:text-gray-400">{t('relayWorldMap.regions.northAmerica')}</span>
+          <div className="h-3 w-3 rounded-full bg-success-500" />
+          <span className="mt-2 text-caption text-gray-600 dark:text-gray-400">{t('relayWorldMap.regions.northAmerica')}</span>
         </div>
 
         <div className="absolute top-[30%] left-[50%] flex flex-col items-center">
-          <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50" />
-          <span className="mt-2 text-xs text-gray-500 dark:text-gray-400">{t('relayWorldMap.regions.europe')}</span>
+          <div className="h-3 w-3 rounded-full bg-success-500" />
+          <span className="mt-2 text-caption text-gray-600 dark:text-gray-400">{t('relayWorldMap.regions.europe')}</span>
         </div>
 
         <div className="absolute top-[45%] left-[80%] flex flex-col items-center">
-          <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50" />
-          <span className="mt-2 text-xs text-gray-500 dark:text-gray-400">{t('relayWorldMap.regions.asia')}</span>
+          <div className="h-3 w-3 rounded-full bg-success-500" />
+          <span className="mt-2 text-caption text-gray-600 dark:text-gray-400">{t('relayWorldMap.regions.asia')}</span>
         </div>
 
         <div className="absolute top-[60%] left-[15%] flex flex-col items-center">
-          <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50" />
-          <span className="mt-2 text-xs text-gray-500 dark:text-gray-400">{t('relayWorldMap.regions.northAmerica')}</span>
+          <div className="h-3 w-3 rounded-full bg-success-500" />
+          <span className="mt-2 text-caption text-gray-600 dark:text-gray-400">{t('relayWorldMap.regions.northAmerica')}</span>
         </div>
       </div>
 
@@ -150,7 +152,7 @@ export function RelayWorldMap({
         {relays.map((relay) => (
           <div
             key={relay.id}
-            className="flex items-start gap-3 p-3 bg-white dark:bg-gray-900 rounded-lg"
+            className="flex items-start gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-gray-800 dark:bg-gray-800"
           >
             {relay.status && (
               <div
@@ -160,12 +162,16 @@ export function RelayWorldMap({
                 )}
               />
             )}
-            <Server className="mt-0.5 w-4 h-4 text-gray-500 flex-shrink-0" />
+            <Server
+              className="mt-0.5 h-4 w-4 flex-shrink-0 text-gray-400 dark:text-gray-500"
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
             <div className="min-w-0">
-              <p className="text-sm text-gray-700 dark:text-gray-300 font-mono truncate">
+              <p className="truncate font-mono text-body-sm text-gray-700 dark:text-gray-300">
                 {relay.url.replace("wss://", "")}
               </p>
-              <p className="text-xs text-gray-600 dark:text-gray-400">
+              <p className="text-caption text-gray-600 dark:text-gray-400">
                 {t(`relayWorldMap.relays.${relay.id}.description`)}
               </p>
             </div>
@@ -173,7 +179,7 @@ export function RelayWorldMap({
         ))}
       </div>
 
-      <p className="mt-4 text-xs text-gray-600 dark:text-gray-400">
+      <p className="mt-4 text-caption text-gray-600 dark:text-gray-400">
         {t('relayWorldMap.checkedNote')}
       </p>
     </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Sparkles } from 'lucide-react';
+import { SearchX } from 'lucide-react';
 import { GuideCard, type Guide } from './GuideCard';
 import { LevelProgressBar } from './LevelProgressBar';
 import { CLEAR_GUIDE_FILTER_EVENT } from './InterestFilter';
@@ -21,26 +21,11 @@ export interface GuideSectionProps {
   activeFilter?: string | null;
 }
 
-const levelConfigBase = {
-  beginner: {
-    icon: '🌱',
-    bgColor: 'bg-green-100 dark:bg-green-900/30',
-    textColor: 'text-green-700 dark:text-green-400',
-    borderColor: 'border-green-200 dark:border-green-800',
-  },
-  intermediate: {
-    icon: '🚀',
-    bgColor: 'bg-yellow-100 dark:bg-yellow-900/30',
-    textColor: 'text-yellow-700 dark:text-yellow-400',
-    borderColor: 'border-yellow-200 dark:border-yellow-800',
-  },
-  advanced: {
-    icon: '⚡',
-    bgColor: 'bg-red-100 dark:bg-red-900/30',
-    textColor: 'text-red-700 dark:text-red-400',
-    borderColor: 'border-red-200 dark:border-red-800',
-  },
-};
+// The 🌱 / 🚀 / ⚡ in tinted circles are gone, and with them the green/yellow/red
+// per-level tints. Two reasons. The emoji only repeated the level name next to
+// it, and green on this site means "completed" — a green ring on the Beginner
+// header put the success colour on a section nobody had finished yet. Level is
+// carried by the heading and the progress bar now; green stays semantic.
 
 /**
  * GuideSection Component
@@ -60,11 +45,10 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
   
   // Get translated level config
   const getLevelConfig = (levelId: SkillLevel) => ({
-    ...levelConfigBase[levelId],
     title: t(`skillLevels.${levelId}.title`),
     subtitle: t(`skillLevels.${levelId}.subtitle`),
   });
-  
+
   const config = getLevelConfig(level);
 
   const [completedCount, setCompletedCount] = useState(completedCountProp ?? 0);
@@ -125,38 +109,35 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
   // the reordering only cost the reader the order they had learned.
   const sortedGuides = filteredGuides;
 
+  // The section is not a card any more. A card of cards made the guide cards
+  // disappear into the section's own white ground on light, and the page read
+  // as a marketing grid rather than an index. A hairline rule between levels
+  // does the grouping the border used to do.
   return (
-    <section 
-      className="relative p-6 lg:p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 mb-12"
+    <section
+      className="border-t border-gray-200 pt-10 first:border-t-0 first:pt-0 dark:border-gray-800"
       aria-label={`${config.title} section`}
     >
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
-        <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${config.bgColor}`}>
-          <span className="text-2xl" role="img" aria-label={config.title}>
-            {config.icon}
-          </span>
+      <div className="mb-6">
+        <div className="flex flex-wrap items-center gap-3">
+          <h2 className="text-h2 font-semibold text-gray-900 dark:text-white">
+            {config.title}
+          </h2>
+          {level === 'beginner' && (
+            <span className="inline-flex items-center rounded-full border border-primary-200 px-2.5 py-0.5 text-micro font-semibold uppercase text-primary-text dark:border-primary-800 dark:text-primary-400">
+              {t('guideSection.startHere')}
+            </span>
+          )}
+          {completedCount === totalCount && (
+            <span className="inline-flex items-center rounded-full border border-success-300 px-2.5 py-0.5 text-micro font-semibold uppercase text-success-700 dark:border-success-800 dark:text-success-400">
+              {t('guideSection.complete')}
+            </span>
+          )}
         </div>
-        <div className="flex-1">
-          <div className="flex items-center gap-3">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-              {config.title}
-            </h2>
-            {level === 'beginner' && (
-              <span className="px-3 py-1 bg-friendly-purple-100 text-friendly-purple-700 dark:bg-friendly-purple-900 dark:text-friendly-purple-200 text-sm font-medium rounded-full">
-                {t('guideSection.startHere')}
-              </span>
-            )}
-            {completedCount === totalCount && (
-              <span className="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200 text-sm font-medium rounded-full">
-                ✓ {t('guideSection.complete')}
-              </span>
-            )}
-          </div>
-          <p className="text-gray-600 dark:text-gray-400">
-            {config.subtitle}
-          </p>
-        </div>
+        <p className="mt-1 max-w-measure text-body-sm text-gray-600 dark:text-gray-400">
+          {config.subtitle}
+        </p>
       </div>
 
       {/* Progress Bar - Show current level progress WITHOUT unlock status (that's for locked sections) */}
@@ -186,19 +167,23 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
           the way back, never leave a bare gap. */}
       {sortedGuides.length === 0 && normalizedFilter !== '' && (
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 py-6 text-center">
-          <Sparkles className="w-5 h-5 text-gray-400 dark:text-gray-500 shrink-0" aria-hidden="true" />
+          <SearchX
+            className="h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
+            strokeWidth={1.5}
+            aria-hidden="true"
+          />
           {/* ui.search.noResults is the only "nothing found" string that exists
               in all seven locales today. Its English wording says "matching your
               search", which is a shade off for a topic chip; a dedicated
               guidesPage.filter.noMatches key would read better once it can be
               translated in all seven. */}
-          <p className="text-gray-500 dark:text-gray-400">
+          <p className="text-body-sm text-gray-500 dark:text-gray-400">
             {t('ui.search.noResults')}
           </p>
           <button
             type="button"
             onClick={clearFilter}
-            className="inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-friendly-purple-400"
+            className="inline-flex items-center rounded-md border border-gray-200 bg-white px-3 py-1.5 text-body-sm font-medium text-gray-700 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-700 dark:hover:bg-gray-800"
           >
             {t('interestFilter.allGuides')}
           </button>

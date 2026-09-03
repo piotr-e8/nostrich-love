@@ -138,19 +138,18 @@ const jsonLd = [
 
   <main id="main-content">
     <!-- Hero -->
-    <section class="relative overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 dark:from-primary/5 dark:to-secondary/5" />
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 relative">
+    <section class="border-b border-gray-200 dark:border-gray-800">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
         <div class="max-w-3xl mx-auto text-center">
-          <p class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary-700 dark:text-primary-300 text-sm font-medium mb-6">
+          <p class="text-micro uppercase text-gray-500 dark:text-gray-400 mb-4">
             Honest comparison · Updated July 2026
           </p>
-          <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-6">
+          <h1 class="text-display font-bold text-gray-900 dark:text-white mb-6">
             Twitter/X vs
-            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Nostr</span>:
+            <span class="text-primary-text dark:text-primary-400">Nostr</span>:
             what you gain and give up
           </h1>
-          <p class="text-xl text-gray-600 dark:text-gray-300">
+          <p class="text-lead text-gray-600 dark:text-gray-300">
             Leaving X is easy to romanticize. Here is what actually changes, including
             the parts that are genuinely inconvenient.
           </p>
@@ -162,9 +161,9 @@ const jsonLd = [
     <section class="py-10">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="p-6 rounded-2xl border border-green-200 dark:border-green-800 bg-green-50/60 dark:bg-green-900/10">
-            <h2 class="text-lg font-bold mb-3 text-gray-900 dark:text-white">What you gain</h2>
-            <ul class="list-disc ps-6 text-gray-700 dark:text-gray-300 space-y-2">
+          <div class="p-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+            <h2 class="text-h3 font-bold mb-3 text-gray-900 dark:text-white">What you gain</h2>
+            <ul class="list-disc ps-6 text-body-sm text-gray-700 dark:text-gray-300 space-y-2">
               <li>An identity you own, which no platform can suspend</li>
               <li>No ads, no tracking-driven feed</li>
               <li>Chronological timelines, and a client that works for you</li>
@@ -172,9 +171,9 @@ const jsonLd = [
               <li>Sign-up without email or phone number</li>
             </ul>
           </div>
-          <div class="p-6 rounded-2xl border border-amber-200 dark:border-amber-800 bg-amber-50/60 dark:bg-amber-900/10">
-            <h2 class="text-lg font-bold mb-3 text-gray-900 dark:text-white">What you give up</h2>
-            <ul class="list-disc ps-6 text-gray-700 dark:text-gray-300 space-y-2">
+          <div class="p-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+            <h2 class="text-h3 font-bold mb-3 text-gray-900 dark:text-white">What you give up</h2>
+            <ul class="list-disc ps-6 text-body-sm text-gray-700 dark:text-gray-300 space-y-2">
               <li>Audience size, because the network is far smaller</li>
               <li>Discovery: no algorithm pushes your posts</li>
               <li>Polish, since the apps are rougher than X's</li>
@@ -191,46 +190,46 @@ const jsonLd = [
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
 
-          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Ownership: whose account is it?</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-4">
+          <h2 class="text-h2 font-bold mb-4 text-gray-900 dark:text-white">Ownership: whose account is it?</h2>
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-4">
             Your X account is, legally and practically, theirs: the platform can suspend it,
             delete it, or change the rules under it, and your followers vanish with it. Your
             <strong>Nostr identity is a cryptographic key pair</strong> generated on your device.
             No company issued it, so no company can take it away.
           </p>
-          <p class="text-gray-600 dark:text-gray-300 mb-8">
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-8">
             The trade is responsibility: only you hold the key, and only you can lose it. There is
             no "forgot password" here. Lose your nsec and the identity is gone for good. Five
-            minutes with the <a href="/guides/keys-and-security" class="text-primary-700 dark:text-primary-300 underline">keys guide</a>
+            minutes with the <a href="/guides/keys-and-security" class="text-primary-text dark:text-primary-400 underline underline-offset-2">keys guide</a>
             makes that risk manageable. Skipping it does not.
           </p>
 
-          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Algorithms &amp; reach</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-4">
+          <h2 class="text-h2 font-bold mb-4 text-gray-900 dark:text-white">Algorithms &amp; reach</h2>
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-4">
             X shows you a single feed optimized for engagement, which is a polite way of saying
             optimized to keep you scrolling rather than to show you what your friends said. Nostr
             feeds are <strong>chronological by default</strong>, and because clients are
             interchangeable, the display logic is your choice instead of a company's.
           </p>
-          <p class="text-gray-600 dark:text-gray-300 mb-8">
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-8">
             Be honest with yourself about the flip side: no algorithm also means <strong>no
             virality machine</strong>. Nothing is pushing your posts at strangers, so an audience
             grows slowly, through people actually reading you. If reach is how you pay rent, treat
             that as a real cost rather than a footnote.
           </p>
 
-          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Money without ads</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-8">
+          <h2 class="text-h2 font-bold mb-4 text-gray-900 dark:text-white">Money without ads</h2>
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-8">
             X pays creators from ad revenue, on the platform's terms, if you are accepted and stay
             in good standing. Nostr's native answer is <strong>zaps</strong>: readers attach Bitcoin
             Lightning tips straight to posts, person to person, with no platform cut and no program
             to apply to. Zaps are optional, so you need no Bitcoin to read or post. When you are
-            ready, the <a href="/guides/zaps-and-lightning" class="text-primary-700 dark:text-primary-300 underline">zaps guide</a>
+            ready, the <a href="/guides/zaps-and-lightning" class="text-primary-text dark:text-primary-400 underline underline-offset-2">zaps guide</a>
             covers wallets and setup.
           </p>
 
-          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Bans &amp; censorship</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-8">
+          <h2 class="text-h2 font-bold mb-4 text-gray-900 dark:text-white">Bans &amp; censorship</h2>
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-8">
             On X, a policy change or a moderation decision can end your account, and so can
             government pressure on the company. The platform is one chokepoint. Nostr has no
             chokepoint to squeeze: posts are <strong>cryptographically signed</strong> (they cannot
@@ -239,36 +238,36 @@ const jsonLd = [
             button to press.
           </p>
 
-          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">What you give up: the honest section</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-4">
+          <h2 class="text-h2 font-bold mb-4 text-gray-900 dark:text-white">What you give up: the honest section</h2>
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-4">
             This page would be advertising, not comparison, without this part:
           </p>
-          <ul class="list-disc ps-6 text-gray-600 dark:text-gray-300 mb-8 space-y-2">
+          <ul class="list-disc ps-6 text-body text-gray-600 dark:text-gray-300 mb-8 space-y-2">
             <li><strong>A much smaller network.</strong> Most of your Twitter audience is not on Nostr, and if you need them you will feel it on day one.</li>
             <li><strong>Harder discovery.</strong> There is no global search index and no trending machine, so finding people takes deliberate effort.</li>
             <li><strong>Do-it-yourself spam control.</strong> With no central moderation team, more junk reaches you until you tune your filters and relays.</li>
             <li><strong>Rougher apps.</strong> Many Nostr clients are volunteer-built. They improve fast, but X-grade polish is not the baseline.</li>
           </ul>
 
-          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">How to actually switch</h2>
-          <ol class="list-decimal ps-6 text-gray-600 dark:text-gray-300 mb-8 space-y-3">
+          <h2 class="text-h2 font-bold mb-4 text-gray-900 dark:text-white">How to actually switch</h2>
+          <ol class="list-decimal ps-6 text-body text-gray-600 dark:text-gray-300 mb-8 space-y-3">
             <li>
               <strong>Set up in 5 minutes.</strong> Follow the
-              <a href="/guides/quickstart" class="text-primary-700 dark:text-primary-300 underline">quickstart</a>:
+              <a href="/guides/quickstart" class="text-primary-text dark:text-primary-400 underline underline-offset-2">quickstart</a>:
               generate keys, pick a client, post once.
             </li>
             <li>
               <strong>Back up your nsec properly.</strong> Offline, before anything else. The
-              <a href="/guides/keys-and-security" class="text-primary-700 dark:text-primary-300 underline">keys guide</a> shows how.
+              <a href="/guides/keys-and-security" class="text-primary-text dark:text-primary-400 underline underline-offset-2">keys guide</a> shows how.
             </li>
             <li>
               <strong>Find your Twitter people.</strong> The
-              <a href="/twitter-bridge" class="text-primary-700 dark:text-primary-300 underline">Twitter Bridge</a>
+              <a href="/twitter-bridge" class="text-primary-text dark:text-primary-400 underline underline-offset-2">Twitter Bridge</a>
               checks which accounts you follow are already on Nostr.
             </li>
             <li>
               <strong>Fill the rest of your feed.</strong> Import a
-              <a href="/follow-pack" class="text-primary-700 dark:text-primary-300 underline">curated follow pack</a>.
+              <a href="/follow-pack" class="text-primary-text dark:text-primary-400 underline underline-offset-2">curated follow pack</a>.
               An empty feed is the #1 reason people bounce.
             </li>
             <li>
@@ -277,23 +276,23 @@ const jsonLd = [
             </li>
           </ol>
 
-          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Side by side</h2>
+          <h2 class="text-h2 font-bold mb-4 text-gray-900 dark:text-white">Side by side</h2>
         </div>
 
-        <div class="max-w-4xl mx-auto overflow-x-auto rounded-2xl border border-gray-200 dark:border-gray-700 mb-4">
-          <table class="w-full min-w-[640px] bg-white dark:bg-gray-800 text-sm">
+        <div class="max-w-4xl mx-auto overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-800 mb-4">
+          <table class="w-full min-w-[640px] bg-white dark:bg-gray-900 text-body-sm">
             <caption class="sr-only">Nostr and Twitter/X compared across 8 dimensions</caption>
             <thead>
-              <tr class="bg-gray-50 dark:bg-gray-900/40 border-b border-gray-200 dark:border-gray-700">
-                <th scope="col" class="p-4 text-start font-semibold text-gray-900 dark:text-white">Dimension</th>
-                <th scope="col" class="p-4 text-start font-semibold text-gray-900 dark:text-white">Nostr</th>
-                <th scope="col" class="p-4 text-start font-semibold text-gray-900 dark:text-white">Twitter/X</th>
+              <tr class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-800">
+                <th scope="col" class="p-4 text-start text-micro uppercase text-gray-500 dark:text-gray-400">Dimension</th>
+                <th scope="col" class="p-4 text-start text-micro uppercase text-gray-500 dark:text-gray-400">Nostr</th>
+                <th scope="col" class="p-4 text-start text-micro uppercase text-gray-500 dark:text-gray-400">Twitter/X</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+            <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
               {rows.map((row) => (
                 <tr class="align-top">
-                  <th scope="row" class="p-4 text-start font-medium text-gray-900 dark:text-white whitespace-nowrap">{row.dimension}</th>
+                  <th scope="row" class="p-4 text-start font-semibold text-gray-900 dark:text-white whitespace-nowrap">{row.dimension}</th>
                   <td class="p-4 text-gray-600 dark:text-gray-300">{row.nostr}</td>
                   <td class="p-4 text-gray-600 dark:text-gray-300">{row.twitter}</td>
                 </tr>
@@ -307,27 +306,27 @@ const jsonLd = [
     <!-- Primary CTA -->
     <section class="py-12">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-3xl mx-auto text-center p-8 rounded-2xl bg-gradient-to-br from-primary/10 to-secondary/10 dark:from-primary/15 dark:to-secondary/15 border border-primary/20">
-          <h2 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">The only way to know is to hold your own keys once</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-6">Keep your X account. Spend five minutes seeing what the other side feels like.</p>
+        <div class="max-w-3xl mx-auto text-center p-8 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
+          <h2 class="text-h2 font-bold mb-3 text-gray-900 dark:text-white">The only way to know is to hold your own keys once</h2>
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-6">Keep your X account. Spend five minutes seeing what the other side feels like.</p>
           <a
             href="/guides/quickstart"
-            class="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold text-white bg-primary-600 hover:bg-primary-700 rounded-xl shadow-lg hover:shadow-xl transition-all"
+            class="inline-flex items-center justify-center gap-2 px-8 py-4 text-lead font-semibold text-white bg-primary-600 hover:bg-primary-700 rounded-md transition-colors"
           >
             Try Nostr in 5 minutes. No email, no phone number.
           </a>
-          <p class="mt-4 text-sm text-gray-600 dark:text-gray-400">
-            Not ready for an account? <a href="https://sandstr.app" target="_blank" rel="noopener noreferrer" class="text-primary-700 dark:text-primary-300 underline">Try Nostr clients in your browser on Sandstr</a>. No keys, no install, nothing real.
+          <p class="mt-4 text-body-sm text-gray-600 dark:text-gray-400">
+            Not ready for an account? <a href="https://sandstr.app" target="_blank" rel="noopener noreferrer" class="text-primary-text dark:text-primary-400 underline underline-offset-2">Try Nostr clients in your browser on Sandstr</a>. No keys, no install, nothing real.
           </p>
         </div>
       </div>
     </section>
 
     <!-- FAQ -->
-    <section class="py-12 bg-gray-50 dark:bg-gray-900/30">
+    <section class="py-12 bg-gray-50 dark:bg-gray-900">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-2xl sm:text-3xl font-bold mb-8 text-gray-900 dark:text-white">Frequently asked questions</h2>
+          <h2 class="text-h2 font-bold mb-8 text-gray-900 dark:text-white">Frequently asked questions</h2>
           {faqs.map((faq) => (
             <FAQAccordion question={faq.q} category="basics">
               <div set:html={faq.a} />
@@ -341,33 +340,30 @@ const jsonLd = [
     <section class="py-16">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          <a href="/guides/quickstart" class="group p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-primary-400 hover:shadow-lg transition-all">
-            <div class="text-3xl mb-3" aria-hidden="true">🚀</div>
-            <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white group-hover:text-primary-700 dark:group-hover:text-primary-300">Start on Nostr in 5 minutes</h3>
-            <p class="text-gray-600 dark:text-gray-300">Generate keys, pick a client, make your first post. No email, no phone number.</p>
+          <a href="/guides/quickstart" class="p-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800">
+            <h3 class="text-h3 font-bold mb-2 text-gray-900 dark:text-white">Start on Nostr in 5 minutes</h3>
+            <p class="text-body-sm text-gray-600 dark:text-gray-300">Generate keys, pick a client, make your first post. No email, no phone number.</p>
           </a>
-          <a href="/twitter-bridge" class="group p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-primary-400 hover:shadow-lg transition-all">
-            <div class="text-3xl mb-3" aria-hidden="true">🌉</div>
-            <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white group-hover:text-primary-700 dark:group-hover:text-primary-300">Find your Twitter follows</h3>
-            <p class="text-gray-600 dark:text-gray-300">The Twitter Bridge shows which people you follow are already on Nostr.</p>
+          <a href="/twitter-bridge" class="p-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800">
+            <h3 class="text-h3 font-bold mb-2 text-gray-900 dark:text-white">Find your Twitter follows</h3>
+            <p class="text-body-sm text-gray-600 dark:text-gray-300">The Twitter Bridge shows which people you follow are already on Nostr.</p>
           </a>
-          <a href="/follow-pack" class="group p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-primary-400 hover:shadow-lg transition-all">
-            <div class="text-3xl mb-3" aria-hidden="true">👥</div>
-            <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white group-hover:text-primary-700 dark:group-hover:text-primary-300">Don't start with an empty feed</h3>
-            <p class="text-gray-600 dark:text-gray-300">{accountCount} curated accounts, sorted by interest. Import them into any client.</p>
+          <a href="/follow-pack" class="p-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800">
+            <h3 class="text-h3 font-bold mb-2 text-gray-900 dark:text-white">Don't start with an empty feed</h3>
+            <p class="text-body-sm text-gray-600 dark:text-gray-300">{accountCount} curated accounts, sorted by interest. Import them into any client.</p>
           </a>
         </div>
 
         <div class="max-w-4xl mx-auto text-center text-gray-600 dark:text-gray-300">
           <p class="mb-2">
             More head-to-head:
-            <a href="/nostr-vs-bluesky/" class="text-primary-700 dark:text-primary-300 underline font-medium">Nostr vs Bluesky</a>
+            <a href="/nostr-vs-bluesky/" class="text-primary-text dark:text-primary-400 underline underline-offset-2 font-medium">Nostr vs Bluesky</a>
             ·
-            <a href="/nostr-vs-mastodon/" class="text-primary-700 dark:text-primary-300 underline font-medium">Nostr vs Mastodon</a>
+            <a href="/nostr-vs-mastodon/" class="text-primary-text dark:text-primary-400 underline underline-offset-2 font-medium">Nostr vs Mastodon</a>
           </p>
           <p>
             Want the deep dive? Read the
-            <a href="/guides/protocol-comparison" class="text-primary-700 dark:text-primary-300 underline font-medium">full three-protocol technical comparison</a>.
+            <a href="/guides/protocol-comparison" class="text-primary-text dark:text-primary-400 underline underline-offset-2 font-medium">full three-protocol technical comparison</a>.
           </p>
         </div>
       </div>

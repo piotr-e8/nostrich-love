@@ -23,14 +23,14 @@ const bitcoinQr = await QRCode.toString(`bitcoin:${SUPPORT.bitcoin}`, qrOpts);
     <section class="py-12 lg:py-16">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
-          <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4 text-gray-900 dark:text-white">
+          <h1 class="text-h1 font-bold mb-4 text-gray-900 dark:text-white">
             Value for value
           </h1>
-          <p class="text-lg text-gray-600 dark:text-gray-300 mb-2">
+          <p class="text-lead text-gray-600 dark:text-gray-400 mb-2 max-w-measure">
             Nostrich.love is free and open source, in seven languages, with no ads, no
             tracking and no paywall. One person builds it and pays for it.
           </p>
-          <p class="text-lg text-gray-600 dark:text-gray-300">
+          <p class="text-lead text-gray-600 dark:text-gray-400 max-w-measure">
             If it helped you get started, you can send some value back. Any amount,
             entirely optional.
           </p>
@@ -39,29 +39,28 @@ const bitcoinQr = await QRCode.toString(`bitcoin:${SUPPORT.bitcoin}`, qrOpts);
     </section>
 
     <!-- Zap -->
-    <section class="py-10 bg-gray-50 dark:bg-gray-900/30">
+    <section class="py-10 bg-gray-50 dark:bg-gray-900 border-y border-gray-200 dark:border-gray-800">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
           <div class="flex items-start gap-4">
-            <span class="text-3xl" aria-hidden="true">⚡</span>
             <div class="min-w-0">
-              <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                Zap us on Nostr <span class="text-sm font-normal text-gray-500 dark:text-gray-400">(the native way)</span>
+              <h2 class="text-h2 font-semibold text-gray-900 dark:text-white mb-2">
+                Zap us on Nostr <span class="text-body-sm font-normal text-gray-500 dark:text-gray-400">(the native way)</span>
               </h2>
-              <p class="text-gray-600 dark:text-gray-300 mb-4">
+              <p class="text-body text-gray-600 dark:text-gray-400 mb-4 max-w-measure">
                 You just learned what zaps are, so here is a safe first target. Open our
                 profile in your client and hit the zap button. The profile's Lightning
                 address is verified and zap-capable, so it will go through.
               </p>
-              <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3 mb-4">
-                <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Our npub:</p>
-                <p class="text-sm font-mono break-all text-gray-900 dark:text-gray-100">{SUPPORT.npub}</p>
+              <div class="rounded-lg border border-gray-200 bg-white p-3 mb-4 dark:border-gray-800 dark:bg-gray-900">
+                <p class="text-caption text-gray-500 dark:text-gray-400 mb-1">Our npub:</p>
+                <p class="text-body-sm font-mono break-all text-gray-900 dark:text-gray-100">{SUPPORT.npub}</p>
               </div>
               <div class="flex flex-wrap gap-3">
                 <button
                   type="button"
                   data-copy={SUPPORT.npub}
-                  class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-sm font-medium transition-colors"
+                  class="px-4 py-2 rounded-md border border-gray-200 bg-white text-body-sm font-medium text-gray-900 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-100 dark:hover:border-gray-700 dark:hover:bg-gray-800"
                 >
                   Copy npub
                 </button>
@@ -69,7 +68,7 @@ const bitcoinQr = await QRCode.toString(`bitcoin:${SUPPORT.bitcoin}`, qrOpts);
                   href={`https://njump.me/${SUPPORT.npub}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-sm font-medium transition-colors"
+                  class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-md text-body-sm font-medium transition-colors"
                 >
                   Open our profile
                 </a>
@@ -85,20 +84,20 @@ const bitcoinQr = await QRCode.toString(`bitcoin:${SUPPORT.bitcoin}`, qrOpts);
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
           <div class="flex flex-col sm:flex-row items-start gap-6">
-            <div class="shrink-0 bg-white p-3 rounded-xl border border-gray-200 dark:border-gray-700 [&_svg]:block [&_svg]:h-[180px] [&_svg]:w-[180px]" set:html={lightningQr} />
+            <div class="shrink-0 bg-white p-3 rounded-lg border border-gray-200 dark:border-gray-800 [&_svg]:block [&_svg]:h-[180px] [&_svg]:w-[180px]" set:html={lightningQr} />
             <div class="min-w-0">
-              <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Lightning</h2>
-              <p class="text-gray-600 dark:text-gray-300 mb-4">
+              <h2 class="text-h2 font-semibold text-gray-900 dark:text-white mb-2">Lightning</h2>
+              <p class="text-body text-gray-600 dark:text-gray-400 mb-4 max-w-measure">
                 No Nostr client handy? Any Lightning wallet can pay this address.
                 Scan the code, or copy it.
               </p>
-              <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3 mb-4">
-                <p class="text-sm font-mono break-all text-gray-900 dark:text-gray-100">{SUPPORT.lightning}</p>
+              <div class="rounded-lg border border-gray-200 bg-gray-50 p-3 mb-4 dark:border-gray-800 dark:bg-gray-900">
+                <p class="text-body-sm font-mono break-all text-gray-900 dark:text-gray-100">{SUPPORT.lightning}</p>
               </div>
               <button
                 type="button"
                 data-copy={SUPPORT.lightning}
-                class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-sm font-medium transition-colors"
+                class="px-4 py-2 rounded-md border border-gray-200 bg-white text-body-sm font-medium text-gray-900 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-100 dark:hover:border-gray-700 dark:hover:bg-gray-800"
               >
                 Copy Lightning address
               </button>
@@ -109,28 +108,28 @@ const bitcoinQr = await QRCode.toString(`bitcoin:${SUPPORT.bitcoin}`, qrOpts);
     </section>
 
     <!-- On-chain -->
-    <section class="py-10 bg-gray-50 dark:bg-gray-900/30">
+    <section class="py-10 border-t border-gray-200 dark:border-gray-800">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
           <div class="flex flex-col sm:flex-row items-start gap-6">
-            <div class="shrink-0 bg-white p-3 rounded-xl border border-gray-200 dark:border-gray-700 [&_svg]:block [&_svg]:h-[180px] [&_svg]:w-[180px]" set:html={bitcoinQr} />
+            <div class="shrink-0 bg-white p-3 rounded-lg border border-gray-200 dark:border-gray-800 [&_svg]:block [&_svg]:h-[180px] [&_svg]:w-[180px]" set:html={bitcoinQr} />
             <div class="min-w-0">
-              <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Bitcoin (on-chain)</h2>
-              <p class="text-gray-600 dark:text-gray-300 mb-4">
+              <h2 class="text-h2 font-semibold text-gray-900 dark:text-white mb-2">Bitcoin (on-chain)</h2>
+              <p class="text-body text-gray-600 dark:text-gray-400 mb-4 max-w-measure">
                 For larger or one-off contributions. On-chain fees apply, so Lightning
                 is the better fit for small amounts.
               </p>
-              <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3 mb-4">
-                <p class="text-sm font-mono break-all text-gray-900 dark:text-gray-100">{SUPPORT.bitcoin}</p>
+              <div class="rounded-lg border border-gray-200 bg-gray-50 p-3 mb-4 dark:border-gray-800 dark:bg-gray-900">
+                <p class="text-body-sm font-mono break-all text-gray-900 dark:text-gray-100">{SUPPORT.bitcoin}</p>
               </div>
               <button
                 type="button"
                 data-copy={SUPPORT.bitcoin}
-                class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-sm font-medium transition-colors"
+                class="px-4 py-2 rounded-md border border-gray-200 bg-white text-body-sm font-medium text-gray-900 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-100 dark:hover:border-gray-700 dark:hover:bg-gray-800"
               >
                 Copy address
               </button>
-              <p class="text-xs text-gray-500 dark:text-gray-400 mt-4">
+              <p class="text-caption text-gray-500 dark:text-gray-400 mt-4">
                 This is a single static address, so contributions to it are publicly
                 visible on the blockchain. Transparent by design.
               </p>
@@ -143,7 +142,7 @@ const bitcoinQr = await QRCode.toString(`bitcoin:${SUPPORT.bitcoin}`, qrOpts);
     <!-- Where it goes -->
     <section class="py-10">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-3xl mx-auto text-sm text-gray-600 dark:text-gray-400">
+        <div class="max-w-3xl mx-auto text-body-sm text-gray-600 dark:text-gray-400">
           <p>
             Support pays for hosting, domains and the time it takes to keep 16 guides
             accurate in 7 languages. If you would rather contribute skills than sats,

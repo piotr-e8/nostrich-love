@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, Check, Sparkles, Bitcoin, Lock, Palette, Code, Video } from 'lucide-react';
+import {
+  ChevronDown,
+  Check,
+  LayoutGrid,
+  Bitcoin,
+  Lock,
+  ShieldCheck,
+  Server,
+  Wrench,
+  Users,
+} from 'lucide-react';
 import { useTranslation } from '../../hooks/useTranslation';
 
 export type InterestFilterValue = string | null;
@@ -24,15 +34,23 @@ export interface InterestFilterProps {
   className?: string;
 }
 
-// Helper to get translated filter options
+// Every icon here is decorative: the chip's own label is what a screen reader
+// should read, so all of them carry aria-hidden.
+//
+// Privacy and Security used to share the same padlock, which made two chips
+// look like one option rendered twice. Relays had a </> that told a writer
+// nothing, Tools had a paint palette, Community had a video camera. Sizes and
+// stroke weight follow the icon defaults in VISUAL_SYSTEM.md §5.
+const chipIcon = 'h-4 w-4 shrink-0';
+
 const getFilterOptions = (t: (key: string) => string): InterestFilterOption[] => [
-  { value: null, label: t('interestFilter.allGuides'), icon: <Sparkles className="w-4 h-4" /> },
-  { value: 'bitcoin', label: t('interestFilter.bitcoin'), icon: <Bitcoin className="w-4 h-4" /> },
-  { value: 'privacy', label: t('interestFilter.privacy'), icon: <Lock className="w-4 h-4" /> },
-  { value: 'security', label: t('interestFilter.security'), icon: <Lock className="w-4 h-4" /> },
-  { value: 'relays', label: t('interestFilter.relays'), icon: <Code className="w-4 h-4" /> },
-  { value: 'tools', label: t('interestFilter.tools'), icon: <Palette className="w-4 h-4" /> },
-  { value: 'community', label: t('interestFilter.community'), icon: <Video className="w-4 h-4" /> },
+  { value: null, label: t('interestFilter.allGuides'), icon: <LayoutGrid className={chipIcon} strokeWidth={1.5} aria-hidden="true" /> },
+  { value: 'bitcoin', label: t('interestFilter.bitcoin'), icon: <Bitcoin className={chipIcon} strokeWidth={1.5} aria-hidden="true" /> },
+  { value: 'privacy', label: t('interestFilter.privacy'), icon: <Lock className={chipIcon} strokeWidth={1.5} aria-hidden="true" /> },
+  { value: 'security', label: t('interestFilter.security'), icon: <ShieldCheck className={chipIcon} strokeWidth={1.5} aria-hidden="true" /> },
+  { value: 'relays', label: t('interestFilter.relays'), icon: <Server className={chipIcon} strokeWidth={1.5} aria-hidden="true" /> },
+  { value: 'tools', label: t('interestFilter.tools'), icon: <Wrench className={chipIcon} strokeWidth={1.5} aria-hidden="true" /> },
+  { value: 'community', label: t('interestFilter.community'), icon: <Users className={chipIcon} strokeWidth={1.5} aria-hidden="true" /> },
 ];
 
 /**
@@ -104,34 +122,38 @@ export const InterestFilter: React.FC<InterestFilterProps> = ({
       <div className={`relative interest-filter-dropdown ${className}`}>
         <button
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          className="w-full flex items-center justify-between px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-start focus:outline-none focus:ring-2 focus:ring-friendly-purple-400"
+          className="w-full flex items-center justify-between px-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-md text-start transition-colors hover:border-gray-300 dark:hover:border-gray-700"
           aria-expanded={isDropdownOpen}
           aria-haspopup="listbox"
         >
           <div className="flex items-center gap-2">
             {activeOption.icon}
-            <span className="font-medium text-gray-900 dark:text-white">
+            <span className="text-body-sm font-medium text-gray-900 dark:text-white">
               {activeOption.label}
             </span>
           </div>
-          <ChevronDown 
-            className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} 
+          {/* The rotation is the open/closed indicator, not decoration, so it
+              stays — instant rather than animated under reduced motion. */}
+          <ChevronDown
+            className={`h-5 w-5 shrink-0 text-gray-400 transition-transform duration-200 motion-reduce:transition-none dark:text-gray-500 ${isDropdownOpen ? 'rotate-180' : ''}`}
+            strokeWidth={1.5}
+            aria-hidden="true"
           />
         </button>
 
         {isDropdownOpen && (
-          <div 
-            className="absolute top-full start-0 end-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50 overflow-hidden"
+          <div
+            className="absolute top-full start-0 end-0 mt-1 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-md shadow-raised z-50 overflow-hidden"
             role="listbox"
           >
             {options.map((option) => (
               <button
                 key={option.value ?? 'all'}
                 onClick={() => handleSelect(option.value)}
-                className={`w-full flex items-center justify-between px-4 py-3 text-start transition-colors ${
+                className={`w-full flex items-center justify-between px-4 py-3 text-start text-body-sm transition-colors ${
                   activeFilter === option.value
-                    ? 'bg-friendly-purple-50 dark:bg-friendly-purple-900/30 text-friendly-purple-700 dark:text-friendly-purple-300'
-                    : 'hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
+                    ? 'bg-primary-50 text-primary-text dark:bg-gray-800 dark:text-primary-400'
+                    : 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800'
                 }`}
                 role="option"
                 aria-selected={activeFilter === option.value}
@@ -141,7 +163,7 @@ export const InterestFilter: React.FC<InterestFilterProps> = ({
                   <span>{option.label}</span>
                 </div>
                 {activeFilter === option.value && (
-                  <Check className="w-4 h-4" />
+                  <Check className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                 )}
               </button>
             ))}
@@ -166,10 +188,10 @@ export const InterestFilter: React.FC<InterestFilterProps> = ({
           <button
             key={option.value ?? 'all'}
             onClick={() => handleSelect(option.value)}
-            className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-friendly-purple-400 ${
+            className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-body-sm font-medium transition-colors ${
               isActive
-                ? 'bg-friendly-purple-700 text-white shadow-sm'
-                : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+                ? 'border border-primary-600 bg-primary-600 text-white hover:border-primary-700 hover:bg-primary-700'
+                : 'border border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-700 dark:hover:bg-gray-800'
             }`}
             aria-pressed={isActive}
           >

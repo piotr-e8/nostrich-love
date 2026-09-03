@@ -1,13 +1,13 @@
 ---
-import "@fontsource/inter/400.css";
-import "@fontsource/inter/500.css";
-import "@fontsource/inter/600.css";
-import "@fontsource/inter/700.css";
+// No webfont for body text. The body stack is the platform's own UI face —
+// see tailwind.config.js `fontFamily.sans`. Inter used to be pulled in here as
+// four @fontsource weights; it was dropped so the only face we ship is the
+// display serif below.
 import "../styles/globals.css";
 import SEO from "../components/SEO.astro";
 import { siteConfig } from "../config/site";
 import type { SEOProps } from "../config/seo-types";
-import { type Locale, getLocaleConfig } from "../config/locales";
+import { type Locale, getLocaleConfig, usesDisplayFace } from "../config/locales";
 import { setServerLocale } from "../i18n";
 
 interface Props extends SEOProps {
@@ -26,10 +26,26 @@ setServerLocale(locale);
 const localeConfig = getLocaleConfig(locale);
 const htmlLang = localeConfig.htmlLang;
 const dir = localeConfig.direction;
+
+// Fraunces is a Latin face. Han, Arabic and Devanagari readers keep their
+// system fonts and never fetch it: the data attribute below is what points
+// --font-display at Fraunces, so on those locales the @font-face rule is
+// declared but never referenced, and an unreferenced @font-face downloads
+// nothing. The unicode-range on each rule is the second gate.
+const displayFace = usesDisplayFace(locale);
+// Polish is the only locale whose text reaches past Latin-1 (ą ć ę ł ń ś ź ż).
+// Spanish and German accents are all inside U+00C0–U+00FF, which the base
+// latin file already carries, so only pl pays for the second file up front.
+const preloadLatinExt = displayFace && localeConfig.latinExtended;
 ---
 
 <!DOCTYPE html>
-<html lang={htmlLang} dir={dir} class="scroll-smooth">
+<html
+  lang={htmlLang}
+  dir={dir}
+  class="scroll-smooth"
+  data-display-face={displayFace ? "fraunces" : undefined}
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -40,12 +56,78 @@ const dir = localeConfig.direction;
     <!-- RSS feed (single English feed — un-prefixed URLs are canonical) -->
     <link rel="alternate" type="application/rss+xml" title="Nostrich.love" href="/rss.xml" />
 
+    <!--
+      Display face: Fraunces Variable (SIL OFL 1.1), self-hosted under
+      /fonts/ because the site's own CSP is `font-src 'self'`. Latin-script
+      locales only. The @font-face rules live in the inline block below, not in
+      the bundled stylesheet, so the request starts on the first byte of the
+      head instead of waiting for a CSS round trip. crossorigin is required on
+      a font preload even same-origin, or the browser fetches the file twice.
+      Licence text ships alongside at /fonts/Fraunces-LICENSE.txt.
+    -->
+    {displayFace && (
+      <link
+        rel="preload"
+        as="font"
+        type="font/woff2"
+        href="/fonts/fraunces-latin-wght-normal.woff2"
+        crossorigin
+      />
+    )}
+    {preloadLatinExt && (
+      <link
+        rel="preload"
+        as="font"
+        type="font/woff2"
+        href="/fonts/fraunces-latin-ext-wght-normal.woff2"
+        crossorigin
+      />
+    )}
+
     <!-- Critical CSS to prevent FOUC -->
     <style is:inline>
       /* Prevent FOUC for dark mode */
       html.dark { background-color: #0F0A1A; }
       html.dark body { background-color: #0F0A1A; color: #ffffff; }
-      
+
+      /* --- Display face -------------------------------------------------
+         font-display: swap — the page renders in the system stack first and
+         reflows once. Never block on this. */
+      @font-face {
+        font-family: "Fraunces";
+        font-style: normal;
+        font-display: swap;
+        font-weight: 100 900;
+        src: url("/fonts/fraunces-latin-wght-normal.woff2") format("woff2-variations");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+          U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+          U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: "Fraunces";
+        font-style: normal;
+        font-display: swap;
+        font-weight: 100 900;
+        src: url("/fonts/fraunces-latin-ext-wght-normal.woff2") format("woff2-variations");
+        unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+          U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+          U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+          U+A720-A7FF;
+      }
+
+      /* Headings resolve through this variable. Default is the body stack, so
+         zh / ar / hi headings stay in the reader's own system font and the
+         woff2 above is never referenced, therefore never fetched. */
+      :root {
+        --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+          "Apple Color Emoji", "Segoe UI Emoji";
+        --font-display: var(--font-sans);
+      }
+      html[data-display-face="fraunces"] {
+        --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+      }
+
       /* Skip to content link */
       .skip-to-content {
         position: absolute;
@@ -66,19 +148,28 @@ const dir = localeConfig.direction;
         top: 0;
       }
       
-      /* Focus indicators */
+      /* Focus indicators. This is the safety net under the ornament strip:
+         when a component loses a decorative ring:* class, the focus ring must
+         not go with it. Purple-600 on light, purple-300 on dark — the 500 used
+         before was too close to the dark ground to see. */
       *:focus-visible {
-        outline: 2px solid #8B5CF6;
+        outline: 2px solid #7C3AED;
         outline-offset: 2px;
       }
-      
+
       button:focus-visible,
       a:focus-visible {
-        outline: 2px solid #8B5CF6;
+        outline: 2px solid #7C3AED;
         outline-offset: 2px;
         border-radius: 0.375rem;
       }
-      
+
+      html.dark *:focus-visible,
+      html.dark button:focus-visible,
+      html.dark a:focus-visible {
+        outline-color: #C4B5FD;
+      }
+
       /* Theme System - Friendly to Cyberpunk Gradual Transition */
       :root {
         /* Friendly Theme (Default for beginners) */
@@ -90,7 +181,8 @@ const dir = localeConfig.direction;
         --theme-accent-secondary: #FFD700;
         --theme-border: #E5E7EB;
         --theme-card-bg: #FFFFFF;
-        --theme-hero-gradient: linear-gradient(135deg, #F3F0FF 0%, #FFF7EB 50%, #FFFDF8 100%);
+        /* Flat. Was a three-stop 135deg gradient; the hero now rests on paper. */
+        --theme-hero-gradient: #FFFDF8;
       }
       
       /* Theme: Friendly (beginner mode) */
@@ -103,7 +195,8 @@ const dir = localeConfig.direction;
         --theme-accent-secondary: #FFD700;
         --theme-border: #E5E7EB;
         --theme-card-bg: #FFFFFF;
-        --theme-hero-gradient: linear-gradient(135deg, #F3F0FF 0%, #FFF7EB 50%, #FFFDF8 100%);
+        /* Flat. Was a three-stop 135deg gradient; the hero now rests on paper. */
+        --theme-hero-gradient: #FFFDF8;
       }
       
       /* Theme: Cyberpunk (advanced mode) */
@@ -116,7 +209,7 @@ const dir = localeConfig.direction;
         --theme-accent-secondary: #6366F1;
         --theme-border: #374151;
         --theme-card-bg: #1F1F2E;
-        --theme-hero-gradient: linear-gradient(135deg, #0F0A1A 0%, #1A1025 50%, #2D1B4E 100%);
+        --theme-hero-gradient: #0F0A1A;
       }
       
       /* Apply theme variables */
@@ -141,8 +234,6 @@ const dir = localeConfig.direction;
       })();
     </script>
     
-    <!-- Fonts with display=swap for performance -->
-    <!-- Inter is self-hosted via @fontsource (no third-party font requests) -->
     
     <!-- Cloudflare Web Analytics (Privacy-friendly, no cookies, GDPR compliant) -->
     {siteConfig.analytics.enabled && (

@@ -49,24 +49,24 @@ export function ProtocolComparison({
       {displayItems.map((item) => (
         <div
           key={item.title}
-          className="grid gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900 md:grid-cols-2"
+          className="grid gap-4 rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900 md:grid-cols-2"
         >
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+            <p className="text-micro font-semibold uppercase text-gray-500 dark:text-gray-400">
               {t("protocolComparisonUI.centralizedLabel")}
             </p>
-            <h4 className="mt-1 text-lg font-semibold text-gray-900 dark:text-white">
+            <h4 className="mt-1 text-h3 text-gray-900 dark:text-white">
               {item.title}
             </h4>
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            <p className="mt-2 text-body-sm text-gray-600 dark:text-gray-400">
               {item.centralized}
             </p>
           </div>
-          <div className="rounded-xl bg-gradient-to-br from-primary/10 to-secondary/10 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-primary-600 dark:text-primary-400">
+          <div className="rounded-md border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-800">
+            <p className="text-micro font-semibold uppercase text-primary-text dark:text-primary-400">
               {t("protocolComparisonUI.nostrLabel")}
             </p>
-            <p className="mt-2 text-sm text-gray-900 dark:text-white">
+            <p className="mt-2 text-body-sm text-gray-900 dark:text-white">
               {item.nostr}
             </p>
           </div>

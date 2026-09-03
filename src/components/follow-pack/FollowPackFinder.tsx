@@ -238,7 +238,7 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
     <div className="w-full min-h-[600px]">
       {/* Top section - Filters. The page owns the heading above this island. */}
       <div className="mb-6">
-        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 space-y-4">
+        <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
           <SearchBar
             value={filterState.searchQuery}
             onChange={setSearchQuery}
@@ -262,7 +262,7 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
           />
           
           {filterState.categories.length > 0 && (
-            <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 pt-2 border-t border-gray-100 dark:border-gray-700">
+            <div className="flex items-center gap-2 border-t border-gray-200 pt-2 text-body-sm text-gray-600 dark:border-gray-800 dark:text-gray-400">
               <span>Filtered by:</span>
               {filterState.categories.map(catId => {
                 const cat = categories.find(c => c.id === catId);
@@ -272,10 +272,10 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
                   // note in ExportModal's category breakdown.
                   <span
                     key={catId}
-                    className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
+                    className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 px-2 py-1 text-caption font-medium text-gray-700 dark:border-gray-800 dark:text-gray-200"
                   >
                     <span
-                      className="w-2 h-2 rounded-full flex-shrink-0"
+                      className="h-2 w-2 flex-shrink-0 rounded-full"
                       style={{ backgroundColor: cat.color }}
                       aria-hidden="true"
                     />
@@ -293,7 +293,7 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
               })}
               <button
                 onClick={() => setFilterState(prev => ({ ...prev, categories: [] }))}
-                className="text-primary-600 dark:text-primary-400 hover:underline ms-2 text-xs"
+                className="ms-2 text-caption text-primary-text underline-offset-2 hover:underline dark:text-primary-400"
               >
                 Clear filters
               </button>
@@ -315,8 +315,8 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
           
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="mt-8 flex items-center justify-between bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
-              <div className="text-sm text-gray-600 dark:text-gray-400">
+            <div className="mt-8 flex items-center justify-between rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+              <div className="text-body-sm text-gray-600 dark:text-gray-400">
                 Showing {(currentPage - 1) * ACCOUNTS_PER_PAGE + 1} - {Math.min(currentPage * ACCOUNTS_PER_PAGE, filteredAccounts.length)} of {filteredAccounts.length} accounts
               </div>
               
@@ -324,7 +324,7 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
                 <button
                   onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                   disabled={currentPage === 1}
-                  className="px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-600 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700"
+                  className="rounded-md border border-gray-300 px-3 py-1.5 text-body-sm font-medium transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:hover:bg-gray-800"
                 >
                   Previous
                 </button>
@@ -332,16 +332,16 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
                 <div className="flex items-center gap-1">
                   {getPageNumbers().map((page, index) => (
                     page === '...' ? (
-                      <span key={`ellipsis-${index}`} className="px-2 text-gray-400">...</span>
+                      <span key={`ellipsis-${index}`} className="px-2 text-gray-400 dark:text-gray-500">...</span>
                     ) : (
                       <button
                         key={page}
                         onClick={() => setCurrentPage(page as number)}
                         className={`
-                          w-8 h-8 rounded-lg text-sm font-medium
+                          h-8 w-8 rounded-md text-body-sm font-medium transition-colors
                           ${currentPage === page
                             ? 'bg-primary-600 text-white'
-                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                            : 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800'
                           }
                         `}
                       >
@@ -354,7 +354,7 @@ export const FollowPackFinder: React.FC<FollowPackFinderProps> = ({
                 <button
                   onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                   disabled={currentPage === totalPages}
-                  className="px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-600 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700"
+                  className="rounded-md border border-gray-300 px-3 py-1.5 text-body-sm font-medium transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:hover:bg-gray-800"
                 >
                   Next
                 </button>

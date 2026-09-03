@@ -3275,7 +3275,8 @@
     "lastInLevelDescriptionFinal": "यहाँ गाइड का रास्ता खत्म होता है। {level} के बाद कोई स्तर नहीं है।",
     "continueToLevel": "{level} पर आगे बढ़ें",
     "unlockRequirements": "{nextLevel} अनलॉक करने के लिए {currentLevel} की और गाइड पूरी करें",
-    "offLevelMessage": "यह गाइड आपके वर्तमान {level} स्तर का हिस्सा नहीं है"
+    "offLevelMessage": "यह गाइड आपके वर्तमान {level} स्तर का हिस्सा नहीं है",
+    "aria": "गाइड नेविगेशन"
   },
   "continueLearning": {
     "allLevelsComplete": "सभी स्तर पूर्ण!",

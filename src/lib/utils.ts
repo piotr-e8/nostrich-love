@@ -1,5 +1,36 @@
 import { type ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { extendTailwindMerge } from 'tailwind-merge';
+
+// tailwind-merge has to be told that the named type steps are font sizes.
+// Without this it files `text-h3` and `text-caption` under the same group as
+// `text-gray-900`, so `cn("text-body-sm", "text-gray-600")` silently returns
+// only the last one — the size or the colour disappears, and which one you lose
+// depends on the order the strings happen to be in. That hit 24 call sites the
+// moment the type scale landed: chips whose label reverted to inherited size,
+// a wordmark that lost its colour. Named steps live in tailwind.config.js
+// `fontSize`; keep the two lists in step.
+const twMerge = extendTailwindMerge({
+  extend: {
+    classGroups: {
+      'font-size': [
+        {
+          text: [
+            'display',
+            'h1',
+            'h2',
+            'h3',
+            'h4',
+            'lead',
+            'body',
+            'body-sm',
+            'caption',
+            'micro',
+          ],
+        },
+      ],
+    },
+  },
+});
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

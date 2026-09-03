@@ -52,10 +52,10 @@ interface ClientComparisonTableProps {
 }
 
 const PLATFORM_ICONS: Record<Platform, React.ReactNode> = {
-  ios: <Smartphone className="w-4 h-4" />,
-  android: <Smartphone className="w-4 h-4" />,
-  web: <Globe className="w-4 h-4" />,
-  desktop: <Monitor className="w-4 h-4" />,
+  ios: <Smartphone className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />,
+  android: <Smartphone className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />,
+  web: <Globe className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />,
+  desktop: <Monitor className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />,
 };
 
 // The CSV is a file the reader keeps, not a UI label, so the name stays
@@ -329,50 +329,50 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
   };
 
   const difficultyColors: Record<Difficulty, string> = {
-    beginner: 'text-success-500 bg-success-500/10',
-    intermediate: 'text-warning-500 bg-warning-500/10',
-    advanced: 'text-error-500 bg-error-500/10',
+    beginner: 'text-success-700 dark:text-success-400 bg-success-50 dark:bg-success-950',
+    intermediate: 'text-warning-800 dark:text-warning-300 border border-warning-200 dark:border-warning-900',
+    advanced: 'text-error-800 dark:text-error-300 border border-error-200 dark:border-error-900',
   };
 
   return (
     <div className={cn("max-w-6xl mx-auto", className)}>
       {/* Search & Filters */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-4 mb-6">
+      <div className="mb-6 rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" strokeWidth={1.5} aria-hidden="true" />
             <input
               type="text"
               aria-label={t('clientComparisonTable.searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={t('clientComparisonTable.searchPlaceholder')}
-              className="w-full ps-10 pe-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none"
+              className="w-full ps-10 pe-4 py-2.5 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-md text-body text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-colors hover:border-gray-400 dark:hover:border-gray-600"
             />
           </div>
           <div className="flex gap-2">
             <button
               onClick={() => setShowFilters(!showFilters)}
               className={cn(
-                "px-4 py-2.5 rounded-xl font-medium transition-all inline-flex items-center gap-2 text-sm",
+                "px-4 py-2.5 rounded-md font-medium transition-colors inline-flex items-center gap-2 text-body-sm",
                 showFilters
-                  ? "bg-purple-500 text-white"
-                  : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                  ? "bg-primary-600 text-white"
+                  : "border border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800"
               )}
             >
-              <Filter className="w-4 h-4" />
+              <Filter className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
               {t('clientComparisonTable.filters.button')}
               {(selectedPlatforms.size > 0 || selectedFeatures.size > 0 || difficultyFilter) && (
-                <span className="w-5 h-5 bg-white text-purple-500 rounded-full text-xs flex items-center justify-center font-bold">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-caption font-semibold text-primary-text">
                   {selectedPlatforms.size + selectedFeatures.size + (difficultyFilter ? 1 : 0)}
                 </span>
               )}
             </button>
             <button
               onClick={exportData}
-              className="px-4 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-xl font-medium transition-all inline-flex items-center gap-2 text-sm"
+              className="inline-flex items-center gap-2 rounded-md border border-gray-200 px-4 py-2.5 text-body-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800"
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
               {t('clientComparisonTable.export')}
             </button>
           </div>
@@ -380,20 +380,20 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
 
         {/* Expandable Filters */}
         {showFilters && (
-            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 space-y-4 animate-slide-down motion-reduce:animate-none">
+            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800 space-y-4 animate-slide-down motion-reduce:animate-none">
               {/* Platform Filters */}
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium">{t('clientComparisonTable.filters.platform')}</p>
+                <p className="text-body-sm text-gray-500 dark:text-gray-400 mb-2 font-medium">{t('clientComparisonTable.filters.platform')}</p>
                 <div className="flex flex-wrap gap-2">
                   {(['ios', 'android', 'web', 'desktop'] as Platform[]).map((platform) => (
                     <button
                       key={platform}
                       onClick={() => togglePlatform(platform)}
                       className={cn(
-                        "px-3 py-1.5 rounded-lg text-sm font-medium transition-all inline-flex items-center gap-1.5",
+                        "px-3 py-1.5 rounded-lg text-body-sm font-medium transition-colors inline-flex items-center gap-1.5",
                         selectedPlatforms.has(platform)
-                          ? "bg-purple-500 text-white"
-                          : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                          ? "bg-primary-600 text-white"
+                          : "border border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800"
                       )}
                     >
                       {PLATFORM_ICONS[platform]}
@@ -405,22 +405,22 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
 
               {/* Feature Filters */}
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium">{t('clientComparisonTable.filters.features')}</p>
+                <p className="text-body-sm text-gray-500 dark:text-gray-400 mb-2 font-medium">{t('clientComparisonTable.filters.features')}</p>
                 <div className="flex flex-wrap gap-2">
                   {[
-                    { id: 'wallet', icon: <Wallet className="w-3.5 h-3.5" /> },
+                    { id: 'wallet', icon: <Wallet className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" /> },
                     { id: 'media', icon: <ImageIcon className="w-3.5 h-3.5" /> },
-                    { id: 'longform', icon: <FileText className="w-3.5 h-3.5" /> },
-                    { id: 'privacy', icon: <Shield className="w-3.5 h-3.5" /> },
+                    { id: 'longform', icon: <FileText className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" /> },
+                    { id: 'privacy', icon: <Shield className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" /> },
                   ].map((feature) => (
                     <button
                       key={feature.id}
                       onClick={() => toggleFeature(feature.id)}
                       className={cn(
-                        "px-3 py-1.5 rounded-lg text-sm font-medium transition-all inline-flex items-center gap-1.5",
+                        "px-3 py-1.5 rounded-lg text-body-sm font-medium transition-colors inline-flex items-center gap-1.5",
                         selectedFeatures.has(feature.id)
-                          ? "bg-purple-500 text-white"
-                          : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                          ? "bg-primary-600 text-white"
+                          : "border border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800"
                       )}
                     >
                       {feature.icon}
@@ -432,17 +432,17 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
 
               {/* Difficulty Filter */}
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium">{t('clientComparisonTable.filters.difficulty')}</p>
+                <p className="text-body-sm text-gray-500 dark:text-gray-400 mb-2 font-medium">{t('clientComparisonTable.filters.difficulty')}</p>
                 <div className="flex flex-wrap gap-2">
                   {(['beginner', 'intermediate', 'advanced'] as Difficulty[]).map((diff) => (
                     <button
                       key={diff}
                       onClick={() => setDifficultyFilter(difficultyFilter === diff ? null : diff)}
                       className={cn(
-                        "px-3 py-1.5 rounded-lg text-sm font-medium transition-all",
+                        "px-3 py-1.5 rounded-lg text-body-sm font-medium transition-colors",
                         difficultyFilter === diff
-                          ? "bg-purple-500 text-white"
-                          : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                          ? "bg-primary-600 text-white"
+                          : "border border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800"
                       )}
                     >
                       {getDifficultyLabel(diff)}
@@ -459,7 +459,7 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                     setSelectedFeatures(new Set());
                     setDifficultyFilter(null);
                   }}
-                  className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+                  className="text-body-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
                 >
                   {t('clientComparisonTable.clearFilters')}
                 </button>
@@ -474,19 +474,19 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
           <div
             key={client.id}
             className={cn(
-              "bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all cursor-pointer",
+              "cursor-pointer overflow-hidden rounded-lg border border-gray-200 bg-white transition-colors dark:border-gray-800 dark:bg-gray-900",
               "animate-slide-up motion-reduce:animate-none",
-              expandedClient === client.id ? "ring-2 ring-purple-500" : "hover:border-purple-300 dark:hover:border-purple-700"
+              expandedClient === client.id ? "border-primary-600 dark:border-primary-400" : "hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800"
             )}
             onClick={() => setExpandedClient(expandedClient === client.id ? null : client.id)}
           >
             {/* Card Header */}
             <div className="p-4">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center text-white font-bold text-lg">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-gray-200 text-h4 text-gray-600 dark:border-gray-800 dark:text-gray-400">
                   {client.icon}
                 </div>
-                <h3 className="font-bold text-gray-900 dark:text-white">{client.name}</h3>
+                <h3 className="text-h3 text-gray-900 dark:text-white">{client.name}</h3>
               </div>
 
               {/* Platforms & Difficulty */}
@@ -494,40 +494,40 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                 {client.platforms.map((platform) => (
                   <span
                     key={platform}
-                    className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-lg text-xs"
+                    className="inline-flex items-center gap-1 rounded-md border border-gray-200 px-2 py-1 text-caption text-gray-600 dark:border-gray-800 dark:text-gray-400"
                   >
                     {PLATFORM_ICONS[platform]}
                     {getPlatformLabel(platform)}
                   </span>
                 ))}
-                <span className={cn("px-2 py-1 rounded-full text-xs font-medium", difficultyColors[client.difficulty])}>
+                <span className={cn("px-2 py-1 rounded-full text-caption font-medium", difficultyColors[client.difficulty])}>
                   {getDifficultyLabel(client.difficulty)}
                 </span>
               </div>
 
               {/* Description */}
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{client.description}</p>
+              <p className="text-body-sm text-gray-600 dark:text-gray-400 mb-3">{client.description}</p>
 
               {/* Key Features */}
               <div className="flex flex-wrap gap-1.5 mb-3">
                 {client.wallet && (
-                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded text-xs">
-                    <Wallet className="w-3 h-3" /> {getFeatureLabel('wallet')}
+                  <span className="inline-flex items-center gap-1 px-2 py-1 border border-success-200 text-success-800 dark:border-success-900 dark:text-success-300 rounded text-caption">
+                    <Wallet className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" /> {getFeatureLabel('wallet')}
                   </span>
                 )}
                 {client.media && (
-                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded text-xs">
+                  <span className="inline-flex items-center gap-1 px-2 py-1 border border-blue-200 text-blue-800 dark:border-blue-900 dark:text-blue-300 rounded text-caption">
                     <ImageIcon className="w-3 h-3" /> {getFeatureLabel('media')}
                   </span>
                 )}
                 {client.longform && (
-                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 rounded text-xs">
-                    <FileText className="w-3 h-3" /> {getFeatureLabel('longform')}
+                  <span className="inline-flex items-center gap-1 px-2 py-1 border border-gray-200 text-gray-700 dark:border-gray-800 dark:text-gray-300 rounded text-caption">
+                    <FileText className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" /> {getFeatureLabel('longform')}
                   </span>
                 )}
                 {client.privacy && (
-                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-400 rounded text-xs">
-                    <Shield className="w-3 h-3" /> {getFeatureLabel('privacy')}
+                  <span className="inline-flex items-center gap-1 rounded-md border border-gray-200 px-2 py-1 text-caption text-gray-700 dark:border-gray-800 dark:text-gray-400">
+                    <Shield className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" /> {getFeatureLabel('privacy')}
                   </span>
                 )}
               </div>
@@ -537,7 +537,7 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                 {client.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2 py-0.5 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 rounded-full text-xs"
+                    className="px-2 py-0.5 border border-gray-200 text-gray-700 dark:border-gray-800 dark:text-gray-300 rounded-full text-caption"
                   >
                     {tag}
                   </span>
@@ -547,16 +547,16 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
               {/* Expand Indicator */}
               <div className="flex items-center justify-center mt-3 text-gray-400">
                 {expandedClient === client.id ? (
-                  <ChevronUp className="w-5 h-5" />
+                  <ChevronUp className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
                 ) : (
-                  <ChevronDown className="w-5 h-5" />
+                  <ChevronDown className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
                 )}
               </div>
             </div>
 
             {/* Expanded Details */}
             {expandedClient === client.id && (
-                <div className="border-t border-gray-200 dark:border-gray-700 animate-slide-down motion-reduce:animate-none">
+                <div className="border-t border-gray-200 dark:border-gray-800 animate-slide-down motion-reduce:animate-none">
                   <div className="p-4 space-y-4">
                     {/* Links */}
                     <div className="flex flex-wrap gap-2">
@@ -566,11 +566,11 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
-                          className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg text-sm transition-colors"
+                          className="inline-flex items-center gap-1 rounded-md border border-gray-200 px-3 py-1.5 text-body-sm text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800"
                         >
-                          <Globe className="w-4 h-4" />
+                          <Globe className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                           {t('clientComparisonTable.card.links.web')}
-                          <ExternalLink className="w-3 h-3" />
+                          <ExternalLink className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
                         </a>
                       )}
                       {client.urls.ios && (
@@ -579,11 +579,11 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
-                          className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg text-sm transition-colors"
+                          className="inline-flex items-center gap-1 rounded-md border border-gray-200 px-3 py-1.5 text-body-sm text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800"
                         >
-                          <Smartphone className="w-4 h-4" />
+                          <Smartphone className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                           {t('clientComparisonTable.card.links.ios')}
-                          <ExternalLink className="w-3 h-3" />
+                          <ExternalLink className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
                         </a>
                       )}
                       {client.urls.android && (
@@ -592,11 +592,11 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
-                          className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg text-sm transition-colors"
+                          className="inline-flex items-center gap-1 rounded-md border border-gray-200 px-3 py-1.5 text-body-sm text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800"
                         >
-                          <Smartphone className="w-4 h-4" />
+                          <Smartphone className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                           {t('clientComparisonTable.card.links.android')}
-                          <ExternalLink className="w-3 h-3" />
+                          <ExternalLink className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
                         </a>
                       )}
                       {client.urls.desktop && (
@@ -605,11 +605,11 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
-                          className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg text-sm transition-colors"
+                          className="inline-flex items-center gap-1 rounded-md border border-gray-200 px-3 py-1.5 text-body-sm text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800"
                         >
-                          <Monitor className="w-4 h-4" />
+                          <Monitor className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                           {t('clientComparisonTable.card.links.desktop')}
-                          <ExternalLink className="w-3 h-3" />
+                          <ExternalLink className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
                         </a>
                       )}
                     </div>
@@ -617,22 +617,22 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
                     {/* Pros/Cons */}
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <p className="text-sm font-medium text-green-600 dark:text-green-400 mb-2">{t('clientComparisonTable.card.pros')}</p>
+                        <p className="mb-2 text-body-sm font-medium text-success-800 dark:text-success-300">{t('clientComparisonTable.card.pros')}</p>
                         <ul className="space-y-1">
                           {client.pros.slice(0, 3).map((pro, i) => (
-                            <li key={i} className="text-xs text-gray-600 dark:text-gray-400 flex items-start gap-1.5">
-                              <Check className="w-3 h-3 text-green-500 flex-shrink-0 mt-0.5" />
+                            <li key={i} className="text-caption text-gray-600 dark:text-gray-400 flex items-start gap-1.5">
+                              <Check className="w-3 h-3 text-success-700 dark:text-success-400 flex-shrink-0 mt-0.5" strokeWidth={1.5} aria-hidden="true" />
                               {pro}
                             </li>
                           ))}
                         </ul>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-red-600 dark:text-red-400 mb-2">{t('clientComparisonTable.card.cons')}</p>
+                        <p className="mb-2 text-body-sm font-medium text-error-800 dark:text-error-300">{t('clientComparisonTable.card.cons')}</p>
                         <ul className="space-y-1">
                           {client.cons.slice(0, 3).map((con, i) => (
-                            <li key={i} className="text-xs text-gray-600 dark:text-gray-400 flex items-start gap-1.5">
-                              <X className="w-3 h-3 text-red-500 flex-shrink-0 mt-0.5" />
+                            <li key={i} className="text-caption text-gray-600 dark:text-gray-400 flex items-start gap-1.5">
+                              <X className="w-3 h-3 text-error-700 dark:text-error-400 flex-shrink-0 mt-0.5" strokeWidth={1.5} aria-hidden="true" />
                               {con}
                             </li>
                           ))}
@@ -649,8 +649,8 @@ export function ClientComparisonTable({ className }: ClientComparisonTableProps)
       {/* Empty State */}
       {filteredClients.length === 0 && (
         <div className="text-center py-12">
-          <Smartphone className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{t('clientComparisonTable.noResults.title')}</h3>
+          <Smartphone className="w-16 h-16 text-gray-400 mx-auto mb-4" strokeWidth={1.5} aria-hidden="true" />
+          <h3 className="text-h3 font-semibold text-gray-900 dark:text-white mb-2">{t('clientComparisonTable.noResults.title')}</h3>
           <p className="text-gray-500 dark:text-gray-400">
             {t('clientComparisonTable.noResults.description')}
           </p>

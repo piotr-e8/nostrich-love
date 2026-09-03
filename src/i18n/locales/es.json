@@ -3275,7 +3275,8 @@
     "lastInLevelDescriptionFinal": "Aquí termina el camino de las guías. No hay ningún nivel después de {level}.",
     "continueToLevel": "Continuar a {level}",
     "unlockRequirements": "Completa más guías de {currentLevel} para desbloquear {nextLevel}",
-    "offLevelMessage": "Esta guía no es parte de tu nivel actual {level}"
+    "offLevelMessage": "Esta guía no es parte de tu nivel actual {level}",
+    "aria": "Navegación de guías"
   },
   "continueLearning": {
     "allLevelsComplete": "¡Todos los Niveles Completados!",

@@ -21,10 +21,12 @@ export interface ClientCardProps {
 }
 
 const platformIcons: Record<string, React.ReactNode> = {
-  ios: <Smartphone className="h-3 w-3" />,
-  android: <Smartphone className="h-3 w-3" />,
-  web: <Globe className="h-3 w-3" />,
-  desktop: <Monitor className="h-3 w-3" />,
+  ios: <Smartphone className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />,
+  android: (
+    <Smartphone className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
+  ),
+  web: <Globe className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />,
+  desktop: <Monitor className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />,
 };
 
 const platformLabels: Record<string, string> = {
@@ -39,42 +41,46 @@ export function ClientCard({ client, className, onClick }: ClientCardProps) {
     <div
       onClick={() => onClick?.(client)}
       className={cn(
-        "group relative overflow-hidden rounded-2xl border border-gray-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-gray-700 dark:bg-gray-900",
+        "group relative overflow-hidden rounded-lg border border-gray-200 bg-white p-6 transition-colors dark:border-gray-800 dark:bg-gray-900",
         onClick &&
-          "cursor-pointer hover:border-primary-300 dark:hover:border-primary-700",
+          "cursor-pointer hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800",
         className,
       )}
     >
       {/* Beginner Friendly Badge */}
       {client.beginnerFriendly && (
-        <div className="absolute -end-8 top-4 rotate-45 rtl:-rotate-45 bg-gradient-to-r from-primary-500 to-secondary-500 px-8 py-1 text-xs font-bold text-white shadow-lg">
+        <span className="mb-3 inline-block rounded-md border border-gray-200 px-2 py-0.5 text-micro font-semibold uppercase text-primary-text dark:border-gray-800 dark:text-primary-400">
           Beginner Friendly
-        </div>
+        </span>
       )}
 
       {/* Icon */}
-      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-100 to-secondary-100 dark:from-primary-900 dark:to-secondary-900">
+      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-md border border-gray-200 dark:border-gray-800">
         {client.icon ? (
-          <img src={client.icon} alt="" className="h-10 w-10 object-contain" />
+          <img src={client.icon} alt="" className="h-8 w-8 object-contain" />
         ) : (
-          <span className="text-2xl font-bold text-primary-600 dark:text-primary-400">
+          <span className="text-h3 font-semibold text-gray-600 dark:text-gray-400">
             {client.name.charAt(0)}
           </span>
         )}
       </div>
 
       {/* Content */}
-      <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
+      <h3 className="mb-1 text-h3 text-gray-900 dark:text-white">
         {client.name}
       </h3>
-      <p className="mb-3 text-sm text-gray-600 dark:text-gray-400">
+      <p className="mb-3 text-body-sm text-gray-600 dark:text-gray-400">
         {client.description}
       </p>
 
       {/* Rating */}
       <div className="mb-4 flex items-center gap-1">
-        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+        <Star
+          className="h-4 w-4 text-gray-400 dark:text-gray-500"
+          strokeWidth={1.5}
+          aria-hidden="true"
+        />
+        <span className="text-body-sm font-medium text-gray-700 dark:text-gray-300">
           {client.rating}
         </span>
       </div>
@@ -84,7 +90,7 @@ export function ClientCard({ client, className, onClick }: ClientCardProps) {
         {client.platforms.map((platform) => (
           <span
             key={platform}
-            className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-400"
+            className="inline-flex items-center gap-1 rounded-md border border-gray-200 px-2 py-1 text-caption text-gray-600 dark:border-gray-800 dark:text-gray-400"
           >
             {platformIcons[platform]}
             {platformLabels[platform]}
@@ -97,9 +103,13 @@ export function ClientCard({ client, className, onClick }: ClientCardProps) {
         {client.features.slice(0, 3).map((feature) => (
           <div
             key={feature}
-            className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400"
+            className="flex items-center gap-2 text-caption text-gray-600 dark:text-gray-400"
           >
-            <Check className="h-3 w-3 text-green-500" />
+            <Check
+              className="h-4 w-4 shrink-0 text-success-700 dark:text-success-400"
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
             <span>{feature}</span>
           </div>
         ))}
@@ -111,7 +121,7 @@ export function ClientCard({ client, className, onClick }: ClientCardProps) {
         target="_blank"
         rel="noopener noreferrer"
         onClick={(e) => e.stopPropagation()}
-        className="mt-4 inline-flex items-center text-sm font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+        className="mt-4 inline-flex items-center text-body-sm font-medium text-primary-text underline-offset-2 hover:underline dark:text-primary-400"
       >
         Visit Website
         <svg

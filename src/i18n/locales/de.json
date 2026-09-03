@@ -3275,7 +3275,8 @@
     "lastInLevelDescriptionFinal": "Hier endet der Guide-Pfad. Nach {level} kommt kein weiteres Level.",
     "continueToLevel": "Weiter zu {level}",
     "unlockRequirements": "Schließe weitere {currentLevel}-Guides ab, um {nextLevel} freizuschalten",
-    "offLevelMessage": "Dieser Guide ist nicht Teil deines aktuellen {level}-Levels"
+    "offLevelMessage": "Dieser Guide ist nicht Teil deines aktuellen {level}-Levels",
+    "aria": "Guide-Navigation"
   },
   "continueLearning": {
     "allLevelsComplete": "Alle Level Abgeschlossen!",

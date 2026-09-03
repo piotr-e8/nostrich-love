@@ -15,17 +15,17 @@ const sizeMap = {
   sm: {
     marker: "h-3 w-3",
     track: "h-1",
-    font: "text-xs",
+    font: "text-caption",
   },
   md: {
     marker: "h-4 w-4",
     track: "h-1.5",
-    font: "text-sm",
+    font: "text-body-sm",
   },
   lg: {
     marker: "h-5 w-5",
     track: "h-2",
-    font: "text-base",
+    font: "text-body",
   },
 };
 
@@ -46,29 +46,27 @@ export function ProgressIndicator({
   return (
     <div
       className={cn(
-        "rounded-2xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900",
+        "rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900",
         className,
       )}
     >
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-primary-600 dark:text-primary-400">
+          <p className="text-micro font-semibold uppercase text-primary-text dark:text-primary-400">
             {label}
           </p>
-          <p className="text-2xl font-bold text-gray-900 dark:text-white">
-            {percentage}%
-          </p>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-h2 text-gray-900 dark:text-white">{percentage}%</p>
+          <p className="text-body-sm text-gray-500 dark:text-gray-400">
             Step {clampedCurrent} of {total}
           </p>
         </div>
 
         {estimatedTime && (
           <div className="text-end">
-            <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+            <p className="text-micro font-semibold uppercase text-gray-500 dark:text-gray-400">
               Est. time
             </p>
-            <p className="text-base font-medium text-gray-900 dark:text-white">
+            <p className="text-body font-medium text-gray-900 dark:text-white">
               {estimatedTime}
             </p>
           </div>
@@ -79,12 +77,12 @@ export function ProgressIndicator({
         <div className={cn("relative flex items-center", sizeStyles.track)}>
           <div className="absolute inset-0 rounded-full bg-gray-200 dark:bg-gray-800" />
           <div
-            className="relative rounded-full bg-gradient-to-r from-primary to-secondary transition-all duration-500"
+            className="relative rounded-full bg-primary-600 transition-[width] duration-500 motion-reduce:transition-none"
             style={{ width: `${percentage}%`, height: "100%" }}
           />
         </div>
 
-        <div className="mt-3 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+        <div className="mt-3 flex items-center justify-between text-caption text-gray-500 dark:text-gray-400">
           <span>Start</span>
           <span>Complete</span>
         </div>
@@ -103,16 +101,16 @@ export function ProgressIndicator({
                   className={cn(
                     "flex items-center justify-center rounded-full border",
                     sizeStyles.marker,
-                    isCompleted && "border-primary bg-primary-600 text-white",
+                    isCompleted && "border-primary-600 bg-primary-600 text-white",
                     isCurrent &&
-                      "border-primary-500 bg-primary-50 text-primary-600 dark:text-primary-400 dark:bg-primary/20",
+                      "border-primary-600 bg-primary-50 text-primary-text dark:border-primary-400 dark:bg-gray-800 dark:text-primary-400",
                     !isCompleted &&
                       !isCurrent &&
                       "border-gray-300 bg-white text-gray-400 dark:border-gray-700 dark:bg-gray-900",
                   )}
                 >
                   {isCompleted ? (
-                    <Check className="h-3 w-3" />
+                    <Check className="h-3 w-3" strokeWidth={1.5} aria-hidden="true" />
                   ) : (
                     <span className="text-[10px] font-semibold">
                       {index + 1}

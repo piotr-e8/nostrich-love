@@ -15,6 +15,7 @@ import {
   Send,
   RefreshCw,
   AlertTriangle,
+  PartyPopper,
 } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { DamusInteractiveSimulator } from "./damus";
@@ -78,10 +79,8 @@ function KeyGenSimulator({ className }: { className?: string }) {
   return (
     <div className={cn("max-w-2xl mx-auto", className)}>
       {!keys ? (
-        <div className="bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900/30 dark:to-blue-900/30 rounded-2xl p-8 text-center">
-          <div className="w-20 h-20 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <Key className="w-10 h-10 text-purple-600" />
-          </div>
+        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-8 text-center">
+          <Key className="mx-auto mb-3 h-6 w-6 text-primary-text dark:text-primary-400" strokeWidth={1.5} aria-hidden="true" />
           <h3 className="text-xl font-bold mb-2">{t("quickstartSimulator.steps.createKeys")}</h3>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
             {t("quickstartSimulator.keyGen.description")}
@@ -254,7 +253,7 @@ function ClientSimulation({ client, onBack }: { client: Client; onBack: () => vo
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-2xl border-2 border-gray-200 dark:border-gray-700 overflow-hidden">
+    <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden">
       <div className="bg-gray-100 dark:bg-gray-800 px-4 py-3 flex items-center justify-between border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center gap-3">
           <button
@@ -292,7 +291,7 @@ function DamusSimulation() {
 
 function AmethystSimulation() {
   return (
-    <div className="max-w-sm mx-auto bg-gray-900 rounded-3xl overflow-hidden border-8 border-gray-800">
+    <div className="max-w-sm mx-auto bg-gray-900 rounded-lg overflow-hidden border-8 border-gray-800">
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-bold text-white">Amethyst</h3>
@@ -314,13 +313,13 @@ function AmethystSimulation() {
         <div className="space-y-4">
           <div className="bg-gray-800 rounded-xl p-3">
             <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full" />
+              <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full" />
               <div>
                 <div className="text-sm font-semibold text-white">Carol</div>
                 <div className="text-xs text-gray-500">carol@nostrplebs.com</div>
               </div>
             </div>
-            <p className="text-sm text-gray-300 mb-3">The customization options in Amethyst are incredible! 🎨</p>
+            <p className="text-sm text-gray-300 mb-3">The customization options in Amethyst are incredible!</p>
             <div className="flex items-center justify-between text-xs text-gray-500">
               <div className="flex gap-3">
                 <span className="flex items-center gap-1"><MessageCircle className="w-3 h-3" /> 12</span>
@@ -389,7 +388,7 @@ function IrisSimulation() {
 function PrimalSimulation() {
   return (
     <div className="bg-white dark:bg-gray-900 rounded-lg min-h-[400px]">
-      <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-4">
+      <div className="bg-primary-600 text-white p-4">
         <h3 className="font-bold text-lg">Primal</h3>
         <p className="text-sm opacity-80">Beautiful and intuitive</p>
       </div>
@@ -404,19 +403,19 @@ function PrimalSimulation() {
         </div>
         
         <div className="space-y-4">
-          <div className="bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 rounded-xl p-4 border border-gray-100 dark:border-gray-800">
+          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-800">
             <div className="flex items-start gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-400 rounded-xl" />
+              <div className="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded-md" />
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="font-bold">Emma</span>
                   <span className="text-xs text-purple-600 bg-purple-100 dark:bg-purple-900/30 px-2 py-0.5 rounded-full">✓</span>
                 </div>
-                <p className="text-sm text-gray-700 dark:text-gray-300">The UI in Primal is so clean! Love the discovery features ✨</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">The UI in Primal is so clean! Love the discovery features</p>
                 <div className="flex items-center gap-4 mt-3 text-gray-500 text-sm">
-                  <span className="flex items-center gap-1">💬 23</span>
-                  <span className="flex items-center gap-1">⚡ 1.2k</span>
-                  <span className="flex items-center gap-1">❤️ 89</span>
+                  <span className="flex items-center gap-1"><MessageCircle className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" /> 23</span>
+                  <span className="flex items-center gap-1"><Zap className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" /> 1.2k</span>
+                  <span className="flex items-center gap-1"><Heart className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" /> 89</span>
                 </div>
               </div>
             </div>
@@ -531,7 +530,7 @@ function FirstDaySimulator({ className }: { className?: string }) {
       </div>
 
       {/* Step Content */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-800 p-6">
           {currentStep === "relays" && (
             <div
               key="relays"
@@ -659,7 +658,7 @@ function FirstDaySimulator({ className }: { className?: string }) {
                     className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-xl"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full" />
+                      <div className="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full" />
                       <div>
                         <div className="font-semibold">{user.name}</div>
                         <div className="text-xs text-gray-500">{user.handle}</div>
@@ -713,7 +712,7 @@ function FirstDaySimulator({ className }: { className?: string }) {
                         <span className="font-semibold">Alice</span>
                         <span className="text-gray-500 text-sm">· 1h</span>
                       </div>
-                      <p className="mt-1">Just published a guide to Nostr for beginners! Check it out 👇</p>
+                      <p className="mt-1">Just published a guide to Nostr for beginners! Check it out</p>
                       <div className="flex gap-6 mt-3 text-gray-500">
                         <button className="flex items-center gap-1 hover:text-purple-600">
                           <MessageCircle className="w-4 h-4" /> {t("quickstartSimulator.buttons.reply")}
@@ -772,7 +771,7 @@ function FirstDaySimulator({ className }: { className?: string }) {
                 <div
                   className="animate-scale-in motion-reduce:animate-none bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-500 rounded-xl p-6 text-center"
                 >
-                  <div className="text-4xl mb-2">⚡</div>
+                  <Zap className="mx-auto mb-2 h-6 w-6 text-warning-700 dark:text-warning-400" strokeWidth={1.5} aria-hidden="true" />
                   <h4 className="text-xl font-bold text-yellow-800 dark:text-yellow-400 mb-2">
                     {t("quickstartSimulator.zapStep.received")}
                   </h4>
@@ -795,7 +794,7 @@ function FirstDaySimulator({ className }: { className?: string }) {
             className="animate-scale-in motion-reduce:animate-none mt-6 text-center"
           >
             <div className="bg-green-50 dark:bg-green-900/20 border-2 border-green-500 rounded-xl p-6">
-              <div className="text-4xl mb-2">🎉</div>
+              <PartyPopper className="mx-auto mb-2 h-6 w-6 text-success-700 dark:text-success-400" strokeWidth={1.5} aria-hidden="true" />
               <h4 className="text-xl font-bold text-green-800 dark:text-green-400">
                 {t("quickstartSimulator.completion.title")}
               </h4>

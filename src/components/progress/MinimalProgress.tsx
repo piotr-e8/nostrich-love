@@ -23,9 +23,9 @@ export function MinimalProgressBar({ guideId, estimatedTimeMinutes }: MinimalPro
   if (!mounted || !shouldShowProgressIndicators()) return null;
 
   return (
-    <div className="fixed top-0 left-0 right-0 h-[2px] z-50 bg-transparent">
+    <div className="fixed inset-x-0 top-0 z-50 h-[2px] bg-transparent">
       <div
-        className="h-full bg-primary transition-all duration-300 ease-out"
+        className="h-full bg-primary-600 transition-[width] duration-300 ease-out dark:bg-primary-400 motion-reduce:transition-none"
         style={{ width: `${scrollProgress * 100}%` }}
         aria-hidden="true"
       />
@@ -48,7 +48,7 @@ export function GuidePositionIndicator({ currentGuide, totalGuides }: GuidePosit
   if (!mounted || !shouldShowProgressIndicators()) return null;
 
   return (
-    <div className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+    <div className="text-body-sm font-medium text-gray-500 dark:text-gray-400">
       Guide {currentGuide} of {totalGuides}
     </div>
   );
@@ -70,6 +70,6 @@ export function GuideCardProgress({ guideId }: GuideCardProgressProps) {
   // This is a placeholder - in real implementation, you'd check guide status
   // and show a subtle dot or arc
   return (
-    <div className="absolute top-2 end-2 w-2 h-2 rounded-full bg-gray-200 dark:bg-gray-700" />
+    <div className="absolute end-2 top-2 h-2 w-2 rounded-full bg-gray-200 dark:bg-gray-700" />
   );
 }

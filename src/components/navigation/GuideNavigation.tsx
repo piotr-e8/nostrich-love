@@ -138,20 +138,44 @@ export function GuideNavigation({
 
   const guidesPrefix = guidesIndexPath(locale).replace(/\/$/, '');
 
+  // This block renders inside <article class="prose">, so `not-prose` on the
+  // root turns off the typography plugin's link, heading and paragraph styling
+  // for the furniture at the end of the article. It does NOT switch off the
+  // hand-written `.prose p` / `.prose h3` rules in globals.css — those are
+  // plain descendant selectors and out-weigh a utility class — which is why the
+  // small labels below are spans rather than paragraphs.
+  const rootClass = cn(
+    'not-prose mt-12 border-t border-gray-200 pt-8 dark:border-gray-800',
+    className,
+  );
+
+  // Card recipe, VISUAL_SYSTEM.md §4: a border and a ground. No shadow, no
+  // scale, no accent-tinted hover border — the border and the ground move.
+  const navCard =
+    'flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-4 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700 dark:hover:bg-gray-800';
+  const navLabel = 'block text-micro uppercase text-gray-500 dark:text-gray-400';
+  const navTitle = 'block text-body-sm font-medium text-gray-900 dark:text-white';
+  const navArrow = 'h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500 rtl:rotate-180';
+
+  // Secondary button: gray ground, both grounds. It carried no dark: variants
+  // at all, so on the dark page it painted gray-100 on gray-900.
+  const secondaryButton =
+    'inline-flex items-center justify-center rounded-md bg-gray-100 px-6 py-3 text-body-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700';
+
   // Off-level message
   if (showOffLevelMessage) {
     return (
-      <div className={cn('border-t border-gray-200 dark:border-gray-800 pt-8 mt-12', className)}>
+      <div className={rootClass}>
         <div className="text-center">
-          <p className="text-gray-600 dark:text-gray-400 mb-4">
+          <p className="mb-4 text-gray-600 dark:text-gray-400">
             {t('guideNavigation.offLevelMessage').replace('{level}', t(`skillLevels.${currentLevel}.label`) || 'selected')}
           </p>
           <div className="flex justify-center gap-4">
-            <a 
-              href={guidesPrefix} 
-              className="inline-flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+            <a
+              href={guidesPrefix}
+              className="inline-flex items-center rounded-md bg-gray-100 px-4 py-2 text-body-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
             >
-              <ArrowLeft className="w-4 h-4 me-2 rtl:rotate-180" />
+              <ArrowLeft className="me-2 h-4 w-4 shrink-0 rtl:rotate-180" strokeWidth={1.5} aria-hidden="true" />
               {t('guideNavigation.backToAllGuides')}
             </a>
           </div>
@@ -171,13 +195,17 @@ export function GuideNavigation({
   // reader who arrived on this guide from search.
   if (isLastInLevel) {
     return (
-      <div className={cn('border-t border-gray-200 dark:border-gray-800 pt-8 mt-12', className)}>
-        <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 p-8 text-center mb-8">
-          <Milestone className="w-8 h-8 mx-auto mb-4 text-gray-400 dark:text-gray-500 rtl:-scale-x-100" aria-hidden="true" />
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+      <div className={rootClass}>
+        <div className="mb-8 rounded-lg border border-gray-200 bg-gray-50 p-8 text-center dark:border-gray-800 dark:bg-gray-900">
+          <Milestone
+            className="mx-auto mb-4 h-6 w-6 text-gray-400 dark:text-gray-500 rtl:-scale-x-100"
+            strokeWidth={1.5}
+            aria-hidden="true"
+          />
+          <h3 className="mb-2 text-h3 font-semibold text-gray-900 dark:text-white">
             {t('guideNavigation.lastInLevel').replace('{level}', t(`skillLevels.${currentLevel}.label`) || '')}
           </h3>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
+          <p className="mx-auto mb-6 max-w-measure-narrow text-gray-600 dark:text-gray-400">
             {t(
               nextLevel
                 ? 'guideNavigation.lastInLevelDescription'
@@ -190,79 +218,71 @@ export function GuideNavigation({
           {nextLevelFirstGuide && nextLevel && (
             <a
               href={`${guidesPrefix}/${nextLevelFirstGuide}`}
-              className="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors"
+              className="inline-flex items-center rounded-md bg-primary-600 px-6 py-3 text-body-sm font-medium text-white transition-colors hover:bg-primary-700"
             >
               {t('guideNavigation.continueToLevel').replace('{level}', t(`skillLevels.${nextLevel}.label`) || '')}
-              <ArrowRight className="w-4 h-4 ms-2 rtl:rotate-180" />
+              <ArrowRight className="ms-2 h-4 w-4 shrink-0 rtl:rotate-180" strokeWidth={1.5} aria-hidden="true" />
             </a>
           )}
         </div>
-        
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+
+        <div className="flex flex-col items-stretch justify-between gap-4 sm:flex-row sm:items-center">
           {prevGuide ? (
-            <a
-              href={`${guidesPrefix}/${prevGuide.slug}`}
-              className="group flex items-center gap-3 p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-primary/50 transition-all"
-            >
-              <ArrowLeft className="w-5 h-5 rtl:rotate-180" />
-              <div>
-                <p className="text-xs text-gray-500 uppercase">{t('guideNavigation.previous')}</p>
-                <p className="text-sm font-medium">{prevGuide.title}</p>
-              </div>
+            <a href={`${guidesPrefix}/${prevGuide.slug}`} className={navCard}>
+              <ArrowLeft className={navArrow} strokeWidth={1.5} aria-hidden="true" />
+              <span className="min-w-0">
+                <span className={navLabel}>{t('guideNavigation.previous')}</span>
+                <span className={navTitle}>{prevGuide.title}</span>
+              </span>
             </a>
           ) : (
             <div className="flex-1" />
           )}
-          
-          <a
-            href={guidesPrefix}
-            className="inline-flex items-center justify-center px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors"
-          >
+
+          <a href={guidesPrefix} className={secondaryButton}>
             {t('guideNavigation.exploreAllGuides')}
-            <ArrowRight className="w-4 h-4 ms-2 rtl:rotate-180" />
+            <ArrowRight className="ms-2 h-4 w-4 shrink-0 rtl:rotate-180" strokeWidth={1.5} aria-hidden="true" />
           </a>
         </div>
       </div>
     );
   }
 
-  // Normal navigation
+  // Normal navigation.
+  // A <nav> with a label, not a bare <div>: this is the sequential path through
+  // the course and it is how a keyboard or screen-reader user moves between
+  // guides. It also gives scripts/verify-seo.js a stable hook, so the check that
+  // these anchors ship statically can stop matching on a Tailwind class string.
   return (
-    <div className={cn('border-t border-gray-200 dark:border-gray-800 pt-8 mt-12', className)}>
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+    <nav className={rootClass} aria-label={t('guideNavigation.aria')}>
+      <div className="flex flex-col items-stretch justify-between gap-4 sm:flex-row sm:items-center">
         {prevGuide ? (
-          <a
-            href={`${guidesPrefix}/${prevGuide.slug}`}
-            className="group flex items-center gap-3 p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-primary/50 transition-all"
-          >
-            <ArrowLeft className="w-5 h-5 rtl:rotate-180" />
-            <div>
-              <p className="text-xs text-gray-500 uppercase">{t('guideNavigation.previous')}</p>
-              <p className="text-sm font-medium">{prevGuide.title}</p>
-            </div>
+          <a href={`${guidesPrefix}/${prevGuide.slug}`} className={navCard}>
+            <ArrowLeft className={navArrow} strokeWidth={1.5} aria-hidden="true" />
+            <span className="min-w-0">
+              <span className={navLabel}>{t('guideNavigation.previous')}</span>
+              <span className={navTitle}>{prevGuide.title}</span>
+            </span>
           </a>
         ) : (
-          <div className="flex-1 text-sm text-gray-500">
+          <div className="flex-1 text-body-sm text-gray-500 dark:text-gray-400">
             {t('guideNavigation.startOfLevel').replace('{level}', t(`skillLevels.${currentLevel}.label`) || '')}
           </div>
         )}
 
         {nextGuide ? (
-          <a
-            href={`${guidesPrefix}/${nextGuide.slug}`}
-            className="group flex items-center gap-3 p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-primary/50 transition-all sm:text-end"
-          >
-            <div className="flex-1">
-              <p className="text-xs text-gray-500 uppercase">{t('guideNavigation.next')}</p>
-              <p className="text-sm font-medium">{nextGuide.title}</p>
-            </div>
-            <ArrowRight className="w-5 h-5 rtl:rotate-180" />
+          <a href={`${guidesPrefix}/${nextGuide.slug}`} className={cn(navCard, 'sm:text-end')}>
+            <span className="min-w-0 flex-1">
+              <span className={navLabel}>{t('guideNavigation.next')}</span>
+              <span className={navTitle}>{nextGuide.title}</span>
+            </span>
+            <ArrowRight className={navArrow} strokeWidth={1.5} aria-hidden="true" />
           </a>
         ) : (
           <div className="flex-1" />
         )}
       </div>
-    </div>
+    </nav>
   );
 }
 

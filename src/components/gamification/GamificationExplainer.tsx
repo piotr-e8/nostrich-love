@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect, useState, useRef } from 'react';
-import { X, Award, Trophy, Star, Flame, Target, BookOpen, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { X, Award, Trophy, Star, Target, BookOpen, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { BADGE_DEFINITIONS } from '../../utils/gamification';
@@ -34,18 +34,16 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description, col
   <div
     className={cn(
       'animate-slide-up motion-reduce:animate-none',
-      'p-4 rounded-xl border transition-all',
-      'bg-white dark:bg-gray-800',
-      'border-gray-200 dark:border-gray-700',
-      'hover:shadow-md hover:border-friendly-purple/30'
+      'p-4 rounded-lg border transition-colors',
+      'bg-white dark:bg-gray-900',
+      'border-gray-200 dark:border-gray-800',
+      'hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800'
     )}
     style={{ animationDelay: `${Math.round(delay * 1000)}ms` }}
   >
-    <div className={cn('w-10 h-10 rounded-lg flex items-center justify-center mb-3', color)}>
-      {icon}
-    </div>
-    <h4 className="font-semibold text-gray-900 dark:text-white mb-1">{title}</h4>
-    <p className="text-sm text-gray-600 dark:text-gray-400">{description}</p>
+    <div className={cn('mb-3', color)}>{icon}</div>
+    <h4 className="text-h4 font-display text-gray-900 dark:text-white mb-1">{title}</h4>
+    <p className="text-body-sm text-gray-600 dark:text-gray-400">{description}</p>
   </div>
 );
 
@@ -123,9 +121,9 @@ export function GamificationExplainer({
   // different one.
   const EXAMPLE_BADGE_IDS = ['knowledge-seeker', 'level-beginner', 'nostr-graduate'] as const;
   const EXAMPLE_COLORS = [
-    'bg-purple-100 text-purple-600 dark:bg-purple-900/30',
-    'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30',
-    'bg-amber-100 text-amber-600 dark:bg-amber-900/30',
+    'text-primary-text dark:text-primary-400',
+    'text-emerald-700 dark:text-emerald-400',
+    'text-amber-700 dark:text-amber-400',
   ];
   const badgeExamples = EXAMPLE_BADGE_IDS.map((id, i) => {
     const badge = BADGE_DEFINITIONS.find((b) => b.id === id);
@@ -138,9 +136,21 @@ export function GamificationExplainer({
   });
 
   const steps = [
-    { num: 1, text: 'Pick a guide from the list', icon: <BookOpen className="w-4 h-4" /> },
-    { num: 2, text: 'Read and scroll through it', icon: <Target className="w-4 h-4" /> },
-    { num: 3, text: 'Take the quiz at the end', icon: <CheckCircle2 className="w-4 h-4" /> },
+    {
+      num: 1,
+      text: 'Pick a guide from the list',
+      icon: <BookOpen className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />,
+    },
+    {
+      num: 2,
+      text: 'Read and scroll through it',
+      icon: <Target className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />,
+    },
+    {
+      num: 3,
+      text: 'Take the quiz at the end',
+      icon: <CheckCircle2 className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />,
+    },
   ];
 
   return (
@@ -150,7 +160,7 @@ export function GamificationExplainer({
           {/* Backdrop */}
           <div
             className={cn(
-              'fixed inset-0 bg-black/60 backdrop-blur-sm z-50',
+              'fixed inset-0 bg-black/60 z-50',
               'transition-opacity duration-300 motion-reduce:transition-none',
               isShown ? 'opacity-100' : 'opacity-0'
             )}
@@ -174,83 +184,49 @@ export function GamificationExplainer({
             <div
               ref={modalRef}
               className={cn(
-                'relative w-full max-w-2xl max-h-[90vh] bg-white dark:bg-gray-800',
-                'rounded-3xl shadow-2xl overflow-hidden pointer-events-auto',
-                'border border-gray-200 dark:border-gray-700',
+                'relative w-full max-w-2xl max-h-[90vh] bg-white dark:bg-gray-900',
+                'rounded-lg shadow-raised overflow-hidden pointer-events-auto',
+                'border border-gray-200 dark:border-gray-800',
                 'flex flex-col'
               )}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Header Gradient */}
-              <div className="relative h-24 bg-gradient-to-br from-friendly-purple via-purple-600 to-friendly-purple overflow-hidden flex-shrink-0">
-                {/* Animated Background: oversized glow shuttling side to side
-                    (CSS can't tween a radial-gradient's center, so we move the
-                    element instead). */}
-                <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-                  <div
-                    className="absolute -left-[30%] top-0 h-full w-[160%] animate-gamification-shimmer motion-reduce:animate-none"
-                    style={{
-                      background:
-                        'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 0%, transparent 35%)',
-                    }}
-                  />
-                </div>
-                <style>{`
-                  @keyframes gamification-shimmer-kf {
-                    0%, 100% { transform: translateX(-12%); }
-                    50% { transform: translateX(12%); }
-                  }
-                  .animate-gamification-shimmer {
-                    animation: gamification-shimmer-kf 4s ease-in-out infinite;
-                  }
-                  @media (prefers-reduced-motion: reduce) {
-                    .animate-gamification-shimmer { animation: none; }
-                  }
-                `}</style>
-
-                {/* Decorative Elements */}
-                <div className="absolute top-3 start-4">
-                  <Star className="w-5 h-5 text-white/40" />
-                </div>
-                <div className="absolute bottom-3 end-6">
-                  <Trophy className="w-6 h-6 text-friendly-gold/60" />
-                </div>
-                <div className="absolute top-5 end-20">
-                  <Flame className="w-4 h-4 text-white/30" />
-                </div>
-
+              {/* Header */}
+              <div className="relative flex-shrink-0 border-b border-gray-200 dark:border-gray-800 px-6 py-5">
                 {/* Close Button */}
                 <button
                   onClick={handleClose}
                   className={cn(
-                    'absolute top-3 end-3 p-2 rounded-xl',
-                    'bg-white/10 hover:bg-white/20 backdrop-blur-sm',
-                    'transition-all focus:outline-none focus:ring-2 focus:ring-white/50'
+                    'absolute top-4 end-4 p-2 rounded-md',
+                    'text-gray-500 dark:text-gray-400',
+                    'transition-colors hover:bg-gray-100 dark:hover:bg-gray-800'
                   )}
                   aria-label="Close modal"
                 >
-                  <X className="w-5 h-5 text-white" />
+                  <X className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
                 </button>
 
                 {/* Title */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div
-                    className="animate-slide-up motion-reduce:animate-none text-center"
-                    style={{ animationDelay: '200ms' }}
-                  >
-                    <div className="flex items-center justify-center gap-2 mb-1">
-                      <Award className="w-6 h-6 text-white" />
-                      <span className="text-sm font-semibold text-white/80 uppercase tracking-wide">
-                        How It Works
-                      </span>
-                    </div>
-                    <h2
-                      id="gamification-title"
-                      className="text-2xl font-bold text-white"
-                    >
-                      Gamification System
-                    </h2>
+                <div
+                  className="animate-slide-up motion-reduce:animate-none text-center"
+                  style={{ animationDelay: '200ms' }}
+                >
+                  <div className="flex items-center justify-center gap-1.5 mb-1">
+                    <Award
+                      className="h-4 w-4 shrink-0 text-gray-400 dark:text-gray-500"
+                      strokeWidth={1.5}
+                      aria-hidden="true"
+                    />
+                    <span className="text-micro uppercase text-gray-500 dark:text-gray-400">
+                      How It Works
+                    </span>
                   </div>
+                  <h2
+                    id="gamification-title"
+                    className="text-h2 font-display text-gray-900 dark:text-white"
+                  >
+                    Gamification System
+                  </h2>
                 </div>
               </div>
 
@@ -262,17 +238,19 @@ export function GamificationExplainer({
                   style={{ animationDelay: '300ms' }}
                 >
                   <div className="flex items-center gap-2 mb-3">
-                    <div className="w-8 h-8 rounded-lg bg-friendly-purple/10 flex items-center justify-center">
-                      <Trophy className="w-4 h-4 text-friendly-purple" />
-                    </div>
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                    <Trophy
+                      className="h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
+                      strokeWidth={1.5}
+                      aria-hidden="true"
+                    />
+                    <h3 className="text-h3 font-display text-gray-900 dark:text-white">
                       Badges System
                     </h3>
                   </div>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">
+                  <p className="text-body text-gray-600 dark:text-gray-400 mb-4">
                     Complete guides to earn badges. Each badge represents a milestone in your Nostr learning journey!
                   </p>
-                  
+
                   {/* Badge Examples */}
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {badgeExamples.map((badge, index) => (
@@ -280,23 +258,23 @@ export function GamificationExplainer({
                         key={badge.name}
                         className={cn(
                           'animate-scale-in motion-reduce:animate-none',
-                          'p-3 rounded-xl border border-gray-200 dark:border-gray-700',
-                          'bg-gray-50 dark:bg-gray-700/50',
+                          'p-3 rounded-lg border border-gray-200 dark:border-gray-800',
+                          'bg-gray-50 dark:bg-gray-900',
                           'flex items-center gap-3'
                         )}
                         style={{ animationDelay: `${400 + index * 100}ms` }}
                       >
                         <div className="text-2xl">{badge.emoji}</div>
                         <div>
-                          <p className="font-semibold text-sm text-gray-900 dark:text-white">{badge.name}</p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">{badge.desc}</p>
+                          <p className="text-body-sm font-semibold text-gray-900 dark:text-white">{badge.name}</p>
+                          <p className="text-caption text-gray-500 dark:text-gray-400">{badge.desc}</p>
                         </div>
                       </div>
                     ))}
                   </div>
-                  
-                  <div className="mt-3 flex items-center gap-2 text-sm text-friendly-purple font-medium">
-                    <Star className="w-4 h-4" />
+
+                  <div className="mt-3 flex items-center gap-2 text-body-sm text-primary-text dark:text-primary-400 font-medium">
+                    <Star className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                     {/* The count was hard-coded as 8 and named a "Nostr Expert"
                         badge that does not exist. Both were wrong before the
                         level certificates; now it counts the real list. */}
@@ -312,30 +290,32 @@ export function GamificationExplainer({
                   style={{ animationDelay: '500ms' }}
                 >
                   <div className="flex items-center gap-2 mb-3">
-                    <div className="w-8 h-8 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                      <Target className="w-4 h-4 text-green-600 dark:text-green-400" />
-                    </div>
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                    <Target
+                      className="h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
+                      strokeWidth={1.5}
+                      aria-hidden="true"
+                    />
+                    <h3 className="text-h3 font-display text-gray-900 dark:text-white">
                       Progress Tracking
                     </h3>
                   </div>
-                  <p className="text-gray-600 dark:text-gray-400 mb-3">
+                  <p className="text-body text-gray-600 dark:text-gray-400 mb-3">
                     Track your learning progress. Each guide you complete adds to your total and brings you closer to mastery!
                   </p>
-                  
+
                   {/* Progress Bar Demo */}
-                  <div className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+                  <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-800">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Your Progress</span>
-                      <span className="text-lg font-bold text-friendly-purple">{progressPercentage}%</span>
+                      <span className="text-body-sm font-medium text-gray-700 dark:text-gray-300">Your Progress</span>
+                      <span className="text-body font-semibold text-primary-text dark:text-primary-400">{progressPercentage}%</span>
                     </div>
-                    <div className="h-3 w-full bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
+                    <div className="h-3 w-full bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-gradient-to-r from-friendly-purple to-friendly-purple-400 rounded-full transition-[width] duration-[800ms] delay-[600ms] ease-out motion-reduce:transition-none"
+                        className="h-full bg-primary-600 rounded-full transition-[width] duration-[800ms] delay-[600ms] ease-out motion-reduce:transition-none"
                         style={{ width: entered ? `${progressPercentage}%` : '0%' }}
                       />
                     </div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                    <p className="text-caption text-gray-500 dark:text-gray-400 mt-2">
                       {currentProgress} of {totalGuides} guides completed
                     </p>
                   </div>
@@ -351,26 +331,32 @@ export function GamificationExplainer({
                   style={{ animationDelay: '600ms' }}
                 >
                   <div className="flex items-center gap-2 mb-3">
-                    <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                    </div>
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                    <CheckCircle2
+                      className="h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
+                      strokeWidth={1.5}
+                      aria-hidden="true"
+                    />
+                    <h3 className="text-h3 font-display text-gray-900 dark:text-white">
                       Quizzes
                     </h3>
                   </div>
-                  <p className="text-gray-600 dark:text-gray-400 mb-3">
+                  <p className="text-body text-gray-600 dark:text-gray-400 mb-3">
                     Most guides end in a short quiz. Nothing is graded and nothing is locked — it is there so you leave knowing which parts you understood and which are worth rereading.
                   </p>
 
-                  <div className="flex items-center gap-4 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-xl p-4 border border-emerald-200 dark:border-emerald-800">
-                    <div className="text-4xl">✅</div>
+                  <div className="flex items-start gap-3 bg-gray-50 dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-800">
+                    <CheckCircle2
+                      className="h-5 w-5 shrink-0 mt-0.5 text-emerald-700 dark:text-emerald-400"
+                      strokeWidth={1.5}
+                      aria-hidden="true"
+                    />
                     <div>
-                      <p className="font-semibold text-gray-900 dark:text-white">
+                      <p className="text-body font-semibold text-gray-900 dark:text-white">
                         {quizzesPassed > 0
                           ? `${quizzesPassed} quiz${quizzesPassed === 1 ? '' : 'zes'} passed`
                           : 'No quizzes passed yet'}
                       </p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-body-sm text-gray-600 dark:text-gray-400">
                         Retaking one can only improve your result, so a second attempt costs you nothing.
                       </p>
                     </div>
@@ -383,36 +369,46 @@ export function GamificationExplainer({
                   style={{ animationDelay: '700ms' }}
                 >
                   <div className="flex items-center gap-2 mb-3">
-                    <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                      <BookOpen className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                    </div>
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                    <BookOpen
+                      className="h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
+                      strokeWidth={1.5}
+                      aria-hidden="true"
+                    />
+                    <h3 className="text-h3 font-display text-gray-900 dark:text-white">
                       How to Start
                     </h3>
                   </div>
-                  
+
                   <div className="space-y-2">
                     {steps.map((step, index) => (
                       <div
                         key={step.num}
-                        className="animate-slide-in-left motion-reduce:animate-none flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg"
+                        className="animate-slide-in-left motion-reduce:animate-none flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg"
                         style={{ animationDelay: `${800 + index * 100}ms` }}
                       >
                         <div className={cn(
-                          'w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm',
-                          'bg-friendly-purple text-white'
+                          'w-7 h-7 rounded-full flex items-center justify-center font-semibold text-caption',
+                          'bg-primary-600 text-white'
                         )}>
                           {step.num}
                         </div>
-                        <div className="flex items-center gap-2 flex-1">
+                        <div className="flex items-center gap-2 flex-1 text-gray-400 dark:text-gray-500">
                           {step.icon}
-                          <span className="text-gray-700 dark:text-gray-300">{step.text}</span>
+                          <span className="text-body-sm text-gray-700 dark:text-gray-300">{step.text}</span>
                         </div>
                         {index < steps.length - 1 && (
-                          <ChevronRight className="w-4 h-4 text-gray-400 rtl:rotate-180" />
+                          <ChevronRight
+                            className="h-4 w-4 shrink-0 text-gray-400 dark:text-gray-500 rtl:rotate-180"
+                            strokeWidth={1.5}
+                            aria-hidden="true"
+                          />
                         )}
                         {index === steps.length - 1 && (
-                          <CheckCircle2 className="w-5 h-5 text-green-500" />
+                          <CheckCircle2
+                            className="h-5 w-5 shrink-0 text-success-700 dark:text-success-400"
+                            strokeWidth={1.5}
+                            aria-hidden="true"
+                          />
                         )}
                       </div>
                     ))}
@@ -421,22 +417,18 @@ export function GamificationExplainer({
               </div>
 
               {/* Footer with Got It Button */}
-              <div className="p-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 flex-shrink-0">
+              <div className="p-6 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 flex-shrink-0">
                 <button
                   onClick={handleClose}
                   className={cn(
                     'animate-slide-up motion-reduce:animate-none',
-                    'w-full py-3.5 px-6 rounded-xl font-semibold text-white',
-                    'bg-gradient-to-r from-friendly-purple to-purple-600',
-                    'hover:from-purple-600 hover:to-purple-700',
-                    'transition-all transform hover:scale-[1.02] active:scale-[0.98]',
-                    'focus:outline-none focus:ring-2 focus:ring-friendly-purple focus:ring-offset-2',
-                    'dark:focus:ring-offset-gray-800',
+                    'w-full py-3.5 px-6 rounded-md font-semibold text-white',
+                    'bg-primary-600 hover:bg-primary-700 transition-colors',
                     'flex items-center justify-center gap-2'
                   )}
                   style={{ animationDelay: '900ms' }}
                 >
-                  <CheckCircle2 className="w-5 h-5" />
+                  <CheckCircle2 className="h-5 w-5 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                   Got it!
                 </button>
               </div>

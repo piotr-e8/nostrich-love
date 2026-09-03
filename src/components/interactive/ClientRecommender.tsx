@@ -133,22 +133,22 @@ const getDeviceOptions = (t: (key: string) => string) => [
   {
     value: "ios" as Device,
     label: t("clientRecommender.deviceOptions.ios.label"),
-    icon: <Smartphone className="w-6 h-6" />,
+    icon: <Smartphone className="h-6 w-6" strokeWidth={1.5} aria-hidden="true" />,
   },
   {
     value: "android" as Device,
     label: t("clientRecommender.deviceOptions.android.label"),
-    icon: <Smartphone className="w-6 h-6" />,
+    icon: <Smartphone className="h-6 w-6" strokeWidth={1.5} aria-hidden="true" />,
   },
   {
     value: "desktop" as Device,
     label: t("clientRecommender.deviceOptions.desktop.label"),
-    icon: <Monitor className="w-6 h-6" />,
+    icon: <Monitor className="h-6 w-6" strokeWidth={1.5} aria-hidden="true" />,
   },
   {
     value: "web" as Device,
     label: t("clientRecommender.deviceOptions.web.label"),
-    icon: <Globe className="w-6 h-6" />,
+    icon: <Globe className="h-6 w-6" strokeWidth={1.5} aria-hidden="true" />,
   },
 ];
 
@@ -157,25 +157,25 @@ const getPriorityOptions = (t: (key: string) => string) => [
     value: "easy" as Priority,
     label: t("clientRecommender.priorityOptions.easy.label"),
     description: t("clientRecommender.priorityOptions.easy.description"),
-    icon: <Star className="w-5 h-5" />,
+    icon: <Star className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
   },
   {
     value: "power" as Priority,
     label: t("clientRecommender.priorityOptions.power.label"),
     description: t("clientRecommender.priorityOptions.power.description"),
-    icon: <Zap className="w-5 h-5" />,
+    icon: <Zap className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
   },
   {
     value: "privacy" as Priority,
     label: t("clientRecommender.priorityOptions.privacy.label"),
     description: t("clientRecommender.priorityOptions.privacy.description"),
-    icon: <Shield className="w-5 h-5" />,
+    icon: <Shield className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
   },
   {
     value: "web-only" as Priority,
     label: t("clientRecommender.priorityOptions.webOnly.label"),
     description: t("clientRecommender.priorityOptions.webOnly.description"),
-    icon: <Globe className="w-5 h-5" />,
+    icon: <Globe className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
   },
 ];
 
@@ -183,17 +183,17 @@ const getFeatureOptions = (t: (key: string) => string) => [
   {
     value: "wallet" as Feature,
     label: t("clientRecommender.featureOptions.wallet.label"),
-    icon: <Wallet className="w-5 h-5" />,
+    icon: <Wallet className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
   },
   {
     value: "images" as Feature,
     label: t("clientRecommender.featureOptions.images.label"),
-    icon: <ImageIcon className="w-5 h-5" />,
+    icon: <ImageIcon className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
   },
   {
     value: "longform" as Feature,
     label: t("clientRecommender.featureOptions.longform.label"),
-    icon: <FileText className="w-5 h-5" />,
+    icon: <FileText className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
   },
 ];
 
@@ -305,34 +305,36 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
 
     return (
       <div className={cn("max-w-4xl mx-auto p-6", className)}>
-        <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 md:p-8">
+        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-6 md:p-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-success-500/20 rounded-2xl mb-4 animate-scale-in motion-reduce:animate-none">
-              <Award className="w-8 h-8 text-success-500" />
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+            <Award
+              className="mx-auto mb-3 h-6 w-6 text-success-700 dark:text-success-400"
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
+            <h2 className="text-h2 font-display text-gray-900 dark:text-white mb-2">
               {t('clientRecommender.title')}
             </h2>
-            <p className="text-gray-400">
+            <p className="text-gray-600 dark:text-gray-400">
               {t('clientRecommender.description')}
             </p>
           </div>
 
           {/* Top Recommendation */}
-          <div className="bg-gradient-to-br from-primary-500/20 to-primary-600/10 border-2 border-primary-500 rounded-2xl p-6 mb-6 animate-slide-up motion-reduce:animate-none">
+          <div className="bg-white dark:bg-gray-900 border border-primary-600 dark:border-primary-500 rounded-lg p-6 mb-6 animate-slide-up motion-reduce:animate-none">
             <div className="flex items-start gap-4 mb-4">
-              <div className="w-16 h-16 bg-primary-500 rounded-2xl flex items-center justify-center flex-shrink-0">
-                <span className="text-2xl font-bold text-white">
+              <div className="w-12 h-12 bg-primary-600 rounded-md flex items-center justify-center flex-shrink-0">
+                <span className="text-h3 font-display text-white">
                   {top.name.charAt(0)}
                 </span>
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <h3 className="text-2xl font-bold text-white">{top.name}</h3>
+                  <h3 className="text-h3 font-display text-gray-900 dark:text-white">{top.name}</h3>
                   {top.beginnerFriendly && (
-                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-success-500/20 text-success-500 text-xs rounded-full">
-                      <Sparkles className="w-3 h-3" />
+                    <span className="inline-flex items-center gap-1 px-2 py-1 border border-success-300 dark:border-success-800 text-success-700 dark:text-success-400 text-caption rounded-full">
+                      <Sparkles className="h-3 w-3 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                       {t('clientRecommender.results.beginnerFriendly')}
                     </span>
                   )}
@@ -340,38 +342,38 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
               </div>
             </div>
 
-            <p className="text-gray-300 mb-4">
+            <p className="text-gray-700 dark:text-gray-300 mb-4">
               {clientText(top.id, 'description')}
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
-                <h4 className="text-sm font-medium text-success-500 mb-2">
+                <h4 className="text-h4 font-display text-success-700 dark:text-success-400 mb-2">
                   {t('clientRecommender.results.pros')}
                 </h4>
                 <ul className="space-y-1">
                   {clientList(top.id, 'pros').map((pro, i) => (
                     <li
                       key={i}
-                      className="text-sm text-gray-400 flex items-center gap-2"
+                      className="text-body-sm text-gray-600 dark:text-gray-400 flex items-center gap-2"
                     >
-                      <Check className="w-4 h-4 text-success-500 flex-shrink-0" />
+                      <Check className="h-4 w-4 shrink-0 text-success-700 dark:text-success-400" strokeWidth={1.5} aria-hidden="true" />
                       {pro}
                     </li>
                   ))}
                 </ul>
               </div>
               <div>
-                <h4 className="text-sm font-medium text-error-500 mb-2">
+                <h4 className="text-h4 font-display text-error-700 dark:text-error-400 mb-2">
                   {t('clientRecommender.results.cons')}
                 </h4>
                 <ul className="space-y-1">
                   {clientList(top.id, 'cons').map((con, i) => (
                     <li
                       key={i}
-                      className="text-sm text-gray-400 flex items-center gap-2"
+                      className="text-body-sm text-gray-600 dark:text-gray-400 flex items-center gap-2"
                     >
-                      <span className="w-4 h-4 flex items-center justify-center text-error-500 flex-shrink-0">
+                      <span className="w-4 h-4 flex items-center justify-center text-error-700 dark:text-error-400 flex-shrink-0">
                         −
                       </span>
                       {con}
@@ -387,10 +389,10 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                   href={top.urls[answers.device]}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-md font-medium transition-colors"
                 >
                   {t('clientRecommender.results.getApp').replace('{clientName}', top.name)}
-                  <ExternalLink className="w-4 h-4" />
+                  <ExternalLink className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                 </a>
               )}
               {top.urls.web && (
@@ -398,10 +400,10 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                   href={top.urls.web}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-medium transition-all"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-md border border-gray-200 bg-white text-gray-700 font-medium transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-700 dark:hover:bg-gray-800"
                 >
                   {t('clientRecommender.results.tryWeb')}
-                  <Globe className="w-4 h-4" />
+                  <Globe className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                 </a>
               )}
             </div>
@@ -413,28 +415,28 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
               {recommendations.slice(1).map((client, index) => (
                 <div
                   key={client.id}
-                  className="bg-gray-800/50 border border-gray-700 rounded-xl p-4 animate-slide-up motion-reduce:animate-none"
+                  className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-4 animate-slide-up motion-reduce:animate-none"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="w-10 h-10 bg-gray-700 rounded-xl flex items-center justify-center">
-                      <span className="font-bold text-white">
+                    <div className="w-10 h-10 rounded-md bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                      <span className="font-semibold text-gray-900 dark:text-white">
                         {client.name.charAt(0)}
                       </span>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-white">
+                      <h4 className="font-semibold text-gray-900 dark:text-white">
                         {client.name}
                       </h4>
                       {client.beginnerFriendly && (
-                        <div className="flex items-center gap-2 text-xs text-success-500">
-                          <Sparkles className="w-3 h-3" />
+                        <div className="flex items-center gap-2 text-caption text-success-700 dark:text-success-400">
+                          <Sparkles className="h-3 w-3 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                           {t('clientRecommender.results.beginnerFriendly')}
                         </div>
                       )}
                     </div>
                   </div>
-                  <p className="text-sm text-gray-400 mb-3">
+                  <p className="text-body-sm text-gray-600 dark:text-gray-400 mb-3">
                     {clientText(client.id, 'description')}
                   </p>
                   <div className="flex gap-2">
@@ -443,10 +445,10 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                         href={client.urls[answers.device]}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium inline-flex items-center gap-1"
+                        className="text-body-sm text-primary-text dark:text-primary-400 underline underline-offset-2 font-medium inline-flex items-center gap-1"
                       >
                         {t('clientRecommender.results.getApp').replace('{clientName}', client.name)}
-                        <ExternalLink className="w-3 h-3" />
+                        <ExternalLink className="h-3 w-3 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                       </a>
                     )}
                     {client.urls.web && (
@@ -454,10 +456,10 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                         href={client.urls.web}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm text-gray-400 hover:text-white inline-flex items-center gap-1"
+                        className="text-body-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white inline-flex items-center gap-1"
                       >
                         {t('clientRecommender.results.tryWeb')}
-                        <Globe className="w-3 h-3" />
+                        <Globe className="h-3 w-3 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                       </a>
                     )}
                   </div>
@@ -470,9 +472,9 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
           <div className="text-center mt-8">
             <button
               onClick={reset}
-              className="inline-flex items-center gap-2 px-4 py-2 text-gray-400 hover:text-white transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
             >
-              <RefreshCw className="w-4 h-4" />
+              <RefreshCw className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
               {t('clientRecommender.retakeQuiz')}
             </button>
           </div>
@@ -483,15 +485,15 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
 
   return (
     <div className={cn("max-w-2xl mx-auto p-6", className)}>
-      <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 md:p-8">
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-6 md:p-8">
         {/* Progress */}
         <div className="flex items-center gap-2 mb-8">
           {[1, 2, 3].map((s) => (
             <div
               key={s}
               className={cn(
-                "flex-1 h-2 rounded-full transition-all",
-                s <= step ? "bg-primary-500" : "bg-gray-700",
+                "flex-1 h-2 rounded-full transition-colors",
+                s <= step ? "bg-primary-600" : "bg-gray-200 dark:bg-gray-800",
               )}
             />
           ))}
@@ -500,10 +502,10 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
         {/* Step 1: Device */}
         {step === 1 && (
           <div className="animate-slide-in-right motion-reduce:animate-none">
-            <h2 className="text-2xl font-bold text-white mb-2">
+            <h2 className="text-h2 font-display text-gray-900 dark:text-white mb-2">
               {t('clientRecommender.steps.device.title')}
             </h2>
-            <p className="text-gray-400 mb-6">
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
               {t('clientRecommender.steps.device.description')}
             </p>
 
@@ -513,16 +515,16 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                   key={option.value}
                   onClick={() => handleDeviceSelect(option.value)}
                   className={cn(
-                    "flex items-center gap-4 p-4 border rounded-xl transition-all text-start",
+                    "flex items-center gap-4 p-4 border rounded-md transition-colors text-start",
                     answers.device === option.value
-                      ? "border-primary-500 bg-primary-500/10"
-                      : "border-gray-700 hover:border-gray-600 hover:bg-gray-800/50",
+                      ? "border-primary-600 bg-primary-50 dark:border-primary-500 dark:bg-gray-800"
+                      : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700 dark:hover:bg-gray-800",
                   )}
                 >
-                  <div className="w-12 h-12 bg-gray-700 rounded-xl flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-md bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
                     {option.icon}
                   </div>
-                  <span className="font-medium text-white">{option.label}</span>
+                  <span className="font-medium text-gray-900 dark:text-white">{option.label}</span>
                 </button>
               ))}
             </div>
@@ -535,15 +537,15 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
             <div className="flex items-center gap-2 mb-4">
               <button
                 onClick={() => setStep(1)}
-                className="p-2 hover:bg-gray-700 rounded-lg transition-all"
+                className="p-2 rounded-md transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
               >
-                <ChevronLeft className="w-5 h-5 text-gray-400 rtl:rotate-180" />
+                <ChevronLeft className="h-5 w-5 text-gray-400 dark:text-gray-500 rtl:rotate-180" strokeWidth={1.5} aria-hidden="true" />
               </button>
-              <h2 className="text-2xl font-bold text-white">
+              <h2 className="text-h2 font-display text-gray-900 dark:text-white">
                 {t('clientRecommender.steps.priority.title')}
               </h2>
             </div>
-            <p className="text-gray-400 mb-6">
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
               {t('clientRecommender.steps.priority.description')}
             </p>
 
@@ -553,18 +555,18 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                   key={option.value}
                   onClick={() => handlePrioritySelect(option.value)}
                   className={cn(
-                    "w-full flex items-center gap-4 p-4 border rounded-xl transition-all text-start",
+                    "w-full flex items-center gap-4 p-4 border rounded-md transition-colors text-start",
                     answers.priority === option.value
-                      ? "border-primary-500 bg-primary-500/10"
-                      : "border-gray-700 hover:border-gray-600 hover:bg-gray-800/50",
+                      ? "border-primary-600 bg-primary-50 dark:border-primary-500 dark:bg-gray-800"
+                      : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700 dark:hover:bg-gray-800",
                   )}
                 >
-                  <div className="w-12 h-12 bg-gray-700 rounded-xl flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-md bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
                     {option.icon}
                   </div>
                   <div>
-                    <p className="font-medium text-white">{option.label}</p>
-                    <p className="text-sm text-gray-400">
+                    <p className="font-medium text-gray-900 dark:text-white">{option.label}</p>
+                    <p className="text-body-sm text-gray-600 dark:text-gray-400">
                       {option.description}
                     </p>
                   </div>
@@ -580,15 +582,15 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
             <div className="flex items-center gap-2 mb-4">
               <button
                 onClick={() => setStep(2)}
-                className="p-2 hover:bg-gray-700 rounded-lg transition-all"
+                className="p-2 rounded-md transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
               >
-                <ChevronLeft className="w-5 h-5 text-gray-400 rtl:rotate-180" />
+                <ChevronLeft className="h-5 w-5 text-gray-400 dark:text-gray-500 rtl:rotate-180" strokeWidth={1.5} aria-hidden="true" />
               </button>
-              <h2 className="text-2xl font-bold text-white">
+              <h2 className="text-h2 font-display text-gray-900 dark:text-white">
                 {t('clientRecommender.steps.features.title')}
               </h2>
             </div>
-            <p className="text-gray-400 mb-6">
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
               {t('clientRecommender.steps.features.description')}
             </p>
 
@@ -598,30 +600,30 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
                   key={option.value}
                   onClick={() => toggleFeature(option.value)}
                   className={cn(
-                    "w-full flex items-center justify-between p-4 border rounded-xl transition-all",
+                    "w-full flex items-center justify-between p-4 border rounded-md transition-colors",
                     answers.features.includes(option.value)
-                      ? "border-primary-500 bg-primary-500/10"
-                      : "border-gray-700 hover:border-gray-600 hover:bg-gray-800/50",
+                      ? "border-primary-600 bg-primary-50 dark:border-primary-500 dark:bg-gray-800"
+                      : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700 dark:hover:bg-gray-800",
                   )}
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gray-700 rounded-xl flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-md bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
                       {option.icon}
                     </div>
-                    <span className="font-medium text-white">
+                    <span className="font-medium text-gray-900 dark:text-white">
                       {option.label}
                     </span>
                   </div>
                   <div
                     className={cn(
-                      "w-6 h-6 rounded border-2 flex items-center justify-center transition-all",
+                      "w-6 h-6 rounded border-2 flex items-center justify-center transition-colors",
                       answers.features.includes(option.value)
-                        ? "bg-primary-500 border-primary-500"
-                        : "border-gray-500",
+                        ? "bg-primary-600 border-primary-600"
+                        : "border-gray-300 dark:border-gray-600",
                     )}
                   >
                     {answers.features.includes(option.value) && (
-                      <Check className="w-4 h-4 text-white" />
+                      <Check className="h-4 w-4 text-white" strokeWidth={1.5} aria-hidden="true" />
                     )}
                   </div>
                 </button>
@@ -630,10 +632,10 @@ export function ClientRecommender({ className }: ClientRecommenderProps) {
 
             <button
               onClick={handleFinish}
-              className="w-full py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all flex items-center justify-center gap-2"
+              className="w-full py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-md font-medium transition-colors flex items-center justify-center gap-2"
             >
               {t('clientRecommender.steps.features.seeRecommendations')}
-              <ChevronRight className="w-5 h-5 rtl:rotate-180" />
+              <ChevronRight className="h-5 w-5 shrink-0 rtl:rotate-180" strokeWidth={1.5} aria-hidden="true" />
             </button>
           </div>
         )}

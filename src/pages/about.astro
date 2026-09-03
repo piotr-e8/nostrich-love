@@ -43,17 +43,13 @@ const jsonLd = [
   
   <main id="main-content">
     <!-- Hero Section -->
-    <section class="relative overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 dark:from-primary/5 dark:to-secondary/5" />
-      
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative">
+    <section>
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
         <div class="text-center max-w-3xl mx-auto">
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              About This Guide
-            </span>
+          <h1 class="text-display font-bold mb-6 text-gray-900 dark:text-white">
+            About This Guide
           </h1>
-          <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+          <p class="text-lead text-gray-600 dark:text-gray-400 mb-8 max-w-measure mx-auto">
             A free, open-source guide to Nostr, written for people who have never heard of it.
           </p>
         </div>
@@ -64,20 +60,20 @@ const jsonLd = [
     <section class="py-16">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Why this exists</h2>
+          <h2 class="text-h2 font-semibold text-gray-900 dark:text-white mb-6">Why this exists</h2>
           <div class="prose dark:prose-invert max-w-none">
-            <p class="text-lg text-gray-600 dark:text-gray-400 mb-4">
+            <p class="text-body text-gray-600 dark:text-gray-400 mb-4">
               Nostrich.love was made to put the Nostr protocol within reach of people who are not
               developers. Decentralized social media should not ask for a technical background at
               the door.
             </p>
-            <p class="text-lg text-gray-600 dark:text-gray-400 mb-4">
+            <p class="text-body text-gray-600 dark:text-gray-400 mb-4">
               Nostr stands for Notes and Other Stuff Transmitted by Relays. It is a small, open
               protocol for social media that no company owns and that is hard to censor. Instead
               of an account on somebody's server, you have a pair of cryptographic keys, and
               those keys are what put you in control of your identity and your data.
             </p>
-            <p class="text-lg text-gray-600 dark:text-gray-400">
+            <p class="text-body text-gray-600 dark:text-gray-400">
               The guide itself is free, open source, and maintained by the community.
               No ads, no tracking, no gatekeeping.
             </p>
@@ -87,42 +83,38 @@ const jsonLd = [
     </section>
 
     <!-- Principles Section -->
-    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
+    <section class="py-16 bg-gray-50 dark:bg-gray-900 border-y border-gray-200 dark:border-gray-800">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">Our Principles</h2>
-          
+          <h2 class="text-h2 font-semibold text-gray-900 dark:text-white mb-8 text-center">Our Principles</h2>
+
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
-              <div class="text-3xl mb-4">🔓</div>
-              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Open Source</h3>
-              <p class="text-gray-600 dark:text-gray-400">
+            <div class="p-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+              <h3 class="text-h3 font-semibold text-gray-900 dark:text-white mb-2">Open Source</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 All the code sits in public on GitHub. Read it, fork it, or send a fix.
               </p>
             </div>
-            
-            <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
-              <div class="text-3xl mb-4">🔒</div>
-              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Privacy First</h3>
-              <p class="text-gray-600 dark:text-gray-400">
+
+            <div class="p-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+              <h3 class="text-h3 font-semibold text-gray-900 dark:text-white mb-2">Privacy First</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 No tracking, no cookies, no data collection. The analytics we do run are the
                 privacy-friendly kind.
               </p>
             </div>
-            
-            <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
-              <div class="text-3xl mb-4">🌍</div>
-              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Accessible</h3>
-              <p class="text-gray-600 dark:text-gray-400">
+
+            <div class="p-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+              <h3 class="text-h3 font-semibold text-gray-900 dark:text-white mb-2">Accessible</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 Written for people who are not developers. Where a term is unavoidable, we
                 explain it before we use it.
               </p>
             </div>
-            
-            <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
-              <div class="text-3xl mb-4">⚡</div>
-              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Community Driven</h3>
-              <p class="text-gray-600 dark:text-gray-400">
+
+            <div class="p-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+              <h3 class="text-h3 font-semibold text-gray-900 dark:text-white mb-2">Community Driven</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 Built from inside the Nostr community. Corrections and additions are welcome.
               </p>
             </div>
@@ -135,11 +127,11 @@ const jsonLd = [
     <section class="py-16">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Built With</h2>
-          
+          <h2 class="text-h2 font-semibold text-gray-900 dark:text-white mb-6">Built With</h2>
+
           <div class="prose dark:prose-invert max-w-none">
-            <p class="text-gray-600 dark:text-gray-400 mb-4">The site runs on open-source pieces:</p>
-            <ul class="space-y-2 text-gray-600 dark:text-gray-400">
+            <p class="text-body text-gray-600 dark:text-gray-400 mb-4">The site runs on open-source pieces:</p>
+            <ul class="space-y-2 text-body text-gray-600 dark:text-gray-400">
               <li><strong>Astro</strong> builds the static pages</li>
               <li><strong>React</strong> handles the interactive parts</li>
               <li><strong>Tailwind CSS</strong> does the styling</li>
@@ -152,31 +144,31 @@ const jsonLd = [
     </section>
 
     <!-- Maintainer Section -->
-    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
+    <section class="py-16 border-t border-gray-200 dark:border-gray-800">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Who Builds This</h2>
+          <h2 class="text-h2 font-semibold text-gray-900 dark:text-white mb-6">Who Builds This</h2>
           <div class="prose dark:prose-invert max-w-none">
-            <p class="text-gray-600 dark:text-gray-400 mb-4">
+            <p class="text-body text-gray-600 dark:text-gray-400 mb-4">
               Nostrich.love is built and maintained by
               <strong>Piotr Czarnoleski</strong>
-              (<a href="https://github.com/ptrio42" target="_blank" rel="noopener noreferrer" class="text-primary-600 dark:text-primary-400 hover:underline">ptrio42</a>),
+              (<a href="https://github.com/ptrio42" target="_blank" rel="noopener noreferrer" class="text-primary-text dark:text-primary-400 underline underline-offset-2">ptrio42</a>),
               a developer who has been building on nostr since 2023. He runs relays written in Go,
-              built <a href="https://swarmstr.com" target="_blank" rel="noopener noreferrer" class="text-primary-600 dark:text-primary-400 hover:underline">swarmstr.com</a>
+              built <a href="https://swarmstr.com" target="_blank" rel="noopener noreferrer" class="text-primary-text dark:text-primary-400 underline underline-offset-2">swarmstr.com</a>
               (a Q&amp;A client for the protocol), and contributes to nostr open source such as the
-              <a href="https://github.com/fiatjaf/khatru" target="_blank" rel="noopener noreferrer" class="text-primary-600 dark:text-primary-400 hover:underline">khatru</a>
+              <a href="https://github.com/fiatjaf/khatru" target="_blank" rel="noopener noreferrer" class="text-primary-text dark:text-primary-400 underline underline-offset-2">khatru</a>
               relay framework.
             </p>
-            <p class="text-gray-600 dark:text-gray-400 mb-4">
+            <p class="text-body text-gray-600 dark:text-gray-400 mb-4">
               This site exists because onboarding is the step he kept watching newcomers fail at,
               especially outside English. Every guide, tool and translation here is open source,
               and corrections are welcome from anyone.
             </p>
-            <ul class="space-y-2 text-gray-600 dark:text-gray-400">
+            <ul class="space-y-2 text-body text-gray-600 dark:text-gray-400">
               <li><strong>Nostr:</strong> <code>_@nostrich.love</code> (NIP-05)</li>
-              <li><strong>Email:</strong> <a href="mailto:hello@nostrich.love" class="text-primary-600 dark:text-primary-400 hover:underline">hello@nostrich.love</a></li>
-              <li><strong>Source code:</strong> <a href="https://github.com/ptrio42/nostrich-love" target="_blank" rel="noopener noreferrer" class="text-primary-600 dark:text-primary-400 hover:underline">GitHub</a> (MIT licensed)</li>
-              <li><strong>Support:</strong> value for value, via <a href="/support" class="text-primary-600 dark:text-primary-400 hover:underline">zaps, Lightning or on-chain</a></li>
+              <li><strong>Email:</strong> <a href="mailto:hello@nostrich.love" class="text-primary-text dark:text-primary-400 underline underline-offset-2">hello@nostrich.love</a></li>
+              <li><strong>Source code:</strong> <a href="https://github.com/ptrio42/nostrich-love" target="_blank" rel="noopener noreferrer" class="text-primary-text dark:text-primary-400 underline underline-offset-2">GitHub</a> (MIT licensed)</li>
+              <li><strong>Support:</strong> value for value, via <a href="/support" class="text-primary-text dark:text-primary-400 underline underline-offset-2">zaps, Lightning or on-chain</a></li>
             </ul>
           </div>
         </div>
@@ -184,11 +176,11 @@ const jsonLd = [
     </section>
 
     <!-- Official Account Section -->
-    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
+    <section class="py-16 border-t border-gray-200 dark:border-gray-800">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6 text-center">Follow Us on Nostr</h2>
-          <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 text-center">
+          <h2 class="text-h2 font-semibold text-gray-900 dark:text-white mb-6 text-center">Follow Us on Nostr</h2>
+          <p class="text-lead text-gray-600 dark:text-gray-400 mb-8 text-center max-w-measure mx-auto">
             New guides and site news get posted to the official Nostr account.
           </p>
           <OfficialAccountWidget client:idle expanded={true} />
@@ -197,12 +189,12 @@ const jsonLd = [
     </section>
 
     <!-- Contribute Section -->
-    <section class="py-20 bg-gradient-to-br from-primary to-secondary">
+    <section class="py-20 border-t border-gray-200 dark:border-gray-800">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl font-bold text-white mb-4">
+        <h2 class="text-h2 font-semibold text-gray-900 dark:text-white mb-4">
           Join the Community
         </h2>
-        <p class="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
+        <p class="text-lead text-gray-600 dark:text-gray-400 mb-8 max-w-measure mx-auto">
           Help make Nostr easier to walk into. Fixes, bug reports and suggestions all go through GitHub.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -210,13 +202,13 @@ const jsonLd = [
             href="https://github.com/ptrio42/nostrich-love"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-primary-600 bg-white rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+            class="inline-flex items-center justify-center px-8 py-4 text-body font-semibold text-white bg-primary-600 hover:bg-primary-700 rounded-md transition-colors"
           >
             Contribute on GitHub
           </a>
           <a
             href="/guides"
-            class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white border-2 border-white/30 hover:border-white rounded-xl transition-all duration-200"
+            class="inline-flex items-center justify-center px-8 py-4 text-body font-semibold text-primary-text dark:text-primary-400 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-md transition-colors hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800"
           >
             Start Learning
           </a>

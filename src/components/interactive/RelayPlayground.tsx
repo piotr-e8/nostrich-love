@@ -141,13 +141,13 @@ function RelayIssueNotice({ issue }: { issue: RelayIssue }) {
   return (
     <div
       role="status"
-      className="flex items-start gap-2 rounded-xl border border-error-500/40 bg-error-500/10 p-3 text-sm text-error-600 dark:text-error-400"
+      className="flex items-start gap-2 rounded-lg border border-error-200 bg-error-50 dark:border-error-900 dark:bg-error-950 p-3 text-body-sm text-error-600 dark:text-error-400"
     >
-      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" strokeWidth={1.5} aria-hidden="true" />
       <span>
         {message}
         {issue.detail && (
-          <span className="mt-1 block break-all font-mono text-xs text-gray-600 dark:text-gray-400">
+          <span className="mt-1 block break-all font-mono text-caption text-gray-600 dark:text-gray-400">
             {issue.detail}
           </span>
         )}
@@ -456,42 +456,46 @@ export function RelayPlayground({ className }: { className?: string }) {
 
   return (
     <div className={cn("max-w-7xl mx-auto p-4 md:p-6", className)}>
-      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 md:p-8">
+      <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900 md:p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4 animate-scale-in motion-reduce:animate-none">
-            <Globe className="w-8 h-8 text-primary-600 dark:text-primary-400" />
+          <div className="mb-4 flex justify-center">
+            <Globe
+              className="h-6 w-6 text-gray-400 dark:text-gray-500"
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
           </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          <h2 className="mb-2 text-h2 text-gray-900 dark:text-white">
             {t('relayPlayground.title')}
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="mx-auto max-w-measure text-lead text-gray-600 dark:text-gray-400">
             {t('relayPlayground.description')}
           </p>
         </div>
 
         {/* Stats Overview */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
-            <div className="text-3xl font-bold text-success-500">{onlineCount}</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">{t('relayPlayground.status.online')}</div>
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800">
+            <div className="text-h2 text-success-800 dark:text-success-300">{onlineCount}</div>
+            <div className="text-body-sm text-gray-600 dark:text-gray-400">{t('relayPlayground.status.online')}</div>
           </div>
-          <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
-            <div className="text-3xl font-bold text-error-500">{offlineCount}</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">{t('relayPlayground.status.offline')}</div>
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800">
+            <div className="text-h2 text-error-800 dark:text-error-300">{offlineCount}</div>
+            <div className="text-body-sm text-gray-600 dark:text-gray-400">{t('relayPlayground.status.offline')}</div>
           </div>
-          <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
-            <div className="text-3xl font-bold text-gray-900 dark:text-white">{relays.length}</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">{t('relayPlayground.stats.totalRelays')}</div>
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800">
+            <div className="text-h2 text-gray-900 dark:text-white">{relays.length}</div>
+            <div className="text-body-sm text-gray-600 dark:text-gray-400">{t('relayPlayground.stats.totalRelays')}</div>
           </div>
-          <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
-            <div className="text-3xl font-bold text-primary-600 dark:text-primary-400">{avgLatency}ms</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">{t('relayPlayground.healthTab.responseTime')}</div>
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center dark:border-gray-800 dark:bg-gray-800">
+            <div className="text-h2 text-primary-text dark:text-primary-400">{avgLatency}ms</div>
+            <div className="text-body-sm text-gray-600 dark:text-gray-400">{t('relayPlayground.healthTab.responseTime')}</div>
           </div>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex flex-wrap gap-2 mb-6 border-b border-gray-700 pb-4">
+        <div className="mb-6 flex flex-wrap gap-2 border-b border-gray-200 pb-4 dark:border-gray-800">
           {[
             { id: "connection" as Tab, label: t('relayPlayground.tabs.connection'), icon: Wifi },
             { id: "health" as Tab, label: t('relayPlayground.tabs.health'), icon: Activity },
@@ -503,13 +507,13 @@ export function RelayPlayground({ className }: { className?: string }) {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={cn(
-                "flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all",
+                "flex items-center gap-2 rounded-md px-4 py-2 font-medium transition-colors",
                 activeTab === tab.id
                   ? "bg-primary-600 text-white"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-600 dark:text-gray-400 dark:hover:bg-gray-700"
+                  : "border border-gray-200 text-gray-600 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-400 dark:hover:bg-gray-800"
               )}
             >
-              <tab.icon className="w-4 h-4" />
+              <tab.icon className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
               {tab.label}
             </button>
           ))}
@@ -517,23 +521,27 @@ export function RelayPlayground({ className }: { className?: string }) {
             type="button"
             onClick={checkAllRelays}
             disabled={isCheckingAll}
-            className="ms-auto flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 disabled:bg-gray-100 dark:disabled:bg-gray-800 text-gray-900 dark:text-white disabled:text-gray-500 rounded-lg font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="ms-auto flex items-center gap-2 rounded-md border border-gray-200 px-4 py-2 font-medium text-gray-900 transition-colors hover:bg-gray-50 disabled:opacity-50 dark:border-gray-800 dark:text-white dark:hover:bg-gray-800"
           >
-            <RefreshCw className={cn("w-4 h-4", isCheckingAll && "animate-spin")} />
+            <RefreshCw className={cn("w-4 h-4", isCheckingAll && "animate-spin")} strokeWidth={1.5} aria-hidden="true" />
             {isCheckingAll ? t('relayPlayground.buttons.checking') : t('relayPlayground.buttons.checkAll')}
           </button>
         </div>
 
         {/* Search */}
         <div className="relative mb-6">
-          <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+          <Search
+            className="absolute start-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 dark:text-gray-500"
+            strokeWidth={1.5}
+            aria-hidden="true"
+          />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             aria-label={t('relayPlayground.search.placeholder')}
             placeholder={t('relayPlayground.search.placeholder')}
-            className="w-full ps-10 pe-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:outline-none"
+            className="w-full ps-10 pe-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 rounded-md text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 text-body transition-colors focus:border-primary-600 dark:focus:border-primary-400"
           />
         </div>
 
@@ -597,9 +605,9 @@ function ConnectionLab({
   return (
     <div className="space-y-6 animate-slide-up motion-reduce:animate-none">
       {/* Educational Banner */}
-      <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 flex items-start gap-3">
-        <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
-        <div className="text-sm text-gray-700 dark:text-gray-300">
+      <div className="border border-blue-200 bg-blue-50 dark:border-blue-900 dark:bg-blue-950 rounded-lg p-4 flex items-start gap-3">
+        <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" strokeWidth={1.5} aria-hidden="true" />
+        <div className="text-body-sm text-gray-700 dark:text-gray-300">
           <strong className="text-blue-600 dark:text-blue-400">{t('relayPlayground.connectionTab.selectRelay')}</strong>
         </div>
       </div>
@@ -608,7 +616,7 @@ function ConnectionLab({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {relays.length === 0 ? (
           <div className="col-span-3 text-center py-12 text-gray-600 dark:text-gray-400">
-            <Server className="w-12 h-12 mx-auto mb-4 opacity-50" />
+            <Server className="w-12 h-12 mx-auto mb-4 opacity-50" strokeWidth={1.5} aria-hidden="true" />
             <p>{t('relayPlayground.healthTab.noData')}</p>
           </div>
         ) : (
@@ -622,64 +630,66 @@ function ConnectionLab({
               aria-label={relay.name}
               onClick={() => onSelectRelay(relay)}
               className={cn(
-                "relative w-full text-start p-4 border rounded-xl transition-all",
+                "relative w-full text-start p-4 border rounded-lg transition-colors",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                 selectedRelay?.id === relay.id
-                  ? "border-primary-500 bg-primary-500/10"
-                  : "border-gray-300 hover:border-gray-400 dark:border-gray-700 dark:hover:border-gray-600 bg-gray-100/30 dark:bg-gray-800/30"
+                  ? "border-primary-600 bg-primary-50 dark:border-primary-400 dark:bg-gray-800"
+                  : "border-gray-300 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-600 bg-gray-50 dark:bg-gray-800"
               )}
             >
               {/* Connection Status Indicator */}
               <div className="absolute top-3 end-3">
                 {relay.connectionState === "connected" && (
-                  <div className="flex items-center gap-1 text-success-500 text-xs">
-                    <Wifi className="w-3 h-3" />
+                  <div className="flex items-center gap-1 text-success-700 dark:text-success-400 text-caption">
+                    <Wifi className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
                     {t('relayPlayground.status.connected')}
                   </div>
                 )}
                 {relay.connectionState === "connecting" && (
-                  <div className="flex items-center gap-1 text-yellow-500 text-xs">
-                    <Loader2 className="w-3 h-3 animate-spin" />
+                  <div className="flex items-center gap-1 text-warning-700 dark:text-warning-400 text-caption">
+                    <Loader2 className="w-3 h-3 animate-spin" strokeWidth={1.5} aria-hidden="true" />
                     {t('relayPlayground.status.checking')}
                   </div>
                 )}
                 {relay.connectionState === "error" && (
-                  <div className="flex items-center gap-1 text-error-500 text-xs">
-                    <WifiOff className="w-3 h-3" />
+                  <div className="flex items-center gap-1 text-error-700 dark:text-error-400 text-caption">
+                    <WifiOff className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
                     {t('relayPlayground.status.error')}
                   </div>
                 )}
               </div>
 
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-blue-600/10 flex items-center justify-center">
-                  <Server className="w-5 h-5 text-blue-400" />
-                </div>
+                <Server
+                  className="h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
+                  strokeWidth={1.5}
+                  aria-hidden="true"
+                />
                 <div className="min-w-0 flex-1">
                   <h3 className="font-semibold text-gray-900 dark:text-white truncate">{relay.name}</h3>
-                  <p className="text-xs text-gray-500 truncate">{relay.url}</p>
+                  <p className="truncate text-caption text-gray-500 dark:text-gray-400">{relay.url}</p>
                 </div>
               </div>
 
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
+              <p className="text-body-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
                 {t(`relayPlayground.relays.${relay.id}.description`)}
               </p>
 
-              <div className="flex items-center justify-between text-xs text-gray-500">
+              <div className="flex items-center justify-between text-caption text-gray-500">
                 <span className={cn(
                   "px-2 py-0.5 rounded-full",
-                  relay.access === "free" ? "bg-green-500/20 text-green-400" :
-                  relay.access === "paid" ? "bg-amber-500/20 text-amber-500" :
-                  relay.access === "restricted" ? "bg-purple-500/20 text-purple-400" :
-                  "bg-gray-500/20 text-gray-600 dark:text-gray-400"
+                  relay.access === "free" ? "border border-success-200 text-success-800 dark:border-success-900 dark:text-success-300" :
+                  relay.access === "paid" ? "border border-warning-200 text-warning-800 dark:border-warning-900 dark:text-warning-300" :
+                  relay.access === "restricted" ? "border border-gray-200 text-gray-700 dark:border-gray-800 dark:text-gray-300" :
+                  "border border-gray-200 text-gray-600 dark:border-gray-800 dark:text-gray-400"
                 )}>
                   {t(`relayPlayground.access.${relay.access}`)}
                 </span>
                 <span className={cn(
                   "px-2 py-0.5 rounded-full",
-                  relay.status === "online" ? "bg-green-500/20 text-green-400" :
-                  relay.status === "offline" ? "bg-red-500/20 text-red-400" :
-                  "bg-gray-500/20 text-gray-600 dark:text-gray-400"
+                  relay.status === "online" ? "border border-success-200 text-success-800 dark:border-success-900 dark:text-success-300" :
+                  relay.status === "offline" ? "border border-error-200 text-error-800 dark:border-error-900 dark:text-error-300" :
+                  "border border-gray-200 text-gray-600 dark:border-gray-800 dark:text-gray-400"
                 )}>
                   {t(`relayPlayground.status.${relay.status}`)}
                 </span>
@@ -691,20 +701,20 @@ function ConnectionLab({
 
       {/* Selected Relay Details */}
       {selectedRelay && (
-          <div className="bg-gray-100/50 dark:bg-gray-800/50 border border-gray-700 rounded-xl p-6 animate-slide-down motion-reduce:animate-none">
+          <div className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-800 rounded-lg p-6 animate-slide-down motion-reduce:animate-none">
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{selectedRelay.name}</h3>
+                <h3 className="text-h3 text-gray-900 dark:text-white">{selectedRelay.name}</h3>
                 <p className="text-gray-600 dark:text-gray-400">{selectedRelay.url}</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                <p className="text-body-sm text-gray-600 dark:text-gray-400 mt-2">
                   {t(`relayPlayground.relays.${selectedRelay.id}.description`)}
                 </p>
               </div>
               <button
                 onClick={() => onSelectRelay(null as any)}
-                className="text-gray-500 hover:text-gray-700 dark:hover:text-white"
+                className="rounded-md p-1 text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-500 dark:hover:text-white"
               >
-                <XCircle className="w-6 h-6" />
+                <XCircle className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
               </button>
             </div>
 
@@ -713,33 +723,33 @@ function ConnectionLab({
               {selectedRelay.connectionState === "idle" || selectedRelay.connectionState === "error" ? (
                 <button
                   onClick={() => onConnect(selectedRelay)}
-                  className="flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all"
+                  className="flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-md font-medium transition-colors"
                 >
-                  <Play className="w-5 h-5" />
+                  <Play className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
                   {t('relayPlayground.buttons.connect')}
                 </button>
               ) : (
                 <button
                   onClick={onDisconnect}
-                  className="flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-medium transition-all"
+                  className="flex items-center gap-2 px-6 py-3 bg-error-700 hover:bg-error-800 text-white rounded-md font-medium transition-colors"
                 >
-                  <Pause className="w-5 h-5" />
+                  <Pause className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
                   {t('relayPlayground.buttons.disconnect')}
                 </button>
               )}
               <button
                 onClick={() => copyToClipboard(selectedRelay.url)}
-                className="flex items-center gap-2 px-4 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white rounded-xl font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="flex items-center gap-2 rounded-md border border-gray-200 px-4 py-3 font-medium text-gray-900 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:text-white dark:hover:bg-gray-800"
               >
-                <Copy className="w-5 h-5" />
+                <Copy className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
                 {t('relayPlayground.buttons.copy')}
               </button>
             </div>
 
             {/* Connection State Display */}
-            <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 p-4 font-mono text-sm">
-              <div className="text-gray-500 mb-2">// {t('relayPlayground.connectionTab.connectionState')}</div>
-              <div className="text-green-400">
+            <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-4 font-mono text-body-sm">
+              <div className="mb-2 text-gray-500 dark:text-gray-400">// {t('relayPlayground.connectionTab.connectionState')}</div>
+              <div className="text-success-700 dark:text-success-400">
                 {selectedRelay.connectionState === "idle" && t('relayPlayground.connectionTab.unknown')}
                 {selectedRelay.connectionState === "connecting" && `const ws = new WebSocket('${selectedRelay.url}');\nws.onopen = () => console.log('${t('relayPlayground.status.connected')}');`}
                 {selectedRelay.connectionState === "connected" && t('relayPlayground.connectionTab.connected')}
@@ -752,12 +762,12 @@ function ConnectionLab({
             </div>
 
             {/* Educational Info */}
-            <div className="mt-4 p-4 bg-blue-500/10 border border-blue-500/30 rounded-xl">
+            <div className="mt-4 p-4 border border-blue-200 bg-blue-50 dark:border-blue-900 dark:bg-blue-950 rounded-lg">
               <h4 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
-                <Info className="w-4 h-4" />
+                <Info className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                 {t('relayPlayground.connectionTab.whatHappensTitle')}
               </h4>
-              <p className="text-sm text-gray-700 dark:text-gray-300">
+              <p className="text-body-sm text-gray-700 dark:text-gray-300">
                 {t('relayPlayground.connectionTab.whatHappensBody')}
               </p>
             </div>
@@ -788,16 +798,16 @@ function HealthDashboard({
 
   const getLatencyColor = (latency?: number) => {
     if (!latency) return "text-gray-500";
-    if (latency < 100) return "text-green-400";
-    if (latency < 300) return "text-yellow-400";
-    return "text-red-400";
+    if (latency < 100) return "text-success-700 dark:text-success-400";
+    if (latency < 300) return "text-warning-700 dark:text-warning-400";
+    return "text-error-700 dark:text-error-400";
   };
 
   return (
     <div className="space-y-6 animate-slide-up motion-reduce:animate-none">
       {/* Sort Controls */}
       <div className="flex items-center gap-4">
-        <span className="text-gray-600 dark:text-gray-400 text-sm">{t('relayPlayground.healthTab.sortBy')}</span>
+        <span className="text-gray-600 dark:text-gray-400 text-body-sm">{t('relayPlayground.healthTab.sortBy')}</span>
         <div className="flex gap-2">
           {[
             { key: "latency" as const, label: t('relayPlayground.healthTab.responseTime') },
@@ -807,7 +817,7 @@ function HealthDashboard({
               key={option.key}
               onClick={() => setSortBy(option.key)}
               className={cn(
-                "px-3 py-1.5 rounded-lg text-sm font-medium transition-all",
+                "px-3 py-1.5 rounded-lg text-body-sm font-medium transition-colors",
                 sortBy === option.key
                   ? "bg-primary-600 text-white"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-600 dark:text-gray-400 dark:hover:bg-gray-700"
@@ -820,37 +830,37 @@ function HealthDashboard({
       </div>
 
       {/* Health Table */}
-      <div className="bg-gray-100/30 dark:bg-gray-800/30 rounded-xl overflow-hidden border border-gray-700">
+      <div className="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
         <table className="w-full">
-          <thead className="bg-gray-100/50 dark:bg-gray-800/50">
+          <thead className="bg-gray-50 dark:bg-gray-800">
             <tr>
-              <th className="text-start px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.healthTab.relay')}</th>
-              <th className="text-start px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.healthTab.access')}</th>
-              <th className="text-start px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.connectionTab.latency')}</th>
-              <th className="text-start px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.healthTab.lastChecked')}</th>
+              <th className="text-start px-4 py-3 text-body-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.healthTab.relay')}</th>
+              <th className="text-start px-4 py-3 text-body-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.healthTab.access')}</th>
+              <th className="text-start px-4 py-3 text-body-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.connectionTab.latency')}</th>
+              <th className="text-start px-4 py-3 text-body-sm font-medium text-gray-600 dark:text-gray-400">{t('relayPlayground.healthTab.lastChecked')}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-700">
             {sortedRelays.map((relay) => (
-              <tr key={relay.id} className="hover:bg-gray-100/30 dark:bg-gray-800/30 transition-colors">
+              <tr key={relay.id} className="hover:bg-gray-50 dark:bg-gray-800 transition-colors">
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
-                    <Server className="w-4 h-4 text-gray-500" />
+                    <Server className="w-4 h-4 text-gray-500" strokeWidth={1.5} aria-hidden="true" />
                     <div>
                       <div className="font-medium text-gray-900 dark:text-white">{relay.name}</div>
-                      <div className="text-xs text-gray-500">{relay.url}</div>
+                      <div className="text-caption text-gray-500">{relay.url}</div>
                     </div>
                   </div>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="text-gray-600 dark:text-gray-400 text-sm">
+                  <span className="text-gray-600 dark:text-gray-400 text-body-sm">
                     {t(`relayPlayground.access.${relay.access}`)}
                   </span>
                 </td>
                 <td className={cn("px-4 py-3 font-mono", getLatencyColor(relay.latency))}>
                   {relay.latency ? `${relay.latency}ms` : t('relayPlayground.connectionTab.unknown')}
                 </td>
-                <td className="px-4 py-3 text-gray-600 dark:text-gray-400 text-sm">
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400 text-body-sm">
                   {relay.lastChecked ? 
                     new Date(relay.lastChecked).toLocaleTimeString() : 
                     t('relayPlayground.connectionTab.unknown')
@@ -864,30 +874,30 @@ function HealthDashboard({
 
       {/* Latency Explanation */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
-          <div className="flex items-center gap-2 text-green-400 font-semibold mb-2">
-            <CheckCircle2 className="w-5 h-5" />
+        <div className="border border-success-200 bg-success-50 dark:border-success-900 dark:bg-success-950 rounded-lg p-4">
+          <div className="flex items-center gap-2 text-success-700 dark:text-success-400 font-semibold mb-2">
+            <CheckCircle2 className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
             {t('relayPlayground.healthTab.fastTitle')} (&lt; 100ms)
           </div>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-body-sm text-gray-600 dark:text-gray-400">
             {t('relayPlayground.healthTab.fastBody')}
           </p>
         </div>
-        <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4">
-          <div className="flex items-center gap-2 text-yellow-400 font-semibold mb-2">
-            <Activity className="w-5 h-5" />
+        <div className="border border-warning-200 bg-warning-50 dark:border-warning-900 dark:bg-warning-950 rounded-lg p-4">
+          <div className="flex items-center gap-2 text-warning-700 dark:text-warning-400 font-semibold mb-2">
+            <Activity className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
             {t('relayPlayground.healthTab.okTitle')} (100-300ms)
           </div>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-body-sm text-gray-600 dark:text-gray-400">
             {t('relayPlayground.healthTab.okBody')}
           </p>
         </div>
-        <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
-          <div className="flex items-center gap-2 text-red-400 font-semibold mb-2">
-            <AlertCircle className="w-5 h-5" />
+        <div className="border border-error-200 bg-error-50 dark:border-error-900 dark:bg-error-950 rounded-lg p-4">
+          <div className="flex items-center gap-2 text-error-700 dark:text-error-400 font-semibold mb-2">
+            <AlertCircle className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
             {t('relayPlayground.healthTab.slowTitle')} (&gt; 300ms)
           </div>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-body-sm text-gray-600 dark:text-gray-400">
             {t('relayPlayground.healthTab.slowBody')}
           </p>
         </div>
@@ -918,9 +928,9 @@ function NIPDetector({
   return (
     <div className="space-y-6 animate-slide-up motion-reduce:animate-none">
       {/* What are NIPs? */}
-      <div className="bg-purple-500/10 border border-purple-500/30 rounded-xl p-4 flex items-start gap-3">
-        <Info className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-        <div className="text-sm text-gray-300">
+      <div className="border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-800 rounded-lg p-4 flex items-start gap-3">
+        <Info className="w-5 h-5 text-gray-600 dark:text-gray-400 flex-shrink-0 mt-0.5" strokeWidth={1.5} aria-hidden="true" />
+        <div className="text-body-sm text-gray-300">
           {t('relayPlayground.nipsTab.description')}
         </div>
       </div>
@@ -936,28 +946,27 @@ function NIPDetector({
               key={nip}
               onClick={() => setSelectedNIP(selectedNIP === nip ? null : nip)}
               className={cn(
-                "p-3 rounded-xl border text-start transition-all",
-                "hover:scale-105 active:scale-95 motion-reduce:transform-none",
+                "rounded-lg border p-3 text-start transition-colors",
                 selectedNIP === nip
-                  ? "border-purple-500 bg-purple-500/20"
-                  : "border-gray-700 hover:border-purple-500/50 bg-gray-100/30 dark:bg-gray-800/30"
+                  ? "border-primary-600 bg-primary-50 dark:border-primary-400 dark:bg-gray-800"
+                  : "border-gray-200 bg-gray-50 hover:border-gray-300 dark:border-gray-800 dark:bg-gray-800 dark:hover:border-gray-700"
               )}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-lg font-bold text-gray-900 dark:text-white">NIP-{nip}</span>
+                <span className="text-h4 font-semibold text-gray-900 dark:text-white">NIP-{nip}</span>
                 <span className={cn(
-                  "text-xs font-medium px-2 py-0.5 rounded-full",
-                  percentage >= 70 ? "bg-green-500/20 text-green-400" :
-                  percentage >= 30 ? "bg-yellow-500/20 text-yellow-400" :
-                  "bg-red-500/20 text-red-400"
+                  "text-caption font-medium px-2 py-0.5 rounded-full",
+                  percentage >= 70 ? "border border-success-200 text-success-800 dark:border-success-900 dark:text-success-300" :
+                  percentage >= 30 ? "border border-warning-200 text-warning-800 dark:border-warning-900 dark:text-warning-300" :
+                  "border border-error-200 text-error-800 dark:border-error-900 dark:text-error-300"
                 )}>
                   {percentage}%
                 </span>
               </div>
-              <div className="text-xs text-gray-600 dark:text-gray-400 line-clamp-2">
+              <div className="text-caption text-gray-600 dark:text-gray-400 line-clamp-2">
                 {nipName(nip, t)}
               </div>
-              <div className="mt-2 text-xs text-gray-500">
+              <div className="mt-2 text-caption text-gray-500">
                 {t('relayPlayground.nipsTab.relayCount')
                   .replace('{count}', String(supportCount))
                   .replace('{total}', String(relays.length))}
@@ -969,17 +978,17 @@ function NIPDetector({
 
       {/* Selected NIP Details */}
       {selectedNIP && (
-          <div className="bg-gray-100/50 dark:bg-gray-800/50 border border-gray-700 rounded-xl p-6 animate-slide-down motion-reduce:animate-none">
+          <div className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-800 rounded-lg p-6 animate-slide-down motion-reduce:animate-none">
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">NIP-{selectedNIP}</h3>
-                <p className="text-purple-400">{nipName(selectedNIP, t)}</p>
+                <h3 className="text-h3 text-gray-900 dark:text-white">NIP-{selectedNIP}</h3>
+                <p className="text-gray-600 dark:text-gray-400">{nipName(selectedNIP, t)}</p>
               </div>
               <button
                 onClick={() => setSelectedNIP(null)}
-                className="text-gray-500 hover:text-gray-700 dark:hover:text-white"
+                className="rounded-md p-1 text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-500 dark:hover:text-white"
               >
-                <XCircle className="w-6 h-6" />
+                <XCircle className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
               </button>
             </div>
 
@@ -991,7 +1000,7 @@ function NIPDetector({
                   .map(relay => (
                     <span
                       key={relay.id}
-                      className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm"
+                      className="px-3 py-1 border border-success-200 text-success-800 dark:border-success-900 dark:text-success-300 rounded-full text-body-sm"
                     >
                       {relay.name}
                     </span>
@@ -1008,13 +1017,13 @@ function NIPDetector({
                   .map(relay => (
                     <span
                       key={relay.id}
-                      className="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-sm"
+                      className="px-3 py-1 border border-error-200 text-error-800 dark:border-error-900 dark:text-error-300 rounded-full text-body-sm"
                     >
                       {relay.name}
                     </span>
                   ))}
                 {relays.filter(r => !r.supportedNIPs.includes(selectedNIP)).length > 10 && (
-                  <span className="px-3 py-1 bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-600 dark:text-gray-400 rounded-full text-sm">
+                  <span className="rounded-md border border-gray-200 px-3 py-1 text-body-sm text-gray-600 dark:border-gray-800 dark:text-gray-400">
                     {t('relayPlayground.nipsTab.andMore').replace(
                       '{count}',
                       String(relays.filter(r => !r.supportedNIPs.includes(selectedNIP)).length - 10)
@@ -1027,8 +1036,8 @@ function NIPDetector({
         )}
 
       {/* Common NIPs */}
-      <div className="bg-gray-100/30 dark:bg-gray-800/30 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('relayPlayground.nipsTab.title')}</h3>
+      <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-800">
+        <h3 className="text-h4 font-semibold text-gray-900 dark:text-white mb-4">{t('relayPlayground.nipsTab.title')}</h3>
         <div className="space-y-3">
           {[1, 2, 9, 11, 17, 40, 42].map((nip) => (
             <div key={nip} className="flex items-center justify-between">
@@ -1043,7 +1052,7 @@ function NIPDetector({
                     style={{ width: `${getSupportPercentage(nip)}%` }}
                   />
                 </div>
-                <span className="text-sm text-gray-600 dark:text-gray-400 w-12 text-end">
+                <span className="text-body-sm text-gray-600 dark:text-gray-400 w-12 text-end">
                   {getSupportPercentage(nip)}%
                 </span>
               </div>
@@ -1217,20 +1226,20 @@ function EventStreamViewer({
   return (
     <div className="space-y-6 animate-slide-up motion-reduce:animate-none">
       {/* Educational Banner */}
-      <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
+      <div className="border border-success-200 bg-success-50 dark:border-success-900 dark:bg-success-950 rounded-lg p-4">
         <div className="flex items-start gap-3">
-          <Info className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-          <div className="text-sm text-gray-300">
+          <Info className="w-5 h-5 text-success-700 dark:text-success-400 flex-shrink-0 mt-0.5" strokeWidth={1.5} aria-hidden="true" />
+          <div className="text-body-sm text-gray-300">
             {t('relayPlayground.eventsTab.description')}
           </div>
         </div>
       </div>
 
       {/* Controls */}
-      <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-6 border border-gray-700 space-y-4">
+      <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-800 space-y-4">
         {/* Relay Selection */}
         <div>
-          <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.connectionTab.selectRelay')}</label>
+          <label className="block text-body-sm font-medium text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.connectionTab.selectRelay')}</label>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {relays.slice(0, 8).map((relay) => (
               <button
@@ -1243,7 +1252,7 @@ function EventStreamViewer({
                   setSelectedRelay(relay);
                 }}
                 className={cn(
-                  "px-3 py-2 rounded-lg text-sm font-medium transition-all text-start",
+                  "px-3 py-2 rounded-lg text-body-sm font-medium transition-colors text-start",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                   selectedRelay?.id === relay.id
                     ? "bg-primary-600 text-white"
@@ -1251,7 +1260,7 @@ function EventStreamViewer({
                 )}
               >
                 <div className="truncate font-medium">{relay.name}</div>
-                <div className="text-xs opacity-70">{relay.latency}ms</div>
+                <div className="text-caption opacity-70">{relay.latency}ms</div>
               </button>
             ))}
           </div>
@@ -1259,7 +1268,7 @@ function EventStreamViewer({
 
         {/* Event Kinds */}
         <div>
-          <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.queryTab.kinds')}</label>
+          <label className="block text-body-sm font-medium text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.queryTab.kinds')}</label>
           <div className="flex flex-wrap gap-2">
             {EVENT_KINDS.map((kind) => (
               <button
@@ -1267,14 +1276,14 @@ function EventStreamViewer({
                 onClick={() => !isStreaming && toggleKind(kind)}
                 disabled={isStreaming}
                 className={cn(
-                  "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all",
+                  "flex items-center gap-2 px-3 py-2 rounded-lg text-body-sm font-medium transition-colors",
                   selectedKinds.includes(kind)
                     ? "bg-primary-600 text-white"
-                    : "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-600 dark:text-gray-400",
+                    : "border border-gray-200 text-gray-600 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-400 dark:hover:bg-gray-800",
                   isStreaming && "opacity-50 cursor-not-allowed"
                 )}
               >
-                <Hash className="w-4 h-4" />
+                <Hash className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                 {t(`relayPlayground.kinds.${kind}`)}
               </button>
             ))}
@@ -1283,7 +1292,7 @@ function EventStreamViewer({
 
         {/* Max Events */}
         <div>
-          <label htmlFor={maxEventsId} className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">
+          <label htmlFor={maxEventsId} className="block text-body-sm font-medium text-gray-600 dark:text-gray-400 mb-2">
             {t('relayPlayground.queryTab.limit')}: {maxEvents}
           </label>
           <input
@@ -1304,25 +1313,25 @@ function EventStreamViewer({
             <button
               onClick={startStreaming}
               disabled={!selectedRelay || selectedKinds.length === 0}
-              className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 dark:disabled:bg-gray-700 text-white rounded-xl font-medium"
+              className="flex items-center gap-2 px-6 py-3 bg-success-700 hover:bg-success-800 disabled:bg-gray-400 dark:disabled:bg-gray-700 text-white rounded-md font-medium"
             >
-              <Play className="w-5 h-5" />
+              <Play className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
               {t('relayPlayground.buttons.connect')}
             </button>
           ) : (
             <button
               onClick={stopStreaming}
-              className="flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-medium"
+              className="flex items-center gap-2 px-6 py-3 bg-error-700 hover:bg-error-800 text-white rounded-md font-medium"
             >
-              <Pause className="w-5 h-5" />
+              <Pause className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
               {t('relayPlayground.buttons.disconnect')}
             </button>
           )}
           <button
             onClick={() => setEvents([])}
-            className="flex items-center gap-2 px-4 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white rounded-xl font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="flex items-center gap-2 rounded-md border border-gray-200 px-4 py-3 font-medium text-gray-900 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:text-white dark:hover:bg-gray-800"
           >
-            <Trash2 className="w-5 h-5" />
+            <Trash2 className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
             {t('relayPlayground.buttons.clear')}
           </button>
         </div>
@@ -1332,15 +1341,15 @@ function EventStreamViewer({
       {issue && <RelayIssueNotice issue={issue} />}
 
       {/* Events Display */}
-      <div className="bg-gray-100/30 dark:bg-gray-800/30 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+      <div className="bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden">
+        <div className="p-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
           <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-            <Eye className="w-5 h-5" />
+            <Eye className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
             {t('relayPlayground.eventsTab.title')} ({events.length})
           </h3>
           {isStreaming && (
-            <div className="flex items-center gap-2 text-green-400">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+            <div className="flex items-center gap-2 text-success-700 dark:text-success-400">
+              <span className="w-2 h-2 rounded-full bg-success-500 animate-pulse" />
               {t('relayPlayground.status.online')}
             </div>
           )}
@@ -1353,17 +1362,17 @@ function EventStreamViewer({
           ) : (
             <div className="divide-y divide-gray-700">
               {events.map((evt, idx) => (
-                <div key={idx} className="p-4 hover:bg-gray-100/50 dark:bg-gray-800/50">
+                <div key={idx} className="p-4 hover:bg-gray-50 dark:bg-gray-800">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="px-2 py-0.5 bg-primary-500/20 text-primary-400 rounded text-xs">
+                    <span className="px-2 py-0.5 border border-gray-200 text-primary-text dark:border-gray-800 dark:text-primary-400 rounded text-caption">
                       {t('relayPlayground.eventsTab.kind')} {evt.event.kind}
                     </span>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-caption text-gray-500">
                       {new Date(evt.event.created_at * 1000).toLocaleTimeString()}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-300 line-clamp-2">{evt.event.content}</p>
-                  <p className="text-xs text-gray-500 mt-1">{t('relayPlayground.eventsTab.author')}: {evt.event.pubkey.slice(0, 16)}...</p>
+                  <p className="text-body-sm text-gray-300 line-clamp-2">{evt.event.content}</p>
+                  <p className="text-caption text-gray-500 mt-1">{t('relayPlayground.eventsTab.author')}: {evt.event.pubkey.slice(0, 16)}...</p>
                 </div>
               ))}
             </div>
@@ -1496,10 +1505,10 @@ function QueryTester({
   return (
     <div className="space-y-6 animate-slide-up motion-reduce:animate-none">
       {/* Educational Banner */}
-      <div className="bg-purple-500/10 border border-purple-500/30 rounded-xl p-4">
+      <div className="border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-800 rounded-lg p-4">
         <div className="flex items-start gap-3">
-          <Info className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-          <div className="text-sm text-gray-300">
+          <Info className="w-5 h-5 text-gray-600 dark:text-gray-400 flex-shrink-0 mt-0.5" strokeWidth={1.5} aria-hidden="true" />
+          <div className="text-body-sm text-gray-300">
             {t('relayPlayground.queryTab.description')}
           </div>
         </div>
@@ -1507,12 +1516,12 @@ function QueryTester({
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Query Builder */}
-        <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('relayPlayground.queryTab.title')}</h3>
+        <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-800">
+          <h3 className="text-h4 font-semibold text-gray-900 dark:text-white mb-4">{t('relayPlayground.queryTab.title')}</h3>
 
           {/* Relay */}
           <div className="mb-4">
-            <label htmlFor={relaySelectId} className="block text-sm text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.connectionTab.selectRelay')}</label>
+            <label htmlFor={relaySelectId} className="block text-body-sm text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.connectionTab.selectRelay')}</label>
             <select
               id={relaySelectId}
               value={selectedRelay?.id || ""}
@@ -1520,7 +1529,7 @@ function QueryTester({
                 setIssue(null);
                 setSelectedRelay(relays.find(r => r.id === e.target.value) || null);
               }}
-              className="w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 rounded-lg text-gray-900 dark:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <option value="">{t('relayPlayground.queryTab.chooseRelay')}</option>
               {relays.map(r => (
@@ -1531,17 +1540,17 @@ function QueryTester({
 
           {/* Kinds */}
           <div className="mb-4">
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.queryTab.kinds')}</label>
+            <label className="block text-body-sm text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.queryTab.kinds')}</label>
             <div className="flex flex-wrap gap-2">
               {EVENT_KINDS.map(kind => (
                 <button
                   key={kind}
                   onClick={() => toggleKind(kind)}
                   className={cn(
-                    "px-3 py-1.5 rounded-lg text-sm transition-all",
+                    "px-3 py-1.5 rounded-lg text-body-sm transition-colors",
                     queryKinds.includes(kind)
                       ? "bg-primary-600 text-white"
-                      : "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-600 dark:text-gray-400"
+                      : "border border-gray-200 text-gray-600 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-400 dark:hover:bg-gray-800"
                   )}
                 >
                   {t(`relayPlayground.kinds.${kind}`)}
@@ -1552,7 +1561,7 @@ function QueryTester({
 
           {/* Limit */}
           <div className="mb-4">
-            <label htmlFor={limitId} className="block text-sm text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.queryTab.limit')}: {limit}</label>
+            <label htmlFor={limitId} className="block text-body-sm text-gray-600 dark:text-gray-400 mb-2">{t('relayPlayground.queryTab.limit')}: {limit}</label>
             <input
               id={limitId}
               type="range"
@@ -1568,15 +1577,15 @@ function QueryTester({
           <button
             onClick={runQuery}
             disabled={!selectedRelay || queryKinds.length === 0 || isQuerying}
-            className="w-full py-3 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-400 dark:disabled:bg-gray-700 text-white rounded-xl font-medium"
+            className="w-full py-3 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-400 dark:disabled:bg-gray-700 text-white rounded-md font-medium"
           >
             {isQuerying ? (
               <span className="flex items-center justify-center gap-2">
-                <Loader2 className="w-5 h-5 animate-spin" /> {t('relayPlayground.buttons.checking')}
+                <Loader2 className="w-5 h-5 animate-spin" strokeWidth={1.5} aria-hidden="true" /> {t('relayPlayground.buttons.checking')}
               </span>
             ) : (
               <span className="flex items-center justify-center gap-2">
-                <Play className="w-5 h-5" /> {t('relayPlayground.queryTab.execute')}
+                <Play className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" /> {t('relayPlayground.queryTab.execute')}
               </span>
             )}
           </button>
@@ -1591,9 +1600,9 @@ function QueryTester({
               onClick={() => setShowRaw(!showRaw)}
               aria-pressed={showRaw}
               className={cn(
-                "px-3 py-1.5 rounded-lg text-sm transition-all",
+                "px-3 py-1.5 rounded-lg text-body-sm transition-colors",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
-                showRaw ? "bg-primary-600 text-white" : "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-400"
+                showRaw ? "bg-primary-600 text-white" : "border border-gray-200 text-gray-600 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-400 dark:hover:bg-gray-800"
               )}
             >
               {showRaw ? t('relayPlayground.buttons.hideJson') : t('relayPlayground.buttons.showJson')}
@@ -1603,8 +1612,8 @@ function QueryTester({
           {/* Raw JSON: the events that came back, which is what the toggle sits
               next to. Shown even when the answer is an empty list. */}
           {showRaw && (
-            <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 p-4 mb-4 overflow-x-auto">
-              <pre className="text-xs text-gray-700 dark:text-gray-300">
+            <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-4 mb-4 overflow-x-auto">
+              <pre className="text-caption text-gray-700 dark:text-gray-300">
                 {JSON.stringify(results, null, 2)}
               </pre>
             </div>
@@ -1618,7 +1627,7 @@ function QueryTester({
           )}
 
           {/* Results List */}
-          <div className="bg-gray-100/30 dark:bg-gray-800/30 rounded-xl border border-gray-700 max-h-[500px] overflow-y-auto">
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-800 max-h-[500px] overflow-y-auto">
             {results.length === 0 ? (
               <div className="text-center py-12 text-gray-500">
                 {/* An empty answer and a failed query are not the same thing,
@@ -1628,17 +1637,17 @@ function QueryTester({
             ) : (
               <div className="divide-y divide-gray-700">
                 {results.map((evt, idx) => (
-                  <div key={idx} className="p-4 hover:bg-gray-100/50 dark:bg-gray-800/50">
+                  <div key={idx} className="p-4 hover:bg-gray-50 dark:bg-gray-800">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="px-2 py-0.5 bg-primary-500/20 text-primary-400 rounded text-xs">
+                      <span className="px-2 py-0.5 border border-gray-200 text-primary-text dark:border-gray-800 dark:text-primary-400 rounded text-caption">
                         {t('relayPlayground.eventsTab.kind')} {evt.kind}
                       </span>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-caption text-gray-500">
                         {new Date(evt.created_at * 1000).toLocaleString()}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-300 line-clamp-3">{evt.content}</p>
-                    <p className="text-xs text-gray-500 mt-1">{evt.pubkey.slice(0, 20)}...</p>
+                    <p className="text-body-sm text-gray-300 line-clamp-3">{evt.content}</p>
+                    <p className="text-caption text-gray-500 mt-1">{evt.pubkey.slice(0, 20)}...</p>
                   </div>
                 ))}
               </div>

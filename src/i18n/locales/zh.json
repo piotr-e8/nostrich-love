@@ -1882,7 +1882,8 @@
     "lastInLevelDescriptionFinal": "指南路径到此结束，{level} 之后没有更高的等级。",
     "continueToLevel": "继续到 {level}",
     "unlockRequirements": "完成更多 {currentLevel} 指南以解锁 {nextLevel}",
-    "offLevelMessage": "本指南不属于你当前的 {level} 等级"
+    "offLevelMessage": "本指南不属于你当前的 {level} 等级",
+    "aria": "指南导航"
   },
   "continueLearning": {
     "allLevelsComplete": "所有等级已完成！",

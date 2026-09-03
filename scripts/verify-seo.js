@@ -214,7 +214,15 @@ if (existsSync(join(DIST, "sitemap-0.xml"))) {
       continue;
     }
     const html = read(path);
-    const navLinks = [...html.matchAll(/href="([^"]*\/guides\/[a-z0-9-]+)"[^>]*class="group flex/g)];
+    // Match the labelled <nav> the component renders, not a Tailwind class
+    // string. The old matcher pinned `class="group flex`, so a purely visual
+    // change that dropped the hover-group failed this check while every anchor
+    // was still there. Guard the output: anchors to other guides, inside the
+    // guide navigation region, present in the static HTML.
+    const navRegion = html.match(/<nav[^>]*aria-label="[^"]*"[^>]*>([\s\S]*?)<\/nav>/g) || [];
+    const navLinks = navRegion
+      .filter((region) => /href="[^"]*\/guides\/[a-z0-9-]+"/.test(region))
+      .flatMap((region) => [...region.matchAll(/href="([^"]*\/guides\/[a-z0-9-]+)"/g)]);
     if (navLinks.length >= 2) ok(`${path} ships ${navLinks.length} prev/next anchors statically`);
     else fail(`${path} has ${navLinks.length} prev/next anchors — expected 2 (skeleton regression?)`);
   }

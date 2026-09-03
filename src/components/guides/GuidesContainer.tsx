@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useId } from 'react';
+import { Search } from 'lucide-react';
 import { InterestFilter } from './InterestFilter';
 import { GuideSection } from './GuideSection';
 import type { SkillLevel } from './GuideCard';
@@ -114,27 +115,29 @@ export const GuidesContainer: React.FC<GuidesContainerProps> = ({
 
       {/* Search */}
       <div className="mb-8">
-        <p id={searchLabelId} className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 text-center">
+        <p id={searchLabelId} className="mb-4 text-center text-micro font-semibold uppercase text-gray-500 dark:text-gray-400">
           {t('ui.search.placeholder')}
         </p>
         <div className="relative max-w-xl mx-auto">
-          <svg className="absolute start-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
+          <Search
+            className="absolute start-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 dark:text-gray-500"
+            strokeWidth={1.5}
+            aria-hidden="true"
+          />
           <input
             type="text"
             aria-labelledby={searchLabelId}
             placeholder={t('ui.search.placeholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full ps-12 pe-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-friendly-purple-400 focus:border-transparent"
+            className="w-full ps-11 pe-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-md text-body text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-colors hover:border-gray-300 dark:hover:border-gray-700"
           />
         </div>
       </div>
 
       {/* Interest Filter */}
       <div className="mb-8 text-center">
-        <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
+        <p className="mb-4 text-micro font-semibold uppercase text-gray-500 dark:text-gray-400">
           {t('guidesPage.filter.filterByInterest')}
         </p>
         <div className="flex justify-center">

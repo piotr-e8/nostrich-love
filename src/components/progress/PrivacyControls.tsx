@@ -97,20 +97,20 @@ export function PrivacyControls() {
   if (!mounted) {
     return (
       <div
-        className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 max-w-2xl"
+        className="max-w-2xl rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900"
         aria-busy="true"
       >
-        <h3 className="text-lg font-semibold mb-4">Privacy &amp; Progress Settings</h3>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+        <h3 className="mb-4 text-h3">Privacy &amp; Progress Settings</h3>
+        <p className="text-body-sm text-gray-500 dark:text-gray-400">
           Reading your settings from this browser.
         </p>
         <div className="mt-6 space-y-4" aria-hidden="true">
-          <div className="h-10 rounded-md bg-gray-100 dark:bg-gray-700" />
-          <div className="h-10 rounded-md bg-gray-100 dark:bg-gray-700" />
-          <div className="h-10 rounded-md bg-gray-100 dark:bg-gray-700" />
+          <div className="h-10 rounded-md bg-gray-100 dark:bg-gray-800" />
+          <div className="h-10 rounded-md bg-gray-100 dark:bg-gray-800" />
+          <div className="h-10 rounded-md bg-gray-100 dark:bg-gray-800" />
         </div>
         <noscript>
-          <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-4 text-body-sm text-gray-500 dark:text-gray-400">
             These controls need JavaScript. With JavaScript off, nothing is stored
             about your progress in the first place.
           </p>
@@ -120,11 +120,11 @@ export function PrivacyControls() {
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 max-w-2xl">
-      <h3 className="text-lg font-semibold mb-4">Privacy &amp; Progress Settings</h3>
+    <div className="max-w-2xl rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+      <h3 className="mb-4 text-h3">Privacy &amp; Progress Settings</h3>
 
       {message && (
-        <div className="mb-4 p-3 bg-primary/10 text-primary-600 dark:text-primary-400 rounded-md text-sm">
+        <div className="mb-4 rounded-md border border-gray-200 p-3 text-body-sm text-gray-700 dark:border-gray-800 dark:text-gray-300">
           {message}
         </div>
       )}
@@ -134,7 +134,7 @@ export function PrivacyControls() {
         <div className="flex items-center justify-between mb-2">
           <div>
             <h4 className="font-medium">Progress Tracking</h4>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-body-sm text-gray-500 dark:text-gray-400">
               On by default. Records the guides you finish, your streak and your
               badges, all inside this browser. Switch it off and nothing new is
               written.
@@ -143,13 +143,13 @@ export function PrivacyControls() {
           <button
             onClick={handleToggleTracking}
             className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-              settings.trackingEnabled ? 'bg-primary' : 'bg-gray-300 dark:bg-gray-600'
+              settings.trackingEnabled ? 'bg-primary-600' : 'bg-gray-300 dark:bg-gray-700'
             }`}
             role="switch"
             aria-checked={settings.trackingEnabled}
           >
             <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform motion-reduce:transition-none ${
                 settings.trackingEnabled ? 'translate-x-6 rtl:-translate-x-6' : 'translate-x-1 rtl:-translate-x-1'
               }`}
             />
@@ -162,7 +162,7 @@ export function PrivacyControls() {
         <div className="flex items-center justify-between mb-2">
           <div>
             <h4 className="font-medium">Show Progress Indicators</h4>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-body-sm text-gray-500 dark:text-gray-400">
               Show the reading progress bar at the top of a guide
             </p>
           </div>
@@ -171,14 +171,14 @@ export function PrivacyControls() {
             disabled={!settings.trackingEnabled}
             className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
               settings.showProgressIndicators && settings.trackingEnabled
-                ? 'bg-primary'
-                : 'bg-gray-300 dark:bg-gray-600'
+                ? 'bg-primary-600'
+                : 'bg-gray-300 dark:bg-gray-700'
             } ${!settings.trackingEnabled ? 'opacity-50 cursor-not-allowed' : ''}`}
             role="switch"
             aria-checked={settings.showProgressIndicators}
           >
             <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform motion-reduce:transition-none ${
                 settings.showProgressIndicators && settings.trackingEnabled
                   ? 'translate-x-6 rtl:-translate-x-6'
                   : 'translate-x-1 rtl:-translate-x-1'
@@ -203,13 +203,13 @@ export function PrivacyControls() {
         <div className="flex gap-3 mb-3">
           <button
             onClick={handleExport}
-            className="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md text-sm font-medium transition-colors"
+            className="rounded-md border border-gray-200 px-4 py-2 text-body-sm font-medium transition-colors hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-800"
           >
             Export Progress Data
           </button>
           <button
             onClick={() => setShowImport(!showImport)}
-            className="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md text-sm font-medium transition-colors"
+            className="rounded-md border border-gray-200 px-4 py-2 text-body-sm font-medium transition-colors hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-800"
           >
             Import Progress Data
           </button>
@@ -217,16 +217,16 @@ export function PrivacyControls() {
         
         {showImport && (
           <div className="mt-3">
-            <label className="block text-sm text-gray-600 dark:text-gray-300 mb-2">
+            <label className="mb-2 block text-body-sm text-gray-600 dark:text-gray-300">
               Choose the file you exported
               <input
                 type="file"
                 accept="application/json,.json"
                 onChange={handleImportFile}
-                className="mt-1 block w-full text-sm file:me-3 file:px-3 file:py-2 file:rounded-md file:border-0 file:bg-gray-100 dark:file:bg-gray-700 file:text-sm file:font-medium"
+                className="mt-1 block w-full text-body-sm file:me-3 file:rounded-md file:border-0 file:bg-gray-100 file:px-3 file:py-2 file:text-sm file:font-medium dark:file:bg-gray-800"
               />
             </label>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+            <p className="mb-2 text-body-sm text-gray-500 dark:text-gray-400">
               Or paste its contents:
             </p>
             <textarea
@@ -234,12 +234,12 @@ export function PrivacyControls() {
               value={importText}
               onChange={(e) => setImportText(e.target.value)}
               placeholder="Paste your exported progress data here..."
-              className="w-full h-32 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-sm"
+              className="h-32 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-body-sm dark:border-gray-700 dark:bg-gray-800"
             />
             <button
               onClick={handleImport}
               disabled={!importText.trim()}
-              className="mt-2 px-4 py-2 bg-primary-600 text-white rounded-md text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary-700 transition-colors"
+              className="mt-2 rounded-md bg-primary-600 px-4 py-2 text-body-sm font-medium text-white transition-colors hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Import
             </button>
@@ -249,15 +249,15 @@ export function PrivacyControls() {
       
       {/* Delete Data */}
       <div>
-        <h4 className="font-medium mb-2 text-red-600 dark:text-red-400">Delete All Data</h4>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
+        <h4 className="mb-2 font-medium text-danger-700 dark:text-danger-400">Delete All Data</h4>
+        <p className="mb-3 text-body-sm text-gray-500 dark:text-gray-400">
           Permanently remove all progress data from this device
         </p>
         
         {!showDeleteConfirm ? (
           <button
             onClick={() => setShowDeleteConfirm(true)}
-            className="px-4 py-2 border border-red-300 dark:border-red-700 text-red-600 dark:text-red-400 rounded-md text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+            className="rounded-md border border-danger-300 px-4 py-2 text-body-sm font-medium text-danger-700 transition-colors hover:bg-danger-50 dark:border-danger-800 dark:text-danger-400 dark:hover:bg-danger-950"
           >
             Delete All Progress Data
           </button>
@@ -265,13 +265,13 @@ export function PrivacyControls() {
           <div className="flex gap-3">
             <button
               onClick={handleDelete}
-              className="px-4 py-2 bg-red-600 text-white rounded-md text-sm font-medium hover:bg-red-700 transition-colors"
+              className="rounded-md bg-danger-600 px-4 py-2 text-body-sm font-medium text-white transition-colors hover:bg-danger-700"
             >
               Yes, Delete Everything
             </button>
             <button
               onClick={() => setShowDeleteConfirm(false)}
-              className="px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-md text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              className="rounded-md border border-gray-200 px-4 py-2 text-body-sm font-medium transition-colors hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-800"
             >
               Cancel
             </button>
@@ -280,8 +280,8 @@ export function PrivacyControls() {
       </div>
       
       {/* Privacy Note */}
-      <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-        <p className="text-xs text-gray-500 dark:text-gray-400">
+      <div className="mt-6 border-t border-gray-200 pt-4 dark:border-gray-800">
+        <p className="text-caption text-gray-500 dark:text-gray-400">
           Your progress data is written to this browser's local storage and is
           never sent to a server. Clearing your browser data clears it too, which
           is why the export exists.

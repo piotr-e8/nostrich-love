@@ -44,75 +44,81 @@ export function KeyCard({ npub, nsec, className, onCopy }: KeyCardProps) {
   return (
     <div className={cn('space-y-6', className)}>
       {/* Public Key Card */}
-      <div className="relative overflow-hidden rounded-2xl border border-green-200 bg-green-50/50 dark:border-green-800 dark:bg-green-950/20">
-        <div className="absolute start-0 top-0 h-full w-1 bg-green-500" />
+      <div className="relative overflow-hidden rounded-lg border border-success-200 bg-success-50 dark:border-success-900 dark:bg-success-950">
         <div className="p-6">
           <div className="mb-4 flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-400">
-              <Lock className="h-5 w-5" />
-            </div>
+            <Lock
+              className="h-5 w-5 shrink-0 text-success-700 dark:text-success-400"
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
             <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white">Public Identity (npub)</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Safe to share with anyone</p>
+              <h3 className="text-h4 font-semibold text-gray-900 dark:text-white">Public Identity (npub)</h3>
+              <p className="text-body-sm text-gray-600 dark:text-gray-400">Safe to share with anyone</p>
             </div>
           </div>
           
-          <div className="mb-4 rounded-lg border border-green-200 bg-white p-4 font-mono text-sm dark:border-green-800 dark:bg-gray-900">
-            <code className="break-all text-green-700 dark:text-green-400">{formatNpub(npub)}</code>
+          <div className="mb-4 rounded-md border border-success-200 bg-white p-4 font-mono text-body-sm dark:border-success-900 dark:bg-gray-900">
+            <code className="break-all text-success-800 dark:text-success-300">{formatNpub(npub)}</code>
           </div>
           
           <div className="flex flex-wrap gap-2">
             <button
               onClick={handleCopyNpub}
               className={cn(
-                'inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200',
+                'inline-flex items-center gap-2 rounded-md px-4 py-2 text-body-sm font-medium transition-colors',
                 copiedNpub
-                  ? 'bg-green-500 text-white'
-                  : 'bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800'
+                  ? 'bg-success-700 text-white'
+                  : 'border border-success-200 text-success-800 hover:bg-success-100 dark:border-success-900 dark:text-success-300 dark:hover:bg-success-900'
               )}
               aria-label={copiedNpub ? 'Copied!' : 'Copy public key'}
             >
-              {copiedNpub ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+              {copiedNpub ? (
+                <Check className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
+              )}
               {copiedNpub ? 'Copied!' : 'Copy'}
             </button>
           </div>
           
-          <div className="mt-4 flex items-start gap-2 text-sm text-green-700 dark:text-green-400">
-            <Shield className="mt-0.5 h-4 w-4 flex-shrink-0" />
+          <div className="mt-4 flex items-start gap-2 text-body-sm text-success-800 dark:text-success-300">
+            <Shield className="mt-0.5 h-4 w-4 flex-shrink-0" strokeWidth={1.5} aria-hidden="true" />
             <span>This is your public identifier. Others can use it to follow you and see your posts.</span>
           </div>
         </div>
       </div>
 
       {/* Private Key Card */}
-      <div className="relative overflow-hidden rounded-2xl border-2 border-red-200 bg-red-50/50 dark:border-red-800 dark:bg-red-950/20">
-        {/* Danger stripes */}
-        <div className="absolute -right-8 -top-8 h-24 w-24 rotate-45 bg-red-500/10" />
-        <div className="absolute -left-8 -bottom-8 h-24 w-24 rotate-45 bg-red-500/10" />
-        
-        <div className="absolute start-0 top-0 h-full w-1.5 bg-red-500" />
+      <div className="relative overflow-hidden rounded-lg border border-danger-300 bg-danger-50 dark:border-danger-800 dark:bg-danger-950">
         <div className="p-6">
           <div className="mb-4 flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-400">
-              <AlertTriangle className="h-5 w-5" />
-            </div>
+            <AlertTriangle
+              className="h-5 w-5 shrink-0 text-danger-600 dark:text-danger-400"
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
             <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white">Private Key (nsec)</h3>
-              <p className="text-sm text-red-600 dark:text-red-400 font-medium">KEEP SECRET - NEVER SHARE</p>
+              <h3 className="text-h4 font-semibold text-gray-900 dark:text-white">Private Key (nsec)</h3>
+              <p className="text-body-sm font-medium text-danger-700 dark:text-danger-400">KEEP SECRET - NEVER SHARE</p>
             </div>
           </div>
           
-          <div className="mb-4 rounded-lg border border-red-200 bg-white p-4 font-mono text-sm dark:border-red-800 dark:bg-gray-900">
+          <div className="mb-4 rounded-md border border-danger-200 bg-white p-4 font-mono text-body-sm dark:border-danger-900 dark:bg-gray-900">
             <div className="flex items-center justify-between gap-4">
-              <code className={cn('break-all text-red-700 dark:text-red-400', !showNsec && 'blur-sm select-none')}>
+              <code className={cn('break-all text-danger-800 dark:text-danger-300', !showNsec && 'select-none blur-sm')}>
                 {showNsec ? formatNpub(nsec, true) : 'nsec1••••••••••••••••••••••••••••••••'}
               </code>
               <button
                 onClick={() => setShowNsec(!showNsec)}
-                className="flex-shrink-0 rounded-md p-1.5 text-gray-500 hover:bg-red-100 hover:text-red-600 dark:text-gray-400 dark:hover:bg-red-900 dark:hover:text-red-400"
+                className="flex-shrink-0 rounded-md p-1.5 text-gray-500 transition-colors hover:bg-danger-100 hover:text-danger-700 dark:text-gray-400 dark:hover:bg-danger-900 dark:hover:text-danger-300"
                 aria-label={showNsec ? 'Hide private key' : 'Show private key'}
               >
-                {showNsec ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                {showNsec ? (
+                  <EyeOff className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
+                ) : (
+                  <Eye className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
+                )}
               </button>
             </div>
           </div>
@@ -122,45 +128,49 @@ export function KeyCard({ npub, nsec, className, onCopy }: KeyCardProps) {
               onClick={handleCopyNsec}
               disabled={!showNsec}
               className={cn(
-                'inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200',
-                !showNsec && 'opacity-50 cursor-not-allowed',
+                'inline-flex items-center gap-2 rounded-md px-4 py-2 text-body-sm font-medium transition-colors',
+                !showNsec && 'cursor-not-allowed opacity-50',
                 copiedNsec
-                  ? 'bg-red-500 text-white'
-                  : 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900 dark:text-red-300 dark:hover:bg-red-800'
+                  ? 'bg-danger-700 text-white'
+                  : 'border border-danger-200 text-danger-800 hover:bg-danger-100 dark:border-danger-900 dark:text-danger-300 dark:hover:bg-danger-900'
               )}
               aria-label={copiedNsec ? 'Copied!' : 'Copy private key'}
             >
-              {copiedNsec ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+              {copiedNsec ? (
+                <Check className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
+              )}
               {copiedNsec ? 'Copied!' : 'Copy'}
             </button>
             <button
               onClick={handleDownload}
-              className="inline-flex items-center gap-2 rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 transition-all duration-200"
+              className="inline-flex items-center gap-2 rounded-md border border-gray-200 px-4 py-2 text-body-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800"
             >
-              <Download className="h-4 w-4" />
+              <Download className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
               Download Backup
             </button>
           </div>
           
           <div className="mt-4 space-y-2">
-            <div className="flex items-start gap-2 text-sm text-red-700 dark:text-red-400">
-              <AlertTriangle className="mt-0.5 h-4 w-4 flex-shrink-0" />
+            <div className="flex items-start gap-2 text-body-sm text-danger-800 dark:text-danger-300">
+              <AlertTriangle className="mt-0.5 h-4 w-4 flex-shrink-0" strokeWidth={1.5} aria-hidden="true" />
               <span>This is your password. Anyone with this key can post as you and access your account.</span>
             </div>
-            <div className="flex items-start gap-2 text-sm text-red-700 dark:text-red-400">
-              <AlertTriangle className="mt-0.5 h-4 w-4 flex-shrink-0" />
+            <div className="flex items-start gap-2 text-body-sm text-danger-800 dark:text-danger-300">
+              <AlertTriangle className="mt-0.5 h-4 w-4 flex-shrink-0" strokeWidth={1.5} aria-hidden="true" />
               <span>Save it in a password manager or write it down on paper. If you lose it, you cannot recover your account.</span>
             </div>
           </div>
           
-          <label className="mt-6 flex cursor-pointer items-start gap-3 rounded-lg border border-red-200 bg-white/50 p-4 dark:border-red-800 dark:bg-gray-900/50">
+          <label className="mt-6 flex cursor-pointer items-start gap-3 rounded-md border border-danger-200 bg-white p-4 dark:border-danger-900 dark:bg-gray-900">
             <input
               type="checkbox"
               checked={understood}
               onChange={(e) => setUnderstood(e.target.checked)}
-              className="mt-0.5 h-4 w-4 rounded border-red-300 text-red-600 focus:ring-red-500"
+              className="mt-0.5 h-4 w-4 rounded border-danger-300 text-danger-600"
             />
-            <span className="text-sm font-medium text-red-800 dark:text-red-300">
+            <span className="text-body-sm font-medium text-danger-800 dark:text-danger-300">
               I understand that this key cannot be recovered if lost. I have saved it safely.
             </span>
           </label>

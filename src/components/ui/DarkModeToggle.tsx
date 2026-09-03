@@ -66,51 +66,51 @@ export function DarkModeToggle({ className, showLabel = false }: DarkModeToggleP
 
   if (!mounted) {
     return (
-      <div className={cn('h-10 w-10 rounded-lg bg-gray-100 dark:bg-gray-800', className)} />
+      <div className={cn('h-10 w-10 rounded-md bg-gray-100 dark:bg-gray-800', className)} />
     );
   }
 
   return (
     <div className={cn('flex items-center gap-2', className)}>
       {showLabel && (
-        <span className="text-sm text-gray-600 dark:text-gray-400">Theme</span>
+        <span className="text-body-sm text-gray-600 dark:text-gray-400">Theme</span>
       )}
-      <div className="flex rounded-lg border border-gray-200 bg-gray-100 p-1 dark:border-gray-700 dark:bg-gray-800">
+      <div className="flex rounded-md border border-gray-200 bg-gray-50 p-1 dark:border-gray-800 dark:bg-gray-900">
         <button
           onClick={() => handleThemeChange('light')}
           className={cn(
-            'flex items-center justify-center rounded-md p-1.5 transition-all duration-200',
+            'flex items-center justify-center rounded-md p-1.5 transition-colors',
             theme === 'light'
-              ? 'bg-white text-amber-500 shadow-sm dark:bg-gray-700'
+              ? 'bg-white text-primary-text dark:bg-gray-800 dark:text-primary-400'
               : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
           )}
           aria-label="Light mode"
         >
-          <Sun className="h-4 w-4" />
+          <Sun className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
         </button>
         <button
           onClick={() => handleThemeChange('dark')}
           className={cn(
-            'flex items-center justify-center rounded-md p-1.5 transition-all duration-200',
+            'flex items-center justify-center rounded-md p-1.5 transition-colors',
             theme === 'dark'
-              ? 'bg-white text-primary-600 shadow-sm dark:bg-gray-700'
+              ? 'bg-white text-primary-text dark:bg-gray-800 dark:text-primary-400'
               : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
           )}
           aria-label="Dark mode"
         >
-          <Moon className="h-4 w-4" />
+          <Moon className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
         </button>
         <button
           onClick={() => handleThemeChange('system')}
           className={cn(
-            'flex items-center justify-center rounded-md p-1.5 transition-all duration-200',
+            'flex items-center justify-center rounded-md p-1.5 transition-colors',
             theme === 'system'
-              ? 'bg-white text-gray-700 shadow-sm dark:bg-gray-700 dark:text-gray-200'
+              ? 'bg-white text-primary-text dark:bg-gray-800 dark:text-primary-400'
               : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
           )}
           aria-label="System preference"
         >
-          <Monitor className="h-4 w-4" />
+          <Monitor className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
         </button>
       </div>
     </div>
@@ -142,7 +142,7 @@ export function DarkModeToggleSimple({ className }: { className?: string }) {
 
   if (!mounted) {
     return (
-      <button className={cn('rounded-lg p-2', className)} aria-label="Toggle theme">
+      <button className={cn('rounded-md p-2', className)} aria-label="Toggle theme">
         <div className="h-5 w-5" />
       </button>
     );
@@ -152,14 +152,18 @@ export function DarkModeToggleSimple({ className }: { className?: string }) {
     <button
       onClick={toggle}
       className={cn(
-        'rounded-lg p-2 transition-colors duration-200',
+        'rounded-md p-2 transition-colors',
         'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
         'dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white',
         className
       )}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
-      {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+      {isDark ? (
+        <Sun className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
+      ) : (
+        <Moon className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
+      )}
     </button>
   );
 }

@@ -204,7 +204,7 @@ interface SkeletonCardProps {
 
 export function SkeletonCard({ lines = 3, className }: SkeletonCardProps) {
   return (
-    <div className={cn('rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-900', className)}>
+    <div className={cn('rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900', className)}>
       <Skeleton variant="text" className="mb-4 h-6 w-1/2" />
       <div className="space-y-2">
         {Array.from({ length: lines }).map((_, i) => (
@@ -235,7 +235,7 @@ export function Spinner({ size = 'md', className }: SpinnerProps) {
   return (
     <div
       className={cn(
-        'animate-spin rounded-full border-primary-500 border-t-transparent',
+        'animate-spin rounded-full border-primary-600 border-t-transparent dark:border-primary-400',
         sizes[size],
         className
       )}
@@ -275,9 +275,9 @@ export function PageLoader({ isLoading, message = 'Loading...' }: PageLoaderProp
   if (!isLoading) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/90 backdrop-blur-sm dark:bg-gray-900/90">
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white dark:bg-gray-900">
       <Spinner size="lg" />
-      <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">{message}</p>
+      <p className="mt-4 text-body-sm text-gray-600 dark:text-gray-400">{message}</p>
     </div>
   );
 }

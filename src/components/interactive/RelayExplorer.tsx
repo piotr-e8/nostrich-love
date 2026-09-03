@@ -172,12 +172,6 @@ const STARTER_PACK_RELAYS = [
   "wss://relay.primal.net",
 ];
 
-const ACCESS_STYLES: Record<RelayAccess, string> = {
-  free: "from-primary-500/20 to-primary-600/10",
-  paid: "from-warning-500/20 to-warning-600/10",
-  restricted: "from-gray-500/20 to-gray-600/10",
-};
-
 export function RelayExplorer({
   className,
   onSelectRelays,
@@ -436,23 +430,27 @@ export function RelayExplorer({
   // Get latency color
   const getLatencyColor = (latency?: number | null) => {
     if (!latency) return "text-gray-500";
-    if (latency < 100) return "text-success-500";
-    if (latency < 300) return "text-warning-500";
-    return "text-error-500";
+    if (latency < 100) return "text-success-700 dark:text-success-400";
+    if (latency < 300) return "text-warning-700 dark:text-warning-400";
+    return "text-error-700 dark:text-error-400";
   };
 
   return (
     <div className={cn("max-w-6xl mx-auto p-6", className)}>
-      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 md:p-8">
+      <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900 md:p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4 animate-scale-in motion-reduce:animate-none">
-            <Globe className="w-8 h-8 text-primary-600 dark:text-primary-400" />
+          <div className="mb-4 flex justify-center">
+            <Globe
+              className="h-6 w-6 text-gray-400 dark:text-gray-500"
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
           </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          <h2 className="mb-2 text-h2 text-gray-900 dark:text-white">
             {t('relayExplorer.title')}
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 max-w-lg mx-auto">
+          <p className="mx-auto max-w-measure text-lead text-gray-600 dark:text-gray-400">
             {t('relayExplorer.description')}
           </p>
         </div>
@@ -462,14 +460,14 @@ export function RelayExplorer({
           {/* Search and Actions */}
           <div className="flex flex-col md:flex-row gap-3">
             <div className="relative flex-1">
-              <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+              <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" strokeWidth={1.5} aria-hidden="true" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 aria-label={t('relayExplorer.search.placeholder')}
                 placeholder={t('relayExplorer.search.placeholder')}
-                className="w-full ps-10 pe-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
+                className="w-full ps-10 pe-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 rounded-md text-gray-900 dark:text-white placeholder-gray-500 text-body transition-colors focus:border-primary-600 dark:focus:border-primary-400"
               />
             </div>
             {/* The one-click way out for a reader who does not want to judge
@@ -477,20 +475,19 @@ export function RelayExplorer({
             <button
               type="button"
               onClick={selectStarterPack}
-              className="px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all inline-flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-4 py-3 font-medium text-white transition-colors hover:bg-primary-700"
             >
-              <Sparkles className="w-5 h-5" />
+              <Sparkles className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
               {t('relayExplorer.starterPack.button')}
             </button>
             <button
               type="button"
               onClick={checkAllRelays}
               disabled={isChecking}
-              className="px-4 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 disabled:bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl font-medium transition-all inline-flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="inline-flex items-center gap-2 rounded-md border border-gray-200 px-4 py-3 font-medium text-gray-900 transition-colors hover:bg-gray-50 disabled:opacity-50 dark:border-gray-800 dark:text-white dark:hover:bg-gray-800"
             >
               <RefreshCw
-                className={cn("w-5 h-5", isChecking && "animate-spin")}
-              />
+                className={cn("w-5 h-5", isChecking && "animate-spin")} strokeWidth={1.5} aria-hidden="true" />
               {isChecking ? t('relayExplorer.checking') : t('relayExplorer.testAll')}
             </button>
           </div>
@@ -500,18 +497,18 @@ export function RelayExplorer({
             {/* Topic Filter */}
             <div className="flex flex-wrap gap-2">
               {[
-                { value: "all" as Topic, label: t('relayExplorer.filters.topic.label'), icon: <Globe className="w-4 h-4" /> },
-                { value: "general" as Topic, label: t('relayExplorer.filters.topic.general'), icon: <Users className="w-4 h-4" /> },
-                { value: "bitcoin" as Topic, label: t('relayExplorer.filters.topic.bitcoin'), icon: <Zap className="w-4 h-4" /> },
+                { value: "all" as Topic, label: t('relayExplorer.filters.topic.label'), icon: <Globe className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" /> },
+                { value: "general" as Topic, label: t('relayExplorer.filters.topic.general'), icon: <Users className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" /> },
+                { value: "bitcoin" as Topic, label: t('relayExplorer.filters.topic.bitcoin'), icon: <Zap className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" /> },
               ].map((option) => (
                 <button
                   key={option.value}
                   onClick={() => setTopicFilter(option.value)}
                   className={cn(
-                    "inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all",
+                    "inline-flex items-center gap-2 rounded-md px-3 py-2 text-body-sm font-medium transition-colors",
                     topicFilter === option.value
-                      ? "bg-primary-500 text-gray-900 dark:text-white"
-                      : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700",
+                      ? "bg-primary-600 text-white"
+                      : "border border-gray-200 text-gray-600 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-400 dark:hover:bg-gray-800",
                   )}
                 >
                   {option.icon}
@@ -523,19 +520,19 @@ export function RelayExplorer({
             {/* Type Filter */}
             <div className="flex flex-wrap gap-2">
               {[
-                { value: "all" as RelayType, label: t('relayExplorer.filters.type.label'), icon: <Filter className="w-4 h-4" /> },
-                { value: "free" as RelayType, label: t('relayExplorer.filters.type.free'), icon: <Check className="w-4 h-4" /> },
-                { value: "paid" as RelayType, label: t('relayExplorer.filters.type.paid'), icon: <DollarSign className="w-4 h-4" /> },
-                { value: "restricted" as RelayType, label: t('relayExplorer.filters.type.restricted'), icon: <Lock className="w-4 h-4" /> },
+                { value: "all" as RelayType, label: t('relayExplorer.filters.type.label'), icon: <Filter className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" /> },
+                { value: "free" as RelayType, label: t('relayExplorer.filters.type.free'), icon: <Check className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" /> },
+                { value: "paid" as RelayType, label: t('relayExplorer.filters.type.paid'), icon: <DollarSign className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" /> },
+                { value: "restricted" as RelayType, label: t('relayExplorer.filters.type.restricted'), icon: <Lock className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" /> },
               ].map((option) => (
                 <button
                   key={option.value}
                   onClick={() => setTypeFilter(option.value)}
                   className={cn(
-                    "inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all",
+                    "inline-flex items-center gap-2 rounded-md px-3 py-2 text-body-sm font-medium transition-colors",
                     typeFilter === option.value
-                      ? "bg-primary-500 text-gray-900 dark:text-white"
-                      : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700",
+                      ? "bg-primary-600 text-white"
+                      : "border border-gray-200 text-gray-600 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-400 dark:hover:bg-gray-800",
                   )}
                 >
                   {option.icon}
@@ -548,7 +545,7 @@ export function RelayExplorer({
           {/* Custom Relay Input */}
           <div className="flex gap-2">
             <div className="relative flex-1">
-              <Server className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+              <Server className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" strokeWidth={1.5} aria-hidden="true" />
               <input
                 type="text"
                 value={customRelayInput}
@@ -556,15 +553,15 @@ export function RelayExplorer({
                 onKeyDown={(e) => e.key === "Enter" && addCustomRelay()}
                 aria-label={t('relayExplorer.customRelay.placeholder')}
                 placeholder={t('relayExplorer.customRelay.placeholder')}
-                className="w-full ps-10 pe-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
+                className="w-full ps-10 pe-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 rounded-md text-gray-900 dark:text-white placeholder-gray-500 text-body transition-colors focus:border-primary-600 dark:focus:border-primary-400"
               />
             </div>
             <button
               onClick={addCustomRelay}
               disabled={!customRelayInput.trim()}
-              className="px-4 py-3 bg-primary-600 disabled:bg-gray-200 dark:disabled:bg-gray-700 text-gray-900 dark:text-white rounded-xl font-medium transition-all inline-flex items-center gap-2"
+              className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-4 py-3 font-medium text-white transition-colors hover:bg-primary-700 disabled:opacity-50"
             >
-              <Plus className="w-5 h-5" />
+              <Plus className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
               {t('relayExplorer.customRelay.add')}
             </button>
           </div>
@@ -572,23 +569,23 @@ export function RelayExplorer({
           {/* Selected Count */}
           {selectedRelays.size > 0 && (
             <>
-            <div className="flex items-center justify-between bg-gray-100 dark:bg-gray-800/50 rounded-xl p-3">
+            <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-gray-800 dark:bg-gray-800">
               <span className="text-gray-600 dark:text-gray-400">
                 {t('relayExplorer.selected.count').replace('{count}', String(selectedRelays.size))}
               </span>
               <div className="flex gap-2">
                 <button
                   onClick={copySelectedRelays}
-                  className="px-3 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white rounded-lg text-sm transition-all inline-flex items-center gap-2"
+                  className="inline-flex items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-2 text-body-sm text-gray-900 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800"
                 >
-                  <Copy className="w-4 h-4" />
+                  <Copy className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                   {t('relayExplorer.selected.copy')}
                 </button>
                 <button
                   onClick={downloadRelayList}
-                  className="px-3 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white rounded-lg text-sm transition-all inline-flex items-center gap-2"
+                  className="inline-flex items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-2 text-body-sm text-gray-900 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800"
                 >
-                  <Download className="w-4 h-4" />
+                  <Download className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                   {t('relayExplorer.selected.download')}
                 </button>
                 <button
@@ -596,7 +593,7 @@ export function RelayExplorer({
                     setSelectedRelays(new Set());
                     onSelectRelays?.([]);
                   }}
-                  className="px-3 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-lg text-sm transition-all"
+                  className="rounded-md px-3 py-2 text-body-sm text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                 >
                   {t('relayExplorer.selected.clear')}
                 </button>
@@ -605,8 +602,8 @@ export function RelayExplorer({
 
             {/* What the copied blob is for. Without this the tool ends at a
                 toast and the reader is left holding a list of addresses. */}
-            <div className="flex items-start gap-2 rounded-xl border border-primary-500/30 bg-primary-500/10 p-3 text-sm text-gray-700 dark:text-gray-300">
-              <Info className="w-4 h-4 flex-shrink-0 mt-0.5 text-primary-600 dark:text-primary-400" />
+            <div className="flex items-start gap-2 rounded-lg border border-gray-200 bg-gray-50 p-3 text-body-sm text-gray-700 dark:border-gray-800 dark:bg-gray-800 dark:text-gray-300">
+              <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-gray-400 dark:text-gray-500" strokeWidth={1.5} aria-hidden="true" />
               <p>{t('relayExplorer.selected.whereTo')}</p>
             </div>
             </>
@@ -625,12 +622,12 @@ export function RelayExplorer({
                 aria-pressed={selectedRelays.has(relay.url)}
                 aria-label={relay.name}
                 className={cn(
-                  "relative w-full text-start border rounded-xl p-4 transition-all",
+                  "relative w-full text-start border rounded-lg p-4 transition-colors",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                   "animate-scale-in motion-reduce:animate-none",
                   selectedRelays.has(relay.url)
-                    ? "border-primary-500 bg-primary-500/10"
-                    : "border-gray-200 dark:border-gray-700 hover:border-gray-600 hover:bg-gray-100 dark:bg-gray-800/30",
+                    ? "border-primary-600 bg-primary-50 dark:border-primary-400 dark:bg-gray-800"
+                    : "border-gray-200 hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:hover:border-gray-700 dark:hover:bg-gray-800",
                 )}
                 onClick={() => toggleRelaySelection(relay.url)}
               >
@@ -638,62 +635,58 @@ export function RelayExplorer({
                 <div className="absolute top-3 end-3">
                   <div
                     className={cn(
-                      "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all",
+                      "flex h-6 w-6 items-center justify-center rounded-full border-2 transition-colors",
                       selectedRelays.has(relay.url)
-                        ? "bg-primary-500 border-primary-500"
-                        : "border-gray-600",
+                        ? "border-primary-600 bg-primary-600"
+                        : "border-gray-300 dark:border-gray-600",
                     )}
                   >
                     {selectedRelays.has(relay.url) && (
-                      <Check className="w-4 h-4 text-white" />
+                      <Check className="w-4 h-4 text-white" strokeWidth={1.5} aria-hidden="true" />
                     )}
                   </div>
                 </div>
 
                 {/* Header */}
                 <div className="flex items-start gap-3 mb-3 pe-8">
-                  <div
-                    className={cn(
-                      "w-12 h-12 rounded-xl flex items-center justify-center",
-                      "bg-gradient-to-br",
-                      ACCESS_STYLES[relay.type],
-                    )}
-                  >
-                    <Globe className="w-6 h-6 text-primary-600 dark:text-primary-400" />
-                  </div>
+                  <Globe
+                    className="mt-0.5 h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
+                    strokeWidth={1.5}
+                    aria-hidden="true"
+                  />
                   <div className="min-w-0 flex-1">
                     <h3 className="font-semibold text-gray-900 dark:text-white truncate">
                       {relay.name}
                     </h3>
-                    <p className="text-xs text-gray-500 truncate">{relay.url}</p>
+                    <p className="truncate text-caption text-gray-500 dark:text-gray-400">{relay.url}</p>
                   </div>
                 </div>
 
                 {/* Description */}
-                <p className="text-sm  text-gray-600 dark:text-gray-400 mb-3 line-clamp-3">
+                <p className="text-body-sm  text-gray-600 dark:text-gray-400 mb-3 line-clamp-3">
                   {relayDescription(relay)}
                 </p>
 
                 {/* Stats */}
-                <div className="flex items-center gap-3 text-xs mb-3">
+                <div className="flex items-center gap-3 text-caption mb-3">
                   <span
                     className={cn(
                       "flex items-center gap-1",
                       getLatencyColor(relay.latency),
                     )}
                   >
-                    <Activity className="w-3 h-3" />
+                    <Activity className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
                     {relay.latency ? `${relay.latency}ms` : t('relayExplorer.card.latencyUnknown')}
                   </span>
                   {relay.type === "paid" && (
-                    <span className="flex items-center gap-1 text-warning-500">
-                      <DollarSign className="w-3 h-3" />
+                    <span className="flex items-center gap-1 text-warning-700 dark:text-warning-400">
+                      <DollarSign className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
                       {t('relayExplorer.filters.type.paid')}
                     </span>
                   )}
                   {relay.type === "restricted" && (
-                    <span className="flex items-center gap-1 text-warning-500">
-                      <Lock className="w-3 h-3" />
+                    <span className="flex items-center gap-1 text-warning-700 dark:text-warning-400">
+                      <Lock className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
                       {t('relayExplorer.filters.type.restricted')}
                     </span>
                   )}
@@ -707,7 +700,7 @@ export function RelayExplorer({
                       getStatusColor(relay.status),
                     )}
                   />
-                  <span className="text-xs text-gray-500 capitalize">
+                  <span className="text-caption capitalize text-gray-500 dark:text-gray-400">
                     {relay.status === "checking" ? t('relayExplorer.card.status.checking') : 
                      relay.status === "online" ? t('relayExplorer.card.status.online') : 
                      t('relayExplorer.card.status.offline')}
@@ -720,7 +713,7 @@ export function RelayExplorer({
                     {relay.supportedNips.slice(0, 4).map((nip) => (
                       <span
                         key={nip}
-                        className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 px-2 py-1 rounded-full"
+                        className="rounded-md border border-gray-200 px-2 py-1 text-caption text-gray-600 dark:border-gray-800 dark:text-gray-400"
                       >
                         NIP-{String(nip).padStart(2, "0")}
                       </span>
@@ -736,9 +729,9 @@ export function RelayExplorer({
                   type="button"
                   onClick={() => removeCustomRelay(relay.url)}
                   aria-label={t('relayExplorer.customRelay.remove').replace('{name}', relay.name)}
-                  className="absolute bottom-3 end-3 p-1 text-gray-500 hover:text-error-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
+                  className="absolute bottom-3 end-3 p-1 text-gray-500 hover:text-error-700 dark:hover:text-error-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                 </button>
               )}
             </div>
@@ -748,8 +741,8 @@ export function RelayExplorer({
         {/* Empty State */}
         {filteredRelays.length === 0 && (
           <div className="text-center py-12">
-            <Server className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+            <Server className="mx-auto mb-4 h-6 w-6 text-gray-400 dark:text-gray-500" strokeWidth={1.5} aria-hidden="true" />
+            <h3 className="mb-2 text-h3 text-gray-900 dark:text-white">
               {t('relayExplorer.empty.title')}
             </h3>
             <p className="text-gray-600 dark:text-gray-400">
@@ -759,29 +752,29 @@ export function RelayExplorer({
         )}
 
         {/* Stats Footer */}
-        <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+        <div className="mt-8 border-t border-gray-200 pt-6 dark:border-gray-800">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">{relays.length}</p>
-              <p className="text-sm  text-gray-600 dark:text-gray-400">{t('relayExplorer.stats.popularRelays')}</p>
+              <p className="text-h2 text-gray-900 dark:text-white">{relays.length}</p>
+              <p className="text-body-sm  text-gray-600 dark:text-gray-400">{t('relayExplorer.stats.popularRelays')}</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-success-500">
+              <p className="text-h2 text-success-700 dark:text-success-400">
                 {relays.filter((r) => r.status === "online").length}
               </p>
-              <p className="text-sm  text-gray-600 dark:text-gray-400">{t('relayExplorer.stats.onlineNow')}</p>
+              <p className="text-body-sm  text-gray-600 dark:text-gray-400">{t('relayExplorer.stats.onlineNow')}</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-primary-600 dark:text-primary-400">
+              <p className="text-h2 text-primary-text dark:text-primary-400">
                 {relays.filter((r) => r.type === "free").length}
               </p>
-              <p className="text-sm  text-gray-600 dark:text-gray-400">{t('relayExplorer.stats.freeRelays')}</p>
+              <p className="text-body-sm  text-gray-600 dark:text-gray-400">{t('relayExplorer.stats.freeRelays')}</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-warning-500">
+              <p className="text-h2 text-warning-700 dark:text-warning-400">
                 {selectedRelays.size}
               </p>
-              <p className="text-sm  text-gray-600 dark:text-gray-400">{t('relayExplorer.stats.selected')}</p>
+              <p className="text-body-sm  text-gray-600 dark:text-gray-400">{t('relayExplorer.stats.selected')}</p>
             </div>
           </div>
         </div>
@@ -789,18 +782,18 @@ export function RelayExplorer({
 
       {/* Toast */}
       {toast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+        <div className="fixed inset-x-0 bottom-6 z-50 flex justify-center">
           <div
             className={cn(
-              "px-6 py-3 rounded-xl shadow-2xl flex items-center gap-2 animate-slide-up motion-reduce:animate-none",
-              toast.type === "success" && "bg-success-500 text-white",
-              toast.type === "error" && "bg-error-500 text-white",
-              toast.type === "info" && "bg-primary-500 text-white",
+              "flex items-center gap-2 rounded-md px-6 py-3 shadow-raised animate-slide-up motion-reduce:animate-none",
+              toast.type === "success" && "bg-success-700 text-white",
+              toast.type === "error" && "bg-error-700 text-white",
+              toast.type === "info" && "bg-primary-600 text-white",
             )}
           >
-            {toast.type === "success" && <Check className="w-5 h-5" />}
-            {toast.type === "error" && <AlertCircle className="w-5 h-5" />}
-            {toast.type === "info" && <Info className="w-5 h-5" />}
+            {toast.type === "success" && <Check className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />}
+            {toast.type === "error" && <AlertCircle className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />}
+            {toast.type === "info" && <Info className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />}
             {toast.message}
           </div>
         </div>

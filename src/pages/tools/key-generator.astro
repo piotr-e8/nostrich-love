@@ -100,36 +100,38 @@ const nextSteps = [
 
   <main id="main-content">
     <!-- Hero -->
-    <section class="relative overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 dark:from-primary/5 dark:to-secondary/5" />
-
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 relative">
+    <section class="border-b border-gray-200 dark:border-gray-800">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div class="text-center max-w-3xl mx-auto">
-          <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              Nostr Key Generator
-            </span>
+          <h1 class="text-display font-bold text-gray-900 dark:text-white mb-4">
+            Nostr Key Generator
           </h1>
-          <p class="text-xl text-gray-600 dark:text-gray-300 mb-6">
+          <p class="text-lead text-gray-600 dark:text-gray-300 mb-6">
             See what a Nostr key pair actually is. This page makes a real npub and nsec on your
             own device and sends nothing to any server, so you can look at one before you own one.
           </p>
-          <p class="text-base text-gray-500 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
+          <p class="text-body-sm text-gray-500 dark:text-gray-400 mb-6 max-w-measure mx-auto">
             Making an identity you intend to keep? Let a client or a signer extension generate it
             instead. This page leaks nothing. But a key that has been shown in a browser tab has
             been somewhere a key held by a signer never goes.
           </p>
-          <div class="flex flex-wrap justify-center gap-4 text-sm">
+          <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-body-sm">
             <span class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400">
-              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 flex items-center justify-center text-xs" aria-hidden="true">✓</span>
+              <svg class="h-4 w-4 shrink-0 text-success-600 dark:text-success-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+              </svg>
               Runs locally in your browser
             </span>
             <span class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400">
-              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 flex items-center justify-center text-xs" aria-hidden="true">✓</span>
+              <svg class="h-4 w-4 shrink-0 text-success-600 dark:text-success-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+              </svg>
               No email, no phone number
             </span>
             <span class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400">
-              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 flex items-center justify-center text-xs" aria-hidden="true">✓</span>
+              <svg class="h-4 w-4 shrink-0 text-success-600 dark:text-success-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+              </svg>
               Works with every Nostr client
             </span>
           </div>
@@ -138,23 +140,23 @@ const nextSteps = [
     </section>
 
     <!-- The tool -->
-    <section class="py-12 bg-gray-50 dark:bg-gray-900/30">
+    <section class="py-12 bg-gray-50 dark:bg-gray-900">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
           <KeyGenerator client:idle />
-          <p class="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
-            Part of the free <a href="/tools" class="text-primary-600 dark:text-primary-400 hover:underline">Nostr tools</a> collection.
+          <p class="mt-4 text-center text-caption text-gray-500 dark:text-gray-400">
+            Part of the free <a href="/tools" class="text-primary-text dark:text-primary-400 underline underline-offset-2">Nostr tools</a> collection.
           </p>
         </div>
       </div>
     </section>
 
     <!-- How it works -->
-    <section class="py-16 bg-white dark:bg-gray-800">
+    <section class="py-16">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">How it works</h2>
-          <div class="space-y-4 text-gray-600 dark:text-gray-300">
+          <h2 class="text-h2 font-bold text-gray-900 dark:text-white mb-4">How it works</h2>
+          <div class="space-y-4 text-body text-gray-600 dark:text-gray-300">
             <p>
               The generator uses in-browser cryptography (the open-source
               <code class="text-sm">nostr-tools</code> library, the same one most Nostr apps are
@@ -184,35 +186,28 @@ const nextSteps = [
     </section>
 
     <!-- Safety note -->
-    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
+    <section class="py-16">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Before you close this tab</h2>
-          <div class="p-6 rounded-2xl border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-900/20">
-            <ul class="space-y-3 text-gray-700 dark:text-gray-300">
-              <li class="flex gap-3">
-                <span aria-hidden="true">🔑</span>
-                <span>
-                  <strong class="text-gray-900 dark:text-white">Your keys never leave this page.</strong>{' '}
-                  They are generated and displayed locally. Nothing reaches our servers, and we
-                  could not recover your key for you even if you asked.
-                </span>
+          <h2 class="text-h2 font-bold text-gray-900 dark:text-white mb-4">Before you close this tab</h2>
+          <!-- Amber is semantic here: this is the warning callout on a page that
+               puts a live secret on screen. It is not a decorative tint. -->
+          <div class="p-6 rounded-lg border border-warning-300 bg-warning-50 dark:border-warning-800 dark:bg-warning-900/20">
+            <ul class="space-y-3 text-body text-gray-700 dark:text-gray-300">
+              <li>
+                <strong class="text-gray-900 dark:text-white">Your keys never leave this page.</strong>{' '}
+                They are generated and displayed locally. Nothing reaches our servers, and we
+                could not recover your key for you even if you asked.
               </li>
-              <li class="flex gap-3">
-                <span aria-hidden="true">📝</span>
-                <span>
-                  <strong class="text-gray-900 dark:text-white">Save the nsec offline, now.</strong>{' '}
-                  Paper or a password manager both work. Lose the nsec and the account goes with
-                  it. There is no reset and no recovery, by design.
-                </span>
+              <li>
+                <strong class="text-gray-900 dark:text-white">Save the nsec offline, now.</strong>{' '}
+                Paper or a password manager both work. Lose the nsec and the account goes with
+                it. There is no reset and no recovery, by design.
               </li>
-              <li class="flex gap-3">
-                <span aria-hidden="true">🤫</span>
-                <span>
-                  <strong class="text-gray-900 dark:text-white">Never share or paste the nsec anywhere</strong>{' '}
-                  except into a Nostr client you trust, or better, a signer extension.
-                  The npub is the one made for sharing.
-                </span>
+              <li>
+                <strong class="text-gray-900 dark:text-white">Never share or paste the nsec anywhere</strong>{' '}
+                except into a Nostr client you trust, or better, a signer extension.
+                The npub is the one made for sharing.
               </li>
             </ul>
           </div>
@@ -221,26 +216,26 @@ const nextSteps = [
     </section>
 
     <!-- What next -->
-    <section class="py-16 bg-white dark:bg-gray-800">
+    <section class="py-16">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-10">
+          <h2 class="text-h2 font-bold text-gray-900 dark:text-white text-center mb-10">
             You have keys. Now what?
           </h2>
           <div class="grid md:grid-cols-3 gap-6">
             {nextSteps.map((item) => (
               <a
                 href={item.href}
-                class="group block p-6 bg-gray-50 dark:bg-gray-900/40 rounded-2xl border border-gray-200 dark:border-gray-700 hover:border-primary/60 hover:shadow-sm transition-all"
+                class="block p-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800"
               >
-                <div class="w-10 h-10 mb-4 rounded-xl bg-primary/10 flex items-center justify-center font-bold text-primary-600 dark:text-primary-400">
+                <p class="mb-3 text-micro uppercase text-gray-500 dark:text-gray-400" aria-hidden="true">
                   {item.step}
-                </div>
-                <h3 class="font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-primary-700 dark:group-hover:text-primary-300 transition-colors">
+                </p>
+                <h3 class="text-h3 font-bold text-gray-900 dark:text-white mb-2">
                   {item.title}
                 </h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">{item.description}</p>
-                <span class="text-sm font-medium text-primary-600 dark:text-primary-400">
+                <p class="text-body-sm text-gray-600 dark:text-gray-400 mb-4">{item.description}</p>
+                <span class="text-caption font-medium text-primary-text dark:text-primary-400 underline underline-offset-2">
                   {item.cta} →
                 </span>
               </a>
@@ -251,10 +246,10 @@ const nextSteps = [
     </section>
 
     <!-- FAQ -->
-    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
+    <section class="py-16 border-t border-gray-200 dark:border-gray-800">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-8">
+          <h2 class="text-h2 font-bold text-gray-900 dark:text-white text-center mb-8">
             Frequently asked questions
           </h2>
           {faqs.map((faq) => (
@@ -262,9 +257,9 @@ const nextSteps = [
               <p>{faq.answer}</p>
             </FAQAccordion>
           ))}
-          <p class="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+          <p class="mt-6 text-center text-body-sm text-gray-600 dark:text-gray-400">
             Want the full picture first? Read the{' '}
-            <a href="/guides/keys-and-security" class="text-primary-600 dark:text-primary-400 hover:underline">keys &amp; security guide</a>.
+            <a href="/guides/keys-and-security" class="text-primary-text dark:text-primary-400 underline underline-offset-2">keys &amp; security guide</a>.
           </p>
         </div>
       </div>

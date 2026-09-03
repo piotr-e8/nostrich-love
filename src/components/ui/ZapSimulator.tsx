@@ -34,23 +34,25 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
   return (
     <div
       className={cn(
-        "bg-white dark:bg-gray-800/30 border border-gray-200 dark:border-gray-700 rounded-2xl p-6",
+        "rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900",
         className,
       )}
     >
       <div className="text-center mb-6">
-        <div className="w-16 h-16 mx-auto bg-amber-500/20 rounded-2xl flex items-center justify-center mb-4">
-          <Zap className="w-8 h-8 text-amber-500" />
-        </div>
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t('zapSimulator.title')}</h3>
-        <p className="text-gray-600 dark:text-gray-400 text-sm">
+        <Zap
+          className="mx-auto mb-4 h-6 w-6 text-gray-400 dark:text-gray-500"
+          strokeWidth={1.5}
+          aria-hidden="true"
+        />
+        <h3 className="mb-2 text-h3 text-gray-900 dark:text-white">{t('zapSimulator.title')}</h3>
+        <p className="text-body-sm text-gray-600 dark:text-gray-400">
           {t('zapSimulator.description')}
         </p>
       </div>
 
       <div className="space-y-4">
         <div>
-          <label htmlFor={amountInputId} className="text-sm text-gray-600 dark:text-gray-400 mb-2 block">
+          <label htmlFor={amountInputId} className="mb-2 block text-body-sm text-gray-600 dark:text-gray-400">
             {t('zapSimulator.labels.amount')}
           </label>
           <div className="flex flex-wrap gap-2 mb-3">
@@ -62,10 +64,10 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
                   setCustomAmount("");
                 }}
                 className={cn(
-                  "px-4 py-2 rounded-lg text-sm font-medium transition-all",
+                  "rounded-md px-4 py-2 text-body-sm font-medium transition-colors",
                   amount === preset && !customAmount
-                    ? "bg-amber-500 text-white"
-                    : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600",
+                    ? "bg-primary-600 text-white"
+                    : "border border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800",
                 )}
               >
                 {preset.toLocaleString()}
@@ -81,46 +83,54 @@ export function ZapSimulator({ className }: ZapSimulatorProps) {
               setCustomAmount(e.target.value);
               setAmount(parseInt(e.target.value) || 0);
             }}
-            className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:border-amber-500"
+            className="w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-body text-gray-900 placeholder-gray-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
           />
         </div>
 
-        <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-4">
+        <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-800">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-gray-600 dark:text-gray-400">{t('zapSimulator.labels.invoice')}</span>
+            <span className="text-body-sm text-gray-600 dark:text-gray-400">{t('zapSimulator.labels.invoice')}</span>
             <button
               onClick={handleCopy}
-              className="text-sm text-amber-600 dark:text-amber-500 hover:text-amber-700 dark:hover:text-amber-400 flex items-center gap-1"
+              className="flex items-center gap-1 text-body-sm text-primary-text underline-offset-2 hover:underline dark:text-primary-400"
             >
               {copied ? (
-                <Check className="w-4 h-4" />
+                <Check className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
               ) : (
-                <Copy className="w-4 h-4" />
+                <Copy className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
               )}
               {copied ? t('zapSimulator.buttons.pay') : t('zapSimulator.buttons.copy')}
             </button>
           </div>
-          <div className="font-mono text-xs text-gray-500 dark:text-gray-500 break-all">
+          <div className="break-all font-mono text-caption text-gray-500 dark:text-gray-400">
             lnurl1dp68gurn8ghj7ampd3kx2ar0veekzar0wd5xjtnrdakj7tnhv4kxctttdehhwm30d3h82unvwqhhgmmjwscqzzsxqrpcgupzqvdkxsmm4w4ek2njsmqx93rz8sctjhjlyk
           </div>
         </div>
 
         <button
           onClick={handleZap}
-          className="w-full py-4 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-semibold flex items-center justify-center gap-2 transition-all active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none"
+          className="flex w-full items-center justify-center gap-2 rounded-md bg-primary-600 py-4 font-semibold text-white transition-colors hover:bg-primary-700"
         >
-          <Bitcoin className="w-5 h-5" />
+          <Bitcoin className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
           {t('zapSimulator.buttons.pay')} {amount.toLocaleString()} sats
-          <ArrowRight className="w-5 h-5 rtl:rotate-180" />
+          <ArrowRight
+            className="h-5 w-5 rtl:rotate-180"
+            strokeWidth={1.5}
+            aria-hidden="true"
+          />
         </button>
 
         {showSuccess && (
           <div
-            className="animate-slide-up motion-reduce:animate-none bg-green-100 dark:bg-green-500/20 border border-green-300 dark:border-green-500/30 rounded-lg p-4 text-center"
+            className="animate-slide-up rounded-lg border border-success-200 bg-success-50 p-4 text-center motion-reduce:animate-none dark:border-success-900 dark:bg-success-950"
           >
-            <Zap className="w-6 h-6 text-green-600 dark:text-green-500 mx-auto mb-2" />
-            <p className="text-green-700 dark:text-green-400 font-medium">{t('zapSimulator.steps.confirm')}</p>
-            <p className="text-green-600 dark:text-green-400/70 text-sm">
+            <Zap
+              className="mx-auto mb-2 h-5 w-5 text-success-700 dark:text-success-400"
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
+            <p className="font-medium text-success-800 dark:text-success-300">{t('zapSimulator.steps.confirm')}</p>
+            <p className="text-body-sm text-success-800 dark:text-success-400">
               {t('zapSimulator.description')}
             </p>
           </div>

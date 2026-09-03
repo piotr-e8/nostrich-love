@@ -31,14 +31,14 @@ export function ProgressBar({
   return (
     <div className={cn("w-full space-y-2", className)}>
       {(label || showFraction) && (
-        <div className="flex items-center justify-between text-sm">
+        <div className="flex items-center justify-between text-body-sm">
           {label && (
             <p className="font-medium text-gray-900 dark:text-white">{label}</p>
           )}
           {showFraction && (
-            <span className="font-semibold text-primary-600 dark:text-primary-400">
+            <span className="font-semibold text-primary-text dark:text-primary-400">
               {percentage}%
-              <span className="ms-1 text-xs font-normal text-gray-500 dark:text-gray-400">
+              <span className="ms-1 text-caption font-normal text-gray-500 dark:text-gray-400">
                 ({clampedCurrent}/{total})
               </span>
             </span>
@@ -53,7 +53,7 @@ export function ProgressBar({
         )}
       >
         <div
-          className="h-full rounded-full bg-gradient-to-r from-primary to-secondary transition-all duration-500"
+          className="h-full rounded-full bg-primary-600 transition-[width] duration-500 motion-reduce:transition-none"
           style={{ width: `${percentage}%` }}
         />
       </div>

@@ -21,31 +21,38 @@ export function CTA({
 }: CTAProps) {
   const variantStyles = {
     primary: "bg-primary-600 hover:bg-primary-700 text-white",
-    secondary: "bg-gray-700 hover:bg-gray-600 text-white",
+    secondary:
+      "bg-gray-800 hover:bg-gray-700 text-white dark:bg-gray-700 dark:hover:bg-gray-600",
     outline:
-      "border-2 border-primary-500 text-primary-600 dark:text-primary-400 hover:bg-primary-500/10",
+      "border border-primary-600 text-primary-text hover:bg-primary-50 dark:border-primary-400 dark:text-primary-400 dark:hover:bg-gray-800",
   };
 
   return (
     <div
       className={cn(
-        "bg-gradient-to-br from-primary-500/10 to-primary-600/5 border border-primary-500/30 rounded-2xl p-8 text-center",
+        "rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-800 dark:bg-gray-900",
         className,
       )}
     >
-      <h3 className="text-2xl font-bold text-white mb-3">{title}</h3>
+      <h3 className="text-h3 mb-3 text-gray-900 dark:text-white">{title}</h3>
       {description && (
-        <p className="text-gray-400 mb-6 max-w-lg mx-auto">{description}</p>
+        <p className="text-body-sm mx-auto mb-6 max-w-measure-narrow text-gray-600 dark:text-gray-400">
+          {description}
+        </p>
       )}
       <a
         href={href}
         className={cn(
-          "inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all",
+          "inline-flex items-center gap-2 rounded-md px-6 py-3 font-medium transition-colors",
           variantStyles[variant],
         )}
       >
         {buttonText}
-        <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+        <ArrowRight
+          className="h-4 w-4 rtl:rotate-180"
+          strokeWidth={1.5}
+          aria-hidden="true"
+        />
       </a>
     </div>
   );

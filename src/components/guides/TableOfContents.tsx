@@ -145,12 +145,15 @@ export function TableOfContents({ headings, className }: TableOfContentsProps) {
 
   if (tree.length === 0) return null;
 
+  // The rail is the whole design: a hairline the reader's position moves along.
+  // Purple marks the current entry because that is the one nav state the accent
+  // exists for; everything else is gray and only the border changes on hover.
   const linkClass = (slug: string, nested: boolean) =>
     cn(
-      'block border-s-2 py-1.5 pe-2 text-sm transition-colors',
+      'block border-s-2 py-1.5 pe-2 text-body-sm transition-colors',
       nested ? 'ps-6' : 'ps-3',
       activeSlug === slug
-        ? 'border-primary font-medium text-primary-700 dark:text-primary-300'
+        ? 'border-primary-600 font-medium text-primary-text dark:border-primary-400 dark:text-primary-400'
         : 'border-gray-200 text-gray-600 hover:border-gray-400 hover:text-gray-900 dark:border-gray-800 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-100',
     );
 
@@ -158,7 +161,7 @@ export function TableOfContents({ headings, className }: TableOfContentsProps) {
     <nav
       aria-label={t('tableOfContents.ariaLabel')}
       className={cn(
-        'rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900',
+        'rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900',
         className,
       )}
       onKeyDown={(event) => {
@@ -170,19 +173,22 @@ export function TableOfContents({ headings, className }: TableOfContentsProps) {
     >
       <button
         type="button"
-        className="flex w-full items-center justify-between gap-3 px-4 py-3 text-start text-sm font-semibold text-gray-900 dark:text-gray-100 xl:hidden"
+        className="flex w-full items-center justify-between gap-3 px-4 py-3 text-start text-body-sm font-semibold text-gray-900 dark:text-gray-100 xl:hidden"
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((value) => !value)}
       >
         <span>{t('tableOfContents.title')}</span>
+        {/* The flip still states open/closed; the tween on it does not, and
+            transition-transform is out under VISUAL_SYSTEM.md §4. */}
         <ChevronDown
-          className={cn('h-4 w-4 shrink-0 transition-transform', open && 'rotate-180')}
+          className={cn('h-4 w-4 shrink-0 text-gray-400 dark:text-gray-500', open && 'rotate-180')}
+          strokeWidth={1.5}
           aria-hidden="true"
         />
       </button>
 
-      <p className="hidden px-4 pt-4 pb-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 xl:block">
+      <p className="hidden px-4 pt-4 pb-2 text-micro font-semibold uppercase text-gray-500 dark:text-gray-400 xl:block">
         {t('tableOfContents.title')}
       </p>
 

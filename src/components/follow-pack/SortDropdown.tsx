@@ -21,18 +21,16 @@ export const SortDropdown: React.FC<SortDropdownProps> = ({
 
   return (
     <div className="flex items-center gap-2">
-      <span id={captionId} className="text-sm text-gray-600 dark:text-gray-400">Sort by:</span>
+      <span id={captionId} className="text-body-sm text-gray-600 dark:text-gray-400">Sort by:</span>
       <select
         aria-labelledby={captionId}
         value={value}
         onChange={(e) => onChange(e.target.value as FilterState['sortBy'])}
         className="
-          text-sm border border-gray-300 dark:border-gray-600
-          rounded-lg px-3 py-1.5
-          bg-white dark:bg-gray-800
-          text-gray-900 dark:text-white
-          focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent
-          cursor-pointer
+          cursor-pointer rounded-md px-3 py-1.5
+          border border-gray-300 dark:border-gray-700
+          bg-white dark:bg-gray-900
+          text-body-sm text-gray-900 dark:text-white
         "
       >
         {options.map(option => (

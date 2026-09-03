@@ -14,41 +14,43 @@ interface CalloutProps {
   icon?: React.ReactNode;
 }
 
-const variantStyles: Record<
-  CalloutVariant,
-  { container: string; icon: string; iconBg: string }
-> = {
-  info: {
-    container:
-      "bg-blue-50 border-blue-200 text-blue-900 dark:bg-blue-950/30 dark:border-blue-800 dark:text-blue-100",
-    icon: "text-blue-500 dark:text-blue-400",
-    iconBg: "bg-blue-100 dark:bg-blue-900",
-  },
-  warning: {
-    container:
-      "bg-amber-50 border-amber-200 text-amber-900 dark:bg-amber-950/30 dark:border-amber-800 dark:text-amber-100",
-    icon: "text-amber-500 dark:text-amber-400",
-    iconBg: "bg-amber-100 dark:bg-amber-900",
-  },
-  success: {
-    container:
-      "bg-green-50 border-green-200 text-green-900 dark:bg-green-950/30 dark:border-green-800 dark:text-green-100",
-    icon: "text-green-500 dark:text-green-400",
-    iconBg: "bg-green-100 dark:bg-green-900",
-  },
-  danger: {
-    container:
-      "bg-red-50 border-red-200 text-red-900 dark:bg-red-950/30 dark:border-red-800 dark:text-red-100",
-    icon: "text-red-500 dark:text-red-400",
-    iconBg: "bg-red-100 dark:bg-red-900",
-  },
-};
+// The tint here is semantic, which is the one exception to "a card is a border
+// and a ground" — a warning has to look like a warning. Dark grounds are solid
+// 950s, not `/30` alphas: an alpha tint over the page ground renders muddy and
+// shifts depending on what is behind it.
+const variantStyles: Record<CalloutVariant, { container: string; icon: string }> =
+  {
+    info: {
+      container:
+        "bg-blue-50 border-blue-200 text-blue-900 dark:bg-blue-950 dark:border-blue-900 dark:text-blue-100",
+      icon: "text-blue-600 dark:text-blue-400",
+    },
+    warning: {
+      container:
+        "bg-warning-50 border-warning-200 text-warning-900 dark:bg-warning-950 dark:border-warning-900 dark:text-warning-100",
+      icon: "text-warning-600 dark:text-warning-400",
+    },
+    success: {
+      container:
+        "bg-success-50 border-success-200 text-success-900 dark:bg-success-950 dark:border-success-900 dark:text-success-100",
+      icon: "text-success-600 dark:text-success-400",
+    },
+    danger: {
+      container:
+        "bg-danger-50 border-danger-200 text-danger-900 dark:bg-danger-950 dark:border-danger-900 dark:text-danger-100",
+      icon: "text-danger-600 dark:text-danger-400",
+    },
+  };
 
 const defaultIcons: Record<CalloutVariant, React.ReactNode> = {
-  info: <Info className="h-5 w-5" />,
-  warning: <AlertTriangle className="h-5 w-5" />,
-  success: <CheckCircle className="h-5 w-5" />,
-  danger: <XCircle className="h-5 w-5" />,
+  info: <Info className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
+  warning: (
+    <AlertTriangle className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
+  ),
+  success: (
+    <CheckCircle className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
+  ),
+  danger: <XCircle className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
 };
 
 export function Callout({
@@ -72,11 +74,7 @@ export function Callout({
 
   return (
     <div
-      className={cn(
-        "relative rounded-xl border p-4",
-        styles.container,
-        className,
-      )}
+      className={cn("relative rounded-lg border p-4", styles.container, className)}
       role="alert"
     >
       <div className="flex gap-3">
@@ -84,16 +82,16 @@ export function Callout({
           {icon || defaultIcons[variant]}
         </div>
         <div className="flex-1">
-          {title && <h4 className="mb-1 font-semibold">{title}</h4>}
-          <div className="text-sm opacity-90">{children}</div>
+          {title && <h4 className="mb-1 text-h4 font-semibold">{title}</h4>}
+          <div className="text-body-sm">{children}</div>
         </div>
         {dismissible && (
           <button
             onClick={handleDismiss}
-            className="flex-shrink-0 rounded p-1 opacity-60 transition-opacity hover:opacity-100"
+            className="flex-shrink-0 rounded-md p-1 transition-colors hover:bg-black/5 dark:hover:bg-white/10"
             aria-label="Dismiss"
           >
-            <X className="h-4 w-4" />
+            <X className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
           </button>
         )}
       </div>
@@ -128,20 +126,20 @@ export function SecurityWarning({ children, className }: SecurityWarningProps) {
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-xl border-2 border-red-200 bg-red-50 p-5 dark:border-red-800 dark:bg-red-950/30",
+        "rounded-lg border border-danger-200 bg-danger-50 p-5 dark:border-danger-900 dark:bg-danger-950",
         className,
       )}
     >
-      {/* Warning stripes decoration */}
-      <div className="absolute -right-8 -top-8 h-24 w-24 rotate-45 bg-red-500/10" />
-      <div className="absolute -left-8 -bottom-8 h-24 w-24 rotate-45 bg-red-500/10" />
-
-      <div className="relative">
-        <div className="mb-2 flex items-center gap-2 text-red-800 dark:text-red-200">
-          <AlertTriangle className="h-5 w-5" />
-          <span className="font-semibold">Security Warning</span>
-        </div>
-        <div className="text-sm text-red-700 dark:text-red-300">{children}</div>
+      <div className="mb-2 flex items-center gap-2 text-danger-800 dark:text-danger-200">
+        <AlertTriangle
+          className="h-5 w-5 shrink-0"
+          strokeWidth={1.5}
+          aria-hidden="true"
+        />
+        <span className="font-semibold">Security Warning</span>
+      </div>
+      <div className="text-body-sm text-danger-700 dark:text-danger-300">
+        {children}
       </div>
     </div>
   );
@@ -154,20 +152,22 @@ interface TipProps {
   className?: string;
 }
 
+// Not tinted purple any more. Purple means "you can act on this"; a tip is not
+// an action, and an accent used as a mood is the ornament this pass removes.
 export function Tip({ children, pro = false, className }: TipProps) {
   return (
     <div
       className={cn(
-        "rounded-xl border border-purple-200 bg-purple-50 p-4 dark:border-purple-800 dark:bg-purple-950/30",
+        "rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-900",
         className,
       )}
     >
       {pro && (
-        <span className="mb-2 inline-flex items-center rounded-full bg-purple-100 px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-purple-700 dark:bg-purple-900 dark:text-purple-300">
+        <span className="mb-2 block text-micro font-semibold uppercase text-primary-text dark:text-primary-400">
           Pro Tip
         </span>
       )}
-      <div className="text-sm text-purple-900 dark:text-purple-100">
+      <div className="text-body-sm text-gray-700 dark:text-gray-300">
         {children}
       </div>
     </div>

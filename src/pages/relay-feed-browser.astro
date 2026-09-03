@@ -13,37 +13,40 @@ const description = 'Discover Nostr communities by browsing relay feeds. Read No
   
   <main id="main-content">
     <!-- Hero Section -->
-    <section class="relative overflow-hidden bg-gradient-to-br from-orange-50 via-transparent to-amber-50 dark:from-gray-900 dark:to-gray-800">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 relative">
+    <section>
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div class="max-w-4xl mx-auto text-center">
-          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 text-sm font-medium mb-6">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H14" />
-            </svg>
+          <!-- Was an orange pill. Same words, as an eyebrow. -->
+          <p class="text-micro uppercase text-gray-500 dark:text-gray-400 mb-6">
             Read Nostr Like a Newspaper
-          </div>
-          
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-            Browse Relay
-            <span class="bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent"> Feeds</span>
+          </p>
+
+          <h1 class="text-display font-bold mb-6 text-gray-900 dark:text-white">
+            Browse Relay Feeds
           </h1>
-          
-          <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-            Discover Nostr communities by browsing relay feeds. Each relay is like a different 
+
+          <p class="text-lead text-gray-600 dark:text-gray-400 mb-8 max-w-measure mx-auto">
+            Discover Nostr communities by browsing relay feeds. Each relay is like a different
             newspaper—same protocol, unique communities. Find your niche without algorithms.
           </p>
-          
-          <div class="flex flex-wrap justify-center gap-4 text-sm">
+
+          <div class="flex flex-wrap justify-center gap-4 text-body-sm">
             <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 flex items-center justify-center text-xs">✓</span>
+              <svg class="h-4 w-4 shrink-0 text-success-600 dark:text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7" />
+              </svg>
               No Registration
             </div>
             <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 flex items-center justify-center text-xs">✓</span>
+              <svg class="h-4 w-4 shrink-0 text-success-600 dark:text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7" />
+              </svg>
               Discover Communities
             </div>
             <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 flex items-center justify-center text-xs">✓</span>
+              <svg class="h-4 w-4 shrink-0 text-success-600 dark:text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7" />
+              </svg>
               Preview Before Joining
             </div>
           </div>
@@ -52,7 +55,7 @@ const description = 'Discover Nostr communities by browsing relay feeds. Read No
     </section>
 
     <!-- Main Tool Section -->
-    <section class="py-8 lg:py-12 bg-gray-50 dark:bg-gray-900/30">
+    <section class="py-8 lg:py-12 bg-gray-50 dark:bg-gray-900 border-y border-gray-200 dark:border-gray-800">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto">
           <RelayFeedBrowser client:idle />
@@ -61,40 +64,40 @@ const description = 'Discover Nostr communities by browsing relay feeds. Read No
     </section>
 
     <!-- How It Works -->
-    <section class="py-16 bg-white dark:bg-gray-800">
+    <section class="py-16">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-12">
+          <h2 class="text-h2 font-semibold text-gray-900 dark:text-white text-center mb-12">
             How It Works
           </h2>
-          
+
           <div class="grid md:grid-cols-3 gap-8">
             <div class="text-center">
-              <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-orange-100 dark:bg-orange-900/20 flex items-center justify-center">
-                <span class="text-2xl">1️⃣</span>
+              <div class="w-10 h-10 mx-auto mb-4 rounded-full border border-gray-200 dark:border-gray-800 flex items-center justify-center text-body-sm font-semibold text-gray-500 dark:text-gray-400">
+                1
               </div>
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Pick a Category</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-400">
+              <h3 class="text-h4 font-semibold text-gray-900 dark:text-white mb-2">Pick a Category</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 Choose from Bitcoin, Art, Music, Tech, Development, Gaming, or Regional communities.
               </p>
             </div>
-            
+
             <div class="text-center">
-              <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center">
-                <span class="text-2xl">2️⃣</span>
+              <div class="w-10 h-10 mx-auto mb-4 rounded-full border border-gray-200 dark:border-gray-800 flex items-center justify-center text-body-sm font-semibold text-gray-500 dark:text-gray-400">
+                2
               </div>
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Browse Relays</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-400">
+              <h3 class="text-h4 font-semibold text-gray-900 dark:text-white mb-2">Browse Relays</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 Explore relay feeds like reading different newspapers. See what each community posts.
               </p>
             </div>
-            
+
             <div class="text-center">
-              <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-green-100 dark:bg-green-900/20 flex items-center justify-center">
-                <span class="text-2xl">3️⃣</span>
+              <div class="w-10 h-10 mx-auto mb-4 rounded-full border border-gray-200 dark:border-gray-800 flex items-center justify-center text-body-sm font-semibold text-gray-500 dark:text-gray-400">
+                3
               </div>
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Add to Client</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-400">
+              <h3 class="text-h4 font-semibold text-gray-900 dark:text-white mb-2">Add to Client</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 Found a relay you like? Add it to your Nostr client and join the community.
               </p>
             </div>
@@ -104,42 +107,42 @@ const description = 'Discover Nostr communities by browsing relay feeds. Read No
     </section>
 
     <!-- Supported Clients -->
-    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
+    <section class="py-16 border-t border-gray-200 dark:border-gray-800">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-8">
+          <h2 class="text-h2 font-semibold text-gray-900 dark:text-white text-center mb-8">
             Clients with Relay Browsing
           </h2>
           
           <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <a href="https://jumble.social" target="_blank" rel="noopener noreferrer" class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-700 transition-colors">
+            <a href="https://jumble.social" target="_blank" rel="noopener noreferrer" class="p-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800">
               <p class="font-medium text-gray-900 dark:text-white">Jumble</p>
-              <p class="text-xs text-gray-500">Web • Built for relay exploration</p>
+              <p class="text-caption text-gray-500 dark:text-gray-400">Web • Built for relay exploration</p>
             </a>
             
-            <a href="https://github.com/mikedilger/gossip" target="_blank" rel="noopener noreferrer" class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-700 transition-colors">
+            <a href="https://github.com/mikedilger/gossip" target="_blank" rel="noopener noreferrer" class="p-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800">
               <p class="font-medium text-gray-900 dark:text-white">Gossip</p>
-              <p class="text-xs text-gray-500">Desktop • Ephemeral feeds</p>
+              <p class="text-caption text-gray-500 dark:text-gray-400">Desktop • Ephemeral feeds</p>
             </a>
             
-            <a href="https://coracle.social" target="_blank" rel="noopener noreferrer" class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-700 transition-colors">
+            <a href="https://coracle.social" target="_blank" rel="noopener noreferrer" class="p-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800">
               <p class="font-medium text-gray-900 dark:text-white">Coracle</p>
-              <p class="text-xs text-gray-500">Web • Advanced management</p>
+              <p class="text-caption text-gray-500 dark:text-gray-400">Web • Advanced management</p>
             </a>
             
-            <a href="https://wisp.sh" target="_blank" rel="noopener noreferrer" class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-700 transition-colors">
+            <a href="https://wisp.sh" target="_blank" rel="noopener noreferrer" class="p-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800">
               <p class="font-medium text-gray-900 dark:text-white">Wisp</p>
-              <p class="text-xs text-gray-500">Web • Clean interface</p>
+              <p class="text-caption text-gray-500 dark:text-gray-400">Web • Clean interface</p>
             </a>
             
-            <a href="https://primal.net" target="_blank" rel="noopener noreferrer" class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-700 transition-colors">
+            <a href="https://primal.net" target="_blank" rel="noopener noreferrer" class="p-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800">
               <p class="font-medium text-gray-900 dark:text-white">Primal</p>
-              <p class="text-xs text-gray-500">Web/Mobile • Fast & simple</p>
+              <p class="text-caption text-gray-500 dark:text-gray-400">Web/Mobile • Fast & simple</p>
             </a>
             
-            <a href="https://snort.social" target="_blank" rel="noopener noreferrer" class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-700 transition-colors">
+            <a href="https://snort.social" target="_blank" rel="noopener noreferrer" class="p-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800">
               <p class="font-medium text-gray-900 dark:text-white">Snort</p>
-              <p class="text-xs text-gray-500">Web • Feature-rich</p>
+              <p class="text-caption text-gray-500 dark:text-gray-400">Web • Feature-rich</p>
             </a>
           </div>
         </div>
@@ -147,47 +150,47 @@ const description = 'Discover Nostr communities by browsing relay feeds. Read No
     </section>
 
     <!-- FAQ Section -->
-    <section class="py-16 bg-white dark:bg-gray-800">
+    <section class="py-16 border-t border-gray-200 dark:border-gray-800">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-8">
+          <h2 class="text-h2 font-semibold text-gray-900 dark:text-white text-center mb-8">
             Frequently Asked Questions
           </h2>
           
           <div class="space-y-4">
-            <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">What is a relay feed?</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">
+            <div class="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+              <h3 class="text-h4 font-semibold text-gray-900 dark:text-white mb-2">What is a relay feed?</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 Unlike your normal feed (which shows people you follow), a relay feed shows all posts from everyone using that specific relay. It's like reading a newspaper—each relay has its own community and content mix.
               </p>
             </div>
             
-            <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Why browse by relay?</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">
+            <div class="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+              <h3 class="text-h4 font-semibold text-gray-900 dark:text-white mb-2">Why browse by relay?</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 Relay browsing helps you discover communities organized around specific topics. Bitcoin-focused relays discuss ₿, art relays showcase creative work, regional relays connect locals. It's a different way to find your tribe.
               </p>
             </div>
             
-            <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">How do I add a relay to my client?</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">
+            <div class="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+              <h3 class="text-h4 font-semibold text-gray-900 dark:text-white mb-2">How do I add a relay to my client?</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 Each client is different, but generally: go to Settings → Relays → Add Relay, then paste the relay URL (like wss://spatia-arcana.com). Check your client's documentation for specific steps.
               </p>
             </div>
             
-            <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Can I submit a relay?</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">
+            <div class="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+              <h3 class="text-h4 font-semibold text-gray-900 dark:text-white mb-2">Can I submit a relay?</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 Yes—this list is open source and community-maintained. Open an issue on
-                <a href="https://github.com/ptrio42/nostrich-love/issues" target="_blank" rel="noopener noreferrer" class="text-orange-600 dark:text-orange-400 hover:underline">GitHub</a>
+                <a href="https://github.com/ptrio42/nostrich-love/issues" target="_blank" rel="noopener noreferrer" class="text-primary-text dark:text-primary-400 underline underline-offset-2">GitHub</a>
                 with the relay URL, a short description, and its topic. We check that it's reachable and active before adding it.
               </p>
             </div>
             
-            <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Is this free to use?</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">
+            <div class="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+              <h3 class="text-h4 font-semibold text-gray-900 dark:text-white mb-2">Is this free to use?</h3>
+              <p class="text-body-sm text-gray-600 dark:text-gray-400">
                 Absolutely! Browsing relay feeds is free. Some relays are paid (like nostr.wine), but many are free to use. This tool helps you discover them all.
               </p>
             </div>
@@ -197,24 +200,24 @@ const description = 'Discover Nostr communities by browsing relay feeds. Read No
     </section>
 
     <!-- CTA Section -->
-    <section class="py-16 bg-gradient-to-r from-orange-50 to-amber-50 dark:from-gray-900 dark:to-gray-800">
+    <section class="py-16 border-t border-gray-200 dark:border-gray-800">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-2xl mx-auto text-center">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 class="text-h2 font-semibold text-gray-900 dark:text-white mb-4">
             Ready to Discover Communities?
           </h2>
-          
-          <p class="text-gray-600 dark:text-gray-300 mb-8">
+
+          <p class="text-lead text-gray-600 dark:text-gray-400 mb-8 max-w-measure mx-auto">
             Start browsing relay feeds now. Your next favorite community is just a click away!
           </p>
-          
+
           <a
             href="#main-content"
-            class="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-xl font-semibold hover:bg-orange-600 transition-colors"
+            class="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-md text-body font-semibold transition-colors"
           >
             Start Browsing
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 10l7-7m0 0l7 7m-7-7v18" />
             </svg>
           </a>
         </div>

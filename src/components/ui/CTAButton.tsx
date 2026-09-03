@@ -42,13 +42,13 @@ export function CTAButton({
       className={cn(
         "flex w-full flex-col items-center gap-1 text-center sm:flex-row sm:justify-between sm:text-start",
         variant === "outline" &&
-          "border-2 border-primary/40 text-primary-600 dark:text-primary-400 hover:bg-primary/10",
+          "border border-gray-300 text-primary-text hover:bg-gray-50 dark:border-gray-700 dark:text-primary-400 dark:hover:bg-gray-800",
         className,
       )}
       leftIcon={leftIcon}
       rightIcon={
         showArrow && !rightIcon ? (
-          <ArrowUpRight className="h-4 w-4" />
+          <ArrowUpRight className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
         ) : (
           rightIcon
         )
@@ -56,11 +56,9 @@ export function CTAButton({
       {...props}
     >
       <span className="flex flex-col">
-        <span className="text-base font-semibold leading-tight">
-          {children}
-        </span>
+        <span className="text-body font-semibold">{children}</span>
         {description && (
-          <span className="text-sm font-normal text-gray-200/80 dark:text-gray-200/70">
+          <span className="text-body-sm font-normal opacity-80">
             {description}
           </span>
         )}

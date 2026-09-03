@@ -10,6 +10,9 @@ interface ValueCardProps {
   iconClassName?: string;
 }
 
+// A card is a border and a ground. The icon used to sit inside a 48px
+// purple-tinted rounded square, which is the badge-behind-an-icon pattern the
+// visual system rules out; the icon now sits on the card at text scale.
 export function ValueCard({
   icon,
   title,
@@ -22,24 +25,21 @@ export function ValueCard({
   return (
     <div
       className={cn(
-        "bg-white dark:bg-gray-800/30 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all",
+        "rounded-lg border border-gray-200 bg-white p-6 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700 dark:hover:bg-gray-800",
         className,
       )}
     >
-      <div
-        className={cn(
-          "w-12 h-12 rounded-xl bg-primary-500/20 flex items-center justify-center mb-4",
-          iconClassName,
-        )}
-      >
+      <div className={cn("mb-4 text-gray-400 dark:text-gray-500", iconClassName)}>
         {isString ? (
-          <span className="text-2xl">{icon}</span>
+          <span aria-hidden="true">{icon}</span>
         ) : (
           <Icon icon={icon} />
         )}
       </div>
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{title}</h3>
-      <p className="text-gray-600 dark:text-gray-400 text-sm">{description}</p>
+      <h3 className="text-h3 mb-2 text-gray-900 dark:text-white">{title}</h3>
+      <p className="text-body-sm text-gray-600 dark:text-gray-400">
+        {description}
+      </p>
     </div>
   );
 }
@@ -47,5 +47,7 @@ export function ValueCard({
 // Handle icon as component
 function Icon({ icon }: { icon: LucideIcon }) {
   const IconComponent = icon;
-  return <IconComponent className="w-6 h-6 text-primary-600 dark:text-primary-400" />;
+  return (
+    <IconComponent className="h-6 w-6" strokeWidth={1.5} aria-hidden="true" />
+  );
 }

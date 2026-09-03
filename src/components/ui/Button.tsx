@@ -18,20 +18,24 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   rightIcon?: React.ReactNode;
 }
 
+// These used to be drawn for a dark ground only (grey-300 text, a grey-900
+// focus offset), so outline and ghost were near-invisible on white. Focus is
+// left to the global :focus-visible outline rather than a per-variant ring.
 const variantStyles: Record<ButtonVariant, string> = {
-  primary:
-    "bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500",
-  secondary: "bg-gray-700 text-white hover:bg-gray-600 focus:ring-gray-500",
+  primary: "bg-primary-600 text-white hover:bg-primary-700",
+  secondary:
+    "bg-gray-800 text-white hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600",
   outline:
-    "border-2 border-gray-600 text-gray-300 hover:bg-gray-700 focus:ring-gray-500",
-  ghost: "text-gray-300 hover:bg-gray-800 focus:ring-gray-500",
-  danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500",
+    "border border-gray-300 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800",
+  ghost:
+    "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800",
+  danger: "bg-danger-600 text-white hover:bg-danger-700",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: "px-3 py-1.5 text-sm",
-  md: "px-4 py-2 text-base",
-  lg: "px-6 py-3 text-lg",
+  sm: "px-3 py-1.5 text-caption",
+  md: "px-4 py-2 text-body-sm",
+  lg: "px-6 py-3 text-body",
 };
 
 export function Button({
@@ -48,9 +52,8 @@ export function Button({
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all",
-        "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900",
-        "disabled:opacity-50 disabled:cursor-not-allowed",
+        "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors",
+        "disabled:cursor-not-allowed disabled:opacity-50",
         variantStyles[variant],
         sizeStyles[size],
         className,
@@ -58,7 +61,7 @@ export function Button({
       disabled={disabled || isLoading}
       {...props}
     >
-      {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
+      {isLoading && <Loader2 className="h-4 w-4 animate-spin" strokeWidth={1.5} aria-hidden="true" />}
       {!isLoading && leftIcon}
       {children}
       {!isLoading && rightIcon}
@@ -91,9 +94,8 @@ export function IconButton({
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center rounded-lg transition-all",
-        "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900",
-        "disabled:opacity-50 disabled:cursor-not-allowed",
+        "inline-flex items-center justify-center rounded-md transition-colors",
+        "disabled:cursor-not-allowed disabled:opacity-50",
         variantStyles[variant],
         sizeClasses[size],
         className,
@@ -101,7 +103,7 @@ export function IconButton({
       disabled={disabled || isLoading}
       {...props}
     >
-      {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : icon}
+      {isLoading ? <Loader2 className="h-4 w-4 animate-spin" strokeWidth={1.5} aria-hidden="true" /> : icon}
     </button>
   );
 }

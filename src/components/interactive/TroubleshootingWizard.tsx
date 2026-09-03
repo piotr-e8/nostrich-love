@@ -465,35 +465,37 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
   const getSeverityColor = (severity: string) => {
     switch (severity) {
       case "high":
-        return "text-error-500 bg-error-500/10 border-error-500/30";
+        return "text-error-700 dark:text-error-400 border-error-300 dark:border-error-800";
       case "medium":
-        return "text-warning-500 bg-warning-500/10 border-warning-500/30";
+        return "text-warning-700 dark:text-warning-400 border-warning-300 dark:border-warning-800";
       default:
-        return "text-success-500 bg-success-500/10 border-success-500/30";
+        return "text-success-700 dark:text-success-400 border-success-300 dark:border-success-800";
     }
   };
 
   return (
     <div className={cn("max-w-2xl mx-auto p-6", className)}>
-      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 md:p-8">
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-6 md:p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-500/20 rounded-2xl mb-4 animate-scale-in motion-reduce:animate-none">
-            <Wrench className="w-8 h-8 text-primary-500" />
-          </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          <Wrench
+            className="mx-auto mb-3 h-6 w-6 text-primary-text dark:text-primary-400"
+            strokeWidth={1.5}
+            aria-hidden="true"
+          />
+          <h2 className="text-h2 font-display text-gray-900 dark:text-white mb-2">
             {t('troubleshootingWizard.title')}
           </h2>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-body-sm text-gray-600 dark:text-gray-400">
             {t('troubleshootingWizard.description')}
           </p>
         </div>
 
         {/* Progress Indicator */}
         <div className="flex items-center gap-2 mb-6">
-          <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+          <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
             <div
-              className="h-full bg-primary-500 transition-[width] duration-300 ease-out-quint motion-reduce:transition-none"
+              className="h-full bg-primary-600 transition-[width] duration-300 ease-out-quint motion-reduce:transition-none"
               style={{
                 width: solution
                   ? "100%"
@@ -501,7 +503,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               }}
             />
           </div>
-          <span className="text-sm text-gray-600 dark:text-gray-400">
+          <span className="text-caption text-gray-600 dark:text-gray-400">
             {t('troubleshootingWizard.step')} {history.length + (solution ? 1 : 0)}
           </span>
         </div>
@@ -510,9 +512,9 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
         {(history.length > 0 || solution) && (
           <button
             onClick={goBack}
-            className="mb-4 inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white transition-colors"
+            className="mb-4 inline-flex items-center gap-2 text-body-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
           >
-            <ChevronLeft className="w-4 h-4 rtl:rotate-180" />
+            <ChevronLeft className="h-4 w-4 rtl:rotate-180" strokeWidth={1.5} aria-hidden="true" />
             {t('troubleshootingWizard.back')}
           </button>
         )}
@@ -523,11 +525,11 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               {/* Severity Badge */}
               <div
                 className={cn(
-                  "inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium mb-4 border",
+                  "inline-flex items-center gap-2 px-3 py-1 rounded-full text-caption font-medium mb-4 border",
                   getSeverityColor(solution.severity),
                 )}
               >
-                <AlertCircle className="w-4 h-4" />
+                <AlertCircle className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                 {solution.severity === "high"
                   ? t('troubleshootingWizard.severity.high')
                   : solution.severity === "medium"
@@ -536,24 +538,28 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               </div>
 
               {/* Title */}
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+              <h3 className="text-h3 font-display text-gray-900 dark:text-white mb-2">
                 {solution.title}
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">{solution.description}</p>
+              <p className="text-body text-gray-600 dark:text-gray-400 mb-6">{solution.description}</p>
 
               {/* Steps */}
-              <div className="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4 mb-6">
-                <h4 className="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                  <Check className="w-5 h-5 text-primary-500" />
+              <div className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-4 mb-6">
+                <h4 className="text-h4 font-display text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                  <Check
+                    className="h-5 w-5 shrink-0 text-primary-text dark:text-primary-400"
+                    strokeWidth={1.5}
+                    aria-hidden="true"
+                  />
                   {t('troubleshootingWizard.stepsToFix')}
                 </h4>
                 <ol className="space-y-3">
                   {solution.steps.map((step, i) => (
                     <li key={i} className="flex items-start gap-3">
-                      <span className="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center text-gray-900 dark:text-white text-sm font-medium flex-shrink-0">
+                      <span className="w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center text-white text-caption font-medium flex-shrink-0">
                         {i + 1}
                       </span>
-                      <span className="text-gray-700 dark:text-gray-300">{step}</span>
+                      <span className="text-body-sm text-gray-700 dark:text-gray-300">{step}</span>
                     </li>
                   ))}
                 </ol>
@@ -561,18 +567,22 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
 
               {/* Tips */}
               {solution.tips && (
-                <div className="bg-info-500/10 border border-info-500/30 rounded-xl p-4 mb-6">
-                  <h4 className="font-medium text-info-500 mb-2 flex items-center gap-2">
-                    <Info className="w-5 h-5" />
+                <div className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-4 mb-6">
+                  <h4 className="text-h4 font-display text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                    <Info
+                      className="h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
+                      strokeWidth={1.5}
+                      aria-hidden="true"
+                    />
                     {t('troubleshootingWizard.proTips')}
                   </h4>
                   <ul className="space-y-1">
                     {solution.tips.map((tip, i) => (
                       <li
                         key={i}
-                        className="text-sm text-gray-600 dark:text-gray-400 flex items-start gap-2"
+                        className="text-body-sm text-gray-600 dark:text-gray-400 flex items-start gap-2"
                       >
-                        <span className="text-info-500">•</span>
+                        <span aria-hidden="true">•</span>
                         {tip}
                       </li>
                     ))}
@@ -583,7 +593,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               {/* Resources */}
               {solution.resources && solution.resources.length > 0 && (
                 <div className="mb-6">
-                  <h4 className="font-medium text-gray-900 dark:text-white mb-3">
+                  <h4 className="text-h4 font-display text-gray-900 dark:text-white mb-3">
                     {t('troubleshootingWizard.helpfulResources')}
                   </h4>
                   <div className="flex flex-wrap gap-2">
@@ -591,9 +601,9 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
                       <a
                         key={resource.label}
                         href={resource.url}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-primary-500/20 text-primary-500 hover:bg-primary-500/30 rounded-lg transition-colors"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-body-sm rounded-md border border-gray-200 bg-white text-primary-text transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-primary-400 dark:hover:border-gray-700 dark:hover:bg-gray-800"
                       >
-                        <ExternalLink className="w-4 h-4" />
+                        <ExternalLink className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                         {resource.label}
                       </a>
                     ))}
@@ -605,16 +615,16 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={reset}
-                  className="flex-1 py-3 bg-primary-600 hover:bg-primary-700 text-gray-900 dark:text-white rounded-xl font-medium transition-all inline-flex items-center justify-center gap-2"
+                  className="flex-1 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-md font-medium transition-colors inline-flex items-center justify-center gap-2"
                 >
-                  <RotateCcw className="w-5 h-5" />
+                  <RotateCcw className="h-5 w-5 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                   {t('troubleshootingWizard.startOver')}
                 </button>
                 <button
                   onClick={() => setShowDiagnosticInfo(true)}
-                  className="py-3 px-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 text-gray-900 dark:text-white rounded-xl font-medium transition-all inline-flex items-center justify-center gap-2"
+                  className="py-3 px-4 rounded-md border border-gray-200 bg-white text-gray-700 font-medium transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-700 dark:hover:bg-gray-800 inline-flex items-center justify-center gap-2"
                 >
-                  <FileText className="w-5 h-5" />
+                  <FileText className="h-5 w-5 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                   {t('troubleshootingWizard.saveDiagnosticInfo')}
                 </button>
               </div>
@@ -622,7 +632,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
         ) : (
             <div key="question">
               {/* Question */}
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
+              <h3 className="text-h3 font-display text-gray-900 dark:text-white mb-6">
                 {currentQuestion.text}
               </h3>
 
@@ -632,18 +642,22 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
                   <button
                     key={option.value}
                     onClick={() => handleOptionSelect(option)}
-                    className="w-full text-start p-4 border border-gray-200 dark:border-gray-700 hover:border-primary-500 hover:bg-primary-500/5 rounded-xl transition-all group"
+                    className="w-full text-start p-4 rounded-lg border border-gray-200 bg-white transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700 dark:hover:bg-gray-800 group"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 group-hover:bg-primary-500/20 rounded-xl flex items-center justify-center transition-colors">
-                        <span className="text-gray-600 dark:text-gray-400 group-hover:text-primary-500 transition-colors">
-                          {option.icon || <ArrowRight className="w-5 h-5 rtl:rotate-180" />}
-                        </span>
-                      </div>
-                      <span className="font-medium text-gray-900 dark:text-white flex-1">
+                      <span className="text-gray-400 dark:text-gray-500 group-hover:text-primary-text dark:group-hover:text-primary-400 transition-colors">
+                        {option.icon || (
+                          <ArrowRight className="h-5 w-5 rtl:rotate-180" strokeWidth={1.5} aria-hidden="true" />
+                        )}
+                      </span>
+                      <span className="text-body font-medium text-gray-900 dark:text-white flex-1">
                         {option.label}
                       </span>
-                      <ChevronRight className="w-5 h-5 text-gray-500 group-hover:text-primary-500 rtl:rotate-180" />
+                      <ChevronRight
+                        className="h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500 group-hover:text-primary-text dark:group-hover:text-primary-400 rtl:rotate-180 transition-colors"
+                        strokeWidth={1.5}
+                        aria-hidden="true"
+                      />
                     </div>
                   </button>
                 ))}
@@ -655,33 +669,33 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
         {!solution && history.length > 0 && (
           <button
             onClick={reset}
-            className="mt-6 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white text-sm transition-colors inline-flex items-center gap-2"
+            className="mt-6 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-body-sm transition-colors inline-flex items-center gap-2"
           >
-            <RotateCcw className="w-4 h-4" />
+            <RotateCcw className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
             {t('troubleshootingWizard.startOver')}
           </button>
         )}
 
         {/* Footer - Still Need Help */}
-        <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-          <p className="text-center text-gray-600 dark:text-gray-400 mb-4">{t('troubleshootingWizard.stillNeedHelp')}</p>
+        <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <p className="text-center text-body-sm text-gray-600 dark:text-gray-400 mb-4">{t('troubleshootingWizard.stillNeedHelp')}</p>
           <div className="flex flex-wrap justify-center gap-3">
             <a
               href="https://snort.social"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 text-body-sm rounded-md border border-gray-200 bg-white text-gray-700 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-700 dark:hover:bg-gray-800"
             >
-              <MessageCircle className="w-4 h-4" />
+              <MessageCircle className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
               {t('troubleshootingWizard.askOnNostr')}
             </a>
             <a
               href="https://github.com/nostr-protocol/nostr"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 text-body-sm rounded-md border border-gray-200 bg-white text-gray-700 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-700 dark:hover:bg-gray-800"
             >
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
               {t('troubleshootingWizard.documentation')}
             </a>
           </div>
@@ -692,7 +706,7 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
       {showDiagnosticInfo && (
           <div
             className={cn(
-              "fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4",
+              "fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4",
               "transition-opacity duration-300 motion-reduce:transition-none",
               isModalShown ? "opacity-100" : "opacity-0",
             )}
@@ -704,47 +718,47 @@ Current Step: ${solution ? solution.title : currentQuestion?.text}
               aria-modal="true"
               aria-labelledby="diagnostic-info-title"
               className={cn(
-                "bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 max-w-md w-full",
+                "bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg shadow-raised p-6 max-w-md w-full",
                 "transition-all duration-300 ease-out-quint motion-reduce:transition-none",
                 isModalShown ? "opacity-100 scale-100" : "opacity-0 scale-95",
               )}
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 id="diagnostic-info-title" className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+              <h3 id="diagnostic-info-title" className="text-h3 font-display text-gray-900 dark:text-white mb-4">
                 {t('troubleshootingWizard.diagnosticInfo.title')}
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+              <p className="text-body-sm text-gray-600 dark:text-gray-400 mb-4">
                 {t('troubleshootingWizard.diagnosticInfo.description')}
               </p>
-              <div className="bg-white dark:bg-gray-900 rounded-xl p-4 mb-4 font-mono text-xs text-gray-600 dark:text-gray-400 space-y-2">
+              <div className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md p-4 mb-4 font-mono text-caption text-gray-600 dark:text-gray-400 space-y-2">
                 <p>
-                  <span className="text-gray-600">Date:</span>{" "}
+                  <span className="text-gray-500 dark:text-gray-500">Date:</span>{" "}
                   {diagnosticInfo.timestamp}
                 </p>
                 <p>
-                  <span className="text-gray-600">Platform:</span>{" "}
+                  <span className="text-gray-500 dark:text-gray-500">Platform:</span>{" "}
                   {diagnosticInfo.platform}
                 </p>
                 <p>
-                  <span className="text-gray-600">Browser:</span>{" "}
+                  <span className="text-gray-500 dark:text-gray-500">Browser:</span>{" "}
                   {diagnosticInfo.userAgent.slice(0, 50)}...
                 </p>
                 <p>
-                  <span className="text-gray-600">Issue:</span>{" "}
+                  <span className="text-gray-500 dark:text-gray-500">Issue:</span>{" "}
                   {solution?.title || currentQuestion?.text}
                 </p>
               </div>
               <div className="flex gap-3">
                 <button
                   onClick={copyDiagnosticInfo}
-                  className="flex-1 px-4 py-3 bg-primary-600 hover:bg-primary-700 text-gray-900 dark:text-white rounded-xl font-medium transition-all inline-flex items-center justify-center gap-2"
+                  className="flex-1 px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-md font-medium transition-colors inline-flex items-center justify-center gap-2"
                 >
-                  <Copy className="w-4 h-4" />
+                  <Copy className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                   {t('troubleshootingWizard.diagnosticInfo.copy')}
                 </button>
                 <button
                   onClick={closeDiagnosticInfo}
-                  className="px-4 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 text-gray-900 dark:text-white rounded-xl font-medium transition-all"
+                  className="px-4 py-3 rounded-md border border-gray-200 bg-white text-gray-700 font-medium transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-700 dark:hover:bg-gray-800"
                 >
                   {t('troubleshootingWizard.diagnosticInfo.close')}
                 </button>
@@ -769,37 +783,37 @@ const getQuestions = (solutions: Record<string, Solution>, t: (key: string) => s
       {
         label: t('troubleshootingWizard.questions.start.options.emptyFeed'),
         value: "empty-feed",
-        icon: <Eye className="w-5 h-5" />,
+        icon: <Eye className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
         next: "feed-check",
       },
       {
         label: t('troubleshootingWizard.questions.start.options.connection'),
         value: "connection",
-        icon: <Wifi className="w-5 h-5" />,
+        icon: <Wifi className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
         next: "connection-check",
       },
       {
         label: t('troubleshootingWizard.questions.start.options.lostKeys'),
         value: "lost-keys",
-        icon: <Key className="w-5 h-5" />,
+        icon: <Key className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
         solution: solutions.lostKeys,
       },
       {
         label: t('troubleshootingWizard.questions.start.options.zaps'),
         value: "zaps",
-        icon: <Zap className="w-5 h-5" />,
+        icon: <Zap className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
         next: "zap-check",
       },
       {
         label: t('troubleshootingWizard.questions.start.options.clientError'),
         value: "client-error",
-        icon: <Smartphone className="w-5 h-5" />,
+        icon: <Smartphone className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
         next: "client-check",
       },
       {
         label: t('troubleshootingWizard.questions.start.options.profileIssue'),
         value: "profile-issue",
-        icon: <Eye className="w-5 h-5" />,
+        icon: <Eye className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
         next: "profile-check",
       },
     ],

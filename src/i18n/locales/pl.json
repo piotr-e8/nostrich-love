@@ -3275,7 +3275,8 @@
     "lastInLevelDescriptionFinal": "Tu kończy się ścieżka przewodników. Po poziomie {level} nie ma kolejnego.",
     "continueToLevel": "Kontynuuj do {level}",
     "unlockRequirements": "Ukończ więcej przewodników z {currentLevel}, aby odblokować {nextLevel}",
-    "offLevelMessage": "Ten przewodnik nie jest częścią Twojego obecnego poziomu {level}"
+    "offLevelMessage": "Ten przewodnik nie jest częścią Twojego obecnego poziomu {level}",
+    "aria": "Nawigacja po poradnikach"
   },
   "continueLearning": {
     "allLevelsComplete": "Wszystkie poziomy ukończone!",

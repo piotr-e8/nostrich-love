@@ -137,19 +137,18 @@ const jsonLd = [
 
   <main id="main-content">
     <!-- Hero -->
-    <section class="relative overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 dark:from-primary/5 dark:to-secondary/5" />
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 relative">
+    <section class="border-b border-gray-200 dark:border-gray-800">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
         <div class="max-w-3xl mx-auto text-center">
-          <p class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary-700 dark:text-primary-300 text-sm font-medium mb-6">
+          <p class="text-micro uppercase text-gray-500 dark:text-gray-400 mb-4">
             Honest comparison · Updated July 2026
           </p>
-          <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-6">
+          <h1 class="text-display font-bold text-gray-900 dark:text-white mb-6">
             Mastodon vs
-            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Nostr</span>:
+            <span class="text-primary-text dark:text-primary-400">Nostr</span>:
             which should you join?
           </h1>
-          <p class="text-xl text-gray-600 dark:text-gray-300">
+          <p class="text-lead text-gray-600 dark:text-gray-300">
             One ties your account to a server and the person who runs it. The other ties it
             to a key only you hold. Almost every other difference follows from that.
           </p>
@@ -160,16 +159,16 @@ const jsonLd = [
     <!-- TL;DR verdict -->
     <section class="py-10">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-3xl mx-auto p-6 rounded-2xl border-s-4 border-primary bg-primary/5 dark:bg-primary/10">
-          <h2 class="text-lg font-bold mb-3 text-gray-900 dark:text-white">TL;DR: the honest verdict</h2>
-          <p class="text-gray-700 dark:text-gray-300 mb-3">
+        <div class="max-w-3xl mx-auto ps-6 border-s-4 border-primary-600 dark:border-primary-400">
+          <h2 class="text-h3 font-bold mb-3 text-gray-900 dark:text-white">TL;DR: the honest verdict</h2>
+          <p class="text-body text-gray-700 dark:text-gray-300 mb-3">
             <strong>Pick Mastodon</strong> if you want established communities and hands-on
             moderation by people you can name. The apps are more mature there too.
             <strong>Pick Nostr</strong> if you want an identity that survives any server shutting
             down, defederating, or banning you.
           </p>
-          <p class="text-gray-700 dark:text-gray-300">
-            Undecided? <a href="/guides/quickstart" class="font-semibold text-primary-700 dark:text-primary-300 underline">Trying Nostr takes about 5 minutes</a>,
+          <p class="text-body text-gray-700 dark:text-gray-300">
+            Undecided? <a href="/guides/quickstart" class="font-semibold text-primary-text dark:text-primary-400 underline underline-offset-2">Trying Nostr takes about 5 minutes</a>,
             with no email and no "which instance?" decision to agonize over.
           </p>
         </div>
@@ -181,112 +180,112 @@ const jsonLd = [
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
 
-          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">The core difference in one sentence</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-8">
+          <h2 class="text-h2 font-bold mb-4 text-gray-900 dark:text-white">The core difference in one sentence</h2>
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-8">
             On Mastodon your account <em>lives on a server</em>. That server assigns your identity
             (@you@server.com), stores your data, and speaks to the rest of the network for you.
             On Nostr your identity <em>is a key</em>, generated on your own device. It works with
             every relay and every client, and nobody but you owns it.
           </p>
 
-          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Instances and relays are NOT the same thing</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-4">
+          <h2 class="text-h2 font-bold mb-4 text-gray-900 dark:text-white">Instances and relays are NOT the same thing</h2>
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-4">
             This is the misconception that derails most comparisons. Both networks have "many
             servers", so people assume the servers play the same role. They do not.
           </p>
-          <p class="text-gray-600 dark:text-gray-300 mb-4">
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-4">
             A <strong>Mastodon instance</strong> is a federated home. It hosts your account,
             enforces its rules on you, and exchanges posts with other instances. It is also your
             single point of failure. If it goes down, defederates, or bans you, your identity takes
             the hit, because you are its user.
           </p>
-          <p class="text-gray-600 dark:text-gray-300 mb-4">
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-4">
             A <strong>Nostr relay</strong> is an interchangeable dumb store. It does not host your
             account, because there are no accounts, only signed posts. Relays never talk to each
             other; your client publishes to several and aggregates what it reads back. Any one relay
             is disposable. Drop it, add another, and nothing about your identity changes.
           </p>
-          <pre aria-hidden="true" class="overflow-x-auto rounded-xl bg-gray-900 text-gray-100 text-xs sm:text-sm p-4 mb-8 leading-relaxed"><code>Mastodon:  You ──lives on──► Instance A ◄──federates──► Instance B
+          <pre aria-hidden="true" class="overflow-x-auto rounded-lg bg-gray-900 text-gray-100 text-xs sm:text-sm p-4 mb-8 leading-relaxed"><code>Mastodon:  You ──lives on──► Instance A ◄──federates──► Instance B
            your home; its rules; its fate is your fate
 
 Nostr:     You ──publish to──► Relay 1, Relay 2, Relay 3 ...
            interchangeable copies; no federation; client merges them</code></pre>
 
-          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">The joining problem</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-4">
+          <h2 class="text-h2 font-bold mb-4 text-gray-900 dark:text-white">The joining problem</h2>
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-4">
             Mastodon's hardest step comes first: <strong>"which instance do I pick?"</strong> The
             choice is real and it sticks. It decides your local timeline's culture, the rules you
             live under, the admin you depend on, and whose defederation decisions land on you.
             Plenty of newcomers stall right here.
           </p>
-          <p class="text-gray-600 dark:text-gray-300 mb-8">
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-8">
             Nostr's equivalent step is picking a client app, and the stakes are intentionally low:
             default relay lists work fine to start, and because your identity is a key, you can
             change every choice later without losing anything.
           </p>
 
-          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Moderation models, honestly</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-4">
+          <h2 class="text-h2 font-bold mb-4 text-gray-900 dark:text-white">Moderation models, honestly</h2>
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-4">
             <strong>Mastodon</strong> moderates at the community level. Admins enforce instance
             rules and can defederate from entire servers. This creates spaces that really are safer
             than most of the internet. It also creates echo chambers, admin burnout, and the risk
             that a defederation decision you had no vote in cuts you off from friends.
           </p>
-          <p class="text-gray-600 dark:text-gray-300 mb-8">
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-8">
             <strong>Nostr</strong> moderates at the individual level. Your client filters what you
             see; each relay decides what it stores. Nobody can moderate you off the network, which
             also means spam is harder to fight and curation is largely your job. Neither model is
             free. They just send the bill to different people.
           </p>
 
-          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Moving and losing</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-4">
+          <h2 class="text-h2 font-bold mb-4 text-gray-900 dark:text-white">Moving and losing</h2>
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-4">
             Mastodon's account migration is real but <strong>partial</strong>: you can redirect to
             a new instance and move your follow list, but followers do not fully transfer, your
             old posts stay behind (export quality depends on the server), and your handle changes
             with the server name. Your handle is your identity, so your identity changes too.
           </p>
-          <p class="text-gray-600 dark:text-gray-300 mb-8">
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-8">
             Nostr has nothing to migrate. The same nsec works in any client on day one and in year
             five; "switching" is just opening a different app. The honest caveat on this side:
             relays do not guarantee to store your old posts forever.
           </p>
 
-          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Direct messages</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-8">
+          <h2 class="text-h2 font-bold mb-4 text-gray-900 dark:text-white">Direct messages</h2>
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-8">
             Mastodon DMs are not end-to-end encrypted: <strong>server admins can technically read
             them</strong>, on both the sending and receiving side. Nostr's NIP-17 DMs are encrypted
             so relay operators cannot read the contents. Some metadata still leaks, which the
-            <a href="/guides/nip17-private-messages" class="text-primary-700 dark:text-primary-300 underline">private messages guide</a>
+            <a href="/guides/nip17-private-messages" class="text-primary-text dark:text-primary-400 underline underline-offset-2">private messages guide</a>
             explains honestly. Neither network is the place for truly high-stakes secrets. Only one
             of them lets your server admin read your DMs.
           </p>
 
-          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">What Mastodon does better</h2>
-          <ul class="list-disc ps-6 text-gray-600 dark:text-gray-300 mb-8 space-y-2">
+          <h2 class="text-h2 font-bold mb-4 text-gray-900 dark:text-white">What Mastodon does better</h2>
+          <ul class="list-disc ps-6 text-body text-gray-600 dark:text-gray-300 mb-8 space-y-2">
             <li><strong>Mature apps.</strong> Years of polish across web and mobile, with fewer rough edges than most Nostr clients.</li>
             <li><strong>Culture of care.</strong> Content warnings and alt-text norms are genuinely stronger than anywhere else in social media.</li>
             <li><strong>Granular privacy.</strong> Followers-only and unlisted posts exist. On Nostr, normal posts are public.</li>
             <li><strong>Organizational self-hosting.</strong> An organization can run its own instance under its own rules. That model is proven and people rely on it.</li>
           </ul>
 
-          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Side by side</h2>
+          <h2 class="text-h2 font-bold mb-4 text-gray-900 dark:text-white">Side by side</h2>
         </div>
 
-        <div class="max-w-4xl mx-auto overflow-x-auto rounded-2xl border border-gray-200 dark:border-gray-700 mb-4">
-          <table class="w-full min-w-[640px] bg-white dark:bg-gray-800 text-sm">
+        <div class="max-w-4xl mx-auto overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-800 mb-4">
+          <table class="w-full min-w-[640px] bg-white dark:bg-gray-900 text-body-sm">
             <caption class="sr-only">Nostr and Mastodon compared across 8 dimensions</caption>
             <thead>
-              <tr class="bg-gray-50 dark:bg-gray-900/40 border-b border-gray-200 dark:border-gray-700">
-                <th scope="col" class="p-4 text-start font-semibold text-gray-900 dark:text-white">Dimension</th>
-                <th scope="col" class="p-4 text-start font-semibold text-gray-900 dark:text-white">Nostr</th>
-                <th scope="col" class="p-4 text-start font-semibold text-gray-900 dark:text-white">Mastodon</th>
+              <tr class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-800">
+                <th scope="col" class="p-4 text-start text-micro uppercase text-gray-500 dark:text-gray-400">Dimension</th>
+                <th scope="col" class="p-4 text-start text-micro uppercase text-gray-500 dark:text-gray-400">Nostr</th>
+                <th scope="col" class="p-4 text-start text-micro uppercase text-gray-500 dark:text-gray-400">Mastodon</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+            <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
               {rows.map((row) => (
                 <tr class="align-top">
-                  <th scope="row" class="p-4 text-start font-medium text-gray-900 dark:text-white whitespace-nowrap">{row.dimension}</th>
+                  <th scope="row" class="p-4 text-start font-semibold text-gray-900 dark:text-white whitespace-nowrap">{row.dimension}</th>
                   <td class="p-4 text-gray-600 dark:text-gray-300">{row.nostr}</td>
                   <td class="p-4 text-gray-600 dark:text-gray-300">{row.mastodon}</td>
                 </tr>
@@ -300,12 +299,12 @@ Nostr:     You ──publish to──► Relay 1, Relay 2, Relay 3 ...
     <!-- Primary CTA -->
     <section class="py-12">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-3xl mx-auto text-center p-8 rounded-2xl bg-gradient-to-br from-primary/10 to-secondary/10 dark:from-primary/15 dark:to-secondary/15 border border-primary/20">
-          <h2 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">Skip the "which instance?" question entirely</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-6">On Nostr there is no instance to choose. Generate keys, pick any client, done.</p>
+        <div class="max-w-3xl mx-auto text-center p-8 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
+          <h2 class="text-h2 font-bold mb-3 text-gray-900 dark:text-white">Skip the "which instance?" question entirely</h2>
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-6">On Nostr there is no instance to choose. Generate keys, pick any client, done.</p>
           <a
             href="/guides/quickstart"
-            class="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold text-white bg-primary-600 hover:bg-primary-700 rounded-xl shadow-lg hover:shadow-xl transition-all"
+            class="inline-flex items-center justify-center gap-2 px-8 py-4 text-lead font-semibold text-white bg-primary-600 hover:bg-primary-700 rounded-md transition-colors"
           >
             Try Nostr in 5 minutes. No email, no phone number.
           </a>
@@ -314,10 +313,10 @@ Nostr:     You ──publish to──► Relay 1, Relay 2, Relay 3 ...
     </section>
 
     <!-- FAQ -->
-    <section class="py-12 bg-gray-50 dark:bg-gray-900/30">
+    <section class="py-12 bg-gray-50 dark:bg-gray-900">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-2xl sm:text-3xl font-bold mb-8 text-gray-900 dark:text-white">Frequently asked questions</h2>
+          <h2 class="text-h2 font-bold mb-8 text-gray-900 dark:text-white">Frequently asked questions</h2>
           {faqs.map((faq) => (
             <FAQAccordion question={faq.q} category="basics">
               <div set:html={faq.a} />
@@ -331,28 +330,26 @@ Nostr:     You ──publish to──► Relay 1, Relay 2, Relay 3 ...
     <section class="py-16">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-          <a href="/guides/quickstart" class="group p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-primary-400 hover:shadow-lg transition-all">
-            <div class="text-3xl mb-3" aria-hidden="true">🚀</div>
-            <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white group-hover:text-primary-700 dark:group-hover:text-primary-300">Start on Nostr in 5 minutes</h3>
-            <p class="text-gray-600 dark:text-gray-300">Generate keys, pick a client, make your first post. No email, no instance to choose.</p>
+          <a href="/guides/quickstart" class="p-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800">
+            <h3 class="text-h3 font-bold mb-2 text-gray-900 dark:text-white">Start on Nostr in 5 minutes</h3>
+            <p class="text-body-sm text-gray-600 dark:text-gray-300">Generate keys, pick a client, make your first post. No email, no instance to choose.</p>
           </a>
-          <a href="/follow-pack" class="group p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-primary-400 hover:shadow-lg transition-all">
-            <div class="text-3xl mb-3" aria-hidden="true">👥</div>
-            <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white group-hover:text-primary-700 dark:group-hover:text-primary-300">Don't start with an empty feed</h3>
-            <p class="text-gray-600 dark:text-gray-300">{accountCount} curated accounts, sorted by interest. Import them into any client.</p>
+          <a href="/follow-pack" class="p-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800">
+            <h3 class="text-h3 font-bold mb-2 text-gray-900 dark:text-white">Don't start with an empty feed</h3>
+            <p class="text-body-sm text-gray-600 dark:text-gray-300">{accountCount} curated accounts, sorted by interest. Import them into any client.</p>
           </a>
         </div>
 
         <div class="max-w-4xl mx-auto text-center text-gray-600 dark:text-gray-300">
           <p class="mb-2">
             More head-to-head:
-            <a href="/nostr-vs-bluesky/" class="text-primary-700 dark:text-primary-300 underline font-medium">Nostr vs Bluesky</a>
+            <a href="/nostr-vs-bluesky/" class="text-primary-text dark:text-primary-400 underline underline-offset-2 font-medium">Nostr vs Bluesky</a>
             ·
-            <a href="/nostr-vs-twitter/" class="text-primary-700 dark:text-primary-300 underline font-medium">Nostr vs Twitter/X</a>
+            <a href="/nostr-vs-twitter/" class="text-primary-text dark:text-primary-400 underline underline-offset-2 font-medium">Nostr vs Twitter/X</a>
           </p>
           <p>
             Want the deep dive? Read the
-            <a href="/guides/protocol-comparison" class="text-primary-700 dark:text-primary-300 underline font-medium">full three-protocol technical comparison</a>.
+            <a href="/guides/protocol-comparison" class="text-primary-text dark:text-primary-400 underline underline-offset-2 font-medium">full three-protocol technical comparison</a>.
           </p>
         </div>
       </div>

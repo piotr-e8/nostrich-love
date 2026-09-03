@@ -91,14 +91,14 @@ const getDefaultChecklist = (t: (key: string) => string): ChecklistItem[] => [
     id: "copy-npub",
     label: t('backupChecklist.checklist.copiedNpub.label'),
     description: t('backupChecklist.checklist.copiedNpub.description'),
-    icon: <Key className="w-5 h-5" />,
+    icon: <Key className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
     checked: false,
   },
   {
     id: "copy-nsec",
     label: t('backupChecklist.checklist.copiedNsec.label'),
     description: t('backupChecklist.checklist.copiedNsec.description'),
-    icon: <Lock className="w-5 h-5" />,
+    icon: <Lock className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
     checked: false,
     warning: t('backupChecklist.checklist.copiedNsec.warning'),
   },
@@ -106,14 +106,14 @@ const getDefaultChecklist = (t: (key: string) => string): ChecklistItem[] => [
     id: "password-manager",
     label: t('backupChecklist.checklist.passwordManager.label'),
     description: t('backupChecklist.checklist.passwordManager.description'),
-    icon: <Shield className="w-5 h-5" />,
+    icon: <Shield className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
     checked: false,
   },
   {
     id: "paper-backup",
     label: t('backupChecklist.checklist.paperBackup.label'),
     description: t('backupChecklist.checklist.paperBackup.description'),
-    icon: <FileText className="w-5 h-5" />,
+    icon: <FileText className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
     checked: false,
     warning: t('backupChecklist.checklist.paperBackup.warning'),
   },
@@ -121,7 +121,7 @@ const getDefaultChecklist = (t: (key: string) => string): ChecklistItem[] => [
     id: "encrypted-file",
     label: t('backupChecklist.checklist.encryptedFile.label'),
     description: t('backupChecklist.checklist.encryptedFile.description'),
-    icon: <Save className="w-5 h-5" />,
+    icon: <Save className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />,
     checked: false,
   },
 ];
@@ -234,21 +234,23 @@ export function BackupChecklist({
   if (isComplete) {
     return (
       <div className={cn("max-w-2xl mx-auto p-6", className)}>
-        <div className="bg-gray-900 border border-success-500 rounded-2xl p-8 text-center">
-          <div className="w-20 h-20 bg-success-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-scale-pop motion-reduce:animate-none">
-            <CheckCircle2 className="w-10 h-10 text-white" />
-          </div>
-          <h2 className="text-2xl font-bold text-white mb-2">
+        <div className="bg-white dark:bg-gray-900 border border-success-300 dark:border-success-800 rounded-lg p-8 text-center">
+          <CheckCircle2
+            className="mx-auto mb-3 h-6 w-6 text-success-700 dark:text-success-400"
+            strokeWidth={1.5}
+            aria-hidden="true"
+          />
+          <h2 className="text-h2 font-display text-gray-900 dark:text-white mb-2">
             {t('backupChecklist.completion.title')}
           </h2>
-          <p className="text-gray-400 mb-6">
+          <p className="text-body text-gray-600 dark:text-gray-400 mb-6">
             {t('backupChecklist.completion.description')}
           </p>
           <button
             onClick={reset}
-            className="inline-flex items-center gap-2 px-4 py-2 text-gray-400 hover:text-white transition-all"
+            className="inline-flex items-center gap-2 px-4 py-2 text-body-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
           >
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
             {t('backupChecklist.completion.reset')}
           </button>
         </div>
@@ -258,40 +260,42 @@ export function BackupChecklist({
 
   return (
     <div className={cn("max-w-2xl mx-auto p-6", className)}>
-      <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 md:p-8">
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-6 md:p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-warning-500/20 rounded-2xl mb-4 animate-scale-in motion-reduce:animate-none">
-            <Shield className="w-8 h-8 text-warning-500" />
-          </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+          <Shield
+            className="mx-auto mb-3 h-6 w-6 text-warning-700 dark:text-warning-400"
+            strokeWidth={1.5}
+            aria-hidden="true"
+          />
+          <h2 className="text-h2 font-display text-gray-900 dark:text-white mb-2">
             {t('backupChecklist.title')}
           </h2>
-          <p className="text-gray-400 max-w-lg mx-auto">
+          <p className="text-body text-gray-600 dark:text-gray-400 max-w-lg mx-auto">
             {t('backupChecklist.description')}
           </p>
         </div>
 
         {/* Progress */}
         <div className="mb-8">
-          <div className="flex justify-between text-sm mb-2">
-            <span className="text-gray-400">{t('backupChecklist.progress')}</span>
+          <div className="flex justify-between text-body-sm mb-2">
+            <span className="text-gray-600 dark:text-gray-400">{t('backupChecklist.progress')}</span>
             <span
               className={cn(
                 "font-medium",
-                allChecked ? "text-success-500" : "text-warning-500",
+                allChecked
+                  ? "text-success-700 dark:text-success-400"
+                  : "text-warning-700 dark:text-warning-400",
               )}
             >
               {checkedCount}/{checklist.length}
             </span>
           </div>
-          <div className="h-3 bg-gray-700 rounded-full overflow-hidden">
+          <div className="h-3 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
             <div
               className={cn(
-                "h-full rounded-full transition-all duration-500 ease-out-quint motion-reduce:transition-none",
-                allChecked
-                  ? "bg-success-500"
-                  : "bg-gradient-to-r from-warning-500 to-warning-400",
+                "h-full rounded-full transition-[width] duration-500 ease-out-quint motion-reduce:transition-none",
+                allChecked ? "bg-success-600" : "bg-warning-500",
               )}
               style={{ width: `${progress}%` }}
             />
@@ -304,19 +308,31 @@ export function BackupChecklist({
             {requiredKeys.npub && (
               <button
                 onClick={() => handleCopyKey("npub")}
-                className="flex items-center justify-center gap-2 p-3 bg-success-500/10 border border-success-500/30 hover:bg-success-500/20 rounded-xl transition-all"
+                className="flex items-center justify-center gap-2 p-3 rounded-md border border-success-300 bg-white transition-colors hover:bg-success-50 dark:border-success-800 dark:bg-gray-900 dark:hover:bg-gray-800"
               >
-                <Key className="w-5 h-5 text-success-500" />
-                <span className="text-success-500 font-medium">{t('backupChecklist.buttons.copyNpub')}</span>
+                <Key
+                  className="h-5 w-5 shrink-0 text-success-700 dark:text-success-400"
+                  strokeWidth={1.5}
+                  aria-hidden="true"
+                />
+                <span className="text-body-sm font-medium text-success-700 dark:text-success-400">
+                  {t('backupChecklist.buttons.copyNpub')}
+                </span>
               </button>
             )}
             {requiredKeys.nsec && (
               <button
                 onClick={() => handleCopyKey("nsec")}
-                className="flex items-center justify-center gap-2 p-3 bg-error-500/10 border border-error-500/30 hover:bg-error-500/20 rounded-xl transition-all"
+                className="flex items-center justify-center gap-2 p-3 rounded-md border border-error-300 bg-white transition-colors hover:bg-error-50 dark:border-error-800 dark:bg-gray-900 dark:hover:bg-gray-800"
               >
-                <Lock className="w-5 h-5 text-error-500" />
-                <span className="text-error-500 font-medium">{t('backupChecklist.buttons.copyNsec')}</span>
+                <Lock
+                  className="h-5 w-5 shrink-0 text-error-700 dark:text-error-400"
+                  strokeWidth={1.5}
+                  aria-hidden="true"
+                />
+                <span className="text-body-sm font-medium text-error-700 dark:text-error-400">
+                  {t('backupChecklist.buttons.copyNsec')}
+                </span>
               </button>
             )}
           </div>
@@ -333,48 +349,58 @@ export function BackupChecklist({
               <button
                 onClick={() => toggleCheck(item.id)}
                 className={cn(
-                  "w-full text-start p-4 border rounded-xl transition-all",
+                  "w-full text-start p-4 border rounded-lg transition-colors",
                   item.checked
-                    ? "border-success-500/50 bg-success-500/5"
-                    : "border-gray-700 hover:border-gray-600 hover:bg-gray-800/30",
+                    ? "border-success-300 bg-success-50 dark:border-success-800 dark:bg-gray-900"
+                    : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700 dark:hover:bg-gray-800",
                 )}
               >
                 <div className="flex items-start gap-4">
                   <div
                     className={cn(
-                      "w-6 h-6 rounded border-2 flex items-center justify-center flex-shrink-0 mt-0.5 transition-all",
+                      "w-5 h-5 rounded-sm border flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors",
                       item.checked
-                        ? "bg-success-500 border-success-500"
-                        : "border-gray-500 hover:border-primary-500",
+                        ? "bg-success-600 border-success-600"
+                        : "border-gray-300 dark:border-gray-600",
                     )}
                   >
-                    {item.checked && <Check className="w-4 h-4 text-white" />}
+                    {item.checked && (
+                      <Check className="h-4 w-4 text-white" strokeWidth={1.5} aria-hidden="true" />
+                    )}
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <span
                         className={cn(
                           "transition-colors",
-                          item.checked ? "text-success-500" : "text-gray-400",
+                          item.checked
+                            ? "text-success-700 dark:text-success-400"
+                            : "text-gray-400 dark:text-gray-500",
                         )}
                       >
                         {item.icon}
                       </span>
                       <span
                         className={cn(
-                          "font-medium transition-colors",
-                          item.checked ? "text-success-500" : "text-white",
+                          "text-body font-medium transition-colors",
+                          item.checked
+                            ? "text-success-700 dark:text-success-400"
+                            : "text-gray-900 dark:text-white",
                         )}
                       >
                         {item.label}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-400 mt-1">
+                    <p className="text-body-sm text-gray-600 dark:text-gray-400 mt-1">
                       {item.description}
                     </p>
                     {item.warning && !item.checked && (
-                      <div className="flex items-start gap-2 mt-2 text-xs text-warning-500">
-                        <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                      <div className="flex items-start gap-2 mt-2 text-caption text-warning-700 dark:text-warning-400">
+                        <AlertCircle
+                          className="h-4 w-4 flex-shrink-0 mt-0.5"
+                          strokeWidth={1.5}
+                          aria-hidden="true"
+                        />
                         {item.warning}
                       </div>
                     )}
@@ -390,20 +416,20 @@ export function BackupChecklist({
           <button
             onClick={handleComplete}
             className={cn(
-              "w-full py-4 rounded-xl font-medium transition-all flex items-center justify-center gap-2",
+              "w-full py-4 rounded-md font-medium transition-colors flex items-center justify-center gap-2",
               allChecked
                 ? "bg-success-600 hover:bg-success-700 text-white"
-                : "bg-gray-700 text-gray-400 hover:bg-gray-600",
+                : "border border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:border-gray-700 dark:hover:bg-gray-800",
             )}
           >
             {allChecked ? (
               <>
-                <CheckCircle2 className="w-5 h-5" />
+                <CheckCircle2 className="h-5 w-5 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                 {t('backupChecklist.buttons.completeAll')}
               </>
             ) : (
               <>
-                <AlertTriangle className="w-5 h-5" />
+                <AlertTriangle className="h-5 w-5 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                 {t('backupChecklist.buttons.completeRequired')}
               </>
             )}
@@ -412,7 +438,7 @@ export function BackupChecklist({
           {!allChecked && (
             <button
               onClick={() => setShowSkipWarning(true)}
-              className="w-full py-3 text-gray-400 hover:text-white text-sm transition-all"
+              className="w-full py-3 text-body-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
             >
               {t('backupChecklist.buttons.skip')}
             </button>
@@ -420,12 +446,16 @@ export function BackupChecklist({
         </div>
 
         {/* Security Tips */}
-        <div className="mt-8 p-4 bg-info-500/10 border border-info-500/30 rounded-xl">
-          <h4 className="font-medium text-info-500 mb-2 flex items-center gap-2">
-            <Shield className="w-4 h-4" />
-{t('backupChecklist.securityTips.title')}
+        <div className="mt-8 p-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg">
+          <h4 className="text-h4 font-display text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+            <Shield
+              className="h-4 w-4 shrink-0 text-gray-400 dark:text-gray-500"
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
+            {t('backupChecklist.securityTips.title')}
           </h4>
-          <ul className="text-sm text-gray-400 space-y-1">
+          <ul className="text-body-sm text-gray-600 dark:text-gray-400 space-y-1">
             <li>• {t('backupChecklist.securityTips.items.0')}</li>
             <li>• {t('backupChecklist.securityTips.items.1')}</li>
             <li>
@@ -440,7 +470,7 @@ export function BackupChecklist({
       {showSkipWarning && (
           <div
             className={cn(
-              "fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4",
+              "fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4",
               "transition-opacity duration-300 motion-reduce:transition-none",
               skipModal.isShown ? "opacity-100" : "opacity-0",
             )}
@@ -452,22 +482,26 @@ export function BackupChecklist({
               aria-modal="true"
               aria-labelledby="backup-skip-title"
               className={cn(
-                "bg-gray-900 border border-error-500 rounded-2xl p-6 max-w-md w-full",
+                "bg-white dark:bg-gray-900 border border-error-300 dark:border-error-800 rounded-lg shadow-raised p-6 max-w-md w-full",
                 "transition-all duration-300 ease-out-quint motion-reduce:transition-none",
                 skipModal.isShown ? "opacity-100 scale-100" : "opacity-0 scale-95",
               )}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-error-500/20 rounded-full flex items-center justify-center">
-                  <AlertTriangle className="w-6 h-6 text-error-500" />
-                </div>
-                <h3 id="backup-skip-title" className="text-xl font-bold text-white">{t('backupChecklist.skipModal.title')}</h3>
+                <AlertTriangle
+                  className="h-6 w-6 shrink-0 text-error-700 dark:text-error-400"
+                  strokeWidth={1.5}
+                  aria-hidden="true"
+                />
+                <h3 id="backup-skip-title" className="text-h3 font-display text-gray-900 dark:text-white">
+                  {t('backupChecklist.skipModal.title')}
+                </h3>
               </div>
-              <p className="text-gray-300 mb-4">
+              <p className="text-body text-gray-700 dark:text-gray-300 mb-4">
                 {t('backupChecklist.skipModal.description')}
               </p>
-              <ul className="text-sm text-error-500 space-y-1 mb-6">
+              <ul className="text-body-sm text-error-700 dark:text-error-400 space-y-1 mb-6">
                 {(getValue('backupChecklist.skipModal.risks') as string[]).map((risk: string, index: number) => (
                   <li key={index}>• {risk}</li>
                 ))}
@@ -475,7 +509,7 @@ export function BackupChecklist({
               <div className="flex gap-3">
                 <button
                   onClick={() => skipModal.close()}
-                  className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all"
+                  className="flex-1 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-md transition-colors"
                 >
                   {t('backupChecklist.skipModal.goBack')}
                 </button>
@@ -484,7 +518,7 @@ export function BackupChecklist({
                     skipModal.close();
                     onComplete?.();
                   }}
-                  className="flex-1 px-4 py-2 bg-error-500/20 hover:bg-error-500/30 text-error-500 rounded-lg transition-all"
+                  className="flex-1 px-4 py-2 rounded-md border border-error-300 bg-white text-error-700 font-medium transition-colors hover:bg-error-50 dark:border-error-800 dark:bg-gray-900 dark:text-error-400 dark:hover:bg-gray-800"
                 >
                   {t('backupChecklist.skipModal.skipAnyway')}
                 </button>
@@ -497,7 +531,7 @@ export function BackupChecklist({
       {showConfirmation && (
           <div
             className={cn(
-              "fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4",
+              "fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4",
               "transition-opacity duration-300 motion-reduce:transition-none",
               confirmModal.isShown ? "opacity-100" : "opacity-0",
             )}
@@ -509,31 +543,35 @@ export function BackupChecklist({
               aria-modal="true"
               aria-labelledby="backup-confirm-title"
               className={cn(
-                "bg-gray-900 border border-success-500 rounded-2xl p-6 max-w-md w-full",
+                "bg-white dark:bg-gray-900 border border-success-300 dark:border-success-800 rounded-lg shadow-raised p-6 max-w-md w-full",
                 "transition-all duration-300 ease-out-quint motion-reduce:transition-none",
                 confirmModal.isShown ? "opacity-100 scale-100" : "opacity-0 scale-95",
               )}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-success-500/20 rounded-full flex items-center justify-center">
-                  <CheckCircle2 className="w-6 h-6 text-success-500" />
-                </div>
-                <h3 id="backup-confirm-title" className="text-xl font-bold text-white">{t('backupChecklist.confirmModal.title')}</h3>
+                <CheckCircle2
+                  className="h-6 w-6 shrink-0 text-success-700 dark:text-success-400"
+                  strokeWidth={1.5}
+                  aria-hidden="true"
+                />
+                <h3 id="backup-confirm-title" className="text-h3 font-display text-gray-900 dark:text-white">
+                  {t('backupChecklist.confirmModal.title')}
+                </h3>
               </div>
-              <p className="text-gray-300 mb-6">
+              <p className="text-body text-gray-700 dark:text-gray-300 mb-6">
                 {t('backupChecklist.confirmModal.description')}
               </p>
               <div className="flex gap-3">
                 <button
                   onClick={() => confirmModal.close()}
-                  className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all"
+                  className="flex-1 px-4 py-2 rounded-md border border-gray-200 bg-white text-gray-700 font-medium transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-700 dark:hover:bg-gray-800"
                 >
                   {t('backupChecklist.confirmModal.review')}
                 </button>
                 <button
                   onClick={confirmComplete}
-                  className="flex-1 px-4 py-2 bg-success-600 hover:bg-success-700 text-white rounded-lg transition-all"
+                  className="flex-1 px-4 py-2 bg-success-600 hover:bg-success-700 text-white font-medium rounded-md transition-colors"
                 >
                   {t('backupChecklist.confirmModal.confirm')}
                 </button>
@@ -547,16 +585,16 @@ export function BackupChecklist({
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
           <div
             className={cn(
-              "px-6 py-3 rounded-xl shadow-2xl flex items-center gap-2 animate-slide-up motion-reduce:animate-none",
+              "px-6 py-3 rounded-md shadow-raised flex items-center gap-2 animate-slide-up motion-reduce:animate-none",
               toast.type === "success"
-                ? "bg-success-500 text-white"
-                : "bg-error-500 text-white",
+                ? "bg-success-600 text-white"
+                : "bg-error-600 text-white",
             )}
           >
             {toast.type === "success" ? (
-              <Check className="w-5 h-5" />
+              <Check className="h-5 w-5 shrink-0" strokeWidth={1.5} aria-hidden="true" />
             ) : (
-              <AlertTriangle className="w-5 h-5" />
+              <AlertTriangle className="h-5 w-5 shrink-0" strokeWidth={1.5} aria-hidden="true" />
             )}
             {toast.message}
           </div>

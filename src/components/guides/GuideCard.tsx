@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, Clock, ArrowRight, BookOpen } from 'lucide-react';
+import { CheckCircle2, Clock, ArrowRight } from 'lucide-react';
 import { useTranslation } from '../../hooks/useTranslation';
 
 export type SkillLevel = 'beginner' | 'intermediate' | 'advanced';
@@ -22,17 +22,11 @@ export interface GuideCardProps {
   index?: number;
 }
 
-const difficultyColors = {
-  beginner: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
-  intermediate: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
-  advanced: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
-};
-
-const levelColors = {
-  beginner: 'bg-green-500',
-  intermediate: 'bg-yellow-500',
-  advanced: 'bg-red-500',
-};
+// The difficulty pill used to be tinted green / yellow / red, and `levelColors`
+// held a second unused copy of the same three. Green means "completed" on this
+// card — the check icon and the start border both use it — so a green pill on
+// an unread beginner guide was the success colour doing decoration. The pill is
+// a neutral outlined chip now; the only green left on the card is completion.
 
 // Helper to get translated difficulty label
 const getDifficultyLabel = (difficulty: SkillLevel, t: (key: string) => string) => {
@@ -59,25 +53,31 @@ const UnlockedCard: React.FC<{ guide: Guide; isCompleted?: boolean; isInProgress
   return (
     <a
       href={guide.href}
-      className={`group block p-6 bg-white dark:bg-gray-800 rounded-2xl border transition-all duration-200 hover:shadow-lg hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-friendly-purple-400 ${
+      className={`group block rounded-lg border bg-white p-6 transition-colors hover:bg-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 ${
         isCompleted
-          ? 'border-s-4 border-s-green-500 border-gray-200 dark:border-gray-700'
-          : 'border-gray-200 dark:border-gray-700 hover:border-friendly-purple-400 dark:hover:border-friendly-purple-500'
+          ? 'border-s-4 border-s-success-500 border-gray-200 dark:border-gray-800'
+          : 'border-gray-200 hover:border-gray-300 dark:border-gray-800 dark:hover:border-gray-700'
       }`}
       aria-label={`${guide.title} - ${difficultyLabel} - ${statusText}`}
     >
       {/* Header: Difficulty Badge + Status + Time */}
       <div className="flex items-start justify-between mb-4">
-        <span className={`px-3 py-1 text-xs font-medium rounded-full ${difficultyColors[guide.difficulty]}`}>
+        <span className="inline-flex items-center rounded-full border border-gray-200 px-2.5 py-0.5 text-micro font-medium uppercase text-gray-600 dark:border-gray-800 dark:text-gray-400">
           {difficultyLabel}
         </span>
 
         <div className="flex items-center gap-2">
+          {/* The link's own aria-label already reads the status, so the icon is
+              decorative to a screen reader. */}
           {isCompleted && (
-            <CheckCircle2 className="w-5 h-5 text-green-500" aria-label={t('guideCard.status.completed')} />
+            <CheckCircle2
+              className="h-4 w-4 text-success-600 dark:text-success-400"
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
           )}
-          <div className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
-            <Clock className="w-4 h-4" />
+          <div className="flex items-center gap-1.5 text-caption text-gray-500 dark:text-gray-400">
+            <Clock className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
             <span>{guide.estimatedTime}</span>
           </div>
         </div>
@@ -85,10 +85,10 @@ const UnlockedCard: React.FC<{ guide: Guide; isCompleted?: boolean; isInProgress
 
       {/* Content: Title + Description */}
       <div className="mb-4">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-friendly-purple-700 dark:group-hover:text-friendly-purple-400 transition-colors line-clamp-2">
+        <h3 className="mb-2 line-clamp-2 text-h3 font-semibold text-gray-900 underline-offset-2 group-hover:underline dark:text-white">
           {guide.title}
         </h3>
-        <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+        <p className="line-clamp-2 text-body-sm text-gray-600 dark:text-gray-400">
           {guide.description}
         </p>
       </div>
@@ -99,7 +99,7 @@ const UnlockedCard: React.FC<{ guide: Guide; isCompleted?: boolean; isInProgress
           {guide.tags.slice(0, 3).map((tag) => (
             <span
               key={tag}
-              className="px-2 py-0.5 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded"
+              className="rounded-md border border-gray-200 px-2 py-0.5 text-caption text-gray-600 dark:border-gray-800 dark:text-gray-400"
             >
               {tag}
             </span>
@@ -108,19 +108,25 @@ const UnlockedCard: React.FC<{ guide: Guide; isCompleted?: boolean; isInProgress
       )}
 
       {/* Footer: Action Text + Arrow */}
-      <div className="pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between mt-auto">
-        <span className={`text-sm font-medium transition-colors ${
+      <div className="mt-auto flex items-center justify-between border-t border-gray-200 pt-4 dark:border-gray-800">
+        <span className={`text-body-sm font-medium ${
           isCompleted
-            ? 'text-green-600 dark:text-green-400'
-            : 'text-friendly-purple-700 dark:text-friendly-purple-400 group-hover:underline'
+            ? 'text-success-700 dark:text-success-400'
+            : 'text-primary-text dark:text-primary-400'
         }`}>
           {statusText}
         </span>
-        <ArrowRight className={`w-5 h-5 transition-all rtl:rotate-180 ${
-          isCompleted
-            ? 'text-green-500'
-            : 'text-gray-400 group-hover:text-friendly-purple-500 group-hover:translate-x-1 rtl:group-hover:-translate-x-1'
-        }`} />
+        {/* Directional, so it flips under RTL. It no longer slides on hover —
+            the card's ground and the underlined title carry that now. */}
+        <ArrowRight
+          className={`h-4 w-4 shrink-0 rtl:rotate-180 ${
+            isCompleted
+              ? 'text-success-600 dark:text-success-400'
+              : 'text-gray-400 dark:text-gray-500'
+          }`}
+          strokeWidth={1.5}
+          aria-hidden="true"
+        />
       </div>
     </a>
   );

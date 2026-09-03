@@ -31,11 +31,11 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
             onClick={() => onToggle(category.id)}
             aria-pressed={isSelected}
             className={`
-              inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium
-              transition-all duration-200 border
+              inline-flex items-center gap-1.5 rounded-md border px-3 py-1.5
+              text-body-sm font-medium transition-colors
               ${isSelected
-                ? 'border-transparent text-white shadow-sm'
-                : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
+                ? 'border-transparent text-white'
+                : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-700'
               }
             `}
             style={{
@@ -47,7 +47,7 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
           >
             {!isSelected && (
               <span
-                className="w-2 h-2 rounded-full flex-shrink-0"
+                className="h-2 w-2 flex-shrink-0 rounded-full"
                 style={{ backgroundColor: category.color }}
                 aria-hidden="true"
               />
@@ -62,8 +62,8 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
               </span>
             )}
             {isSelected && (
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 13l4 4L19 7" />
               </svg>
             )}
           </button>

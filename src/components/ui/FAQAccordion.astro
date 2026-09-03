@@ -30,14 +30,11 @@ const {
   defaultOpen = false,
 } = Astro.props;
 
-const styles: Record<string, string> = {
-  security: 'bg-red-500/10 text-red-500 border-red-500/30',
-  basics: 'bg-blue-500/10 text-blue-500 border-blue-500/30',
-  technical: 'bg-purple-500/10 text-purple-500 border-purple-500/30',
-  advanced: 'bg-amber-500/10 text-amber-500 border-amber-500/30',
-  troubleshooting: 'bg-green-500/10 text-green-500 border-green-500/30',
-  'getting-started': 'bg-primary-500/10 text-primary-600 dark:text-primary-400 border-primary-500/30',
-};
+// One chip treatment for every category. The six alpha-tinted colours here were
+// decorative, not semantic: nothing about "advanced" is a warning and nothing
+// about "troubleshooting" succeeded. The label carries the category.
+const chip =
+  'border-gray-200 text-gray-600 dark:border-gray-800 dark:text-gray-400';
 
 const labels: Record<string, string> = {
   security: 'Security',
@@ -69,25 +66,25 @@ const iconFor: Record<string, string> = {
   'getting-started': 'help',
 };
 
-const chipClass = styles[category] ?? styles.basics;
+const chipClass = chip;
 const iconSvg = icons[iconFor[category] ?? 'help'];
 ---
 
 <details
   class:list={[
-    'faq-item group mb-6 overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800/30',
+    'faq-item group mb-6 overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900',
     className,
   ]}
   open={defaultOpen}
 >
   <summary
-    class="flex cursor-pointer list-none items-start gap-4 p-5 transition-all hover:bg-gray-50 dark:hover:bg-gray-800/50"
+    class="flex cursor-pointer list-none items-start gap-4 p-5 transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
   >
     <div class="flex-1">
       <div class="mb-2 flex items-center gap-3">
         <span
           class:list={[
-            'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium',
+            'inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-micro font-semibold uppercase',
             chipClass,
           ]}
         >
@@ -98,7 +95,7 @@ const iconSvg = icons[iconFor[category] ?? 'help'];
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
+            stroke-width="1.5"
             stroke-linecap="round"
             stroke-linejoin="round"
             aria-hidden="true"
@@ -107,11 +104,11 @@ const iconSvg = icons[iconFor[category] ?? 'help'];
           {labels[category] ?? labels.basics}
         </span>
       </div>
-      <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{question}</h3>
+      <h3 class="text-h3 text-gray-900 dark:text-white">{question}</h3>
     </div>
 
     <div
-      class="faq-chevron flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-gray-200 transition-all dark:bg-gray-700"
+      class="faq-chevron flex h-8 w-8 flex-shrink-0 items-center justify-center transition-transform dark:text-gray-500"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -120,10 +117,10 @@ const iconSvg = icons[iconFor[category] ?? 'help'];
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        stroke-width="2"
+        stroke-width="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"
-        class="text-gray-500 transition-colors dark:text-gray-400"
+        class="text-gray-400 dark:text-gray-500"
         aria-hidden="true"
       >
         <path d="m6 9 6 6 6-6"></path>
@@ -131,7 +128,7 @@ const iconSvg = icons[iconFor[category] ?? 'help'];
     </div>
   </summary>
 
-  <div class="border-t border-gray-200 px-5 pb-5 pt-0 dark:border-gray-700">
+  <div class="border-t border-gray-200 px-5 pb-5 pt-0 dark:border-gray-800">
     <div class="prose prose-sm dark:prose-invert max-w-none pt-4">
       <slot />
     </div>
@@ -145,13 +142,7 @@ const iconSvg = icons[iconFor[category] ?? 'help'];
   }
 
   .faq-item[open] .faq-chevron {
-    /* primary-500 */
-    background-color: #8b5cf6;
     transform: rotate(180deg);
-  }
-
-  .faq-item[open] .faq-chevron svg {
-    color: #fff;
   }
 
   /* No open/close height animation.

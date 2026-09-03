@@ -102,22 +102,22 @@ export function RelayVisualizer({
   const getStatusColor = (status: Relay["status"]) => {
     switch (status) {
       case "connected":
-        return "bg-green-500";
+        return "bg-success-500";
       case "connecting":
-        return "bg-yellow-500";
+        return "bg-warning-500";
       case "disconnected":
-        return "bg-red-500";
+        return "bg-danger-500";
     }
   };
 
   return (
     <div
       className={cn(
-        "relative rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-900",
+        "relative rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900",
         className,
       )}
     >
-      <h3 className="mb-6 text-lg font-semibold text-gray-900 dark:text-white">
+      <h3 className="mb-6 text-h3 text-gray-900 dark:text-white">
         {t('relayVisualizer.title')}
       </h3>
 
@@ -127,16 +127,16 @@ export function RelayVisualizer({
         <div className="relative">
           <div
             className={cn(
-              "flex h-16 w-16 items-center justify-center rounded-full border-4 transition-all duration-300",
+              "flex h-16 w-16 items-center justify-center rounded-full border-2 transition-colors duration-300 motion-reduce:transition-none",
               activeConnections.length > 0
-                ? "border-green-500 bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
-                : "border-gray-300 bg-gray-100 text-gray-500 dark:border-gray-600 dark:bg-gray-800",
+                ? "border-success-500 bg-success-50 text-success-800 dark:bg-success-950 dark:text-success-300"
+                : "border-gray-300 bg-gray-50 text-gray-500 dark:border-gray-700 dark:bg-gray-800",
             )}
           >
-            <span className="text-xs font-bold">{t('nostrSimulator.nodes.user')}</span>
+            <span className="text-caption font-semibold">{t('nostrSimulator.nodes.user')}</span>
           </div>
           {activeConnections.length > 0 && (
-            <div className="absolute inset-0 animate-ping-slow rounded-full border-2 border-green-500 opacity-30" />
+            <div className="absolute inset-0 animate-ping-slow rounded-full border-2 border-success-500 opacity-30 motion-reduce:animate-none" />
           )}
         </div>
 
@@ -150,7 +150,7 @@ export function RelayVisualizer({
               {/* Connection Line */}
               <div className="relative h-12 w-0.5 overflow-hidden bg-gray-200 dark:bg-gray-700">
                 {relay.status === "connected" && (
-                  <div className="absolute inset-0 bg-gradient-to-b from-green-500 to-transparent opacity-50" />
+                  <div className="absolute inset-0 bg-success-500 opacity-40" />
                 )}
                 {/* Data Packets */}
                 {dataPackets
@@ -158,7 +158,7 @@ export function RelayVisualizer({
                   .map((packet) => (
                     <div
                       key={packet.id}
-                      className="absolute left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-green-400"
+                      className="absolute inset-x-0 mx-auto h-2 w-2 rounded-full bg-success-500"
                       style={{ top: `${packet.progress}%` }}
                     />
                   ))}
@@ -168,10 +168,10 @@ export function RelayVisualizer({
               <button
                 onClick={() => onRelayToggle?.(relay.id)}
                 className={cn(
-                  "group relative flex flex-col items-center gap-2 rounded-xl border p-4 transition-all duration-200 hover:shadow-md",
+                  "group relative flex flex-col items-center gap-2 rounded-lg border p-4 transition-colors hover:border-gray-300 dark:hover:border-gray-700",
                   relay.status === "connected"
-                    ? "border-green-300 bg-green-50 dark:border-green-800 dark:bg-green-950/30"
-                    : "border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800",
+                    ? "border-success-200 bg-success-50 dark:border-success-900 dark:bg-success-950"
+                    : "border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-800",
                 )}
               >
                 <div
@@ -187,11 +187,11 @@ export function RelayVisualizer({
                     <div className="absolute inset-0 animate-ping rounded-full opacity-30" />
                   )}
                 </div>
-                <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
+                <span className="text-caption font-medium text-gray-700 dark:text-gray-300">
                   {relay.name}
                 </span>
                 {relay.latency && (
-                  <span className="text-[10px] text-gray-500">
+                  <span className="text-micro text-gray-500 dark:text-gray-400">
                     {relay.latency}ms
                   </span>
                 )}
@@ -206,7 +206,7 @@ export function RelayVisualizer({
         {relays.map((relay) => (
           <div
             key={relay.id}
-            className="flex items-center justify-between rounded-lg border border-gray-100 bg-gray-50 p-3 dark:border-gray-800 dark:bg-gray-800/50"
+            className="flex items-center justify-between rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-gray-800 dark:bg-gray-800"
           >
             <div className="flex items-center gap-3">
               <div
@@ -216,11 +216,11 @@ export function RelayVisualizer({
                 )}
               />
               <div>
-                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                <p className="text-body-sm font-medium text-gray-900 dark:text-white">
                   {relay.url}
                 </p>
                 {relay.users && (
-                  <p className="text-xs text-gray-500">
+                  <p className="text-caption text-gray-500 dark:text-gray-400">
                     {relay.users.toLocaleString()} {t('relayVisualizer.labels.connections')}
                   </p>
                 )}
@@ -229,10 +229,10 @@ export function RelayVisualizer({
             <button
               onClick={() => onRelayToggle?.(relay.id)}
               className={cn(
-                "rounded-lg px-3 py-1.5 text-xs font-medium transition-colors",
+                "rounded-md border px-3 py-1.5 text-caption font-medium transition-colors",
                 relay.status === "connected"
-                  ? "bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900 dark:text-red-300"
-                  : "bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900 dark:text-green-300",
+                  ? "border-danger-200 text-danger-800 hover:bg-danger-50 dark:border-danger-900 dark:text-danger-300 dark:hover:bg-danger-950"
+                  : "border-success-200 text-success-800 hover:bg-success-50 dark:border-success-900 dark:text-success-300 dark:hover:bg-success-950",
               )}
             >
               {relay.status === "connected" ? t('relayVisualizer.controls.disconnect') : t('relayVisualizer.controls.connect')}
@@ -241,11 +241,11 @@ export function RelayVisualizer({
         ))}
       </div>
 
-      <div className="mt-4 text-center text-sm text-gray-500">
+      <div className="mt-4 text-center text-body-sm text-gray-500 dark:text-gray-400">
         {activeConnections.length === 0 ? (
-          <span className="text-red-500">{t('relayExplorer.card.status.offline')}</span>
+          <span className="text-danger-700 dark:text-danger-400">{t('relayExplorer.card.status.offline')}</span>
         ) : (
-          <span className="text-green-600">
+          <span className="text-success-800 dark:text-success-400">
             {t('relayVisualizer.labels.relayCount').replace('{count}', String(activeConnections.length))}
           </span>
         )}

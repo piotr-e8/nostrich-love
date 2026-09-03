@@ -96,8 +96,83 @@ export default {
           },
         },
       },
+      // --- TYPE ------------------------------------------------------------
+      // Body is a system stack, on purpose. It costs zero bytes, and it is the
+      // only choice that renders Han, Arabic and Devanagari correctly on every
+      // platform. Inter (the previous declaration, loaded via @fontsource) was
+      // four extra weights of the most-defaulted UI face on the web; dropping
+      // it is what buys the display face its budget.
+      // `display` resolves through --font-display, which Layout.astro only
+      // points at Fraunces for Latin-script locales. See VISUAL_SYSTEM.md.
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
+        sans: [
+          "ui-sans-serif",
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica Neue",
+          "Arial",
+          "Noto Sans",
+          "sans-serif",
+          "Apple Color Emoji",
+          "Segoe UI Emoji",
+        ],
+        display: ["var(--font-display)"],
+        mono: [
+          "ui-monospace",
+          "SFMono-Regular",
+          "SF Mono",
+          "Menlo",
+          "Consolas",
+          "Liberation Mono",
+          "monospace",
+        ],
+      },
+      // Named steps. Appliers use these names, never an arbitrary px/rem value
+      // and never a `leading-*`/`tracking-*` bolted on top — the line height and
+      // letter spacing come with the step. The old numeric utilities
+      // (text-sm ... text-4xl) still exist and still work; they are what the
+      // existing components use. New and rewritten type uses the names below.
+      fontSize: {
+        // Hero only. One per page, at most.
+        display: [
+          "clamp(2.5rem, 6vw, 3.75rem)",
+          { lineHeight: "1.05", letterSpacing: "-0.022em" },
+        ],
+        h1: ["2.25rem", { lineHeight: "1.12", letterSpacing: "-0.02em" }],
+        h2: ["1.75rem", { lineHeight: "1.22", letterSpacing: "-0.015em" }],
+        h3: ["1.3125rem", { lineHeight: "1.32", letterSpacing: "-0.01em" }],
+        h4: ["1.0625rem", { lineHeight: "1.45", letterSpacing: "-0.005em" }],
+        // Standfirst under a heading. Sans, not display.
+        lead: ["1.1875rem", { lineHeight: "1.6", letterSpacing: "0" }],
+        // Running text. 17px, because 16px system-ui reads small next to a
+        // display serif.
+        body: ["1.0625rem", { lineHeight: "1.7", letterSpacing: "0" }],
+        "body-sm": ["0.9375rem", { lineHeight: "1.6", letterSpacing: "0" }],
+        caption: ["0.8125rem", { lineHeight: "1.5", letterSpacing: "0.005em" }],
+        // Uppercase eyebrows and labels. Always paired with `uppercase`.
+        micro: ["0.6875rem", { lineHeight: "1.4", letterSpacing: "0.07em" }],
+      },
+      maxWidth: {
+        // Running text. ~65 characters at text-body.
+        measure: "65ch",
+        "measure-narrow": "52ch",
+        "measure-wide": "74ch",
+      },
+      // --- ELEVATION -------------------------------------------------------
+      // Two shadows, and one of them is nearly invisible. A card is a border
+      // and a ground; it does not float. `shadow-raised` is only for things
+      // that genuinely sit above the page and would be ambiguous otherwise:
+      // modals, dropdowns, popovers, the mobile nav sheet. Nothing that sits
+      // in the flow of a page gets it. Neither reads on the dark ground —
+      // there the border does all the work, which is why every card spec in
+      // VISUAL_SYSTEM.md carries a dark: border.
+      boxShadow: {
+        card: "0 1px 2px 0 rgb(15 23 42 / 0.04)",
+        raised: "0 8px 24px -8px rgb(15 23 42 / 0.18)",
+        none: "none",
       },
       // CSS replacements for the framer-motion loops in StreakBanner (#59/#67):
       // the banner mounts site-wide from Layout.astro, and framer-motion was
@@ -185,25 +260,36 @@ export default {
         DEFAULT: {
           css: {
             color: theme("colors.gray.700"),
+            // Headings in the display face. On zh/ar/hi --font-display falls
+            // back to the system sans stack, so this line is inert there.
+            "h1, h2, h3, h4": {
+              fontFamily: "var(--font-display)",
+            },
             h1: {
               color: theme("colors.gray.900"),
               fontWeight: "700",
               fontSize: "2.25rem",
+              lineHeight: "1.12",
+              letterSpacing: "-0.02em",
               marginTop: "2rem",
               marginBottom: "1rem",
             },
             h2: {
               color: theme("colors.gray.900"),
               fontWeight: "600",
-              fontSize: "1.5rem",
-              marginTop: "2rem",
+              fontSize: "1.75rem",
+              lineHeight: "1.22",
+              letterSpacing: "-0.015em",
+              marginTop: "2.25rem",
               marginBottom: "0.75rem",
             },
             h3: {
               color: theme("colors.gray.900"),
               fontWeight: "600",
-              fontSize: "1.25rem",
-              marginTop: "1.5rem",
+              fontSize: "1.3125rem",
+              lineHeight: "1.32",
+              letterSpacing: "-0.01em",
+              marginTop: "1.75rem",
               marginBottom: "0.5rem",
             },
             p: {

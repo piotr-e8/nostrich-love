@@ -41,17 +41,13 @@ const guideMetadata = Object.fromEntries(
 
   <main id="main-content">
     <!-- Hero Section -->
-    <section class="relative overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-friendly-purple-100/50 via-transparent to-friendly-gold-100/30 dark:from-friendly-purple-900/30 dark:to-friendly-gold-900/20" />
-      
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 relative">
+    <section>
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div class="text-center max-w-3xl mx-auto">
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-            <span class="bg-gradient-to-r from-friendly-purple-600 to-friendly-purple-400 bg-clip-text text-transparent">
-              Your Progress
-            </span>
+          <h1 class="text-display font-bold mb-6 text-gray-900 dark:text-white">
+            Your Progress
           </h1>
-          <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">
+          <p class="text-lead text-gray-600 dark:text-gray-400 mb-8 max-w-measure mx-auto">
             Master Nostr one level at a time. Everything is open — this just tracks how far you have got.
           </p>
         </div>
@@ -59,48 +55,46 @@ const guideMetadata = Object.fromEntries(
     </section>
 
     <!-- Summary Cards -->
-    <section class="py-8 bg-gray-50 dark:bg-gray-900/30 border-y border-gray-200 dark:border-gray-800">
+    <section class="py-8 bg-gray-50 dark:bg-gray-900 border-y border-gray-200 dark:border-gray-800">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
           <!-- Guides Completed Card -->
-          <div class="bg-white dark:bg-gray-800 rounded-2xl border-2 border-friendly-purple-200 dark:border-friendly-purple-700 p-6 shadow-sm">
+          <div class="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
             <div class="flex items-center gap-4">
-              <div class="w-14 h-14 rounded-xl bg-friendly-purple-100 dark:bg-friendly-purple-900/30 flex items-center justify-center flex-shrink-0">
-                <svg class="w-7 h-7 text-friendly-purple-700 dark:text-friendly-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
+              <svg class="h-6 w-6 shrink-0 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
               <div>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Guides Completed</p>
-                <p id="guides-completed-count" class="text-3xl font-bold text-gray-900 dark:text-white">0</p>
+                <p class="text-caption text-gray-500 dark:text-gray-400">Guides Completed</p>
+                <p id="guides-completed-count" class="font-display text-h2 font-bold text-gray-900 dark:text-white">0</p>
               </div>
             </div>
           </div>
 
           <!-- Current Level Card -->
-          <div class="bg-white dark:bg-gray-800 rounded-2xl border-2 border-friendly-gold-200 dark:border-friendly-gold-700 p-6 shadow-sm">
+          <div class="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
             <div class="flex items-center gap-4">
-              <div class="w-14 h-14 rounded-xl bg-friendly-gold-100 dark:bg-friendly-gold-900/30 flex items-center justify-center flex-shrink-0">
-                <span id="current-level-icon" class="text-3xl">🌱</span>
-              </div>
+              <svg class="h-6 w-6 shrink-0 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z" />
+                <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65" />
+                <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65" />
+              </svg>
               <div class="min-w-0 flex-1">
-                <p class="text-sm text-gray-500 dark:text-gray-400">Current Level</p>
-                <p id="current-level-name" class="text-2xl font-bold text-gray-900 dark:text-white truncate">Beginner</p>
+                <p class="text-caption text-gray-500 dark:text-gray-400">Current Level</p>
+                <p id="current-level-name" class="font-display text-h3 font-bold text-gray-900 dark:text-white truncate">Beginner</p>
               </div>
             </div>
           </div>
 
           <!-- Overall Progress Card -->
-          <div class="bg-white dark:bg-gray-800 rounded-2xl border-2 border-green-200 dark:border-green-700 p-6 shadow-sm">
+          <div class="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
             <div class="flex items-center gap-4">
-              <div class="w-14 h-14 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0">
-                <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
-              </div>
+              <svg class="h-6 w-6 shrink-0 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
               <div>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Overall Progress</p>
-                <p id="progress-percentage" class="text-3xl font-bold text-gray-900 dark:text-white">0%</p>
+                <p class="text-caption text-gray-500 dark:text-gray-400">Overall Progress</p>
+                <p id="progress-percentage" class="font-display text-h2 font-bold text-gray-900 dark:text-white">0%</p>
               </div>
             </div>
           </div>
@@ -112,7 +106,7 @@ const guideMetadata = Object.fromEntries(
     <section class="py-12">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">Skill Progression</h2>
+          <h2 class="text-h2 font-semibold text-gray-900 dark:text-white mb-8 text-center">Skill Progression</h2>
           
           <!-- Progress Path Visual -->
           <div class="relative mb-12">
@@ -122,28 +116,25 @@ const guideMetadata = Object.fromEntries(
             <div id="level-container" class="space-y-8">
               <!-- Beginner Level -->
               <section class="level-section relative" data-level="beginner">
-                <div class="bg-white dark:bg-gray-800 rounded-2xl border-2 border-green-200 dark:border-green-700 p-6 md:p-8 shadow-sm transition-all duration-300">
+                <div class="rounded-lg border border-gray-200 bg-white p-6 md:p-8 dark:border-gray-800 dark:bg-gray-900">
                   <!-- Level Header -->
                   <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div class="flex items-center gap-4">
-                      <div class="w-16 h-16 rounded-2xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0">
-                        <span class="text-3xl">🌱</span>
-                      </div>
                       <div>
-                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Beginner</h3>
-                        <p class="text-gray-600 dark:text-gray-400">Foundation of Nostr</p>
+                        <h3 class="text-h2 font-semibold text-gray-900 dark:text-white">Beginner</h3>
+                        <p class="text-body-sm text-gray-600 dark:text-gray-400">Foundation of Nostr</p>
                       </div>
                     </div>
                   </div>
 
                   <!-- Progress Bar -->
                   <div class="mb-6">
-                    <div class="flex justify-between text-sm mb-2">
+                    <div class="flex justify-between text-body-sm mb-2">
                       <span class="text-gray-600 dark:text-gray-400">Progress</span>
                       <span class="progress-text font-semibold text-gray-900 dark:text-white">{`0/${beginnerTotal} guides`}</span>
                     </div>
-                    <div class="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                      <div class="progress-fill h-full bg-gradient-to-r from-green-400 to-green-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    <div class="h-3 w-full bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
+                      <div class="progress-fill h-full bg-primary-600 rounded-full transition-all duration-500 motion-reduce:transition-none" style="width: 0%"></div>
                     </div>
                   </div>
 
@@ -157,28 +148,25 @@ const guideMetadata = Object.fromEntries(
 
               <!-- Intermediate Level -->
               <section class="level-section relative" data-level="intermediate">
-                <div class="bg-white dark:bg-gray-800 rounded-2xl border-2 border-friendly-purple-200 dark:border-friendly-purple-700 p-6 md:p-8 shadow-sm transition-all duration-300">
+                <div class="rounded-lg border border-gray-200 bg-white p-6 md:p-8 dark:border-gray-800 dark:bg-gray-900">
                   <!-- Level Header -->
                   <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div class="flex items-center gap-4">
-                      <div class="w-16 h-16 rounded-2xl bg-friendly-purple-100 dark:bg-friendly-purple-900/30 flex items-center justify-center flex-shrink-0">
-                        <span class="text-3xl">🚀</span>
-                      </div>
                       <div>
-                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Intermediate</h3>
-                        <p class="text-gray-600 dark:text-gray-400">Level up your skills</p>
+                        <h3 class="text-h2 font-semibold text-gray-900 dark:text-white">Intermediate</h3>
+                        <p class="text-body-sm text-gray-600 dark:text-gray-400">Level up your skills</p>
                       </div>
                     </div>
                   </div>
 
                   <!-- Progress Bar -->
                   <div class="mb-6">
-                    <div class="flex justify-between text-sm mb-2">
+                    <div class="flex justify-between text-body-sm mb-2">
                       <span class="text-gray-600 dark:text-gray-400">Progress</span>
                       <span class="progress-text font-semibold text-gray-900 dark:text-white">{`0/${intermediateTotal} guides`}</span>
                     </div>
-                    <div class="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                      <div class="progress-fill h-full bg-gradient-to-r from-friendly-purple-400 to-friendly-purple-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    <div class="h-3 w-full bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
+                      <div class="progress-fill h-full bg-primary-600 rounded-full transition-all duration-500 motion-reduce:transition-none" style="width: 0%"></div>
                     </div>
                   </div>
 
@@ -192,28 +180,25 @@ const guideMetadata = Object.fromEntries(
 
               <!-- Advanced Level -->
               <section class="level-section relative" data-level="advanced">
-                <div class="bg-white dark:bg-gray-800 rounded-2xl border-2 border-friendly-gold-200 dark:border-friendly-gold-700 p-6 md:p-8 shadow-sm transition-all duration-300">
+                <div class="rounded-lg border border-gray-200 bg-white p-6 md:p-8 dark:border-gray-800 dark:bg-gray-900">
                   <!-- Level Header -->
                   <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div class="flex items-center gap-4">
-                      <div class="w-16 h-16 rounded-2xl bg-friendly-gold-100 dark:bg-friendly-gold-900/30 flex items-center justify-center flex-shrink-0">
-                        <span class="text-3xl">⚡</span>
-                      </div>
                       <div>
-                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Advanced</h3>
-                        <p class="text-gray-600 dark:text-gray-400">Master the protocol</p>
+                        <h3 class="text-h2 font-semibold text-gray-900 dark:text-white">Advanced</h3>
+                        <p class="text-body-sm text-gray-600 dark:text-gray-400">Master the protocol</p>
                       </div>
                     </div>
                   </div>
 
                   <!-- Progress Bar -->
                   <div class="mb-6">
-                    <div class="flex justify-between text-sm mb-2">
+                    <div class="flex justify-between text-body-sm mb-2">
                       <span class="text-gray-600 dark:text-gray-400">Progress</span>
                       <span class="progress-text font-semibold text-gray-900 dark:text-white">{`0/${advancedTotal} guides`}</span>
                     </div>
-                    <div class="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                      <div class="progress-fill h-full bg-gradient-to-r from-friendly-gold-400 to-friendly-gold-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    <div class="h-3 w-full bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
+                      <div class="progress-fill h-full bg-primary-600 rounded-full transition-all duration-500 motion-reduce:transition-none" style="width: 0%"></div>
                     </div>
                   </div>
 
@@ -231,14 +216,14 @@ const guideMetadata = Object.fromEntries(
     </section>
 
     <!-- Recent Activity Section -->
-    <section class="py-12 bg-gray-50 dark:bg-gray-900/30">
+    <section class="py-12 border-t border-gray-200 dark:border-gray-800">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Recent Activity</h2>
-          
+          <h2 class="text-h2 font-semibold text-gray-900 dark:text-white mb-6">Recent Activity</h2>
+
           <div id="recent-activity" class="space-y-4">
-            <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 text-center">
-              <p class="text-gray-500 dark:text-gray-400">
+            <div class="rounded-lg border border-gray-200 bg-white p-6 text-center dark:border-gray-800 dark:bg-gray-900">
+              <p class="text-body-sm text-gray-500 dark:text-gray-400">
                 No activity yet. Start learning to see your progress here!
               </p>
             </div>
@@ -248,22 +233,22 @@ const guideMetadata = Object.fromEntries(
     </section>
 
     <!-- CTA Section -->
-    <section class="py-16 bg-gradient-to-br from-friendly-purple-100 via-white to-friendly-gold-50 dark:from-friendly-purple-900/30 dark:via-gray-900 dark:to-friendly-gold-900/20">
+    <section class="py-16 border-t border-gray-200 dark:border-gray-800">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+        <h2 class="text-h2 font-semibold text-gray-900 dark:text-white mb-4">
           Keep leveling up!
         </h2>
-        <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+        <p class="text-lead text-gray-600 dark:text-gray-400 mb-8 max-w-measure mx-auto">
           Every guide you finish moves you further along. Nothing is gated — read in any order you like.
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
             href="/guides"
-            class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-friendly-purple-700 hover:bg-friendly-purple-800 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+            class="inline-flex items-center justify-center px-8 py-4 text-body font-semibold text-white bg-primary-600 hover:bg-primary-700 rounded-md transition-colors"
           >
             Continue Learning
-            <svg class="ms-2 w-5 h-5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            <svg class="ms-2 h-5 w-5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </a>
           <!-- The one live entrance to /badges. It was commented out, which left
@@ -271,11 +256,11 @@ const guideMetadata = Object.fromEntries(
                a reader could ever open to see the collection. -->
           <a
             href="/badges"
-            class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-friendly-purple-700 dark:text-friendly-purple-400 bg-white dark:bg-gray-800 border-2 border-friendly-purple-200 dark:border-friendly-purple-700 hover:border-friendly-purple-400 dark:hover:border-friendly-purple-500 rounded-xl transition-all duration-200"
+            class="inline-flex items-center justify-center px-8 py-4 text-body font-semibold text-primary-text dark:text-primary-400 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-md transition-colors hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800"
           >
             View Your Badges
-            <svg class="ms-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+            <svg class="ms-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
             </svg>
           </a>
         </div>
@@ -295,14 +280,6 @@ const guideMetadata = Object.fromEntries(
 </Layout>
 
 <style>
-  
-  .guide-item {
-    transition: all 0.2s ease;
-  }
-  
-  .guide-item:hover {
-    transform: translateX(4px);
-  }
   
   .guide-item.completed {
     opacity: 0.7;
@@ -414,20 +391,13 @@ const guideMetadata = Object.fromEntries(
     const currentLevel = [...levelOrder].reverse().find(
       (lvl) => (completedByLevel[lvl]?.length || 0) > 0
     ) || 'beginner';
-    const levelIcons: Record<string, string> = {
-      beginner: '🌱',
-      intermediate: '🚀',
-      advanced: '⚡'
-    };
     const levelNames: Record<string, string> = {
       beginner: 'Beginner',
       intermediate: 'Intermediate',
       advanced: 'Advanced'
     };
-    
-    const levelIconEl = document.getElementById('current-level-icon');
+
     const levelNameEl = document.getElementById('current-level-name');
-    if (levelIconEl) levelIconEl.textContent = levelIcons[currentLevel];
     if (levelNameEl) levelNameEl.textContent = levelNames[currentLevel];
     
     // Update percentage
@@ -475,29 +445,29 @@ const guideMetadata = Object.fromEntries(
           
           return `
             <a href="${guidesPrefix}/${guideId}"
-               class="guide-item flex items-center gap-4 p-3 rounded-xl border ${isCompleted ? 'border-green-200 dark:border-green-700 bg-green-50 dark:bg-green-900/20 completed' : 'border-gray-200 dark:border-gray-700 hover:border-friendly-purple-300 dark:hover:border-friendly-purple-600'} transition-all cursor-pointer"
+               class="guide-item flex items-center gap-4 p-3 rounded-lg border ${isCompleted ? 'border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 completed' : 'border-gray-200 dark:border-gray-800 hover:border-gray-300 hover:bg-gray-50 dark:hover:border-gray-700 dark:hover:bg-gray-800'} transition-colors cursor-pointer"
                data-guide="${guideId}"
             >
-              <div class="w-8 h-8 rounded-lg ${isCompleted ? 'bg-green-100 dark:bg-green-900/30' : 'bg-gray-100 dark:bg-gray-700'} flex items-center justify-center flex-shrink-0">
-                ${isCompleted 
-                  ? `<svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              <div class="w-8 h-8 flex items-center justify-center flex-shrink-0">
+                ${isCompleted
+                  ? `<svg class="h-5 w-5 text-success-600 dark:text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7" />
                     </svg>`
-                  : `<span class="text-sm font-semibold ${isCompleted ? 'text-green-600' : 'text-gray-500 dark:text-gray-400'}">${position}</span>`
+                  : `<span class="text-caption font-semibold text-gray-500 dark:text-gray-400">${position}</span>`
                 }
               </div>
               <div class="flex-1 min-w-0">
                 <p class="font-medium ${isCompleted ? 'text-gray-600 dark:text-gray-400 line-through' : 'text-gray-900 dark:text-white'} truncate">
                   ${meta.title}
                 </p>
-                <p class="text-xs text-gray-500 dark:text-gray-400 truncate">
+                <p class="text-caption text-gray-500 dark:text-gray-400 truncate">
                   ${meta.description}
                 </p>
               </div>
-              ${isCompleted 
-                ? `<span class="text-xs text-green-600 dark:text-green-400 font-medium flex-shrink-0">Completed</span>`
-                : `<svg class="w-5 h-5 text-gray-400 flex-shrink-0 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              ${isCompleted
+                ? `<span class="text-caption text-success-700 dark:text-success-400 font-medium flex-shrink-0">Completed</span>`
+                : `<svg class="h-5 w-5 text-gray-400 dark:text-gray-500 flex-shrink-0 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" />
                   </svg>`
               }
             </a>
@@ -525,8 +495,8 @@ const guideMetadata = Object.fromEntries(
     
     if (completedGuides.length === 0) {
       container.innerHTML = `
-        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 text-center">
-          <p class="text-gray-500 dark:text-gray-400">
+        <div class="rounded-lg border border-gray-200 bg-white p-6 text-center dark:border-gray-800 dark:bg-gray-900">
+          <p class="text-body-sm text-gray-500 dark:text-gray-400">
             No activity yet. Start learning to see your progress here!
           </p>
         </div>
@@ -535,21 +505,19 @@ const guideMetadata = Object.fromEntries(
     }
     
     container.innerHTML = completedGuides.map((guide: any) => `
-      <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 flex items-center gap-4">
-        <div class="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0">
-          <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-          </svg>
-        </div>
+      <div class="rounded-lg border border-gray-200 bg-white p-4 flex items-center gap-4 dark:border-gray-800 dark:bg-gray-900">
+        <svg class="h-5 w-5 shrink-0 text-success-600 dark:text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7" />
+        </svg>
         <div class="flex-1 min-w-0">
           <p class="font-semibold text-gray-900 dark:text-white truncate">
             ${guide.metadata.title}
           </p>
-          <p class="text-sm text-gray-500 dark:text-gray-400">
+          <p class="text-body-sm text-gray-500 dark:text-gray-400">
             ${guide.metadata.description}
           </p>
         </div>
-        <span class="text-sm text-gray-400 dark:text-gray-500 flex-shrink-0">
+        <span class="text-caption text-gray-400 dark:text-gray-500 flex-shrink-0">
           ${formatDate(guide.completedAt)}
         </span>
       </div>

@@ -26,7 +26,6 @@ interface ToolCard {
   id: string;
   title: string;
   description: string;
-  icon: string;
   component: unknown;
   /** Optional dedicated SEO lander embedding the same component. */
   page?: string;
@@ -37,7 +36,6 @@ const tools: ToolCard[] = [
     id: 'key-generator',
     title: 'Key Generator',
     description: 'Generate secure Nostr keys (nsec/npub) directly in your browser. No data sent to servers.',
-    icon: '🔐',
     component: KeyGenerator,
     // SEO lander embedding the same component (market-research.md §6 row 13)
     page: '/tools/key-generator',
@@ -46,14 +44,12 @@ const tools: ToolCard[] = [
     id: 'follow-pack-finder',
     title: 'Find People to Follow',
     description: 'Browse hundreds of curated Nostr accounts by category. Build a follow pack and import it into any client.',
-    icon: '👥',
     component: FollowPackFinder,
   },
   {
     id: 'nip05-checker',
     title: 'NIP-05 Checker',
     description: 'Verify your NIP-05 identifier is set up correctly and troubleshoot issues.',
-    icon: '✅',
     component: NIP05Checker,
     // SEO lander embedding the same component (market-research.md §6 row 8)
     page: '/tools/nip05-checker',
@@ -62,7 +58,6 @@ const tools: ToolCard[] = [
     id: 'relay-playground',
     title: 'Relay Playground',
     description: 'Interactive relay testing: connect live, check health metrics, and explore NIP support. Learn how relays work hands-on.',
-    icon: '🧪',
     component: RelayPlayground,
   },
 ];
@@ -73,18 +68,14 @@ const tools: ToolCard[] = [
   
   <main id="main-content">
     <!-- Hero Section -->
-    <section class="relative overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 dark:from-primary/5 dark:to-secondary/5" />
-      
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative">
+    <section class="border-b border-gray-200 dark:border-gray-800">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
         <div class="text-center max-w-3xl mx-auto">
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              Nostr Tools
-            </span>
+          <h1 class="text-display font-bold text-gray-900 dark:text-white mb-6">
+            Nostr Tools
           </h1>
-          <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
-            Free browser-based tools to help you get started with Nostr. 
+          <p class="text-lead text-gray-600 dark:text-gray-300 mb-8">
+            Free browser-based tools to help you get started with Nostr.
             All tools run locally in your browser - no data is sent to any server.
           </p>
         </div>
@@ -92,26 +83,23 @@ const tools: ToolCard[] = [
     </section>
 
     <!-- Tools Grid -->
-    <section class="py-16 bg-gray-50 dark:bg-gray-900/30">
+    <section class="py-16">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {tools.map((tool, index) => (
-            <div id={tool.id} class={`p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 ${index === 0 || tool.id === 'relay-playground' || tool.id === 'follow-pack-finder' ? 'lg:col-span-2' : ''}`}>
-              <div class="flex items-center gap-4 mb-6">
-                <div class="text-4xl">{tool.icon}</div>
-                <div>
-                  <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{tool.title}</h2>
-                  <p class="text-gray-600 dark:text-gray-400">{tool.description}</p>
-                  {tool.page && (
-                    <a
-                      href={tool.page}
-                      class="inline-block mt-1 text-sm font-medium text-primary-600 dark:text-primary-400 hover:underline"
-                      aria-label={`Open the dedicated ${tool.title} page`}
-                    >
-                      Dedicated page →
-                    </a>
-                  )}
-                </div>
+            <div id={tool.id} class={`p-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 ${index === 0 || tool.id === 'relay-playground' || tool.id === 'follow-pack-finder' ? 'lg:col-span-2' : ''}`}>
+              <div class="mb-6">
+                <h2 class="text-h2 font-bold text-gray-900 dark:text-white">{tool.title}</h2>
+                <p class="text-body-sm text-gray-600 dark:text-gray-400">{tool.description}</p>
+                {tool.page && (
+                  <a
+                    href={tool.page}
+                    class="inline-block mt-1 text-caption font-medium text-primary-text dark:text-primary-400 underline underline-offset-2"
+                    aria-label={`Open the dedicated ${tool.title} page`}
+                  >
+                    Dedicated page →
+                  </a>
+                )}
               </div>
               {tool.id === 'key-generator' && <div class="max-w-3xl mx-auto"><KeyGenerator client:idle /></div>}
               {tool.id === 'follow-pack-finder' && <FollowPackFinder client:idle />}
@@ -124,12 +112,11 @@ const tools: ToolCard[] = [
     </section>
 
     <!-- Sandstr cross-link: the client simulators live there now -->
-    <section class="py-12 bg-gray-50 dark:bg-gray-900/30">
+    <section class="py-12 bg-gray-50 dark:bg-gray-900">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-3xl mx-auto text-center p-8 rounded-2xl border-2 border-primary/30 bg-primary/5 dark:bg-primary/10">
-          <p class="text-3xl mb-3" aria-hidden="true">🏖️</p>
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Want to try whole clients, not just tools?</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-6">
+        <div class="max-w-3xl mx-auto text-center p-8 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+          <h2 class="text-h2 font-bold text-gray-900 dark:text-white mb-3">Want to try whole clients, not just tools?</h2>
+          <p class="text-body text-gray-600 dark:text-gray-300 mb-6">
             Sandstr lets you click through Damus, Amethyst, Primal and more in your browser —
             no keys, no install, nothing real.
           </p>
@@ -137,7 +124,7 @@ const tools: ToolCard[] = [
             href="https://sandstr.app"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold text-white bg-primary-600 hover:bg-primary-700 rounded-xl transition-colors"
+            class="inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold text-white bg-primary-600 hover:bg-primary-700 rounded-md transition-colors"
           >
             Open Sandstr →
           </a>

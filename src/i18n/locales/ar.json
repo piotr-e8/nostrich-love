@@ -3366,7 +3366,8 @@
     "lastInLevelDescriptionFinal": "هنا ينتهي مسار الأدلة. لا يوجد مستوى بعد {level}.",
     "continueToLevel": "الاستمرار إلى {level}",
     "unlockRequirements": "أكمل المزيد من أدلة {currentLevel} لفتح {nextLevel}",
-    "offLevelMessage": "هذا الدليل ليس جزءاً من مستوى {level} الحالي"
+    "offLevelMessage": "هذا الدليل ليس جزءاً من مستوى {level} الحالي",
+    "aria": "التنقل بين الأدلة"
   },
   "continueLearning": {
     "allLevelsComplete": "اكتملت جميع المستويات!",

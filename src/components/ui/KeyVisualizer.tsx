@@ -30,38 +30,38 @@ export function KeyVisualizer({
     value: string;
     type: "npub" | "nsec";
   }) => (
-    <div className="space-y-2 rounded-2xl border border-gray-200 bg-white/80 p-4 dark:border-gray-800 dark:bg-gray-900/70">
-      <div className="flex items-center justify-between text-sm font-medium text-gray-600 dark:text-gray-300">
+    <div className="space-y-2 rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+      <div className="flex items-center justify-between text-body-sm font-medium text-gray-600 dark:text-gray-300">
         <span>{label}</span>
         <div className="flex items-center gap-2">
           {type === "nsec" && (
             <button
               type="button"
               onClick={onTogglePrivate}
-              className="text-gray-400 transition-colors hover:text-primary-600 dark:hover:text-primary-400"
+              className="rounded-md p-1 text-gray-400 transition-colors hover:text-primary-text dark:text-gray-500 dark:hover:text-primary-400"
             >
               {showPrivate ? (
-                <EyeOff className="h-4 w-4" />
+                <EyeOff className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
               ) : (
-                <Eye className="h-4 w-4" />
+                <Eye className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
               )}
             </button>
           )}
           <button
             type="button"
             onClick={() => onCopy?.(type)}
-            className="text-gray-400 transition-colors hover:text-primary-600 dark:hover:text-primary-400"
+            className="rounded-md p-1 text-gray-400 transition-colors hover:text-primary-text dark:text-gray-500 dark:hover:text-primary-400"
           >
-            <Copy className="h-4 w-4" />
+            <Copy className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
           </button>
         </div>
       </div>
       <code
         className={cn(
-          "block text-xs break-all rounded-xl bg-gray-100 dark:bg-gray-900/90 p-3 font-mono text-gray-900 dark:text-white",
+          "block break-all rounded-md bg-gray-50 p-3 font-mono text-caption text-gray-900 dark:bg-gray-800 dark:text-white",
           type === "nsec"
-            ? "border border-red-500/30 dark:border-red-500/50"
-            : "border border-green-500/30 dark:border-green-500/50",
+            ? "border border-danger-200 dark:border-danger-900"
+            : "border border-success-200 dark:border-success-900",
         )}
       >
         {type === "nsec" && !showPrivate ? maskKey(value) : value}

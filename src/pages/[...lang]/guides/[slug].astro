@@ -363,10 +363,15 @@ const components = {
 
 
   <main id="main-content" class="py-16">
-    <section class="relative overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 dark:from-primary/5 dark:to-secondary/5" />
-
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative">
+    <!--
+      No tinted wash behind the article. The absolutely-positioned
+      primary/secondary gradient that used to sit here was the one piece of
+      ornament on the best-behaved template on the site; the page ground and the
+      card's own border do the separating now (VISUAL_SYSTEM.md §4). With the
+      overlay gone, `relative`/`overflow-hidden` had nothing left to contain.
+    -->
+    <section>
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
         <!--
           Below xl this is one column: a collapsed "On this page" bar, then the
           article card. From xl the contents move into a sticky 15rem column
@@ -386,13 +391,17 @@ const components = {
               className="mb-6 xl:col-start-2 xl:row-start-1 xl:mb-0 xl:sticky xl:top-24"
             />
           )}
-          <div class="bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-lg xl:col-start-1 xl:row-start-1">
+          <div class="rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 xl:col-start-1 xl:row-start-1">
           <article class="prose prose-lg dark:prose-invert max-w-none px-6 sm:px-10 lg:px-12 py-10">
-            <div class="flex items-center justify-between mb-2">
-              <!-- <p class="text-sm uppercase tracking-wide text-primary-600 dark:text-primary-400 font-semibold">Guide</p> -->
-              <!-- <GuidePositionIndicator client:idle currentGuide={currentGuideNumGlobal} totalGuides={totalGuidesGlobal} /> -->
-            </div>
-            
+            <!-- <p class="text-sm uppercase tracking-wide text-primary-600 dark:text-primary-400 font-semibold">Guide</p> -->
+            <!-- <GuidePositionIndicator client:idle currentGuide={currentGuideNumGlobal} totalGuides={totalGuidesGlobal} /> -->
+            <!--
+              The two lines above are the whole of what an empty flex row used
+              to wrap. Because that row was a real element it, not the H1, was
+              `.prose > *:first-child`, so every guide opened with 2.5rem of
+              margin above its title that nobody asked for.
+            -->
+
             <!-- <EnhancedGuideCompletionIndicator -->
             <!--   client:load  -->
             <!--   guides={guideList}  -->
@@ -400,30 +409,38 @@ const components = {
             <!--   currentGuidePrerequisites={prerequisites} -->
             <!--   className="mb-6"  -->
             <!-- />  -->
-            <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-3">{guide.data.title}</h1>
+            <!--
+              Sizes here name the step the `.prose` rules in globals.css already
+              render (h1 = 2.25rem/700, standfirst = the body step). They are
+              written out so the intent is legible next to the rest of the pass;
+              they do not fight the stylesheet.
+            -->
+            <h1 class="text-h1 font-bold text-gray-900 dark:text-white">{guide.data.title}</h1>
 
             {guide.data.description && (
-              <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">{guide.data.description}</p>
+              <p class="text-body text-gray-600 dark:text-gray-300">{guide.data.description}</p>
             )}
 
-            <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-12">
+            <!--
+              Metadata, not controls. Two of these three sat in pill grounds —
+              one gray, one a primary/10 tint — which made caption text look
+              clickable and spent the accent colour on a label nobody can press.
+              Purple marks what you can act on (VISUAL_SYSTEM.md §4).
+            -->
+            <div class="mb-12 flex flex-wrap items-center gap-x-4 gap-y-1 text-caption text-gray-500 dark:text-gray-400">
               {guide.data.estimatedTime && (
-                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <span class="inline-flex items-center gap-1.5">
+                  <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   {guide.data.estimatedTime}
                 </span>
               )}
 
-              {levelChipLabel && (
-                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary-600 dark:text-primary-400">
-                  {levelChipLabel}
-                </span>
-              )}
+              {levelChipLabel && <span>{levelChipLabel}</span>}
 
               {modifiedDate && (
-                <span class="inline-flex items-center gap-2">
+                <span>
                   {t('guidePage.lastUpdated', locale)} <time datetime={modifiedDate}>{modifiedDate}</time>
                 </span>
               )}
@@ -464,20 +481,27 @@ const components = {
                   href={editUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                  class="inline-flex items-center gap-2 text-body-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-text dark:hover:text-primary-400 transition-colors"
                 >
-                  <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                   </svg>
                   {t('guideFooter.improvePage', locale)}
                 </a>
-                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{t('guideFooter.improveHint', locale)}</p>
+                <!--
+                  A <span class="block">, not a <p>: the `.prose p` rule in
+                  globals.css is a plain descendant selector, so it out-weighs a
+                  utility class and `not-prose` on the wrapper does not stop it.
+                  As a paragraph this hint rendered at the 17px body step with
+                  1.25rem of margin, which is not what a hint is.
+                -->
+                <span class="mt-1 block text-caption text-gray-500 dark:text-gray-400">{t('guideFooter.improveHint', locale)}</span>
               </div>
               <a
                 href={followUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center justify-center gap-2 self-start sm:self-auto shrink-0 px-4 py-2 rounded-full bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium transition-colors"
+                class="inline-flex items-center justify-center gap-2 self-start sm:self-auto shrink-0 px-4 py-2 rounded-md bg-primary-600 hover:bg-primary-700 text-white text-body-sm font-medium transition-colors"
               >
                 <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M13 10V3L4 14h7v7l9-11h-9z" />

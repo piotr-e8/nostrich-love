@@ -509,13 +509,13 @@ export const ExportModal: React.FC<ExportModalProps> = ({
         role="dialog"
         aria-modal="true"
         aria-labelledby="export-modal-title"
-        className="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col"
+        className="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-raised dark:border-gray-800 dark:bg-gray-900"
       >
         {/* Header */}
-        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+        <div className="p-6 border-b border-gray-200 dark:border-gray-800">
           <div className="flex justify-between items-start">
             <div>
-              <h2 id="export-modal-title" className="text-2xl font-bold text-gray-900 dark:text-white">
+              <h2 id="export-modal-title" className="text-h2 text-gray-900 dark:text-white">
                 Export Follow Pack
               </h2>
               <p className="text-gray-600 dark:text-gray-400 mt-1">
@@ -557,7 +557,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
             {categoryBreakdown.map(({ category, count }) => (
               <span
                 key={category!.id}
-                className="inline-flex items-center gap-1.5 text-xs px-2 py-1 rounded-full font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
+                className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 px-2 py-1 text-caption font-medium text-gray-700 dark:border-gray-800 dark:text-gray-200"
               >
                 <span
                   className="w-2 h-2 rounded-full flex-shrink-0"
@@ -571,7 +571,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
         </div>
 
         {/* Tabs */}
-        <div className="border-b border-gray-200 dark:border-gray-700">
+        <div className="border-b border-gray-200 dark:border-gray-800">
           <div className="flex" role="tablist" aria-label="Export method">
             {tabs.map(tab => (
               <button
@@ -597,7 +597,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                   flex-1 py-3 px-2 sm:px-4 text-xs sm:text-sm font-medium text-center
                   border-b-2 transition-colors
                   ${activeTab === tab.id
-                    ? 'border-primary text-primary-700 dark:text-primary-300'
+                    ? 'border-primary-600 text-primary-text dark:border-primary-400 dark:text-primary-400'
                     : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
                   }
                 `}
@@ -617,9 +617,9 @@ export const ExportModal: React.FC<ExportModalProps> = ({
         >
           {activeTab === 'qr' && naddr && (
             <div className="text-center">
-              <div className="bg-white p-4 rounded-xl inline-block mb-4 shadow-sm" style={{ maxWidth: 'min(100%, 280px)' }}>
+              <div className="mb-4 inline-block rounded-lg border border-gray-200 bg-white p-4" style={{ maxWidth: 'min(100%, 280px)' }}>
                 {qrError ? (
-                  <div className="w-64 h-64 flex items-center justify-center text-red-600">
+                  <div className="flex h-64 w-64 items-center justify-center text-danger-700">
                     <p>{qrError}</p>
                   </div>
                 ) : (
@@ -642,18 +642,18 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                 <button
                   onClick={handleDownloadQR}
                   disabled={!qrDataUrl}
-                  className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="rounded-md border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800"
                 >
                   Download QR
                 </button>
               </div>
 
-              <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 mb-4 text-start">
+              <div className="mb-4 rounded-lg border border-gray-200 bg-gray-50 p-3 text-start dark:border-gray-800 dark:bg-gray-800">
                 <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">List address (naddr):</p>
                 <p className="text-xs font-mono break-all">{naddr}</p>
               </div>
 
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 text-start">
+              <div className="border border-blue-200 bg-blue-50 dark:border-blue-900 dark:bg-blue-950 rounded-lg p-4 text-start">
                 <p className="text-sm text-blue-900 dark:text-blue-100">
                   <span className="font-medium">How to import:</span>
                 </p>
@@ -669,7 +669,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
 
           {activeTab === 'qr' && !naddr && (
             <div className="text-center">
-              <div className="bg-gray-50 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700 rounded-xl p-6 mb-4 text-start">
+              <div className="mb-4 rounded-lg border border-gray-200 bg-gray-50 p-6 text-start dark:border-gray-800 dark:bg-gray-800">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
                   A scannable QR needs the list published first
                 </h3>
@@ -686,7 +686,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                 </button>
               </div>
 
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 text-start">
+              <div className="border border-blue-200 bg-blue-50 dark:border-blue-900 dark:bg-blue-950 rounded-lg p-4 text-start">
                 <p className="text-sm text-blue-800 dark:text-blue-200">
                   <span className="font-medium">Prefer not to publish anything?</span>{' '}
                   The "Copy List" tab works right now, however many accounts you picked.
@@ -749,7 +749,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
               {publishStatus === 'idle' && (
                 <div role="group" aria-labelledby={consentHeadingId} className="space-y-4">
                   <div>
-                    <h3 id={consentHeadingId} className="text-lg font-bold text-gray-900 dark:text-white">
+                    <h3 id={consentHeadingId} className="text-h3 text-gray-900 dark:text-white">
                       Publish this pack as a public Nostr list?
                     </h3>
                     <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
@@ -805,11 +805,11 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                       </p>
                     </div>
 
-                    <div className="p-4 bg-amber-50 dark:bg-amber-900/20">
-                      <p className="text-sm font-semibold text-amber-900 dark:text-amber-100 mb-1">
+                    <div className="p-4 bg-warning-50 dark:bg-warning-950">
+                      <p className="text-sm font-semibold text-warning-900 dark:text-warning-100 mb-1">
                         It is public and effectively permanent
                       </p>
-                      <p className="text-sm text-amber-900 dark:text-amber-100">
+                      <p className="text-sm text-warning-900 dark:text-warning-100">
                         Anyone can read it. Nostr has no reliable delete: a deletion request is
                         only a hint that relays may ignore, and copies already made stay.
                         Treat this as permanent.
@@ -828,7 +828,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                     <button
                       onClick={publishToNostr}
                       disabled={selectedAccounts.length === 0}
-                      className="flex-1 px-4 py-2.5 rounded-lg font-medium border border-red-300 dark:border-red-800 text-red-700 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex-1 px-4 py-2.5 rounded-lg font-medium border border-danger-300 dark:border-danger-800 text-danger-800 dark:text-danger-300 hover:bg-danger-50 dark:hover:bg-danger-950 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Publish to {RELAYS.length} public relays
                     </button>
@@ -839,12 +839,12 @@ export const ExportModal: React.FC<ExportModalProps> = ({
               {/* ---------------- IN FLIGHT ---------------- */}
               {publishStatus === 'publishing' && (
                 <div
-                  className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 flex items-center gap-3"
+                  className="border border-warning-200 bg-warning-50 dark:border-warning-900 dark:bg-warning-950 rounded-lg p-4 flex items-center gap-3"
                   role="status"
                   aria-live="polite"
                 >
-                  <div className="animate-spin w-5 h-5 border-2 border-yellow-600 border-t-transparent rounded-full" aria-hidden="true"></div>
-                  <p className="text-sm text-yellow-900 dark:text-yellow-100">
+                  <div className="animate-spin w-5 h-5 border-2 border-warning-600 border-t-transparent rounded-full" aria-hidden="true"></div>
+                  <p className="text-sm text-warning-900 dark:text-warning-100">
                     Publishing your list to {RELAYS.length} relays…
                   </p>
                 </div>
@@ -854,27 +854,27 @@ export const ExportModal: React.FC<ExportModalProps> = ({
               {(publishStatus === 'published' || publishStatus === 'error') && (
                 <div className="space-y-4" role="status" aria-live="polite">
                   {publishStatus === 'published' ? (
-                    <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-                      <p className="text-sm font-semibold text-green-900 dark:text-green-100">
+                    <div className="border border-success-200 bg-success-50 dark:border-success-900 dark:bg-success-950 rounded-lg p-4">
+                      <p className="text-sm font-semibold text-success-900 dark:text-success-100">
                         Published.
                       </p>
-                      <p className="text-sm text-green-900 dark:text-green-100 mt-1">
+                      <p className="text-sm text-success-900 dark:text-success-100 mt-1">
                         This list is now public on {successfulRelayCount} of {RELAYS.length}{' '}
                         relays. It cannot be edited or removed.
                       </p>
                     </div>
                   ) : (
-                    <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-                      <p className="text-sm font-semibold text-red-900 dark:text-red-100">
+                    <div className="border border-danger-200 bg-danger-50 dark:border-danger-900 dark:bg-danger-950 rounded-lg p-4">
+                      <p className="text-sm font-semibold text-danger-900 dark:text-danger-100">
                         Nothing was published.
                       </p>
-                      <p className="text-sm text-red-900 dark:text-red-100 mt-1">
+                      <p className="text-sm text-danger-900 dark:text-danger-100 mt-1">
                         No relay accepted the event, so no list exists. The other export
                         tabs still work.
                       </p>
                       <button
                         onClick={publishToNostr}
-                        className="mt-2 text-sm text-red-800 dark:text-red-200 underline"
+                        className="mt-2 text-sm text-danger-800 dark:text-danger-200 underline"
                       >
                         Try publishing again
                       </button>
@@ -882,7 +882,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                   )}
 
                   {/* Relay results, expanded — not hidden behind a disclosure */}
-                  <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
+                  <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-800">
                     <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Relay results
                     </p>
@@ -891,10 +891,10 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                         <div key={relay.url} className="flex items-center justify-between gap-2 text-sm">
                           <span className="text-gray-700 dark:text-gray-300 font-mono truncate flex-1">{relay.url}</span>
                           {relay.status === 'success' && (
-                            <span className="text-green-700 dark:text-green-400 ms-2 flex-shrink-0">Saved</span>
+                            <span className="text-success-800 dark:text-success-300 ms-2 flex-shrink-0">Saved</span>
                           )}
                           {relay.status === 'error' && (
-                            <span className="text-red-700 dark:text-red-400 ms-2 flex-shrink-0" title={relay.error}>Failed</span>
+                            <span className="text-danger-800 dark:text-danger-300 ms-2 flex-shrink-0" title={relay.error}>Failed</span>
                           )}
                           {relay.status === 'pending' && (
                             <span className="text-gray-600 dark:text-gray-400 ms-2 flex-shrink-0">Pending</span>
@@ -905,7 +905,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                   </div>
 
                   {naddr && (
-                    <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
+                    <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-800">
                       <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         List address (naddr). Share it so other people can subscribe:
                       </p>
@@ -922,7 +922,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                   )}
 
                   {burnerNpub && (
-                    <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4">
+                    <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-800">
                       <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Published by (throwaway key, already discarded):
                       </p>
@@ -933,9 +933,9 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                   {/* Verification */}
                   {verificationStatus !== 'idle' && (
                     <div className={`rounded-lg p-3 ${
-                      verificationStatus === 'verified' ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800' :
-                      verificationStatus === 'not_found' ? 'bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800' :
-                      'bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800'
+                      verificationStatus === 'verified' ? 'border border-success-200 bg-success-50 dark:border-success-900 dark:bg-success-950' :
+                      verificationStatus === 'not_found' ? 'border border-warning-200 bg-warning-50 dark:border-warning-900 dark:bg-warning-950' :
+                      'border border-blue-200 bg-blue-50 dark:border-blue-900 dark:bg-blue-950'
                     }`}>
                       {verificationStatus === 'checking' && (
                         <p className="text-sm text-blue-900 dark:text-blue-100 flex items-center gap-2">
@@ -944,18 +944,18 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                         </p>
                       )}
                       {verificationStatus === 'verified' && (
-                        <p className="text-sm text-green-900 dark:text-green-100">
+                        <p className="text-sm text-success-900 dark:text-success-100">
                           Confirmed on at least one relay.
                         </p>
                       )}
                       {verificationStatus === 'not_found' && (
                         <div>
-                          <p className="text-sm text-orange-900 dark:text-orange-100">
+                          <p className="text-sm text-warning-900 dark:text-warning-100">
                             Not found yet. It may still be spreading between relays.
                           </p>
                           <button
                             onClick={() => verifyEventOnRelays()}
-                            className="mt-2 text-xs text-orange-800 dark:text-orange-200 underline"
+                            className="mt-2 text-xs text-warning-800 dark:text-warning-200 underline"
                           >
                             Check again
                           </button>
@@ -984,7 +984,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center">
+        <div className="p-6 border-t border-gray-200 dark:border-gray-800 flex justify-between items-center">
           <p className="text-sm text-gray-600 dark:text-gray-400">
             {selectedAccounts.length} accounts
           </p>

@@ -25,12 +25,11 @@ export const AccountBrowser: React.FC<AccountBrowserProps> = ({
 
   if (accounts.length === 0) {
     return (
-      <div className="text-center py-12">
-        <div className="text-6xl mb-4">🔍</div>
-        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+      <div className="py-12 text-center">
+        <h3 className="mb-2 text-h3 text-gray-900 dark:text-white">
           No accounts found
         </h3>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-body-sm text-gray-600 dark:text-gray-400">
           Try adjusting your filters or search query
         </p>
       </div>
@@ -44,45 +43,45 @@ export const AccountBrowser: React.FC<AccountBrowserProps> = ({
         <div className="flex items-center gap-2">
           <button
             onClick={onSelectAll}
-            className="text-sm text-primary hover:underline"
+            className="text-body-sm text-primary-text underline-offset-2 hover:underline dark:text-primary-400"
           >
             Select all visible
           </button>
-          <span className="text-gray-300 dark:text-gray-600">|</span>
-          <span className="text-sm text-gray-600 dark:text-gray-400">
+          <span className="text-gray-300 dark:text-gray-600" aria-hidden="true">|</span>
+          <span className="text-body-sm text-gray-600 dark:text-gray-400">
             {accounts.length} accounts
           </span>
         </div>
         
-        <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+        <div className="flex items-center gap-1 rounded-md border border-gray-200 p-1 dark:border-gray-800">
           <button
             onClick={() => setViewMode('grid')}
             className={`
-              p-1.5 rounded transition-colors
-              ${viewMode === 'grid' 
-                ? 'bg-white dark:bg-gray-700 shadow-sm' 
+              rounded-md p-1.5 transition-colors
+              ${viewMode === 'grid'
+                ? 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white'
                 : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
               }
             `}
             title="Grid view"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
             </svg>
           </button>
           <button
             onClick={() => setViewMode('list')}
             className={`
-              p-1.5 rounded transition-colors
-              ${viewMode === 'list' 
-                ? 'bg-white dark:bg-gray-700 shadow-sm' 
+              rounded-md p-1.5 transition-colors
+              ${viewMode === 'list'
+                ? 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white'
                 : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
               }
             `}
             title="List view"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
         </div>
@@ -117,52 +116,52 @@ export const AccountBrowser: React.FC<AccountBrowserProps> = ({
             role="dialog"
             aria-modal="true"
             aria-labelledby="account-preview-title"
-            className="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6"
+            className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-lg border border-gray-200 bg-white p-6 shadow-raised dark:border-gray-800 dark:bg-gray-900"
             onClick={e => e.stopPropagation()}
           >
             <div className="flex justify-between items-start mb-4">
-              <h2 id="account-preview-title" className="text-2xl font-bold text-gray-900 dark:text-white">
+              <h2 id="account-preview-title" className="text-h2 text-gray-900 dark:text-white">
                 {previewAccount.name}
               </h2>
               <button
                 onClick={() => setPreviewAccount(null)}
-                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                className="rounded-md p-1 text-gray-400 transition-colors hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
                 aria-label="Close preview"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
             
             <div className="space-y-4">
               <div>
-                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Bio</h3>
-                <p className="text-gray-900 dark:text-white">{previewAccount.bio}</p>
+                <h3 className="mb-1 text-micro font-semibold uppercase text-gray-500 dark:text-gray-400">Bio</h3>
+                <p className="text-body-sm text-gray-900 dark:text-white">{previewAccount.bio}</p>
               </div>
               
               <div>
-                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">npub</h3>
-                <code className="text-sm bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded break-all">
+                <h3 className="mb-1 text-micro font-semibold uppercase text-gray-500 dark:text-gray-400">npub</h3>
+                <code className="break-all rounded-md border border-gray-200 px-2 py-1 text-caption dark:border-gray-800">
                   {previewAccount.npub}
                 </code>
               </div>
               
               {previewAccount.nip05 && (
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">NIP-05</h3>
-                  <p className="text-gray-900 dark:text-white">{previewAccount.nip05}</p>
+                  <h3 className="mb-1 text-micro font-semibold uppercase text-gray-500 dark:text-gray-400">NIP-05</h3>
+                  <p className="text-body-sm text-gray-900 dark:text-white">{previewAccount.nip05}</p>
                 </div>
               )}
               
               {previewAccount.website && (
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Website</h3>
+                  <h3 className="mb-1 text-micro font-semibold uppercase text-gray-500 dark:text-gray-400">Website</h3>
                   <a 
                     href={previewAccount.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary hover:underline"
+                    className="text-body-sm text-primary-text underline-offset-2 hover:underline dark:text-primary-400"
                   >
                     {previewAccount.website}
                   </a>
@@ -170,12 +169,12 @@ export const AccountBrowser: React.FC<AccountBrowserProps> = ({
               )}
               
               <div>
-                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Tags</h3>
+                <h3 className="mb-1 text-micro font-semibold uppercase text-gray-500 dark:text-gray-400">Tags</h3>
                 <div className="flex flex-wrap gap-2">
                   {previewAccount.tags.map(tag => (
                     <span 
                       key={tag}
-                      className="text-sm px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+                      className="rounded-md border border-gray-200 px-2 py-1 text-caption text-gray-700 dark:border-gray-800 dark:text-gray-300"
                     >
                       #{tag}
                     </span>
@@ -191,10 +190,10 @@ export const AccountBrowser: React.FC<AccountBrowserProps> = ({
                   setPreviewAccount(null);
                 }}
                 className={`
-                  px-6 py-2 rounded-lg font-medium
+                  rounded-md px-6 py-2 font-medium transition-colors
                   ${selectedNpubs.has(previewAccount.npub)
-                    ? 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400'
-                    : 'bg-primary text-white hover:bg-primary/90'
+                    ? 'border border-danger-200 text-danger-800 hover:bg-danger-50 dark:border-danger-900 dark:text-danger-300 dark:hover:bg-danger-950'
+                    : 'bg-primary-600 text-white hover:bg-primary-700'
                   }
                 `}
               >
