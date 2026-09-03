@@ -1912,7 +1912,7 @@
     },
     "securityWarning": {
       "title": "Aviso de Seguridad Crítico",
-      "description": "Tu clave privada (nsec) es como una contraseña. Cualquiera con acceso a ella puede controlar tu cuenta. Completa la lista de verificación de seguridad a continuación antes de copiar o descargar tus claves."
+      "description": "Tu clave privada (nsec) funciona como una contraseña. Quien la tenga controla tu cuenta, así que antes de copiarla o guardarla tienes que marcar la lista de abajo."
     },
     "securityChecklist": {
       "title": "Lista de Verificación de Seguridad",
@@ -1949,9 +1949,14 @@
     },
     "modal": {
       "title": "Advertencia de Seguridad",
-      "description": "No has completado todos los reconocimientos de seguridad. Copiar tus claves sin entender los riesgos podría resultar en una pérdida permanente de acceso.",
+      "description": "No has terminado la lista de seguridad. Copiar o guardar tu clave privada sin conocer los riesgos puede costarte esta cuenta para siempre.",
       "goBack": "Volver",
-      "copyAnyway": "Copiar de Todas Formas"
+      "continueAnyway": "Continuar de todas formas"
+    },
+    "discardModal": {
+      "title": "¿Descartar estas claves?",
+      "description": "Este par solo existe en esta página. Generar uno nuevo lo borra y nada lo recupera. Si aún no has guardado la clave privada, vuelve y guárdala primero.",
+      "confirm": "Descartar y generar"
     },
     "toast": {
       "success": "¡Claves generadas exitosamente!",
@@ -2363,6 +2368,10 @@
         "title": "NIP-05 inválido",
         "description": "No se pudo verificar este identificador"
       },
+      "unknown": {
+        "title": "No se pudo comprobar",
+        "description": "La comprobación no obtuvo respuesta, así que no dice nada sobre si el identificador está bien configurado."
+      },
       "checkAnother": "Verificar otro",
       "getYourOwn": "Obtén tu propio identificador NIP-05"
     },
@@ -2392,6 +2401,22 @@
         "description": "No se pudo conectar para verificar el identificador",
         "fix": "Verifica tu conexión a internet e intenta de nuevo"
       },
+      "blocked": {
+        "title": "No se pudo leer el archivo desde este navegador",
+        "description": "El dominio no devolvió nada. Casi siempre es porque no envía la cabecera Access-Control-Allow-Origin que los navegadores exigen. Un dominio caído, mal escrito o bloqueado en tu conexión se ve igual desde aquí.",
+        "fix": "Revisa primero la dirección. Si el dominio es tuyo, sirve /.well-known/nostr.json con Access-Control-Allow-Origin: * y vuelve a comprobar. Las apps de Nostr no dependen de esa regla, así que allí el identificador puede funcionar ya."
+      },
+      "npubInsteadOfHex": {
+        "title": "El archivo tiene un npub donde va la clave en hex",
+        "description": "El archivo cargó y tu nombre está en él, pero el valor que lo acompaña es una cadena npub1. NIP-05 exige la clave pública en 64 caracteres hexadecimales, así que ningún cliente verificará este identificador.",
+        "fix": "Sustituye el npub del archivo nostr.json por la clave hex de abajo, deja las comillas como están y guarda el archivo."
+      },
+      "malformedKey": {
+        "title": "El valor del archivo no es una clave pública válida",
+        "description": "Tu nombre está en el archivo, pero el valor que lo acompaña no es una clave pública: tiene que ser exactamente 64 caracteres hexadecimales en minúscula.",
+        "fix": "Copia la clave pública en hex desde tu app de Nostr (no el npub) y pégala entera. Una clave cortada, un espacio de más o las mayúsculas rompen la verificación."
+      },
+      "hexLabel": "Pega esto en su lugar (clave pública en hex)",
       "fixLabel": "Solución:"
     },
     "providers": {
@@ -2410,7 +2435,6 @@
     "aboutNip05Body": "NIP-05 verifica una identidad de Nostr a través de un nombre de dominio. Te permite dar una dirección con aspecto de correo electrónico (tu@tudominio.com) en lugar de un npub larguísimo.",
     "messages": {
       "invalidFormat": "Formato inválido. Usa: usuario@dominio.com",
-      "corsBlocked": "Este dominio no acepta comprobaciones hechas directamente desde un navegador. Prueba la misma dirección en un cliente de Nostr.",
       "notConfigured": "Aquí no hay NIP-05 configurado, o no se pudo alcanzar el dominio.",
       "nameNotFound": "El nombre \"{name}\" no aparece en {domain}.",
       "networkError": "Algo salió mal al contactar con ese dominio. Revisa tu conexión e inténtalo de nuevo.",
@@ -2702,12 +2726,14 @@
       "count": "{count} relay(s) seleccionado(s)",
       "copy": "Copiar",
       "download": "Descargar",
-      "clear": "Limpiar"
+      "clear": "Limpiar",
+      "whereTo": "Pega estas direcciones en tu app de Nostr en Configuración → Relays → Agregar, una por línea."
     },
     "customRelay": {
       "placeholder": "Agregar relay personalizado (wss://...)",
       "add": "Agregar",
-      "description": "Un relay que añadiste tú."
+      "description": "Un relay que añadiste tú.",
+      "remove": "Quitar {name} de la lista"
     },
     "toast": {
       "starterPackAdded": "¡Relays del paquete inicial agregados!",
@@ -2771,6 +2797,9 @@
       "spatia-arcana": {
         "description": "Cualquiera puede leerlo, pero solo pueden publicar las personas que el operador ha aprobado."
       }
+    },
+    "starterPack": {
+      "button": "Elige un conjunto inicial por mí"
     }
   },
   "relayPlayground": {
@@ -3008,6 +3037,11 @@
       "96": "Almacenamiento de archivos por HTTP (sustituido por Blossom)",
       "98": "Autenticación HTTP",
       "99": "Anuncios clasificados"
+    },
+    "errors": {
+      "timedOut": "El relay no devolvió nada antes de que dejáramos de esperar. Puede estar ocupado, o puede responder solo a cuentas que ya conoce.",
+      "subscriptionRefused": "El relay rechazó esta solicitud. Algunos relays solo responden a quien ha pagado o ha iniciado sesión.",
+      "closedEarly": "El relay cerró la conexión antes de terminar de responder."
     }
   },
   "nostrSimulator": {
@@ -3259,7 +3293,13 @@
     "takeQuiz": "Responder Cuestionario",
     "continueLearning": "Continuar Aprendiendo",
     "dismiss": "Cerrar",
-    "upNext": "A continuación"
+    "upNext": "A continuación",
+    "quizComplete": "¡Quiz completado!",
+    "stillToFinish": "Te queda por terminar en {level}",
+    "unreadGuideDescription": "Todavía no has leído {title}.",
+    "unpassedQuizDescription": "El quiz de {title} sigue esperando una nota de aprobado.",
+    "guidesCounter": "{done}/{total} guías",
+    "quizzesCounter": "{done}/{total} quizzes"
   },
   "share": {
     "label": "Compartir:",
@@ -3385,7 +3425,9 @@
     "loading": "Cargando...",
     "errors": {
       "connectFailed": "No hemos podido conectar con este relay. Puede estar caído, o tu red puede estar bloqueándolo.",
-      "loadMoreFailed": "No hemos podido cargar publicaciones más antiguas. Inténtalo otra vez en un momento."
+      "loadMoreFailed": "No hemos podido cargar publicaciones más antiguas. Inténtalo otra vez en un momento.",
+      "timedOut": "Este relay respondió, pero no envió ninguna publicación, así que dejamos de esperar. Puede estar ocupado, o puede atender solo a quien tiene una cuenta con él.",
+      "refused": "Este relay rechazó la solicitud. Los relays de pago y los que piden aprobación suelen hacerlo mientras no tengas una cuenta con ellos."
     }
   },
   "officialAccount": {
@@ -3400,6 +3442,14 @@
       "nip05Failed": "No se pudo resolver NIP-05",
       "loadFailed": "No se pudieron cargar los datos de la cuenta"
     }
+  },
+  "guidePage": {
+    "lastUpdated": "Última actualización",
+    "levelPosition": "{level} · {current} de {total}"
+  },
+  "tableOfContents": {
+    "title": "En esta página",
+    "ariaLabel": "Secciones de la guía"
   },
   "guideFooter": {
     "improvePage": "Mejora esta página",

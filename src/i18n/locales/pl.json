@@ -1912,7 +1912,7 @@
     },
     "securityWarning": {
       "title": "Krytyczne ostrzeżenie bezpieczeństwa",
-      "description": "Twój klucz prywatny (nsec) jest jak hasło. Każdy, kto ma do niego dostęp, może przejąć kontrolę nad Twoim kontem. Uzupełnij poniższą listę kontrolną bezpieczeństwa przed kopiowaniem lub pobieraniem kluczy."
+      "description": "Twój klucz prywatny (nsec) działa jak hasło. Kto go ma, ten ma Twoje konto, więc zanim skopiujesz go albo zapiszesz, musisz odhaczyć poniższą listę."
     },
     "securityChecklist": {
       "title": "Lista kontrolna bezpieczeństwa",
@@ -1949,9 +1949,14 @@
     },
     "modal": {
       "title": "Ostrzeżenie bezpieczeństwa",
-      "description": "Nie uzupełniłeś wszystkich potwierdzeń bezpieczeństwa. Kopiowanie kluczy bez zrozumienia ryzyka może skutkować trwałą utratą dostępu.",
+      "description": "Lista bezpieczeństwa nie jest odhaczona do końca. Skopiowanie albo zapisanie klucza prywatnego, zanim znasz ryzyko, może kosztować Cię to konto na zawsze.",
       "goBack": "Wróć",
-      "copyAnyway": "Kopiuj mimo to"
+      "continueAnyway": "Kontynuuj mimo to"
+    },
+    "discardModal": {
+      "title": "Wyrzucić te klucze?",
+      "description": "Ta para istnieje tylko na tej stronie. Wygenerowanie nowej kasuje ją bezpowrotnie. Jeśli nie masz jeszcze zapisanego klucza prywatnego, wróć i zapisz go najpierw.",
+      "confirm": "Wyrzuć i generuj nową"
     },
     "toast": {
       "success": "Klucze wygenerowane pomyślnie!",
@@ -2363,6 +2368,10 @@
         "title": "Nieprawidłowy NIP-05",
         "description": "Nie można zweryfikować tego identyfikatora"
       },
+      "unknown": {
+        "title": "Nie udało się tego sprawdzić",
+        "description": "Sprawdzanie nie dostało odpowiedzi, więc nie mówi nic o tym, czy identyfikator jest dobrze ustawiony."
+      },
       "checkAnother": "Sprawdź inny",
       "getYourOwn": "Uzyskaj własny identyfikator NIP-05"
     },
@@ -2392,6 +2401,22 @@
         "description": "Nie można połączyć się w celu weryfikacji identyfikatora",
         "fix": "Sprawdź połączenie internetowe i spróbuj ponownie"
       },
+      "blocked": {
+        "title": "Nie udało się odczytać pliku z poziomu przeglądarki",
+        "description": "Domena nic nie odpowiedziała. Zwykle znaczy to, że nie wysyła nagłówka Access-Control-Allow-Origin, którego wymagają przeglądarki. Tak samo wygląda stąd domena wyłączona, wpisana z literówką albo zablokowana na Twoim łączu.",
+        "fix": "Najpierw sprawdź adres. Jeśli domena jest Twoja, ustaw dla /.well-known/nostr.json nagłówek Access-Control-Allow-Origin: * i sprawdź ponownie. Aplikacje Nostr nie podlegają tej regule, więc tam identyfikator może już działać."
+      },
+      "npubInsteadOfHex": {
+        "title": "W pliku jest npub zamiast klucza w hex",
+        "description": "Plik się wczytał i Twoja nazwa w nim jest, ale wartość obok niej to ciąg npub1. NIP-05 wymaga klucza publicznego jako 64 znaków szesnastkowych, więc żaden klient nie zweryfikuje tego identyfikatora.",
+        "fix": "Zamień npub w pliku nostr.json na poniższy klucz w hex, zostaw cudzysłowy i zapisz plik."
+      },
+      "malformedKey": {
+        "title": "Wartość w pliku nie jest poprawnym kluczem publicznym",
+        "description": "Twoja nazwa jest w pliku, ale wartość obok niej nie jest kluczem publicznym: musi mieć dokładnie 64 znaki szesnastkowe, wszystkie małe.",
+        "fix": "Skopiuj klucz publiczny w hex ze swojej aplikacji Nostr (nie npub) i wklej go w całości. Ucięty klucz, zbędna spacja albo wielkie litery psują weryfikację."
+      },
+      "hexLabel": "Wklej to zamiast npub (klucz publiczny w hex)",
       "fixLabel": "Rozwiązanie:"
     },
     "providers": {
@@ -2410,7 +2435,6 @@
     "aboutNip05Body": "NIP-05 potwierdza tożsamość w Nostr przez nazwę domeny. Dzięki temu podajesz adres wyglądający jak e-mail (ty@twojadomena.com) zamiast długiego npuba.",
     "messages": {
       "invalidFormat": "Nieprawidłowy format. Użyj: użytkownik@domena.com",
-      "corsBlocked": "Ta domena nie pozwala na sprawdzanie prosto z przeglądarki. Spróbuj tego samego adresu w kliencie Nostr.",
       "notConfigured": "NIP-05 nie jest tu skonfigurowany albo nie udało się połączyć z domeną.",
       "nameNotFound": "Nazwy \"{name}\" nie ma na liście w domenie {domain}.",
       "networkError": "Coś poszło nie tak przy łączeniu z tą domeną. Sprawdź połączenie i spróbuj ponownie.",
@@ -2702,12 +2726,14 @@
       "count": "Wybrano {count} relay",
       "copy": "Kopiuj",
       "download": "Pobierz",
-      "clear": "Wyczyść"
+      "clear": "Wyczyść",
+      "whereTo": "Wklej je w swojej aplikacji Nostr w Ustawienia → Relaye → Dodaj, po jednym adresie w wierszu."
     },
     "customRelay": {
       "placeholder": "Dodaj własne relay (wss://...)",
       "add": "Dodaj",
-      "description": "Relay dodany przez Ciebie."
+      "description": "Relay dodany przez Ciebie.",
+      "remove": "Usuń {name} z listy"
     },
     "toast": {
       "starterPackAdded": "Dodano relay z pakietu startowego!",
@@ -2771,6 +2797,9 @@
       "spatia-arcana": {
         "description": "Czytać może każdy, ale publikują tylko osoby zatwierdzone przez operatora."
       }
+    },
+    "starterPack": {
+      "button": "Wybierz za mnie zestaw startowy"
     }
   },
   "relayPlayground": {
@@ -3008,6 +3037,11 @@
       "96": "Przechowywanie plików przez HTTP (zastąpione przez Blossom)",
       "98": "Uwierzytelnianie HTTP",
       "99": "Ogłoszenia drobne"
+    },
+    "errors": {
+      "timedOut": "Relay nic nie odesłał, zanim przestaliśmy czekać. Może być zajęty albo odpowiada tylko kontom, które już zna.",
+      "subscriptionRefused": "Relay odrzucił to zapytanie. Część relayów odpowiada tylko osobom, które zapłaciły albo się zalogowały.",
+      "closedEarly": "Relay zamknął połączenie, zanim skończył odpowiadać."
     }
   },
   "nostrSimulator": {
@@ -3259,7 +3293,13 @@
     "takeQuiz": "Rozwiąż quiz",
     "continueLearning": "Kontynuuj naukę",
     "dismiss": "Zamknij",
-    "upNext": "Dalej"
+    "upNext": "Dalej",
+    "quizComplete": "Quiz ukończony!",
+    "stillToFinish": "Do dokończenia na poziomie {level}",
+    "unreadGuideDescription": "Nie masz jeszcze przeczytanego przewodnika {title}.",
+    "unpassedQuizDescription": "Quiz w przewodniku {title} wciąż czeka na zaliczenie.",
+    "guidesCounter": "{done}/{total} przewodników",
+    "quizzesCounter": "{done}/{total} quizów"
   },
   "share": {
     "label": "Udostępnij:",
@@ -3385,7 +3425,9 @@
     "loading": "Ładowanie...",
     "errors": {
       "connectFailed": "Nie udało się połączyć z tym relayem. Może być wyłączony albo blokuje go twoja sieć.",
-      "loadMoreFailed": "Nie udało się wczytać starszych postów. Spróbuj za chwilę."
+      "loadMoreFailed": "Nie udało się wczytać starszych postów. Spróbuj za chwilę.",
+      "timedOut": "Ten relay odpowiedział, ale nie przysłał żadnych postów, więc przestaliśmy czekać. Może być zajęty albo obsługuje tylko osoby, które mają u niego konto.",
+      "refused": "Ten relay odrzucił zapytanie. Relaye płatne i te tylko za zgodą operatora często tak robią, dopóki nie masz u nich konta."
     }
   },
   "officialAccount": {
@@ -3400,6 +3442,14 @@
       "nip05Failed": "Nie udało się rozwiązać NIP-05",
       "loadFailed": "Nie udało się załadować danych konta"
     }
+  },
+  "guidePage": {
+    "lastUpdated": "Ostatnia aktualizacja",
+    "levelPosition": "{level} · {current} z {total}"
+  },
+  "tableOfContents": {
+    "title": "Na tej stronie",
+    "ariaLabel": "Sekcje poradnika"
   },
   "guideFooter": {
     "improvePage": "Ulepsz tę stronę",

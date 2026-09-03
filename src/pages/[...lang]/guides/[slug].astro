@@ -49,6 +49,7 @@ import {
 import { MinimalProgressBar, GuidePositionIndicator } from '../../../components/progress/MinimalProgress';
 import { ProgressTracker } from '../../../components/progress/ProgressTracker';
 import { GuideNavigation } from '../../../components/navigation/GuideNavigation';
+import { TableOfContents, type TocHeading } from '../../../components/guides/TableOfContents';
 import { ContinueLearning } from '../../../components/navigation/ContinueLearning';
 import { GuideCompletionIndicator } from '../../../components/navigation/GuideCompletionIndicator';
 import { EnhancedGuideCompletionIndicator } from '../../../components/navigation/EnhancedGuideCompletionIndicator';
@@ -56,6 +57,7 @@ import { PrerequisiteWarning } from '../../../components/navigation/Prerequisite
 import { BadgeEarnedModalListener } from '../../../components/gamification/BadgeEarnedModalListener';
 import type { Badge } from '../../../components/gamification/types';
 import { LEARNING_PATHS, getPreviousGuideInPath, getNextGuideInPath, getGuidePositionInPath, getPathLength, getAllGuidesOrdered, getGuideLevel } from '../../../data/learning-paths';
+import type { MarkdownHeading } from 'astro';
 import { locales, getLocaleConfig, type Locale } from '../../../config/locales';
 import { langParam, DEFAULT_LOCALE, guidesIndexPath } from '../../../i18n/paths';
 import { breadcrumbList } from '../../../lib/breadcrumbs';
@@ -118,7 +120,28 @@ const title =
     ? `${guide.data.title} - Nostr Beginner Guide`
     : guide.data.title);
 const description = guide.data.description ?? 'Learn how to use Nostr with our beginner-friendly guides.';
-const { Content } = await guide.render();
+const { Content, headings } = await guide.render();
+
+// Table of contents. Astro extracts these from the markdown headings and
+// rehype-slug has already put the same ids on the rendered elements, in all
+// seven locales (Arabic, Chinese and Hindi included — the slugs are non-ASCII
+// but they are real ids, so getElementById finds them).
+//
+// The parenthetical reading time some headings carry ("Understanding Keys
+// (2 minutes)") is dropped: it belongs next to the heading, not in a 15rem
+// column. The pattern is any trailing parenthesis containing a digit, which
+// holds for "(10 minut)" and "(12 دقيقة)" too. Chinese headings use full-width
+// parentheses ("（3 分钟）"), so both pairs are matched.
+const HEADING_TIME_SUFFIX = /\s*[(（][^()（）]*\d[^()（）]*[)）]\s*$/;
+const tocHeadings: TocHeading[] = (headings as MarkdownHeading[])
+  .filter(h => (h.depth === 2 || h.depth === 3) && Boolean(h.slug) && h.text.trim().length > 0)
+  .map(h => ({ depth: h.depth, slug: h.slug, text: h.text.replace(HEADING_TIME_SUFFIX, '').trim() }));
+
+// Guides run from 4 headings to 45. A contents list is only worth its space
+// when there is something to choose between: the FAQ guide is a single
+// <FAQAccordion> under one heading, and a one-entry list there is furniture.
+const topLevelHeadings = tocHeadings.filter(h => h.depth === 2).length;
+const showToc = topLevelHeadings >= 2 && tocHeadings.length >= 3;
 // Get user's active path from localStorage (default to 'general' if not set)
 // This runs on server, so we'll pass the path ID to client components
 const guideSlug = guide.slug.replace(`${locale}/`, '');
@@ -131,6 +154,22 @@ const guideSlug = guide.slug.replace(`${locale}/`, '');
 // as if it were the course level. Translated per locale via skillLevels.*.label.
 const guideLevel = getGuideLevel(guideSlug);
 const levelLabel = guideLevel ? t(`skillLevels.${guideLevel}.label`, locale) : undefined;
+
+// Where the reader is in the course. The counter was written, computed and then
+// commented out (audit #52, #63): the settings page still promises a
+// "Guide X of Y" indicator that no page rendered. It is a pure function of the
+// slug, so it needs no island and no stored progress — and it counts within the
+// level, which is the unit the hub, the level bars and the end-of-guide banner
+// all use.
+const levelPosition = guideLevel ? getGuidePositionInPath(guideSlug, guideLevel) : -1;
+const levelTotal = guideLevel ? getPathLength(guideLevel) : 0;
+const levelChipLabel =
+  levelLabel && levelPosition > 0
+    ? t('guidePage.levelPosition', locale)
+        .replace('{level}', levelLabel)
+        .replace('{current}', String(levelPosition))
+        .replace('{total}', String(levelTotal))
+    : levelLabel;
 
 // Calculate position for both global order and path-based
 const currentGuideNumGlobal = GUIDE_ORDER.indexOf(guideSlug) + 1;
@@ -232,7 +271,12 @@ const prerequisiteData = prerequisites.map(prereqSlug => {
   const prereqGuide = guidesMap.get(prereqSlug);
   return {
     slug: prereqSlug,
-    title: prereqGuide?.data.title || prereqSlug
+    title: prereqGuide?.data.title || prereqSlug,
+    // PrerequisiteWarning renders both its per-guide clock chip and its "about
+    // N minutes" footer behind this field (audit #90). It was never passed, so
+    // the banner asked readers to go do prerequisite work without ever saying
+    // what it costs.
+    estimatedTime: prereqGuide?.data.estimatedTime
   };
 });
 
@@ -323,7 +367,26 @@ const components = {
       <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 dark:from-primary/5 dark:to-secondary/5" />
 
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative">
-        <div class="max-w-3xl mx-auto bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-lg">
+        <!--
+          Below xl this is one column: a collapsed "On this page" bar, then the
+          article card. From xl the contents move into a sticky 15rem column
+          beside the card (col-start-2 flips to the left side under dir="rtl"
+          on its own). The article track stays 48rem — the same width max-w-3xl
+          gave it — so adding the column does not stretch the reading measure.
+          Without a contents list the wrapper stays the plain centred max-w-3xl
+          it always was.
+        -->
+        <div class={showToc
+          ? 'mx-auto max-w-3xl xl:max-w-none xl:grid xl:grid-cols-[48rem_15rem] xl:justify-center xl:items-start xl:gap-10'
+          : 'mx-auto max-w-3xl'}>
+          {showToc && (
+            <TableOfContents
+              client:idle
+              headings={tocHeadings}
+              className="mb-6 xl:col-start-2 xl:row-start-1 xl:mb-0 xl:sticky xl:top-24"
+            />
+          )}
+          <div class="bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-lg xl:col-start-1 xl:row-start-1">
           <article class="prose prose-lg dark:prose-invert max-w-none px-6 sm:px-10 lg:px-12 py-10">
             <div class="flex items-center justify-between mb-2">
               <!-- <p class="text-sm uppercase tracking-wide text-primary-600 dark:text-primary-400 font-semibold">Guide</p> -->
@@ -353,15 +416,15 @@ const components = {
                 </span>
               )}
 
-              {levelLabel && (
+              {levelChipLabel && (
                 <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary-600 dark:text-primary-400">
-                  {levelLabel}
+                  {levelChipLabel}
                 </span>
               )}
 
               {modifiedDate && (
                 <span class="inline-flex items-center gap-2">
-                  Last updated <time datetime={modifiedDate}>{modifiedDate}</time>
+                  {t('guidePage.lastUpdated', locale)} <time datetime={modifiedDate}>{modifiedDate}</time>
                 </span>
               )}
             </div>
@@ -423,6 +486,7 @@ const components = {
               </a>
             </div>
           </article>
+          </div>
         </div>
       </div>
     </section>

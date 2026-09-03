@@ -4,6 +4,9 @@ import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import { BadgeEarnedModalListener } from '../components/gamification/BadgeEarnedModalListener';
 import { PrivacyControls } from '../components/progress/PrivacyControls';
+import { SUPPORT } from '../data/support';
+
+const nostrProfileUrl = `https://njump.me/${SUPPORT.npub}`;
 ---
 
 <!-- noindex: this page renders the visitor's own localStorage state, so it is
@@ -46,7 +49,7 @@ import { PrivacyControls } from '../components/progress/PrivacyControls';
     </section>
 
     <!-- Additional Info -->
-    <section class="py-12 lg:py-16 bg-gray-50 dark:bg-gray-900/50">
+    <section class="py-12 lg:py-16 bg-gray-50 dark:bg-gray-900">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-2xl mx-auto">
           <h2 class="text-2xl font-bold mb-6">About Our Privacy Approach</h2>
@@ -55,14 +58,14 @@ import { PrivacyControls } from '../components/progress/PrivacyControls';
             <div>
               <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Local-First Design</h3>
               <p>
-                All your progress data is stored locally in your browser. Nothing is sent to our servers or any third parties. Your learning journey stays private.
+                Your progress, badges and quiz results live in this browser's local storage and are never sent anywhere. The site does count anonymous page views through Cloudflare Web Analytics, with no cookies and nothing that identifies you. The <a href="/privacy" class="text-primary-600 dark:text-primary-400 hover:underline">Privacy Policy</a> has the details.
               </p>
             </div>
-            
+
             <div>
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Opt-In Philosophy</h3>
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Tracking Starts On</h3>
               <p>
-                Progress tracking is disabled by default. We believe you should choose what features to enable. No dark patterns, no forced tracking.
+                Progress tracking is on from your first page view, so the first guide you read already counts toward your streak and badges. It records nothing beyond this browser. The Progress Tracking switch above turns it off, and once it is off nothing new is written. What was already saved stays until you use Delete All Progress Data.
               </p>
             </div>
             
@@ -83,7 +86,7 @@ import { PrivacyControls } from '../components/progress/PrivacyControls';
           
           <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
             <p class="text-sm text-gray-500 dark:text-gray-400">
-              Have questions about privacy? Check our <a href="/privacy" class="text-primary-600 dark:text-primary-400 hover:underline">Privacy Policy</a> or reach out on Nostr.
+              Have questions about privacy? Check our <a href="/privacy" class="text-primary-600 dark:text-primary-400 hover:underline">Privacy Policy</a> or <a href={nostrProfileUrl} class="text-primary-600 dark:text-primary-400 hover:underline" target="_blank" rel="noopener noreferrer">ask us on Nostr</a>.
             </p>
           </div>
         </div>

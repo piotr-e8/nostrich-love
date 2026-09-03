@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ArrowRight, BookOpen, CheckCircle, GraduationCap, X, Lock } from 'lucide-react';
+import { ArrowRight, BookOpen, CheckCircle, GraduationCap, X } from 'lucide-react';
 import { cn } from '../../lib/utils';
-import { SKILL_LEVELS, type SkillLevel, getNextLevel, getGuideLevel } from '../../data/learning-paths';
+import { type SkillLevel, guideHasQuiz } from '../../data/learning-paths';
 import {
-  getCompletedGuidesInLevel as getCompletedInLevel,
-  getLevelProgressLocal as getLevelProgress,
-} from '../../lib/progress';
+  getCompletedGuides,
+  getPassedQuizzes,
+  getQuizResult,
+  QUIZ_COMPLETED_EVENT,
+} from '../../utils/gamification';
+import {
+  planContinueLearning,
+  type ContinueLearningPlan,
+} from './continueLearningPlan';
 import { useTranslation } from '../../hooks/useTranslation';
 import { guidesIndexPath } from "../../i18n/paths";
 import type { Locale } from '../../config/locales';
@@ -22,6 +28,27 @@ function readSessionDismissed(): boolean {
     // SSR, Safari private mode, or storage disabled — start undismissed.
     return false;
   }
+}
+
+/**
+ * Slug of the guide being read.
+ *
+ * The site's canonical URLs and its sitemap both carry a trailing slash, so a
+ * reader arriving from search lands on /guides/what-is-nostr/. Splitting that
+ * on '/' hands back an empty last segment, no level is found, and the whole
+ * panel silently disappears — which is exactly what happened before the
+ * trailing slash was stripped here.
+ */
+function currentSlugFromPath(): string {
+  if (typeof window === 'undefined') return '';
+  return window.location.pathname.replace(/\/+$/, '').split('/').pop() || '';
+}
+
+function formatGuideTitle(slug: string): string {
+  return slug
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 }
 
 interface ContinueLearningProps {
@@ -126,17 +153,7 @@ export function ContinueLearning({
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(readSessionDismissed);
   const [isViewingQuiz, setIsViewingQuiz] = useState(false);
-  const [quizCompleted, setQuizCompleted] = useState(false);
-  const [nextGuide, setNextGuide] = useState(initialNextGuide);
-  const [currentLevel, setCurrentLevel] = useState<SkillLevel>('beginner');
-  const [isLevelComplete, setIsLevelComplete] = useState(false);
-  const [nextLevelInfo, setNextLevelInfo] = useState<{
-    level: SkillLevel | null;
-    unlocked: boolean;
-    guidesNeeded: number;
-    completedCount: number;
-    totalInCurrent: number;
-  } | null>(null);
+  const [model, setModel] = useState<ContinueLearningPlan | null>(null);
 
   const dismiss = useCallback(() => {
     setIsDismissed(true);
@@ -147,128 +164,86 @@ export function ContinueLearning({
     }
   }, []);
 
-  // Calculate level-based next guide on mount
+  // [slug].astro resolves the next guide's localized title at build time, so
+  // prefer it over the slug-derived fallback when the target happens to match.
+  const titleOf = useCallback(
+    (slug: string) =>
+      guideTitles?.[slug] ||
+      (initialNextGuide?.slug === slug ? initialNextGuide.title : undefined) ||
+      formatGuideTitle(slug),
+    [guideTitles, initialNextGuide]
+  );
+
+  const buildModel = useCallback((): ContinueLearningPlan | null => {
+    const slug = currentSlugFromPath();
+    return planContinueLearning({
+      slug,
+      readGuides: getCompletedGuides(),
+      passedQuizzes: getPassedQuizzes(),
+      hasQuiz: hasQuiz || guideHasQuiz(slug),
+      quizAttempted: getQuizResult(slug) !== null,
+    });
+  }, [hasQuiz]);
+
   useEffect(() => {
     try {
-      const pathParts = window.location.pathname.split('/');
-      const currentSlug = pathParts[pathParts.length - 1];
-
-      // Determine which level this guide belongs to (not user's current level)
-      const guideLevel = getGuideLevel(currentSlug);
-
-      if (!guideLevel) {
-        // Guide not found in any level
-        setNextGuide(undefined);
-        setIsLevelComplete(false);
-        return;
-      }
-
-      setCurrentLevel(guideLevel);
-
-      const levelConfig = SKILL_LEVELS[guideLevel];
-      const levelProgress = getLevelProgress(guideLevel);
-      const completedCount = getCompletedInLevel(guideLevel).length;
-      const totalInLevel = levelConfig.sequence.length;
-
-      // Check if current level is complete
-      const isComplete = completedCount >= totalInLevel;
-      setIsLevelComplete(isComplete);
-
-      // Get next level info
-      const nextLevel = getNextLevel(guideLevel);
-      if (nextLevel) {
-        // Nothing is gated any more.
-        const nextUnlocked = true;
-        const guidesNeeded = 0;
-
-        setNextLevelInfo({
-          level: nextLevel,
-          unlocked: nextUnlocked,
-          guidesNeeded,
-          completedCount,
-          totalInCurrent: totalInLevel
-        });
-
-        // If level complete, no next guide in current level
-        if (isComplete) {
-          setNextGuide(undefined);
-          return;
-        }
-      } else {
-        setNextLevelInfo(null);
-      }
-
-      // Find next incomplete guide in current level
-      if (levelConfig?.sequence.includes(currentSlug)) {
-        const currentIndex = levelConfig.sequence.indexOf(currentSlug);
-
-        // Look for next incomplete guide after current
-        for (let i = currentIndex + 1; i < levelConfig.sequence.length; i++) {
-          const nextSlug = levelConfig.sequence[i];
-          const isCompleted = getCompletedInLevel(guideLevel).includes(nextSlug);
-
-          if (!isCompleted) {
-            const title = guideTitles?.[nextSlug] || formatGuideTitle(nextSlug);
-            setNextGuide({ slug: nextSlug, title });
-            setIsLevelComplete(false);
-            return;
-          }
-        }
-
-        // If we've gone through all guides and they're all complete
-        setNextGuide(undefined);
-        setIsLevelComplete(true);
-      } else {
-        setNextGuide(undefined);
-      }
+      setModel(buildModel());
     } catch (error) {
       console.error('[ContinueLearning] Error:', error);
     }
-  }, [guideTitles]);
+  }, [buildModel]);
 
-  // Helper to format guide title (fallback)
-  function formatGuideTitle(slug: string): string {
-    return slug
-      .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
-  }
+  // The moment a quiz records a result, the panel has a different answer to
+  // give. Before this, completion was sniffed for as a `[data-quiz-completed]`
+  // element that no quiz on the site has ever rendered, so the panel offered
+  // "Take the Quiz" for the whole life of the page — including to a reader
+  // staring at their own results.
+  useEffect(() => {
+    const onQuizCompleted = () => {
+      try {
+        setModel(buildModel());
+      } catch {
+        // Keep whatever we had rather than blanking the panel.
+      }
+      setIsViewingQuiz(false);
+      if (!readSessionDismissed()) setIsVisible(true);
+    };
 
-  // Detect if user is viewing quiz section
+    window.addEventListener(QUIZ_COMPLETED_EVENT, onQuizCompleted);
+    return () => window.removeEventListener(QUIZ_COMPLETED_EVENT, onQuizCompleted);
+  }, [buildModel]);
+
+  const quizPending = Boolean(model?.quiz && !model.quiz.attempted);
+
+  // While the reader is still working through the quiz, stay out of the way.
+  // Once it is answered the panel is the thing they need, so the quiz filling
+  // the viewport must no longer hide it.
   const checkQuizVisibility = useCallback(() => {
-    if (!hasQuiz) return;
+    if (!quizPending) {
+      setIsViewingQuiz(false);
+      return;
+    }
 
     const quizElement = document.querySelector(quizSelector);
     if (!quizElement) return;
 
     const rect = quizElement.getBoundingClientRect();
     const windowHeight = window.innerHeight;
-
-    // Quiz is considered "in view" if it's occupying >50% of viewport
     const quizVisibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
-    const isQuizInViewport = quizVisibleHeight > windowHeight * 0.5;
 
-    setIsViewingQuiz(isQuizInViewport);
-
-    // Check if quiz is completed (look for completion indicators)
-    const completionIndicator = quizElement.querySelector('[data-quiz-completed], .quiz-completed');
-    if (completionIndicator) {
-      setQuizCompleted(true);
-    }
-  }, [hasQuiz, quizSelector]);
+    setIsViewingQuiz(quizVisibleHeight > windowHeight * 0.5);
+  }, [quizPending, quizSelector]);
 
   useEffect(() => {
-    if (!nextGuide && !isLevelComplete) return;
+    if (!model) return;
 
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
 
-      // Check quiz visibility
       checkQuizVisibility();
 
-      // Show when user reaches threshold, unless viewing quiz
       if (scrollPercent >= threshold && !isDismissed) {
         setIsVisible(true);
       }
@@ -278,7 +253,7 @@ export function ContinueLearning({
     handleScroll(); // Check initial position
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [nextGuide, isLevelComplete, threshold, isDismissed, checkQuizVisibility]);
+  }, [model, threshold, isDismissed, checkQuizVisibility]);
 
   const scrollToQuiz = () => {
     const quizElement = document.querySelector(quizSelector);
@@ -287,18 +262,7 @@ export function ContinueLearning({
     }
   };
 
-  const navigateToNextLevel = () => {
-    if (!nextLevelInfo?.level) return;
-
-    const nextLevel = nextLevelInfo.level;
-    const nextLevelConfig = SKILL_LEVELS[nextLevel];
-
-    if (nextLevelInfo.unlocked && nextLevelConfig) {
-      // Navigate to first guide in next level
-      const firstGuide = nextLevelConfig.sequence[0];
-      window.location.href = `${guidesPrefix}/${firstGuide}`;
-    }
-  };
+  const levelName = (level: SkillLevel) => t(`skillLevels.${level}.label`);
 
   const dismissLabel = t('continueLearning.dismiss');
 
@@ -313,17 +277,66 @@ export function ContinueLearning({
     </button>
   );
 
-  // Hide when not yet scrolled far enough, dismissed, or actively viewing quiz
-  if (!isVisible || isDismissed || isViewingQuiz) return null;
+  /** Card shell for the desktop panel. Always a bottom bar. */
+  const desktopCard = (children: React.ReactNode, accent: 'primary' | 'green') => (
+    <div className="hidden md:block">
+      <div
+        className={cn(
+          'fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-lg',
+          'animate-in fade-in duration-500 slide-in-from-bottom-4',
+          className
+        )}
+      >
+        <div
+          className={cn(
+            'relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl p-6',
+            accent === 'green'
+              ? 'border-2 border-green-300 dark:border-green-700'
+              : 'border-2 border-primary/30 shadow-primary/10'
+          )}
+        >
+          {children}
+        </div>
+      </div>
+    </div>
+  );
 
-  // Level complete variant
-  if (isLevelComplete) {
-    const currentLevelConfig = SKILL_LEVELS[currentLevel];
+  if (!isVisible || isDismissed || isViewingQuiz || !model) return null;
 
-    // Check if this is the final level (Advanced)
-    const isFinalLevel = !nextLevelInfo?.level;
+  const { target } = model;
+  const targetTitle = target ? titleOf(target.slug) : '';
 
-    if (isFinalLevel) {
+  /**
+   * Guides and quizzes, side by side. The site used to call a level complete on
+   * guides alone while the certificate needed the quizzes too, so a reader was
+   * congratulated and then handed nothing. Showing both counts is what makes
+   * the two agree in the reader's head.
+   */
+  const counters = (
+    <div className="flex items-center justify-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+      <span>
+        {t('continueLearning.guidesCounter')
+          .replace('{done}', String(model.guidesRead))
+          .replace('{total}', String(model.guidesTotal))}
+      </span>
+      {model.quizzesTotal > 0 && (
+        <>
+          <span aria-hidden="true">·</span>
+          <span>
+            {t('continueLearning.quizzesCounter')
+              .replace('{done}', String(model.quizzesPassed))
+              .replace('{total}', String(model.quizzesTotal))}
+          </span>
+        </>
+      )}
+    </div>
+  );
+
+  // ---------------------------------------------------------------- complete
+  if (model.levelComplete) {
+    const finished = model.allLevelsComplete && !model.nextLevel;
+
+    if (finished) {
       return (
         <>
           <MobileBar
@@ -334,117 +347,129 @@ export function ContinueLearning({
             onDismiss={dismiss}
             dismissLabel={dismissLabel}
           />
-          <div className="hidden md:block">
-            <div className={cn(
-              'fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-lg',
-              'animate-in fade-in duration-500 slide-in-from-bottom-4',
-              className
-            )}>
-              <div className="relative bg-white dark:bg-gray-900 rounded-2xl border-2 border-green-300 dark:border-green-700 shadow-2xl p-6">
-                {dismissButton}
-                <div className="text-center">
-                  <div className="text-4xl mb-2">🎉</div>
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
-                    {t('continueLearning.allLevelsComplete')}
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                    {t('continueLearning.allLevelsCompleteDescription').replace('{level}', currentLevelConfig.label)}
-                  </p>
-                  <a
-                    href={guidesPrefix}
-                    className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
-                  >
-                    <CheckCircle className="w-4 h-4" />
-                    {t('guideNavigation.exploreAllGuides')}
-                  </a>
-                </div>
+          {desktopCard(
+            <>
+              {dismissButton}
+              <div className="text-center">
+                <div className="text-4xl mb-2">🎉</div>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                  {t('continueLearning.allLevelsComplete')}
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                  {t('continueLearning.allLevelsCompleteDescription').replace(
+                    '{level}',
+                    levelName(model.level)
+                  )}
+                </p>
+                <a
+                  href={guidesPrefix}
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
+                >
+                  <CheckCircle className="w-4 h-4" />
+                  {t('guideNavigation.exploreAllGuides')}
+                </a>
               </div>
-            </div>
-          </div>
+            </>,
+            'green'
+          )}
         </>
       );
     }
 
-    const nextLevelLabel = nextLevelInfo?.level
-      ? SKILL_LEVELS[nextLevelInfo.level].label
-      : '';
-    const continueToLevelLabel = t('continueLearning.continueToLevel').replace('{level}', nextLevelLabel);
+    const onwardLabel = model.nextLevel
+      ? t('continueLearning.continueToLevel').replace('{level}', levelName(model.nextLevel))
+      : t('continueLearning.browseAllGuides');
+    const onwardHref =
+      model.nextLevel && target ? `${guidesPrefix}/${target.slug}` : guidesPrefix;
 
     return (
       <>
         <MobileBar
           label={t('continueLearning.levelComplete')}
-          title={continueToLevelLabel}
-          action={{ onClick: navigateToNextLevel }}
-          actionLabel={continueToLevelLabel}
+          title={onwardLabel}
+          action={{ href: onwardHref }}
+          actionLabel={onwardLabel}
           actionIcon={<ArrowRight className="h-5 w-5 rtl:rotate-180" aria-hidden="true" />}
           onDismiss={dismiss}
           dismissLabel={dismissLabel}
         />
-        <div className="hidden md:block">
-          <div className={cn(
-            'fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-lg',
-            'animate-in fade-in duration-500 slide-in-from-bottom-4',
-            className
-          )}>
-            <div className="relative bg-white dark:bg-gray-900 rounded-2xl border-2 border-green-300 dark:border-green-700 shadow-2xl p-6">
-              {dismissButton}
-              <div className="text-center">
-                <div className="text-4xl mb-2">🎉</div>
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
-                  {t('continueLearning.levelComplete')}
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                  {t('continueLearning.levelCompleteDescription').replace('{level}', currentLevelConfig.label)}
-                </p>
-
-                {nextLevelInfo?.unlocked ? (
-                  <button
-                    onClick={navigateToNextLevel}
-                    className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
-                  >
-                    {continueToLevelLabel}
-                    <ArrowRight className="w-4 h-4 rtl:rotate-180" />
-                  </button>
-                ) : (
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-center gap-2 text-amber-600 dark:text-amber-400">
-                      <Lock className="w-4 h-4" />
-                      <span className="text-sm font-medium">
-                        {t('continueLearning.locked').replace('{level}', nextLevelLabel)}
-                      </span>
-                    </div>
-                    {nextLevelInfo && nextLevelInfo.guidesNeeded > 0 && (
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
-                        {t('continueLearning.unlockRequirements').replace('{count}', String(nextLevelInfo.guidesNeeded)).replace('{currentLevel}', currentLevelConfig.label).replace('{nextLevel}', nextLevelLabel).replace('{plural}', nextLevelInfo.guidesNeeded !== 1 ? 's' : '')}
-                      </p>
-                    )}
-                    <a
-                      href={guidesPrefix}
-                      className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                    >
-                      <BookOpen className="w-4 h-4" />
-                      {t('continueLearning.browseAllGuides')}
-                    </a>
-                  </div>
+        {desktopCard(
+          <>
+            {dismissButton}
+            <div className="text-center">
+              <div className="text-4xl mb-2">🎉</div>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                {t('continueLearning.levelComplete')}
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                {t('continueLearning.levelCompleteDescription').replace(
+                  '{level}',
+                  levelName(model.level)
                 )}
-              </div>
+              </p>
+              <div className="mb-4">{counters}</div>
+              <a
+                href={onwardHref}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
+              >
+                {onwardLabel}
+                <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+              </a>
             </div>
-          </div>
-        </div>
+          </>,
+          'green'
+        )}
       </>
     );
   }
 
-  if (!nextGuide) return null;
+  // ------------------------------------------------------------- in progress
+  const quizAttempted = Boolean(model.quiz?.attempted);
+  const showRetake = Boolean(model.quiz && model.quiz.attempted && !model.quiz.passed);
+  const targetHref = target ? `${guidesPrefix}/${target.slug}` : guidesPrefix;
+  const isBackfill = target?.kind === 'backfill';
 
-  const showQuizCta = hasQuiz && !quizCompleted;
+  const eyebrow = quizAttempted
+    ? t('continueLearning.quizComplete')
+    : t('continueLearning.guideComplete');
+
+  let heading: string;
+  let description: string;
+
+  if (quizPending) {
+    heading = t('continueLearning.testKnowledge');
+    description = t('continueLearning.quizDescription');
+  } else if (isBackfill) {
+    heading = t('continueLearning.stillToFinish').replace('{level}', levelName(model.level));
+    description = (
+      target?.missing === 'quiz'
+        ? t('continueLearning.unpassedQuizDescription')
+        : t('continueLearning.unreadGuideDescription')
+    ).replace('{title}', targetTitle);
+  } else if (target?.kind === 'level' && target.level) {
+    heading = t('continueLearning.continueToLevel').replace('{level}', levelName(target.level));
+    description = t('continueLearning.continueDescription').replace('{title}', targetTitle);
+  } else if (target) {
+    heading = t('continueLearning.nextGuide');
+    description = t('continueLearning.continueDescription').replace('{title}', targetTitle);
+  } else {
+    heading = t('continueLearning.nextGuide');
+    description = t('continueLearning.browseAllGuides');
+  }
+
+  const mobileLabel = quizPending
+    ? t('continueLearning.guideComplete')
+    : isBackfill
+      ? t('continueLearning.stillToFinish').replace('{level}', levelName(model.level))
+      : quizAttempted
+        ? t('continueLearning.quizComplete')
+        : t('continueLearning.upNext');
 
   return (
     <>
-      {showQuizCta ? (
+      {quizPending ? (
         <MobileBar
-          label={t('continueLearning.guideComplete')}
+          label={mobileLabel}
           title={t('continueLearning.takeQuiz')}
           action={{ onClick: scrollToQuiz }}
           actionLabel={t('continueLearning.takeQuiz')}
@@ -454,89 +479,88 @@ export function ContinueLearning({
         />
       ) : (
         <MobileBar
-          label={t('continueLearning.upNext')}
-          title={nextGuide.title}
-          action={{ href: `${guidesPrefix}/${nextGuide.slug}` }}
+          label={mobileLabel}
+          title={targetTitle || undefined}
+          action={{ href: targetHref }}
           actionLabel={t('continueLearning.continueLearning')}
           actionIcon={<ArrowRight className="h-5 w-5 rtl:rotate-180" aria-hidden="true" />}
           onDismiss={dismiss}
           dismissLabel={dismissLabel}
         />
       )}
-      <div className="hidden md:block">
-        <div
-          className={cn(
-            // Position: side panel when quiz detected, bottom center otherwise
-            hasQuiz
-              ? 'fixed end-6 top-1/2 -translate-y-1/2 z-40 w-80'
-              : 'fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-lg',
-            'animate-in fade-in duration-500',
-            hasQuiz ? 'slide-in-from-right-4' : 'slide-in-from-bottom-4',
-            className
-          )}
-        >
-          <div className="bg-white dark:bg-gray-900 rounded-2xl border-2 border-primary/30 shadow-2xl shadow-primary/10 p-6">
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <BookOpen className="w-6 h-6 text-primary-600 dark:text-primary-400" />
-              </div>
 
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span className="text-xs font-medium text-green-600 dark:text-green-400 uppercase tracking-wide">
-                    {t('continueLearning.guideComplete')}
-                  </span>
-                </div>
+      {desktopCard(
+        <div className="flex items-start gap-4">
+          <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+            {quizAttempted ? (
+              <GraduationCap className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+            ) : (
+              <BookOpen className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+            )}
+          </div>
 
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
-                  {showQuizCta ? t('continueLearning.testKnowledge') : t('continueLearning.nextGuide')}
-                </h3>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1">
+              <CheckCircle className="w-4 h-4 text-green-500" />
+              <span className="text-xs font-medium text-green-600 dark:text-green-400 uppercase tracking-wide">
+                {eyebrow}
+              </span>
+            </div>
 
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                  {showQuizCta
-                    ? t('continueLearning.quizDescription')
-                    : t('continueLearning.continueDescription').replace('{title}', nextGuide.title)}
-                </p>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">{heading}</h3>
 
-                <div className="flex flex-col gap-3">
-                  {showQuizCta && (
-                    <button
-                      onClick={scrollToQuiz}
-                      className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-primary-600 text-white font-medium hover:bg-primary-700 transition-colors"
-                    >
-                      <GraduationCap className="w-4 h-4" />
-                      {t('continueLearning.takeQuiz')}
-                    </button>
-                  )}
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{description}</p>
 
-                  <a
-                    href={`${guidesPrefix}/${nextGuide.slug}`}
-                    className={cn(
-                      'w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-colors',
-                      showQuizCta
-                        ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-                        : 'bg-primary-600 text-white hover:bg-primary-700'
-                    )}
-                  >
-                    {t('continueLearning.continueLearning')}
-                    <ArrowRight className="w-4 h-4 rtl:rotate-180" />
-                  </a>
+            {isBackfill && <div className="mb-4">{counters}</div>}
 
-                  <button
-                    type="button"
-                    onClick={dismiss}
-                    aria-label={dismissLabel}
-                    className="self-end inline-flex items-center justify-center px-3 py-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-                  >
-                    <X className="w-4 h-4" aria-hidden="true" />
-                  </button>
-                </div>
-              </div>
+            <div className="flex flex-col gap-3">
+              {quizPending && (
+                <button
+                  onClick={scrollToQuiz}
+                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-primary-600 text-white font-medium hover:bg-primary-700 transition-colors"
+                >
+                  <GraduationCap className="w-4 h-4" />
+                  {t('continueLearning.takeQuiz')}
+                </button>
+              )}
+
+              <a
+                href={targetHref}
+                className={cn(
+                  'w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-colors',
+                  quizPending
+                    ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                    : 'bg-primary-600 text-white hover:bg-primary-700'
+                )}
+              >
+                {target ? t('continueLearning.continueLearning') : t('continueLearning.browseAllGuides')}
+                <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+              </a>
+
+              {showRetake && (
+                <button
+                  type="button"
+                  onClick={scrollToQuiz}
+                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                >
+                  <GraduationCap className="w-4 h-4" />
+                  {t('ui.quiz.retakeQuiz')}
+                </button>
+              )}
+
+              <button
+                type="button"
+                onClick={dismiss}
+                aria-label={dismissLabel}
+                className="self-end inline-flex items-center justify-center px-3 py-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+              >
+                <X className="w-4 h-4" aria-hidden="true" />
+              </button>
             </div>
           </div>
-        </div>
-      </div>
+        </div>,
+        'primary'
+      )}
     </>
   );
 }

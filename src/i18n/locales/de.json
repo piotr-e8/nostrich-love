@@ -1912,7 +1912,7 @@
     },
     "securityWarning": {
       "title": "Kritischer Sicherheitshinweis",
-      "description": "Dein privater Schlüssel (nsec) ist wie ein Passwort. Jeder mit Zugriff darauf kann deinen Account kontrollieren. Vervollständige die Sicherheitscheckliste unten, bevor du deine Schlüssel kopierst oder herunterlädst."
+      "description": "Dein privater Schlüssel (nsec) ist wie ein Passwort. Wer ihn hat, hat dein Konto, also muss die Checkliste unten abgehakt sein, bevor du ihn kopieren oder speichern kannst."
     },
     "securityChecklist": {
       "title": "Sicherheitscheckliste",
@@ -1949,9 +1949,14 @@
     },
     "modal": {
       "title": "Sicherheitswarnung",
-      "description": "Du hast nicht alle Sicherheitsbestätigungen vervollständigt. Das Kopieren deiner Schlüssel ohne Verständnis der Risiken könnte zum permanenten Verlust des Zugangs führen.",
+      "description": "Die Sicherheits-Checkliste ist noch nicht vollständig abgehakt. Deinen privaten Schlüssel zu kopieren oder zu speichern, bevor du die Risiken kennst, kann dich dieses Konto endgültig kosten.",
       "goBack": "Zurück",
-      "copyAnyway": "Trotzdem kopieren"
+      "continueAnyway": "Trotzdem fortfahren"
+    },
+    "discardModal": {
+      "title": "Diese Schlüssel verwerfen?",
+      "description": "Dieses Paar existiert nur auf dieser Seite. Ein neues zu erzeugen löscht es, und nichts holt es zurück. Wenn du den privaten Schlüssel noch nicht gesichert hast, geh zurück und sichere ihn zuerst.",
+      "confirm": "Verwerfen und neu erzeugen"
     },
     "toast": {
       "success": "Schlüssel erfolgreich generiert!",
@@ -2363,6 +2368,10 @@
         "title": "Ungültiger NIP-05",
         "description": "Dieser Identifikator konnte nicht überprüft werden"
       },
+      "unknown": {
+        "title": "Konnte nicht geprüft werden",
+        "description": "Die Prüfung bekam keine Antwort und sagt damit nichts darüber aus, ob der Identifikator richtig eingerichtet ist."
+      },
       "checkAnother": "Anderen prüfen",
       "getYourOwn": "Hole dir deinen eigenen NIP-05-Identifikator"
     },
@@ -2392,6 +2401,22 @@
         "description": "Konnte keine Verbindung zur Überprüfung des Identifikators herstellen",
         "fix": "Prüfe deine Internetverbindung und versuche es erneut"
       },
+      "blocked": {
+        "title": "Die Datei ließ sich aus diesem Browser nicht lesen",
+        "description": "Von der Domain kam nichts zurück. Meist fehlt der Header Access-Control-Allow-Origin, den Browser verlangen. Eine Domain, die offline ist, falsch geschrieben wurde oder in deinem Netz blockiert wird, sieht von hier aus genauso aus.",
+        "fix": "Prüfe zuerst die Adresse. Gehört dir die Domain, liefere /.well-known/nostr.json mit Access-Control-Allow-Origin: * aus und prüfe erneut. Nostr-Apps trifft diese Regel nicht, dort kann der Identifikator längst funktionieren."
+      },
+      "npubInsteadOfHex": {
+        "title": "In der Datei steht ein npub statt des Hex-Schlüssels",
+        "description": "Die Datei wurde geladen und dein Name steht darin, aber der Wert daneben ist eine npub1-Zeichenkette. NIP-05 verlangt den öffentlichen Schlüssel als 64 Hexadezimalzeichen, deshalb verifiziert kein Client diesen Identifikator.",
+        "fix": "Ersetze das npub in der nostr.json durch den Hex-Schlüssel unten, lass die Anführungszeichen stehen und speichere die Datei."
+      },
+      "malformedKey": {
+        "title": "Der Wert in der Datei ist kein gültiger öffentlicher Schlüssel",
+        "description": "Dein Name steht in der Datei, der Wert daneben ist aber kein öffentlicher Schlüssel: Es müssen genau 64 Hexadezimalzeichen sein, alle klein geschrieben.",
+        "fix": "Kopiere den öffentlichen Schlüssel im Hex-Format aus deiner Nostr-App (nicht das npub) und füge ihn vollständig ein. Ein abgeschnittener Schlüssel, ein Leerzeichen zu viel oder Großbuchstaben verhindern die Verifizierung."
+      },
+      "hexLabel": "Stattdessen das hier einsetzen (öffentlicher Schlüssel in Hex)",
       "fixLabel": "Lösung:"
     },
     "providers": {
@@ -2410,7 +2435,6 @@
     "aboutNip05Body": "NIP-05 bestätigt eine Nostr-Identität über einen Domainnamen. Damit gibst du eine Adresse weiter, die aussieht wie eine E-Mail (du@deinedomain.com), statt eines langen npub.",
     "messages": {
       "invalidFormat": "Ungültiges Format. So sieht es richtig aus: nutzer@domain.com",
-      "corsBlocked": "Diese Domain lehnt Prüfungen direkt aus dem Browser ab. Probiere dieselbe Adresse in einem Nostr-Client.",
       "notConfigured": "NIP-05 ist hier nicht eingerichtet, oder die Domain war nicht erreichbar.",
       "nameNotFound": "Der Name \"{name}\" ist auf {domain} nicht eingetragen.",
       "networkError": "Beim Zugriff auf diese Domain ist etwas schiefgegangen. Prüfe deine Verbindung und versuche es noch einmal.",
@@ -2702,12 +2726,14 @@
       "count": "{count} Relay(s) ausgewählt",
       "copy": "Kopieren",
       "download": "Herunterladen",
-      "clear": "Leeren"
+      "clear": "Leeren",
+      "whereTo": "Füg sie in deiner Nostr-App unter Einstellungen → Relays → Hinzufügen ein, eine Adresse pro Zeile."
     },
     "customRelay": {
       "placeholder": "Eigenes Relay hinzufügen (wss://...)",
       "add": "Hinzufügen",
-      "description": "Ein Relay, das du selbst hinzugefügt hast."
+      "description": "Ein Relay, das du selbst hinzugefügt hast.",
+      "remove": "{name} aus der Liste entfernen"
     },
     "toast": {
       "starterPackAdded": "Starter-Pack-Relays hinzugefügt!",
@@ -2771,6 +2797,9 @@
       "spatia-arcana": {
         "description": "Lesen kann jeder, posten nur, wer vom Betreiber freigeschaltet wurde."
       }
+    },
+    "starterPack": {
+      "button": "Wähl ein Starter-Set für mich"
     }
   },
   "relayPlayground": {
@@ -3008,6 +3037,11 @@
       "96": "HTTP-Dateispeicher (ersetzt durch Blossom)",
       "98": "HTTP-Authentifizierung",
       "99": "Kleinanzeigen"
+    },
+    "errors": {
+      "timedOut": "Das Relay hat nichts zurückgeschickt, bevor wir aufgehört haben zu warten. Vielleicht ist es ausgelastet, vielleicht antwortet es nur Konten, die es schon kennt.",
+      "subscriptionRefused": "Das Relay hat diese Anfrage abgelehnt. Manche Relays antworten nur Leuten, die bezahlt oder sich angemeldet haben.",
+      "closedEarly": "Das Relay hat die Verbindung geschlossen, bevor es fertig geantwortet hat."
     }
   },
   "nostrSimulator": {
@@ -3259,7 +3293,13 @@
     "takeQuiz": "Quiz Starten",
     "continueLearning": "Weiter Lernen",
     "dismiss": "Schließen",
-    "upNext": "Als Nächstes"
+    "upNext": "Als Nächstes",
+    "quizComplete": "Quiz abgeschlossen!",
+    "stillToFinish": "Noch offen in {level}",
+    "unreadGuideDescription": "{title} hast du noch nicht gelesen.",
+    "unpassedQuizDescription": "Das Quiz in {title} wartet noch auf ein Bestehen.",
+    "guidesCounter": "{done}/{total} Guides",
+    "quizzesCounter": "{done}/{total} Quiz"
   },
   "share": {
     "label": "Teilen:",
@@ -3385,7 +3425,9 @@
     "loading": "Wird geladen...",
     "errors": {
       "connectFailed": "Dieses Relay ist nicht erreichbar. Vielleicht ist es offline, oder dein Netzwerk blockiert es.",
-      "loadMoreFailed": "Ältere Beiträge konnten nicht geladen werden. Versuch es gleich noch einmal."
+      "loadMoreFailed": "Ältere Beiträge konnten nicht geladen werden. Versuch es gleich noch einmal.",
+      "timedOut": "Dieses Relay hat geantwortet, aber keine Beiträge geschickt, also haben wir aufgehört zu warten. Vielleicht ist es ausgelastet, vielleicht bedient es nur Leute mit einem Konto dort.",
+      "refused": "Dieses Relay hat die Anfrage abgelehnt. Bezahl-Relays und solche, die eine Freigabe verlangen, machen das oft, solange du dort kein Konto hast."
     }
   },
   "officialAccount": {
@@ -3400,6 +3442,14 @@
       "nip05Failed": "NIP-05 konnte nicht aufgelöst werden",
       "loadFailed": "Kontodaten konnten nicht geladen werden"
     }
+  },
+  "guidePage": {
+    "lastUpdated": "Zuletzt aktualisiert",
+    "levelPosition": "{level} · {current} von {total}"
+  },
+  "tableOfContents": {
+    "title": "Auf dieser Seite",
+    "ariaLabel": "Abschnitte des Leitfadens"
   },
   "guideFooter": {
     "improvePage": "Verbessere diese Seite",

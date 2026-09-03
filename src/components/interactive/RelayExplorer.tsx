@@ -17,6 +17,7 @@ import {
   Server,
   AlertCircle,
   Info,
+  Sparkles,
 } from "lucide-react";
 import {
   cn,
@@ -163,11 +164,12 @@ const POPULAR_RELAYS: Relay[] = [
   },
 ];
 
+// The same three the relays-demystified guide puts in its table, so the button
+// and the page around it recommend one set, not two.
 const STARTER_PACK_RELAYS = [
   "wss://relay.damus.io",
   "wss://nos.lol",
   "wss://relay.primal.net",
-  "wss://relay.snort.social",
 ];
 
 const ACCESS_STYLES: Record<RelayAccess, string> = {
@@ -194,7 +196,6 @@ export function RelayExplorer({
     message: string;
     type: "success" | "error" | "info";
   } | null>(null);
-  const [showStarterPack, setShowStarterPack] = useState(false);
   const wsRef = useRef<WebSocket | null>(null);
 
   // Load saved selections from localStorage
@@ -471,10 +472,21 @@ export function RelayExplorer({
                 className="w-full ps-10 pe-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none"
               />
             </div>
+            {/* The one-click way out for a reader who does not want to judge
+                thirteen relays on latency numbers. */}
             <button
+              type="button"
+              onClick={selectStarterPack}
+              className="px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all inline-flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              <Sparkles className="w-5 h-5" />
+              {t('relayExplorer.starterPack.button')}
+            </button>
+            <button
+              type="button"
               onClick={checkAllRelays}
               disabled={isChecking}
-              className="px-4 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 disabled:bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl font-medium transition-all inline-flex items-center gap-2"
+              className="px-4 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-600 disabled:bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl font-medium transition-all inline-flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <RefreshCw
                 className={cn("w-5 h-5", isChecking && "animate-spin")}
@@ -559,6 +571,7 @@ export function RelayExplorer({
 
           {/* Selected Count */}
           {selectedRelays.size > 0 && (
+            <>
             <div className="flex items-center justify-between bg-gray-100 dark:bg-gray-800/50 rounded-xl p-3">
               <span className="text-gray-600 dark:text-gray-400">
                 {t('relayExplorer.selected.count').replace('{count}', String(selectedRelays.size))}
@@ -589,16 +602,31 @@ export function RelayExplorer({
                 </button>
               </div>
             </div>
+
+            {/* What the copied blob is for. Without this the tool ends at a
+                toast and the reader is left holding a list of addresses. */}
+            <div className="flex items-start gap-2 rounded-xl border border-primary-500/30 bg-primary-500/10 p-3 text-sm text-gray-700 dark:text-gray-300">
+              <Info className="w-4 h-4 flex-shrink-0 mt-0.5 text-primary-600 dark:text-primary-400" />
+              <p>{t('relayExplorer.selected.whereTo')}</p>
+            </div>
+            </>
           )}
         </div>
 
         {/* Relay Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {filteredRelays.map((relay) => (
-              <div
-                key={relay.id}
+            <div key={relay.id} className="relative">
+              {/* The card is a real toggle button: keyboard, focus ring and
+                  pressed state all come for free. The remove control for custom
+                  relays sits outside it, since a button cannot nest a button. */}
+              <button
+                type="button"
+                aria-pressed={selectedRelays.has(relay.url)}
+                aria-label={relay.name}
                 className={cn(
-                  "relative border rounded-xl p-4 transition-all cursor-pointer",
+                  "relative w-full text-start border rounded-xl p-4 transition-all",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                   "animate-scale-in motion-reduce:animate-none",
                   selectedRelays.has(relay.url)
                     ? "border-primary-500 bg-primary-500/10"
@@ -700,20 +728,21 @@ export function RelayExplorer({
                   </div>
                 )}
 
-                {/* Remove button for custom relays */}
-                {relay.id.startsWith("custom-") && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      removeCustomRelay(relay.url);
-                    }}
-                    className="absolute bottom-3 end-3 p-1 text-gray-500 hover:text-error-500 transition-colors"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                )}
-              </div>
-            ))}
+              </button>
+
+              {/* Remove button for custom relays */}
+              {relay.id.startsWith("custom-") && (
+                <button
+                  type="button"
+                  onClick={() => removeCustomRelay(relay.url)}
+                  aria-label={t('relayExplorer.customRelay.remove').replace('{name}', relay.name)}
+                  className="absolute bottom-3 end-3 p-1 text-gray-500 hover:text-error-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+          ))}
         </div>
 
         {/* Empty State */}

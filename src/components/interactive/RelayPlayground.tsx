@@ -113,6 +113,49 @@ interface StreamEvent {
 
 type Tab = "connection" | "health" | "nips" | "events" | "query";
 
+// Why a subscription produced nothing. Held as a code, resolved through t() at
+// render time, so the sentence follows the reader's language.
+interface RelayIssue {
+  code: "connectionFailed" | "timedOut" | "subscriptionRefused" | "closedEarly";
+  /** The relay's own words from CLOSED or NOTICE. Server text, never translated. */
+  detail?: string;
+}
+
+// A relay that refuses a subscription has to answer within this, or we stop
+// waiting and say so. Silence is otherwise indistinguishable from an empty relay.
+const SUBSCRIPTION_TIMEOUT_MS = 10000;
+
+// CLOSED puts its reason third, NOTICE second.
+function relayReason(frame: unknown[]): string | undefined {
+  const candidate = frame[0] === "NOTICE" ? frame[1] : frame[2];
+  return typeof candidate === "string" && candidate.trim() ? candidate.trim() : undefined;
+}
+
+function RelayIssueNotice({ issue }: { issue: RelayIssue }) {
+  const { t } = useTranslation();
+  const message =
+    issue.code === "connectionFailed"
+      ? t("relayPlayground.connectionTab.connectionFailed")
+      : t(`relayPlayground.errors.${issue.code}`);
+
+  return (
+    <div
+      role="status"
+      className="flex items-start gap-2 rounded-xl border border-error-500/40 bg-error-500/10 p-3 text-sm text-error-600 dark:text-error-400"
+    >
+      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+      <span>
+        {message}
+        {issue.detail && (
+          <span className="mt-1 block break-all font-mono text-xs text-gray-600 dark:text-gray-400">
+            {issue.detail}
+          </span>
+        )}
+      </span>
+    </div>
+  );
+}
+
 // Relay list. Every host here answered a NIP-11 request on 2026-09-02
 // (docs/audit-2026-09/relays-verified.md), except purplepag.es, whose own proxy
 // returned 502 while its certificate was still being renewed: unresolved, kept,
@@ -471,9 +514,10 @@ export function RelayPlayground({ className }: { className?: string }) {
             </button>
           ))}
           <button
+            type="button"
             onClick={checkAllRelays}
             disabled={isCheckingAll}
-            className="ms-auto flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 disabled:bg-gray-800 text-white rounded-lg font-medium transition-all"
+            className="ms-auto flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 disabled:bg-gray-100 dark:disabled:bg-gray-800 text-gray-900 dark:text-white disabled:text-gray-500 rounded-lg font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             <RefreshCw className={cn("w-4 h-4", isCheckingAll && "animate-spin")} />
             {isCheckingAll ? t('relayPlayground.buttons.checking') : t('relayPlayground.buttons.checkAll')}
@@ -569,11 +613,17 @@ function ConnectionLab({
           </div>
         ) : (
           relays.map((relay) => (
-            <div
+            // A real button: every tab downstream reads from the relay picked
+            // here, so this has to work from the keyboard.
+            <button
               key={relay.id}
+              type="button"
+              aria-pressed={selectedRelay?.id === relay.id}
+              aria-label={relay.name}
               onClick={() => onSelectRelay(relay)}
               className={cn(
-                "relative p-4 border rounded-xl cursor-pointer transition-all",
+                "relative w-full text-start p-4 border rounded-xl transition-all",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                 selectedRelay?.id === relay.id
                   ? "border-primary-500 bg-primary-500/10"
                   : "border-gray-300 hover:border-gray-400 dark:border-gray-700 dark:hover:border-gray-600 bg-gray-100/30 dark:bg-gray-800/30"
@@ -634,7 +684,7 @@ function ConnectionLab({
                   {t(`relayPlayground.status.${relay.status}`)}
                 </span>
               </div>
-            </div>
+            </button>
           ))
         )}
       </div>
@@ -679,7 +729,7 @@ function ConnectionLab({
               )}
               <button
                 onClick={() => copyToClipboard(selectedRelay.url)}
-                className="flex items-center gap-2 px-4 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-xl font-medium transition-all"
+                className="flex items-center gap-2 px-4 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white rounded-xl font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 <Copy className="w-5 h-5" />
                 {t('relayPlayground.buttons.copy')}
@@ -1018,8 +1068,13 @@ function EventStreamViewer({
   const [isStreaming, setIsStreaming] = useState(false);
   const [selectedKinds, setSelectedKinds] = useState<number[]>([1]);
   const [maxEvents, setMaxEvents] = useState(50);
+  const [issue, setIssue] = useState<RelayIssue | null>(null);
   const wsRef = useRef<WebSocket | null>(null);
   const subscriptionRef = useRef<string | null>(null);
+  const timerRef = useRef<number | null>(null);
+  // Set while the reader presses Stop, so a close we asked for is not reported
+  // back to them as a failure.
+  const manualStopRef = useRef(false);
 
   // Kind numbers are protocol values; their names come from i18n.
   const EVENT_KINDS = [0, 1, 6, 7];
@@ -1031,7 +1086,9 @@ function EventStreamViewer({
       wsRef.current.close();
     }
 
+    setIssue(null);
     setIsStreaming(true);
+    manualStopRef.current = false;
 
     try {
       const ws = new WebSocket(selectedRelay.url);
@@ -1039,40 +1096,87 @@ function EventStreamViewer({
       const subId = `stream-${Date.now()}`;
       subscriptionRef.current = subId;
 
+      // Whatever ends the stream ends it once, and says why.
+      let heardBack = false;
+      let stopped = false;
+      const stop = (failure?: RelayIssue) => {
+        if (stopped) return;
+        stopped = true;
+        if (timerRef.current !== null) {
+          window.clearTimeout(timerRef.current);
+          timerRef.current = null;
+        }
+        if (failure) setIssue(failure);
+        setIsStreaming(false);
+        try {
+          ws.close();
+        } catch {
+          // Already closing.
+        }
+      };
+
+      timerRef.current = window.setTimeout(() => {
+        if (!heardBack) stop({ code: "timedOut" });
+      }, SUBSCRIPTION_TIMEOUT_MS);
+
       ws.onopen = () => {
         ws.send(JSON.stringify(["REQ", subId, { kinds: selectedKinds, limit: maxEvents }]));
       };
 
       ws.onmessage = (event) => {
+        let data: unknown[];
         try {
-          const data = JSON.parse(event.data);
-          if (data[0] === "EVENT" && data[1] === subId) {
-            const nostrEvent: NostrEvent = data[2];
-            setEvents(prev => {
-              const newEvents = [{
-                event: nostrEvent,
-                relayName: selectedRelay.name,
-                relayUrl: selectedRelay.url,
-                receivedAt: new Date(),
-              }, ...prev];
-              return newEvents.slice(0, maxEvents);
-            });
-          }
+          data = JSON.parse(event.data);
         } catch (e) {
           console.error("Failed to parse event:", e);
+          return;
+        }
+        if (!Array.isArray(data)) return;
+
+        if (data[0] === "EVENT" && data[1] === subId) {
+          heardBack = true;
+          const nostrEvent: NostrEvent = data[2] as NostrEvent;
+          setEvents(prev => {
+            const newEvents = [{
+              event: nostrEvent,
+              relayName: selectedRelay.name,
+              relayUrl: selectedRelay.url,
+              receivedAt: new Date(),
+            }, ...prev];
+            return newEvents.slice(0, maxEvents);
+          });
+        } else if (data[0] === "EOSE") {
+          // Stored events are done; the stream stays open for live ones.
+          heardBack = true;
+        } else if (data[0] === "CLOSED") {
+          stop({ code: "subscriptionRefused", detail: relayReason(data) });
+        } else if (data[0] === "NOTICE" && !heardBack) {
+          stop({ code: "subscriptionRefused", detail: relayReason(data) });
         }
       };
 
-      ws.onclose = () => setIsStreaming(false);
-      ws.onerror = () => setIsStreaming(false);
+      ws.onclose = () => {
+        if (manualStopRef.current) {
+          stop();
+          return;
+        }
+        stop(heardBack ? { code: "closedEarly" } : { code: "connectionFailed" });
+      };
+      ws.onerror = () => stop({ code: "connectionFailed" });
     } catch {
       setIsStreaming(false);
+      setIssue({ code: "connectionFailed" });
     }
   }, [selectedRelay, selectedKinds, maxEvents]);
 
   const stopStreaming = useCallback(() => {
+    manualStopRef.current = true;
+    if (timerRef.current !== null) {
+      window.clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
     if (wsRef.current) {
-      if (subscriptionRef.current) {
+      if (subscriptionRef.current && wsRef.current.readyState === WebSocket.OPEN) {
         wsRef.current.send(JSON.stringify(["CLOSE", subscriptionRef.current]));
       }
       wsRef.current.close();
@@ -1091,6 +1195,10 @@ function EventStreamViewer({
   // Cleanup on unmount
   useEffect(() => {
     return () => {
+      if (timerRef.current !== null) {
+        window.clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
       if (wsRef.current) {
         if (subscriptionRef.current) {
           try {
@@ -1099,6 +1207,7 @@ function EventStreamViewer({
             // Ignore errors when closing
           }
         }
+        wsRef.current.onclose = null;
         wsRef.current.close();
         wsRef.current = null;
       }
@@ -1126,12 +1235,16 @@ function EventStreamViewer({
             {relays.slice(0, 8).map((relay) => (
               <button
                 key={relay.id}
+                type="button"
+                aria-pressed={selectedRelay?.id === relay.id}
                 onClick={() => {
                   if (isStreaming) stopStreaming();
+                  setIssue(null);
                   setSelectedRelay(relay);
                 }}
                 className={cn(
                   "px-3 py-2 rounded-lg text-sm font-medium transition-all text-start",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                   selectedRelay?.id === relay.id
                     ? "bg-primary-600 text-white"
                     : "bg-gray-700 text-gray-300 hover:bg-gray-600"
@@ -1207,13 +1320,16 @@ function EventStreamViewer({
           )}
           <button
             onClick={() => setEvents([])}
-            className="flex items-center gap-2 px-4 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-xl font-medium"
+            className="flex items-center gap-2 px-4 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white rounded-xl font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             <Trash2 className="w-5 h-5" />
             {t('relayPlayground.buttons.clear')}
           </button>
         </div>
       </div>
+
+      {/* Why the stream produced nothing, when it produced nothing. */}
+      {issue && <RelayIssueNotice issue={issue} />}
 
       {/* Events Display */}
       <div className="bg-gray-100/30 dark:bg-gray-800/30 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
@@ -1273,7 +1389,9 @@ function QueryTester({
   const [isQuerying, setIsQuerying] = useState(false);
   const [results, setResults] = useState<NostrEvent[]>([]);
   const [showRaw, setShowRaw] = useState(false);
+  const [issue, setIssue] = useState<RelayIssue | null>(null);
   const wsRef = useRef<WebSocket | null>(null);
+  const timerRef = useRef<number | null>(null);
 
   // Kind numbers are protocol values; their names come from i18n.
   const EVENT_KINDS = [0, 1, 3, 6, 7, 9735];
@@ -1284,6 +1402,7 @@ function QueryTester({
 
     setIsQuerying(true);
     setResults([]);
+    setIssue(null);
 
     try {
       const ws = new WebSocket(selectedRelay.url);
@@ -1292,32 +1411,64 @@ function QueryTester({
       const filter = { kinds: queryKinds, limit };
 
       const newResults: NostrEvent[] = [];
+      let done = false;
+
+      // One exit for every outcome: EOSE, a refusal, a drop, or silence.
+      const finish = (failure?: RelayIssue) => {
+        if (done) return;
+        done = true;
+        if (timerRef.current !== null) {
+          window.clearTimeout(timerRef.current);
+          timerRef.current = null;
+        }
+        setIsQuerying(false);
+        if (failure) setIssue(failure);
+        try {
+          ws.close();
+        } catch {
+          // Already closing.
+        }
+      };
+
+      timerRef.current = window.setTimeout(
+        () => finish(newResults.length > 0 ? undefined : { code: "timedOut" }),
+        SUBSCRIPTION_TIMEOUT_MS,
+      );
 
       ws.onopen = () => {
         ws.send(JSON.stringify(["REQ", subId, filter]));
       };
 
       ws.onmessage = (event) => {
+        let data: unknown[];
         try {
-          const data = JSON.parse(event.data);
-          if (data[0] === "EVENT" && data[1] === subId) {
-            newResults.push(data[2]);
-            setResults([...newResults]);
-          } else if (data[0] === "EOSE") {
-            setIsQuerying(false);
-            ws.close();
-          }
+          data = JSON.parse(event.data);
         } catch (e) {
           console.error("Parse error:", e);
+          return;
+        }
+        if (!Array.isArray(data)) return;
+
+        if (data[0] === "EVENT" && data[1] === subId) {
+          newResults.push(data[2] as NostrEvent);
+          setResults([...newResults]);
+        } else if (data[0] === "EOSE") {
+          finish();
+        } else if (data[0] === "CLOSED" || data[0] === "NOTICE") {
+          finish(
+            newResults.length > 0
+              ? undefined
+              : { code: "subscriptionRefused", detail: relayReason(data) },
+          );
         }
       };
 
-      ws.onclose = () => setIsQuerying(false);
-      ws.onerror = () => setIsQuerying(false);
-
-      setTimeout(() => ws.close(), 10000);
+      ws.onclose = () =>
+        finish(newResults.length > 0 ? undefined : { code: "closedEarly" });
+      ws.onerror = () => finish({ code: "connectionFailed" });
     } catch {
       setIsQuerying(false);
+      setIssue({ code: "connectionFailed" });
     }
   }, [selectedRelay, queryKinds, limit]);
 
@@ -1330,7 +1481,12 @@ function QueryTester({
   // Cleanup on unmount
   useEffect(() => {
     return () => {
+      if (timerRef.current !== null) {
+        window.clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
       if (wsRef.current) {
+        wsRef.current.onclose = null;
         wsRef.current.close();
         wsRef.current = null;
       }
@@ -1360,8 +1516,11 @@ function QueryTester({
             <select
               id={relaySelectId}
               value={selectedRelay?.id || ""}
-              onChange={(e) => setSelectedRelay(relays.find(r => r.id === e.target.value) || null)}
-              className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-lg text-gray-900 dark:text-white"
+              onChange={(e) => {
+                setIssue(null);
+                setSelectedRelay(relays.find(r => r.id === e.target.value) || null);
+              }}
+              className="w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <option value="">{t('relayPlayground.queryTab.chooseRelay')}</option>
               {relays.map(r => (
@@ -1426,24 +1585,35 @@ function QueryTester({
         {/* Results */}
         <div>
           <div className="flex items-center justify-between mb-4">
-            <span className="text-gray-600 dark:text-gray-400">{t('relayPlayground.queryTab.results')}: <strong className="text-white">{results.length}</strong></span>
+            <span className="text-gray-600 dark:text-gray-400">{t('relayPlayground.queryTab.results')}: <strong className="text-gray-900 dark:text-white">{results.length}</strong></span>
             <button
+              type="button"
               onClick={() => setShowRaw(!showRaw)}
+              aria-pressed={showRaw}
               className={cn(
                 "px-3 py-1.5 rounded-lg text-sm transition-all",
-                showRaw ? "bg-primary-600 text-white" : "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-600 dark:text-gray-400"
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                showRaw ? "bg-primary-600 text-white" : "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-400"
               )}
             >
               {showRaw ? t('relayPlayground.buttons.hideJson') : t('relayPlayground.buttons.showJson')}
             </button>
           </div>
 
-          {/* Raw JSON */}
-          {showRaw && results.length > 0 && (
+          {/* Raw JSON: the events that came back, which is what the toggle sits
+              next to. Shown even when the answer is an empty list. */}
+          {showRaw && (
             <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 p-4 mb-4 overflow-x-auto">
               <pre className="text-xs text-gray-700 dark:text-gray-300">
-                {JSON.stringify(["REQ", "sub", { kinds: queryKinds, limit }], null, 2)}
+                {JSON.stringify(results, null, 2)}
               </pre>
+            </div>
+          )}
+
+          {/* Why the query came back empty, when it did */}
+          {issue && (
+            <div className="mb-4">
+              <RelayIssueNotice issue={issue} />
             </div>
           )}
 
@@ -1451,7 +1621,9 @@ function QueryTester({
           <div className="bg-gray-100/30 dark:bg-gray-800/30 rounded-xl border border-gray-700 max-h-[500px] overflow-y-auto">
             {results.length === 0 ? (
               <div className="text-center py-12 text-gray-500">
-                <p>{t('relayPlayground.queryTab.noResults')}</p>
+                {/* An empty answer and a failed query are not the same thing,
+                    so the empty-state line stands down when there is an error. */}
+                {!issue && <p>{t('relayPlayground.queryTab.noResults')}</p>}
               </div>
             ) : (
               <div className="divide-y divide-gray-700">

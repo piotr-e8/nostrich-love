@@ -51,7 +51,24 @@ interface RelayFeedBrowserProps {
   className?: string;
 }
 
-type FeedError = "connectFailed" | "loadMoreFailed";
+type FeedErrorCode = "connectFailed" | "loadMoreFailed" | "timedOut" | "refused";
+
+// A relay that answers but never sends EOSE (auth-gated ones do this) would
+// otherwise spin forever, so every request gets a deadline.
+const FEED_TIMEOUT_MS = 10000;
+
+interface FeedError {
+  code: FeedErrorCode;
+  // Whatever the relay itself said in CLOSED or NOTICE. Server text, never
+  // translated, shown verbatim under the localized sentence.
+  detail?: string;
+}
+
+// CLOSED and NOTICE carry a human-readable reason in different slots.
+function reasonFrom(frame: unknown[]): string | undefined {
+  const candidate = frame[0] === "NOTICE" ? frame[1] : frame[2];
+  return typeof candidate === "string" && candidate.trim() ? candidate.trim() : undefined;
+}
 
 export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
   const { t } = useTranslation();
@@ -68,50 +85,119 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
   const [error, setError] = useState<FeedError | null>(null);
   const [copied, setCopied] = useState(false);
   const wsRef = useRef<WebSocket | null>(null);
+  const timerRef = useRef<number | null>(null);
 
   const filteredRelays = selectedCategory === "all" ? TOPICAL_RELAYS : TOPICAL_RELAYS.filter((relay) => relay.category === selectedCategory);
 
+  // Drop the handlers before closing, so a socket we abandoned cannot come back
+  // later and write its results over whatever the reader is looking at now.
+  const closeSocket = useCallback(() => {
+    if (timerRef.current !== null) {
+      window.clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+    const ws = wsRef.current;
+    if (!ws) return;
+    ws.onopen = null;
+    ws.onmessage = null;
+    ws.onerror = null;
+    ws.onclose = null;
+    ws.close();
+    wsRef.current = null;
+  }, []);
+
   const handleViewFeed = (relay: TopicalRelay) => {
+    closeSocket();
+
     setViewingRelay(relay);
     setIsLoading(true);
     setError(null);
     setEvents([]);
     setOldestTimestamp(null);
     setHasMore(true);
-    
-    const ws = new WebSocket(relay.url);
+
+    let ws: WebSocket;
+    try {
+      ws = new WebSocket(relay.url);
+    } catch {
+      setIsLoading(false);
+      setError({ code: "connectFailed" });
+      return;
+    }
     wsRef.current = ws;
-    
+
     const receivedEvents: RelayFeedEvent[] = [];
-    
-    ws.onopen = () => {
-      ws.send(JSON.stringify(["REQ", "feed", { kinds: [1], limit: 20 }]));
-    };
-    
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (data[0] === "EVENT") {
-        const evt = data[2] as NostrEvent;
-        receivedEvents.push({ event: evt, relayName: relay.name, relayUrl: relay.url, receivedAt: new Date() });
-      } else if (data[0] === "EOSE") {
-        setIsLoading(false);
+    // Every path out of the spinner runs through settle() exactly once, so a
+    // relay that errors after EOSE (or never answers at all) cannot leave the
+    // reader looking at a spinner.
+    let settled = false;
+
+    const done = (failure?: FeedError) => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timer);
+      setIsLoading(false);
+      if (failure) {
+        setError(failure);
+        setHasMore(false);
+      } else {
         setEvents(receivedEvents);
-        // Track oldest timestamp for pagination
         if (receivedEvents.length > 0) {
-          const oldest = Math.min(...receivedEvents.map(e => e.event.created_at));
+          const oldest = Math.min(...receivedEvents.map((e) => e.event.created_at));
           setOldestTimestamp(oldest);
           setHasMore(receivedEvents.length >= 20);
         } else {
           setHasMore(false);
         }
+      }
+      try {
         ws.close();
+      } catch {
+        // Already closing; nothing to do.
       }
     };
-    
-    ws.onerror = () => {
-      setIsLoading(false);
-      setError("connectFailed");
+
+    // Whatever arrived before the deadline is worth showing; nothing at all is
+    // a failure the reader needs told.
+    const timer = window.setTimeout(
+      () => done(receivedEvents.length > 0 ? undefined : { code: "timedOut" }),
+      FEED_TIMEOUT_MS,
+    );
+    timerRef.current = timer;
+
+    ws.onopen = () => {
+      ws.send(JSON.stringify(["REQ", "feed", { kinds: [1], limit: 20 }]));
     };
+
+    ws.onmessage = (event) => {
+      let data: unknown[];
+      try {
+        data = JSON.parse(event.data);
+      } catch {
+        return;
+      }
+      if (!Array.isArray(data)) return;
+
+      if (data[0] === "EVENT") {
+        const evt = data[2] as NostrEvent;
+        receivedEvents.push({ event: evt, relayName: relay.name, relayUrl: relay.url, receivedAt: new Date() });
+      } else if (data[0] === "EOSE") {
+        done();
+      } else if (data[0] === "CLOSED" || data[0] === "NOTICE") {
+        // The relay is turning the subscription down. If posts already came
+        // through, keep them; otherwise say why we have nothing.
+        done(
+          receivedEvents.length > 0
+            ? undefined
+            : { code: "refused", detail: reasonFrom(data) },
+        );
+      }
+    };
+
+    ws.onerror = () => done({ code: "connectFailed" });
+
+    ws.onclose = () =>
+      done(receivedEvents.length > 0 ? undefined : { code: "connectFailed" });
   };
 
   const handleLoadMore = () => {
@@ -120,37 +206,70 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
     setIsLoadingMore(true);
     setError(null);
     
-    const ws = new WebSocket(viewingRelay.url);
-    
+    let ws: WebSocket;
+    try {
+      ws = new WebSocket(viewingRelay.url);
+    } catch {
+      setIsLoadingMore(false);
+      setError({ code: "loadMoreFailed" });
+      return;
+    }
+    wsRef.current = ws;
+
     const newEvents: RelayFeedEvent[] = [];
-    
+    let settled = false;
+
+    const done = (failed: boolean) => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timer);
+      setIsLoadingMore(false);
+      if (failed) {
+        setError({ code: "loadMoreFailed" });
+      } else if (newEvents.length > 0) {
+        setEvents((prev) => [...prev, ...newEvents]);
+        const oldest = Math.min(...newEvents.map((e) => e.event.created_at));
+        setOldestTimestamp(oldest);
+        setHasMore(newEvents.length >= 20);
+      } else {
+        setHasMore(false);
+      }
+      try {
+        ws.close();
+      } catch {
+        // Already closing; nothing to do.
+      }
+    };
+
+    const timer = window.setTimeout(() => done(newEvents.length === 0), FEED_TIMEOUT_MS);
+    timerRef.current = timer;
+
     ws.onopen = () => {
       ws.send(JSON.stringify(["REQ", "feed-more", { kinds: [1], limit: 20, until: oldestTimestamp - 1 }]));
     };
-    
+
     ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
+      let data: unknown[];
+      try {
+        data = JSON.parse(event.data);
+      } catch {
+        return;
+      }
+      if (!Array.isArray(data)) return;
+
       if (data[0] === "EVENT") {
         const evt = data[2] as NostrEvent;
         newEvents.push({ event: evt, relayName: viewingRelay.name, relayUrl: viewingRelay.url, receivedAt: new Date() });
       } else if (data[0] === "EOSE") {
-        setIsLoadingMore(false);
-        if (newEvents.length > 0) {
-          setEvents(prev => [...prev, ...newEvents]);
-          const oldest = Math.min(...newEvents.map(e => e.event.created_at));
-          setOldestTimestamp(oldest);
-          setHasMore(newEvents.length >= 20);
-        } else {
-          setHasMore(false);
-        }
-        ws.close();
+        done(false);
+      } else if (data[0] === "CLOSED" || data[0] === "NOTICE") {
+        done(newEvents.length === 0);
       }
     };
-    
-    ws.onerror = () => {
-      setIsLoadingMore(false);
-      setError("loadMoreFailed");
-    };
+
+    ws.onerror = () => done(true);
+
+    ws.onclose = () => done(newEvents.length === 0);
   };
 
   const handleCopyUrl = () => {
@@ -161,8 +280,13 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
     }
   };
 
+  // Leaving the page mid-request should not leave a socket open behind us.
+  useEffect(() => closeSocket, [closeSocket]);
+
   const stopViewing = () => {
-    if (wsRef.current) wsRef.current.close();
+    closeSocket();
+    setIsLoading(false);
+    setIsLoadingMore(false);
     setViewingRelay(null);
     setEvents([]);
     setOldestTimestamp(null);
@@ -208,9 +332,16 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
               </button>
             </div>
             {error && (
-              <div className="mt-2 flex items-center gap-2 text-sm text-red-600 dark:text-red-400">
-                <AlertCircle className="h-4 w-4" />
-                <span>{t(`relayFeedBrowser.errors.${error}`)}</span>
+              <div className="mt-2 flex items-start gap-2 text-sm text-red-600 dark:text-red-400">
+                <AlertCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                <span>
+                  {t(`relayFeedBrowser.errors.${error.code}`)}
+                  {error.detail && (
+                    <span className="mt-1 block break-all font-mono text-xs text-gray-600 dark:text-gray-400">
+                      {error.detail}
+                    </span>
+                  )}
+                </span>
               </div>
             )}
           </div>
@@ -272,8 +403,25 @@ export function RelayFeedBrowser({ className }: RelayFeedBrowserProps) {
               <h5 className="font-semibold text-gray-900 dark:text-gray-100">{relay.name}</h5>
               <p className="text-sm text-gray-600 dark:text-gray-400">{relay.description}</p>
             </div>
-            <button onClick={() => handleViewFeed(relay)} disabled={viewingRelay?.id === relay.id} className={cn("px-3 py-2 rounded-lg text-sm font-medium transition-colors", viewingRelay?.id === relay.id ? "bg-orange-500 text-white" : "bg-orange-100 dark:bg-orange-950 text-orange-700 dark:text-orange-300 hover:bg-orange-200 dark:hover:bg-orange-900")}>
-              {viewingRelay?.id === relay.id ? <Loader2 className="h-4 w-4 animate-spin" /> : t("relayFeedBrowser.viewFeed")}
+            <button
+              type="button"
+              onClick={() => handleViewFeed(relay)}
+              disabled={viewingRelay?.id === relay.id && isLoading}
+              className={cn(
+                "px-3 py-2 rounded-lg text-sm font-medium transition-colors",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                viewingRelay?.id === relay.id
+                  ? "bg-orange-500 text-white"
+                  : "bg-orange-100 dark:bg-orange-950 text-orange-700 dark:text-orange-300 hover:bg-orange-200 dark:hover:bg-orange-900",
+              )}
+            >
+              {/* The spinner belongs to the request, not to the selection: once
+                  the feed has loaded the button goes back to being pressable. */}
+              {viewingRelay?.id === relay.id && isLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                t("relayFeedBrowser.viewFeed")
+              )}
             </button>
           </div>
         ))}

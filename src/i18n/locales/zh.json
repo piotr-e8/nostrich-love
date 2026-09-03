@@ -1762,7 +1762,7 @@
     },
     "securityWarning": {
       "title": "重要安全提示",
-      "description": "你的私钥（nsec）就像密码。任何有权访问它的人都可以控制你的账户。在复制或下载密钥之前，请完成下面的安全检查清单。"
+      "description": "你的私钥（nsec）就像密码。谁拿到它，谁就能用你的账号，所以复制或保存它之前要先勾完下面的清单。"
     },
     "securityChecklist": {
       "title": "安全检查清单",
@@ -1799,9 +1799,14 @@
     },
     "modal": {
       "title": "安全警告",
-      "description": "你尚未完成所有安全确认。在不理解风险的情况下复制密钥可能导致永久失去访问权限。",
+      "description": "安全清单还没勾完。在还没弄清风险之前复制或保存私钥，可能会让你永久失去这个账号。",
       "goBack": "返回",
-      "copyAnyway": "仍然复制"
+      "continueAnyway": "仍然继续"
+    },
+    "discardModal": {
+      "title": "要丢掉这对密钥吗？",
+      "description": "这对密钥只存在于这个页面上。重新生成会把它清掉，而且找不回来。如果你还没保存私钥，先返回保存。",
+      "confirm": "丢弃并重新生成"
     },
     "toast": {
       "success": "密钥生成成功！",
@@ -1895,7 +1900,13 @@
     "takeQuiz": "参加测验",
     "continueLearning": "继续学习",
     "dismiss": "关闭",
-    "upNext": "接下来"
+    "upNext": "接下来",
+    "quizComplete": "测验已完成！",
+    "stillToFinish": "{level} 还有没完成的部分",
+    "unreadGuideDescription": "你还没有读过 {title}。",
+    "unpassedQuizDescription": "{title} 的测验还没有通过。",
+    "guidesCounter": "{done}/{total} 篇指南",
+    "quizzesCounter": "{done}/{total} 个测验"
   },
   "share": {
     "label": "分享：",
@@ -2473,6 +2484,10 @@
         "title": "无效的 NIP-05",
         "description": "无法验证此标识符"
       },
+      "unknown": {
+        "title": "这次没查成",
+        "description": "这次检查没有得到回应，所以它说明不了这个标识符配置得对不对。"
+      },
       "checkAnother": "检查另一个",
       "getYourOwn": "获取你自己的 NIP-05 标识符"
     },
@@ -2502,6 +2517,22 @@
         "description": "无法连接以验证标识符",
         "fix": "检查你的互联网连接后重试"
       },
+      "blocked": {
+        "title": "浏览器读不到这个文件",
+        "description": "这个域名什么都没返回。通常是因为它没有发送浏览器要求的 Access-Control-Allow-Origin 响应头。域名已下线、拼错了，或者在你的网络里被拦住，从这里看都是同一个样子。",
+        "fix": "先检查地址是否正确。如果域名是你自己的，请让 /.well-known/nostr.json 带上 Access-Control-Allow-Origin: * 再查一次。Nostr 客户端不受这条规则限制，这个标识符在客户端里可能已经能用了。"
+      },
+      "npubInsteadOfHex": {
+        "title": "文件里放的是 npub，这里应该放十六进制公钥",
+        "description": "文件加载成功，你的名字也在里面，但对应的值是一串 npub1。NIP-05 要求公钥写成 64 位十六进制字符，所以没有客户端会通过这个标识符的验证。",
+        "fix": "把 nostr.json 里的 npub 换成下面这串十六进制公钥，引号保持原样，然后保存文件。"
+      },
+      "malformedKey": {
+        "title": "文件里的值不是有效的公钥",
+        "description": "你的名字在文件里，但旁边的值不是公钥：它必须正好是 64 位小写十六进制字符。",
+        "fix": "从你的 Nostr 客户端复制十六进制公钥（不是 npub），完整粘贴进去。截断的公钥、多余的空格或大写字母都会让验证失败。"
+      },
+      "hexLabel": "改填这个（十六进制公钥）",
       "fixLabel": "解决办法："
     },
     "providers": {
@@ -2520,7 +2551,6 @@
     "aboutNip05Body": "NIP-05 通过域名来验证 Nostr 身份。这样你能给别人一个看着像邮箱的地址（you@yourdomain.com），而不是一长串 npub。",
     "messages": {
       "invalidFormat": "格式不对。请使用：user@domain.com",
-      "corsBlocked": "这个域名不接受直接从浏览器发起的检查。可以换到 Nostr 客户端里查同一个地址。",
       "notConfigured": "这里没有设置 NIP-05，或者这个域名连不上。",
       "nameNotFound": "{domain} 上没有列出“{name}”这个名字。",
       "networkError": "连接这个域名时出了问题。检查一下网络再试一次。",
@@ -2812,12 +2842,14 @@
       "count": "已选择 {count} 个中继",
       "copy": "复制",
       "download": "下载",
-      "clear": "清除"
+      "clear": "清除",
+      "whereTo": "把它们粘贴到你的 Nostr 应用里：设置 → 中继 → 添加，一行一个地址。"
     },
     "customRelay": {
       "placeholder": "添加自定义中继（wss://...）",
       "add": "添加",
-      "description": "你自己添加的中继。"
+      "description": "你自己添加的中继。",
+      "remove": "把 {name} 从列表中移除"
     },
     "toast": {
       "starterPackAdded": "已添加入门包中继！",
@@ -2881,6 +2913,9 @@
       "spatia-arcana": {
         "description": "谁都能读，但只有运营者批准过的人才能发。"
       }
+    },
+    "starterPack": {
+      "button": "帮我选一组入门中继"
     }
   },
   "relayPlayground": {
@@ -3118,6 +3153,11 @@
       "96": "HTTP 文件存储（已由 Blossom 取代）",
       "98": "HTTP 身份验证",
       "99": "分类信息"
+    },
+    "errors": {
+      "timedOut": "在我们不再等待之前，中继什么都没有回。它可能很忙，也可能只回应它已经认识的账号。",
+      "subscriptionRefused": "中继拒绝了这次请求。有些中继只回应付过费或已登录的人。",
+      "closedEarly": "中继还没答完就关闭了连接。"
     }
   },
   "nostrSimulator": {
@@ -3385,7 +3425,9 @@
     "loading": "加载中...",
     "errors": {
       "connectFailed": "连不上这个中继。它可能已经下线，也可能是你的网络把它挡住了。",
-      "loadMoreFailed": "加载不了更早的帖子。过一会儿再试试。"
+      "loadMoreFailed": "加载不了更早的帖子。过一会儿再试试。",
+      "timedOut": "这个中继有回应，但一直没发来帖子，我们就不等了。它可能很忙，也可能只服务在那里有账号的人。",
+      "refused": "这个中继拒绝了请求。付费中继和需要审核的中继常常这样，除非你在那里有账号。"
     }
   },
   "officialAccount": {
@@ -3400,6 +3442,14 @@
       "nip05Failed": "无法解析 NIP-05",
       "loadFailed": "无法加载账号数据"
     }
+  },
+  "guidePage": {
+    "lastUpdated": "最后更新",
+    "levelPosition": "{level} · 第 {current} 篇，共 {total} 篇"
+  },
+  "tableOfContents": {
+    "title": "本页内容",
+    "ariaLabel": "指南章节"
   },
   "guideFooter": {
     "improvePage": "改进此页面",

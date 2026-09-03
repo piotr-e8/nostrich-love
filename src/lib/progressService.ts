@@ -39,8 +39,17 @@ function getDeviceId(): string {
   return deviceId;
 }
 
-// Default privacy settings — tracking is ON by default (opt-out via the
-// settings page). Everything stays on this device either way.
+// Default privacy settings. Tracking is ON by default (opt-out via the
+// settings page) and everything stays on this device either way. The settings
+// page used to claim the opposite; the copy was corrected to match this rather
+// than flipping the default, because turning it off by default empties the
+// resume banner, /progress and every badge for a first-time reader.
+//
+// `dataRetention` is no longer settable from the UI: the select promised
+// "session only" and 30/90 day expiry that gamification.saveGamificationData()
+// (the real writer for completions, badges and streak) never honoured. The
+// field stays because saveProgressData() below still respects a value stored
+// by an earlier visit.
 const defaultPrivacySettings: PrivacySettings = {
   trackingEnabled: true,
   dataRetention: 'forever',

@@ -4,7 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { Sparkles } from 'lucide-react';
 import { GuideCard, type Guide } from './GuideCard';
 import { LevelProgressBar } from './LevelProgressBar';
+import { CLEAR_GUIDE_FILTER_EVENT } from './InterestFilter';
 import { getCompletedGuidesInLevel } from '../../lib/progress';
+import { guideMatchesTopic, isGuideTopicId } from '../../config/guide-topics';
 import { useTranslation } from '../../hooks/useTranslation';
 
 export type SkillLevel = 'beginner' | 'intermediate' | 'advanced';
@@ -78,31 +80,50 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
     }
   }, [level]);
 
-  // Filter guides based on interest filter
+  // `activeFilter` carries two different things, because GuidesContainer feeds
+  // one value to every section: either a topic id from the chips, or whatever
+  // the reader typed into the search box. Topic ids are a closed set, so they
+  // can be told apart and matched against the slug->topic map instead of against
+  // prose. Free text still falls back to a title/description substring match,
+  // which is what a search box should do.
+  //
+  // Do NOT reinstate the old behaviour of substring-matching a chip value
+  // ("privacy", "relays") against the title and description: those are
+  // translated, the chip values are not, and in Polish, Chinese, Arabic and
+  // Hindi that combination emptied the whole page.
+  const normalizedFilter = activeFilter?.trim().toLowerCase() ?? '';
+
   const filteredGuides = React.useMemo(() => {
-    if (!activeFilter) return guides;
-    
-    const normalizedFilter = activeFilter.toLowerCase();
-    
+    if (!normalizedFilter) return guides;
+
+    if (isGuideTopicId(normalizedFilter)) {
+      const topic = normalizedFilter;
+      return guides.filter(guide => guideMatchesTopic(guide.id, topic));
+    }
+
     return guides.filter(guide => {
-      // Check if guide has tags that match the filter (case-insensitive)
-      if (guide.tags?.some(tag => tag.toLowerCase() === normalizedFilter)) return true;
-      
-      // Check guide title/description for keywords
       const searchText = `${guide.title} ${guide.description}`.toLowerCase();
       return searchText.includes(normalizedFilter);
     });
-  }, [guides, activeFilter]);
+  }, [guides, normalizedFilter]);
 
-  // Sort guides: incomplete first, then completed (within filtered set)
-  const sortedGuides = React.useMemo(() => {
-    return [...filteredGuides].sort((a, b) => {
-      const aCompleted = completedGuideIds.includes(a.id);
-      const bCompleted = completedGuideIds.includes(b.id);
-      if (aCompleted === bCompleted) return 0;
-      return aCompleted ? 1 : -1;
-    });
-  }, [filteredGuides, completedGuideIds]);
+  // The filter state lives in GuidesContainer, two levels up, and this component
+  // is not given a setter. Rather than thread a prop through, the reset asks the
+  // filter bar to reset itself: InterestFilter listens for this event and calls
+  // its own onFilterChange(null), which is the same path a click on "All Guides"
+  // takes (and which also clears the search box).
+  const clearFilter = React.useCallback(() => {
+    if (typeof window === 'undefined') return;
+    window.dispatchEvent(new CustomEvent(CLEAR_GUIDE_FILTER_EVENT));
+  }, []);
+
+  // Reading order, exactly as SKILL_LEVELS lists it. This used to re-sort
+  // completed guides to the end of the section, which quietly rearranged the
+  // course as the reader progressed: finish guide 1 and 2, come back, and the
+  // section now starts at guide 3 with the first two at the bottom. The cards
+  // already say what is done (green start border, check icon, "Completed"), so
+  // the reordering only cost the reader the order they had learned.
+  const sortedGuides = filteredGuides;
 
   return (
     <section 
@@ -160,13 +181,27 @@ export const GuideSection: React.FC<GuideSectionProps> = ({
         ))}
       </div>
 
-      {/* Empty State (when filter returns no results) */}
-      {sortedGuides.length === 0 && activeFilter && (
-        <div className="text-center py-12">
-          <Sparkles className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+      {/* Empty state. A topic can legitimately have nothing at one level (there
+          is no Bitcoin guide in Advanced), so this must always say so and offer
+          the way back, never leave a bare gap. */}
+      {sortedGuides.length === 0 && normalizedFilter !== '' && (
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 py-6 text-center">
+          <Sparkles className="w-5 h-5 text-gray-400 dark:text-gray-500 shrink-0" aria-hidden="true" />
+          {/* ui.search.noResults is the only "nothing found" string that exists
+              in all seven locales today. Its English wording says "matching your
+              search", which is a shade off for a topic chip; a dedicated
+              guidesPage.filter.noMatches key would read better once it can be
+              translated in all seven. */}
           <p className="text-gray-500 dark:text-gray-400">
             {t('ui.search.noResults')}
           </p>
+          <button
+            type="button"
+            onClick={clearFilter}
+            className="inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-friendly-purple-400"
+          >
+            {t('interestFilter.allGuides')}
+          </button>
         </div>
       )}
     </section>

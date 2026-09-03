@@ -4,6 +4,13 @@ import { useTranslation } from '../../hooks/useTranslation';
 
 export type InterestFilterValue = string | null;
 
+/**
+ * Fired by the empty state inside GuideSection when the reader asks to go back
+ * to all guides. Handled here because this component is the one holding
+ * onFilterChange; see the comment on the listener below.
+ */
+export const CLEAR_GUIDE_FILTER_EVENT = 'nostrich:clear-guide-filter';
+
 export interface InterestFilterOption {
   value: InterestFilterValue;
   label: string;
@@ -55,6 +62,20 @@ export const InterestFilter: React.FC<InterestFilterProps> = ({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // A "no guides under this topic" state renders inside GuideSection, which has
+  // no handle on the filter state. It asks for a reset by dispatching an event;
+  // routing it back through onFilterChange keeps one code path for clearing the
+  // filter, so the saved-filter write and the search-box reset still happen.
+  useEffect(() => {
+    const handleClearRequest = () => {
+      onFilterChange(null);
+      setIsDropdownOpen(false);
+    };
+
+    window.addEventListener(CLEAR_GUIDE_FILTER_EVENT, handleClearRequest);
+    return () => window.removeEventListener(CLEAR_GUIDE_FILTER_EVENT, handleClearRequest);
+  }, [onFilterChange]);
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -100,7 +121,7 @@ export const InterestFilter: React.FC<InterestFilterProps> = ({
 
         {isDropdownOpen && (
           <div 
-            className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50 overflow-hidden"
+            className="absolute top-full start-0 end-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50 overflow-hidden"
             role="listbox"
           >
             {options.map((option) => (
@@ -130,12 +151,14 @@ export const InterestFilter: React.FC<InterestFilterProps> = ({
     );
   }
 
-  // Desktop Tabs View
+  // Desktop chip row. Not role="tablist": these are toggle buttons, there are no
+  // tab panels, and a tablist promises arrow-key navigation this never had.
+  // A group of aria-pressed buttons is what they actually are.
   return (
-    <div 
+    <div
       className={`flex flex-wrap items-center justify-center gap-2 ${className}`}
-      role="tablist"
-      aria-label="Filter guides by interest"
+      role="group"
+      aria-label={t('guidesPage.filter.filterByInterest')}
     >
       {options.map((option) => {
         const isActive = activeFilter === option.value;
@@ -148,8 +171,7 @@ export const InterestFilter: React.FC<InterestFilterProps> = ({
                 ? 'bg-friendly-purple-700 text-white shadow-sm'
                 : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
             }`}
-            role="tab"
-            aria-selected={isActive}
+            aria-pressed={isActive}
           >
             {option.icon}
             <span>{option.label}</span>

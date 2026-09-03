@@ -22,17 +22,41 @@ import { nip19 } from "nostr-tools";
 import { cn, copyToClipboard } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
 
+// Three outcomes, not two. "unknown" exists because a browser cannot tell a
+// domain that withholds Access-Control-Allow-Origin from one that is down or
+// does not resolve: fetch rejects with the same TypeError either way, and the
+// message differs per browser. Reporting that as "Invalid NIP-05" sent people
+// off to edit a file that was fine.
+type NIP05Status = "valid" | "invalid" | "unknown";
+
+type NIP05ErrorType =
+  | "format"
+  | "domain"
+  | "not-found"
+  | "json"
+  | "network"
+  | "blocked"
+  | "npub-instead-of-hex"
+  | "malformed-key";
+
 interface NIP05Result {
   identifier: string;
-  isValid: boolean;
+  status: NIP05Status;
   npub?: string;
   name?: string;
   about?: string;
   picture?: string;
   relays?: string[];
   error?: string;
-  errorType?: "format" | "domain" | "not-found" | "json" | "network";
+  errorType?: NIP05ErrorType;
+  /** Hex decoded from an npub found where hex belongs, so the fix is copy-paste. */
+  hexFromNpub?: string;
 }
+
+// NIP-05 requires the value in `names` to be the public key as 64 lowercase hex
+// characters. An `npub1…` there is the most common hand-editing mistake: the
+// file parses, the fetch succeeds, and every client still refuses to verify.
+const HEX_PUBKEY = /^[0-9a-f]{64}$/;
 
 interface NIP05CheckerProps {
   className?: string;
@@ -66,6 +90,21 @@ const getErrorMessages = (t: (key: string) => string): Record<
     title: t('nip05Checker.errors.networkError.title'),
     description: t('nip05Checker.errors.networkError.description'),
     fix: t('nip05Checker.errors.networkError.fix'),
+  },
+  blocked: {
+    title: t('nip05Checker.errors.blocked.title'),
+    description: t('nip05Checker.errors.blocked.description'),
+    fix: t('nip05Checker.errors.blocked.fix'),
+  },
+  "npub-instead-of-hex": {
+    title: t('nip05Checker.errors.npubInsteadOfHex.title'),
+    description: t('nip05Checker.errors.npubInsteadOfHex.description'),
+    fix: t('nip05Checker.errors.npubInsteadOfHex.fix'),
+  },
+  "malformed-key": {
+    title: t('nip05Checker.errors.malformedKey.title'),
+    description: t('nip05Checker.errors.malformedKey.description'),
+    fix: t('nip05Checker.errors.malformedKey.fix'),
   },
 });
 
@@ -114,7 +153,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
       if (!isValidFormat(identifier)) {
         setResult({
           identifier,
-          isValid: false,
+          status: "invalid",
           error: t('nip05Checker.messages.invalidFormat'),
           errorType: "format",
         });
@@ -124,54 +163,66 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
 
       const [name, domain] = identifier.split("@");
 
-      // Try to fetch nostr.json from the domain
-      // Note: In production, you'd need to handle CORS or use a proxy
+      // .well-known is the path NIP-05 defines; the bare /nostr.json is a
+      // legacy fallback some hosts still use.
       const urls = [
         `https://${domain}/.well-known/nostr.json?name=${encodeURIComponent(name)}`,
         `https://${domain}/nostr.json?name=${encodeURIComponent(name)}`,
       ];
 
-      let response = null;
-      let lastError = null;
+      let response: any = null;
+      let brokenJson = false;
+      // fetch() rejects only on a network-level failure, never on an HTTP error
+      // status, so a rejection means the browser got nothing back: missing CORS
+      // header, dead domain, dropped connection. Sniffing e.message for "CORS"
+      // or "Failed to fetch" only ever matched Chrome's wording.
+      let unreachable = false;
+      let sawHttpResponse = false;
 
       for (const url of urls) {
+        let res: Response;
         try {
-          const res = await fetch(url, {
+          res = await fetch(url, {
             method: "GET",
             headers: { Accept: "application/json" },
           });
-          if (res.ok) {
-            response = await res.json();
-            break;
-          }
-        } catch (e) {
-          lastError = e;
-          // Check if it's a CORS error (TypeError with network-related message)
-          if (
-            e instanceof TypeError &&
-            (e.message.includes("CORS") ||
-              e.message.includes("Failed to fetch"))
-          ) {
-            setResult({
-              identifier,
-              isValid: false,
-              error: t('nip05Checker.messages.corsBlocked'),
-              errorType: "network",
-            });
-            setIsChecking(false);
-            return;
-          }
+        } catch {
+          unreachable = true;
           continue;
         }
+        sawHttpResponse = true;
+        if (!res.ok) continue;
+        try {
+          response = await res.json();
+        } catch {
+          brokenJson = true;
+        }
+        break;
+      }
+
+      if (brokenJson) {
+        setResult({
+          identifier,
+          status: "invalid",
+          errorType: "json",
+        });
+        setIsChecking(false);
+        return;
       }
 
       if (!response) {
-        setResult({
-          identifier,
-          isValid: false,
-          error: t('nip05Checker.messages.notConfigured'),
-          errorType: "not-found",
-        });
+        // A readable HTTP answer (even a 404) proves the domain is reachable
+        // and does not block us, so that is a real "not set up here".
+        setResult(
+          !sawHttpResponse && unreachable
+            ? { identifier, status: "unknown", errorType: "blocked" }
+            : {
+                identifier,
+                status: "invalid",
+                error: t('nip05Checker.messages.notConfigured'),
+                errorType: "not-found",
+              }
+        );
         setIsChecking(false);
         return;
       }
@@ -184,7 +235,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
       if (!pubkey) {
         setResult({
           identifier,
-          isValid: false,
+          status: "invalid",
           error: t('nip05Checker.messages.nameNotFound')
             .replace('{name}', name)
             .replace('{domain}', domain),
@@ -194,21 +245,38 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
         return;
       }
 
-      // Convert pubkey to npub using proper bech32 encoding
-      let npub: string;
-      try {
-        npub = nip19.npubEncode(pubkey);
-      } catch {
-        npub = pubkey; // Fallback to raw pubkey if encoding fails
+      // The value has to be hex. npubEncode() happily encodes any short hex
+      // string into a plausible-looking npub, so a truncated key used to be
+      // reported valid too.
+      const rawKey = typeof pubkey === "string" ? pubkey.trim() : "";
+      if (!HEX_PUBKEY.test(rawKey)) {
+        const looksLikeNpub = rawKey.startsWith("npub1");
+        let hexFromNpub: string | undefined;
+        if (looksLikeNpub) {
+          try {
+            const decoded = nip19.decode(rawKey);
+            if (decoded.type === "npub") hexFromNpub = decoded.data as string;
+          } catch {
+            // An npub that does not decode: the message alone has to do.
+          }
+        }
+        setResult({
+          identifier,
+          status: "invalid",
+          errorType: looksLikeNpub ? "npub-instead-of-hex" : "malformed-key",
+          hexFromNpub,
+        });
+        setIsChecking(false);
+        return;
       }
 
       setResult({
         identifier,
-        isValid: true,
-        npub,
+        status: "valid",
+        npub: nip19.npubEncode(rawKey),
         name: name === "_" ? domain : name,
         about: t('nip05Checker.messages.verifiedOn').replace('{domain}', domain),
-        relays: response.relays?.[pubkey] || [],
+        relays: response.relays?.[rawKey] || [],
       });
 
       // Add to recent checks
@@ -222,7 +290,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
     } catch (error) {
       setResult({
         identifier,
-        isValid: false,
+        status: "invalid",
         error: t('nip05Checker.messages.networkError'),
         errorType: "network",
       });
@@ -250,6 +318,25 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
     setResult(null);
     setIdentifier("");
   };
+
+  // Shared by the "invalid" and the "could not check" panels
+  const renderDetails = (errorType?: NIP05ErrorType) =>
+    errorType && errorMessages[errorType] ? (
+      <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 mb-4">
+        <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
+          {errorMessages[errorType].title}
+        </h4>
+        <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
+          {errorMessages[errorType].description}
+        </p>
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          <span className="text-primary-600 dark:text-primary-400">
+            {t('nip05Checker.errors.fixLabel')}
+          </span>{" "}
+          {errorMessages[errorType].fix}
+        </p>
+      </div>
+    ) : null;
 
   return (
     <div className={cn("max-w-2xl mx-auto p-6", className)}>
@@ -368,7 +455,7 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
           )}
           {result && (
             <div className="mt-6 animate-slide-up motion-reduce:animate-none">
-              {result.isValid ? (
+              {result.status === "valid" ? (
                 <div className="bg-success-500/10 border border-success-500/30 rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-12 h-12 bg-success-500 rounded-full flex items-center justify-center">
@@ -467,6 +554,30 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                     )}
                   </div>
                 </div>
+              ) : result.status === "unknown" ? (
+                /* Not "invalid" — the check never got an answer, so the tool
+                   has nothing to say about the identifier itself. */
+                <div className="bg-warning-500/10 border border-warning-500/30 rounded-xl p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-warning-500/20 rounded-full flex items-center justify-center">
+                      <AlertTriangle className="w-6 h-6 text-yellow-700 dark:text-yellow-400" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-yellow-700 dark:text-yellow-400">
+                        {t('nip05Checker.results.unknown.title')}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-400">
+                        {t('nip05Checker.results.unknown.description')}
+                      </p>
+                    </div>
+                  </div>
+
+                  {renderDetails(result.errorType)}
+
+                  {result.error && (
+                    <p className="text-gray-600 dark:text-gray-400 text-sm">{result.error}</p>
+                  )}
+                </div>
               ) : (
                 <div className="bg-error-500/10 border border-error-500/30 rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-4">
@@ -484,24 +595,37 @@ export function NIP05Checker({ className }: NIP05CheckerProps) {
                   </div>
 
                   {/* Error Details */}
-                  {result.errorType && errorMessages[result.errorType] && (
+                  {renderDetails(result.errorType)}
+
+                  {/* The hex the file should have held, ready to paste */}
+                  {result.hexFromNpub && (
                     <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 mb-4">
-                      <h4 className="font-semibold text-error-500 mb-1">
-                        {errorMessages[result.errorType].title}
-                      </h4>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
-                        {errorMessages[result.errorType].description}
+                      <p className="text-sm text-gray-500 mb-1">
+                        {t('nip05Checker.errors.hexLabel')}
                       </p>
-                      <p className="text-sm">
-                        <span className="text-primary-600 dark:text-primary-400">
-                          {t('nip05Checker.errors.fixLabel')}
-                        </span>{" "}
-                        {errorMessages[result.errorType].fix}
-                      </p>
+                      <div className="flex items-center gap-2">
+                        <code className="flex-1 font-mono text-sm text-gray-900 dark:text-white break-all">
+                          {result.hexFromNpub}
+                        </code>
+                        <button
+                          onClick={() =>
+                            handleCopy(
+                              result.hexFromNpub!,
+                              t('nip05Checker.results.valid.copied')
+                            )
+                          }
+                          aria-label={t('nip05Checker.results.valid.copyPublicKey')}
+                          className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                        >
+                          <Copy className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                        </button>
+                      </div>
                     </div>
                   )}
 
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">{result.error}</p>
+                  {result.error && (
+                    <p className="text-gray-600 dark:text-gray-400 text-sm">{result.error}</p>
+                  )}
 
                   {/* Get NIP-05 CTA */}
                   <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">

@@ -1912,7 +1912,7 @@
     },
     "securityWarning": {
       "title": "Critical Security Notice",
-      "description": "Your private key (nsec) is like a password. Anyone with access to it can control your account. Complete the security checklist below before copying or downloading your keys."
+      "description": "Your private key (nsec) works like a password. Anyone who has it controls your account, so the checklist below has to be ticked before you can copy or save it."
     },
     "securityChecklist": {
       "title": "Security Checklist",
@@ -1949,9 +1949,14 @@
     },
     "modal": {
       "title": "Security Warning",
-      "description": "You haven't completed all security acknowledgments. Copying your keys without understanding the risks could result in permanent loss of access.",
+      "description": "You have not finished the security checklist. Copying or saving your private key before you know the risks can cost you this account for good.",
       "goBack": "Go Back",
-      "copyAnyway": "Copy Anyway"
+      "continueAnyway": "Continue anyway"
+    },
+    "discardModal": {
+      "title": "Throw these keys away?",
+      "description": "This pair exists only on this page. Generating a new one wipes it, and nothing can bring it back. If you have not saved the private key yet, go back and save it first.",
+      "confirm": "Discard and generate"
     },
     "toast": {
       "success": "Keys generated successfully!",
@@ -2363,6 +2368,10 @@
         "title": "Invalid NIP-05",
         "description": "This identifier could not be verified"
       },
+      "unknown": {
+        "title": "Could not check this one",
+        "description": "The check got no answer, so it says nothing about whether the identifier is set up correctly."
+      },
       "checkAnother": "Check Another",
       "getYourOwn": "Get your own NIP-05 identifier"
     },
@@ -2392,6 +2401,22 @@
         "description": "Could not connect to verify the identifier",
         "fix": "Check your internet connection and try again"
       },
+      "blocked": {
+        "title": "Could not read the file from this browser",
+        "description": "Nothing came back from the domain. Usually that means it does not send the Access-Control-Allow-Origin header browsers require. A domain that is offline, misspelled or blocked on your connection looks exactly the same from here.",
+        "fix": "Check the address first. If the domain is yours, serve /.well-known/nostr.json with Access-Control-Allow-Origin: * and check again. Nostr apps are not bound by that rule, so the identifier may already work in one."
+      },
+      "npubInsteadOfHex": {
+        "title": "The file holds an npub where the hex key belongs",
+        "description": "The file loaded and your name is in it, but the value beside it is an npub1 string. NIP-05 wants the public key as 64 hexadecimal characters, so no client will verify this identifier.",
+        "fix": "Replace the npub in nostr.json with the hex key below, leave the quotes as they are, and save the file."
+      },
+      "malformedKey": {
+        "title": "The value in the file is not a valid public key",
+        "description": "Your name is in the file, but the value beside it is not a public key: it has to be exactly 64 hexadecimal characters, all lowercase.",
+        "fix": "Copy the hex public key from your Nostr app (not the npub) and paste it in whole. A truncated key, a stray space or capital letters all break verification."
+      },
+      "hexLabel": "Paste this instead (public key in hex)",
       "fixLabel": "Fix:"
     },
     "providers": {
@@ -2410,7 +2435,6 @@
     "aboutNip05Body": "NIP-05 verifies a Nostr identity through a domain name. It lets you hand out an address that looks like an email (you@yourdomain.com) instead of a long npub.",
     "messages": {
       "invalidFormat": "Invalid format. Use: user@domain.com",
-      "corsBlocked": "This domain refuses checks made straight from a browser. Try the same address in a Nostr client instead.",
       "notConfigured": "NIP-05 is not set up here, or the domain could not be reached.",
       "nameNotFound": "The name \"{name}\" is not listed on {domain}.",
       "networkError": "Something went wrong while reaching that domain. Check your connection and try again.",
@@ -2702,12 +2726,14 @@
       "count": "{count} relay(s) selected",
       "copy": "Copy",
       "download": "Download",
-      "clear": "Clear"
+      "clear": "Clear",
+      "whereTo": "Paste these into your Nostr app under Settings → Relays → Add, one address per line."
     },
     "customRelay": {
       "placeholder": "Add custom relay (wss://...)",
       "add": "Add",
-      "description": "A relay you added yourself."
+      "description": "A relay you added yourself.",
+      "remove": "Remove {name} from the list"
     },
     "toast": {
       "starterPackAdded": "Starter pack relays added!",
@@ -2771,6 +2797,9 @@
       "spatia-arcana": {
         "description": "Anyone can read it, but only people the operator has approved can post."
       }
+    },
+    "starterPack": {
+      "button": "Pick a starter set for me"
     }
   },
   "relayPlayground": {
@@ -3008,6 +3037,11 @@
       "96": "HTTP file storage (replaced by Blossom)",
       "98": "HTTP auth",
       "99": "Classified listings"
+    },
+    "errors": {
+      "timedOut": "The relay sent nothing back before we stopped waiting. It may be busy, or it may only answer accounts it already knows.",
+      "subscriptionRefused": "The relay turned this request down. Some relays only answer people who have paid or signed in.",
+      "closedEarly": "The relay closed the connection before it finished answering."
     }
   },
   "nostrSimulator": {
@@ -3259,7 +3293,13 @@
     "takeQuiz": "Take the Quiz",
     "continueLearning": "Continue Learning",
     "dismiss": "Dismiss",
-    "upNext": "Up next"
+    "upNext": "Up next",
+    "quizComplete": "Quiz complete!",
+    "stillToFinish": "Still to finish in {level}",
+    "unreadGuideDescription": "You have not read {title} yet.",
+    "unpassedQuizDescription": "The quiz in {title} still needs a passing score.",
+    "guidesCounter": "{done}/{total} guides",
+    "quizzesCounter": "{done}/{total} quizzes"
   },
   "share": {
     "label": "Share:",
@@ -3385,7 +3425,9 @@
     "loading": "Loading...",
     "errors": {
       "connectFailed": "Could not reach this relay. It may be offline, or your network may be blocking it.",
-      "loadMoreFailed": "Could not load older posts. Try again in a moment."
+      "loadMoreFailed": "Could not load older posts. Try again in a moment.",
+      "timedOut": "This relay answered but never sent any posts, so we stopped waiting. It may be busy, or it may only serve people who have an account there.",
+      "refused": "This relay turned the request down. Paid relays and approval-only relays often do that until you have an account with them."
     }
   },
   "officialAccount": {
@@ -3400,6 +3442,14 @@
       "nip05Failed": "Failed to resolve NIP-05",
       "loadFailed": "Failed to load account data"
     }
+  },
+  "guidePage": {
+    "lastUpdated": "Last updated",
+    "levelPosition": "{level} · {current} of {total}"
+  },
+  "tableOfContents": {
+    "title": "On this page",
+    "ariaLabel": "Guide sections"
   },
   "guideFooter": {
     "improvePage": "Improve this page",

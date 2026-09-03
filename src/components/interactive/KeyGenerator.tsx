@@ -89,6 +89,11 @@ export function KeyGenerator({
   } | null>(null);
   const [entropyProgress, setEntropyProgress] = useState(0);
   const [showWarningModal, setShowWarningModal] = useState(false);
+  // "security": an action on the private key before the checklist is done.
+  // "discard": throwing the current pair away, which nothing can undo.
+  const [modalVariant, setModalVariant] = useState<"security" | "discard">(
+    "security",
+  );
   const [pendingAction, setPendingAction] = useState<(() => void) | null>(null);
   // Timed-exit modal state (double-rAF mount idiom)
   const [modalEntered, setModalEntered] = useState(false);
@@ -122,6 +127,7 @@ export function KeyGenerator({
 
   const closeWarningModal = () => {
     if (modalExiting) return;
+    setPendingAction(null);
     setModalExiting(true);
     modalExitTimer.current = setTimeout(() => {
       setModalExiting(false);
@@ -133,11 +139,12 @@ export function KeyGenerator({
   // the whole 300 ms exit window, so a plain setShowWarningModal(true) there
   // is a no-op and the pending timer would close the modal the user just
   // re-requested. (AnimatePresence used to re-enter in this case.)
-  const openWarningModal = () => {
+  const openWarningModal = (variant: "security" | "discard" = "security") => {
     if (modalExitTimer.current) {
       clearTimeout(modalExitTimer.current);
       modalExitTimer.current = null;
     }
+    setModalVariant(variant);
     setModalExiting(false);
     setShowWarningModal(true);
   };
@@ -228,13 +235,23 @@ export function KeyGenerator({
     showToast(t('keyGenerator.toast.success'), "success");
   }, [onKeysGenerated, showToast, t]);
 
-  const handleCopy = async (text: string, label: string) => {
+  // Gate for anything that puts the PRIVATE key somewhere it can be read
+  // later: the clipboard, a text file, a PNG. The npub is not routed through
+  // here — it carries a "Safe to share" badge, and a warning modal on top of
+  // that badge told the reader two opposite things about the same key.
+  const guardPrivateKeyAction = (action: () => void) => {
     if (!allChecksPassed) {
-      setPendingAction(() => () => performCopy(text, label));
-      openWarningModal();
+      setPendingAction(() => action);
+      openWarningModal("security");
       return;
     }
-    await performCopy(text, label);
+    action();
+  };
+
+  const handleCopyPrivate = (text: string, label: string) => {
+    guardPrivateKeyAction(() => {
+      void performCopy(text, label);
+    });
   };
 
   const performCopy = async (text: string, label: string) => {
@@ -246,7 +263,21 @@ export function KeyGenerator({
     }
   };
 
+  const saveDataUrl = (dataUrl: string, filename: string) => {
+    const a = document.createElement("a");
+    a.href = dataUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  };
+
   const handleDownload = () => {
+    if (!keys) return;
+    guardPrivateKeyAction(performDownload);
+  };
+
+  const performDownload = () => {
     if (!keys) return;
 
     const content = `${t('keyGenerator.backupFile.title')}
@@ -453,7 +484,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <button
-                    onClick={() => handleCopy(keys.npub, t('keyGenerator.keys.public.title'))}
+                    onClick={() => performCopy(keys.npub, t('keyGenerator.keys.public.title'))}
                     className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 dark:green-900/30 hover:bg-success-500/30 text-success-500 rounded-lg transition-all"
                   >
                     <Copy className="w-4 h-4" />
@@ -508,7 +539,7 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <button
-                    onClick={() => handleCopy(keys.nsec, t('keyGenerator.keys.private.title'))}
+                    onClick={() => handleCopyPrivate(keys.nsec, t('keyGenerator.keys.private.title'))}
                     className="inline-flex items-center gap-2 px-4 py-2 bg-red-100 dark:red-900/30 hover:bg-error-500/30 text-error-500 rounded-lg transition-all"
                   >
                     <Copy className="w-4 h-4" />
@@ -522,14 +553,19 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                     {t('keyGenerator.keys.private.download')}
                   </button>
                   {qrCodeData?.nsec && (
-                    <a
-                      href={qrCodeData.nsec}
-                      download="nsec-qr.png"
+                    /* A button, not <a download>: an anchor saves the private
+                       key as a PNG with no way to gate it on the checklist. */
+                    <button
+                      onClick={() =>
+                        guardPrivateKeyAction(() =>
+                          saveDataUrl(qrCodeData.nsec, "nsec-qr.png"),
+                        )
+                      }
                       className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-white rounded-lg transition-all"
                     >
                       <QrCode className="w-4 h-4" />
                       {t('keyGenerator.keys.private.qrCode')}
-                    </a>
+                    </button>
                   )}
                 </div>
               </div>
@@ -538,9 +574,14 @@ ${t('keyGenerator.backupFile.warnings.title')}:
               <div className="text-center pt-4">
                 <button
                   onClick={() => {
-                    setKeys(null);
-                    setSecurityChecks(getSecurityChecks(t));
-                    setQrCodeData(null);
+                    // The pair lives in React state only. Clearing it is final,
+                    // so ask first instead of wiping it on a stray click.
+                    setPendingAction(() => () => {
+                      setKeys(null);
+                      setSecurityChecks(getSecurityChecks(t));
+                      setQrCodeData(null);
+                    });
+                    openWarningModal("discard");
                   }}
                   className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-all inline-flex items-center gap-2"
                 >
@@ -575,11 +616,15 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                   <AlertTriangle className="w-6 h-6 text-yellow-700 dark:text-yellow-400" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                  {t('keyGenerator.modal.title')}
+                  {modalVariant === "discard"
+                    ? t('keyGenerator.discardModal.title')
+                    : t('keyGenerator.modal.title')}
                 </h3>
               </div>
               <p className="text-gray-600 dark:text-gray-300 mb-6">
-                {t('keyGenerator.modal.description')}
+                {modalVariant === "discard"
+                  ? t('keyGenerator.discardModal.description')
+                  : t('keyGenerator.modal.description')}
               </p>
               <div className="flex gap-3">
                 <button
@@ -596,7 +641,9 @@ ${t('keyGenerator.backupFile.warnings.title')}:
                   }}
                   className="flex-1 px-4 py-2 bg-warning-500/20 hover:bg-yellow-200 dark:hover:bg-yellow-800 text-yellow-700 dark:text-yellow-400 rounded-lg transition-all"
                 >
-                  {t('keyGenerator.modal.copyAnyway')}
+                  {modalVariant === "discard"
+                    ? t('keyGenerator.discardModal.confirm')
+                    : t('keyGenerator.modal.continueAnyway')}
                 </button>
               </div>
             </div>

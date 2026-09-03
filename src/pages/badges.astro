@@ -66,7 +66,7 @@ const allBadges: Badge[] = BADGE_DEFINITIONS.map((badge) => ({
               />
             </div>
             <p id="collection-text" class="text-sm text-gray-500 dark:text-gray-400 mt-2">
-              0 of 9 badges earned
+              {`0 of ${allBadges.length} badges earned`}
             </p>
           </div>
         </div>
@@ -205,11 +205,16 @@ const allBadges: Badge[] = BADGE_DEFINITIONS.map((badge) => ({
           Continue exploring Nostr guides, connect with the community, and unlock all achievements!
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <!-- Primary way out. A reader gets here straight after a badge
+               celebration, so when there is a guide to go back to this points at
+               it (rewritten by the script below); otherwise it stays the guide
+               index. Without this the page was somewhere you arrived and stopped. -->
           <a
+            id="badges-continue-link"
             href="/guides"
             class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-friendly-purple-700 hover:bg-friendly-purple-800 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
           >
-            Start Learning
+            <span id="badges-continue-label">Start Learning</span>
             <svg class="ms-2 w-5 h-5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
@@ -473,9 +478,40 @@ const allBadges: Badge[] = BADGE_DEFINITIONS.map((badge) => ({
     }
   }
 
+  /**
+   * Point the primary CTA back at the guide the reader was last on, so the page
+   * leads somewhere instead of ending. Falls back to the guide index when there
+   * is nothing stored (a first visit, or tracking switched off in /settings).
+   */
+  function updateContinueLink() {
+    const link = document.getElementById('badges-continue-link') as HTMLAnchorElement | null;
+    const label = document.getElementById('badges-continue-label');
+    if (!link || !label) return;
+
+    let lastViewed: { slug?: string; title?: string; timestamp?: number } | null = null;
+    try {
+      const stored = localStorage.getItem('nostrich-last-viewed');
+      if (stored) lastViewed = JSON.parse(stored);
+    } catch (e) {
+      console.error('Error reading last viewed guide:', e);
+    }
+
+    if (!lastViewed?.slug || !lastViewed.title) return;
+
+    // English is served un-prefixed (prefixDefaultLocale: false), so /en/guides/*
+    // would only 301. Inline scripts cannot import i18n/paths.
+    const savedLang = localStorage.getItem('preferredLanguage');
+    const locale = savedLang && ['en','pl','es','de','zh','ar','hi'].includes(savedLang) ? savedLang : 'en';
+    const guidesPrefix = locale === 'en' ? '/guides' : `/${locale}/guides`;
+
+    link.href = `${guidesPrefix}/${lastViewed.slug}`;
+    label.textContent = `Back to ${lastViewed.title}`;
+  }
+
   // Initialize page
   function init() {
     updateBadgeGrid();
+    updateContinueLink();
 
     // Close modal handlers
     const closeBtn = document.getElementById('modal-close');

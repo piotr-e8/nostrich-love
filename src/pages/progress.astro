@@ -2,9 +2,30 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
-import { SKILL_LEVELS } from '../data/learning-paths';
+import { getCollection } from 'astro:content';
+import { getLevelLength, getAllGuidesOrdered } from '../data/learning-paths';
 
-const totalGuides = 15; // Total number of guides across all levels
+// Pre-hydration numbers. These used to be typed in by hand (15 overall, 0/6 for
+// a seven-guide level), so the page disagreed with the course spine and a reader
+// who finished everything was shown 107%. learning-paths.ts is the source.
+const beginnerTotal = getLevelLength('beginner');
+const intermediateTotal = getLevelLength('intermediate');
+const advancedTotal = getLevelLength('advanced');
+
+// Guide titles for the level lists and Recent Activity. The inline script used
+// to carry its own hand-written table of 15 titles, which had drifted from the
+// guides themselves ("What is Nostr?" where the guide is called "Nostr Explained
+// Simply") and was missing `outbox-model` entirely, so that row rendered as the
+// raw slug. This page is English-only, so the en/ entries are the right ones.
+// Passed through a JSON script tag because a module script cannot read
+// frontmatter and define:vars would forbid the imports it needs.
+const englishGuides = await getCollection('guides', (entry) => entry.slug.startsWith('en/'));
+const guideMetadata = Object.fromEntries(
+  getAllGuidesOrdered().map((slug) => {
+    const entry = englishGuides.find((g) => g.slug === `en/${slug}`);
+    return [slug, { title: entry?.data.title ?? slug, description: entry?.data.description ?? '' }];
+  })
+);
 ---
 
 <!-- noindex: this page renders the visitor's own localStorage state, so it is
@@ -119,7 +140,7 @@ const totalGuides = 15; // Total number of guides across all levels
                   <div class="mb-6">
                     <div class="flex justify-between text-sm mb-2">
                       <span class="text-gray-600 dark:text-gray-400">Progress</span>
-                      <span class="progress-text font-semibold text-gray-900 dark:text-white">0/6 guides</span>
+                      <span class="progress-text font-semibold text-gray-900 dark:text-white">{`0/${beginnerTotal} guides`}</span>
                     </div>
                     <div class="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                       <div class="progress-fill h-full bg-gradient-to-r from-green-400 to-green-500 rounded-full transition-all duration-500" style="width: 0%"></div>
@@ -154,7 +175,7 @@ const totalGuides = 15; // Total number of guides across all levels
                   <div class="mb-6">
                     <div class="flex justify-between text-sm mb-2">
                       <span class="text-gray-600 dark:text-gray-400">Progress</span>
-                      <span class="progress-text font-semibold text-gray-900 dark:text-white">0/6 guides</span>
+                      <span class="progress-text font-semibold text-gray-900 dark:text-white">{`0/${intermediateTotal} guides`}</span>
                     </div>
                     <div class="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                       <div class="progress-fill h-full bg-gradient-to-r from-friendly-purple-400 to-friendly-purple-500 rounded-full transition-all duration-500" style="width: 0%"></div>
@@ -189,7 +210,7 @@ const totalGuides = 15; // Total number of guides across all levels
                   <div class="mb-6">
                     <div class="flex justify-between text-sm mb-2">
                       <span class="text-gray-600 dark:text-gray-400">Progress</span>
-                      <span class="progress-text font-semibold text-gray-900 dark:text-white">0/3 guides</span>
+                      <span class="progress-text font-semibold text-gray-900 dark:text-white">{`0/${advancedTotal} guides`}</span>
                     </div>
                     <div class="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                       <div class="progress-fill h-full bg-gradient-to-r from-friendly-gold-400 to-friendly-gold-500 rounded-full transition-all duration-500" style="width: 0%"></div>
@@ -245,7 +266,9 @@ const totalGuides = 15; // Total number of guides across all levels
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </a>
-          <!-- View Badges button - TEMPORARILY HIDDEN
+          <!-- The one live entrance to /badges. It was commented out, which left
+               twelve badges awarded and a celebration modal firing with no page
+               a reader could ever open to see the collection. -->
           <a
             href="/badges"
             class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-friendly-purple-700 dark:text-friendly-purple-400 bg-white dark:bg-gray-800 border-2 border-friendly-purple-200 dark:border-friendly-purple-700 hover:border-friendly-purple-400 dark:hover:border-friendly-purple-500 rounded-xl transition-all duration-200"
@@ -255,11 +278,18 @@ const totalGuides = 15; // Total number of guides across all levels
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
             </svg>
           </a>
-          -->
         </div>
       </div>
     </section>
   </main>
+
+  <!-- Guide titles, straight from the content collection. Read by the script below. -->
+  <script
+    id="guide-metadata"
+    type="application/json"
+    set:html={JSON.stringify(guideMetadata).replace(/</g, '\\u003c')}
+    is:inline
+  ></script>
 
   <Footer />
 </Layout>
@@ -287,7 +317,7 @@ const totalGuides = 15; // Total number of guides across all levels
 
 <script>
   import { loadGamificationData, getCompletedInLevel, getLevelProgress } from '../utils/gamification';
-  import { SKILL_LEVELS, getLevelLength, type SkillLevel } from '../data/learning-paths';
+  import { SKILL_LEVELS, getLevelLength, getAllGuidesOrdered, type SkillLevel } from '../data/learning-paths';
 
   const STORAGE_KEY = 'nostrich-gamification-v1';
 
@@ -300,24 +330,30 @@ const totalGuides = 15; // Total number of guides across all levels
     completedByLevel: Record<SkillLevel, string[]>;
   }
   
-  // Guide metadata for display
-  const guideMetadata: Record<string, { title: string; description: string }> = {
-    'what-is-nostr': { title: 'What is Nostr?', description: 'Learn the fundamentals' },
-    'keys-and-security': { title: 'Keys & Security', description: 'Protect your identity' },
-    'quickstart': { title: 'Quickstart', description: 'Get started in minutes' },
-    'finding-community': { title: 'Finding Community', description: 'Connect with others' },
-    'faq': { title: 'FAQ', description: 'Common questions answered' },
-    'relays-demystified': { title: 'Relays Demystified', description: 'Understand the network' },
-    'nip05-identity': { title: 'NIP-05 Identity', description: 'Get your verified handle' },
-    'zaps-and-lightning': { title: 'Zaps & Lightning', description: 'Send and receive value' },
-    'nostr-tools': { title: 'Essential Tools', description: 'Must-have utilities' },
-    'troubleshooting': { title: 'Troubleshooting', description: 'Fix common issues' },
-    'multi-client': { title: 'Using Multiple Clients', description: 'Advanced workflows' },
-    'relay-guide': { title: 'Relay Guide', description: 'Set up your own relay' },
-    'privacy-security': { title: 'Privacy & Security', description: 'Advanced protection' },
-    'nip17-private-messages': { title: 'Private Messages', description: 'NIP-17 deep dive' },
-    'protocol-comparison': { title: 'Protocol Comparison', description: 'Nostr vs alternatives' },
-  };
+  // Guide titles for display, rendered into #guide-metadata from the content
+  // collection in this page's frontmatter. This was a hand-written table that
+  // named guides differently from /guides and had no entry for `outbox-model`.
+  type GuideMeta = { title: string; description: string };
+
+  const guideMetadata: Record<string, GuideMeta> = (() => {
+    try {
+      const el = document.getElementById('guide-metadata');
+      return el?.textContent ? JSON.parse(el.textContent) : {};
+    } catch (e) {
+      console.error('Error reading guide metadata:', e);
+      return {};
+    }
+  })();
+
+  /** Never render a raw slug at the reader: fall back to a readable title. */
+  function metaFor(guideId: string): GuideMeta {
+    return (
+      guideMetadata[guideId] || {
+        title: guideId.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
+        description: '',
+      }
+    );
+  }
 
   // Format date for recent activity
   function formatDate(dateString: string): string {
@@ -363,7 +399,8 @@ const totalGuides = 15; // Total number of guides across all levels
   // Update summary cards
   function updateSummaryCards() {
     const { completedGuides, completedByLevel } = getProgressData();
-    const totalGuides = 15;
+    // Was hardcoded 15 against a 16-guide course, so finishing everything read 107%.
+    const totalGuides = getAllGuidesOrdered().length;
     
     // Update guides completed count
     const guidesCountEl = document.getElementById('guides-completed-count');
@@ -432,7 +469,7 @@ const totalGuides = 15; // Total number of guides across all levels
 
         const guides = SKILL_LEVELS[level]?.sequence || [];
         guideList.innerHTML = guides.map((guideId, idx) => {
-          const meta = guideMetadata[guideId] || { title: guideId, description: '' };
+          const meta = metaFor(guideId);
           const isCompleted = completedByLevel[level]?.includes(guideId);
           const position = idx + 1;
           
@@ -481,7 +518,7 @@ const totalGuides = 15; // Total number of guides across all levels
     const completedGuides = completedWithTimestamps
       .map((guide: any) => ({
         ...guide,
-        metadata: guideMetadata[guide.id] || { title: guide.id, description: '' },
+        metadata: metaFor(guide.id),
       }))
       .sort((a: any, b: any) => new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime())
       .slice(0, 5); // Show last 5
