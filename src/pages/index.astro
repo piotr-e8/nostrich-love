@@ -18,7 +18,7 @@ import { COMPARISON_PAGES } from '../config/comparison-pages';
 // a reader arriving here had no way to know a structured course existed one
 // click away. Still leads with "Learn Nostr" for the reasons in the note above.
 const title = 'Learn Nostr: A Free Course, Beginner to Advanced';
-const description = 'A structured course in Nostr: 16 guides across three levels, most ending in a quiz. Keys, relays, zaps and clients — free, no account, in seven languages.';
+const description = 'A structured course in Nostr: 16 guides across three levels, most ending in a quiz. Keys, relays, zaps and clients. Free, no account, in seven languages.';
 
 // Entity anchor. Every Organization reference elsewhere on the site is an
 // anonymous inline `publisher` stub inside a guide's LearningResource; this is
@@ -68,17 +68,17 @@ const valueProps = [
   {
     icon: '📚',
     title: 'Three levels, in order',
-    description: 'Beginner, intermediate, advanced. Nothing is locked — the levels just show where to start and what comes next.'
+    description: 'Beginner, intermediate, advanced. You can read them in any order you like; the levels only say where to start and what tends to come next.'
   },
   {
     icon: '✅',
-    title: 'Quizzes, not just reading',
-    description: 'Most guides end in a quiz, so you leave knowing which parts you understood and which to reread.'
+    title: 'A quiz at the end',
+    description: 'Most guides finish with one, so you leave knowing which parts you understood and which to read again.'
   },
   {
     icon: '🌍',
     title: 'Seven languages',
-    description: 'Every guide, fully translated — including Arabic with the whole layout mirrored, and Hindi.'
+    description: 'Every guide is fully translated, Hindi included. In Arabic the whole layout mirrors, right to left.'
   },
 ];
 
@@ -86,42 +86,42 @@ const comparisonPoints = [
   {
     nostr: {
       icon: '📅',
-      title: 'Chronological Feed',
-      description: 'See posts from people you follow in order. You decide what matters.'
+      title: 'Your feed, in order',
+      description: 'Posts from the people you follow, in the order they were written. You decide what matters.'
     },
-    oldWay: 'Algorithm-controlled feed'
+    oldWay: 'Elsewhere, an algorithm decides what you see and when.'
   },
   {
     nostr: {
       icon: '📰',
-      title: 'Curated by Topic',
-      description: 'Join specialized relays for focused discussions. Music, tech, gardening—read Nostr like a newspaper with sections you choose.'
+      title: 'Rooms you pick yourself',
+      description: 'Relays can be narrow. One for music, one for gardening. You read the sections you want and skip the rest.'
     },
-    oldWay: 'One-size-fits-all feed with mixed content'
+    oldWay: 'Elsewhere, everybody gets the same mixed timeline.'
   },
   {
     nostr: {
       icon: '🔒',
-      title: 'Anonymous by Design',
-      description: 'No phone, no email, no ID. Use any name you choose.'
+      title: 'Anonymous if you want to be',
+      description: 'No phone number, no email, no ID check. Call yourself whatever you like.'
     },
-    oldWay: 'Mandatory ID verification'
+    oldWay: 'Most platforms want a verified identity before you can start.'
   },
   {
     nostr: {
       icon: '💾',
-      title: 'Permanent Ownership',
-      description: 'Your content lives on distributed servers. You control it forever.'
+      title: 'Your posts stay yours',
+      description: 'They sit on several relays at once instead of in one company database. Nobody can quietly remove the lot.'
     },
-    oldWay: 'Account deletion risk'
+    oldWay: 'One account deletion elsewhere and the archive goes with it.'
   },
   {
     nostr: {
       icon: '⚡',
-      title: 'Direct Payments',
-      description: 'Receive tips instantly. No middlemen taking a cut.'
+      title: 'Tips land with you',
+      description: 'Readers can send you money straight from the app. No middleman takes a cut.'
     },
-    oldWay: 'Platform monetizes your data'
+    oldWay: 'The usual arrangement sells your attention instead.'
   }
 ];
 
@@ -147,10 +147,10 @@ const comparisonPoints = [
             <!-- Problem Statement -->
             <div class="text-center mb-8">
               <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-400 mb-2">
-                You spend countless hours creating content, making memories, and building a network on social media.
+                Everything you have posted, and everyone who follows you, sits on a server that belongs to somebody else.
               </p>
               <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-400">
-                But what if your account gets deactivated? What if you're shadow banned? What if the platform changes the rules?
+                The rules there can change on a Tuesday, and nobody has to warn you first.
               </p>
             </div>
             
@@ -158,7 +158,7 @@ const comparisonPoints = [
             <div class="flex justify-center mb-6">
               <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-friendly-purple-200 dark:border-friendly-purple-700 shadow-sm">
                 <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">There is a better way</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Nostr works differently</span>
               </div>
             </div>
             
@@ -172,14 +172,14 @@ const comparisonPoints = [
               </h1>
 
               <p class="text-xl sm:text-2xl text-gray-600 dark:text-gray-400 mb-4 max-w-3xl mx-auto leading-relaxed">
-                Sixteen guides across three levels — beginner, intermediate, advanced — and most of them end in a quiz, so you find out what you actually understood. Nothing is locked: the levels only show a sensible order to read in.
+                Sixteen guides, sorted into three levels. Most of them end in a quiz, so you find out what actually stuck. Nothing is locked. The levels are only a sensible order to read in.
               </p>
 
               <!-- This line used to read "Join thousands discovering…". There is no
                    traffic measurement behind any such number, so it made a claim the
                    site cannot support. What replaces it is checkable in one click. -->
               <p class="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
-                Free and open source, in <span class="font-semibold text-friendly-purple-700 dark:text-friendly-purple-400">seven languages</span> — including Arabic and Hindi, which almost nothing else in Nostr covers.
+                Free and open source, in <span class="font-semibold text-friendly-purple-700 dark:text-friendly-purple-400">seven languages</span>. That includes Arabic and Hindi, which almost nothing else in Nostr covers.
               </p>
             </div>
             
@@ -216,7 +216,7 @@ const comparisonPoints = [
             How the course works
           </h2>
           <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Read in order or jump straight to what you need — both work
+            Read it in order, or skip to the part you need. Both work.
           </p>
         </div>
 
@@ -237,10 +237,10 @@ const comparisonPoints = [
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
           <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            A Better Way to Connect
+            What changes on Nostr
           </h2>
           <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            See what changes when you are in control
+            A few things work differently once no company owns the feed
           </p>
         </div>
         
@@ -258,7 +258,7 @@ const comparisonPoints = [
               
               {/* Old way - de-emphasized */}
               <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
-                <p class="text-sm text-gray-500 dark:text-gray-400 italic">vs. {point.oldWay} on traditional platforms</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 italic">{point.oldWay}</p>
               </div>
             </div>
           ))}
@@ -273,7 +273,7 @@ const comparisonPoints = [
           Quick Start Guides
         </h2>
         <p class="text-gray-600 dark:text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-          Jump in with these beginner-friendly guides to get you started
+          Four places people usually start
         </p>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
@@ -283,7 +283,7 @@ const comparisonPoints = [
               🐦
             </div>
             <h3 class="font-bold text-lg text-gray-900 dark:text-white mb-2">What is Nostr?</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400">Learn the basics of decentralized social media and how it works</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400">What the thing actually is, before any of the setup</p>
             <div class="mt-4 flex items-center text-friendly-purple-700 dark:text-friendly-purple-400 text-sm font-medium">
               Start here
               <svg class="ms-2 w-4 h-4 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -298,7 +298,7 @@ const comparisonPoints = [
               🚀
             </div>
             <h3 class="font-bold text-lg text-gray-900 dark:text-white mb-2">First Steps</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400">Your first 10 minutes on Nostr - everything you need to know</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Keys ready, an app picked, your first post sent</p>
             <div class="mt-4 flex items-center text-blue-600 dark:text-blue-400 text-sm font-medium">
               Get started
               <svg class="ms-2 w-4 h-4 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -313,7 +313,7 @@ const comparisonPoints = [
               📱
             </div>
             <h3 class="font-bold text-lg text-gray-900 dark:text-white mb-2">Choose Your App</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400">Compare clients and find the perfect Nostr app for you</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Compare the apps and see which one suits the way you post</p>
             <div class="mt-4 flex items-center text-green-600 dark:text-green-400 text-sm font-medium">
               Compare apps
               <svg class="ms-2 w-4 h-4 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -328,9 +328,9 @@ const comparisonPoints = [
               🔐
             </div>
             <h3 class="font-bold text-lg text-gray-900 dark:text-white mb-2">Understanding Keys</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400">Master Nostr keys and how they keep you in control</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400">What your two keys are, and which one nobody else may ever see</p>
             <div class="mt-4 flex items-center text-amber-600 dark:text-amber-400 text-sm font-medium">
-              Learn more
+              Read about keys
               <svg class="ms-2 w-4 h-4 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
@@ -354,7 +354,7 @@ const comparisonPoints = [
           Coming from another platform?
         </h2>
         <p class="text-gray-600 dark:text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-          See exactly how Nostr differs from the network you are leaving — and what carries over
+          How Nostr differs from the network you are leaving, and what carries over
         </p>
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
@@ -388,7 +388,7 @@ const comparisonPoints = [
             href="/guides/protocol-comparison"
             class="font-medium text-friendly-purple-700 dark:text-friendly-purple-400 hover:underline"
           >
-            Nostr vs ActivityPub vs Bluesky — all three protocols compared
+            Nostr vs ActivityPub vs Bluesky: all three protocols compared
           </a>
         </p>
       </div>
@@ -401,7 +401,7 @@ const comparisonPoints = [
           Ready to take control?
         </h2>
         <p class="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-          Begin with our progressive skill levels—start as a beginner and work your way up to advanced topics.
+          The course begins at beginner level and ends at the protocol itself. Or open the index and pick.
         </p>
         <a
           href="/guides"

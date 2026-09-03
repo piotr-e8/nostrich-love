@@ -23,7 +23,7 @@ const accountCount = getAccountCount();
 // The "8" in the title is load-bearing: it must equal rows.length below.
 const title = 'Bluesky vs Nostr (2026): 8 Key Differences';
 const description =
-  'Bluesky feels like old Twitter; Nostr hands you the keys. Identity, portability, moderation and payments compared — plus a 5-minute way to try Nostr.';
+  'Bluesky feels like old Twitter; Nostr hands you the keys. Identity, portability, moderation and payments compared, plus a 5-minute way to try Nostr.';
 
 const pageUrl = new URL(Astro.url.pathname, siteConfig.url).toString();
 
@@ -32,11 +32,11 @@ const rows: Row[] = [
   {
     dimension: 'Identity & custody',
     nostr: 'A key pair you generate and hold. The key is the account.',
-    bluesky: 'A DID managed together with your PDS — today mostly hosted by Bluesky.',
+    bluesky: 'A DID managed together with your PDS, which today is usually hosted by Bluesky.',
   },
   {
     dimension: 'Account recovery',
-    nostr: 'None — by design. Lose the nsec, lose the identity.',
+    nostr: 'None, by design. Lose the nsec, lose the identity.',
     bluesky: 'Possible through your PDS provider.',
   },
   {
@@ -61,7 +61,7 @@ const rows: Row[] = [
   },
   {
     dimension: 'Sign-up requirements',
-    nostr: 'None. Generate keys locally — no email, no phone number.',
+    nostr: 'None. Generate keys locally. No email, no phone number.',
     bluesky: 'An account with Bluesky PBC (or another PDS host).',
   },
   {
@@ -77,15 +77,15 @@ type Faq = { q: string; a: string };
 const faqs: Faq[] = [
   {
     q: 'Is Nostr better than Bluesky?',
-    a: 'Neither is simply better — they optimize for different things. Bluesky optimizes for polish and a familiar, old-Twitter experience backed by a company. Nostr optimizes for self-custody and censorship resistance: your identity is a cryptographic key that no company can reset, seize, or delete. Decide which trade-off matters more to you; you can also <a href="/guides/quickstart">try Nostr in about five minutes</a> without giving up Bluesky.',
+    a: 'Neither one is simply better. They are built for different things. Bluesky is built for polish and for a familiar, old-Twitter feel with a company behind it. Nostr is built for self-custody and censorship resistance: your identity is a cryptographic key, and no company can reset it or take it back. Decide which trade-off matters more to you. You can also <a href="/guides/quickstart">try Nostr in about five minutes</a> without giving up Bluesky.',
   },
   {
     q: 'Is Bluesky actually decentralized?',
-    a: 'Partly, with more promised. The AT Protocol is designed for decentralization — you can in principle self-host a Personal Data Store (PDS) and keep your DID while switching providers. In practice, most accounts sit on Bluesky-hosted PDSes and the network relies on a central Relay/Indexer run by Bluesky, which is a bottleneck and a potential point of control. True decentralization is planned, not yet delivered.',
+    a: 'Partly, with more promised. The AT Protocol is designed for decentralization: in principle you can self-host a Personal Data Store (PDS) and keep your DID while switching providers. In practice most accounts sit on Bluesky-hosted PDSes, and the network relies on a central Relay/Indexer run by Bluesky, which is both a bottleneck and a potential point of control. True decentralization is planned, not yet delivered.',
   },
   {
     q: 'Can you get banned on Bluesky? On Nostr?',
-    a: 'On Bluesky, yes: Bluesky PBC moderates at the relay level, so the network as most people experience it relies on the company’s goodwill. On Nostr, an individual relay can refuse your posts, but there is no protocol-level ban — you switch relays and keep the same identity, because nobody can take your keys.',
+    a: 'On Bluesky, yes: Bluesky PBC moderates at the relay level, so the network as most people experience it runs on the company’s goodwill. On Nostr, an individual relay can refuse your posts, but there is no protocol-level ban. You switch relays and carry on with the same identity, because nobody can take your keys.',
   },
   {
     q: 'Can I use Nostr and Bluesky at the same time?',
@@ -93,15 +93,15 @@ const faqs: Faq[] = [
   },
   {
     q: 'Do I need Bitcoin to use Nostr?',
-    a: 'No. Reading and posting on Nostr are free and require no Bitcoin, no wallet, and no payment details. Zaps — Lightning tips attached to posts — are an optional layer you can ignore entirely, or explore later with the <a href="/guides/zaps-and-lightning">zaps guide</a>.',
+    a: 'No. Reading and posting on Nostr are free and require no Bitcoin, no wallet, and no payment details. Zaps, the Lightning tips people attach to posts, are an optional layer. Ignore them completely, or read the <a href="/guides/zaps-and-lightning">zaps guide</a> whenever you get curious.',
   },
   {
     q: 'Can I move my Bluesky followers to Nostr?',
-    a: 'No — there is no automatic way. The two protocols use incompatible identity systems, so followers cannot be transferred. Honest expectation: you start fresh on Nostr. The practical fix is to seed your feed from a <a href="/follow-pack">curated follow pack</a> and tell your Bluesky audience where to find you.',
+    a: 'No, and there is no automatic way to do it. The two protocols use incompatible identity systems, so followers cannot be transferred. Expect to start fresh on Nostr. The practical fix: seed your feed from a <a href="/follow-pack">curated follow pack</a>, then tell your Bluesky audience where to find you.',
   },
   {
     q: 'Which is easier for a normal person?',
-    a: 'Bluesky, honestly. Sign-up looks like every app you already know, and there is a company smoothing the rough edges. Nostr asks you to hold a key and pick a client — but with a guide, the whole setup takes about five minutes and never asks for an email or phone number. The <a href="/guides/quickstart">quickstart</a> walks you through it.',
+    a: 'Bluesky, honestly. Sign-up looks like every app you already know, and there is a company smoothing the rough edges. Nostr asks you to hold a key and pick a client yourself. With a guide that whole setup takes about five minutes, and it never asks for an email or a phone number. The <a href="/guides/quickstart">quickstart</a> walks you through it.',
   },
 ];
 
@@ -152,7 +152,7 @@ const jsonLd = [
             8 differences that matter
           </h1>
           <p class="text-xl text-gray-600 dark:text-gray-300">
-            Both call themselves decentralized. They mean very different things by it —
+            Both call themselves decentralized. They mean very different things by it,
             starting with who holds your identity.
           </p>
         </div>
@@ -163,12 +163,11 @@ const jsonLd = [
     <section class="py-10">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto p-6 rounded-2xl border-s-4 border-primary bg-primary/5 dark:bg-primary/10">
-          <h2 class="text-lg font-bold mb-3 text-gray-900 dark:text-white">TL;DR — the honest verdict</h2>
+          <h2 class="text-lg font-bold mb-3 text-gray-900 dark:text-white">TL;DR: the honest verdict</h2>
           <p class="text-gray-700 dark:text-gray-300 mb-3">
-            <strong>Pick Bluesky</strong> if you want the most polished, familiar, old-Twitter
-            experience with a company smoothing the edges. <strong>Pick Nostr</strong> if you want
-            an identity no company can reset, seize, or delete — and you accept being responsible
-            for it yourself.
+            <strong>Pick Bluesky</strong> if you want the polished, familiar, old-Twitter experience
+            with a company smoothing the edges. <strong>Pick Nostr</strong> if you want an identity
+            no company can reset or take back, and you accept being the one responsible for it.
           </p>
           <p class="text-gray-700 dark:text-gray-300">
             You do not have to choose forever: <a href="/guides/quickstart" class="font-semibold text-primary-700 dark:text-primary-300 underline">trying Nostr takes about 5 minutes</a>
@@ -187,18 +186,18 @@ const jsonLd = [
           <p class="text-gray-600 dark:text-gray-300 mb-4">
             On <strong>Nostr</strong>, your identity is a cryptographic key pair generated on your
             own device: a public key (npub) you share, and a private key (nsec) that <em>is</em> the
-            account. No company issued it, so no company can reset it, seize it, or hand it to
-            someone else. The flip side is stated plainly: there is <strong>no account recovery</strong>.
-            Lose the nsec and the identity is gone forever — a feature for censorship resistance,
-            a real responsibility for you. The <a href="/guides/keys-and-security" class="text-primary-700 dark:text-primary-300 underline">keys guide</a>
+            account. No company issued it, so no company can reset it or hand it to somebody else.
+            The flip side, stated plainly: there is <strong>no account recovery</strong>. Lose the
+            nsec and the identity is gone for good. That is exactly what makes it censorship
+            resistant, and it is why the key needs a proper hiding place. The <a href="/guides/keys-and-security" class="text-primary-700 dark:text-primary-300 underline">keys guide</a>
             covers how to store it safely.
           </p>
           <p class="text-gray-600 dark:text-gray-300 mb-8">
             On <strong>Bluesky</strong>, your identity is a DID (decentralized identifier) managed
-            together with a Personal Data Store (PDS) — for most accounts today, one hosted by
-            Bluesky. The DID design means you can keep your identity while changing handles or
-            (in principle) providers, and your PDS can help you recover access. That is more
-            forgiving — and it means an intermediary stays in the loop.
+            together with a Personal Data Store (PDS), and for most accounts today that PDS is
+            hosted by Bluesky. The DID design means you can keep your identity while changing
+            handles or, in principle, providers, and your PDS can help you recover access. More
+            forgiving, clearly. It also keeps an intermediary in the loop.
           </p>
 
           <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Portability: claims vs reality</h2>
@@ -207,15 +206,15 @@ const jsonLd = [
           </p>
           <p class="text-gray-600 dark:text-gray-300 mb-4">
             <strong>Nostr's portability is native.</strong> Your posts are signed events stored on
-            several relays at once. Switching clients means importing your key — nothing else moves,
-            because nothing is locked to a server. The honest caveat: relays make no promise to keep
-            your old posts forever, so persistence depends on which relays you use.
+            several relays at once. Switching clients means importing your key. Nothing else has to
+            move, because nothing is locked to a server. The honest caveat: relays make no promise
+            to keep your old posts forever, so persistence depends on which relays you use.
           </p>
           <p class="text-gray-600 dark:text-gray-300 mb-8">
             <strong>Bluesky's portability is designed, and partly delivered.</strong> The AT Protocol
             was built for account migration, and the architecture allows self-hosted PDSes. In
             practice most accounts live on Bluesky-hosted infrastructure, and the network depends on
-            a central Relay/Indexer — a bottleneck and a potential point of control until
+            a central Relay/Indexer. That is a bottleneck, and a potential point of control, until
             third-party federation matures.
           </p>
 
@@ -249,21 +248,22 @@ const jsonLd = [
           <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Moderation &amp; getting banned</h2>
           <p class="text-gray-600 dark:text-gray-300 mb-4">
             <strong>Nostr</strong> pushes moderation to the edges: each relay sets its own policy,
-            and your client filters what you see. If a relay drops you, you publish through others —
-            annoying, not fatal. The trade-off is equally real: spam is harder to fight, and
+            and your client filters what you see. If a relay drops you, you publish through others.
+            Annoying, not fatal. The trade-off is just as real: spam is harder to fight, and
             curation is largely on you.
           </p>
           <p class="text-gray-600 dark:text-gray-300 mb-8">
-            <strong>Bluesky</strong> moderates where the network converges: Bluesky PBC can act at
-            the relay/indexer level. That gives better spam control and a calmer default feed — and
-            it means the open network, as most people experience it, relies on Bluesky's goodwill.
+            <strong>Bluesky</strong> moderates where the network converges, because Bluesky PBC can
+            act at the relay/indexer level. That buys better spam control and a calmer default feed.
+            It also means the open network, as most people experience it, runs on Bluesky's goodwill.
           </p>
 
           <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Sign-up &amp; privacy</h2>
           <p class="text-gray-600 dark:text-gray-300 mb-4">
-            Joining <strong>Nostr</strong> means generating keys — locally, in seconds. No email,
-            no phone number, no form. You are pseudonymous by default. Two honest caveats: normal
-            posts are public, and metadata (which relays you use, when you post) can be analyzed.
+            Joining <strong>Nostr</strong> means generating keys on your own device, in seconds.
+            No email, no phone number, no form. You are pseudonymous by default, with two caveats
+            worth knowing: normal posts are public, and metadata like which relays you use and when
+            you post can be analyzed.
           </p>
           <p class="text-gray-600 dark:text-gray-300 mb-8">
             Joining <strong>Bluesky</strong> means creating an account with Bluesky PBC (or another
@@ -274,9 +274,9 @@ const jsonLd = [
           <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Money</h2>
           <p class="text-gray-600 dark:text-gray-300 mb-4">
             Nostr has payments in its bloodstream: <strong>zaps</strong> are Bitcoin Lightning tips
-            attached to posts, sent person-to-person with no platform taking a cut. You do not need
-            Bitcoin to read or post — zaps are optional — but if you create things people like,
-            value can flow to you directly. The <a href="/guides/zaps-and-lightning" class="text-primary-700 dark:text-primary-300 underline">zaps guide</a> explains how.
+            attached to posts, sent person-to-person with no platform taking a cut. Zaps are
+            optional, so you need no Bitcoin at all to read or post. But if you make things people
+            like, money can reach you without stopping anywhere on the way. The <a href="/guides/zaps-and-lightning" class="text-primary-700 dark:text-primary-300 underline">zaps guide</a> explains how.
           </p>
           <p class="text-gray-600 dark:text-gray-300 mb-8">
             Bluesky has nothing comparable built in. Payments simply are not part of the protocol.
@@ -287,10 +287,10 @@ const jsonLd = [
             An honest comparison cuts both ways. Bluesky is genuinely ahead on:
           </p>
           <ul class="list-disc ps-6 text-gray-600 dark:text-gray-300 mb-8 space-y-2">
-            <li><strong>Onboarding.</strong> Sign-up and the first day feel like the Twitter you remember. Nostr asks you to understand keys first.</li>
-            <li><strong>Discovery and search.</strong> A central index gives fast, consistent, network-wide search. Nostr has no global view, so finding people takes more effort.</li>
-            <li><strong>Custom feeds.</strong> A marketplace of algorithmic feeds you can switch between is a real product innovation.</li>
-            <li><strong>Professional infrastructure.</strong> A funded team, uptime, caching, apps that rarely break. Much of Nostr is volunteer-built and it shows at the edges.</li>
+            <li><strong>Onboarding.</strong> Sign-up and the first day feel like the Twitter you remember, whereas Nostr asks you to understand keys before anything else.</li>
+            <li><strong>Discovery and search.</strong> A central index gives fast, consistent search across the whole network. Nostr has no global view, so finding people takes more digging.</li>
+            <li><strong>Custom feeds.</strong> A marketplace of algorithmic feeds you can switch between is a genuine product innovation.</li>
+            <li><strong>Professional infrastructure.</strong> A funded team, uptime, caching, apps that rarely break. Much of Nostr is volunteer-built, and it shows at the edges.</li>
           </ul>
 
           <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">The 8 differences at a glance</h2>
@@ -318,7 +318,7 @@ const jsonLd = [
           </table>
         </div>
         <p class="max-w-4xl mx-auto text-sm text-gray-500 dark:text-gray-400 mb-2 text-center">
-          Where Bluesky wins, it wins clearly — polish and feeds are not close. The question is whether custody matters more to you.
+          Where Bluesky wins, it wins clearly. Polish and feeds are not close. The question is whether custody matters to you more than that.
         </p>
       </div>
     </section>
@@ -333,7 +333,7 @@ const jsonLd = [
             href="/guides/quickstart"
             class="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold text-white bg-primary-600 hover:bg-primary-700 rounded-xl shadow-lg hover:shadow-xl transition-all"
           >
-            Try Nostr in 5 minutes — no email, no phone number
+            Try Nostr in 5 minutes. No email, no phone number.
           </a>
         </div>
       </div>
@@ -345,11 +345,11 @@ const jsonLd = [
         <div class="max-w-3xl mx-auto">
           <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Can I use both?</h2>
           <p class="text-gray-600 dark:text-gray-300">
-            Yes — and it is the pragmatic answer. The networks do not connect, but nothing stops you
-            from holding a Bluesky account for reach and familiarity while keeping a Nostr identity
-            that belongs only to you. Many people treat them as different tools: Bluesky for the
-            mainstream conversation, Nostr for the account nobody can take away and for
-            Lightning-native tipping.
+            Yes, and that is the pragmatic answer. The networks do not connect, but nothing stops
+            you from holding a Bluesky account for reach and familiarity while keeping a Nostr
+            identity that belongs only to you. Plenty of people treat them as different tools:
+            Bluesky for the mainstream conversation, Nostr for the account nobody can take away
+            and for tipping over Lightning.
           </p>
         </div>
       </div>
@@ -381,7 +381,7 @@ const jsonLd = [
           <a href="/follow-pack" class="group p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-primary-400 hover:shadow-lg transition-all">
             <div class="text-3xl mb-3" aria-hidden="true">👥</div>
             <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white group-hover:text-primary-700 dark:group-hover:text-primary-300">Don't start with an empty feed</h3>
-            <p class="text-gray-600 dark:text-gray-300">{accountCount} curated accounts, sorted by interest — import them into any client.</p>
+            <p class="text-gray-600 dark:text-gray-300">{accountCount} curated accounts, sorted by interest. Import them into any client.</p>
           </a>
         </div>
 

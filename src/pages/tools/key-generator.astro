@@ -17,7 +17,7 @@ import { KeyGenerator } from '../../components/interactive';
 // browser", which is the exact thing /guides/keys-and-security and the Nostr
 // long-form articles tell readers not to do — a key that has been displayed in
 // a browser tab has been somewhere a key held by a signer never goes.
-const title = 'Nostr Key Generator — See How Nostr Keys Work';
+const title = 'Nostr Key Generator: See How Nostr Keys Work';
 const description =
   'Generate a real Nostr key pair (npub + nsec) locally, to see what one looks like. Nothing is sent to any server. Includes how keys work and the safer way to create an identity you plan to keep.';
 
@@ -27,22 +27,22 @@ const faqs = [
   {
     question: 'Should I use this to create my real Nostr account?',
     answer:
-      'Use it to see what a key pair looks like. For an identity you intend to keep, let a client (Damus, Amethyst, Primal) or a signer extension (Alby, nos2x) generate the key instead. The reason is not that this page is unsafe — the keys are made on your device by nostr-tools, the same library most clients use, and nothing is sent anywhere; you can load the page, go offline, and it still works. The reason is that a key generated inside a signer never appears on a screen, never lands in a clipboard, and never sits in a browser tab. This one does all three, and each is a place it can be seen or captured.',
+      'Use it to see what a key pair looks like. For an identity you intend to keep, let a client (Damus, Amethyst, Primal) or a signer extension (Alby, nos2x) generate the key instead. Not because this page is unsafe: the keys are made on your device by nostr-tools, the library most clients are built on, and nothing is sent anywhere. Load the page, pull the plug on your internet, and it still works. The difference is that a key made inside a signer never has to appear on a screen or pass through a clipboard. This one does both, and each of those is somewhere a key can be captured.',
   },
   {
     question: 'Are the keys this page makes real?',
     answer:
-      'Completely. It is a genuine secp256k1 key pair and any Nostr client will accept it. That is the point of showing it rather than a fake example — but it also means the nsec on screen is a real secret from the moment it appears, not a sample. Treat it as one.',
+      'Completely. It is a genuine secp256k1 key pair and any Nostr client will accept it. Showing a real one is the point, because a fake example teaches you nothing. It also means the nsec on your screen is a live secret from the moment it appears, not a sample. Treat it that way.',
   },
   {
     question: 'What is the difference between npub and nsec?',
     answer:
-      'The npub is your public key — your identity and address on Nostr. Share it freely so people can find and follow you. The nsec is your secret key — it signs everything you publish and IS your account. Never share it, never paste it into websites you do not trust, and never post it anywhere. If the npub is your username, the nsec is a password that can never be changed.',
+      'The npub is your public key. It is your identity on Nostr and your address there, so share it freely and people can find you. The nsec is your secret key. It signs everything you publish and it IS your account. Never share it, and never paste it into a website you do not trust. If the npub is your username, the nsec is a password that can never be changed.',
   },
   {
     question: 'What happens if I lose my nsec?',
     answer:
-      'The account is gone, permanently. Nostr has no company behind it, so there is no password reset, no recovery email, and no support desk that can restore access — that is the price of an identity nobody can take from you. Write the nsec down offline (on paper or in a password manager) the moment you generate it, and keep a second copy somewhere safe.',
+      'The account is gone, permanently. No company runs Nostr, so nobody can reset a password or send you a recovery email. That is the price of an identity nobody can take away from you. Write the nsec down offline the moment you generate it, on paper or in a password manager, and keep a second copy somewhere safe.',
   },
 ];
 
@@ -74,7 +74,7 @@ const nextSteps = [
   {
     step: '1',
     title: 'Understand your keys',
-    description: 'What npub and nsec really are, how to back them up, and the mistakes that lose accounts.',
+    description: 'What npub and nsec really are, how to back them up, and the mistakes that lose accounts for good.',
     href: '/guides/keys-and-security',
     cta: 'Keys & security guide (8 min)',
   },
@@ -111,13 +111,13 @@ const nextSteps = [
             </span>
           </h1>
           <p class="text-xl text-gray-600 dark:text-gray-300 mb-6">
-            See what a Nostr key pair actually is. This makes a real npub + nsec on your own
-            device — nothing is sent to any server — so you can look at one before you own one.
+            See what a Nostr key pair actually is. This page makes a real npub and nsec on your
+            own device and sends nothing to any server, so you can look at one before you own one.
           </p>
           <p class="text-base text-gray-500 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
             Making an identity you intend to keep? Let a client or a signer extension generate it
-            instead. Not because this page leaks anything — it does not — but a key that has been
-            shown in a browser tab has been somewhere a key held by a signer never goes.
+            instead. This page leaks nothing. But a key that has been shown in a browser tab has
+            been somewhere a key held by a signer never goes.
           </p>
           <div class="flex flex-wrap justify-center gap-4 text-sm">
             <span class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400">
@@ -162,21 +162,21 @@ const nextSteps = [
             </p>
             <ul class="list-disc ps-6 space-y-2">
               <li>
-                <strong class="text-gray-900 dark:text-white">npub</strong> — your public key.
-                This is your identity on Nostr: share it so people can find and follow you.
+                <strong class="text-gray-900 dark:text-white">npub</strong> is your public key,
+                your identity on Nostr. Share it so people can find and follow you.
               </li>
               <li>
-                <strong class="text-gray-900 dark:text-white">nsec</strong> — your secret key.
+                <strong class="text-gray-900 dark:text-white">nsec</strong> is your secret key.
                 It signs everything you publish and <em>is</em> your account. Whoever holds it
-                controls the identity — so nobody should ever see it but you.
+                controls the identity, so nobody should ever see it but you.
               </li>
             </ul>
             <p>
-              There is no registration step because Nostr has no central server to register with:
-              a key pair is the whole account. That is also why the safest key is one you never
-              see — a client or a signer extension can generate it, hold it, and sign with it
-              without ever putting it on a screen. This page puts it on a screen deliberately,
-              because that is the only way to show you what one is.
+              There is no registration step, because Nostr has no central server to register with.
+              A key pair is the whole account. It is also why the safest key is one you never see:
+              a client or a signer extension can generate it, hold it and sign with it without
+              ever putting it on a screen. This page puts one on a screen on purpose, because
+              that is the only way to show you what one is.
             </p>
           </div>
         </div>
@@ -194,7 +194,7 @@ const nextSteps = [
                 <span aria-hidden="true">🔑</span>
                 <span>
                   <strong class="text-gray-900 dark:text-white">Your keys never leave this page.</strong>{' '}
-                  They are generated and displayed locally — no data is sent to our servers, and we
+                  They are generated and displayed locally. Nothing reaches our servers, and we
                   could not recover your key for you even if you asked.
                 </span>
               </li>
@@ -202,16 +202,16 @@ const nextSteps = [
                 <span aria-hidden="true">📝</span>
                 <span>
                   <strong class="text-gray-900 dark:text-white">Save the nsec offline, now.</strong>{' '}
-                  Paper or a password manager both work. If the nsec is lost, the account is lost —
-                  there is no reset and no recovery, by design.
+                  Paper or a password manager both work. Lose the nsec and the account goes with
+                  it. There is no reset and no recovery, by design.
                 </span>
               </li>
               <li class="flex gap-3">
                 <span aria-hidden="true">🤫</span>
                 <span>
                   <strong class="text-gray-900 dark:text-white">Never share or paste the nsec anywhere</strong>{' '}
-                  except into a Nostr client (or, better, a signer extension) that you trust.
-                  The npub, on the other hand, is made for sharing.
+                  except into a Nostr client you trust, or better, a signer extension.
+                  The npub is the one made for sharing.
                 </span>
               </li>
             </ul>

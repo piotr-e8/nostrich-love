@@ -689,8 +689,8 @@ export const ExportModal: React.FC<ExportModalProps> = ({
               <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 text-start">
                 <p className="text-sm text-blue-800 dark:text-blue-200">
                   <span className="font-medium">Prefer not to publish anything?</span>{' '}
-                  The "Copy List" tab works instantly, holds any number of accounts,
-                  and nothing leaves your browser.
+                  The "Copy List" tab works right now, however many accounts you picked.
+                  Nothing leaves your browser.
                 </p>
               </div>
 
@@ -753,8 +753,8 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                       Publish this pack as a public Nostr list?
                     </h3>
                     <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                      This is optional. The QR code, the npub list and the NIP-02 file all work
-                      without it, and none of them send anything anywhere.
+                      This is optional. Every other tab here works without it, and none of
+                      them send anything anywhere.
                     </p>
                   </div>
 
@@ -798,9 +798,9 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                         Who signs it
                       </p>
                       <p className="text-sm text-gray-700 dark:text-gray-300">
-                        A throwaway key generated in your browser and discarded immediately
-                        afterwards. It is not linked to any account you own — and nobody keeps
-                        it, <strong>not even you</strong>, so you will not be able to edit or
+                        A throwaway key generated in your browser and discarded right after.
+                        It is not linked to any account you own. Nobody keeps it,{' '}
+                        <strong>not even you</strong>, so you will not be able to edit or
                         delete this list later.
                       </p>
                     </div>
@@ -869,8 +869,8 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                         Nothing was published.
                       </p>
                       <p className="text-sm text-red-900 dark:text-red-100 mt-1">
-                        No relay accepted the event, so no list exists. The QR code and the
-                        other export tabs still work.
+                        No relay accepted the event, so no list exists. The other export
+                        tabs still work.
                       </p>
                       <button
                         onClick={publishToNostr}
@@ -907,7 +907,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                   {naddr && (
                     <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
                       <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        List address (naddr) — share this to let others subscribe:
+                        List address (naddr). Share it so other people can subscribe:
                       </p>
                       <div className="flex gap-2">
                         <code className="flex-1 text-xs font-mono bg-white dark:bg-gray-800 p-2 rounded break-all">{naddr}</code>
@@ -951,7 +951,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                       {verificationStatus === 'not_found' && (
                         <div>
                           <p className="text-sm text-orange-900 dark:text-orange-100">
-                            Not found yet — the event may still be propagating.
+                            Not found yet. It may still be spreading between relays.
                           </p>
                           <button
                             onClick={() => verifyEventOnRelays()}

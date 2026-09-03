@@ -26,7 +26,7 @@ const categoryCount = groups.reduce((total, group) => total + group.categories.l
 // teaches strategies, this page hands you a vetted list to import.
 // accountCount is interpolated so the number can never drift from the data.
 const title = `Nostr Follow Pack: ${accountCount} Accounts to Start With`;
-const description = `Start your Nostr feed with ${accountCount} curated accounts across ${categoryCount} categories. Pick the ones you like and import them into any client — paste the list, or publish it and scan a QR code.`;
+const description = `Start your Nostr feed with ${accountCount} curated accounts across ${categoryCount} categories. Pick the ones you like and import them into any client: paste the list, or publish it and scan a QR code.`;
 ---
 
 <Layout title={title} description={description}>
@@ -50,11 +50,11 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
           </h1>
 
           <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-            {accountCount} hand-checked Nostr accounts, sorted into {categoryCount} categories —
-            from a starter set of {categoryCounts.jumpstart} essentials to photographers,
-            homesteaders, musicians and shops that take Lightning. Pick the ones that look
-            interesting, then import them into any client — paste the list, or publish it
-            and scan a QR code.
+            {accountCount} hand-checked Nostr accounts, sorted into {categoryCount} categories.
+            A starter set of {categoryCounts.jumpstart} essentials, then photographers,
+            homesteaders, musicians, shops that take Lightning. Tick the ones that look
+            interesting and import them into any client: paste the list, or publish it and
+            scan a QR code.
           </p>
 
           <div class="flex flex-wrap justify-center gap-4 text-sm">
@@ -85,13 +85,13 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
 
           <div class="space-y-4 text-gray-600 dark:text-gray-300">
             <p>
-              Nostr has no algorithm deciding what you see. That is the point — and it is also
+              Nostr has no algorithm deciding what you see. That is the point, and it is also
               why the first five minutes feel broken. You sign up, open a client, and the
               timeline is blank. Nothing recommends anyone. Most people conclude the network is
               dead and never come back.
             </p>
             <p>
-              It is not dead; you simply follow nobody yet. Following 20–50 active accounts is
+              It is not dead. You just follow nobody yet. Following 20-50 active accounts is
               the difference between a blank screen and a network that looks alive, and it is
               the one step no client does for you.
             </p>
@@ -111,7 +111,7 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
               <p class="text-sm text-gray-600 dark:text-gray-400">categories, all populated</p>
             </div>
             <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700">
-              <p class="text-2xl font-bold text-gray-900 dark:text-white">20–50</p>
+              <p class="text-2xl font-bold text-gray-900 dark:text-white">20-50</p>
               <p class="text-sm text-gray-600 dark:text-gray-400">a good first pack</p>
             </div>
           </div>
@@ -127,8 +127,8 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
             Browse by category
           </h2>
           <p class="text-gray-600 dark:text-gray-400 mb-10">
-            Every category below has accounts in it — the number is how many. Pick one to open
-            the finder pre-filtered, or scroll on and search the whole set.
+            Every category below has accounts in it, and the number tells you how many. Pick one
+            to open the finder pre-filtered, or scroll on and search the whole set.
           </p>
 
           <div class="space-y-10">
@@ -218,7 +218,7 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
               </div>
               <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Build your pack</h3>
               <p class="text-sm text-gray-600 dark:text-gray-400">
-                Aim for 20–50 accounts across a few categories. The sidebar shows the mix you
+                Aim for 20-50 accounts across a few categories. The sidebar shows the mix you
                 have picked so far.
               </p>
             </div>
@@ -258,8 +258,8 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
             <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
               <h3 class="font-semibold text-gray-900 dark:text-white mb-2">How do I import into my client?</h3>
               <p class="text-gray-600 dark:text-gray-400 text-sm">
-                Copy the npub list and paste it into the client's "Import follows" feature —
-                or publish the pack and scan its QR code. Works with Amethyst, Damus,
+                Copy the npub list and paste it into the client's "Import follows" feature.
+                Or publish the pack and scan its QR code. Works with Amethyst, Damus,
                 Coracle, Primal and more.
               </p>
             </div>
@@ -267,28 +267,28 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
             <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
               <h3 class="font-semibold text-gray-900 dark:text-white mb-2">How many accounts should I follow?</h3>
               <p class="text-gray-600 dark:text-gray-400 text-sm">
-                Start with 20–50. That is enough for a feed that moves without being
-                overwhelming, and you will find more people organically once you are in.
+                Start with 20-50. That is enough for a feed that moves without being
+                overwhelming, and you will find more people on your own once you are in.
               </p>
             </div>
 
             <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
               <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Who curated these accounts, and how?</h3>
               <p class="text-gray-600 dark:text-gray-400 text-sm">
-                The list was assembled from public Nostr follow packs and checked by hand for
-                activity and topic fit — {accountCount} accounts across {categoryCount}
-                categories. It is a starting point, not a ranking: there is no vetting
-                authority behind it and no account is endorsed. Want to suggest one, or have
-                yours removed? Open an issue on GitHub.
+                The list was assembled from public Nostr follow packs, then checked by hand for
+                activity and topic fit: {accountCount} accounts across {categoryCount}
+                categories. It is a starting point, not a ranking. No vetting authority stands
+                behind it and no account is endorsed. Want to suggest one, or have yours
+                removed? Open an issue on GitHub.
               </p>
             </div>
 
             <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-4">
               <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Will my selections be saved?</h3>
               <p class="text-gray-600 dark:text-gray-400 text-sm">
-                Yes — in this browser's local storage, so your pack is still here when you come
-                back. It is not sent anywhere: no account is required and there is no server
-                holding your picks.
+                Yes, in this browser's local storage, so your pack is still here when you come
+                back. Nothing is sent anywhere. No account is required and no server of ours
+                holds your picks.
               </p>
             </div>
 
@@ -297,7 +297,7 @@ const description = `Start your Nostr feed with ${accountCount} curated accounts
               <p class="text-gray-600 dark:text-gray-400 text-sm">
                 Only if you explicitly ask for it. The QR code, npub list and NIP-02 export all
                 run inside your browser and touch no network. The export dialog also offers one
-                optional extra — publishing your pack as a public NIP-51 list to
+                optional extra: publishing your pack as a public NIP-51 list to
                 {' '}{PUBLISH_RELAYS.length} public relays ({PUBLISH_RELAYS.join(', ')}). That
                 step names the relays, shows you exactly what the event contains, and needs a
                 separate confirmation, because a published list is public and effectively

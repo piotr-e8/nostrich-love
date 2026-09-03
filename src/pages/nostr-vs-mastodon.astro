@@ -34,7 +34,7 @@ const rows: Row[] = [
   },
   {
     dimension: 'Identity & recovery',
-    nostr: 'No recovery — by design. Lose the nsec, lose the identity.',
+    nostr: 'No recovery, by design. Lose the nsec, lose the identity.',
     mastodon: 'Your server can reset your password, like email.',
   },
   {
@@ -54,13 +54,13 @@ const rows: Row[] = [
   },
   {
     dimension: 'Account migration',
-    nostr: 'Nothing to migrate — the same key works in every client.',
+    nostr: 'Nothing to migrate. The same key works in every client.',
     mastodon: 'Partial: followers do not fully transfer, and your identity changes.',
   },
   {
     dimension: 'DM privacy',
     nostr: 'NIP-17 encrypted DMs (with metadata caveats).',
-    mastodon: 'Server admins can read DMs — they are not end-to-end encrypted.',
+    mastodon: 'Server admins can read DMs. They are not end-to-end encrypted.',
   },
   {
     dimension: 'Apps & maturity',
@@ -75,23 +75,23 @@ type Faq = { q: string; a: string };
 const faqs: Faq[] = [
   {
     q: 'What is the difference between a Mastodon instance and a Nostr relay?',
-    a: 'They sound similar and are almost opposites. A Mastodon instance is your home: it stores your account, assigns your @you@server.com identity, sets your rules, and federates with other instances on your behalf. A Nostr relay is an interchangeable storage server: it holds signed posts, does not know you as a user, and does not talk to other relays — your client publishes to several relays at once and merges what it reads back. Losing an instance is losing your home; losing a relay is losing one of several copies.',
+    a: 'They sound similar and are almost opposites. A Mastodon instance is your home: it stores your account, assigns your @you@server.com identity, sets the rules you live under, and federates with other instances on your behalf. A Nostr relay is an interchangeable storage server. It holds signed posts, does not know you as a user, and never talks to other relays; your client publishes to several at once and merges what it reads back. Losing an instance is losing your home. Losing a relay is losing one copy out of several.',
   },
   {
     q: 'If my Mastodon server shuts down, do I lose everything? What about Nostr?',
-    a: 'On Mastodon, your identity goes down with the server — @you@that.server stops existing — and your data survives only if you exported it or the admin arranged a migration window. On Nostr, there is no home server: your identity is a key you hold, and your posts already sit on several relays, so one relay disappearing usually costs you nothing. Honest caveat: relays do not promise to keep old posts forever, so long-term persistence depends on which relays you use.',
+    a: 'On Mastodon your identity goes down with the server. @you@that.server simply stops existing, and your data survives only if you exported it or the admin arranged a migration window. On Nostr there is no home server. Your identity is a key you hold, and your posts already sit on several relays, so one relay disappearing usually costs you nothing. Honest caveat: relays do not promise to keep old posts forever, so long-term persistence depends on which relays you use.',
   },
   {
     q: 'Can I move from Mastodon to Nostr and keep my followers?',
-    a: 'No. The identity systems are incompatible, so followers cannot be transferred — anyone who follows you on Mastodon would need to create Nostr keys and follow you there. Honest expectation: you start fresh. A <a href="/follow-pack">curated follow pack</a> fixes the empty-feed problem from the other side.',
+    a: 'No. The identity systems are incompatible, so followers cannot be transferred. Anyone who follows you on Mastodon would have to create Nostr keys and follow you again over here. Expect to start fresh. A <a href="/follow-pack">curated follow pack</a> at least fixes the empty-feed problem from the other side.',
   },
   {
     q: 'Which has better moderation?',
-    a: 'It depends on what you want moderation to be. Mastodon gives you community-level moderation: an admin who enforces rules, and defederation that can wall off entire misbehaving servers — strong safe spaces, at the cost of admin dependence and echo chambers. Nostr gives you individual-level moderation: your client filters and each relay sets policy, so nobody can moderate you off the network — at the cost of more spam reaching you and curation being your job.',
+    a: 'It depends on what you want moderation to be. Mastodon gives you community-level moderation: an admin enforces the rules, and defederation can wall off an entire misbehaving server. That buys genuinely safe spaces, and the price is admin dependence plus a tendency toward echo chambers. Nostr gives you individual-level moderation: your client filters, each relay sets its own policy, and nobody can moderate you off the network. The price there is more spam reaching you, and curation being your job.',
   },
   {
     q: 'Are Mastodon DMs really readable by admins?',
-    a: 'Yes. Mastodon DMs are not end-to-end encrypted, so the administrators of the sending and receiving servers can technically read them. Nostr offers NIP-17 encrypted DMs, where relay operators cannot read message contents — with the honest caveat that some metadata still leaks. The <a href="/guides/nip17-private-messages">private messages guide</a> covers exactly what is and is not protected.',
+    a: 'Yes. Mastodon DMs are not end-to-end encrypted, so the administrators of the sending and receiving servers can technically read them. Nostr offers NIP-17 encrypted DMs, where relay operators cannot read the contents. Some metadata still leaks, though. The <a href="/guides/nip17-private-messages">private messages guide</a> covers exactly what is protected and what is not.',
   },
   {
     q: 'Do Nostr and Mastodon connect to each other?',
@@ -99,7 +99,7 @@ const faqs: Faq[] = [
   },
   {
     q: 'Which is easier for a beginner?',
-    a: 'Mastodon has more mature apps, but it front-loads its hardest question: which instance do you join? Pick wrong and you inherit the wrong culture or an admin you dislike. Nostr front-loads a different question — can you keep a key safe? — but joining is just picking a client, and the defaults work. The <a href="/guides/quickstart">quickstart</a> gets you there in about five minutes, with no email and no instance to choose.',
+    a: 'Mastodon has more mature apps, but it front-loads its hardest question: which instance do you join? Pick wrong and you inherit a culture that does not suit you, or an admin you dislike. Nostr front-loads a different question, which is whether you can keep a key safe. Joining itself is just picking a client, and the defaults work. The <a href="/guides/quickstart">quickstart</a> gets you there in about five minutes, with no email and no instance to choose.',
   },
 ];
 
@@ -150,8 +150,8 @@ const jsonLd = [
             which should you join?
           </h1>
           <p class="text-xl text-gray-600 dark:text-gray-300">
-            One ties your account to a server and its admin. The other ties it to keys
-            only you hold. That single difference decides almost everything else.
+            One ties your account to a server and the person who runs it. The other ties it
+            to a key only you hold. Almost every other difference follows from that.
           </p>
         </div>
       </div>
@@ -161,15 +161,16 @@ const jsonLd = [
     <section class="py-10">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto p-6 rounded-2xl border-s-4 border-primary bg-primary/5 dark:bg-primary/10">
-          <h2 class="text-lg font-bold mb-3 text-gray-900 dark:text-white">TL;DR — the honest verdict</h2>
+          <h2 class="text-lg font-bold mb-3 text-gray-900 dark:text-white">TL;DR: the honest verdict</h2>
           <p class="text-gray-700 dark:text-gray-300 mb-3">
-            <strong>Pick Mastodon</strong> if you want established communities, mature apps, and
-            strong hands-on moderation by people you can name. <strong>Pick Nostr</strong> if you
-            want an identity that survives any server shutting down, defederating, or banning you.
+            <strong>Pick Mastodon</strong> if you want established communities and hands-on
+            moderation by people you can name. The apps are more mature there too.
+            <strong>Pick Nostr</strong> if you want an identity that survives any server shutting
+            down, defederating, or banning you.
           </p>
           <p class="text-gray-700 dark:text-gray-300">
-            Undecided? <a href="/guides/quickstart" class="font-semibold text-primary-700 dark:text-primary-300 underline">Trying Nostr takes about 5 minutes</a>
-            — no email, and no "which instance?" decision to agonize over.
+            Undecided? <a href="/guides/quickstart" class="font-semibold text-primary-700 dark:text-primary-300 underline">Trying Nostr takes about 5 minutes</a>,
+            with no email and no "which instance?" decision to agonize over.
           </p>
         </div>
       </div>
@@ -182,10 +183,10 @@ const jsonLd = [
 
           <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">The core difference in one sentence</h2>
           <p class="text-gray-600 dark:text-gray-300 mb-8">
-            On Mastodon your account <em>lives on a server</em> — the server assigns your identity
+            On Mastodon your account <em>lives on a server</em>. That server assigns your identity
             (@you@server.com), stores your data, and speaks to the rest of the network for you.
-            On Nostr your identity <em>is a key</em> — generated on your device, working with every
-            relay and every client, owned by nobody but you.
+            On Nostr your identity <em>is a key</em>, generated on your own device. It works with
+            every relay and every client, and nobody but you owns it.
           </p>
 
           <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Instances and relays are NOT the same thing</h2>
@@ -195,15 +196,15 @@ const jsonLd = [
           </p>
           <p class="text-gray-600 dark:text-gray-300 mb-4">
             A <strong>Mastodon instance</strong> is a federated home. It hosts your account,
-            enforces its rules on you, and exchanges posts with other instances. It is your single
-            point of failure: if it goes down, defederates, or bans you, your identity is affected —
-            you are its user.
+            enforces its rules on you, and exchanges posts with other instances. It is also your
+            single point of failure. If it goes down, defederates, or bans you, your identity takes
+            the hit, because you are its user.
           </p>
           <p class="text-gray-600 dark:text-gray-300 mb-4">
             A <strong>Nostr relay</strong> is an interchangeable dumb store. It does not host your
-            account — there are no accounts, only signed posts. Relays do not talk to each other at
-            all; your client publishes to several and aggregates what it reads back. Any one relay
-            is disposable: drop it, add another, nothing about your identity changes.
+            account, because there are no accounts, only signed posts. Relays never talk to each
+            other; your client publishes to several and aggregates what it reads back. Any one relay
+            is disposable. Drop it, add another, and nothing about your identity changes.
           </p>
           <pre aria-hidden="true" class="overflow-x-auto rounded-xl bg-gray-900 text-gray-100 text-xs sm:text-sm p-4 mb-8 leading-relaxed"><code>Mastodon:  You ──lives on──► Instance A ◄──federates──► Instance B
            your home; its rules; its fate is your fate
@@ -214,9 +215,9 @@ Nostr:     You ──publish to──► Relay 1, Relay 2, Relay 3 ...
           <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">The joining problem</h2>
           <p class="text-gray-600 dark:text-gray-300 mb-4">
             Mastodon's hardest step comes first: <strong>"which instance do I pick?"</strong> The
-            choice is real and sticky — it decides your local timeline's culture, the rules you
-            live under, the admin you depend on, and whose defederation decisions affect you. Many
-            newcomers stall right here.
+            choice is real and it sticks. It decides your local timeline's culture, the rules you
+            live under, the admin you depend on, and whose defederation decisions land on you.
+            Plenty of newcomers stall right here.
           </p>
           <p class="text-gray-600 dark:text-gray-300 mb-8">
             Nostr's equivalent step is picking a client app, and the stakes are intentionally low:
@@ -227,27 +228,27 @@ Nostr:     You ──publish to──► Relay 1, Relay 2, Relay 3 ...
           <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Moderation models, honestly</h2>
           <p class="text-gray-600 dark:text-gray-300 mb-4">
             <strong>Mastodon</strong> moderates at the community level. Admins enforce instance
-            rules and can defederate from entire servers. This creates genuinely safer spaces than
-            most of the internet — and also echo chambers, admin burnout, and the risk that a
-            defederation decision you had no vote in cuts you off from friends.
+            rules and can defederate from entire servers. This creates spaces that really are safer
+            than most of the internet. It also creates echo chambers, admin burnout, and the risk
+            that a defederation decision you had no vote in cuts you off from friends.
           </p>
           <p class="text-gray-600 dark:text-gray-300 mb-8">
             <strong>Nostr</strong> moderates at the individual level. Your client filters what you
-            see; each relay decides what it stores. Nobody can moderate you off the network — which
+            see; each relay decides what it stores. Nobody can moderate you off the network, which
             also means spam is harder to fight and curation is largely your job. Neither model is
-            free; they charge different people.
+            free. They just send the bill to different people.
           </p>
 
           <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Moving and losing</h2>
           <p class="text-gray-600 dark:text-gray-300 mb-4">
             Mastodon's account migration is real but <strong>partial</strong>: you can redirect to
             a new instance and move your follow list, but followers do not fully transfer, your
-            old posts stay behind (export quality is server-dependent), and your handle — your
-            identity — changes with the server name.
+            old posts stay behind (export quality depends on the server), and your handle changes
+            with the server name. Your handle is your identity, so your identity changes too.
           </p>
           <p class="text-gray-600 dark:text-gray-300 mb-8">
-            Nostr has nothing to migrate. The same nsec works in any client on day one and year
-            five; "switching" is just opening a different app. The honest caveat on the other side:
+            Nostr has nothing to migrate. The same nsec works in any client on day one and in year
+            five; "switching" is just opening a different app. The honest caveat on this side:
             relays do not guarantee to store your old posts forever.
           </p>
 
@@ -255,18 +256,18 @@ Nostr:     You ──publish to──► Relay 1, Relay 2, Relay 3 ...
           <p class="text-gray-600 dark:text-gray-300 mb-8">
             Mastodon DMs are not end-to-end encrypted: <strong>server admins can technically read
             them</strong>, on both the sending and receiving side. Nostr's NIP-17 DMs are encrypted
-            so relay operators cannot read the contents — though some metadata still leaks, which
-            the <a href="/guides/nip17-private-messages" class="text-primary-700 dark:text-primary-300 underline">private messages guide</a>
-            explains honestly. Neither network is the place for truly high-stakes secrets; only one
-            lets your server admin read your DMs.
+            so relay operators cannot read the contents. Some metadata still leaks, which the
+            <a href="/guides/nip17-private-messages" class="text-primary-700 dark:text-primary-300 underline">private messages guide</a>
+            explains honestly. Neither network is the place for truly high-stakes secrets. Only one
+            of them lets your server admin read your DMs.
           </p>
 
           <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">What Mastodon does better</h2>
           <ul class="list-disc ps-6 text-gray-600 dark:text-gray-300 mb-8 space-y-2">
-            <li><strong>Mature apps.</strong> Years of polish across web and mobile; fewer rough edges than most Nostr clients.</li>
+            <li><strong>Mature apps.</strong> Years of polish across web and mobile, with fewer rough edges than most Nostr clients.</li>
             <li><strong>Culture of care.</strong> Content warnings and alt-text norms are genuinely stronger than anywhere else in social media.</li>
-            <li><strong>Granular privacy.</strong> Followers-only and unlisted posts exist; on Nostr, normal posts are public.</li>
-            <li><strong>Organizational self-hosting.</strong> An org can run its own instance under its own rules — a real, proven model.</li>
+            <li><strong>Granular privacy.</strong> Followers-only and unlisted posts exist. On Nostr, normal posts are public.</li>
+            <li><strong>Organizational self-hosting.</strong> An organization can run its own instance under its own rules. That model is proven and people rely on it.</li>
           </ul>
 
           <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Side by side</h2>
@@ -301,12 +302,12 @@ Nostr:     You ──publish to──► Relay 1, Relay 2, Relay 3 ...
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto text-center p-8 rounded-2xl bg-gradient-to-br from-primary/10 to-secondary/10 dark:from-primary/15 dark:to-secondary/15 border border-primary/20">
           <h2 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">Skip the "which instance?" question entirely</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-6">On Nostr there is no instance to choose — generate keys, pick any client, done.</p>
+          <p class="text-gray-600 dark:text-gray-300 mb-6">On Nostr there is no instance to choose. Generate keys, pick any client, done.</p>
           <a
             href="/guides/quickstart"
             class="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold text-white bg-primary-600 hover:bg-primary-700 rounded-xl shadow-lg hover:shadow-xl transition-all"
           >
-            Try Nostr in 5 minutes — no email, no phone number
+            Try Nostr in 5 minutes. No email, no phone number.
           </a>
         </div>
       </div>
@@ -338,7 +339,7 @@ Nostr:     You ──publish to──► Relay 1, Relay 2, Relay 3 ...
           <a href="/follow-pack" class="group p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-primary-400 hover:shadow-lg transition-all">
             <div class="text-3xl mb-3" aria-hidden="true">👥</div>
             <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white group-hover:text-primary-700 dark:group-hover:text-primary-300">Don't start with an empty feed</h3>
-            <p class="text-gray-600 dark:text-gray-300">{accountCount} curated accounts, sorted by interest — import them into any client.</p>
+            <p class="text-gray-600 dark:text-gray-300">{accountCount} curated accounts, sorted by interest. Import them into any client.</p>
           </a>
         </div>
 

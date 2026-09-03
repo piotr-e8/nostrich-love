@@ -22,7 +22,7 @@ const accountCount = getAccountCount();
 
 const title = 'Twitter/X vs Nostr (2026): Gains and Losses';
 const description =
-  'No ads, no algorithm, no account that can be suspended — and what Nostr costs you in reach and polish. An honest comparison, with a 5-minute start.';
+  'No ads, no algorithm, no account that can be suspended, plus what Nostr costs you in reach and polish. An honest comparison, with a 5-minute start.';
 
 const pageUrl = new URL(Astro.url.pathname, siteConfig.url).toString();
 
@@ -36,7 +36,7 @@ const rows: Row[] = [
   {
     dimension: 'Can you be banned',
     nostr: 'Not from the protocol. Individual relays can refuse you; you post through others.',
-    twitter: 'Yes — by platform policy, moderation decisions, or government pressure.',
+    twitter: 'Yes: by platform policy, by a moderation decision, or under government pressure.',
   },
   {
     dimension: 'Feed & algorithm',
@@ -65,7 +65,7 @@ const rows: Row[] = [
   },
   {
     dimension: 'Effort to start',
-    nostr: 'About 5 minutes with a guide — but the keys are your responsibility.',
+    nostr: 'About 5 minutes with a guide. The keys are then your responsibility.',
     twitter: 'Familiar sign-up, instant.',
   },
 ];
@@ -76,7 +76,7 @@ type Faq = { q: string; a: string };
 const faqs: Faq[] = [
   {
     q: 'Is Nostr a real Twitter replacement?',
-    a: 'For ownership, yes; for reach, not yet — and honesty requires saying both. Nostr replaces the parts of Twitter that depend on trusting a company: your account cannot be suspended, your feed is not engineered for ads, and your identity works across many apps. It does not replace Twitter’s audience: the network is far smaller, so if your goal is maximum reach today, Nostr alone will not deliver it.',
+    a: 'For ownership, yes. For reach, not yet, and honesty requires saying both. Nostr replaces the parts of Twitter that depend on trusting a company: your account cannot be suspended, your feed is not engineered for ads, and your identity works across many apps. What it does not replace is Twitter’s audience. The network is far smaller, so if your goal is maximum reach today, Nostr alone will not deliver it.',
   },
   {
     q: 'Can I find my Twitter friends on Nostr?',
@@ -84,23 +84,23 @@ const faqs: Faq[] = [
   },
   {
     q: 'Does Nostr have an algorithm or ads?',
-    a: 'The protocol has neither. There is no ad system and no engagement-ranking baked in — feeds are chronological by default, and what you see is decided by the client you choose, not by a company optimizing your attention. The honest flip side: no algorithm also means no virality machine working for you.',
+    a: 'The protocol has neither. Nothing in it ranks posts for engagement and nothing in it sells ads, so feeds are chronological by default and what you see is decided by the client you choose. The honest flip side: no algorithm also means no virality machine working for you.',
   },
   {
     q: 'How do people make money on Nostr without ads?',
-    a: 'Zaps. Readers attach small Bitcoin Lightning payments directly to posts they like — person-to-person, with no platform taking a cut and no monetization program to be accepted into. It will not replace a salary for most people, but the money goes from your audience straight to you. The <a href="/guides/zaps-and-lightning">zaps guide</a> explains the setup.',
+    a: 'Zaps. Readers attach small Bitcoin Lightning payments straight to posts they like, person to person, with no platform taking a cut and no monetization program to be accepted into. For most people it will not replace a salary. But the money goes from your audience to you, and nowhere else. The <a href="/guides/zaps-and-lightning">zaps guide</a> explains the setup.',
   },
   {
     q: 'Can my Nostr account be banned or deleted?',
-    a: 'Nobody can delete it: your identity is a key pair that only you hold, and posts are cryptographically signed, so they cannot be forged or silently edited. What can happen: an individual relay can refuse to carry your posts, and individual users can mute you. Because your identity is not tied to any relay, you switch relays and continue — there is no protocol-level ban to receive.',
+    a: 'Nobody can delete it: your identity is a key pair that only you hold, and posts are cryptographically signed, so they cannot be forged or silently edited. What can happen: an individual relay can refuse to carry your posts, and individual users can mute you. Because your identity is not tied to any relay, you switch relays and carry on. There is no protocol-level ban to receive.',
   },
   {
     q: 'Is Nostr free? Do I need Bitcoin or a wallet?',
-    a: 'Nostr is free to use: reading, posting, and creating an identity cost nothing, and no payment details are ever required. Bitcoin and Lightning wallets only enter the picture if you want to send or receive zaps — an optional layer you can add later or never.',
+    a: 'Nostr is free to use: reading, posting, and creating an identity cost nothing, and no payment details are ever required. Bitcoin and Lightning wallets only enter the picture if you want to send or receive zaps, an optional layer you can add later or never.',
   },
   {
     q: 'Why does Nostr feel empty compared to Twitter?',
-    a: 'Two reasons: the network is genuinely much smaller, and there is no algorithm surfacing viral content to fill your screen — a fresh account with three follows sees almost nothing. The fix is to front-load your follow list: import a <a href="/follow-pack">curated follow pack</a> and check the <a href="/twitter-bridge">Twitter Bridge</a> for people you already know, and the feed comes alive.',
+    a: 'Two reasons. The network is genuinely much smaller, and there is no algorithm surfacing viral content to fill your screen, so a fresh account with three follows sees almost nothing. The fix is to front-load your follow list. Import a <a href="/follow-pack">curated follow pack</a>, check the <a href="/twitter-bridge">Twitter Bridge</a> for people you already know, and the feed comes alive.',
   },
 ];
 
@@ -151,8 +151,8 @@ const jsonLd = [
             what you gain and give up
           </h1>
           <p class="text-xl text-gray-600 dark:text-gray-300">
-            Leaving X is easy to romanticize. Here is what actually changes —
-            the good and the genuinely inconvenient.
+            Leaving X is easy to romanticize. Here is what actually changes, including
+            the parts that are genuinely inconvenient.
           </p>
         </div>
       </div>
@@ -165,19 +165,19 @@ const jsonLd = [
           <div class="p-6 rounded-2xl border border-green-200 dark:border-green-800 bg-green-50/60 dark:bg-green-900/10">
             <h2 class="text-lg font-bold mb-3 text-gray-900 dark:text-white">What you gain</h2>
             <ul class="list-disc ps-6 text-gray-700 dark:text-gray-300 space-y-2">
-              <li>An identity you own — no platform can suspend it</li>
+              <li>An identity you own, which no platform can suspend</li>
               <li>No ads, no tracking-driven feed</li>
-              <li>Chronological timelines; the client works for you</li>
-              <li>Zaps — Bitcoin Lightning tips with no middleman</li>
+              <li>Chronological timelines, and a client that works for you</li>
+              <li>Zaps: Bitcoin Lightning tips with no middleman</li>
               <li>Sign-up without email or phone number</li>
             </ul>
           </div>
           <div class="p-6 rounded-2xl border border-amber-200 dark:border-amber-800 bg-amber-50/60 dark:bg-amber-900/10">
             <h2 class="text-lg font-bold mb-3 text-gray-900 dark:text-white">What you give up</h2>
             <ul class="list-disc ps-6 text-gray-700 dark:text-gray-300 space-y-2">
-              <li>Audience size — the network is far smaller</li>
-              <li>Discovery — no algorithm pushes your posts</li>
-              <li>Polish — apps are rougher than X's</li>
+              <li>Audience size, because the network is far smaller</li>
+              <li>Discovery: no algorithm pushes your posts</li>
+              <li>Polish, since the apps are rougher than X's</li>
               <li>Easy verification status symbols</li>
               <li>Someone else handling your account security</li>
             </ul>
@@ -200,52 +200,53 @@ const jsonLd = [
           </p>
           <p class="text-gray-600 dark:text-gray-300 mb-8">
             The trade is responsibility: only you hold the key, and only you can lose it. There is
-            no "forgot password" — lose your nsec and the identity is gone for good. Five minutes
-            with the <a href="/guides/keys-and-security" class="text-primary-700 dark:text-primary-300 underline">keys guide</a>
-            makes that risk manageable; skipping it does not.
+            no "forgot password" here. Lose your nsec and the identity is gone for good. Five
+            minutes with the <a href="/guides/keys-and-security" class="text-primary-700 dark:text-primary-300 underline">keys guide</a>
+            makes that risk manageable. Skipping it does not.
           </p>
 
           <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Algorithms &amp; reach</h2>
           <p class="text-gray-600 dark:text-gray-300 mb-4">
-            X shows you a single feed optimized for engagement — which means optimized for keeping
-            you scrolling, not for showing you what your friends said. Nostr feeds are
-            <strong>chronological by default</strong>, and because clients are interchangeable, the
-            display logic is your choice, not a platform decision.
+            X shows you a single feed optimized for engagement, which is a polite way of saying
+            optimized to keep you scrolling rather than to show you what your friends said. Nostr
+            feeds are <strong>chronological by default</strong>, and because clients are
+            interchangeable, the display logic is your choice instead of a company's.
           </p>
           <p class="text-gray-600 dark:text-gray-300 mb-8">
             Be honest with yourself about the flip side: no algorithm also means <strong>no
-            virality machine</strong>. Nothing is pushing your posts to strangers, so audiences
-            grow slowly, through actual engagement. If reach is your livelihood, that is a real
-            cost — not a footnote.
+            virality machine</strong>. Nothing is pushing your posts at strangers, so an audience
+            grows slowly, through people actually reading you. If reach is how you pay rent, treat
+            that as a real cost rather than a footnote.
           </p>
 
           <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Money without ads</h2>
           <p class="text-gray-600 dark:text-gray-300 mb-8">
             X pays creators from ad revenue, on the platform's terms, if you are accepted and stay
             in good standing. Nostr's native answer is <strong>zaps</strong>: readers attach Bitcoin
-            Lightning tips directly to posts — person-to-person, instantly, with no platform cut
-            and no program to apply to. You do not need Bitcoin to read or post; zaps are optional.
-            When you are ready, the <a href="/guides/zaps-and-lightning" class="text-primary-700 dark:text-primary-300 underline">zaps guide</a>
+            Lightning tips straight to posts, person to person, with no platform cut and no program
+            to apply to. Zaps are optional, so you need no Bitcoin to read or post. When you are
+            ready, the <a href="/guides/zaps-and-lightning" class="text-primary-700 dark:text-primary-300 underline">zaps guide</a>
             covers wallets and setup.
           </p>
 
           <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Bans &amp; censorship</h2>
           <p class="text-gray-600 dark:text-gray-300 mb-8">
-            On X, a policy change, a moderation decision, or government pressure can end your
-            account — the platform is a single chokepoint. Nostr has no chokepoint to squeeze:
-            posts are <strong>cryptographically signed</strong> (they cannot be forged or silently
-            edited) and stored on several independent relays. A relay can refuse your posts; it
-            cannot take your identity, and the network as a whole has no ban button.
+            On X, a policy change or a moderation decision can end your account, and so can
+            government pressure on the company. The platform is one chokepoint. Nostr has no
+            chokepoint to squeeze: posts are <strong>cryptographically signed</strong> (they cannot
+            be forged or quietly edited) and stored on several independent relays. A relay can
+            refuse your posts. It cannot take your identity, and the network as a whole has no ban
+            button to press.
           </p>
 
-          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">What you give up — the honest section</h2>
+          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">What you give up: the honest section</h2>
           <p class="text-gray-600 dark:text-gray-300 mb-4">
             This page would be advertising, not comparison, without this part:
           </p>
           <ul class="list-disc ps-6 text-gray-600 dark:text-gray-300 mb-8 space-y-2">
-            <li><strong>A much smaller network.</strong> Most of your Twitter audience is not on Nostr. If you need them, you will feel it immediately.</li>
-            <li><strong>Harder discovery.</strong> There is no global search index and no trending machine; finding people takes deliberate effort.</li>
-            <li><strong>Do-it-yourself spam control.</strong> No central moderation team means more junk reaches you until you tune filters and relays.</li>
+            <li><strong>A much smaller network.</strong> Most of your Twitter audience is not on Nostr, and if you need them you will feel it on day one.</li>
+            <li><strong>Harder discovery.</strong> There is no global search index and no trending machine, so finding people takes deliberate effort.</li>
+            <li><strong>Do-it-yourself spam control.</strong> With no central moderation team, more junk reaches you until you tune your filters and relays.</li>
             <li><strong>Rougher apps.</strong> Many Nostr clients are volunteer-built. They improve fast, but X-grade polish is not the baseline.</li>
           </ul>
 
@@ -257,7 +258,7 @@ const jsonLd = [
               generate keys, pick a client, post once.
             </li>
             <li>
-              <strong>Back up your nsec properly</strong> — offline, before anything else. The
+              <strong>Back up your nsec properly.</strong> Offline, before anything else. The
               <a href="/guides/keys-and-security" class="text-primary-700 dark:text-primary-300 underline">keys guide</a> shows how.
             </li>
             <li>
@@ -267,8 +268,8 @@ const jsonLd = [
             </li>
             <li>
               <strong>Fill the rest of your feed.</strong> Import a
-              <a href="/follow-pack" class="text-primary-700 dark:text-primary-300 underline">curated follow pack</a>
-              — an empty feed is the #1 reason people bounce.
+              <a href="/follow-pack" class="text-primary-700 dark:text-primary-300 underline">curated follow pack</a>.
+              An empty feed is the #1 reason people bounce.
             </li>
             <li>
               <strong>Tell your Twitter audience where you went.</strong> Pin a post with your Nostr
@@ -313,10 +314,10 @@ const jsonLd = [
             href="/guides/quickstart"
             class="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold text-white bg-primary-600 hover:bg-primary-700 rounded-xl shadow-lg hover:shadow-xl transition-all"
           >
-            Try Nostr in 5 minutes — no email, no phone number
+            Try Nostr in 5 minutes. No email, no phone number.
           </a>
           <p class="mt-4 text-sm text-gray-600 dark:text-gray-400">
-            Not ready for an account? <a href="https://sandstr.app" target="_blank" rel="noopener noreferrer" class="text-primary-700 dark:text-primary-300 underline">Try Nostr clients in your browser on Sandstr</a> — no keys, no install, nothing real.
+            Not ready for an account? <a href="https://sandstr.app" target="_blank" rel="noopener noreferrer" class="text-primary-700 dark:text-primary-300 underline">Try Nostr clients in your browser on Sandstr</a>. No keys, no install, nothing real.
           </p>
         </div>
       </div>
@@ -353,7 +354,7 @@ const jsonLd = [
           <a href="/follow-pack" class="group p-6 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-primary-400 hover:shadow-lg transition-all">
             <div class="text-3xl mb-3" aria-hidden="true">👥</div>
             <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white group-hover:text-primary-700 dark:group-hover:text-primary-300">Don't start with an empty feed</h3>
-            <p class="text-gray-600 dark:text-gray-300">{accountCount} curated accounts, sorted by interest — import them into any client.</p>
+            <p class="text-gray-600 dark:text-gray-300">{accountCount} curated accounts, sorted by interest. Import them into any client.</p>
           </a>
         </div>
 

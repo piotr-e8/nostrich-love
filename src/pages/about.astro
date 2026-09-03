@@ -6,7 +6,7 @@ import { OfficialAccountWidget } from '../components/interactive/OfficialAccount
 import { siteConfig } from '../config/site';
 
 const title = 'About';
-const description = 'Learn about nostrich.love - an open-source project dedicated to helping newcomers understand and use the Nostr decentralized social protocol.';
+const description = 'Who builds nostrich.love and why. An open-source project that helps newcomers understand and use Nostr, the decentralized social protocol.';
 
 // The @id is referenced by the Organization node's `founder` on the homepage,
 // so the two pages describe one entity graph rather than two strangers. Guides
@@ -54,7 +54,7 @@ const jsonLd = [
             </span>
           </h1>
           <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
-            An open-source, community-driven resource for learning Nostr.
+            A free, open-source guide to Nostr, written for people who have never heard of it.
           </p>
         </div>
       </div>
@@ -64,21 +64,22 @@ const jsonLd = [
     <section class="py-16">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Our Mission</h2>
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Why this exists</h2>
           <div class="prose dark:prose-invert max-w-none">
             <p class="text-lg text-gray-600 dark:text-gray-400 mb-4">
-              Nostrich.love was created to make the Nostr protocol accessible to everyone. 
-              We believe that decentralized social media should be easy to understand and use, regardless 
-              of your technical background.
+              Nostrich.love was made to put the Nostr protocol within reach of people who are not
+              developers. Decentralized social media should not ask for a technical background at
+              the door.
             </p>
             <p class="text-lg text-gray-600 dark:text-gray-400 mb-4">
-              Nostr (Notes and Other Stuff Transmitted by Relays) is a simple, open protocol that enables 
-              global, decentralized, and censorship-resistant social media. Unlike traditional platforms, 
-              Nostr puts you in control of your identity and data through cryptographic keys.
+              Nostr stands for Notes and Other Stuff Transmitted by Relays. It is a small, open
+              protocol for social media that no company owns and that is hard to censor. Instead
+              of an account on somebody's server, you have a pair of cryptographic keys, and
+              those keys are what put you in control of your identity and your data.
             </p>
             <p class="text-lg text-gray-600 dark:text-gray-400">
-              This guide is completely free, open-source, and maintained by the community. 
-              No ads, no tracking, no gatekeeping - just pure education.
+              The guide itself is free, open source, and maintained by the community.
+              No ads, no tracking, no gatekeeping.
             </p>
           </div>
         </div>
@@ -96,7 +97,7 @@ const jsonLd = [
               <div class="text-3xl mb-4">🔓</div>
               <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Open Source</h3>
               <p class="text-gray-600 dark:text-gray-400">
-                All code is publicly available on GitHub. Anyone can contribute, review, or fork the project.
+                All the code sits in public on GitHub. Read it, fork it, or send a fix.
               </p>
             </div>
             
@@ -104,7 +105,8 @@ const jsonLd = [
               <div class="text-3xl mb-4">🔒</div>
               <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Privacy First</h3>
               <p class="text-gray-600 dark:text-gray-400">
-                No tracking, no cookies, no data collection. We use privacy-friendly analytics.
+                No tracking, no cookies, no data collection. The analytics we do run are the
+                privacy-friendly kind.
               </p>
             </div>
             
@@ -112,7 +114,8 @@ const jsonLd = [
               <div class="text-3xl mb-4">🌍</div>
               <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Accessible</h3>
               <p class="text-gray-600 dark:text-gray-400">
-                Written for everyone, not just developers. Clear explanations without jargon.
+                Written for people who are not developers. Where a term is unavoidable, we
+                explain it before we use it.
               </p>
             </div>
             
@@ -120,7 +123,7 @@ const jsonLd = [
               <div class="text-3xl mb-4">⚡</div>
               <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Community Driven</h3>
               <p class="text-gray-600 dark:text-gray-400">
-                Built by the Nostr community, for the Nostr community. Contributions welcome!
+                Built from inside the Nostr community. Corrections and additions are welcome.
               </p>
             </div>
           </div>
@@ -135,13 +138,13 @@ const jsonLd = [
           <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Built With</h2>
           
           <div class="prose dark:prose-invert max-w-none">
-            <p class="text-gray-600 dark:text-gray-400 mb-4">This website is built using modern, open-source technologies:</p>
+            <p class="text-gray-600 dark:text-gray-400 mb-4">The site runs on open-source pieces:</p>
             <ul class="space-y-2 text-gray-600 dark:text-gray-400">
-              <li><strong>Astro</strong> - Fast, modern static site builder</li>
-              <li><strong>React</strong> - Interactive components</li>
-              <li><strong>Tailwind CSS</strong> - Utility-first styling</li>
-              <li><strong>TypeScript</strong> - Type-safe development</li>
-              <li><strong>shadcn/ui</strong> - Beautiful UI components</li>
+              <li><strong>Astro</strong> builds the static pages</li>
+              <li><strong>React</strong> handles the interactive parts</li>
+              <li><strong>Tailwind CSS</strong> does the styling</li>
+              <li><strong>TypeScript</strong> everywhere, so mistakes surface early</li>
+              <li><strong>shadcn/ui</strong> for the interface components</li>
             </ul>
           </div>
         </div>
@@ -158,22 +161,22 @@ const jsonLd = [
               Nostrich.love is built and maintained by
               <strong>Piotr Czarnoleski</strong>
               (<a href="https://github.com/ptrio42" target="_blank" rel="noopener noreferrer" class="text-primary-600 dark:text-primary-400 hover:underline">ptrio42</a>),
-              a developer who has been building on nostr since 2023 — running relays written in Go,
-              building <a href="https://swarmstr.com" target="_blank" rel="noopener noreferrer" class="text-primary-600 dark:text-primary-400 hover:underline">swarmstr.com</a>
-              (a Q&amp;A client for the protocol), and contributing to nostr open source such as the
+              a developer who has been building on nostr since 2023. He runs relays written in Go,
+              built <a href="https://swarmstr.com" target="_blank" rel="noopener noreferrer" class="text-primary-600 dark:text-primary-400 hover:underline">swarmstr.com</a>
+              (a Q&amp;A client for the protocol), and contributes to nostr open source such as the
               <a href="https://github.com/fiatjaf/khatru" target="_blank" rel="noopener noreferrer" class="text-primary-600 dark:text-primary-400 hover:underline">khatru</a>
               relay framework.
             </p>
             <p class="text-gray-600 dark:text-gray-400 mb-4">
-              This site exists because onboarding was the step he kept watching newcomers fail at —
-              especially outside English. Every guide, tool and translation here is open source, and
-              corrections are welcome from anyone.
+              This site exists because onboarding is the step he kept watching newcomers fail at,
+              especially outside English. Every guide, tool and translation here is open source,
+              and corrections are welcome from anyone.
             </p>
             <ul class="space-y-2 text-gray-600 dark:text-gray-400">
               <li><strong>Nostr:</strong> <code>_@nostrich.love</code> (NIP-05)</li>
               <li><strong>Email:</strong> <a href="mailto:hello@nostrich.love" class="text-primary-600 dark:text-primary-400 hover:underline">hello@nostrich.love</a></li>
               <li><strong>Source code:</strong> <a href="https://github.com/ptrio42/nostrich-love" target="_blank" rel="noopener noreferrer" class="text-primary-600 dark:text-primary-400 hover:underline">GitHub</a> (MIT licensed)</li>
-              <li><strong>Support:</strong> <a href="/support" class="text-primary-600 dark:text-primary-400 hover:underline">zaps, Lightning or on-chain</a> — value for value</li>
+              <li><strong>Support:</strong> value for value, via <a href="/support" class="text-primary-600 dark:text-primary-400 hover:underline">zaps, Lightning or on-chain</a></li>
             </ul>
           </div>
         </div>
@@ -186,7 +189,7 @@ const jsonLd = [
         <div class="max-w-3xl mx-auto">
           <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6 text-center">Follow Us on Nostr</h2>
           <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 text-center">
-            Get the latest updates, tips, and community news from our official Nostr account.
+            New guides and site news get posted to the official Nostr account.
           </p>
           <OfficialAccountWidget client:idle expanded={true} />
         </div>
@@ -200,7 +203,7 @@ const jsonLd = [
           Join the Community
         </h2>
         <p class="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-          Help us make Nostr accessible to everyone. Contribute to the guide, report issues, or suggest improvements.
+          Help make Nostr easier to walk into. Fixes, bug reports and suggestions all go through GitHub.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a

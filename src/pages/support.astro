@@ -27,8 +27,8 @@ const bitcoinQr = await QRCode.toString(`bitcoin:${SUPPORT.bitcoin}`, qrOpts);
             Value for value
           </h1>
           <p class="text-lg text-gray-600 dark:text-gray-300 mb-2">
-            Nostrich.love is free, open source, and carries no ads, no tracking and no
-            paywall — in seven languages. It is built and paid for by one person.
+            Nostrich.love is free and open source, in seven languages, with no ads, no
+            tracking and no paywall. One person builds it and pays for it.
           </p>
           <p class="text-lg text-gray-600 dark:text-gray-300">
             If it helped you get started, you can send some value back. Any amount,
@@ -49,9 +49,9 @@ const bitcoinQr = await QRCode.toString(`bitcoin:${SUPPORT.bitcoin}`, qrOpts);
                 Zap us on Nostr <span class="text-sm font-normal text-gray-500 dark:text-gray-400">(the native way)</span>
               </h2>
               <p class="text-gray-600 dark:text-gray-300 mb-4">
-                You just learned what zaps are — here is a safe first target. Open our
-                profile in your client and hit the zap button. It works: the profile's
-                Lightning address is verified and zap-capable.
+                You just learned what zaps are, so here is a safe first target. Open our
+                profile in your client and hit the zap button. The profile's Lightning
+                address is verified and zap-capable, so it will go through.
               </p>
               <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3 mb-4">
                 <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Our npub:</p>
@@ -89,8 +89,8 @@ const bitcoinQr = await QRCode.toString(`bitcoin:${SUPPORT.bitcoin}`, qrOpts);
             <div class="min-w-0">
               <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Lightning</h2>
               <p class="text-gray-600 dark:text-gray-300 mb-4">
-                No Nostr client handy? Any Lightning wallet can pay this address —
-                scan the code or copy it.
+                No Nostr client handy? Any Lightning wallet can pay this address.
+                Scan the code, or copy it.
               </p>
               <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3 mb-4">
                 <p class="text-sm font-mono break-all text-gray-900 dark:text-gray-100">{SUPPORT.lightning}</p>
@@ -132,7 +132,7 @@ const bitcoinQr = await QRCode.toString(`bitcoin:${SUPPORT.bitcoin}`, qrOpts);
               </button>
               <p class="text-xs text-gray-500 dark:text-gray-400 mt-4">
                 This is a single static address, so contributions to it are publicly
-                visible on the blockchain — treat it as transparent by design.
+                visible on the blockchain. Transparent by design.
               </p>
             </div>
           </div>
@@ -146,9 +146,9 @@ const bitcoinQr = await QRCode.toString(`bitcoin:${SUPPORT.bitcoin}`, qrOpts);
         <div class="max-w-3xl mx-auto text-sm text-gray-600 dark:text-gray-400">
           <p>
             Support pays for hosting, domains and the time it takes to keep 16 guides
-            accurate in 7 languages. If you would rather contribute skills than sats:
-            translation review is the most valuable thing you can give — every page
-            has an “Improve this page” link.
+            accurate in 7 languages. If you would rather contribute skills than sats,
+            translation review is the most valuable thing you can give. Every page has
+            an “Improve this page” link.
           </p>
         </div>
       </div>
@@ -176,7 +176,7 @@ const bitcoinQr = await QRCode.toString(`bitcoin:${SUPPORT.bitcoin}`, qrOpts);
           if (feedback) feedback.textContent = '';
         }, 2000);
       } catch {
-        if (feedback) feedback.textContent = 'Copy failed — select the text manually';
+        if (feedback) feedback.textContent = 'Copy failed, select the text manually';
       }
     });
   });
