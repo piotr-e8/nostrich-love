@@ -122,7 +122,7 @@ const comparisonPoints = [
 
 ---
 
-<Layout title={title} description={description} jsonLd={jsonLd} data-theme="friendly">
+<Layout title={title} description={description} jsonLd={jsonLd}>
   <Header />
   
   <ResumeBanner client:idle />
@@ -417,10 +417,3 @@ const comparisonPoints = [
   <Footer />
 </Layout>
 
-<script>
-  // Initialize theme
-  document.addEventListener('DOMContentLoaded', () => {
-    // Default to friendly theme
-    document.body.setAttribute('data-theme', 'friendly');
-  });
-</script>

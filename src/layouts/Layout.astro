@@ -170,58 +170,6 @@ const preloadLatinExt = displayFace && localeConfig.latinExtended;
         outline-color: #C4B5FD;
       }
 
-      /* Theme System - Friendly to Cyberpunk Gradual Transition */
-      :root {
-        /* Friendly Theme (Default for beginners) */
-        --theme-bg-primary: #FFFDF8;
-        --theme-bg-secondary: #FFFBF5;
-        --theme-text-primary: #1F2937;
-        --theme-text-secondary: #4B5563;
-        --theme-accent-primary: #9B7BFF;
-        --theme-accent-secondary: #FFD700;
-        --theme-border: #E5E7EB;
-        --theme-card-bg: #FFFFFF;
-        /* Flat. Was a three-stop 135deg gradient; the hero now rests on paper. */
-        --theme-hero-gradient: #FFFDF8;
-      }
-      
-      /* Theme: Friendly (beginner mode) */
-      [data-theme="friendly"] {
-        --theme-bg-primary: #FFFDF8;
-        --theme-bg-secondary: #FFFBF5;
-        --theme-text-primary: #1F2937;
-        --theme-text-secondary: #4B5563;
-        --theme-accent-primary: #9B7BFF;
-        --theme-accent-secondary: #FFD700;
-        --theme-border: #E5E7EB;
-        --theme-card-bg: #FFFFFF;
-        /* Flat. Was a three-stop 135deg gradient; the hero now rests on paper. */
-        --theme-hero-gradient: #FFFDF8;
-      }
-      
-      /* Theme: Cyberpunk (advanced mode) */
-      [data-theme="cyberpunk"] {
-        --theme-bg-primary: #0F0A1A;
-        --theme-bg-secondary: #1A1025;
-        --theme-text-primary: #FFFFFF;
-        --theme-text-secondary: #A1A1AA;
-        --theme-accent-primary: #8B5CF6;
-        --theme-accent-secondary: #6366F1;
-        --theme-border: #374151;
-        --theme-card-bg: #1F1F2E;
-        --theme-hero-gradient: #0F0A1A;
-      }
-      
-      /* Apply theme variables */
-      .theme-bg-primary { background-color: var(--theme-bg-primary); }
-      .theme-bg-secondary { background-color: var(--theme-bg-secondary); }
-      .theme-text-primary { color: var(--theme-text-primary); }
-      .theme-text-secondary { color: var(--theme-text-secondary); }
-      .theme-accent-primary { color: var(--theme-accent-primary); }
-      .theme-accent-secondary { color: var(--theme-accent-secondary); }
-      .theme-border { border-color: var(--theme-border); }
-      .theme-card-bg { background-color: var(--theme-card-bg); }
-      .theme-hero-gradient { background: var(--theme-hero-gradient); }
     </style>
     
     <!-- Dark mode initialization - prevents FOUC -->
