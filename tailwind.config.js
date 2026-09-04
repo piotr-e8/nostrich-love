@@ -1,5 +1,14 @@
 import colors from "tailwindcss/colors";
 
+// The component boundary. `.prose` styles article text written in MDX and must
+// stop at an embedded component: every hydrated island (<astro-island>), and
+// the root of a component that renders without a client directive, which
+// carries `not-prose`. The same string is written out longhand in
+// src/styles/globals.css — CSS has no selector variables — and the rule is
+// recorded in docs/internal/VISUAL_SYSTEM.md §6.
+const NOT_IN_COMPONENT =
+  ':where(astro-island *, [class~="not-prose"], [class~="not-prose"] *)';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: "class",
@@ -300,19 +309,24 @@ export default {
             ul: {
               marginTop: "1rem",
               marginBottom: "1rem",
-              paddingLeft: "1.5rem",
+              paddingInlineStart: "1.5rem",
             },
             ol: {
               marginTop: "1rem",
               marginBottom: "1rem",
-              paddingLeft: "1.5rem",
+              paddingInlineStart: "1.5rem",
             },
             li: {
               marginTop: "0.25rem",
               marginBottom: "0.25rem",
             },
+            // Inline code was pink-600 / pink-400. Pink is not in the palette
+            // (VISUAL_SYSTEM.md §4: purple means actionable, green/amber/red
+            // are semantic, nothing else is a text colour), and inline code is
+            // not a control. The chip's ground is what marks it as code, so
+            // the text is plain ink: gray-800 on gray-100 is 12.6:1.
             code: {
-              color: theme("colors.pink.600"),
+              color: theme("colors.gray.800"),
               backgroundColor: theme("colors.gray.100"),
               padding: "0.2rem 0.4rem",
               borderRadius: "0.25rem",
@@ -326,21 +340,32 @@ export default {
             },
           },
         },
+        // Every element-level key here carries the component boundary from
+        // globals.css. It has to: the `dark:` variant compiles these to
+        // `.dark\:prose-invert:is(.dark *) …`, specificity (0,2,0), which
+        // outranks a component's own utility class. The plugin wraps each key
+        // in :where(), so the :not() filters without adding specificity.
         invert: {
           css: {
             color: theme("colors.gray.300"),
-            h1: {
+            [`h1:not(${NOT_IN_COMPONENT})`]: {
               color: theme("colors.white"),
             },
-            h2: {
+            [`h2:not(${NOT_IN_COMPONENT})`]: {
               color: theme("colors.white"),
             },
-            h3: {
+            [`h3:not(${NOT_IN_COMPONENT})`]: {
               color: theme("colors.white"),
             },
-            code: {
-              color: theme("colors.pink.400"),
+            [`code:not(${NOT_IN_COMPONENT})`]: {
+              color: theme("colors.gray.100"),
               backgroundColor: theme("colors.gray.800"),
+            },
+            // Without this, the rule above lands on the <code> inside every
+            // highlighted block and gives each line its own lighter slab.
+            "pre code": {
+              color: "inherit",
+              backgroundColor: "transparent",
             },
           },
         },

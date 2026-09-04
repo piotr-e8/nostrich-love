@@ -1,4 +1,5 @@
 import React from "react";
+import { BadgeCheck, User, Zap } from "lucide-react";
 import { cn } from "../../lib/utils";
 
 /**
@@ -23,7 +24,7 @@ type Tone = "neutral" | "positive" | "negative";
 const TONES: Record<Tone, string> = {
   neutral: "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800",
   positive: "border-primary/40 bg-primary/5 dark:bg-primary/10",
-  negative: "border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/40",
+  negative: "border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800",
 };
 
 interface Figure {
@@ -41,7 +42,7 @@ function DiagramFrame({
     <figure className={cn("not-prose my-8", className)}>
       {children}
       {caption && (
-        <figcaption className="mt-3 text-sm text-gray-500 dark:text-gray-400 text-center">
+        <figcaption className="mt-3 text-caption text-gray-500 dark:text-gray-400 text-center">
           {caption}
         </figcaption>
       )}
@@ -79,16 +80,16 @@ export function DiagramCompare({
         {panels.map((panel) => (
           <div
             key={panel.title}
-            className={cn("rounded-xl border p-5", TONES[panel.tone ?? "neutral"])}
+            className={cn("rounded-lg border p-5", TONES[panel.tone ?? "neutral"])}
           >
             <p className="font-semibold text-gray-900 dark:text-white">{panel.title}</p>
             {panel.subtitle && (
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-1 text-body-sm text-gray-500 dark:text-gray-400">
                 {panel.subtitle}
               </p>
             )}
             {panel.lines && panel.lines.length > 0 && (
-              <ul className="mt-3 space-y-1.5 text-sm text-gray-600 dark:text-gray-300">
+              <ul className="mt-3 space-y-1.5 text-body-sm text-gray-600 dark:text-gray-300">
                 {panel.lines.map((line) => (
                   <li key={line}>{line}</li>
                 ))}
@@ -125,17 +126,17 @@ export function DiagramLayers({
     return (
       <div
         className={cn(
-          "rounded-xl border p-4",
+          "rounded-lg border p-4",
           innermost
             ? "border-primary/40 bg-primary/5 dark:bg-primary/10"
-            : "border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/40"
+            : "border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
         )}
       >
-        <p className="text-sm font-semibold text-gray-900 dark:text-white">
+        <p className="text-body-sm font-semibold text-gray-900 dark:text-white">
           {layer.label}
         </p>
         {layer.note && (
-          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{layer.note}</p>
+          <p className="mt-1 text-caption text-gray-500 dark:text-gray-400">{layer.note}</p>
         )}
         {!innermost && <div className="mt-3">{render(index + 1)}</div>}
       </div>
@@ -184,7 +185,7 @@ export function DiagramNodes({
               <div className="flex items-center gap-3" aria-hidden={!row.connector}>
                 <span className="h-px flex-1 bg-gray-300 dark:bg-gray-700" />
                 {row.connector && (
-                  <span className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                  <span className="text-micro font-medium uppercase text-gray-500 dark:text-gray-400">
                     {row.connector}
                   </span>
                 )}
@@ -211,7 +212,7 @@ export function DiagramNodes({
                 >
                   <p className="font-medium text-gray-900 dark:text-white">{node.label}</p>
                   {node.sub && (
-                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    <p className="mt-1 text-caption text-gray-500 dark:text-gray-400">
                       {node.sub}
                     </p>
                   )}
@@ -238,27 +239,35 @@ export function MockProfile({
 }: Figure & { name: string; handle: string; bio?: string; verified?: boolean }) {
   return (
     <DiagramFrame caption={caption} className={className}>
-      <div className="mx-auto max-w-sm rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5">
+      <div className="mx-auto max-w-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5">
         <div className="flex items-center gap-3">
-          <div
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-lg"
-            aria-hidden="true"
-          >
-            👤
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700">
+            <User
+              className="h-5 w-5 text-gray-400 dark:text-gray-500"
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
           </div>
           <div className="min-w-0">
             <p className="flex items-center gap-1.5 font-semibold text-gray-900 dark:text-white">
               {name}
+              {/* The badge a client draws next to a verified name. It carried a
+                  hardcoded English title="Verified"; the caption under the
+                  figure is where that sentence belongs, in the locale's own
+                  words, so the mark is drawn and nothing is asserted in
+                  English. */}
               {verified && (
-                <span className="text-primary-600 dark:text-primary" title="Verified">
-                  ✓
-                </span>
+                <BadgeCheck
+                  className="h-4 w-4 shrink-0 text-primary-text dark:text-primary-400"
+                  strokeWidth={1.5}
+                  aria-hidden="true"
+                />
               )}
             </p>
-            <p className="truncate text-sm text-gray-500 dark:text-gray-400">{handle}</p>
+            <p className="truncate text-body-sm text-gray-500 dark:text-gray-400">{handle}</p>
           </div>
         </div>
-        {bio && <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">{bio}</p>}
+        {bio && <p className="mt-3 text-body-sm text-gray-600 dark:text-gray-300">{bio}</p>}
       </div>
     </DiagramFrame>
   );
@@ -285,7 +294,7 @@ export function MockPost({
 }) {
   return (
     <DiagramFrame caption={caption} className={className}>
-      <div className="mx-auto max-w-md rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5">
+      <div className="mx-auto max-w-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5">
         <p className="font-semibold text-gray-900 dark:text-white">{author}</p>
         <p className="mt-2 text-gray-700 dark:text-gray-300">{content}</p>
         {reactions.length > 0 && (
@@ -293,7 +302,7 @@ export function MockPost({
             {reactions.map((reaction) => (
               <li
                 key={reaction.label}
-                className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 dark:bg-gray-900/60 px-3 py-1 text-sm text-gray-600 dark:text-gray-300"
+                className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 dark:bg-gray-700 px-3 py-1 text-body-sm text-gray-600 dark:text-gray-300"
               >
                 <span aria-hidden="true">{reaction.icon}</span>
                 {reaction.label}
@@ -302,12 +311,14 @@ export function MockPost({
           </ul>
         )}
         {zaps.length > 0 && (
-          <ul className="mt-3 space-y-1 text-sm text-gray-500 dark:text-gray-400">
+          <ul className="mt-3 space-y-1 text-body-sm text-gray-500 dark:text-gray-400">
             {zaps.map((zap) => (
-              <li key={zap}>
-                <span aria-hidden="true" className="me-1.5">
-                  ⚡
-                </span>
+              <li key={zap} className="flex items-center gap-1.5">
+                <Zap
+                  className="h-4 w-4 shrink-0 text-gray-400 dark:text-gray-500"
+                  strokeWidth={1.5}
+                  aria-hidden="true"
+                />
                 {zap}
               </li>
             ))}
@@ -337,23 +348,23 @@ export function DiagramSplit({
 }: Figure & { title?: string; rows: SplitRow[] }) {
   return (
     <DiagramFrame caption={caption} className={className}>
-      <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5">
+      <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5">
         {title && (
           <p className="mb-4 font-semibold text-gray-900 dark:text-white">{title}</p>
         )}
         <ul className="space-y-3">
           {rows.map((row) => (
             <li key={row.label} className="flex items-center gap-3">
-              <span className="w-12 shrink-0 text-sm font-semibold text-gray-900 dark:text-white">
+              <span className="w-12 shrink-0 text-body-sm font-semibold text-gray-900 dark:text-white">
                 {row.percent}%
               </span>
-              <span className="h-2 flex-1 rounded-full bg-gray-100 dark:bg-gray-900/60">
+              <span className="h-2 flex-1 rounded-full bg-gray-100 dark:bg-gray-700">
                 <span
                   className="block h-2 rounded-full bg-primary/70"
                   style={{ width: `${row.percent}%` }}
                 />
               </span>
-              <span className="shrink-0 text-sm text-gray-600 dark:text-gray-300">
+              <span className="shrink-0 text-body-sm text-gray-600 dark:text-gray-300">
                 {row.label}
               </span>
             </li>

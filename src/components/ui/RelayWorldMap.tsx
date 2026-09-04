@@ -30,6 +30,26 @@ const DEFAULT_RELAYS: Relay[] = [
   { id: "snort", url: "wss://relay.snort.social" },
 ];
 
+/**
+ * Pin positions as percentages of the map box, and the links drawn between
+ * them. One list, used for both the circle and the line endpoint, because the
+ * two used to be written out separately and drifted apart.
+ *
+ * There were four pins; two of them carried the same label ("North America"),
+ * and the fourth had no line touching it at all. The duplicate is gone.
+ */
+const PINS = [
+  { id: "northAmerica", x: 20, y: 38 },
+  { id: "europe", x: 50, y: 33 },
+  { id: "asia", x: 80, y: 48 },
+] as const;
+
+const LINKS: ReadonlyArray<[string, string]> = [
+  ["northAmerica", "europe"],
+  ["europe", "asia"],
+  ["northAmerica", "asia"],
+];
+
 export function RelayWorldMap({
   relays = DEFAULT_RELAYS,
   className,
@@ -51,100 +71,93 @@ export function RelayWorldMap({
   return (
     <div
       className={cn(
-        "rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900",
+        "not-prose rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900",
         className,
       )}
     >
-      <div className="flex items-center gap-3 mb-6">
-        <Globe
-          className="h-6 w-6 shrink-0 text-gray-400 dark:text-gray-500"
-          strokeWidth={1.5}
-          aria-hidden="true"
-        />
-        <div>
+      <div className="mb-6">
+        <div className="flex items-center gap-3">
+          <Globe
+            className="h-6 w-6 shrink-0 text-gray-400 dark:text-gray-500"
+            strokeWidth={1.5}
+            aria-hidden="true"
+          />
           <h3 className="text-h3 text-gray-900 dark:text-white">{t('relayWorldMap.title')}</h3>
-          <p className="text-body-sm text-gray-600 dark:text-gray-400">
-            {t('relayWorldMap.subtitle')}
-          </p>
         </div>
+        {/* Indented by the icon column (24px) plus the gap (12px) so the two
+            lines of the header share one left edge. */}
+        <p className="mt-1 ms-9 text-body-sm text-gray-600 dark:text-gray-400">
+          {t('relayWorldMap.subtitle')}
+        </p>
       </div>
 
-      {/* Simplified World Map Visualization */}
+      {/* Simplified World Map Visualization.
+          Grid, links and pins live in ONE svg, in one coordinate space. They
+          used to be three stacked layers: percentage endpoints on the lines,
+          but percentage *corners* on the pin boxes, whose width came from the
+          translated label. So every line stopped short of its dot by a
+          different amount, and the amount changed with the language. Here a
+          pin is a circle at the same percentage the line ends at, so the line
+          lands on the dot by construction, in all seven locales. */}
       <div className="relative mb-6 h-48 overflow-hidden rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-800">
-        {/* Grid pattern */}
-        <div className="absolute inset-0 text-gray-400 opacity-30 dark:text-gray-600">
-          <svg width="100%" height="100%">
-            <defs>
-              <pattern
-                id="grid"
-                width="40"
-                height="40"
-                patternUnits="userSpaceOnUse"
+        <svg className="absolute inset-0 h-full w-full" aria-hidden="true">
+          <defs>
+            <pattern
+              id="grid"
+              width="40"
+              height="40"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 40 0 L 0 0 0 40"
+                fill="none"
+                className="stroke-gray-400 dark:stroke-gray-600"
+                strokeWidth="1"
+                opacity="0.3"
+              />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)" />
+
+          {LINKS.map(([from, to]) => {
+            const a = PINS.find((p) => p.id === from)!;
+            const b = PINS.find((p) => p.id === to)!;
+            return (
+              <line
+                key={`${from}-${to}`}
+                x1={`${a.x}%`}
+                y1={`${a.y}%`}
+                x2={`${b.x}%`}
+                y2={`${b.y}%`}
+                className="stroke-gray-300 dark:stroke-gray-600"
+                strokeWidth="2"
+                strokeDasharray="4 4"
+              />
+            );
+          })}
+
+          {/* Pins stand for "relays run everywhere", not for the hosts listed
+              below, which is why no relay name is attached to them. */}
+          {PINS.map((pin) => (
+            <g key={pin.id}>
+              <circle
+                cx={`${pin.x}%`}
+                cy={`${pin.y}%`}
+                r="6"
+                className="fill-success-500"
+              />
+              <text
+                x={`${pin.x}%`}
+                y={`${pin.y}%`}
+                dy="1.9em"
+                textAnchor="middle"
+                className="text-caption fill-gray-600 dark:fill-gray-400"
               >
-                <path
-                  d="M 40 0 L 0 0 0 40"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#grid)" />
-          </svg>
-        </div>
-
-        {/* Connection lines */}
-        <svg className="absolute inset-0 h-full w-full text-gray-300 dark:text-gray-600">
-          <line
-            x1="20%"
-            y1="40%"
-            x2="50%"
-            y2="35%"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeDasharray="4 4"
-          />
-          <line
-            x1="50%"
-            y1="35%"
-            x2="80%"
-            y2="50%"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeDasharray="4 4"
-          />
-          <line
-            x1="20%"
-            y1="40%"
-            x2="80%"
-            y2="50%"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeDasharray="4 4"
-          />
+                {t(`relayWorldMap.regions.${pin.id}`)}
+              </text>
+            </g>
+          ))}
         </svg>
-
-        {/* Decorative pins. They stand for "relays run everywhere", not for the
-            hosts listed below, which is why no relay name is attached to them. */}
-        <div className="absolute top-[35%] left-[20%] flex flex-col items-center">
-          <div className="h-3 w-3 rounded-full bg-success-500" />
-          <span className="mt-2 text-caption text-gray-600 dark:text-gray-400">{t('relayWorldMap.regions.northAmerica')}</span>
-        </div>
-
-        <div className="absolute top-[30%] left-[50%] flex flex-col items-center">
-          <div className="h-3 w-3 rounded-full bg-success-500" />
-          <span className="mt-2 text-caption text-gray-600 dark:text-gray-400">{t('relayWorldMap.regions.europe')}</span>
-        </div>
-
-        <div className="absolute top-[45%] left-[80%] flex flex-col items-center">
-          <div className="h-3 w-3 rounded-full bg-success-500" />
-          <span className="mt-2 text-caption text-gray-600 dark:text-gray-400">{t('relayWorldMap.regions.asia')}</span>
-        </div>
-
-        <div className="absolute top-[60%] left-[15%] flex flex-col items-center">
-          <div className="h-3 w-3 rounded-full bg-success-500" />
-          <span className="mt-2 text-caption text-gray-600 dark:text-gray-400">{t('relayWorldMap.regions.northAmerica')}</span>
-        </div>
       </div>
 
       {/* Relay List */}

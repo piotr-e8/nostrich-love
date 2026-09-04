@@ -3498,7 +3498,8 @@
     "showMore": "{count} weitere anzeigen",
     "timeEstimate": "Etwa {minutes} Min. um alles abzuschließen",
     "continueAnyway": "Trotzdem fortfahren",
-    "startFirst": "Mit der ersten Voraussetzung beginnen"
+    "startFirst": "Mit der ersten Voraussetzung beginnen",
+    "dismiss": "Diesen Hinweis ausblenden"
   },
   "followPack": {
     "groups": {

@@ -40,8 +40,6 @@ export {
   WarningCallout,
   SuccessCallout,
   DangerCallout,
-  SecurityWarning,
-  Tip,
 } from "./Callout";
 export type { CalloutVariant } from "./Callout";
 

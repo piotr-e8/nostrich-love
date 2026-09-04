@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { cn } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
 
@@ -67,7 +67,72 @@ export function RelayVisualizer({
     Array<{ id: string; relayId: string; progress: number }>
   >([]);
 
+  /**
+   * The connection lines are measured, not guessed.
+   *
+   * They used to be three 48px vertical stubs, one per relay column: each one
+   * started 32px below the user circle, ran halfway down, and stopped 16px
+   * above its relay. Horizontally they sat at their own column's centre, up to
+   * 100px away from the user, so the picture showed three ticks floating in a
+   * gap and nothing was joined to anything. Now one svg spans the whole
+   * diagram and every line runs from the bottom of the user circle to the top
+   * of a relay tile, taken from the live boxes — which also survives the row
+   * wrapping on a narrow screen and the mirrored order under RTL.
+   */
+  const diagramRef = useRef<HTMLDivElement>(null);
+  const userRef = useRef<HTMLDivElement>(null);
+  const nodeRefs = useRef<Record<string, HTMLElement | null>>({});
+  const [links, setLinks] = useState<
+    Array<{ id: string; x1: number; y1: number; x2: number; y2: number }>
+  >([]);
+
   useEffect(() => {
+    const measure = () => {
+      const frame = diagramRef.current;
+      const user = userRef.current;
+      if (!frame || !user) return;
+      const box = frame.getBoundingClientRect();
+      const u = user.getBoundingClientRect();
+      const next = relays.flatMap((relay) => {
+        const node = nodeRefs.current[relay.id];
+        if (!node) return [];
+        const n = node.getBoundingClientRect();
+        return [
+          {
+            id: relay.id,
+            x1: u.x + u.width / 2 - box.x,
+            y1: u.bottom - box.y,
+            x2: n.x + n.width / 2 - box.x,
+            y2: n.y - box.y,
+          },
+        ];
+      });
+      setLinks(next);
+    };
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    if (diagramRef.current) observer.observe(diagramRef.current);
+    Object.values(nodeRefs.current).forEach((node) => {
+      if (node) observer.observe(node);
+    });
+    window.addEventListener("resize", measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [relays]);
+
+  useEffect(() => {
+    // A packet crawling down a wire is decoration, so it does not run for a
+    // reader who asked for less motion. The line itself still shows the state.
+    const reduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      setDataPackets([]);
+      return;
+    }
     const interval = setInterval(() => {
       // Add new data packets for connected relays
       const connectedRelays = relays.filter((r) => r.status === "connected");
@@ -113,7 +178,7 @@ export function RelayVisualizer({
   return (
     <div
       className={cn(
-        "relative rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900",
+        "not-prose relative rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900",
         className,
       )}
     >
@@ -122,9 +187,52 @@ export function RelayVisualizer({
       </h3>
 
       {/* Visual Diagram */}
-      <div className="relative mb-8 flex flex-col items-center gap-8">
+      <div
+        ref={diagramRef}
+        className="relative mb-8 flex flex-col items-center gap-16"
+      >
+        {/* The wires, drawn under the nodes across the whole diagram. */}
+        <svg
+          className="pointer-events-none absolute inset-0 h-full w-full"
+          aria-hidden="true"
+        >
+          {links.map((link) => {
+            const connected = activeConnections.includes(link.id);
+            return (
+              <line
+                key={link.id}
+                x1={link.x1}
+                y1={link.y1}
+                x2={link.x2}
+                y2={link.y2}
+                strokeWidth="2"
+                className={
+                  connected
+                    ? "stroke-success-500"
+                    : "stroke-gray-300 dark:stroke-gray-700"
+                }
+                strokeDasharray={connected ? undefined : "4 4"}
+              />
+            );
+          })}
+          {dataPackets.flatMap((packet) => {
+            const link = links.find((l) => l.id === packet.relayId);
+            if (!link) return [];
+            const p = packet.progress / 100;
+            return [
+              <circle
+                key={packet.id}
+                cx={link.x1 + (link.x2 - link.x1) * p}
+                cy={link.y1 + (link.y2 - link.y1) * p}
+                r="4"
+                className="fill-success-500"
+              />,
+            ];
+          })}
+        </svg>
+
         {/* User Node */}
-        <div className="relative">
+        <div className="relative" ref={userRef}>
           <div
             className={cn(
               "flex h-16 w-16 items-center justify-center rounded-full border-2 transition-colors duration-300 motion-reduce:transition-none",
@@ -140,63 +248,41 @@ export function RelayVisualizer({
           )}
         </div>
 
-        {/* Connection Lines */}
+        {/* Relay nodes. The wires above are drawn to the top edge of each of
+            these buttons, so the row can wrap without a line coming loose. */}
         <div className="relative flex flex-wrap justify-center gap-8">
           {relays.map((relay) => (
-            <div
+            <button
               key={relay.id}
-              className="relative flex flex-col items-center gap-4"
+              ref={(node) => {
+                nodeRefs.current[relay.id] = node;
+              }}
+              onClick={() => onRelayToggle?.(relay.id)}
+              className={cn(
+                "relative flex flex-col items-center gap-2 rounded-lg border p-4 transition-colors hover:border-gray-300 dark:hover:border-gray-700",
+                relay.status === "connected"
+                  ? "border-success-200 bg-success-50 dark:border-success-900 dark:bg-success-950"
+                  // gray-800 on gray-800 was a tile with no edge in dark mode.
+                  : "border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800",
+              )}
             >
-              {/* Connection Line */}
-              <div className="relative h-12 w-0.5 overflow-hidden bg-gray-200 dark:bg-gray-700">
-                {relay.status === "connected" && (
-                  <div className="absolute inset-0 bg-success-500 opacity-40" />
-                )}
-                {/* Data Packets */}
-                {dataPackets
-                  .filter((p) => p.relayId === relay.id)
-                  .map((packet) => (
-                    <div
-                      key={packet.id}
-                      className="absolute inset-x-0 mx-auto h-2 w-2 rounded-full bg-success-500"
-                      style={{ top: `${packet.progress}%` }}
-                    />
-                  ))}
-              </div>
-
-              {/* Relay Node */}
-              <button
-                onClick={() => onRelayToggle?.(relay.id)}
+              <div
                 className={cn(
-                  "group relative flex flex-col items-center gap-2 rounded-lg border p-4 transition-colors hover:border-gray-300 dark:hover:border-gray-700",
-                  relay.status === "connected"
-                    ? "border-success-200 bg-success-50 dark:border-success-900 dark:bg-success-950"
-                    : "border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-800",
+                  "h-3 w-3 rounded-full",
+                  relay.status === "connecting" &&
+                    "animate-pulse motion-reduce:animate-none",
+                  getStatusColor(relay.status),
                 )}
-              >
-                <div
-                  className={cn(
-                    "h-3 w-3 rounded-full",
-                    getStatusColor(relay.status),
-                  )}
-                >
-                  {relay.status === "connecting" && (
-                    <div className="h-full w-full animate-pulse rounded-full" />
-                  )}
-                  {relay.status === "connected" && (
-                    <div className="absolute inset-0 animate-ping rounded-full opacity-30" />
-                  )}
-                </div>
-                <span className="text-caption font-medium text-gray-700 dark:text-gray-300">
-                  {relay.name}
+              />
+              <span className="text-caption font-medium text-gray-700 dark:text-gray-300">
+                {relay.name}
+              </span>
+              {relay.latency && (
+                <span className="text-micro text-gray-500 dark:text-gray-400">
+                  {relay.latency}ms
                 </span>
-                {relay.latency && (
-                  <span className="text-micro text-gray-500 dark:text-gray-400">
-                    {relay.latency}ms
-                  </span>
-                )}
-              </button>
-            </div>
+              )}
+            </button>
           ))}
         </div>
       </div>

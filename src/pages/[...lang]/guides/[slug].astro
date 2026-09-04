@@ -36,6 +36,7 @@ import { NIP05Checker } from '../../../components/interactive/NIP05Checker';
 import { PostFlowSimulator } from '../../../components/ui/PostFlowSimulator';
 import { InteractiveChecklist, ChecklistProgress } from '../../../components/InteractiveChecklist';
 import { H2, H3 } from '../../../components/ReadingTimeHeading';
+import GuideTable from '../../../components/guides/GuideTable.astro';
 // Diagram family replacing the box-drawing ASCII art. No client directive
 // anywhere they are used — they render to static HTML.
 import {
@@ -352,6 +353,11 @@ const components = {
   ChecklistProgress,
   H2,
   H3,
+  // Lowercase key: this one overrides an HTML element, not an MDX component.
+  // Every markdown pipe table in every guide renders through it and gets a
+  // scroll container of its own, which is the only way a 4-column comparison
+  // table stays inside the card on a phone.
+  table: GuideTable,
 };
 ---
 
@@ -362,7 +368,15 @@ const components = {
   <ProgressTracker client:idle guideSlug={guideSlug} guideTitle={guide.data.title} />
 
 
-  <main id="main-content" class="py-16">
+  <!--
+    No padding on <main>. The section's own container already carries the
+    page rhythm (`py-16 lg:py-24`), the same one every other page uses, and
+    this template declared it a second time here — so the band between the
+    header and the top of the article card measured 160px, and the band under
+    the card another 160px. One declaration, in the place the rest of the site
+    keeps it.
+  -->
+  <main id="main-content">
     <!--
       No tinted wash behind the article. The absolutely-positioned
       primary/secondary gradient that used to sit here was the one piece of

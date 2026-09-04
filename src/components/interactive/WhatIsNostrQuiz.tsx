@@ -59,7 +59,13 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
   if (!questions || questions.length === 0) {
     return (
       <div className={cn(
-        "rounded-lg border border-gray-200 bg-white p-8 dark:border-gray-800 dark:bg-gray-900",
+        // `not-prose` on the root of all three views. The astro-island wrapper
+        // already keeps article prose out when this is hydrated, but the guard
+        // is what the plugin's own rules honour, it survives the island tag in
+        // between, and it costs nothing — so the component renders the same
+        // whether MDX embeds it with a client directive or without one
+        // (VISUAL_SYSTEM.md §6).
+        "not-prose rounded-lg border border-gray-200 bg-white p-8 dark:border-gray-800 dark:bg-gray-900",
         className
       )}>
         <div className="flex flex-col items-center text-center">
@@ -115,7 +121,7 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
       <div
         data-quiz
         className={cn(
-          "animate-scale-in motion-reduce:animate-none rounded-lg border border-gray-200 bg-white p-8 dark:border-gray-800 dark:bg-gray-900",
+          "not-prose animate-scale-in motion-reduce:animate-none rounded-lg border border-gray-200 bg-white p-8 dark:border-gray-800 dark:bg-gray-900",
           className,
         )}
       >
@@ -142,7 +148,12 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
           </p>
 
           <div
-            className="animate-slide-up motion-reduce:animate-none mt-6 grid w-full gap-4 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-900"
+            // gray-800, not gray-900. This panel sits inside a quiz card that is
+            // itself gray-900 in dark mode, inside an article card that is also
+            // gray-900 — so a gray-900 ground here is no ground at all and the
+            // summary the reader is meant to read simply vanished. gray-50 /
+            // gray-800 is the nested-panel pair the rest of the components use.
+            className="animate-slide-up motion-reduce:animate-none mt-6 grid w-full gap-4 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800"
             style={{ animationDelay: "400ms" }}
           >
             <ResultRow
@@ -198,7 +209,7 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
     <div
       data-quiz
       className={cn(
-        "overflow-hidden rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900",
+        "not-prose overflow-hidden rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900",
         className,
       )}
     >
@@ -255,7 +266,10 @@ export function WhatIsNostrQuiz({ className }: WhatIsNostrQuizProps) {
         className="animate-slide-in-right motion-reduce:animate-none"
       >
           <div
-            className="animate-slide-up motion-reduce:animate-none rounded-lg border border-gray-200 bg-gray-50 p-4 text-body-sm text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-200"
+            // Same nested-panel pair as the results summary: the question box
+            // has to read as a box on the quiz card, and gray-900 on gray-900
+            // does not.
+            className="animate-slide-up motion-reduce:animate-none rounded-lg border border-gray-200 bg-gray-50 p-4 text-body-sm text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
             style={{ animationDelay: "100ms" }}
           >
             {currentQuestion.prompt}

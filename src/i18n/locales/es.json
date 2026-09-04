@@ -3498,7 +3498,8 @@
     "showMore": "Mostrar {count} más",
     "timeEstimate": "Aproximadamente {minutes} min para completar todo",
     "continueAnyway": "Continuar de todos modos",
-    "startFirst": "Comenzar con el primer prerrequisito"
+    "startFirst": "Comenzar con el primer prerrequisito",
+    "dismiss": "Ocultar este aviso"
   },
   "followPack": {
     "groups": {

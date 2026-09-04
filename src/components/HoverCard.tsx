@@ -32,7 +32,7 @@ export function HoverCard({
   return (
     <dl
       className={cn(
-        "my-6 rounded-lg border border-gray-200 bg-gray-50 p-5 dark:border-gray-800 dark:bg-gray-900",
+        "not-prose my-6 rounded-lg border border-gray-200 bg-gray-50 p-5 dark:border-gray-800 dark:bg-gray-900",
         className,
       )}
     >

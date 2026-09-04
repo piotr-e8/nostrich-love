@@ -120,6 +120,180 @@
   min-height: 0;
 }
 
+/* ==========================================================================
+   PROSE STOPS AT A COMPONENT BOUNDARY
+   ==========================================================================
+
+   `.prose` is for MDX article text. It must not reach into an embedded
+   component. A component boundary is either of:
+
+     * `<astro-island>`  — every hydrated React island, automatic, nothing to
+                           remember;
+     * `class="not-prose"` — the root of a component that renders WITHOUT a
+                           client directive (Callout in an .astro/MDX file
+                           renders to plain HTML, so there is no island tag to
+                           key off). Put it on the component's outermost
+                           element.
+
+   Two things had to be fixed for that to actually hold, and they are
+   different problems with different fixes:
+
+   1. The hand-written `.prose x` rules below are plain descendant selectors at
+      specificity (0,1,1), sitting after `@tailwind utilities` in the output.
+      They beat every utility class, so `text-micro` on a <p> inside a quiz
+      rendered at 17px. They now carry $BOUNDARY (see below) and match nothing
+      inside a boundary. `not-prose` never worked on them at all before this.
+
+   2. @tailwindcss/typography's own rules are `:where()`-wrapped, so they lose
+      to a utility class — but only where a utility exists. Margins, list
+      markers, `dd` padding, blockquote rules and `hr` have no utility on them
+      in most components, so they leaked. Those rules already honour
+      `not-prose`, and that guard DOES survive an <astro-island> in between
+      (it is `[class~="not-prose"] *`, a descendant combinator). What it cannot
+      do is fire on a tag it has never heard of. So the boundary reset below
+      re-establishes the Tailwind preflight baseline inside islands, at the
+      plugin's own specificity but later in the components layer, which leaves
+      utilities on top where they belong.
+
+   $BOUNDARY, written out at every site because CSS has no selector variables:
+
+       :not(:where(astro-island *, [class~="not-prose"], [class~="not-prose"] *))
+
+   Adding a rule to `.prose`? It gets $BOUNDARY too. Recorded in
+   docs/internal/VISUAL_SYSTEM.md §6.
+   ========================================================================== */
+
+@layer components {
+  /* The boundary root. `.prose-lg` sets 18px/32px on the <article> and
+     `.prose` sets the body colour; both inherit straight through
+     <astro-island>, which is `display: contents`. Put the page's own base
+     back, so a component renders inside an article exactly as it renders
+     anywhere else on the site. */
+  .prose :where(astro-island, [class~="not-prose"]) {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: hsl(var(--foreground));
+  }
+
+  /* Inside a boundary the baseline is Tailwind preflight, not prose.
+     Specificity (0,1,0) — same as the plugin's `:where()` rules, later in the
+     layer, so it wins over them; and a utility class in the utilities layer
+     still wins over it. That "in between" is the whole trick. */
+  .prose
+    :where(astro-island, [class~="not-prose"])
+    :where(
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      ul,
+      ol,
+      li,
+      dl,
+      dt,
+      dd,
+      blockquote,
+      figure,
+      figcaption,
+      hr,
+      pre,
+      table,
+      img,
+      picture,
+      video
+    ) {
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  .prose
+    :where(astro-island, [class~="not-prose"])
+    :where(h1, h2, h3, h4, h5, h6, dt) {
+    color: inherit;
+    font-weight: inherit;
+  }
+
+  .prose :where(astro-island, [class~="not-prose"]) :where(ul, ol) {
+    list-style: none;
+  }
+
+  .prose
+    :where(astro-island, [class~="not-prose"])
+    :where(ul > li::marker, ol > li::marker) {
+    color: inherit;
+  }
+
+  .prose :where(astro-island, [class~="not-prose"]) :where(a) {
+    color: inherit;
+    font-weight: inherit;
+    text-decoration: inherit;
+  }
+
+  .prose :where(astro-island, [class~="not-prose"]) :where(strong, b) {
+    color: inherit;
+    font-weight: bolder;
+  }
+
+  .prose :where(astro-island, [class~="not-prose"]) :where(blockquote) {
+    border-inline-start-width: 0;
+    padding-inline-start: 0;
+    font-style: normal;
+    quotes: none;
+  }
+
+  .prose
+    :where(astro-island, [class~="not-prose"])
+    :where(blockquote p:first-of-type::before, blockquote p:last-of-type::after) {
+    content: none;
+  }
+
+  .prose :where(astro-island, [class~="not-prose"]) :where(hr) {
+    border-color: inherit;
+  }
+
+  /* Both the plugin's code styling and ours (background + inline padding +
+     0.875em) have to come off, or every <code> in a component turns into a
+     grey chip. */
+  .prose :where(astro-island, [class~="not-prose"]) :where(code, kbd, pre) {
+    color: inherit;
+    background-color: transparent;
+    font-weight: inherit;
+    font-size: inherit;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .prose
+    :where(astro-island, [class~="not-prose"])
+    :where(table, thead, tbody, tfoot, tr, th, td) {
+    border-width: 0;
+    padding: 0;
+    font-size: inherit;
+    line-height: inherit;
+    vertical-align: baseline;
+  }
+
+  .prose :where(astro-island, [class~="not-prose"]) :where(table) {
+    width: auto;
+    table-layout: auto;
+  }
+
+  /* Dark mode needs its own pass at (0,2,0): the `invert` block in
+     tailwind.config.js compiles through the `dark:` variant to
+     `.dark\:prose-invert:is(.dark *) …`, which outranks a plain utility. The
+     element-level keys there now carry $BOUNDARY themselves, so this is only
+     the inherited root colour. */
+  .dark .prose :where(astro-island, [class~="not-prose"]) {
+    color: hsl(var(--foreground));
+  }
+}
+
 /* Prose Typography Improvements */
 .prose {
   max-width: none;
@@ -129,7 +303,8 @@
    source order, so the plugin's heading values in tailwind.config.js and the
    values here have to agree. Keep them in sync; the named steps they mirror
    are text-h1 ... text-h4 in the Tailwind theme. */
-.prose h1 {
+.prose
+  h1:not(:where(astro-island *, [class~="not-prose"], [class~="not-prose"] *)) {
   font-family: var(--font-display);
   font-size: 2.25rem;
   font-weight: 700;
@@ -139,7 +314,8 @@
   letter-spacing: -0.02em;
 }
 
-.prose h2 {
+.prose
+  h2:not(:where(astro-island *, [class~="not-prose"], [class~="not-prose"] *)) {
   font-family: var(--font-display);
   font-size: 1.75rem;
   font-weight: 600;
@@ -149,7 +325,8 @@
   letter-spacing: -0.015em;
 }
 
-.prose h3 {
+.prose
+  h3:not(:where(astro-island *, [class~="not-prose"], [class~="not-prose"] *)) {
   font-family: var(--font-display);
   font-size: 1.3125rem;
   font-weight: 600;
@@ -159,7 +336,8 @@
   letter-spacing: -0.01em;
 }
 
-.prose h4 {
+.prose
+  h4:not(:where(astro-island *, [class~="not-prose"], [class~="not-prose"] *)) {
   font-family: var(--font-display);
   font-size: 1.0625rem;
   font-weight: 600;
@@ -169,23 +347,139 @@
   letter-spacing: -0.005em;
 }
 
-.prose p {
+.prose
+  p:not(:where(astro-island *, [class~="not-prose"], [class~="not-prose"] *)) {
   font-size: 1.0625rem;
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
   line-height: 1.7;
 }
 
-.prose ul,
-.prose ol {
+/* padding-inline-start, not padding-left. On /ar/ this rule was adding 28px on
+   the left while the plugin's own logical rule added 28px on the right, so
+   every Arabic list carried an indent on both sides and lost 28px of measure.
+   Identical in LTR: 28px start, 0 end, before and after. */
+.prose
+  ul:not(:where(astro-island *, [class~="not-prose"], [class~="not-prose"] *)),
+.prose
+  ol:not(:where(astro-island *, [class~="not-prose"], [class~="not-prose"] *)) {
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
-  padding-left: 1.75rem;
+  padding-inline-start: 1.75rem;
 }
 
-.prose li {
+.prose
+  li:not(:where(astro-island *, [class~="not-prose"], [class~="not-prose"] *)) {
   margin-top: 0.375rem;
   margin-bottom: 0.375rem;
+}
+
+/* ONE link treatment in running text.
+ *
+ * There was no `a` rule anywhere — not here, not in the typography config — so
+ * a plain markdown link fell through to the plugin's `--tw-prose-links`
+ * default and rendered #111827, near-black, which on a page whose body ink is
+ * gray-700 reads as bold text and not as a link at all. Meanwhile the inline
+ * JSX links in the MDX carried their own colours: gray-600, friendly-purple-700
+ * (two variants), orange-700, green-600, blue-600. /guides/quickstart alone
+ * served seven different link treatments in one article.
+ *
+ * Purple is the site's "you can act on this" (VISUAL_SYSTEM.md §4) and a link
+ * is the original thing you can act on. #7C3AED is `primary-text`, the darkest
+ * shade that still reads as brand purple and passes AA on white at 5.70:1;
+ * primary-400 is its dark-mode counterpart.
+ *
+ * Specificity is (0,2,1): the attribute selector inside the first :not() is
+ * what lets this beat a `text-blue-600` utility class written in the content.
+ * The second :not() is the component boundary — a link inside an island keeps
+ * whatever its component gave it.
+ *
+ * `:not([class*="bg-"])` is the deliberate exemption. A link that carries its
+ * own ground is a button, and a button's colours are its own business; that
+ * covers the three CTA buttons and the bordered card link in the guides.
+ */
+.prose
+  a:not([class*="bg-"]):not(
+    :where(astro-island *, [class~="not-prose"], [class~="not-prose"] *)
+  ) {
+  color: theme("colors.primary.text");
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color 150ms ease;
+}
+
+.prose
+  a:not([class*="bg-"]):not(
+    :where(astro-island *, [class~="not-prose"], [class~="not-prose"] *)
+  ):hover {
+  color: theme("colors.primary.700");
+  text-decoration-thickness: 2px;
+}
+
+.dark
+  .prose
+  a:not([class*="bg-"]):not(
+    :where(astro-island *, [class~="not-prose"], [class~="not-prose"] *)
+  ) {
+  color: theme("colors.primary.400");
+}
+
+.dark
+  .prose
+  a:not([class*="bg-"]):not(
+    :where(astro-island *, [class~="not-prose"], [class~="not-prose"] *)
+  ):hover {
+  color: theme("colors.primary.300");
+}
+
+/* Wide tables get a scroll container of their own.
+ *
+ * The wrapper element comes from src/components/guides/GuideTable.astro, which
+ * [slug].astro registers as the lowercase `table` key in the components map, so
+ * every markdown pipe table in every guide renders inside one.
+ *
+ * The affordance is the local/scroll scroll-shadow pair. The two "cover"
+ * gradients are `background-attachment: local`, so they travel with the content
+ * and slide off an edge the moment you scroll away from it; the two shadows are
+ * `attachment: scroll`, pinned to the box, sitting underneath. Net effect: a
+ * shadow appears on exactly the edges that still have table behind them, and on
+ * a table that fits, neither ever shows. It costs no JavaScript and it works
+ * unchanged under dir="rtl", where the scroll simply starts at the other end.
+ *
+ * The margins move from the table to the wrapper. Left on the table they would
+ * sit inside the overflow box, and the shadow — which paints the full height of
+ * that box — would run 32px past the table at both ends.
+ */
+.guide-table {
+  --guide-table-ground: #ffffff;
+  --guide-table-shadow: rgb(15 23 42 / 0.16);
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  background-image: linear-gradient(
+      to right,
+      var(--guide-table-ground),
+      transparent
+    ),
+    linear-gradient(to left, var(--guide-table-ground), transparent),
+    linear-gradient(to right, var(--guide-table-shadow), transparent),
+    linear-gradient(to left, var(--guide-table-shadow), transparent);
+  background-position: 0 0, 100% 0, 0 0, 100% 0;
+  background-size: 28px 100%, 28px 100%, 14px 100%, 14px 100%;
+  background-repeat: no-repeat;
+  background-attachment: local, local, scroll, scroll;
+}
+
+.dark .guide-table {
+  --guide-table-ground: theme("colors.gray.900");
+  --guide-table-shadow: rgb(0 0 0 / 0.55);
+}
+
+.guide-table > table {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .prose > *:first-child {
@@ -201,14 +495,19 @@
   color: rgb(209 213 219);
 }
 
-.dark .prose h1,
-.dark .prose h2,
-.dark .prose h3,
-.dark .prose h4 {
+.dark
+  .prose
+  :is(h1, h2, h3, h4):not(
+    :where(astro-island *, [class~="not-prose"], [class~="not-prose"] *)
+  ) {
   color: rgb(255 255 255);
 }
 
-.dark .prose strong {
+.dark
+  .prose
+  strong:not(
+    :where(astro-island *, [class~="not-prose"], [class~="not-prose"] *)
+  ) {
   color: rgb(255 255 255);
 }
 
@@ -389,22 +688,62 @@
   animation: completion-pulse 2s ease-in-out infinite;
 }
 
-/* Shiki syntax highlighting - theme switching support */
-.shiki {
-  background-color: transparent !important;
+/* Astro code blocks with dual themes.
+   Shiki writes the theme background as an inline `style` on the <pre>, so the
+   ground has to be !important to move it. Light mode used to be #fff, which
+   put a white block on a white card: no ground, no border, and the only sign a
+   code block was there at all was the scrollbar it grew when a line ran long.
+   The border is not !important — nothing inline sets it. */
+/* Code is not Arabic.
+ *
+ * Layout.astro sets dir="rtl" on <html> for `ar`, and a <pre> inherits it, so
+ * the browser ran the Unicode bidi algorithm over ASCII source with an RTL
+ * paragraph direction. Measured on /ar/guides/nip05-identity, the JSON block:
+ * the line `  "names": {` laid its characters out at x = 303, 255…293, 245,
+ * 236, 216 — the opening quote to the RIGHT of the word it opens, the colon and
+ * the brace torn off the end and dropped on the LEFT. `"alice": "b0635…"` came
+ * out as `alice":"`. Every line was flush right and the closing `}` sat at the
+ * far right instead of under its `{`.
+ *
+ * `direction: ltr` fixes the paragraph direction; `unicode-bidi: isolate` stops
+ * the block from disturbing the Arabic text around it. `text-align: start`
+ * resolves to left here, which puts the indentation back where the author wrote
+ * it. Inline <code> gets the same treatment for the same reason — `npub1…`,
+ * `wss://relay.example` and `you@domain.com` are identifiers, not sentences —
+ * and isolation is what keeps each one in its correct place inside the Arabic
+ * line that contains it.
+ *
+ * `.line` is Shiki's per-line span and it carries `unicode-bidi: plaintext`,
+ * which resolves each line's direction from its own first strong character.
+ * That is not decoration: several Arabic guides use ```text blocks for short
+ * translated dialogue, and without it the LTR paragraph direction above would
+ * push those lines to the wrong margin.
+ */
+pre,
+code,
+kbd,
+samp {
+  direction: ltr;
+  unicode-bidi: isolate;
 }
 
-.shiki code {
-  background-color: transparent !important;
+pre {
+  text-align: start;
 }
 
-/* Astro code blocks with dual themes */
+.astro-code .line {
+  unicode-bidi: plaintext;
+}
+
 .astro-code {
-  background-color: #fff !important;
+  background-color: theme("colors.gray.50") !important;
+  border: 1px solid theme("colors.gray.200");
+  border-radius: theme("borderRadius.md");
 }
 
 .dark .astro-code {
   background-color: var(--shiki-dark-bg, #24292e) !important;
+  border-color: theme("colors.gray.800");
   color: var(--shiki-dark, #e1e4e8) !important;
 }
 
@@ -413,20 +752,21 @@
   color: var(--shiki-dark, inherit) !important;
 }
 
-/* Light theme (default) - show light, hide dark */
-.shiki .line[data-theme="dark"] {
-  display: none;
+/* The <code> inside a highlighted block is not inline code. Without this it
+   keeps the inline-code chip (ground, padding, radius) from the typography
+   config, and in dark mode `prose-invert` outranks the plugin's own `pre code`
+   reset — which is why every line of a dark code block sat on its own slab a
+   shade lighter than the block behind it. */
+.astro-code code {
+  background-color: transparent !important;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+  font-weight: inherit;
+  font-size: inherit;
 }
 
-.shiki .line[data-theme="light"] {
-  display: block;
-}
-
-/* Dark theme - show dark, hide light */
-.dark .shiki .line[data-theme="dark"] {
-  display: block;
-}
-
-.dark .shiki .line[data-theme="light"] {
-  display: none;
-}
+/* The `.shiki` selectors that used to live here matched nothing: Astro emits
+   `class="astro-code astro-code-themes …"`, and its dual-theme output switches
+   colours with the --shiki-dark custom properties above, not with
+   `.line[data-theme]` elements. Verified against dist/ before deleting. */

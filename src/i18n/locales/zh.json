@@ -3498,7 +3498,8 @@
     "showMore": "显示更多{count}个",
     "timeEstimate": "完成所有内容约需{minutes}分钟",
     "continueAnyway": "仍然继续",
-    "startFirst": "从第一个前置条件开始"
+    "startFirst": "从第一个前置条件开始",
+    "dismiss": "隐藏此提示"
   },
   "followPack": {
     "groups": {

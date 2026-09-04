@@ -1,0 +1,27 @@
+---
+/**
+ * Every markdown table in a guide, wrapped in its own scroll container.
+ *
+ * Registered as the lowercase `table` entry in the `components` map that
+ * [slug].astro hands to <Content />, so it applies to tables written in
+ * markdown pipe syntax without touching a single content file.
+ *
+ * Why a wrapper element and not `display: block; overflow-x: auto` on the
+ * <table> itself: changing a table's display value drops its table role in
+ * assistive technology, and a comparison table with no row/column semantics is
+ * worse than one that scrolls badly.
+ *
+ * tabindex="0" makes the region reachable from the keyboard. A scrollable box
+ * that only a mouse or a finger can move fails WCAG 2.1 SC 2.1.1, and that is
+ * exactly what an overflow container without it is.
+ *
+ * The scroll affordance (a shadow on whichever edge still has table behind it)
+ * is `.guide-table` in src/styles/globals.css.
+ */
+---
+
+<div class="guide-table" tabindex="0">
+  <table>
+    <slot />
+  </table>
+</div>

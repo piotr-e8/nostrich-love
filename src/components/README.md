@@ -131,7 +131,7 @@ const items = [
 - Accessible with ARIA labels
 
 ### 5. Callouts
-Info, warning, success, danger, and specialized callouts.
+Info, warning, success and danger asides. One component, four semantic tints.
 
 ```tsx
 import { 
@@ -140,32 +140,25 @@ import {
   WarningCallout, 
   SuccessCallout, 
   DangerCallout,
-  SecurityWarning,
-  Tip 
 } from './components/ui';
 
 <InfoCallout title="Did you know?">
   Nostr stands for "Notes and Other Stuff Transmitted by Relays"
 </InfoCallout>
 
-<WarningCallout title="Be careful!" dismissible>
+<WarningCallout title="Be careful!">
   Never share your private key.
 </WarningCallout>
-
-<SecurityWarning>
-  Your private key is like your password. Store it safely.
-</SecurityWarning>
-
-<Tip pro>
-  Use a password manager to store your nsec safely.
-</Tip>
 ```
 
+`Note` (`./ui/Note`) is the name the guides use for the info variant; it renders
+through `Callout`, so there is one box, not two that nearly match.
+
 **Features:**
-- 4 variants (info, warning, success, danger)
-- Dismissible option
-- Security warning with special styling
-- Pro tip badges
+- 4 semantic tints (info, warning, success, danger)
+- Optional title
+- `not-prose` boundary and its own `my-5` rhythm, so it spaces itself inside an
+  article (VISUAL_SYSTEM.md §6)
 
 ### 6. Buttons
 Primary, secondary, ghost, danger variants with loading states.

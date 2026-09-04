@@ -293,12 +293,132 @@ Use `rtl:rotate-180` or pick the icon from `dir`. Icons that do not point
 **Language switcher:** the language name in its own script (`localeConfig.name`),
 never a flag. A flag is a country and a language is not.
 
+## 6. Prose stops at a component boundary
+
+`.prose` is for article text written in MDX. It has no business inside an
+embedded component, and until this pass it was inside all of them.
+
+**The boundary is one of two things:**
+
+| the component | what marks it |
+| --- | --- |
+| hydrated (`client:idle`) | `<astro-island>` — automatic, nothing to remember |
+| rendered without a client directive | `class="not-prose"` on its outermost element |
+
+The second row is not optional. A React component used from MDX without a
+client directive renders to plain HTML with no island tag around it, so
+`Callout` in `faq.mdx` sat in raw article prose. If you write or rewrite a
+component that MDX can embed, put `not-prose` on its root. It costs nothing
+when the component is also hydrated.
+
+**Why two mechanisms and not just `not-prose`.** Because the leak had two
+sources and they need different fixes.
+
+1. The hand-written `.prose h1…h4 / p / ul / ol / li` rules in
+   `src/styles/globals.css` are plain descendant selectors, specificity
+   (0,1,1), emitted *after* `@tailwind utilities`. They beat every utility
+   class, and they never honoured `not-prose` at all. Measured: `text-micro`
+   (11px), `text-caption` (13px), `text-body-sm` (15px) and `text-h3` (21px)
+   all rendered at 17px in all 13 islands on `/guides/what-is-nostr`. Each of
+   those rules now carries the boundary guard:
+
+   ```css
+   :not(:where(astro-island *, [class~="not-prose"], [class~="not-prose"] *))
+   ```
+
+   Write it out at every new `.prose` rule. CSS has no selector variables; the
+   same string lives as `NOT_IN_COMPONENT` in `tailwind.config.js`.
+
+2. `@tailwindcss/typography`'s own rules are `:where()`-wrapped at (0,1,0), so
+   a utility class already beats them — but only where a utility exists.
+   Margins, list markers, `dd` padding, blockquote rules and `hr` have no
+   utility on them in most components, so those leaked. Those rules *do*
+   honour `not-prose`, and that guard survives an `<astro-island>` in between
+   (it is `[class~="not-prose"] *`, a descendant combinator, not a child one).
+   What it cannot do is know about a tag it has never heard of. So
+   `globals.css` carries a **boundary reset** in `@layer components` that puts
+   the Tailwind preflight baseline back inside islands.
+
+**The reset's specificity is the whole trick.** It is `(0,1,0)`, the same as
+the plugin's rules, but later in the components layer — so it wins over the
+plugin, and a utility class in the utilities layer still wins over it. In
+between, exactly. It also resets the boundary root to `1rem / 1.5 /
+hsl(var(--foreground))`, because `.prose-lg` sets 18px on the `<article>` and
+`<astro-island>` is `display: contents`, so the size inherits straight through.
+A component now renders inside an article exactly as it renders anywhere else.
+
+Dark mode needs a second pass at (0,2,0): the `invert` block compiles through
+the `dark:` variant to `.dark\:prose-invert:is(.dark *) …`, which outranks a
+plain utility. Every element-level key in that block carries the guard in its
+own selector, which is why `invert` in `tailwind.config.js` is written with
+computed keys.
+
+**Code.** Inline code is `gray-800` on `gray-100`, inverted in dark. It used to
+be `pink-600` / `pink-400`, and pink is not in the palette. Highlighted blocks
+(`.astro-code`) get a `gray-50` ground and a `gray-200` border in light — they
+were `#fff` on a white card, which is no block at all — and the `<code>` inside
+them is explicitly stripped of the inline-code chip, or `prose-invert` gives
+every line its own slab in dark mode.
+
+## 7. Links, tables and code inside an article
+
+Three rules that only bite inside `.prose`, all of them in `globals.css`.
+
+**One link treatment.** A link in running text is `primary-text` (#7C3AED,
+5.70:1 on white), `primary-400` in dark, underlined at 1px with a 2px offset,
+thickening to 2px on hover. Nothing else. Before this there was no `a` rule at
+all, so a markdown link fell through to the typography plugin's default and
+rendered #111827 — near-black, which on gray-700 body ink reads as bold text
+rather than a link — while the inline JSX links in the MDX each brought their
+own colour. `/guides/quickstart` served seven treatments in one article.
+
+The rule is `.prose a:not([class*="bg-"]):not($BOUNDARY)`. The attribute
+selector is what lifts it to (0,2,1), high enough to beat a `text-blue-600`
+written in a content file; it is also the exemption, because a link that
+carries its own ground is a button and keeps its own colours.
+
+**Tables scroll in their own box.** `src/components/guides/GuideTable.astro` is
+registered as the lowercase `table` key in the `components` map that
+`[slug].astro` hands to `<Content />`, so every markdown pipe table renders
+inside a `.guide-table` wrapper. Do not "fix" this with `display: block;
+overflow-x: auto` on the `<table>` — that drops the table role in assistive
+technology. The wrapper is `tabindex="0"` because a region you can only scroll
+with a mouse fails WCAG 2.1 SC 2.1.1; the global `*:focus-visible` outline
+covers it.
+
+The affordance is the local/scroll scroll-shadow pair: two cover gradients at
+`background-attachment: local` that travel with the content, two shadows at
+`attachment: scroll` pinned to the box underneath. A shadow shows on exactly
+the edges that still have table behind them, in either direction, with no
+JavaScript. The margins live on the wrapper, not the table — inside the
+overflow box they would put 32px of shadow past each end of the table.
+
+A table written as literal JSX in an MDX file does **not** go through the map
+(MDX only substitutes markdown-generated elements). The one in `quickstart.mdx`
+carries `className="guide-table" tabIndex={0}` by hand. Any new one should too.
+
+**Code is LTR, everywhere.** `pre, code, kbd, samp` carry
+`direction: ltr; unicode-bidi: isolate`. On `/ar/` the `dir="rtl"` on `<html>`
+put ASCII source in an RTL paragraph and the bidi algorithm tore the
+punctuation off the ends: `  "names": {` laid out with the opening quote to the
+right of the word and the colon and brace dropped on the left, `"alice":
+"b0635…"` came out as `alice":"`, and inline `.well-known` rendered
+`well-known.`. Isolation is what keeps an inline snippet in its right place
+inside the Arabic line around it.
+
+`.astro-code .line` then carries `unicode-bidi: plaintext`, which resolves each
+line's direction from its own first strong character. That one is not
+cosmetic: several Arabic guides use ` ```text ` blocks for short translated
+dialogue, and the LTR paragraph direction above would otherwise strand the
+trailing colon of `في حفلة:` on the wrong side.
+
 ---
 
 ## Files this system lives in
 
 - `tailwind.config.js` — type scale, `fontFamily`, `boxShadow`, `maxWidth` measures
 - `src/layouts/Layout.astro` — `@font-face`, `--font-display`, preloads, focus ring
-- `src/styles/globals.css` — body and heading families, `.prose` heading type
+- `src/styles/globals.css` — body and heading families, `.prose` heading type, link treatment, `.guide-table`, code direction
+- `src/components/guides/GuideTable.astro` — the table scroll container
 - `src/config/locales.ts` — `script` and `latinExtended` per locale, `usesDisplayFace()`
 - `public/fonts/` — the two woff2 files and the OFL licence

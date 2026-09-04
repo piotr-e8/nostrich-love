@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Info, AlertTriangle, CheckCircle, XCircle, X } from "lucide-react";
+import React from "react";
+import { Info, AlertTriangle, CheckCircle, XCircle } from "lucide-react";
 import { cn } from "../../lib/utils";
 
 export type CalloutVariant = "info" | "warning" | "success" | "danger";
@@ -9,8 +9,6 @@ interface CalloutProps {
   title?: string;
   children: React.ReactNode;
   className?: string;
-  dismissible?: boolean;
-  onDismiss?: () => void;
   icon?: React.ReactNode;
 }
 
@@ -18,6 +16,10 @@ interface CalloutProps {
 // and a ground" — a warning has to look like a warning. Dark grounds are solid
 // 950s, not `/30` alphas: an alpha tint over the page ground renders muddy and
 // shifts depending on what is behind it.
+//
+// The container sets the body colour too (the -900/-100 pair). Every block in
+// the family inherits it, including Note, so one blue box does not carry grey
+// text while the one three paragraphs down carries dark blue.
 const variantStyles: Record<CalloutVariant, { container: string; icon: string }> =
   {
     info: {
@@ -58,42 +60,42 @@ export function Callout({
   title,
   children,
   className,
-  dismissible = false,
-  onDismiss,
   icon,
 }: CalloutProps) {
-  const [isDismissed, setIsDismissed] = useState(false);
   const styles = variantStyles[variant];
-
-  if (isDismissed) return null;
-
-  const handleDismiss = () => {
-    setIsDismissed(true);
-    onDismiss?.();
-  };
 
   return (
     <div
-      className={cn("relative rounded-lg border p-4", styles.container, className)}
+      // `not-prose` is the component boundary (VISUAL_SYSTEM.md §6). Callout is
+      // used from MDX without a client directive, so it renders to plain HTML
+      // with no <astro-island> around it and nothing else marks where the
+      // article's prose ends and the component begins. Without it, `.prose p`
+      // put 20px of margin above the body text and the icon floated 28px above
+      // the line it belongs to.
+      //
+      // `my-5` is the flip side of that boundary: `not-prose` also stops the
+      // article from spacing the block, so the callout has to carry the prose
+      // rhythm (20px) itself. Sibling margins collapse, so a callout between
+      // two paragraphs still sits in a 20px gap, not a 40px one.
+      className={cn(
+        "not-prose relative my-5 rounded-lg border p-4",
+        styles.container,
+        className,
+      )}
       role="alert"
     >
       <div className="flex gap-3">
-        <div className={cn("flex-shrink-0", styles.icon)}>
+        {/* `mt-0.5` is optical, not arbitrary: the icon box is 20px inside a
+            24px first line, so flush-top leaves it sitting 2px high. */}
+        <div className={cn("mt-0.5 flex-shrink-0", styles.icon)}>
           {icon || defaultIcons[variant]}
         </div>
         <div className="flex-1">
           {title && <h4 className="mb-1 text-h4 font-semibold">{title}</h4>}
-          <div className="text-body-sm">{children}</div>
+          {/* `space-y-3` because the boundary reset strips prose margins: a
+              two-paragraph body used to run together with no gap at all. */}
+          <div className="space-y-3 text-body-sm">{children}</div>
         </div>
-        {dismissible && (
-          <button
-            onClick={handleDismiss}
-            className="flex-shrink-0 rounded-md p-1 transition-colors hover:bg-black/5 dark:hover:bg-white/10"
-            aria-label="Dismiss"
-          >
-            <X className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
-          </button>
-        )}
       </div>
     </div>
   );
@@ -114,62 +116,4 @@ export function SuccessCallout(props: Omit<CalloutProps, "variant">) {
 
 export function DangerCallout(props: Omit<CalloutProps, "variant">) {
   return <Callout variant="danger" {...props} />;
-}
-
-// Security warning specific to Nostr
-interface SecurityWarningProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-export function SecurityWarning({ children, className }: SecurityWarningProps) {
-  return (
-    <div
-      className={cn(
-        "rounded-lg border border-danger-200 bg-danger-50 p-5 dark:border-danger-900 dark:bg-danger-950",
-        className,
-      )}
-    >
-      <div className="mb-2 flex items-center gap-2 text-danger-800 dark:text-danger-200">
-        <AlertTriangle
-          className="h-5 w-5 shrink-0"
-          strokeWidth={1.5}
-          aria-hidden="true"
-        />
-        <span className="font-semibold">Security Warning</span>
-      </div>
-      <div className="text-body-sm text-danger-700 dark:text-danger-300">
-        {children}
-      </div>
-    </div>
-  );
-}
-
-// Tip/Pro Tip callout
-interface TipProps {
-  children: React.ReactNode;
-  pro?: boolean;
-  className?: string;
-}
-
-// Not tinted purple any more. Purple means "you can act on this"; a tip is not
-// an action, and an accent used as a mood is the ornament this pass removes.
-export function Tip({ children, pro = false, className }: TipProps) {
-  return (
-    <div
-      className={cn(
-        "rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-900",
-        className,
-      )}
-    >
-      {pro && (
-        <span className="mb-2 block text-micro font-semibold uppercase text-primary-text dark:text-primary-400">
-          Pro Tip
-        </span>
-      )}
-      <div className="text-body-sm text-gray-700 dark:text-gray-300">
-        {children}
-      </div>
-    </div>
-  );
 }

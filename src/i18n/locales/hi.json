@@ -3498,7 +3498,8 @@
     "showMore": "{count} और दिखाएं",
     "timeEstimate": "सभी पूरा करने में लगभग {minutes} मिनट",
     "continueAnyway": "फिर भी जारी रखें",
-    "startFirst": "पहली पूर्वापेक्षा से शुरू करें"
+    "startFirst": "पहली पूर्वापेक्षा से शुरू करें",
+    "dismiss": "यह सूचना छिपाएं"
   },
   "followPack": {
     "groups": {

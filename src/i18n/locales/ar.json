@@ -3498,7 +3498,8 @@
     "showMore": "إظهار {count} إضافية",
     "timeEstimate": "حوالي {minutes} دقيقة لإكمال الكل",
     "continueAnyway": "المتابعة على أي حال",
-    "startFirst": "البدء بالمتطلب الأساسي الأول"
+    "startFirst": "البدء بالمتطلب الأساسي الأول",
+    "dismiss": "إخفاء هذا التنبيه"
   },
   "followPack": {
     "groups": {

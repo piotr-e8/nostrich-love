@@ -49,14 +49,19 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
   // the whole grid — activation read as a glitch, not a highlight. Active state
   // is now a ring (drawn outside the layout) and the status lines keep their
   // slot at all times, fading rather than appearing.
+  //
+  // Every tile carries a 1px border in every state, and only its colour
+  // changes. The resting state used to be a white fill at 60% opacity with no
+  // border at all: since the thing does not autoplay, five of the seven tiles
+  // a reader meets on arrival were unframed shapes floating on the card, and
+  // the dashed relay you do not publish to was the only box in the picture.
   const tile = (active: boolean, tone: "primary" | "muted" | "gap") =>
     cn(
-      "flex flex-col items-center gap-1.5 rounded-lg p-3 text-center transition-colors duration-500 motion-reduce:transition-none",
-      tone === "muted" && "border border-dashed border-gray-300 dark:border-gray-700",
-      active && tone === "primary" && "bg-primary-50 ring-2 ring-primary-600 dark:bg-gray-800 dark:ring-primary-400",
-      active && tone === "gap" && "bg-warning-50 ring-2 ring-warning-600 dark:bg-warning-950 dark:ring-warning-400",
-      !active && tone !== "muted" && "bg-white opacity-60 dark:bg-gray-800",
-      !active && tone === "muted" && "opacity-60",
+      "flex flex-col items-center gap-1.5 rounded-lg border p-3 text-center transition-colors duration-500 motion-reduce:transition-none",
+      tone === "muted" && "border-dashed border-gray-300 dark:border-gray-600",
+      tone !== "muted" && !active && "border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800",
+      active && tone === "primary" && "border-primary-600 bg-primary-50 ring-2 ring-primary-600 dark:border-primary-400 dark:bg-gray-800 dark:ring-primary-400",
+      active && tone === "gap" && "border-warning-600 bg-warning-50 ring-2 ring-warning-600 dark:border-warning-400 dark:bg-warning-950 dark:ring-warning-400",
     );
 
   /** A status line that always occupies its row, visible or not. */
@@ -106,7 +111,7 @@ export function PostFlowSimulator({ className }: PostFlowSimulatorProps) {
   return (
     <div
       className={cn(
-        "rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900",
+        "not-prose rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900",
         className,
       )}
     >
