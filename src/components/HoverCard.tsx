@@ -39,13 +39,17 @@ export function HoverCard({
       <dt className="text-h4 font-semibold text-gray-900 dark:text-white">
         {term}
       </dt>
-      {/* `dd` carries a browser default margin-inline-start; ms-0 keeps every
-          line on the same edge as the term, in both directions. */}
-      <dd className="ms-0 mt-2 text-body-sm text-gray-600 dark:text-gray-400">
+      {/* Reset BOTH insets. The browser default on `dd` is a margin, but
+          @tailwindcss/typography also injects padding-inline-start: 23.33px on
+          `.prose dd`, and this card renders inside .prose. Resetting only the
+          margin left the definition 23px to the inside of its own term, which
+          is the bug this rewrite was supposed to close. Measure the text, not
+          the box: the element rect starts at the padding edge either way. */}
+      <dd className="ms-0 ps-0 mt-2 text-body-sm text-gray-600 dark:text-gray-400">
         {definition}
       </dd>
       {children && (
-        <dd className="ms-0 mt-2 border-t border-gray-200 pt-2 text-body-sm text-gray-500 dark:border-gray-800 dark:text-gray-500">
+        <dd className="ms-0 ps-0 mt-2 border-t border-gray-200 pt-2 text-body-sm text-gray-500 dark:border-gray-800 dark:text-gray-500">
           {children}
         </dd>
       )}
